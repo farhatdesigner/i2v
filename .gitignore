@@ -1,18 +1,13 @@
 *.zip
 *.tmp
 *.log
-*.sqlite
+*.sql
 *.gz
-cgi-bin/*
-.well-known/*
 .htaccess
 .user.ini
 error_log
 wordfence-waf.php
 wp-config.php
-wp-cli.phar
-robots.txt
-Robots.txt
 xmlrpc.php
 
 wp-content/uploads/*
