@@ -1,0 +1,119 @@
+.metaPageLable {
+    width: 20%;
+    float: left;
+}
+.metaPageValue {
+    width: 80%;
+	overflow: hidden;
+}
+img.metaPageImage {
+	width: 20%;
+}
+.button-primary {
+    vertical-align: top;
+}
+.metaInput input {
+    width: 40%;
+	padding: 5px;
+}
+.mainBody{
+	padding: 1.8em 0;
+	border-bottom: 1px solid #eeeeee;
+}
+
+.alignmentTitle{
+    padding-right: 18px;
+	padding-left: 5px;
+}
+.borderBottomNone {
+    border: none;
+}
+.border_line {
+    border: 1px solid #eeeeee;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.meta-section-title{
+	font-weight: 600;
+	font-size: 16px;
+    color: #242424;
+}
+.meta-description {
+    color: #aaa;
+    font-style: italic;
+}
+.meta-description.align {
+	margin: 0 auto;
+	margin-top: 5px;
+}
+.meta-description.title {
+    margin: 0 auto;
+	margin-top: 5px;
+}
+.d-inline {
+    display: inline-block;
+}
+.select-title {
+    font: 600 14px/26px "Open Sans", sans-serif;
+    color: #242424;
+    display: block;
+}
+.select-value {
+    width: 32%;
+    display: inline-block;
+    padding-right: 15px;
+    padding-bottom: 10px;
+}
+.select-value:last-child{
+	padding-right: 0;
+}
+.select-value-box {
+    margin-bottom: 10px;
+}
+.select-value select {
+    width: 100%;
+}
+.displayNone{
+	display: none;
+}
+.seprator {
+    padding: 0.5em 0;
+    background: #242424;
+}
+.seprator .meta-section-title {
+    color: #fff;
+    font-weight: 700;
+    padding-left: 10px;
+}
+.accordion {
+	background-color: #23282d;
+    color: #fff;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+    font-weight: bold;
+	text-transform: uppercase;
+}
+
+/* Add a background color to the accordion if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+
+.accordion:before {
+    float: right;
+    font-family: FontAwesome;
+    content:"\f055";
+    padding-right: 5px;
+	font-size: 17px;
+}
+.accordion.active:before {
+    content:"\f056";
+}
+.accordion:hover, 
+.accordion:active, 
+.accordion:focus  {
+    text-decoration:none;
+}

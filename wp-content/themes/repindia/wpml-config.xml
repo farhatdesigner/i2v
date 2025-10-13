@@ -1,0 +1,10 @@
+<wpml-config>
+    <custom-types>
+        <custom-type translate="1">sidebar</custom-type>
+		<custom-type translate="2">gallery</custom-type>
+		<custom-type translate="3">testimonials</custom-type>
+    </custom-types>
+    <taxonomies>
+        <taxonomy translate="1">gallery-category</taxonomy>
+    </taxonomies>
+</wpml-config>
