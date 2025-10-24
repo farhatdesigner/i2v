@@ -318,6 +318,114 @@
       </div>
    </section>
 
+
+   <section class="microspace-custom_outside grey-light">
+      <div class="custom-container mx-auto">
+
+
+         <div class="col-md-12 text-center">
+            <h3 class="main_title quote">
+               Insights & Updates
+            </h3>
+            <div class="text-left">
+               <p>Explore the latest from i2V — blogs, press releases, webinars, events, and industry insights.</p>
+            </div>
+         </div>
+
+
+         <div class="insights-updates">
+            <div class="row">
+               <div class="col-md-7">
+                  <div class="insights-updates-item">
+                     <div class="insights-updates-item-image">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/insights-updates-item-image.png" alt="insights-updates-item">
+                     </div>
+                     <div class="insights-updates-item-text_left">
+                        <ul class="p-0 insights-updates-item-text_left-list">
+                           <li>
+                              <a href="#">Intrusion Detection</a>
+                              <a href="#">Security Management</a>
+                              <a href="#">Loitering Analytics</a>
+                           </li>
+                        </ul>
+                        <h4 class="brand_heading_color">i2V enhances security center SaaS with the addition of intrusion, security and loitering management</h4>
+                        <div class="text-features">
+                           <p>These features enhance real-time monitoring, enabling businesses to detect and respond to threats proactively. Intrusion detection ensures unauthorized access is flagged instantly, while security management centralizes control over multiple security layers. Loitering analytics use AI to identify suspicious behavior, helping prevent potential security risks. With seamless integration and automation, i2V’s latest enhancements empower organizations to maintain a safer environment with improved efficiency. This upgrade reinforces i2V’s commitment to delivering cutting-edge, AI-powered security solutions for smarter, proactive surveillance management.</p>
+                        </div>
+                        <div class="date-author-txt">
+                           <p><span>Jan 30, 2022</span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> Admin</span></p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-5">
+                  <div class="lisitng-inner">
+                     <div class="d-flex align-items-center gap-4">
+                        <div class="insights-updates-item-small-icon">
+                           <img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/bloglisting_image.png" alt="blog">
+                        </div>
+                        <div class="insights-updates-item-text">
+                           <h5>Physical Security Trends for 2025</h5>
+                           <div class="date-author-txt">
+                              <p><span>Jan 30, 2022</span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> Admin</span></p>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="d-flex align-items-center gap-4">
+                        <div class="insights-updates-item-small-icon">
+                           <img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/bloglisting_image.png" alt="blog">
+                        </div>
+                        <div class="insights-updates-item-text">
+                           <h5>Physical Security Trends for 2025</h5>
+                           <div class="date-author-txt">
+                              <p><span>Jan 30, 2022</span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> Admin</span></p>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="d-flex align-items-center gap-4">
+                        <div class="insights-updates-item-small-icon">
+                           <img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/bloglisting_image.png" alt="blog">
+                        </div>
+                        <div class="insights-updates-item-text">
+                           <h5>Physical Security Trends for 2025</h5>
+                           <div class="date-author-txt">
+                              <p><span>Jan 30, 2022</span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> Admin</span></p>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="d-flex align-items-center gap-4">
+                        <div class="insights-updates-item-small-icon">
+                           <img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/bloglisting_image.png" alt="blog">
+                        </div>
+                        <div class="insights-updates-item-text">
+                           <h5>Physical Security Trends for 2025</h5>
+                           <div class="date-author-txt">
+                              <p><span>Jan 30, 2022</span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> Admin</span></p>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="d-flex align-items-center gap-4">
+                        <div class="insights-updates-item-small-icon">
+                           <img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/bloglisting_image.png" alt="blog">
+                        </div>
+                        <div class="insights-updates-item-text">
+                           <h5>Physical Security Trends for 2025</h5>
+                           <div class="date-author-txt">
+                              <p><span>Jan 30, 2022</span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> Admin</span></p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+
+
+
+      </div>
+   </section>
+
 </div>
 
 
