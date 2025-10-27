@@ -1,99 +1,202 @@
 <?php
-		global $repindia_option; 
-		$backStyle = '';
-		$backStyle = repindia_backgroundstyle('footer_bg');
-		$backStyle = implode('', $backStyle);
-		?>
-		<div class="footer">
-		    <div class="container">
-		        <div class="row">
-				    <!-- <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 footer_menu_logo_box">
+global $repindia_option;
+$backStyle = '';
+$backStyle = repindia_backgroundstyle('footer_bg');
+$backStyle = implode('', $backStyle);
+?>
+<div class="footer">
+	<div class="custom-container">
+		<!-- <div class="row">
+			<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 footer_menu_logo_box">
 						<?php
-						if(isset($repindia_option['footer_logo']['url'] ) && !empty($repindia_option['footer_logo']['url']))
-						{   ?>  
-							<a class="footer_logo_anc" href="<?php echo esc_url( home_url( '/' ) ); ?>"><img class="footer_logo_img" src="<?php echo esc_url( $repindia_option['footer_logo']['url'] ); ?>" title="Logo of Phoenix repindia - Ultra luxury apartments in Bangalore" alt="<?php bloginfo( 'name' ); ?>"></a>
-						<?php 
-						}else{ ?>
-							<a class="footer_logo_anc" href="<?php echo esc_url( home_url( '/' ) ); ?>" class="footer-logo_name"><?php bloginfo( 'name' ); ?></a>
-						<?php 
+						if (isset($repindia_option['footer_logo']['url']) && !empty($repindia_option['footer_logo']['url'])) {   ?>  
+							<a class="footer_logo_anc" href="<?php echo esc_url(home_url('/')); ?>"><img class="footer_logo_img" src="<?php echo esc_url($repindia_option['footer_logo']['url']); ?>" title="Logo of Phoenix repindia - Ultra luxury apartments in Bangalore" alt="<?php bloginfo('name'); ?>"></a>
+						<?php
+						} else { ?>
+							<a class="footer_logo_anc" href="<?php echo esc_url(home_url('/')); ?>" class="footer-logo_name"><?php bloginfo('name'); ?></a>
+						<?php
 						}   ?>
 						
-					</div> -->
-					
-					
-		            
-		        </div>
-				<?php
-				if( isset($repindia_option['footer_copyright_switch']) && $repindia_option['footer_copyright_switch'] == 1){ 
-				?>
-				<div class="footer_copyright">
-					<div class="row">
-						<div class="col-md-4 col-xs-12">
-							<p>ABC</p>
-						</div>
-						<div class="col-md-4 col-xs-12">
+					</div>
+
+
+
+		</div> -->
+		<?php
+		if (isset($repindia_option['footer_copyright_switch']) && $repindia_option['footer_copyright_switch'] == 1) {
+		?>
+			<div class="footer_copyright">
+				<div class="row">
+					<div class="col col-xs-12">
+						<ul class="p-0 m-0">
+							<li>
+								<h3>Products</h3>
+							</li>
+							<li><a href="#">i2V’s VMS</a></li>
+							<li><a href="#">AI based video analytics / VCA</a></li>
+							<li><a href="#">Command and control (ICCC)</a></li>
+							<li><a href="#">CMS</a></li>
+							<li><a href="#">ITMS / ITS</a></li>
+							<li><a href="#">ANPR / LPR</a></li>
+							<li><a href="#">VIDS</a></li>
+							<li><a href="#">FRS</a></li>
+							<li><a href="#">ANPR / LPR</a></li>
+						</ul>
+					</div>
+					<div class="col col-xs-12">
+						<!-- 		<?php
+										if (has_nav_menu('footer-product-menu')) {
+											wp_nav_menu(
+												array(
+													'menu_id' => '',
+													'theme_location' => 'footer-product-menu',
+													'container'      => false,
+													'depth'          => 2,
+													'link_after'          => '<span class="caret"><i class="fa fa-arrow-down"></i></span>',
+													'menu_class'     => ''
+												)
+											);
+										}
+										?> -->
+
+						<ul class="p-0 m-0">
+							<li>
+								<h3>Products</h3>
+							</li>
+							<li><a href="#">i2V’s VMS</a></li>
+							<li><a href="#">AI based video analytics / VCA</a> </li>
+							<li><a href="#">Command and control (ICCC)</a></li>
+							<li><a href="#">CMS</a></li>
+							<li><a href="#">ITMS / ITS</a></li>
+							<li><a href="#">ANPR / LPR</a></li>
+							<li><a href="#">VIDS</a></li>
+							<li><a href="#">FRS</a></li>
+							<li><a href="#">ANPR / LPR</a></li>
+						</ul>
+
+
+					</div>
+					<div class="col col-xs-12">
+						<ul class="p-0 m-0">
+							<li>
+								<h3>Company</h3>
+							</li>
+							<li><a href="#">Oil and Gas</a></li>
+							<li><a href="#">Energy</a></li>
+							<li><a href="#">Smart cities</a></li>
+							<li><a href="#">Transportation</a></li>
+							<li><a href="#">Healthcare</a></li>
+							<li><a href="#">Retail</a></li>
+							<li><a href="#">Banking</a></li>
+							<li><a href="#">Education</a> </li>
+							<li><a href="#">Government</a></li>
+							<li><a href="#">Other</a></li>
+
+						</ul>
+					</div>
+					<div class="col col-xs-12">
+						<ul class="p-0 m-0">
+							<li>
+								<h3>Resources</h3>
+							</li>
+							<li><a href="#">Case studies</a></li>
+							<li><a href="#">Blog</a></li>
+							<li><a href="#">Whitepapers</a></li>
+							<li><a href="#">Webinars</a></li>
+							<li><a href="#">Videos</a></li>
+							<li><a href="#">Podcasts</a></li>
+						</ul>
+					</div>
+
+					<div class="col col-xs-12">
+						<ul class="p-0 m-0">
+							<li>
+								<h3>Legal</h3>
+							</li>
+							<li><a href="#">Privacy Policy</a></li>
+							<li><a href="#">Terms of Service</a></li>
+							<li><a href="#">Cookie Policy</a></li>
+							<li><a href="#">Disclaimer</a></li>
+							<li><a href="#">Security</a></li>
+						</ul>
+					</div>
+					<!-- <div class="col-md-12 col-xs-12">
 						<?php
-                            if (has_nav_menu('footer-product-menu')) {
-                                wp_nav_menu(
-                                    array(
-                                        'menu_id' => '',
-                                        'theme_location' => 'footer-product-menu',
-                                        'container'      => false,
-                                        'depth'          => 2,
-                                        'link_after'          => '<span class="caret"><i class="fa fa-arrow-down"></i></span>',
-                                        'menu_class'     => ''
-                                    )
-                                );
-                            }
-                            ?>
-
-
-						</div>
-						<div class="col-md-4 col-xs-12">
-							<?php
-							if( !empty( $repindia_option['enable_social'] ) && isset($repindia_option['footer_social']) && $repindia_option['footer_social'] == 1)
-							{ 
-								$footer_socials = repindia_get_socials( 'enable_social' ); 
-								if ( $footer_socials)
-								{ ?>
+						if (!empty($repindia_option['enable_social']) && isset($repindia_option['footer_social']) && $repindia_option['footer_social'] == 1) {
+							$footer_socials = repindia_get_socials('enable_social');
+							if ($footer_socials) { ?>
 								<div class="footer_social_section">
-								    <p class="footer_text"><?php echo esc_attr($repindia_option['footer_social_title']); ?></p>
+									<p class="footer_text"><?php echo esc_attr($repindia_option['footer_social_title']); ?></p>
 									<ul class="social-icons">
-										<?php   
-										foreach( $footer_socials as $class => $val )
-										{ ?>
+										<?php
+										foreach ($footer_socials as $class => $val) { ?>
 											<li>
-												<a href="<?php echo esc_url( $val ); ?>" target="_blank" class="social-<?php echo esc_attr( $class ); ?>">
-													<i class="fa fa-<?php echo esc_attr( $class ); ?> icon" ></i>
+												<a href="<?php echo esc_url($val); ?>" target="_blank" class="social-<?php echo esc_attr($class); ?>">
+													<i class="fa fa-<?php echo esc_attr($class); ?> icon"></i>
 												</a>
 											</li>
-										<?php   
+										<?php
 										}   ?>
 									</ul>
 								</div>
-								<?php   
-								}
-							} ?>
-						</div>
-					</div>
+						<?php
+							}
+						} ?>
+					</div> -->
 				</div>
-			<?php } ?>
-		        <!-- </div> -->
-
-		    </div>
-		</div> 
-		</div>
-		</div>
+			</div>
+		<?php } ?>
 		<!-- </div> -->
-		
-		
+
+		<div class="footer_bottom">
+			<div class="row">
+				<div class="col-md-12 col-xs-12">
+					<p class="d-inline-flex"><span><img src="<?php echo get_template_directory_uri(); ?>/assets/images/leagal-icon.png" alt="i2V">
+						</span>
+						Legal disclaimer:<br>
+						Performance metrics, deployment figures, and results shown are based on specific implementation scenarios. Actual performance may vary depending on system configuration, environment, and operational conditions. i2V Systems accepts no responsibility and cannot be held liable for any errors, misuse, or misinterpretation of product outputs.</p>
+				</div>
+			</div>
+		</div>
 
 
-	
-		<?php	
-		wp_footer();
-		?>
-    </body>
+
+		<div class="footer_bottom_copy">
+			<div class="row">
+				<div class="col-md-4 col-xs-4">
+					<span><img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.svg" alt="logo"></span>
+				</div>
+				<div class="col-md-4 col-xs-4 text-center">
+					<p>© 2025 All Rights Reserved. i2V Systems Pvt. Ltd.</p>
+				</div>
+				<div class="col-md-4 col-xs-4 text-end">
+					<span>
+						<a href="#">
+							<img src="<?php echo get_template_directory_uri(); ?>/assets/images/link.png" alt="link">
+						</a>
+						<a href="#">
+							<img src="<?php echo get_template_directory_uri(); ?>/assets/images/youtube.png" alt="youtube">
+						</a>
+					</span>
+				</div>
+			</div>
+		</div>
+
+
+
+	</div>
+</div>
+</div>
+</div>
+<!-- </div> -->
+
+
+
+
+
+<?php
+wp_footer();
+?>
+</body>
+
 </html>
-
-
