@@ -817,9 +817,15 @@ p {
     margin-right: 20px;
 }
 
+.btn-sec_gap {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
 .theme-btn {
     border-radius: 8px;
-    background: #0099ED;
+    background: #007ABE;
     padding: 8px 16px;
     font-size: 16px;
     font-style: normal;
@@ -837,13 +843,39 @@ p {
 .bg-trans {
     background: transparent;
     padding: 0;
-    color: #0099ED;
+    color: #74C2ED;
 }
 
 .grey-btn {
     border: 1px solid rgba(193, 196, 198, 0.20);
     background: #464A4F;
+    color: #74C2ED;
+}
+
+.theme-btn-white {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
     color: #0099ED;
+    background: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+}
+
+.border_btn {
+    padding-bottom: 2px;
+    border-radius: 0;
+    border-bottom: 1px solid var(--Buttons-btn-link-primary-border-default, rgba(255, 255, 255, 0.20));
+}
+
+.border-btn-grey {
+    border-radius: var(--button-radius, 8px);
+    border: 1px solid var(--Buttons-btn-secondary-default-outline-border-default, #E5E9EC);
+    background: var(--Buttons-btn-secondary-default-outline-bg-default, #FFF);
+}
+.color-btn-grey {
+ color: #5F6F94;
 }
 
 .left-sidemenu {
@@ -1207,8 +1239,9 @@ h3 {
     font-size: 14px;
     color: #AEB6C9;
 }
+
 .footer_bottom span {
-   padding-right: 20px;
+    padding-right: 20px;
 }
 
 .footer_bottom {
@@ -1218,8 +1251,15 @@ h3 {
     border-color: rgba(193, 196, 198, 0.10);
     margin-top: 30px;
 }
-.footer_bottom_copy{padding: 20px 0;color: #AEB6C9;}
-.footer_bottom_copy p{color: #AEB6C9;}
+
+.footer_bottom_copy {
+    padding: 20px 0;
+    color: #AEB6C9;
+}
+
+.footer_bottom_copy p {
+    color: #AEB6C9;
+}
 
 
 .trusted_para p {
@@ -1231,6 +1271,43 @@ h3 {
     margin-bottom: 40px;
 }
 
-.partner_sec{margin-top: 80px !important;margin-bottom: 63px !important;}
+.partner_sec {
+    margin-top: 80px !important;
+    margin-bottom: 63px !important;
+}
 
-.partner_sec_right {padding: 0px 50px 20px 30px  !important;}
+.partner_sec_right {
+    padding: 0px 50px 20px 30px !important;
+}
+
+
+.color_lightwhite p {
+    color: #AEB6C9 !important;
+}
+
+
+.chosse_circle .elementor-icon-box-wrapper {
+    padding: 40px;
+}
+
+.chosse_circle .elementor-position-left.elementor-view-default:first-child {
+    border-bottom: 1px solid;
+}
+
+.chosse_circle .elementor-icon-box-description {
+    color: var(--Golbal-text-text-3, #AEB6C9) !important;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    margin-top: 10px !important;
+    line-height: 1.5 !important;
+}
+
+.chosse_circle .elementor-icon-box-title {
+    color: #FFFFFF;
+    color: var(--Golbal-text-text-1, rgba(255, 255, 255, 0.90));
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.5 !important;
+}
