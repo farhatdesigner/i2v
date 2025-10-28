@@ -47,14 +47,14 @@ if (toggleButton) {
 // HERO SLIDER
 jQuery(document).ready(function ($) {
     var menu = [];
-    $('.swiper-slide').each(function (index) {
-        menu.push($(this).find('.slide-inner').attr("data-text"));
+    $('.hero-swiper-container .swiper-slide').each(function (index) {
+        menu.push($(this).find('.hero-slide-inner').attr("data-text"));
     });
     var interleaveOffset = 0.5;
 
     // Autoplay progress elements
-    const progressCircle = document.querySelector(".autoplay-progress svg .progress-circle");
-    const progressContent = document.querySelector(".autoplay-progress .progress-content");
+    const progressCircle = document.querySelector(".hero-swiper-container .autoplay-progress svg .progress-circle");
+    const progressContent = document.querySelector(".hero-swiper-container .autoplay-progress .progress-content");
 
     // Progress animation variables
     let progressInterval = null;
@@ -67,7 +67,7 @@ jQuery(document).ready(function ($) {
         }
 
         // Reset all pagination bullets - remove SVG and countdown from all
-        const bullets = document.querySelectorAll('.swiper-pagination-bullet');
+        const bullets = document.querySelectorAll('.hero-swiper-container .swiper-pagination-bullet');
         bullets.forEach(bullet => {
             // Remove SVG and countdown from inactive bullets
             const svg = bullet.querySelector('.bullet-progress-svg');
@@ -77,7 +77,7 @@ jQuery(document).ready(function ($) {
         });
 
         // Start progress for active bullet
-        const activeBullet = document.querySelector('.swiper-pagination-bullet-active');
+        const activeBullet = document.querySelector('.hero-swiper-container .swiper-pagination-bullet-active');
         if (activeBullet) {
             // Add SVG progress circle to active bullet
             const svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -155,13 +155,13 @@ jQuery(document).ready(function ($) {
         },
         watchSlidesProgress: true,
         pagination: {
-            el: '.swiper-pagination',
+            el: '.hero-swiper-container .swiper-pagination',
             clickable: true,
         },
 
         navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
+            nextEl: '.hero-swiper-container .swiper-button-next',
+            prevEl: '.hero-swiper-container .swiper-button-prev',
         },
 
 
@@ -172,7 +172,7 @@ jQuery(document).ready(function ($) {
                     var slideProgress = swiper.slides[i].progress;
                     var innerOffset = swiper.width * interleaveOffset;
                     var innerTranslate = slideProgress * innerOffset;
-                    swiper.slides[i].querySelector(".slide-inner").style.transform =
+                    swiper.slides[i].querySelector(".hero-slide-inner").style.transform =
                         "translate3d(" + innerTranslate + "px, 0, 0)";
                 }
             },
@@ -188,7 +188,7 @@ jQuery(document).ready(function ($) {
                 var swiper = this;
                 for (var i = 0; i < swiper.slides.length; i++) {
                     swiper.slides[i].style.transition = speed + "ms";
-                    swiper.slides[i].querySelector(".slide-inner").style.transition =
+                    swiper.slides[i].querySelector(".hero-slide-inner").style.transition =
                         speed + "ms";
                 }
             },
@@ -210,10 +210,10 @@ jQuery(document).ready(function ($) {
         }
     };
 
-    var swiper = new Swiper(".swiper-container", swiperOptions);
+    var swiper = new Swiper(".hero-swiper-container", swiperOptions);
 
     // DATA BACKGROUND IMAGE
-    var sliderBgSetting = $(".slide-bg-image");
+    var sliderBgSetting = $(".hero-swiper-container .slide-bg-image");
     sliderBgSetting.each(function (indx) {
         if ($(this).attr("data-background")) {
             $(this).css("background-image", "url(" + $(this).data("background") + ")");
