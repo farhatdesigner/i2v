@@ -8,10 +8,10 @@
 <div class="bg-light">
 
    <section class="hero-slider hero-style">
-      <div class="swiper-container">
+      <div class="swiper-container hero-swiper-container">
          <div class="swiper-wrapper">
             <div class="swiper-slide">
-               <div class="slide-inner slide-bg-image" data-background="<?php echo get_template_directory_uri(); ?>/assets/images/bannerslider-1.png">
+               <div class="slide-inner hero-slide-inner slide-bg-image" data-background="<?php echo get_template_directory_uri(); ?>/assets/images/bannerslider-1.png">
                   <div class="text-container">
                      <div data-swiper-parallax="300" class="slide-title">
                         <h2>i2V Systems – Driving the future of smart, secure, and scalable video surveillance</h2>
@@ -31,7 +31,7 @@
             <!-- end swiper-slide -->
 
             <div class="swiper-slide">
-               <div class="slide-inner slide-bg-image" data-background="<?php echo get_template_directory_uri(); ?>/assets/images/bannerslider-2.png">
+               <div class="slide-inner hero-slide-inner slide-bg-image" data-background="<?php echo get_template_directory_uri(); ?>/assets/images/bannerslider-2.png">
                   <div class="text-container">
                      <div data-swiper-parallax="300" class="slide-title">
                         <h2>A smarter way to secure what matters—reliable, scalable, and ready for the future</h2>
@@ -52,7 +52,7 @@
 
 
             <div class="swiper-slide">
-               <div class="slide-inner slide-bg-image" data-background="<?php echo get_template_directory_uri(); ?>/assets/images/bannerslider-3.png">
+               <div class="slide-inner hero-slide-inner slide-bg-image" data-background="<?php echo get_template_directory_uri(); ?>/assets/images/bannerslider-3.png">
                   <div class="text-container">
                      <div data-swiper-parallax="300" class="slide-title">
                         <h2>End-to-end video security built for every industry</h2>
@@ -73,7 +73,7 @@
 
 
             <div class="swiper-slide">
-               <div class="slide-inner slide-bg-image" data-background="<?php echo get_template_directory_uri(); ?>/assets/images/bannerslider-4.png">
+               <div class="slide-inner hero-slide-inner slide-bg-image" data-background="<?php echo get_template_directory_uri(); ?>/assets/images/bannerslider-4.png">
                   <div class="text-container">
                      <div data-swiper-parallax="300" class="slide-title">
                         <h2>Trusted AI video surveillance for government & enterprise</h2>
