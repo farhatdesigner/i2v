@@ -149,10 +149,10 @@ jQuery(document).ready(function ($) {
         loop: true,
         speed: 1000,
         parallax: true,
-        autoplay: {
-            delay: 6500,
-            disableOnInteraction: false,
-        },
+        // autoplay: {
+        //     delay: 6500,
+        //     disableOnInteraction: false,
+        // },
         watchSlidesProgress: true,
         pagination: {
             el: '.hero-swiper-container .swiper-pagination',
@@ -270,39 +270,49 @@ var swiper2 = new Swiper(".brandslider", {
 });
 
 
+// Tabs functionality
+jQuery(document).ready(function ($) {
+    
+    $(document).on('click', '.tabsautoscroll li', function () {
+        var $this = $(this);
+        var t = $this.data("id"); // e.g., "content0", "content1", etc.
+        var tabsContainer = $(".tabsautoscroll");
 
+        // Handle scroll arrows
+        $this.is(":last-child") ? $(".next").hide() : $(".next").show();
+        $this.is(":first-child") ? $(".previous").hide() : $(".previous").show();
 
-$(".tabsautoscroll li").click(function () {
-    var $this = $(this);
-    var e = $this.position();
-    var t = $this.data("id"); // e.g., "content0", "content1", etc.
+        // Scroll tabs horizontally to center the clicked tab
+        var tabPosition = $this.position().left;
+        var tabWidth = $this.outerWidth();
+        var containerWidth = tabsContainer.width();
+        var currentScroll = tabsContainer.scrollLeft();
+        
+        // Calculate scroll position to center the tab
+        var targetScroll = currentScroll + tabPosition - (containerWidth / 2) + (tabWidth / 2);
+        
+        // Use jQuery animate for smooth scrolling
+        tabsContainer.stop().animate({ scrollLeft: targetScroll }, 300, 'swing');
 
-    // Handle scroll arrows
-    $this.is(":last-child") ? $(".next").hide() : $(".next").show();
-    $this.is(":first-child") ? $(".previous").hide() : $(".previous").show();
+        // Toggle class only, no .show() or .hide()
+        $(".tabContent .tabdiv").removeClass("active-tabcontent");
+        $(".tabContent .tabdiv." + t).addClass("active-tabcontent");
 
-    // Scroll tabs horizontally
-    var scroll = $(".tabsautoscroll").scrollLeft();
-    $(".tabsautoscroll").animate({ scrollLeft: scroll + e.left - 200 }, 200);
+        // Active tab styling
+        $(".tabsautoscroll li").removeClass("active");
+        $this.addClass("active");
+    });
 
-    // Toggle class only, no .show() or .hide()
-    $(".tabContent .tabdiv").removeClass("active-tabcontent");
-    $(".tabdiv." + t).addClass("active-tabcontent");
+    // $(".tabdiv a").click(function (e) {
+    //   e.preventDefault(), $("li.active").next("li").trigger("click");
+    // }),
+    $(document).on('click', '.next', function (e) {
+        e.preventDefault();
+        $("li.active").next("li").trigger("click");
+    });
 
-    // Active tab styling
-    $(".tabsautoscroll li").removeClass("active");
-    $this.addClass("active");
-});
-
-
-
-// $(".tabdiv a").click(function (e) {
-//   e.preventDefault(), $("li.active").next("li").trigger("click");
-// }),
-$(".next").click(function (e) {
-    e.preventDefault(), $("li.active").next("li").trigger("click");
-});
-
-$(".previous").click(function (e) {
-    e.preventDefault(), $("li.active").prev("li").trigger("click");
+    $(document).on('click', '.previous', function (e) {
+        e.preventDefault();
+        $("li.active").prev("li").trigger("click");
+    });
 });

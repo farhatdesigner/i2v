@@ -107,7 +107,7 @@ if (! function_exists('repindia_load_theme_scripts_and_styles')) {
 			wp_enqueue_style('typekit', 'https://use.typekit.net/cri5gsd.css', null, REPINDIA_THEME_VERSION, 'all');
 			wp_enqueue_style('bootstrap', get_template_directory_uri() . '/assets/css/bootstrap.min.css', null, REPINDIA_THEME_VERSION, 'all');
 			// Use Swiper 4.x local files
-			// wp_enqueue_style('swiper-min', get_template_directory_uri() . '/assets/css/swiper-4.5.1.min.css', null, '4.5.1', 'all');
+			wp_enqueue_style('swiper-min', get_template_directory_uri() . '/assets/css/swiper-4.5.1.min.css', null, '4.5.1', 'all');
 			wp_enqueue_style('custom-style', get_template_directory_uri() . '/assets/css/custom_style.css', null, REPINDIA_THEME_VERSION, 'all');
 			wp_enqueue_style('repindia-style', get_stylesheet_uri(), null, REPINDIA_THEME_VERSION, 'all');
 			wp_enqueue_style('repindia-responsive', get_template_directory_uri() . '/assets/css/responsive.css', null, REPINDIA_THEME_VERSION, 'all');
@@ -121,7 +121,7 @@ if (! function_exists('repindia_load_theme_scripts_and_styles')) {
 		
 		wp_enqueue_script('bootstrap', get_template_directory_uri() . '/assets/js/bootstrap.bundle.min.js', array('jquery'), REPINDIA_THEME_VERSION, true);
 		// Use Swiper 4.x local files
-		// wp_enqueue_script('swiper-min', get_template_directory_uri() . '/assets/js/swiper-4.5.1.min.js', array('jquery'), '4.5.1', true);
+		wp_enqueue_script('swiper-min', get_template_directory_uri() . '/assets/js/swiper-4.5.1.min.js', array('jquery'), '4.5.1', true);
 		wp_enqueue_script('gsap-min', get_template_directory_uri() . '/assets/js/gsap.min.js', array('jquery'), REPINDIA_THEME_VERSION, true);
 		wp_enqueue_script('scrolltrigger-min', get_template_directory_uri() . '/assets/js/scrolltrigger.js', array('jquery'), REPINDIA_THEME_VERSION, true);
 		wp_enqueue_script('lenis-min', get_template_directory_uri() . '/assets/js/lenis.min.js', array('jquery'), REPINDIA_THEME_VERSION, true);

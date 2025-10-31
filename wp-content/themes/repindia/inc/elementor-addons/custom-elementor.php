@@ -14,12 +14,16 @@ class Widget_Loader
 	}
     private static function include_widgets_files()
     {
-		require_once(__DIR__.'/widgets/about_mission.php');
+		require_once(__DIR__.'/widgets/home_banner.php');
+		require_once(__DIR__.'/widgets/customtabsolution.php');
+		require_once(__DIR__.'/widgets/insightsupdates.php');
     }
     public function register_widgets()
     {
     	$this->include_widgets_files();
-		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\About_Mission() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Home_Banner() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Customtabsolution() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Insightsupdates() );
     }
 	public function __construct()
 	{

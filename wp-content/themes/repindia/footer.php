@@ -26,8 +26,8 @@ $backStyle = implode('', $backStyle);
 		if (isset($repindia_option['footer_copyright_switch']) && $repindia_option['footer_copyright_switch'] == 1) {
 		?>
 			<div class="footer_copyright">
-				<div class="row">
-					<div class="col col-xs-12">
+				<div class="row row-cols-2 row-cols-md-3 row-cols-lg-5">
+					<div class="col">
 						<ul class="p-0 m-0">
 							<li>
 								<h3>Products</h3>
@@ -43,7 +43,7 @@ $backStyle = implode('', $backStyle);
 							<li><a href="#">ANPR / LPR</a></li>
 						</ul>
 					</div>
-					<div class="col col-xs-12">
+					<div class="col">
 						<!-- 		<?php
 										if (has_nav_menu('footer-product-menu')) {
 											wp_nav_menu(
@@ -76,7 +76,7 @@ $backStyle = implode('', $backStyle);
 
 
 					</div>
-					<div class="col col-xs-12">
+					<div class="col">
 						<ul class="p-0 m-0">
 							<li>
 								<h3>Company</h3>
@@ -94,7 +94,7 @@ $backStyle = implode('', $backStyle);
 
 						</ul>
 					</div>
-					<div class="col col-xs-12">
+					<div class="col">
 						<ul class="p-0 m-0">
 							<li>
 								<h3>Resources</h3>
@@ -108,7 +108,7 @@ $backStyle = implode('', $backStyle);
 						</ul>
 					</div>
 
-					<div class="col col-xs-12">
+					<div class="col">
 						<ul class="p-0 m-0">
 							<li>
 								<h3>Legal</h3>
@@ -162,22 +162,26 @@ $backStyle = implode('', $backStyle);
 
 
 		<div class="footer_bottom_copy">
-			<div class="row">
-				<div class="col-md-4 col-xs-4">
-					<span><img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.svg" alt="logo"></span>
+			<div class="row align-items-center">
+				<!-- Mobile: logo left, social right | Desktop: left logo -->
+				<div class="col-6 col-md-4 d-flex align-items-center">
+					<img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.svg"
+						alt="logo" class="img-fluid">
 				</div>
-				<div class="col-md-4 col-xs-4 text-center">
-					<p>© 2025 All Rights Reserved. i2V Systems Pvt. Ltd.</p>
+
+				<!-- Desktop only: center text -->
+				<div class="col-12 order-3 order-md-2 col-md-4 text-center mt-4 mt-md-0">
+					<p class="mb-0">© 2025 All Rights Reserved. i2V Systems Pvt. Ltd.</p>
 				</div>
-				<div class="col-md-4 col-xs-4 text-end">
-					<span>
-						<a href="#">
-							<img src="<?php echo get_template_directory_uri(); ?>/assets/images/link.png" alt="link">
-						</a>
-						<a href="#">
-							<img src="<?php echo get_template_directory_uri(); ?>/assets/images/youtube.png" alt="youtube">
-						</a>
-					</span>
+
+				<!-- Mobile: right icons | Desktop: right aligned -->
+				<div class="col-6 col-md-4 d-flex justify-content-end order-2 order-md-3">
+					<a href="#" class="ms-2">
+						<img src="<?php echo get_template_directory_uri(); ?>/assets/images/link.png" alt="link">
+					</a>
+					<a href="#" class="ms-2">
+						<img src="<?php echo get_template_directory_uri(); ?>/assets/images/youtube.png" alt="youtube">
+					</a>
 				</div>
 			</div>
 		</div>
