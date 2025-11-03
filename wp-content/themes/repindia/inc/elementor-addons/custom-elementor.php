@@ -17,6 +17,7 @@ class Widget_Loader
 		require_once(__DIR__.'/widgets/home_banner.php');
 		require_once(__DIR__.'/widgets/customtabsolution.php');
 		require_once(__DIR__.'/widgets/insightsupdates.php');
+		require_once(__DIR__.'/widgets/cardslisting.php');
     }
     public function register_widgets()
     {
@@ -24,6 +25,7 @@ class Widget_Loader
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Home_Banner() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Customtabsolution() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Insightsupdates() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Cardslisting() );
     }
 	public function __construct()
 	{
