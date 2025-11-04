@@ -1,48 +1,38 @@
-// Check system preference
-const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+document.addEventListener("DOMContentLoaded", function () {
 
-// Load saved preference
-const storedPreference = localStorage.getItem('dark-mode');
+    // Function to update image sources based on theme
+    function updateThemeImages(isDark) {
+        const themeImageDivs = document.querySelectorAll('.theme-img');
+        themeImageDivs.forEach(div => {
+            const img = div.querySelector('img');
+            const lightSrc = div.getAttribute('data-light');
+            const darkSrc = div.getAttribute('data-dark');
 
-// Function to update icons based on dark mode state
-function updateDarkModeIcons(isDark) {
-    const sunIcon = document.querySelector('.icon-sun');
-    const moonIcon = document.querySelector('.icon-moon');
-
-    if (sunIcon && moonIcon) {
-        if (isDark) {
-            // Dark mode: show sun icon (to switch back to light)
-            sunIcon.style.display = 'block';
-            moonIcon.style.display = 'none';
-        } else {
-            // Light mode: show moon icon (to switch to dark)
-            sunIcon.style.display = 'none';
-            moonIcon.style.display = 'block';
-        }
+            if (img && lightSrc && darkSrc) {
+                img.src = isDark ? darkSrc : lightSrc;
+            }
+        });
     }
-}
 
-// Apply stored or system preference
-const initialDarkMode = storedPreference === 'dark' || (!storedPreference && prefersDark);
-if (initialDarkMode) {
-    document.body.classList.add('js-dark');
-}
+    // Check saved preference or system preference
+    const storedPref = localStorage.getItem('dark-mode');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDarkMode = storedPref === 'dark' || (!storedPref && prefersDark);
 
-// Update icons on page load
-document.addEventListener('DOMContentLoaded', function () {
-    updateDarkModeIcons(document.body.classList.contains('js-dark'));
+    // Apply correct image on page load
+    updateThemeImages(isDarkMode);
+
+    // Watch for toggle button clicks (already exists)
+    const toggleBtn = document.querySelector('.dark-mode-toggle');
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', function () {
+            const isDark = document.body.classList.toggle('js-dark');
+            localStorage.setItem('dark-mode', isDark ? 'dark' : 'light');
+            updateThemeImages(isDark);
+        });
+    }
 });
 
-// Toggle with button
-const toggleButton = document.querySelector('.dark-mode-toggle');
-if (toggleButton) {
-    toggleButton.addEventListener('click', function (e) {
-        e.preventDefault();
-        const isDark = document.body.classList.toggle('js-dark');
-        localStorage.setItem('dark-mode', isDark ? 'dark' : 'light');
-        updateDarkModeIcons(isDark);
-    });
-}
 
 // HERO SLIDER
 jQuery(document).ready(function ($) {
@@ -149,10 +139,10 @@ jQuery(document).ready(function ($) {
         loop: true,
         speed: 1000,
         parallax: true,
-        // autoplay: {
-        //     delay: 6500,
-        //     disableOnInteraction: false,
-        // },
+        autoplay: {
+            delay: 6500,
+            disableOnInteraction: false,
+        },
         watchSlidesProgress: true,
         pagination: {
             el: '.hero-swiper-container .swiper-pagination',

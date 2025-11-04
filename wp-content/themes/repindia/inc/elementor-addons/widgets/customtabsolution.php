@@ -107,7 +107,7 @@ class customtabsolution extends Widget_Base
 				<div class="custom-container">
 
 
-					<div class="col-lg-7">
+					<div class="col-lg-8 col-xxl-7">
 						<h3 class="main_title quote">
 							Integrated solutions to secure and streamline every facet of your operations
 						</h3>

@@ -135,6 +135,9 @@ svg {
 ul {
     list-style: none;
 }
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    font-family: "proxima-nova", sans-serif !important;
+}
 
 
 header {
@@ -988,12 +991,13 @@ p {
 
 h3 {
     font-size: 40px;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 1.2;
     margin: 0 0 20px;
     text-transform: capitalize;
     transition: all .4s ease;
     color: #fff;
+    font-family: "proxima-nova", sans-serif;
 }
 
 
@@ -1017,7 +1021,7 @@ h3 {
 
 .tabsWrapper {
     width: 100%;
-    overflow: hidden;
+    /* overflow: hidden; */
     position: relative;
     height: 35px;
     margin: 48px 0;
@@ -1043,13 +1047,21 @@ h3 {
     white-space: nowrap;
     overflow-x: auto;
     overflow-y: hidden;
-    border-bottom: 1px solid var(--tabs-tab-line-border-default, #E6EBF2);
     scroll-behavior: smooth;
     position: relative;
     bottom: 0;
     -webkit-overflow-scrolling: touch;
 }
-
+.tabsWrapper:before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 100vw;
+    height: 2px;
+    background: #e6ebf2;
+    margin-left: -50vw;
+}
 .absolute-title,
 .tabsautoscroll li.active:before {
     bottom: 0;
@@ -1215,6 +1227,7 @@ h3 {
 
 .industry_box {
     height: 160px;
+    width: 100%;
 }
 
 
@@ -1275,6 +1288,7 @@ h3 {
     flex-wrap: wrap;
     flex-direction: column;
     gap: 20px;
+    padding-left: 24px;
 }
 
 .date-author-txt p span:first-child {
@@ -1450,7 +1464,10 @@ h3 {
 .grid-listing li {
     width: calc(33.33% - 40px);
 }
-
+.theme-img img {
+    transition: opacity 0.3s ease;
+  }
+  
 @media (min-width: 1200px) {
     .partner_sec:before {
         position: absolute;
@@ -1458,10 +1475,11 @@ h3 {
         width: 100vw !important;
         height: 28% !important;
         background: #ffffff;
-        left: -40px !important;
-        right: -40px !important;
+        left: 50% !important;
+        right: auto !important;
         top: auto !important;
         bottom: 0 !important;
+        transform: translateX(-50%) !important;
     }
 
     .cards-listing-section ul li:is(:nth-child(4), :nth-child(5)) .card {
@@ -1581,6 +1599,7 @@ h3 {
         flex-direction: row;
         gap: 15px;
         margin-top: 20px;
+        padding-left: 0;
     }
 
     .lisitng-inner>.d-flex {
