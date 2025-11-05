@@ -215,13 +215,17 @@ $(document).ready(function () {
     $(".burger-icon").click(function () {
         $(this).addClass("active-burger");
         $(".toggle-menu-container").addClass("open-menu");
+        $("nav").addClass("overlaynav-active");
         $(".overlay").addClass("overlay-active");
+        $("body").css("overflow", "hidden");
     });
 
-    $(".cross_icon").click(function () {
+    $(".cross_icon, .overlay").click(function () {
         $(".burger-icon").removeClass("active-burger");
         $(".toggle-menu-container").removeClass("open-menu");
+        $("nav").removeClass("overlaynav-active");
         $(".overlay").removeClass("overlay-active");
+        $("body").css("overflow", "");
     });
 });
 
