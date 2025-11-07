@@ -139,10 +139,10 @@ jQuery(document).ready(function ($) {
         loop: true,
         speed: 1000,
         parallax: true,
-        autoplay: {
-            delay: 6500,
-            disableOnInteraction: false,
-        },
+        // autoplay: {
+        //     delay: 6500,
+        //     disableOnInteraction: false,
+        // },
         watchSlidesProgress: true,
         pagination: {
             el: '.hero-swiper-container .swiper-pagination',
@@ -308,5 +308,38 @@ jQuery(document).ready(function ($) {
     $(document).on('click', '.previous', function (e) {
         e.preventDefault();
         $("li.active").prev("li").trigger("click");
+    });
+});
+
+
+// Footer Accordion - Mobile Only (max-width: 767px)
+jQuery(document).ready(function ($) {
+    function handleFooterAccordion() {
+        // Only enable accordion on mobile (767px and below)
+        if ($(window).width() <= 767) {
+            $('.footer-accordion-title').off('click').on('click', function() {
+                var $accordionItem = $(this).closest('.footer-accordion-item');
+                
+                // Simply toggle the active class - CSS will handle the animation
+                $accordionItem.toggleClass('active');
+            });
+        } else {
+            // On desktop, remove click handler and ensure all content is visible
+            $('.footer-accordion-title').off('click');
+            $('.footer-accordion-content').css('display', '');
+            $('.footer-accordion-item').removeClass('active');
+        }
+    }
+
+    // Initialize on page load
+    handleFooterAccordion();
+
+    // Re-initialize on window resize
+    var resizeTimer;
+    $(window).on('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            handleFooterAccordion();
+        }, 250);
     });
 });

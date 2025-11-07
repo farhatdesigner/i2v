@@ -104,7 +104,7 @@ class home_banner extends Widget_Base
       <div class="swiper-container hero-swiper-container">
          <div class="swiper-wrapper">
             <div class="swiper-slide">
-               <div class="slide-inner hero-slide-inner slide-bg-image" data-background="<?php echo get_template_directory_uri(); ?>/assets/images/bannerslider-1.png">
+               <div class="slide-inner hero-slide-inner slide-bg-image" data-background="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/homepage-banner.webp">
                   <div class="text-container">
                      <div data-swiper-parallax="300" class="slide-title">
                         <h2>i2V Systems – Driving the future of smart, secure, and scalable video surveillance</h2>
@@ -114,8 +114,8 @@ class home_banner extends Widget_Base
                      </div>
                      <div class="clearfix"></div>
                      <div data-swiper-parallax="500" class="slide-btns">
-                        <a href="#" class="theme-btn  xl-btn">Request a demo</a>
-                        <a href="#" class="theme-btn xl-btn grey-btn"> See how i2V works</a>
+                        <a href="#" class="theme-btn  xl-btn">Speak to our experts</a>
+                        <a href="#" class="theme-btn xl-btn grey-btn">Explore our AI-powered platform</a>
                      </div>
                   </div>
                </div>
@@ -124,7 +124,7 @@ class home_banner extends Widget_Base
             <!-- end swiper-slide -->
 
             <div class="swiper-slide">
-               <div class="slide-inner hero-slide-inner slide-bg-image" data-background="<?php echo get_template_directory_uri(); ?>/assets/images/bannerslider-2.png">
+               <div class="slide-inner hero-slide-inner slide-bg-image" data-background="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/homepage-banner2.webp">
                   <div class="text-container">
                      <div data-swiper-parallax="300" class="slide-title">
                         <h2>A smarter way to secure what matters—reliable, scalable, and ready for the future</h2>
@@ -134,8 +134,8 @@ class home_banner extends Widget_Base
                      </div>
                      <div class="clearfix"></div>
                      <div data-swiper-parallax="500" class="slide-btns">
-                        <a href="#" class="theme-btn  xl-btn">Request a demo</a>
-                        <a href="#" class="theme-btn xl-btn grey-btn"> See how i2V works</a>
+                        <a href="#" class="theme-btn  xl-btn">Book a free demo</a>
+                        <a href="#" class="theme-btn xl-btn grey-btn">See it in action</a>
                      </div>
                   </div>
                </div>
@@ -145,7 +145,7 @@ class home_banner extends Widget_Base
 
 
             <div class="swiper-slide">
-               <div class="slide-inner hero-slide-inner slide-bg-image" data-background="<?php echo get_template_directory_uri(); ?>/assets/images/bannerslider-3.png">
+               <div class="slide-inner hero-slide-inner slide-bg-image" data-background="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/homepage-banner3.webp">
                   <div class="text-container">
                      <div data-swiper-parallax="300" class="slide-title">
                         <h2>End-to-end video security built for every industry</h2>
@@ -155,8 +155,8 @@ class home_banner extends Widget_Base
                      </div>
                      <div class="clearfix"></div>
                      <div data-swiper-parallax="500" class="slide-btns">
-                        <a href="#" class="theme-btn  xl-btn">Request a demo</a>
-                        <a href="#" class="theme-btn xl-btn grey-btn"> See how i2V works</a>
+                        <a href="#" class="theme-btn  xl-btn">Request a demo today</a>
+                        <a href="#" class="theme-btn xl-btn grey-btn">Explore our solutions</a>
                      </div>
                   </div>
                </div>
@@ -166,7 +166,7 @@ class home_banner extends Widget_Base
 
 
             <div class="swiper-slide">
-               <div class="slide-inner hero-slide-inner slide-bg-image" data-background="<?php echo get_template_directory_uri(); ?>/assets/images/bannerslider-4.png">
+               <div class="slide-inner hero-slide-inner slide-bg-image" data-background="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/homepage-banner4.webp">
                   <div class="text-container">
                      <div data-swiper-parallax="300" class="slide-title">
                         <h2>Trusted AI video surveillance for government & enterprise</h2>
@@ -176,14 +176,36 @@ class home_banner extends Widget_Base
                      </div>
                      <div class="clearfix"></div>
                      <div data-swiper-parallax="500" class="slide-btns">
-                        <a href="#" class="theme-btn  xl-btn">Request a demo</a>
-                        <a href="#" class="theme-btn xl-btn grey-btn"> See how i2V works</a>
+                        <a href="#" class="theme-btn  xl-btn">Strengthen your security</a>
+                        <a href="#" class="theme-btn xl-btn grey-btn">Explore AI in action</a>
                      </div>
                   </div>
                </div>
                <!-- end slide-inner -->
             </div>
             <!-- end swiper-slide -->
+
+
+            <div class="swiper-slide">
+               <div class="slide-inner hero-slide-inner slide-bg-image" data-background="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/homepage-banner5.webp">
+                  <div class="text-container">
+                     <div data-swiper-parallax="300" class="slide-title">
+                        <h2>Next-gen security & video management—designed for performance, built for tomorrow</h2>
+                     </div>
+                     <div data-swiper-parallax="400" class="slide-text">
+                        <p>Empowering enterprises and governments with intelligent security, AI-driven video management, and scalable solutions for seamless surveillance and future-ready protection.</p>
+                     </div>
+                     <div class="clearfix"></div>
+                     <div data-swiper-parallax="500" class="slide-btns">
+                        <a href="#" class="theme-btn  xl-btn">Upgrade your security</a>
+                        <a href="#" class="theme-btn xl-btn grey-btn">Explore i2V's solutions</a>
+                     </div>
+                  </div>
+               </div>
+               <!-- end slide-inner -->
+            </div>
+            <!-- end swiper-slide -->
+
          </div>
          <!-- end swiper-wrapper -->
 

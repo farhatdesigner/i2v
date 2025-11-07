@@ -53,7 +53,7 @@ global $repindia_option;
                                         <h4>Not sure where to start?</h4>
                                         <p>Our experts can answer your questions and help you select the right products for your organization.</p>
                                         <div class="expert_btn">
-                                            <a href="<?php echo esc_url(home_url('/')); ?>" class="btn btn-primary">Talk to our expert</a>
+                                            <a href="<?php echo esc_url(home_url('/')); ?>" class="theme-btn-white border-btn-grey">Talk to our expert</a>
                                         </div>
                                     </li>
 

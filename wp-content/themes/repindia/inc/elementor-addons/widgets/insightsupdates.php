@@ -124,7 +124,7 @@ class insightsupdates extends Widget_Base
                      <div class="col-xl-7">
                         <div class="insights-updates-item">
                            <div class="insights-updates-item-image">
-                              <img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/insights-updates-item-image.png" alt="insights-updates-item">
+                              <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/i2v-enhances-security-center-saa-s-with-the-addition-of-intrusion-security-and-loitering-management.webp" alt="insights-updates-item">
                            </div>
                            <div class="insights-updates-item-text_left">
                               <ul class="p-0 insights-updates-item-text_left-list">
@@ -148,10 +148,32 @@ class insightsupdates extends Widget_Base
                         <div class="lisitng-inner">
                            <div class="d-flex align-items-center gap-4">
                               <div class="insights-updates-item-small-icon">
-                                 <img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/bloglisting_image.png" alt="blog">
+                                 <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Physical-Security-Trends-for-2025.webp" alt="blog">
                               </div>
                               <div class="insights-updates-item-text">
                                  <h5>Physical Security Trends for 2025</h5>
+                                 <div class="date-author-txt">
+                                    <p><span>Jan 30, 2022</span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> Amod Kudesia</span></p>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="d-flex align-items-center gap-4">
+                              <div class="insights-updates-item-small-icon">
+                                 <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/4-tips-for-managing-access-rights-in-a-hybrid-work-environment.webp" alt="blog">
+                              </div>
+                              <div class="insights-updates-item-text">
+                                 <h5>4 Tips for Managing Access Rights in a Hybrid Work Environment</h5>
+                                 <div class="date-author-txt">
+                                    <p><span>Jan 30, 2022</span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> Chintamani Pavithran</span></p>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="d-flex align-items-center gap-4">
+                              <div class="insights-updates-item-small-icon">
+                                 <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/A-Closer-Look-at-Physical-Security-System-Vulnerabilities.webp" alt="blog">
+                              </div>
+                              <div class="insights-updates-item-text">
+                                 <h5>A Closer Look at Physical Security System Vulnerabilities</h5>
                                  <div class="date-author-txt">
                                     <p><span>Jan 30, 2022</span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> Admin</span></p>
                                  </div>
@@ -159,45 +181,34 @@ class insightsupdates extends Widget_Base
                            </div>
                            <div class="d-flex align-items-center gap-4">
                               <div class="insights-updates-item-small-icon">
-                                 <img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/bloglisting_image.png" alt="blog">
+                                 <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/what-you-need-to-know-about-data-privacy.webp" alt="blog">
                               </div>
                               <div class="insights-updates-item-text">
-                                 <h5>Physical Security Trends for 2025</h5>
+                                 <h5>What You Need to Know About Data Privacy</h5>
                                  <div class="date-author-txt">
-                                    <p><span>Jan 30, 2022</span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> Admin</span></p>
+                                    <p><span>Jan 30, 2022</span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> Dattatreya Saidullah</span></p>
                                  </div>
                               </div>
                            </div>
                            <div class="d-flex align-items-center gap-4">
                               <div class="insights-updates-item-small-icon">
-                                 <img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/bloglisting_image.png" alt="blog">
+                                 <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/the-importance-of-encryption-in-security-systems.webp" alt="blog">
                               </div>
                               <div class="insights-updates-item-text">
-                                 <h5>Physical Security Trends for 2025</h5>
+                                 <h5>The Importance of Encryption in Security Systems</h5>
                                  <div class="date-author-txt">
-                                    <p><span>Jan 30, 2022</span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> Admin</span></p>
+                                    <p><span>Jan 30, 2022</span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> Atharvan Maruti</span></p>
                                  </div>
                               </div>
                            </div>
                            <div class="d-flex align-items-center gap-4">
                               <div class="insights-updates-item-small-icon">
-                                 <img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/bloglisting_image.png" alt="blog">
+                                 <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/a-journey-to-hybrid-cloud.webp" alt="blog">
                               </div>
                               <div class="insights-updates-item-text">
-                                 <h5>Physical Security Trends for 2025</h5>
+                                 <h5>The Importance of Encryption in Security Systems</h5>
                                  <div class="date-author-txt">
-                                    <p><span>Jan 30, 2022</span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> Admin</span></p>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="d-flex align-items-center gap-4">
-                              <div class="insights-updates-item-small-icon">
-                                 <img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/bloglisting_image.png" alt="blog">
-                              </div>
-                              <div class="insights-updates-item-text">
-                                 <h5>Physical Security Trends for 2025</h5>
-                                 <div class="date-author-txt">
-                                    <p><span>Jan 30, 2022</span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> Admin</span></p>
+                                    <p><span>Jan 30, 2022</span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> Atharvan Maruti</span></p>
                                  </div>
                               </div>
                            </div>
