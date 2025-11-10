@@ -266,7 +266,7 @@ var swiper2 = new Swiper(".brandslider", {
 
 // Tabs functionality
 jQuery(document).ready(function ($) {
-    
+
     $(document).on('click', '.tabsautoscroll li', function () {
         var $this = $(this);
         var t = $this.data("id"); // e.g., "content0", "content1", etc.
@@ -281,10 +281,10 @@ jQuery(document).ready(function ($) {
         var tabWidth = $this.outerWidth();
         var containerWidth = tabsContainer.width();
         var currentScroll = tabsContainer.scrollLeft();
-        
+
         // Calculate scroll position to center the tab
         var targetScroll = currentScroll + tabPosition - (containerWidth / 2) + (tabWidth / 2);
-        
+
         // Use jQuery animate for smooth scrolling
         tabsContainer.stop().animate({ scrollLeft: targetScroll }, 300, 'swing');
 
@@ -317,9 +317,9 @@ jQuery(document).ready(function ($) {
     function handleFooterAccordion() {
         // Only enable accordion on mobile (767px and below)
         if ($(window).width() <= 767) {
-            $('.footer-accordion-title').off('click').on('click', function() {
+            $('.footer-accordion-title').off('click').on('click', function () {
                 var $accordionItem = $(this).closest('.footer-accordion-item');
-                
+
                 // Simply toggle the active class - CSS will handle the animation
                 $accordionItem.toggleClass('active');
             });
@@ -336,10 +336,29 @@ jQuery(document).ready(function ($) {
 
     // Re-initialize on window resize
     var resizeTimer;
-    $(window).on('resize', function() {
+    $(window).on('resize', function () {
         clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function() {
+        resizeTimer = setTimeout(function () {
             handleFooterAccordion();
         }, 250);
     });
+});
+
+const swiper = new Swiper(".testimonialSwiper", {
+    slidesPerView: 2,
+    spaceBetween: 20,
+    loop: true,
+    pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+    },
+    autoplay: {
+        delay: 4000,
+        disableOnInteraction: false,
+    },
+    breakpoints: {
+        768: {
+            slidesPerView:1 ,
+        },
+    },
 });

@@ -206,7 +206,7 @@ class insightsupdates extends Widget_Base
                                  <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/a-journey-to-hybrid-cloud.webp" alt="blog">
                               </div>
                               <div class="insights-updates-item-text">
-                                 <h5>The Importance of Encryption in Security Systems</h5>
+                                 <h5>A Journey to Hybrid-Cloud</h5>
                                  <div class="date-author-txt">
                                     <p><span>Jan 30, 2022</span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> Atharvan Maruti</span></p>
                                  </div>

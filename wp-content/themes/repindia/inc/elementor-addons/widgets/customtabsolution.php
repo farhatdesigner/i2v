@@ -192,11 +192,11 @@ class customtabsolution extends Widget_Base
 														<span>Configuration Client</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/live-view-2.svg" alt="i2V’s VMS">
+														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/live-view-and-playback-client.svg" alt="i2V’s VMS">
 														<span>Live View and Playback Client</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/map-pin.svg" alt="i2V’s VMS">
+														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/e-map-client.svg" alt="i2V’s VMS">
 														<span>eMap Client</span>
 													</li>
 													<li>
@@ -204,7 +204,7 @@ class customtabsolution extends Widget_Base
 														<span>Auto PTZ tracking</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/playback.svg" alt="i2V’s VMS">
+														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/playback-client.svg" alt="i2V’s VMS">
 														<span>Playback Client</span>
 													</li>
 													<li>
@@ -212,7 +212,7 @@ class customtabsolution extends Widget_Base
 														<span>Recordings and Storage</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/siren.svg" alt="i2V’s VMS">
+														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/alarm-management.svg" alt="i2V’s VMS">
 														<span>Alarm management</span>
 													</li>
 													<li>
