@@ -139,10 +139,10 @@ jQuery(document).ready(function ($) {
         loop: true,
         speed: 1000,
         parallax: true,
-        // autoplay: {
-        //     delay: 6500,
-        //     disableOnInteraction: false,
-        // },
+        autoplay: {
+            delay: 6500,
+            disableOnInteraction: false,
+        },
         watchSlidesProgress: true,
         pagination: {
             el: '.hero-swiper-container .swiper-pagination',
@@ -361,4 +361,71 @@ const swiper = new Swiper(".testimonialSwiper", {
             slidesPerView:1 ,
         },
     },
+});
+
+
+// $(window).scroll(function() {
+//     if ($(window).scrollTop() >= 120) {
+//         $('.sticky-custom').addClass('fixed-header');
+//     } else {
+//         $('.sticky-custom').removeClass('fixed-header');
+//     }
+// });
+
+
+
+jQuery(document).ready(function() {
+    // open first section by default
+    let first = jQuery('.accordion_set').first();
+    first.addClass('acactive');
+    first.find('.select_div').attr("aria-expanded", "true");
+    jQuery(".accontent").first().slideDown(200);
+
+    // setup variables
+    let autoIndex = 0;
+    let total = jQuery(".accordion_set").length;
+    let autoInterval = 4000; // 4 seconds
+    let timer;
+
+    // function to open accordion by index
+    function openAccordion(index) {
+        let target = jQuery(".accordion_set").eq(index);
+        jQuery(".accordion_set").removeClass("acactive");
+        jQuery(".accordion_set > .select_div").attr("aria-expanded", "false");
+        jQuery(".accontent").slideUp(200);
+
+        target.addClass("acactive");
+        target.find(".select_div").attr("aria-expanded", "true");
+        target.find(".accontent").slideDown(200);
+    }
+
+    // auto slide function
+    function startAutoSlide() {
+        timer = setInterval(function() {
+            autoIndex = (autoIndex + 1) % total;
+            openAccordion(autoIndex);
+        }, autoInterval);
+    }
+
+    // start auto slide initially
+    startAutoSlide();
+
+    // on click — manual control + reset timer
+    jQuery(".accordion_set > .select_div").click(function() {
+        clearInterval(timer); // stop auto slide
+
+        let parent = jQuery(this).parents('.accordion_set');
+        autoIndex = jQuery(".accordion_set").index(parent); // update index
+
+        if (parent.hasClass("acactive")) {
+            parent.removeClass("acactive");
+            jQuery(this).attr("aria-expanded", "false");
+            parent.find(".accontent").slideUp(200);
+        } else {
+            openAccordion(autoIndex);
+        }
+
+        // restart auto slide after short delay
+        timer = setTimeout(() => startAutoSlide(), 1000);
+    });
 });
