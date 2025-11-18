@@ -89,11 +89,11 @@ global $repindia_option;
                                         </a>
                                         <a href="<?php echo esc_url(home_url('/')); ?>">
                                             <span><img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/linkdin.svg" alt="LinkedIn"></span>
-                                            LinkedIn
+                                            <small>LinkedIn</small>
                                         </a>
                                         <a href="<?php echo esc_url(home_url('/')); ?>">
                                             <span><img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/youtube.svg" alt="YouTube"></span>
-                                            YouTube
+                                            <small>YouTube</small>
                                         </a>
                                     </li>
                                 </ul>

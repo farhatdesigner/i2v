@@ -200,7 +200,10 @@ jQuery(document).ready(function ($) {
         }
     };
 
-    var swiper = new Swiper(".hero-swiper-container", swiperOptions);
+    // Use Swiper 4.5.1 reference on homepage to avoid Elementor's Swiper 8 conflict
+    // window.SwiperV4 is saved before Elementor loads its Swiper 8
+    var SwiperConstructor = (typeof window.SwiperV4 !== 'undefined') ? window.SwiperV4 : Swiper;
+    var swiper = new SwiperConstructor(".hero-swiper-container", swiperOptions);
 
     // DATA BACKGROUND IMAGE
     var sliderBgSetting = $(".hero-swiper-container .slide-bg-image");
@@ -212,6 +215,16 @@ jQuery(document).ready(function ($) {
 });
 
 $(document).ready(function () {
+    // Function to close the menu
+    function closeMenu() {
+        $(".burger-icon").removeClass("active-burger");
+        $(".toggle-menu-container").removeClass("open-menu");
+        $("nav").removeClass("overlaynav-active");
+        $(".overlay").removeClass("overlay-active");
+        $("body").css("overflow", "");
+    }
+
+    // Open menu when burger icon is clicked
     $(".burger-icon").click(function () {
         $(this).addClass("active-burger");
         $(".toggle-menu-container").addClass("open-menu");
@@ -220,12 +233,21 @@ $(document).ready(function () {
         $("body").css("overflow", "hidden");
     });
 
+    // Close menu when cross icon or overlay is clicked
     $(".cross_icon, .overlay").click(function () {
-        $(".burger-icon").removeClass("active-burger");
-        $(".toggle-menu-container").removeClass("open-menu");
-        $("nav").removeClass("overlaynav-active");
-        $(".overlay").removeClass("overlay-active");
-        $("body").css("overflow", "");
+        closeMenu();
+    });
+
+    // Close menu when clicking outside toggle-menu-container
+    $(document).click(function (e) {
+        // Check if menu is open
+        if ($(".toggle-menu-container").hasClass("open-menu")) {
+            // Check if click is outside toggle-menu-container and not on burger-icon
+            if (!$(e.target).closest(".toggle-menu-container").length && 
+                !$(e.target).closest(".burger-icon").length) {
+                closeMenu();
+            }
+        }
     });
 });
 
