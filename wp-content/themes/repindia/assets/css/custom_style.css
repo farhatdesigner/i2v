@@ -534,11 +534,11 @@ h2 {
 
 
 .hero-slider .swiper-pagination-bullet {
-    width: 12px;
-    height: 12px;
+    width: 8px;
+    height: 8px;
     text-align: left;
     line-height: 12px;
-    font-size: 12px;
+    font-size: 14px;
     color: #262A30;
     background: #fff;
     transition: all .2s ease;
@@ -572,13 +572,13 @@ h2 {
 
 .hero-slider .swiper-pagination-bullet-active .bullet-circle-bg {
     stroke: #262A30;
-    stroke-width: 2px;
+    stroke-width: 4px;
     fill: none;
 }
 
 .hero-slider .swiper-pagination-bullet-active .bullet-circle-progress {
     stroke: #00d4ff;
-    stroke-width: 2px;
+    stroke-width: 4px;
     stroke-linecap: round;
     fill: none;
     stroke-dasharray: 100.53;
@@ -589,11 +589,13 @@ h2 {
 .hero-slider .swiper-pagination-bullet-active .progress-countdown {
     position: relative;
     z-index: 10;
-    font-size: 12px;
-    font-weight: 700;
-    color: #fff;
-    font-family: "proxima-nova", sans-serif;
+    color: #D7DBE4;
     text-align: center;
+    font-family: "Proxima Nova";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
 }
 
 .hero-slider .swiper-pagination .swiper-pagination-bullets,
