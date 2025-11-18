@@ -472,6 +472,7 @@ if (window.innerWidth >= 1180) {
             end: () => "+=" + 200 * panels.length + "%",
             pin: true,
             pinSpacing: true,
+            markers: true,
             scrub: 1,
             autoRefreshEvents: "load",
         }
@@ -497,12 +498,17 @@ if (window.innerWidth >= 1180) {
 
 }
 
+// Initialize Lenis smooth scroll
 const lenis = new Lenis();
 lenis.on("scroll", (e) => {
     console.log(e);
 });
 lenis.on("scroll", ScrollTrigger.update);
 gsap.ticker.add((time) => {
-    lenis.raf(time * 500);
+    lenis.raf(time * 1000); // Convert seconds to milliseconds
 });
 gsap.ticker.lagSmoothing(0);
+
+
+
+
