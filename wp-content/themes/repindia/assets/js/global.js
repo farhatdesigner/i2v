@@ -451,3 +451,64 @@ jQuery(document).ready(function() {
         timer = setTimeout(() => startAutoSlide(), 1000);
     });
 });
+
+
+if (window.innerWidth >= 1180) {
+    gsap.registerPlugin(ScrollTrigger);
+    ScrollTrigger.config({
+        autoRefreshEvents: 'visibilitychange,DOMContentLoaded,load',
+    })
+    const resize = () => {
+        console.log('resize')
+        ScrollTrigger.refresh()
+    }
+    const panels = gsap.utils.toArray(".animate-right");
+    const content = gsap.utils.toArray(".animate-left");
+    const tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: ".sectionsscroll",
+            start: "top top",
+            endTrigger: 'html',
+            end: () => "+=" + 200 * panels.length + "%",
+            pin: true,
+            pinSpacing: true,
+            markers: true,
+            scrub: 1,
+            autoRefreshEvents: "load",
+        }
+    });
+    panels.forEach((panel, index) => {
+        tl.from(
+            panel,
+            {
+                yPercent: 100,
+                ease: "slow",
+            },
+            "+=0.1"
+        );
+        tl.from(
+            content[index],
+            {
+                yPercent: 100,
+                ease: "slow",
+            },
+            "<"
+        );
+    });
+
+}
+
+// Initialize Lenis smooth scroll
+const lenis = new Lenis();
+lenis.on("scroll", (e) => {
+    console.log(e);
+});
+lenis.on("scroll", ScrollTrigger.update);
+gsap.ticker.add((time) => {
+    lenis.raf(time * 1000); // Convert seconds to milliseconds
+});
+gsap.ticker.lagSmoothing(0);
+
+
+
+
