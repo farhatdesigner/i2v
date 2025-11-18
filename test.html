@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>A Meaningful Page Title</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.7/css/swiper.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: #1e2228;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+    }
+
+    .circle-wrapper {
+      position: relative;
+      width: 766px;
+      height: 766px;
+    }
+
+    .circle {
+      position: absolute;
+      inset: 0;
+      border: 2px dashed rgba(255, 255, 255, 0.25);
+      border-radius: 50%;
+    }
+
+    .center-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 26px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* Circle items */
+    .circle-item {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 120px;
+      text-align: center;
+      transform: rotate(calc(45deg * var(--i))) translate(380px) rotate(calc(-45deg * var(--i)));
+      animation: orbit 25s linear infinite;
+    }
+
+    .circle-item img {
+      width: 50px;
+      height: 50px;
+      margin-bottom: 6px;
+      filter: brightness(0) invert(1);
+    }
+
+    .circle-item span {
+      display: block;
+      font-size: 13px;
+      color: #ddd;
+      white-space: nowrap;
+    }
+
+    /* Rotation animation */
+    @keyframes orbit {
+      from {
+        transform: rotate(calc(45deg * var(--i))) translate(380px) rotate(calc(-45deg * var(--i)));
+      }
+
+      to {
+        transform: rotate(calc(45deg * var(--i) + 360deg)) translate(380px) rotate(calc(-45deg * var(--i) - 360deg));
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="circle-wrapper">
+    <div class="circle">
+      <div class="center-text">RLVD</div>
+
+      <div class="circle-item" style="--i:0;"><img src="icon1.png" alt="Face Recognition"><span>Face
+          Recognition</span></div>
+      <div class="circle-item" style="--i:1;"><img src="icon2.png" alt="Video Incident Detection"><span>Video Incident
+          Detection</span></div>
+      <div class="circle-item" style="--i:2;"><img src="icon3.png" alt="Wrong Direction"><span>Wrong Direction</span>
+      </div>
+      <div class="circle-item" style="--i:3;"><img src="icon4.png" alt="Fire & Smoke"><span>Fire & Smoke</span></div>
+      <div class="circle-item" style="--i:4;"><img src="icon5.png" alt="ANPR / LPR"><span>ANPR / LPR</span></div>
+      <div class="circle-item" style="--i:5;"><img src="icon6.png" alt="Command & Control"><span>Command &
+          Control</span></div>
+      <div class="circle-item" style="--i:6;"><img src="icon7.png" alt="Video Management"><span>Video
+          Management</span></div>
+      <div class="circle-item" style="--i:7;"><img src="icon8.png" alt="Video Analytics"><span>Video Analytics</span>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <script>
+
+    // HERO SLIDER
+    var menu = [];
+    jQuery('.swiper-slide').each(function (index) {
+      menu.push(jQuery(this).find('.slide-inner').attr("data-text"));
+    });
+    var interleaveOffset = 0.5;
+    var swiperOptions = {
+      loop: true,
+      speed: 1000,
+      parallax: true,
+      autoplay: {
+        delay: 6500,
+        disableOnInteraction: false,
+      },
+      watchSlidesProgress: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+
+      on: {
+        progress: function () {
+          var swiper = this;
+          for (var i = 0; i < swiper.slides.length; i++) {
+            var slideProgress = swiper.slides[i].progress;
+            var innerOffset = swiper.width * interleaveOffset;
+            var innerTranslate = slideProgress * innerOffset;
+            swiper.slides[i].querySelector(".slide-inner").style.transform =
+              "translate3d(" + innerTranslate + "px, 0, 0)";
+          }
+        },
+
+        touchStart: function () {
+          var swiper = this;
+          for (var i = 0; i < swiper.slides.length; i++) {
+            swiper.slides[i].style.transition = "";
+          }
+        },
+
+        setTransition: function (speed) {
+          var swiper = this;
+          for (var i = 0; i < swiper.slides.length; i++) {
+            swiper.slides[i].style.transition = speed + "ms";
+            swiper.slides[i].querySelector(".slide-inner").style.transition =
+              speed + "ms";
+          }
+        }
+      }
+    };
+
+    var swiper = new Swiper(".swiper-container", swiperOptions);
+
+    // DATA BACKGROUND IMAGE
+    var sliderBgSetting = $(".slide-bg-image");
+    sliderBgSetting.each(function (indx) {
+      if ($(this).attr("data-background")) {
+        $(this).css("background-image", "url(" + $(this).data("background") + ")");
+      }
+    });
+
+
+  </script>
+
+</body>
+
+</html>

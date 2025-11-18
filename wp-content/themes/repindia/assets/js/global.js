@@ -1,48 +1,38 @@
-// Check system preference
-const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+document.addEventListener("DOMContentLoaded", function () {
 
-// Load saved preference
-const storedPreference = localStorage.getItem('dark-mode');
+    // Function to update image sources based on theme
+    function updateThemeImages(isDark) {
+        const themeImageDivs = document.querySelectorAll('.theme-img');
+        themeImageDivs.forEach(div => {
+            const img = div.querySelector('img');
+            const lightSrc = div.getAttribute('data-light');
+            const darkSrc = div.getAttribute('data-dark');
 
-// Function to update icons based on dark mode state
-function updateDarkModeIcons(isDark) {
-    const sunIcon = document.querySelector('.icon-sun');
-    const moonIcon = document.querySelector('.icon-moon');
-
-    if (sunIcon && moonIcon) {
-        if (isDark) {
-            // Dark mode: show sun icon (to switch back to light)
-            sunIcon.style.display = 'block';
-            moonIcon.style.display = 'none';
-        } else {
-            // Light mode: show moon icon (to switch to dark)
-            sunIcon.style.display = 'none';
-            moonIcon.style.display = 'block';
-        }
+            if (img && lightSrc && darkSrc) {
+                img.src = isDark ? darkSrc : lightSrc;
+            }
+        });
     }
-}
 
-// Apply stored or system preference
-const initialDarkMode = storedPreference === 'dark' || (!storedPreference && prefersDark);
-if (initialDarkMode) {
-    document.body.classList.add('js-dark');
-}
+    // Check saved preference or system preference
+    const storedPref = localStorage.getItem('dark-mode');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDarkMode = storedPref === 'dark' || (!storedPref && prefersDark);
 
-// Update icons on page load
-document.addEventListener('DOMContentLoaded', function () {
-    updateDarkModeIcons(document.body.classList.contains('js-dark'));
+    // Apply correct image on page load
+    updateThemeImages(isDarkMode);
+
+    // Watch for toggle button clicks (already exists)
+    const toggleBtn = document.querySelector('.dark-mode-toggle');
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', function () {
+            const isDark = document.body.classList.toggle('js-dark');
+            localStorage.setItem('dark-mode', isDark ? 'dark' : 'light');
+            updateThemeImages(isDark);
+        });
+    }
 });
 
-// Toggle with button
-const toggleButton = document.querySelector('.dark-mode-toggle');
-if (toggleButton) {
-    toggleButton.addEventListener('click', function (e) {
-        e.preventDefault();
-        const isDark = document.body.classList.toggle('js-dark');
-        localStorage.setItem('dark-mode', isDark ? 'dark' : 'light');
-        updateDarkModeIcons(isDark);
-    });
-}
 
 // HERO SLIDER
 jQuery(document).ready(function ($) {
@@ -210,7 +200,10 @@ jQuery(document).ready(function ($) {
         }
     };
 
-    var swiper = new Swiper(".hero-swiper-container", swiperOptions);
+    // Use Swiper 4.5.1 reference on homepage to avoid Elementor's Swiper 8 conflict
+    // window.SwiperV4 is saved before Elementor loads its Swiper 8
+    var SwiperConstructor = (typeof window.SwiperV4 !== 'undefined') ? window.SwiperV4 : Swiper;
+    var swiper = new SwiperConstructor(".hero-swiper-container", swiperOptions);
 
     // DATA BACKGROUND IMAGE
     var sliderBgSetting = $(".hero-swiper-container .slide-bg-image");
@@ -222,16 +215,39 @@ jQuery(document).ready(function ($) {
 });
 
 $(document).ready(function () {
+    // Function to close the menu
+    function closeMenu() {
+        $(".burger-icon").removeClass("active-burger");
+        $(".toggle-menu-container").removeClass("open-menu");
+        $("nav").removeClass("overlaynav-active");
+        $(".overlay").removeClass("overlay-active");
+        $("body").css("overflow", "");
+    }
+
+    // Open menu when burger icon is clicked
     $(".burger-icon").click(function () {
         $(this).addClass("active-burger");
         $(".toggle-menu-container").addClass("open-menu");
+        $("nav").addClass("overlaynav-active");
         $(".overlay").addClass("overlay-active");
+        $("body").css("overflow", "hidden");
     });
 
-    $(".cross_icon").click(function () {
-        $(".burger-icon").removeClass("active-burger");
-        $(".toggle-menu-container").removeClass("open-menu");
-        $(".overlay").removeClass("overlay-active");
+    // Close menu when cross icon or overlay is clicked
+    $(".cross_icon, .overlay").click(function () {
+        closeMenu();
+    });
+
+    // Close menu when clicking outside toggle-menu-container
+    $(document).click(function (e) {
+        // Check if menu is open
+        if ($(".toggle-menu-container").hasClass("open-menu")) {
+            // Check if click is outside toggle-menu-container and not on burger-icon
+            if (!$(e.target).closest(".toggle-menu-container").length && 
+                !$(e.target).closest(".burger-icon").length) {
+                closeMenu();
+            }
+        }
     });
 });
 
@@ -270,39 +286,168 @@ var swiper2 = new Swiper(".brandslider", {
 });
 
 
+// Tabs functionality
+jQuery(document).ready(function ($) {
 
+    $(document).on('click', '.tabsautoscroll li', function () {
+        var $this = $(this);
+        var t = $this.data("id"); // e.g., "content0", "content1", etc.
+        var tabsContainer = $(".tabsautoscroll");
 
-$(".tabsautoscroll li").click(function () {
-    var $this = $(this);
-    var e = $this.position();
-    var t = $this.data("id"); // e.g., "content0", "content1", etc.
+        // Handle scroll arrows
+        $this.is(":last-child") ? $(".next").hide() : $(".next").show();
+        $this.is(":first-child") ? $(".previous").hide() : $(".previous").show();
 
-    // Handle scroll arrows
-    $this.is(":last-child") ? $(".next").hide() : $(".next").show();
-    $this.is(":first-child") ? $(".previous").hide() : $(".previous").show();
+        // Scroll tabs horizontally to center the clicked tab
+        var tabPosition = $this.position().left;
+        var tabWidth = $this.outerWidth();
+        var containerWidth = tabsContainer.width();
+        var currentScroll = tabsContainer.scrollLeft();
 
-    // Scroll tabs horizontally
-    var scroll = $(".tabsautoscroll").scrollLeft();
-    $(".tabsautoscroll").animate({ scrollLeft: scroll + e.left - 200 }, 200);
+        // Calculate scroll position to center the tab
+        var targetScroll = currentScroll + tabPosition - (containerWidth / 2) + (tabWidth / 2);
 
-    // Toggle class only, no .show() or .hide()
-    $(".tabContent .tabdiv").removeClass("active-tabcontent");
-    $(".tabdiv." + t).addClass("active-tabcontent");
+        // Use jQuery animate for smooth scrolling
+        tabsContainer.stop().animate({ scrollLeft: targetScroll }, 300, 'swing');
 
-    // Active tab styling
-    $(".tabsautoscroll li").removeClass("active");
-    $this.addClass("active");
+        // Toggle class only, no .show() or .hide()
+        $(".tabContent .tabdiv").removeClass("active-tabcontent");
+        $(".tabContent .tabdiv." + t).addClass("active-tabcontent");
+
+        // Active tab styling
+        $(".tabsautoscroll li").removeClass("active");
+        $this.addClass("active");
+    });
+
+    // $(".tabdiv a").click(function (e) {
+    //   e.preventDefault(), $("li.active").next("li").trigger("click");
+    // }),
+    $(document).on('click', '.next', function (e) {
+        e.preventDefault();
+        $("li.active").next("li").trigger("click");
+    });
+
+    $(document).on('click', '.previous', function (e) {
+        e.preventDefault();
+        $("li.active").prev("li").trigger("click");
+    });
 });
 
 
+// Footer Accordion - Mobile Only (max-width: 767px)
+jQuery(document).ready(function ($) {
+    function handleFooterAccordion() {
+        // Only enable accordion on mobile (767px and below)
+        if ($(window).width() <= 767) {
+            $('.footer-accordion-title').off('click').on('click', function () {
+                var $accordionItem = $(this).closest('.footer-accordion-item');
 
-// $(".tabdiv a").click(function (e) {
-//   e.preventDefault(), $("li.active").next("li").trigger("click");
-// }),
-$(".next").click(function (e) {
-    e.preventDefault(), $("li.active").next("li").trigger("click");
+                // Simply toggle the active class - CSS will handle the animation
+                $accordionItem.toggleClass('active');
+            });
+        } else {
+            // On desktop, remove click handler and ensure all content is visible
+            $('.footer-accordion-title').off('click');
+            $('.footer-accordion-content').css('display', '');
+            $('.footer-accordion-item').removeClass('active');
+        }
+    }
+
+    // Initialize on page load
+    handleFooterAccordion();
+
+    // Re-initialize on window resize
+    var resizeTimer;
+    $(window).on('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function () {
+            handleFooterAccordion();
+        }, 250);
+    });
 });
 
-$(".previous").click(function (e) {
-    e.preventDefault(), $("li.active").prev("li").trigger("click");
+const swiper = new Swiper(".testimonialSwiper", {
+    slidesPerView: 2,
+    spaceBetween: 20,
+    loop: true,
+    pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+    },
+    autoplay: {
+        delay: 4000,
+        disableOnInteraction: false,
+    },
+    breakpoints: {
+        768: {
+            slidesPerView:1 ,
+        },
+    },
+});
+
+
+// $(window).scroll(function() {
+//     if ($(window).scrollTop() >= 120) {
+//         $('.sticky-custom').addClass('fixed-header');
+//     } else {
+//         $('.sticky-custom').removeClass('fixed-header');
+//     }
+// });
+
+
+
+jQuery(document).ready(function() {
+    // open first section by default
+    let first = jQuery('.accordion_set').first();
+    first.addClass('acactive');
+    first.find('.select_div').attr("aria-expanded", "true");
+    jQuery(".accontent").first().slideDown(200);
+
+    // setup variables
+    let autoIndex = 0;
+    let total = jQuery(".accordion_set").length;
+    let autoInterval = 4000; // 4 seconds
+    let timer;
+
+    // function to open accordion by index
+    function openAccordion(index) {
+        let target = jQuery(".accordion_set").eq(index);
+        jQuery(".accordion_set").removeClass("acactive");
+        jQuery(".accordion_set > .select_div").attr("aria-expanded", "false");
+        jQuery(".accontent").slideUp(200);
+
+        target.addClass("acactive");
+        target.find(".select_div").attr("aria-expanded", "true");
+        target.find(".accontent").slideDown(200);
+    }
+
+    // auto slide function
+    function startAutoSlide() {
+        timer = setInterval(function() {
+            autoIndex = (autoIndex + 1) % total;
+            openAccordion(autoIndex);
+        }, autoInterval);
+    }
+
+    // start auto slide initially
+    startAutoSlide();
+
+    // on click — manual control + reset timer
+    jQuery(".accordion_set > .select_div").click(function() {
+        clearInterval(timer); // stop auto slide
+
+        let parent = jQuery(this).parents('.accordion_set');
+        autoIndex = jQuery(".accordion_set").index(parent); // update index
+
+        if (parent.hasClass("acactive")) {
+            parent.removeClass("acactive");
+            jQuery(this).attr("aria-expanded", "false");
+            parent.find(".accontent").slideUp(200);
+        } else {
+            openAccordion(autoIndex);
+        }
+
+        // restart auto slide after short delay
+        timer = setTimeout(() => startAutoSlide(), 1000);
+    });
 });

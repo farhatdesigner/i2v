@@ -28,74 +28,77 @@ global $repindia_option;
                         <li class="burger-icon">
                             <a href="javascript:void(0)"><img class="" src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/hamburger.svg" alt="Hamburger Menu"></a>
                         </li>
-                        <div class="toggle-menu-container" style="display: none;">
-                            <div class="cross_icon">
-                                <a href="javascript:void(0)"><img class="" src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/x.svg" alt="X Menu"></a>
+                        <div class="toggle-menu-container">
+                            <div class="inside-menu-container-inner">
+                                <div class="cross_icon">
+                                    <a href="javascript:void(0)"><img class="" src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/x.svg" alt="X Menu"></a>
+                                </div>
+                                <?php
+                                if (has_nav_menu('header-toggle-menu')) {
+                                    wp_nav_menu(
+                                        array(
+                                            'menu_id' => 'header-toggle-menu',
+                                            'theme_location' => 'header-toggle-menu',
+                                            'container'      => false,
+                                            'depth'          => 2,
+                                            // 'link_after'          => '<span class="caret"><i class="fa fa-arrow-down"></i></span>',
+                                            'menu_class'     => 'toggle-menu'
+                                        )
+                                    );
+                                }
+                                ?>
+
+                                <ul class="rightmenu_statictxt">
+                                    <li>
+                                        <h4>Not sure where to start?</h4>
+                                        <p>Our experts can answer your questions and help you select the right products for your organization.</p>
+                                        <div class="expert_btn">
+                                            <a href="<?php echo esc_url(home_url('/')); ?>" class="theme-btn-white border-btn-grey">Talk to our expert</a>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <div class="listing-inner">
+                                            <h4>Learn more about</h4>
+                                            <ul>
+                                                <li>
+                                                    <a href="<?php echo esc_url(home_url('/')); ?>">
+                                                        <span><img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/customer.svg" alt="Customer Stories"></span> Our customer stories</a>
+                                                </li>
+                                                <li>
+                                                    <a href="<?php echo esc_url(home_url('/')); ?>">
+                                                        <span><img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/partner.svg" alt="Partner and Integration Hub"></span> Partner and integration hub</a>
+                                                </li>
+                                                <li>
+                                                    <a href="<?php echo esc_url(home_url('/')); ?>">
+                                                        <span><img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/device.svg" alt="supported Device"></span> Supported device</a>
+                                                </li>
+                                                <li>
+                                                    <a href="<?php echo esc_url(home_url('/')); ?>">
+                                                        <span><img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/hardware.svg" alt="Calculate Hardware Sizing"></span> Calculate hardware sizing</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                <ul class="social_media_links">
+                                    <li>
+                                        <a class="cursor-auto" href="javascript:void(0)">
+                                            Follow us on
+                                        </a>
+                                        <a href="<?php echo esc_url(home_url('/')); ?>">
+                                            <span><img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/linkdin.svg" alt="LinkedIn"></span>
+                                            <small>LinkedIn</small>
+                                        </a>
+                                        <a href="<?php echo esc_url(home_url('/')); ?>">
+                                            <span><img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/youtube.svg" alt="YouTube"></span>
+                                            <small>YouTube</small>
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
-                            <?php
-                            if (has_nav_menu('header-toggle-menu')) {
-                                wp_nav_menu(
-                                    array(
-                                        'menu_id' => 'header-toggle-menu',
-                                        'theme_location' => 'header-toggle-menu',
-                                        'container'      => false,
-                                        'depth'          => 2,
-                                        'link_after'          => '<span class="caret"><i class="fa fa-arrow-down"></i></span>',
-                                        'menu_class'     => 'toggle-menu'
-                                    )
-                                );
-                            }
-                            ?>
 
-                            <ul class="rightmenu_statictxt">
-                                <li>
-                                    <h4>Not sure where to start?</h4>
-                                    <p>Our experts can answer your questions and help you select the right products for your organization.</p>
-                                    <div class="expert_btn">
-                                        <a href="<?php echo esc_url(home_url('/')); ?>" class="btn btn-primary">Talk to our expert</a>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="listing-inner">
-                                        <h4>Learn more about</h4>
-                                        <ul>
-                                            <li>
-                                                <a href="<?php echo esc_url(home_url('/')); ?>">
-                                                    <span><img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/customer.svg" alt="Customer Stories"></span> Our customer stories</a>
-                                            </li>
-                                            <li>
-                                                <a href="<?php echo esc_url(home_url('/')); ?>">
-                                                    <span><img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/partner.svg" alt="Partner and Integration Hub"></span> Partner and integration hub</a>
-                                            </li>
-                                            <li>
-                                                <a href="<?php echo esc_url(home_url('/')); ?>">
-                                                    <span><img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/device.svg" alt="supported Device"></span> Supported device</a>
-                                            </li>
-                                            <li>
-                                                <a href="<?php echo esc_url(home_url('/')); ?>">
-                                                    <span><img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/hardware.svg" alt="Calculate Hardware Sizing"></span> Calculate hardware sizing</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
-
-                            <ul class="social_media_links">
-                                <li>
-                                    <a class="cursor-auto" href="javascript:void(0)">
-                                        Follow us on
-                                    </a>
-                                    <a href="<?php echo esc_url(home_url('/')); ?>">
-                                        <span><img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/linkdin.svg" alt="LinkedIn"></span>
-                                        LinkedIn
-                                    </a>
-                                    <a href="<?php echo esc_url(home_url('/')); ?>">
-                                        <span><img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/youtube.svg" alt="YouTube"></span>
-                                        YouTube
-                                    </a>
-                                </li>
-                            </ul>
 
                         </div>
                         <ul class="logo-wdth">

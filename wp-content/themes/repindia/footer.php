@@ -26,25 +26,29 @@ $backStyle = implode('', $backStyle);
 		if (isset($repindia_option['footer_copyright_switch']) && $repindia_option['footer_copyright_switch'] == 1) {
 		?>
 			<div class="footer_copyright">
-				<div class="row">
-					<div class="col col-xs-12">
-						<ul class="p-0 m-0">
-							<li>
-								<h3>Products</h3>
+				<div class="row g-0">
+					<div class="col-md-3 border-right grid-column4">
+						<ul class="p-0 m-0 footer-accordion-menu">
+							<li class="footer-accordion-item">
+								<h3 class="footer-accordion-title">Products <span class="footer-accordion-icon">+</span></h3>
 							</li>
-							<li><a href="#">i2V’s VMS</a></li>
-							<li><a href="#">AI based video analytics / VCA</a></li>
-							<li><a href="#">Command and control (ICCC)</a></li>
-							<li><a href="#">CMS</a></li>
-							<li><a href="#">ITMS / ITS</a></li>
-							<li><a href="#">ANPR / LPR</a></li>
-							<li><a href="#">VIDS</a></li>
-							<li><a href="#">FRS</a></li>
-							<li><a href="#">ANPR / LPR</a></li>
+							<div class="footer-accordion-content">
+								<li><a href="#">i2V's VMS</a></li>
+								<li><a href="#">AI based video analytics / VCA</a></li>
+								<li><a href="#">Command and control (ICCC / PSIM)</a></li>
+								<li><a href="#">Central monitoring software (CMS)</a></li>
+								<li><a href="#">FRS</a></li>
+								<li><a href="#">ITMS / ITS</a></li>
+								<li><a href="#">VIDS</a></li>
+								<li><a href="#">ANPR / LPR</a></li>
+							</div>
 						</ul>
 					</div>
-					<div class="col col-xs-12">
-						<!-- 		<?php
+
+					<div class="col-md-9">
+						<div class="d-flex justify-content-between right-footer-menu">
+							<div class="column-4">
+								<!-- 		<//?php
 										if (has_nav_menu('footer-product-menu')) {
 											wp_nav_menu(
 												array(
@@ -59,67 +63,71 @@ $backStyle = implode('', $backStyle);
 										}
 										?> -->
 
-						<ul class="p-0 m-0">
-							<li>
-								<h3>Products</h3>
-							</li>
-							<li><a href="#">i2V’s VMS</a></li>
-							<li><a href="#">AI based video analytics / VCA</a> </li>
-							<li><a href="#">Command and control (ICCC)</a></li>
-							<li><a href="#">CMS</a></li>
-							<li><a href="#">ITMS / ITS</a></li>
-							<li><a href="#">ANPR / LPR</a></li>
-							<li><a href="#">VIDS</a></li>
-							<li><a href="#">FRS</a></li>
-							<li><a href="#">ANPR / LPR</a></li>
-						</ul>
+								<ul class="p-0 m-0 footer-accordion-menu">
+									<li class="footer-accordion-item">
+										<h3 class="footer-accordion-title">Industries <span class="footer-accordion-icon">+</span></h3>
+									</li>
+									<div class="footer-accordion-content">
+										<li><a href="#">Oil and Gas</a></li>
+										<li><a href="#">Energy</a> </li>
+										<li><a href="#">Smart cities</a></li>
+										<li><a href="#">Transportation</a></li>
+										<li><a href="#">Government</a></li>
+										<li><a href="#">Retail</a></li>
+										<li><a href="#">Education</a></li>
+										<li><a href="#">Healthcare</a></li>
+										<li><a href="#">Hospitality</a></li>
+										<li><a href="#">Financial institutions</a></li>
+									</div>
+								</ul>
+							</div>
+							<div class="column-4">
+								<ul class="p-0 m-0 footer-accordion-menu">
+									<li class="footer-accordion-item">
+										<h3 class="footer-accordion-title">Company <span class="footer-accordion-icon">+</span></h3>
+									</li>
+									<div class="footer-accordion-content">
+										<li><a href="#">Who we are</a></li>
+										<li><a href="#">Mission vision</a></li>
+										<li><a href="#">Our partners</a></li>
+										<li><a href="#">News and events</a></li>
+										<li><a href="#">Careers</a></li>
+										<li><a href="#">FAQs</a></li>
+										<li><a href="#">Contact us</a></li>
+									</div>
+								</ul>
+							</div>
+							<div class="column-4">
+								<ul class="p-0 m-0 footer-accordion-menu">
+									<li class="footer-accordion-item">
+										<h3 class="footer-accordion-title">Resources <span class="footer-accordion-icon">+</span></h3>
+									</li>
+									<div class="footer-accordion-content">
+										<li><a href="#">Blogs</a></li>
+										<li><a href="#">Data sheets</a></li>
+										<li><a href="#">Download our free trail software</a></li>
+										<li><a href="#">Calculate hardware sizing</a></li>
+										<li><a href="#">Help</a></li>
+										<li><a href="#">Sitemap</a></li>
+									</div>
+								</ul>
+							</div>
+							<div class="column-4">
+								<ul class="p-0 m-0 footer-accordion-menu">
+									<li class="footer-accordion-item">
+										<h3 class="footer-accordion-title">Legal <span class="footer-accordion-icon">+</span></h3>
+									</li>
+									<div class="footer-accordion-content">
+										<li><a href="#">Terms of Service</a></li>
+										<li><a href="#">Privacy Policy</a></li>
+										<li><a href="#">Cookie Policy</a></li>
+									</div>
+								</ul>
+							</div>
+						</div>
+					</div>
 
 
-					</div>
-					<div class="col col-xs-12">
-						<ul class="p-0 m-0">
-							<li>
-								<h3>Company</h3>
-							</li>
-							<li><a href="#">Oil and Gas</a></li>
-							<li><a href="#">Energy</a></li>
-							<li><a href="#">Smart cities</a></li>
-							<li><a href="#">Transportation</a></li>
-							<li><a href="#">Healthcare</a></li>
-							<li><a href="#">Retail</a></li>
-							<li><a href="#">Banking</a></li>
-							<li><a href="#">Education</a> </li>
-							<li><a href="#">Government</a></li>
-							<li><a href="#">Other</a></li>
-
-						</ul>
-					</div>
-					<div class="col col-xs-12">
-						<ul class="p-0 m-0">
-							<li>
-								<h3>Resources</h3>
-							</li>
-							<li><a href="#">Case studies</a></li>
-							<li><a href="#">Blog</a></li>
-							<li><a href="#">Whitepapers</a></li>
-							<li><a href="#">Webinars</a></li>
-							<li><a href="#">Videos</a></li>
-							<li><a href="#">Podcasts</a></li>
-						</ul>
-					</div>
-
-					<div class="col col-xs-12">
-						<ul class="p-0 m-0">
-							<li>
-								<h3>Legal</h3>
-							</li>
-							<li><a href="#">Privacy Policy</a></li>
-							<li><a href="#">Terms of Service</a></li>
-							<li><a href="#">Cookie Policy</a></li>
-							<li><a href="#">Disclaimer</a></li>
-							<li><a href="#">Security</a></li>
-						</ul>
-					</div>
 					<!-- <div class="col-md-12 col-xs-12">
 						<?php
 						if (!empty($repindia_option['enable_social']) && isset($repindia_option['footer_social']) && $repindia_option['footer_social'] == 1) {
@@ -162,22 +170,26 @@ $backStyle = implode('', $backStyle);
 
 
 		<div class="footer_bottom_copy">
-			<div class="row">
-				<div class="col-md-4 col-xs-4">
-					<span><img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.svg" alt="logo"></span>
+			<div class="row align-items-center">
+				<!-- Mobile: logo left, social right | Desktop: left logo -->
+				<div class="col-6 col-md-4 d-flex align-items-center">
+					<img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.svg"
+						alt="logo" class="img-fluid">
 				</div>
-				<div class="col-md-4 col-xs-4 text-center">
-					<p>© 2025 All Rights Reserved. i2V Systems Pvt. Ltd.</p>
+
+				<!-- Desktop only: center text -->
+				<div class="col-12 order-3 order-md-2 col-md-4 text-center mt-4 mt-md-0">
+					<p class="mb-0">© 2025 All Rights Reserved. i2V Systems Pvt. Ltd.</p>
 				</div>
-				<div class="col-md-4 col-xs-4 text-end">
-					<span>
-						<a href="#">
-							<img src="<?php echo get_template_directory_uri(); ?>/assets/images/link.png" alt="link">
-						</a>
-						<a href="#">
-							<img src="<?php echo get_template_directory_uri(); ?>/assets/images/youtube.png" alt="youtube">
-						</a>
-					</span>
+
+				<!-- Mobile: right icons | Desktop: right aligned -->
+				<div class="col-6 col-md-4 d-flex justify-content-end order-2 order-md-3">
+					<a href="#" class="ms-2">
+						<img src="<?php echo get_template_directory_uri(); ?>/assets/images/link.png" alt="link">
+					</a>
+					<a href="#" class="ms-2">
+						<img src="<?php echo get_template_directory_uri(); ?>/assets/images/youtube.png" alt="youtube">
+					</a>
 				</div>
 			</div>
 		</div>

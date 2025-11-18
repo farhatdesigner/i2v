@@ -14,12 +14,24 @@ class Widget_Loader
 	}
     private static function include_widgets_files()
     {
-		require_once(__DIR__.'/widgets/about_mission.php');
+		require_once(__DIR__.'/widgets/home_banner.php');
+		require_once(__DIR__.'/widgets/customtabsolution.php');
+		require_once(__DIR__.'/widgets/insightsupdates.php');
+		require_once(__DIR__.'/widgets/cardslisting.php');
+		require_once(__DIR__.'/widgets/carosoulslider.php');
+		require_once(__DIR__.'/widgets/platformtab.php');
+		require_once(__DIR__.'/widgets/vertcialaccordion.php');
     }
     public function register_widgets()
     {
     	$this->include_widgets_files();
-		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\About_Mission() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Home_Banner() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Customtabsolution() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Insightsupdates() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Cardslisting() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Carosoulslider() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Platformtab() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Vertcialaccordion() );
     }
 	public function __construct()
 	{
