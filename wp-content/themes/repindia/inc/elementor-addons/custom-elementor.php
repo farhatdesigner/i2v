@@ -21,6 +21,7 @@ class Widget_Loader
 		require_once(__DIR__.'/widgets/carosoulslider.php');
 		require_once(__DIR__.'/widgets/platformtab.php');
 		require_once(__DIR__.'/widgets/vertcialaccordion.php');
+		require_once(__DIR__.'/widgets/scalescroll.php');
     }
     public function register_widgets()
     {
@@ -32,6 +33,7 @@ class Widget_Loader
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Carosoulslider() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Platformtab() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Vertcialaccordion() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Scalescroll() );
     }
 	public function __construct()
 	{

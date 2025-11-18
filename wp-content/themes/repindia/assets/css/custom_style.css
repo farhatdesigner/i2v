@@ -769,6 +769,12 @@ a:hover {
     margin: 0 auto !important;
 }
 
+
+
+
+
+
+
 /* When screen width is above 1366px */
 @media (min-width: 1610px) {
     .custom-container {
