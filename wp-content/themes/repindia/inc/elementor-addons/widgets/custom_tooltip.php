@@ -73,6 +73,22 @@ class Custom_Tooltip extends Widget_Base
         );
 
         $this->add_control(
+            'icon_position',
+            [
+                'label' => esc_html__('Icon Position', 'repindia'),
+                'type' => \Elementor\Controls_Manager::SELECT,
+                'default' => 'left',
+                'options' => [
+                    'left' => esc_html__('Left', 'repindia'),
+                    'right' => esc_html__('Right', 'repindia'),
+                ],
+                'condition' => [
+                    'show_icon' => 'yes',
+                ],
+            ]
+        );
+
+        $this->add_control(
             'title_align',
             [
                 'label' => esc_html__('Title Alignment', 'repindia'),
@@ -167,6 +183,8 @@ class Custom_Tooltip extends Widget_Base
                 'default' => '#ffffff',
                 'selectors' => [
                     '{{WRAPPER}} .ctw-tooltip-inner' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .ctw-tooltip-inner p' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .ctw-tooltip-inner *' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -246,6 +264,15 @@ class Custom_Tooltip extends Widget_Base
                 'selectors' => [
                     '{{WRAPPER}} .ctw-tooltip' => 'max-width: {{SIZE}}{{UNIT}};',
                 ],
+            ]
+        );
+
+        $this->add_group_control(
+            \Elementor\Group_Control_Typography::get_type(),
+            [
+                'name' => 'tooltip_description_typography',
+                'label' => esc_html__('Description Typography', 'repindia'),
+                'selector' => '{{WRAPPER}} .ctw-tooltip-inner p, {{WRAPPER}} .ctw-tooltip-inner div, {{WRAPPER}} .ctw-tooltip-inner span, {{WRAPPER}} .ctw-tooltip-inner li, {{WRAPPER}} .ctw-tooltip-inner a, {{WRAPPER}} .ctw-tooltip-inner strong, {{WRAPPER}} .ctw-tooltip-inner em, {{WRAPPER}} .ctw-tooltip-inner h1, {{WRAPPER}} .ctw-tooltip-inner h2, {{WRAPPER}} .ctw-tooltip-inner h3, {{WRAPPER}} .ctw-tooltip-inner h4, {{WRAPPER}} .ctw-tooltip-inner h5, {{WRAPPER}} .ctw-tooltip-inner h6',
             ]
         );
 
@@ -348,7 +375,8 @@ class Custom_Tooltip extends Widget_Base
                     'size' => 8,
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .ctw-title .ctw-icon' => 'margin-right: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .ctw-title.ctw-icon-left .ctw-icon' => 'margin-right: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .ctw-title.ctw-icon-right .ctw-icon' => 'margin-left: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
@@ -414,6 +442,7 @@ class Custom_Tooltip extends Widget_Base
         $position = !empty($settings['position']) ? esc_attr($settings['position']) : 'top';
         $title_text = !empty($settings['title_text']) ? esc_html($settings['title_text']) : '';
         $show_icon = !empty($settings['show_icon']) && $settings['show_icon'] === 'yes';
+        $icon_position = !empty($settings['icon_position']) ? esc_attr($settings['icon_position']) : 'left';
         $title_align = !empty($settings['title_align']) ? esc_attr($settings['title_align']) : 'left';
         $tooltip_description = !empty($settings['tooltip_description']) ? $settings['tooltip_description'] : '';
         $tooltip_bg_color = !empty($settings['tooltip_background_color']) ? esc_attr($settings['tooltip_background_color']) : '#333333';
@@ -423,12 +452,12 @@ class Custom_Tooltip extends Widget_Base
         if (!$css_added) {
             $css_added = true;
             echo '<style id="custom-tooltip-css">';
-            echo '.ctw-wrapper { position: relative; display: inline-block;width: 100%;text-align: center; }';
+            echo '.ctw-wrapper { position: relative; display: inline-block;width: 100%;text-align: center;vertical-align: super; }';
             echo '.ctw-trigger { cursor: pointer; display: inline-flex; align-items: center; }';
             echo '.ctw-title { display: inline-flex; align-items: center; }';
             echo '.ctw-icon { display: inline-flex; align-items: center; justify-content: center; }';
             echo '.ctw-text { display: inline-block; }';
-            echo '.ctw-tooltip { position: absolute; opacity: 0; visibility: hidden; transition: opacity 0.25s; z-index: 9999; pointer-events: none; }';
+            echo '.ctw-tooltip { position: absolute; opacity: 0; visibility: hidden; transition: opacity 0.25s; z-index: 9999; pointer-events: none;min-width: 400px; }';
             echo '.ctw-tooltip.show { opacity: 1; visibility: visible; pointer-events: auto; }';
             echo '.ctw-tooltip-inner { position: relative; word-wrap: break-word; }';
             echo '.ctw-tooltip-top { bottom: 100%; left: 50%; transform: translateX(-50%); margin-bottom: 8px; }';
@@ -439,6 +468,8 @@ class Custom_Tooltip extends Widget_Base
             echo '.ctw-tooltip-left .ctw-tooltip-inner::after { content: ""; position: absolute; left: 100%; top: 50%; transform: translateY(-50%); border: 6px solid transparent; border-left-color: var(--ctw-arrow-color, #333333); }';
             echo '.ctw-tooltip-right { left: 100%; top: 50%; transform: translateY(-50%); margin-left: 8px; }';
             echo '.ctw-tooltip-right .ctw-tooltip-inner::after { content: ""; position: absolute; right: 100%; top: 50%; transform: translateY(-50%); border: 6px solid transparent; border-right-color: var(--ctw-arrow-color, #333333); }';
+            echo '.ctw-tooltip-inner p{ margin: 0;}';
+            echo '.ctw-tooltip-inner b,.ctw-tooltip-inner strong{ font-weight: bold!important;}';
             echo '</style>';
         }
 
@@ -489,8 +520,8 @@ class Custom_Tooltip extends Widget_Base
 
         <div class="ctw-wrapper" data-trigger="<?php echo $trigger_type; ?>" data-position="<?php echo $position; ?>" style="--ctw-arrow-color: <?php echo $tooltip_bg_color; ?>;">
             <div class="ctw-trigger">
-                <span class="ctw-title" style="text-align: <?php echo $title_align; ?>;">
-                    <?php if ($show_icon && !empty($settings['icon'])) : ?>
+                <span class="ctw-title ctw-icon-<?php echo $icon_position; ?>" style="text-align: <?php echo $title_align; ?>;">
+                    <?php if ($show_icon && !empty($settings['icon']) && $icon_position === 'left') : ?>
                         <span class="ctw-icon">
                             <?php
                             \Elementor\Icons_Manager::render_icon($settings['icon'], [
@@ -500,13 +531,23 @@ class Custom_Tooltip extends Widget_Base
                         </span>
                     <?php endif; ?>
                     <span class="ctw-text"><?php echo $title_text; ?></span>
+                    <?php if ($show_icon && !empty($settings['icon']) && $icon_position === 'right') : ?>
+                        <span class="ctw-icon">
+                            <?php
+                            \Elementor\Icons_Manager::render_icon($settings['icon'], [
+                                'aria-hidden' => 'true',
+                            ]);
+                            ?>
+                        </span>
+                    <?php endif; ?>
                 </span>
-            </div>
-            <div class="ctw-tooltip ctw-tooltip-<?php echo $position; ?>">
+                <div class="ctw-tooltip ctw-tooltip-<?php echo $position; ?>">
                 <div class="ctw-tooltip-inner">
                     <?php echo wp_kses_post($tooltip_description); ?>
                 </div>
             </div>
+            </div>
+            
         </div>
 
 <?php
