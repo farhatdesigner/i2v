@@ -3289,7 +3289,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 		if($isWPML)
 			$thumbID = UniteCreatorWpmlIntegrate::getTranslatedAttachmentID($thumbID);
-
+		
 		$arrImage = wp_get_attachment_image_src($thumbID, $size);
 		if(empty($arrImage))
 			return (false);
