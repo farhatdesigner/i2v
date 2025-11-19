@@ -1139,7 +1139,7 @@ p {
 .bg-trans {
     background: transparent;
     padding: 0;
-    color: #74C2ED;
+    color: #0099ED;
 }
 
 .bg-trans:hover {
@@ -1250,7 +1250,7 @@ h3 {
     font-weight: 600 !important;
     line-height: 1.2;
     margin: 0 0 20px;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
     transition: all .4s ease;
     color: #fff;
     font-family: "proxima-nova", sans-serif;
@@ -1378,34 +1378,36 @@ h3 {
 #tabs-content,
 .tabs-stage {
     overflow: hidden;
-    -webkit-transition: height 0.3s ease-in-out;
+    /* -webkit-transition: height 0.3s ease-in-out;
     -moz-transition: height 0.3s ease-in-out;
     -o-transition: height 0.3s ease-in-out;
     -ms-transition: height 0.3s ease-in-out;
-    transition: height 0.3s ease-in-out;
+    transition: height 0.3s ease-in-out; */
     -webkit-transition-delay: 0.3s !important;
     -moz-transition-delay: 0.3s !important;
     -o-transition-delay: 0.3s !important;
     -ms-transition-delay: 0.3s !important;
     transition-delay: 0.3s !important;
 }
-
+.tabdiv .content-inner-image {
+    border-radius: 1rem;
+}
 .tabdiv,
 .tabs-stage>.tab {
-    -webkit-transition: all 0.3s ease-in-out;
+    /* -webkit-transition: all 0.3s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
     -ms-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out; */
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    -webkit-transform: translateY(-10%);
+    /* -webkit-transform: translateY(-10%);
     -moz-transform: translateY(-10%);
     -o-transform: translateY(-10%);
     -ms-transform: translateY(-10%);
-    transform: translateY(-10%);
+    transform: translateY(-10%); */
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
     filter: alpha(opacity=0);
     opacity: 0;
@@ -1415,11 +1417,11 @@ h3 {
 
 .tabdiv.active-tabcontent,
 .tab.tab-active {
-    -webkit-transform: translateY(0px);
+    /* -webkit-transform: translateY(0px);
     -moz-transform: translateY(0px);
     -o-transform: translateY(0px);
     -ms-transform: translateY(0px);
-    transform: translateY(0px);
+    transform: translateY(0px); */
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
     filter: alpha(opacity=100);
     opacity: 1;
