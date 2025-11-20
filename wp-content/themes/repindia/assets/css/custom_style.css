@@ -734,7 +734,7 @@ h2 {
 .hero-style .slide-title,
 .hero-style .slide-text,
 .hero-style .slide-btns {
-    max-width: 685px;
+    max-width: 720px;
 }
 
 .hero-style .slide-title h2 {
@@ -2163,7 +2163,20 @@ h3 {
     margin: 0 auto;
     text-align: center;
 }
-
+.elementor-element .prd_detail_tooltip {
+    max-width: 336px;
+    margin: 0 auto;
+}
+.reversetestimonial .elementor-main-swiper {
+    padding-bottom: 10px !important;
+}
+.reversetestimonial .elementor-main-swiper .elementor-testimonial{ justify-content: flex-end; }
+.reversetestimonial .swiper-pagination-bullets{ left: 115px!important;width: auto!important; }
+.reversetestimonial cite.elementor-testimonial__cite{ margin-top: 8px!important; }
+.reversetestimonial .elementor-testimonial__content { padding-top: 6px; }
+.leadersslider.elementor-element .swiper .elementor-swiper-button{ z-index: 6;padding: 5px;background: #fff;border-radius: 100px;display: flex;align-items: center;justify-content: center;border: 1px solid #E5E9EC; }
+.elementor-element.leadersslider .swiper .elementor-swiper-button-prev{ left: 36px; }
+.elementor-element.leadersslider .swiper~.elementor-swiper-button-prev{ right: 36px; }
 
 @media (min-width: 768px) {
     .footer-accordion-icon {
