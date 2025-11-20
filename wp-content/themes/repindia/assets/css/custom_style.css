@@ -1196,6 +1196,7 @@ p {
 .theme-btn-white:hover {
     border: 1px solid #0099ED;
 }
+.theme-btn-white.border-btn-grey.color-btn-grey:hover{ border: 1px solid #5F6F94; }
 
 .border_btn {
     padding-bottom: 2px;
@@ -1232,7 +1233,7 @@ p {
 }
 
 #mrg-head {
-    margin-top: 114px;
+    margin-top: 90px;
 }
 
 

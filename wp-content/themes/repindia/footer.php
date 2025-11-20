@@ -159,7 +159,7 @@ $backStyle = implode('', $backStyle);
 		<div class="footer_bottom">
 			<div class="row">
 				<div class="col-md-12 col-xs-12">
-					<p class="d-inline-flex"><span><img src="<?php echo esc_url( home_url( '/' ) ); ?>wp-content/uploads/2025/11/exclamation_icon.svg" alt="i2V">
+					<p class="d-inline-flex"><span><img src="<?php echo esc_url( home_url( '/' ) ); ?>wp-content/uploads/2025/11/disclaimericon.svg" alt="i2V">
 						</span>
 						Legal disclaimer:<br>
 						Performance metrics, deployment figures, and results shown are based on specific implementation scenarios. Actual performance may vary depending on system configuration, environment, and operational conditions. i2V Systems accepts no responsibility and cannot be held liable for any errors, misuse, or misinterpretation of product outputs.</p>
