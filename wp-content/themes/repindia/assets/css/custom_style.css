@@ -1927,15 +1927,13 @@ h3 {
     top: 120px !important;
     left: 0;
     right: 0;
-    margin: 0 !important;
-    padding: 0 !important;
-    margin: 0 auto;
+    margin: 0 auto !important;
     z-index: 9999;
     width: 100%;
     transition: all 0.3s ease;
 }
 
-.sticky-custom>ul>li:first-child {
+.sticky-custom>ul>li.active-li {
     padding: var(--XSM, 4px) 16px !important;
     align-items: center;
     gap: var(--XSM, 4px);
@@ -1943,9 +1941,10 @@ h3 {
     color: #ffff;
     border-radius: 40px;
     border: 1px solid var(--tabs-tab-btn-active-bg, #0099ED);
+    cursor: pointer;
 }
 
-.sticky-custom>ul>li:first-child span {
+.sticky-custom>ul>li.active-li span {
     color: #ffff !important;
 }
 
