@@ -241,11 +241,25 @@ header .cross_icon {
     border: 1px solid transparent;
     border-radius: 100%;
     box-sizing: border-box;
+    width: 42px;
+    height: 42px;
+    display: block;
 }
 
 header li.burger-icon:hover,
 header .cross_icon:hover {
     border: 1px solid #06283D;
+}
+
+header li.burger-icon a,
+header li.burger-icon svg,
+header .cross_icon a,
+header .cross_icon svg {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 nav {
@@ -455,7 +469,7 @@ h2 {
 
 .hero-slider .swiper-container {
     height: 100%;
-    width: 100% ;
+    width: 100%;
     position: relative;
     margin: 0 20px;
 }
@@ -545,6 +559,11 @@ h2 {
     border-radius: 50%;
     opacity: 0.3;
     margin: 0 !important;
+    /* Ensure all bullets maintain consistent vertical alignment */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
 }
 
 .hero-slider .swiper-pagination-bullet-active {
@@ -559,6 +578,8 @@ h2 {
     justify-content: center;
     margin: 0 !important;
     transition: all 0.3s ease;
+    /* Ensure active bullet maintains same vertical alignment */
+    vertical-align: middle;
 }
 
 .hero-slider .swiper-pagination-bullet-active .bullet-progress-svg {
@@ -691,6 +712,9 @@ h2 {
     display: flex;
     gap: 12px;
     align-items: center;
+    /* Fix container height to prevent jumping when bullets change size */
+    height: 36px;
+    flex-wrap: nowrap;
 }
 
 /*--------------------------------------------------------------
@@ -865,7 +889,7 @@ a:hover {
     display: flex;
     gap: 20px;
     flex-direction: column;
-    max-height: 70vh;
+    max-height: 75vh;
     overflow: auto;
     scroll-behavior: smooth;
     scrollbar-width: thin;
@@ -902,7 +926,7 @@ a:hover {
 #header-toggle-menu>li>a:hover,
 #header-main-menu>li>a:hover,
 .sub-menu li a:hover,
-#header-toggle-menu > li:nth-last-child(4) > a span:hover {
+#header-toggle-menu>li:nth-last-child(4)>a span:hover {
     color: #06283D;
     position: relative;
 }
@@ -910,7 +934,7 @@ a:hover {
 #header-toggle-menu>li>a:hover:before,
 #header-main-menu>li>a:hover:before,
 .sub-menu li a:hover:before,
-#header-toggle-menu > li:nth-last-child(4) > a span:hover:before {
+#header-toggle-menu>li:nth-last-child(4)>a span:hover:before {
     content: '';
     position: absolute;
     width: 100%;
@@ -920,7 +944,8 @@ a:hover {
     background: #5C5C5C;
     opacity: 0.15;
 }
-#header-toggle-menu > li:nth-last-child(4) > a:hover:before {
+
+#header-toggle-menu>li:nth-last-child(4)>a:hover:before {
     content: none !important;
     pointer-events: none !important;
     visibility: hidden !important;
@@ -1046,6 +1071,7 @@ ul.social_media_links>li>a:hover small:before {
     flex-direction: column;
     padding-left: 20px;
 }
+
 .rightmenu_statictxt p {
     font-size: 16px;
 }
@@ -1227,7 +1253,7 @@ p {
     display: flex;
     align-items: center;
     gap: 20px;
-    width: 20%;
+    width: 25%;
 
 }
 
@@ -1389,9 +1415,11 @@ h3 {
     -ms-transition-delay: 0.3s !important;
     transition-delay: 0.3s !important;
 }
+
 .tabdiv .content-inner-image {
     border-radius: 1rem;
 }
+
 .tabdiv,
 .tabs-stage>.tab {
     /* -webkit-transition: all 0.3s ease-in-out;
@@ -1573,18 +1601,24 @@ h3 {
 }
 
 /* .lisitng-inner .d-flex:last-child .insights-updates-item-text{ border-bottom: none;} */
-.lisitng-inner .d-flex{ position: relative; }
-.lisitng-inner .d-flex::after{ 
+.lisitng-inner .d-flex {
+    position: relative;
+}
+
+.lisitng-inner .d-flex::after {
     position: absolute;
     content: '';
     width: 78%;
     height: 1px;
     background: #D7DBE4;
     bottom: -10px;
-    right: 0; 
+    right: 0;
     z-index: 2;
 }
-.lisitng-inner .d-flex:last-child::after{ display: none; }
+
+.lisitng-inner .d-flex:last-child::after {
+    display: none;
+}
 
 .lisitng-inner {
     display: flex;
@@ -1836,7 +1870,12 @@ h3 {
     height: 100px !important;
     border-radius: 8px !important;
 }
-.insights-updates-item-image img.activeblogimg{ border-radius: 12px;max-height: 450px;width: 100%; }
+
+.insights-updates-item-image img.activeblogimg {
+    border-radius: 12px;
+    max-height: 450px;
+    width: 100%;
+}
 
 .content-inner-icons img {
     max-width: 56px !important;
