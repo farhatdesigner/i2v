@@ -386,28 +386,169 @@ const swiper = new Swiper(".testimonialSwiper", {
 });
 
 
-// $(window).scroll(function() {
-//     if ($(window).scrollTop() >= 120) {
-//         $('.sticky-custom').addClass('fixed-header');
-//     } else {
-//         $('.sticky-custom').removeClass('fixed-header');
-//     }
-// });
+$(window).scroll(function() {
+    if ($(window).scrollTop() >= 1800) {
+        $('.sticky-custom').addClass('fixed-header');
+    } else {
+        $('.sticky-custom').removeClass('fixed-header');
+    }
+});
 
+$(".sticky-custom ul.elementor-icon-list-items.elementor-inline-items li.elementor-icon-list-item.elementor-inline-item:nth-child(1)").click(function () {
+    $("html , body").animate({
+        scrollTop: $(".live_monitoring").offset().top - 80
+    }, 1300);
+});
+$(".sticky-custom ul.elementor-icon-list-items.elementor-inline-items li.elementor-icon-list-item.elementor-inline-item:nth-child(2)").click(function () {
+    $("html , body").animate({
+        scrollTop: $(".system_setup").offset().top - 50
+    }, 1300);
+});
+$(".sticky-custom ul.elementor-icon-list-items.elementor-inline-items li.elementor-icon-list-item.elementor-inline-item:nth-child(3)").click(function () {
+    $("html , body").animate({
+        scrollTop: $(".intelligenc_alerts").offset().top - 80
+    }, 1300);
+});
+$(".sticky-custom ul.elementor-icon-list-items.elementor-inline-items li.elementor-icon-list-item.elementor-inline-item:nth-child(4)").click(function () {
+    $("html , body").animate({
+        scrollTop: $(".recording_storage").offset().top - 80
+    }, 1300);
+});
+$(".sticky-custom ul.elementor-icon-list-items.elementor-inline-items li.elementor-icon-list-item.elementor-inline-item:nth-child(5)").click(function () {
+    $("html , body").animate({
+        scrollTop: $(".security_integration").offset().top - 80
+    }, 1300);
+});
 
+// Set first li as active by default and setup scroll spy
+jQuery(document).ready(function($) {
+    var $listItems = $(".sticky-custom ul.elementor-icon-list-items.elementor-inline-items li.elementor-icon-list-item.elementor-inline-item");
+    
+    // Check if elements exist
+    if ($listItems.length === 0) {
+        return;
+    }
+    
+    // Set first li as active by default
+    $listItems.first().addClass("active-li");
+    
+    var sections = [
+        { selector: ".live_monitoring", index: 0 },
+        { selector: ".system_setup", index: 1 },
+        { selector: ".intelligenc_alerts", index: 2 },
+        { selector: ".recording_storage", index: 3 },
+        { selector: ".security_integration", index: 4 }
+    ];
+
+    function updateActiveSection() {
+        var scrollTop = $(window).scrollTop();
+        var offset = 150; // Offset from top to trigger active state
+        var activeIndex = 0; // Default to first section
+
+        // Find which section is currently in view or closest to viewport top
+        var currentScrollPosition = scrollTop + offset;
+        var closestSection = null;
+        var closestDistance = Infinity;
+
+        sections.forEach(function(section) {
+            var $section = $(section.selector);
+            if ($section.length) {
+                var sectionTop = $section.offset().top;
+                var sectionBottom = sectionTop + $section.outerHeight();
+                
+                // Check if section is in viewport
+                if (currentScrollPosition >= sectionTop && currentScrollPosition < sectionBottom) {
+                    var distance = Math.abs(currentScrollPosition - sectionTop);
+                    if (distance < closestDistance) {
+                        closestDistance = distance;
+                        closestSection = section;
+                    }
+                }
+            }
+        });
+
+        // If no section is directly in view, find the last section we've scrolled past
+        if (!closestSection) {
+            sections.forEach(function(section) {
+                var $section = $(section.selector);
+                if ($section.length) {
+                    var sectionTop = $section.offset().top;
+                    if (currentScrollPosition >= sectionTop) {
+                        closestSection = section;
+                    }
+                }
+            });
+        }
+
+        // Update active class
+        if (closestSection !== null) {
+            activeIndex = closestSection.index;
+        } else if (scrollTop < 1800) {
+            // If scrolled back to top, activate first item
+            activeIndex = 0;
+        }
+
+        $listItems.removeClass("active-li");
+        $listItems.eq(activeIndex).addClass("active-li");
+    }
+
+    // Throttle scroll event for better performance
+    var scrollTimeout;
+    $(window).on('scroll', function() {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(function() {
+            updateActiveSection();
+        }, 50);
+    });
+
+    // Initial check on page load
+    updateActiveSection();
+});
 
 jQuery(document).ready(function() {
+    // Check if accordion exists on the page
+    if (jQuery('.accordion_set').length === 0) {
+        return;
+    }
+
     // open first section by default
     let first = jQuery('.accordion_set').first();
     first.addClass('acactive');
     first.find('.select_div').attr("aria-expanded", "true");
     jQuery(".accontent").first().slideDown(200);
 
+    // Initialize videos - show first video, hide others using opacity
+    jQuery('.accordion_video').each(function(index) {
+        if (index === 0) {
+            jQuery(this).addClass('active');
+        } else {
+            jQuery(this).removeClass('active');
+        }
+    });
+
     // setup variables
     let autoIndex = 0;
     let total = jQuery(".accordion_set").length;
     let autoInterval = 4000; // 4 seconds
     let timer;
+    let isPaused = false; // Track if auto-slide is paused
+    let resumeTimeout = null; // Store resume timeout so we can cancel it
+
+    // Helper function to check if any modal is currently open
+    function isModalOpen() {
+        return jQuery('.modal.show, .modal.in').length > 0 || jQuery('body').hasClass('modal-open');
+    }
+
+    // function to switch video by index using opacity transitions
+    function switchVideo(index) {
+        jQuery('.accordion_video').each(function(videoIndex) {
+            if (videoIndex === index) {
+                jQuery(this).addClass('active');
+            } else {
+                jQuery(this).removeClass('active');
+            }
+        });
+    }
 
     // function to open accordion by index
     function openAccordion(index) {
@@ -419,14 +560,51 @@ jQuery(document).ready(function() {
         target.addClass("acactive");
         target.find(".select_div").attr("aria-expanded", "true");
         target.find(".accontent").slideDown(200);
+
+        // Switch to corresponding video
+        switchVideo(index);
     }
 
     // auto slide function
     function startAutoSlide() {
+        if (isPaused || isModalOpen()) {
+            return; // Don't start if paused or modal is open
+        }
+        if (timer) {
+            clearInterval(timer);
+        }
         timer = setInterval(function() {
-            autoIndex = (autoIndex + 1) % total;
-            openAccordion(autoIndex);
+            if (!isPaused && !isModalOpen()) {
+                autoIndex = (autoIndex + 1) % total;
+                openAccordion(autoIndex);
+            }
         }, autoInterval);
+    }
+
+    // pause auto slide function
+    function pauseAutoSlide() {
+        isPaused = true;
+        if (timer) {
+            clearInterval(timer);
+            timer = null;
+        }
+        // Cancel any pending resume timeout
+        if (resumeTimeout) {
+            clearTimeout(resumeTimeout);
+            resumeTimeout = null;
+        }
+    }
+
+    // resume auto slide function
+    function resumeAutoSlide() {
+        // Don't resume if modal is open
+        if (isModalOpen()) {
+            return;
+        }
+        isPaused = false;
+        if (!timer) {
+            startAutoSlide();
+        }
     }
 
     // start auto slide initially
@@ -434,7 +612,7 @@ jQuery(document).ready(function() {
 
     // on click — manual control + reset timer
     jQuery(".accordion_set > .select_div").click(function() {
-        clearInterval(timer); // stop auto slide
+        pauseAutoSlide(); // pause auto slide
 
         let parent = jQuery(this).parents('.accordion_set');
         autoIndex = jQuery(".accordion_set").index(parent); // update index
@@ -447,7 +625,109 @@ jQuery(document).ready(function() {
             openAccordion(autoIndex);
         }
 
-        // restart auto slide after short delay
-        timer = setTimeout(() => startAutoSlide(), 1000);
+        // Cancel any existing resume timeout
+        if (resumeTimeout) {
+            clearTimeout(resumeTimeout);
+        }
+
+        // restart auto slide after short delay, but only if modal is not open
+        resumeTimeout = setTimeout(function() {
+            resumeTimeout = null;
+            if (!isModalOpen()) {
+                resumeAutoSlide();
+            }
+        }, 1000);
+    });
+
+    // Pause accordion when modal opens
+    jQuery(document).on('show.bs.modal', '.modal', function() {
+        pauseAutoSlide();
+    });
+
+    // Resume accordion when modal closes
+    jQuery(document).on('hidden.bs.modal', '.modal', function() {
+        // Small delay to ensure modal is fully closed
+        setTimeout(function() {
+            if (!isModalOpen()) {
+                resumeAutoSlide();
+            }
+        }, 100);
+    });
+});
+
+
+if (window.innerWidth >= 1180) {
+    gsap.registerPlugin(ScrollTrigger);
+    ScrollTrigger.config({
+        autoRefreshEvents: 'visibilitychange,DOMContentLoaded,load',
+    })
+    const resize = () => {
+        console.log('resize')
+        ScrollTrigger.refresh()
+    }
+    const panels = gsap.utils.toArray(".animate-right");
+    const content = gsap.utils.toArray(".animate-left");
+    const tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: ".sectionsscroll",
+            start: "top top",
+            endTrigger: 'html',
+            end: () => "+=" + 200 * panels.length + "%",
+            pin: true,
+            pinSpacing: true,
+            // markers: true,
+            scrub: 1,
+            autoRefreshEvents: "load",
+        }
+    });
+    panels.forEach((panel, index) => {
+        tl.from(
+            panel,
+            {
+                yPercent: 100,
+                ease: "slow",
+            },
+            "+=0.1"
+        );
+        tl.from(
+            content[index],
+            {
+                yPercent: 100,
+                ease: "slow",
+            },
+            "<"
+        );
+    });
+
+}
+
+
+
+
+// Initialize Lenis smooth scroll
+const lenis = new Lenis();
+lenis.on("scroll", (e) => {
+    console.log(e);
+});
+lenis.on("scroll", ScrollTrigger.update);
+gsap.ticker.add((time) => {
+    lenis.raf(time * 1000); // Convert seconds to milliseconds
+});
+gsap.ticker.lagSmoothing(0);
+
+
+
+
+
+
+//Conver svg into svg code
+document.querySelectorAll('img[src$=".svg"]').forEach(function(img){
+    fetch(img.src)
+    .then(r => r.text())
+    .then(txt => {
+    const svg = new DOMParser().parseFromString(txt, "image/svg+xml").documentElement;
+    svg.classList = img.classList;
+    svg.style = img.style;
+    img.replaceWith(svg);
     });
 });

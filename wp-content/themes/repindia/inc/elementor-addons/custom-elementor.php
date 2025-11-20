@@ -21,6 +21,12 @@ class Widget_Loader
 		require_once(__DIR__.'/widgets/carosoulslider.php');
 		require_once(__DIR__.'/widgets/platformtab.php');
 		require_once(__DIR__.'/widgets/vertcialaccordion.php');
+		require_once(__DIR__.'/widgets/scalescroll.php');
+		require_once(__DIR__.'/widgets/custom_tooltip.php');
+		require_once(__DIR__.'/widgets/custom_marquee.php');
+		require_once(__DIR__.'/widgets/scalescroll.php');
+		require_once(__DIR__.'/widgets/video_accordion.php');
+		require_once(__DIR__.'/widgets/singlescrollcards.php');
     }
     public function register_widgets()
     {
@@ -32,6 +38,12 @@ class Widget_Loader
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Carosoulslider() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Platformtab() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Vertcialaccordion() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Scalescroll() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Tooltip() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Marquee() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Scalescroll() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Video_accordion() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Singlescrollcards() );
     }
 	public function __construct()
 	{

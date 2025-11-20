@@ -1,6 +1,14 @@
 
 
 
+version 1.5.152:
+
+* Fix: disable short pixel plugin on ajax requests, because it's breaking the json response
+* Fix: fixed some wpml language with thumb id issues
+* Feature: added the schema for multisource and post list params authomatically
+* Fix: make sure that there are images url's in all of the schemas
+
+
 version 1.5.151:
 
 * Fix: fixed some font awesome double include bugs

@@ -32,6 +32,9 @@ class UniteCreatorSchema {
 	
 	const SCHEMA_ORG_SITE = "https://schema.org";
 	
+	const MULTIPLE_SCHEMA_NAME = "ue_schema";
+	
+	
 	/**
 	 * get schemas array
 	 */
@@ -54,8 +57,15 @@ class UniteCreatorSchema {
 				"type"=>"HowTo"
 			),
 			array(
+				"type"=>"Recepy"
+			),			
+			array(
 				"type"=>"Course",
-				"title"=>"List Of Courses"
+				"title"=>"Courses"
+			),
+			array(
+				"type"=>"Book",
+				"title"=>"Books"
 			),
 			array(
 				"type"=>"ItemList",
@@ -67,11 +77,15 @@ class UniteCreatorSchema {
 			),
 			array(
 				"type"=>"Place",
-				"title"=>"List Of Places"
+				"title"=>"Places"
 			),
 			array(
+				"type"=>"Product",
+				"title"=>"Products"
+			),			
+			array(
 				"type"=>"TouristDestination",
-				"title"=>"Tourist Destinations List"
+				"title"=>"Tourist Destinations"
 			),
 			array(
 				"type"=>"EventSeries",
@@ -87,12 +101,7 @@ class UniteCreatorSchema {
 				"type"=>"SearchResultsPage",
 				"title"=>"Search Results Page",
 				"multiple"=>true
-			),
-			array(
-				"type"=>"CourseCatalog",
-				"title"=>"Course Catalog",
-				"multiple"=>true
-			),
+			)
 			
 		);
 		
@@ -146,10 +155,70 @@ class UniteCreatorSchema {
 	
 	
 	/**
+	 * convert the items from post list name
+	 */
+	private function convertWidgetItems($arrItems, $paramName){
+		
+		$arrItemsConverted = array();
+				
+		foreach($arrItems as $item){
+			
+			$arrItem = UniteFunctionsUC::getVal($item, "item");
+			
+			$arrItem = UniteFunctionsUC::getVal($arrItem, $paramName);
+
+			$arrItemsConverted[] = $arrItem;
+		}
+		
+		
+		return($arrItemsConverted);
+	}
+	
+	
+	
+	/**
+	 * put schema items by post
+	 */
+	private function putSchemaByPost($schemaType, $arrItems, $arrSettings){
+				
+		$postListName = UniteFunctionsUC::getVal($arrSettings, "post_list_name");
+		$arrItemsConverted = $this->convertWidgetItems($arrItems, $postListName);
+		
+		$arrParamsItems = array();
+		
+		$this->putSchemaItems($schemaType, $arrItemsConverted, $arrParamsItems , $arrSettings);
+		
+	}
+	
+	
+	/**
+	 * put schema items
+	 */
+	public function putSchemaItemsByType($type, $schemaType, $arrItems, $arrParamsItems, $arrSettings){
+		
+		$arrSettings["item_type"] = $type;
+			
+		switch($type){
+			case UniteCreatorAddon::ITEMS_TYPE_POST:
+				
+				$this->putSchemaByPost($schemaType, $arrItems, $arrSettings);
+				
+			break;
+			case UniteCreatorAddon::ITEMS_TYPE_MULTISOURCE:
+								
+				$this->putSchemaItems($schemaType, $arrItems, $arrParamsItems , $arrSettings);
+				
+			break;
+			
+		}
+								
+	}
+		
+	
+	/**
 	 * put html items schema
 	 */
 	public function putSchemaItems($schemaType, $arrItems, $paramsItems, $arrSettings){
-		
 				
 		if(empty($schemaType))
 			$schemaType = self::SCHEMA_TYPE_FAQ;
@@ -157,7 +226,7 @@ class UniteCreatorSchema {
 		$title = UniteFunctionsUC::getVal($arrSettings, "title");
 		
 		$title = wp_strip_all_tags($title);
-				
+		
 		if(!isset(self::$arrCollectedSchemaData[$schemaType]))
 			self::$arrCollectedSchemaData[$schemaType] = array("addons"=>array());
 		
@@ -172,7 +241,7 @@ class UniteCreatorSchema {
 		$existingTitle = "";
 		if(isset(self::$arrCollectedSchemaData[$schemaType]["title"]))
 			$existingTitle = self::$arrCollectedSchemaData[$schemaType]["title"];
-					
+		
 		if(!empty($title) && empty($existingTitle))
 			self::$arrCollectedSchemaData[$schemaType]["title"] = $title;
 		
@@ -188,8 +257,8 @@ class UniteCreatorSchema {
 			$this->showDebugMessage();
 		}	
 		
+		
 	}
-
 	
 	
 	/**
@@ -200,19 +269,17 @@ class UniteCreatorSchema {
 		if(self::$showDebug == false){
 			self::$showDebug = HelperUC::hasPermissionsFromQuery("ucschemadebug");
 		}
-
+		
 		if(empty(self::$arrCollectedSchemaData))
 			return false;
 		
 		foreach (self::$arrCollectedSchemaData as $schemaType => $data)
 				$this->putAddonSchema($schemaType, $data);
-			
 		
 		self::$arrCollectedSchemaData = array();
+		
 	}
 	
-	
-
 
 	/**
 	 * generate schema code
@@ -240,8 +307,44 @@ class UniteCreatorSchema {
 	
 
 
-
-
+	/**
+	 * get item schema content
+	 */
+	private function getItemSchemaContent($item, $arrFieldsByRoles){
+		
+		if(isset($item["item"]))
+			$item = $item["item"];
+		
+		$arrContent = array();
+				
+		foreach($arrFieldsByRoles as $role => $fieldName){
+			
+			$value = UniteFunctionsUC::getVal($item, $fieldName);
+			
+			switch($role){
+				case self::ROLE_TITLE:
+				case self::ROLE_CONTENT:
+				case self::ROLE_HEADING:
+				case self::ROLE_DESCRIPTION:
+					$value = wp_strip_all_tags($value);
+					$value = trim($value);
+				break;
+				case self::ROLE_IMAGE:
+				case self::ROLE_LINK:
+					$value = UniteFunctionsUC::sanitize($value, UniteFunctionsUC::SANITIZE_URL);
+				break;
+				
+			}
+			
+			$arrContent[$role] = $value;
+			
+		}		
+		
+		return($arrContent);
+	}
+	
+	private function a____________MAP_FIELDS________(){}
+	
 	
 	/**
 	 * get fields by type
@@ -361,7 +464,6 @@ class UniteCreatorSchema {
 		if(!empty($arrImageParams))
 			$roleImage = UniteFunctionsUC::getFirstNotEmptyKey($arrImageParams);
 		
-		
 		//return the params
 		
 		$arrOutput = array(
@@ -386,8 +488,27 @@ class UniteCreatorSchema {
 	 */
 	private function getFieldsByRolesFinal($paramsItems, $arrSettings) {
 		
-	    $arrFieldsByRoles = $this->getFieldsByRoles($paramsItems);
-	
+		$itemsType = UniteFunctionsUC::getVal($arrSettings, "item_type");
+		
+		switch($itemsType){
+			case UniteCreatorAddon::ITEMS_TYPE_POST:
+				
+				$arrFieldsByRoles = array(
+			        self::ROLE_TITLE => "title",
+			        self::ROLE_DESCRIPTION => "intro_full",
+			        self::ROLE_HEADING => "intro",
+			        self::ROLE_CONTENT =>"content",
+			        self::ROLE_IMAGE =>"image",
+			        self::ROLE_LINK =>"link",
+				);
+				
+			break;
+			default:
+	    		$arrFieldsByRoles = $this->getFieldsByRoles($paramsItems);
+			break;
+		}
+				
+			    
 	    // Check if manual mapping is enabled
 	    $isMappingEnabled = UniteFunctionsUC::getVal($arrSettings, "enable_mapping");
 	    $isMappingEnabled = UniteFunctionsUC::strToBool($isMappingEnabled);
@@ -412,43 +533,7 @@ class UniteCreatorSchema {
 		
 	    return $arrFieldsByRoles;
 	}	
-
 	
-
-	/**
-	 * get item schema content
-	 */
-	private function getItemSchemaContent($item, $arrFieldsByRoles){
-		
-		if(isset($item["item"]))
-			$item = $item["item"];
-		
-		$arrContent = array();
-				
-		foreach($arrFieldsByRoles as $role => $fieldName){
-			
-			$value = UniteFunctionsUC::getVal($item, $fieldName);
-			
-			switch($role){
-				case self::ROLE_TITLE:
-				case self::ROLE_CONTENT:
-				case self::ROLE_HEADING:
-				case self::ROLE_DESCRIPTION:
-					$value = wp_strip_all_tags($value);
-				break;
-				case self::ROLE_IMAGE:
-				case self::ROLE_LINK:
-					$value = UniteFunctionsUC::sanitize($value, UniteFunctionsUC::SANITIZE_URL);
-				break;
-				
-			}
-			
-			$arrContent[$role] = $value;
-			
-		}		
-		
-		return($arrContent);
-	}
 	
 	private function a____________SETTINGS________(){}
 	
@@ -461,7 +546,7 @@ class UniteCreatorSchema {
  * @param string $name
  * @param array $paramsItems
  */
-private function addFieldsMappingSettings($objSettings, $name, $paramsItems) {
+private function addFieldsMappingSettings($objSettings, $name, $paramsItems, $isPost) {
 
     // ---- Add master toggle: enable mapping yes/no ----
     $arrParam = array();
@@ -477,35 +562,48 @@ private function addFieldsMappingSettings($objSettings, $name, $paramsItems) {
         "No",
         $arrParam
     );
-
+	
 	
     // ---- Build field options: only textfield, textarea, editor ----
+    
     $arrFieldOptions = array();
     $arrFieldOptions[self::ROLE_AUTO] = __("[Auto Detect]", "unlimited-elements-for-elementor");
     
-    foreach ($paramsItems as $param) {
-        $paramName = UniteFunctionsUC::getVal($param, "name");
-        $paramTitle = UniteFunctionsUC::getVal($param, "title");
-        $paramType = UniteFunctionsUC::getVal($param, "type");
-
-        if (empty($paramName))
-            continue;
-
-        $isTextType = ($paramType === UniteCreatorDialogParam::PARAM_TEXTFIELD);
-        $isContentType = in_array($paramType, array(
-            UniteCreatorDialogParam::PARAM_TEXTAREA,
-            UniteCreatorDialogParam::PARAM_EDITOR
-        ));
-
-        if (!$isTextType && !$isContentType)
-            continue;
-
-        $arrFieldOptions[$paramName] = $paramTitle;
-    }
-
+    if($isPost == true){
+    	
+ 		$arrFieldOptions['title']   = __("Post Title", "unlimited-elements-for-elementor");
+        $arrFieldOptions['intro'] = __("Post Intro", "unlimited-elements-for-elementor");
+        $arrFieldOptions['intro_full'] = __("Post Intro Full", "unlimited-elements-for-elementor");
+        $arrFieldOptions['content'] = __("Post Content", "unlimited-elements-for-elementor");
+        
+       // $arrFieldOptions['post_meta'] = __("Post Meta Field", "unlimited-elements-for-elementor");    	
+    }else{
+    	
+	    foreach ($paramsItems as $param) {
+	        $paramName = UniteFunctionsUC::getVal($param, "name");
+	        $paramTitle = UniteFunctionsUC::getVal($param, "title");
+	        $paramType = UniteFunctionsUC::getVal($param, "type");
+	
+	        if (empty($paramName))
+	            continue;
+	
+	        $isTextType = ($paramType === UniteCreatorDialogParam::PARAM_TEXTFIELD);
+	        $isContentType = in_array($paramType, array(
+	            UniteCreatorDialogParam::PARAM_TEXTAREA,
+	            UniteCreatorDialogParam::PARAM_EDITOR
+	        ));
+	
+	        if (!$isTextType && !$isContentType)
+	            continue;
+	
+	        $arrFieldOptions[$paramName] = $paramTitle;
+	    }
+    	
+    }	
+    
     // ---- Flip options: label => value ----
+    
     $arrFieldOptions = array_flip($arrFieldOptions);
-
     
     // ---- Define roles (only text/content roles) ----
     
@@ -536,7 +634,7 @@ private function addFieldsMappingSettings($objSettings, $name, $paramsItems) {
     }
 }
 	
-
+	
 	/**
 	 * put schema settings
 	 */
@@ -545,8 +643,35 @@ private function addFieldsMappingSettings($objSettings, $name, $paramsItems) {
 		$arrParam = array();
 		$arrParam["origtype"] = UniteCreatorDialogParam::PARAM_RADIOBOOLEAN;
 		$arrParam["description"] = UniteFunctionsUC::getVal($param, "description");
-
+		
 		$objSettings->addRadioBoolean($name."_enable", $param["title"],false,"Yes","No",$arrParam);
+		
+		
+		if(GlobalsUnlimitedElements::$enableCustomSchema == true){
+			
+			//------- from list / custom
+			
+			$arrParam = array();
+			$arrParam["origtype"] = UniteCreatorDialogParam::PARAM_DROPDOWN;
+			$arrParam["elementor_condition"] = array($name."_enable"=>"true");
+			
+			
+			$arrOptions = array(
+				__("From List","unlimited-elements-for-elementor") => "list",
+				__("Custom","unlimited-elements-for-elementor") => "custom",
+			);
+			
+			$objSettings->addSelect($name."_selection",$arrOptions, __("Schema Source","unlimited-elements-for-elementor") , "list", $arrParam);
+		
+			//------- custom textarea
+			
+			$arrParam = array();
+			$arrParam["origtype"] = UniteCreatorDialogParam::PARAM_TEXTAREA;
+			$arrParam["elementor_condition"] = array($name."_enable"=>"true",$name."_selection"=>"custom");
+			
+			$objSettings->addTextArea($name."_custom", "", __("Custom JSON Schema","unlimited-elements-for-elementor") , $arrParam);
+		
+		}
 		
 		//------- schema types
 		
@@ -563,13 +688,17 @@ private function addFieldsMappingSettings($objSettings, $name, $paramsItems) {
 
 		$arrParam = array();
 		$arrParam["origtype"] = UniteCreatorDialogParam::PARAM_DROPDOWN;
-		$arrParam["elementor_condition"] = array($name."_enable"=>"true");
+		$arrParam["elementor_condition"] = array($name."_enable"=>"true",$name."_selection"=>"list");
+		
+		if(GlobalsUnlimitedElements::$enableCustomSchema == false)
+			$arrParam["elementor_condition"] = array($name."_enable"=>"true");
+		
+		
 		$arrOptions = array_flip($arrOptions);
 		
 		$title = __('Schema Type',"unlimited-elements-for-elementor");
 		
-		$objSettings->addSelect("{$name}_type", $arrOptions, $title, "faq", $arrParam);
-				
+		$objSettings->addSelect("{$name}_type", $arrOptions, $title, "faqpage", $arrParam);
 		
 		//------- main name
 		
@@ -577,12 +706,12 @@ private function addFieldsMappingSettings($objSettings, $name, $paramsItems) {
 		$arrParam["origtype"] = UniteCreatorDialogParam::PARAM_TEXTFIELD;
 		$arrParam["elementor_condition"] = array($name."_enable"=>"true",$name."_type"=>
 			array("howto", 
+				  "recepy", 
 				  "faq", 
 				  "itemlist", 
 				  "eventseries", 
 				  "musicplaylist", 
-				  "searchresultspage", 
-				  "coursecatalog"));
+				  "searchresultspage"));
 		
 		$arrParam["decsription"] = __('Use to describe the action, like how to tie a shoes',"unlimited-elements-for-elementor");
 		$arrParam["label_block"] = true;
@@ -591,13 +720,29 @@ private function addFieldsMappingSettings($objSettings, $name, $paramsItems) {
 		
 		$objSettings->addTextBox($name."_title","", $title, $arrParam);
 		
+		
+		//------- hr before mapping -------
+		
+		$arrParam = array();
+		$arrParam["origtype"] = UniteCreatorDialogParam::PARAM_HR;
+		$arrParam["elementor_condition"] = array($name."_enable"=>"true");
+		
+		$objSettings->addHr($name."_hr_before_mapping", $arrParam);
+		
+		
 		//---- add schema mapping here:
 		
+		if(empty($this->objAddon))
+			UniteFunctionsUC::throwError("No addon found, please set addon for the schema object");
+		
+		$itemsType = $this->objAddon->getItemsType();
+		
+		$isPost = ($itemsType == UniteCreatorAddon::ITEMS_TYPE_POST);
+					
 		$paramsItems = $this->objAddon->getParamsItems();
 		
 		if(!empty($paramsItems))
-			$this->addFieldsMappingSettings($objSettings, $name, $paramsItems);
-		
+			$this->addFieldsMappingSettings($objSettings, $name, $paramsItems, $isPost);
 		
 		
 		//------- debug
@@ -610,6 +755,20 @@ private function addFieldsMappingSettings($objSettings, $name, $paramsItems) {
 		$title = __('Show Schema Debug',"unlimited-elements-for-elementor");
 		
 		$objSettings->addRadioBoolean($name."_debug", $title, false, "Yes","No", $arrParam);
+		
+	}
+	
+	
+	/**
+	 * add schema settings for posts option
+	 */
+	public function addSchemaMultipleSettings(&$objSettings){
+		
+		$param = array();
+		$param["title"] = __('Enable Schema',"unlimited-elements-for-elementor");
+		$param["description"] = "";
+		
+		$this->addSchemaSettings($objSettings, self::MULTIPLE_SCHEMA_NAME, $param);
 		
 	}
 	
@@ -642,7 +801,7 @@ private function addFieldsMappingSettings($objSettings, $name, $paramsItems) {
 		
 		HelperHtmlUC::putHtmlDataDebugBox($this->debugFields);
 		
-		dmp("The Schema Ouptut");
+		dmp("The Schema Output");
 		
 		HelperHtmlUC::putHtmlDataDebugBox($arrSchema);
 	}
@@ -661,7 +820,7 @@ private function addFieldsMappingSettings($objSettings, $name, $paramsItems) {
 			return(null);
 			
 		$arrItemsContent = array();
-		
+				
 		foreach($arrAddonsData as $addonData){
 			
 			$items = UniteFunctionsUC::getVal($addonData, "items");
@@ -670,6 +829,12 @@ private function addFieldsMappingSettings($objSettings, $name, $paramsItems) {
 			
 			//field quessing
 			$arrFieldsByRoles = $this->getFieldsByRolesFinal($params, $settings);
+			
+			$schemaContent = null;
+			if($schemaType == "custom"){
+				$schemaContent = UniteFunctionsUC::getVal($settings, "custom");
+			}
+				
 			
 			//add debug
 			
@@ -683,10 +848,16 @@ private function addFieldsMappingSettings($objSettings, $name, $paramsItems) {
 			foreach($items as $item){
 				
 				$arrContent = $this->getItemSchemaContent($item, $arrFieldsByRoles);
+				
+				if(!empty($schemaContent))
+					$arrContent["schema_custom_json"] = $schemaContent;
+				
 				$arrItemsContent[] = $arrContent;
 			}
 		}
-				
+		
+		
+		
 		return($arrItemsContent);
 	}
 	
@@ -697,9 +868,9 @@ private function addFieldsMappingSettings($objSettings, $name, $paramsItems) {
 	private function generateSchemaByType($schemaType, $data) {
 		
 	    $items = $this->getAllSchemaItemsContent($data, $schemaType);
-	    
+	   	
 	    $title = UniteFunctionsUC::getVal($data, "title");
-	
+			    	    
 		switch ($schemaType) {
 		    case "person":
 		        return $this->schemaPerson($items);
@@ -707,12 +878,16 @@ private function addFieldsMappingSettings($objSettings, $name, $paramsItems) {
 		        return $this->schemaHowTo($items, $title);
 		    case "course":
 		        return $this->schemaCourse($items);
+		    case "book":
+		        return $this->schemaBook($items);
 		    case "itemlist":
 		        return $this->schemaItemList($items, $title);
 		    case "event":
 		        return $this->schemaEvent($items);
 		    case "place":
 		        return $this->schemaPlace($items);
+		    case "product":
+		        return $this->schemaProduct($items);		        
 		    case "touristdestination":
 		        return $this->schemaTouristDestination($items);
 		    case "eventseries":
@@ -721,8 +896,16 @@ private function addFieldsMappingSettings($objSettings, $name, $paramsItems) {
 		        return $this->schemaMusicPlaylist($items);
 		    case "searchresultspage":
 		        return $this->schemaSearchResultsPage($items, $title);
-		    case "coursecatalog":
-		        return $this->schemaCourseCatalog($items, $title);
+		    case "custom":
+		    	
+		    	if(GlobalsUnlimitedElements::$enableCustomSchema == true){
+			    	$jsonSchema = $this->schemaCustom($items, $title);
+			    	
+			    	return($jsonSchema);
+		    	}else 
+		    		return(null);
+		    	
+		    break;
 		    default:
 		    case "faq":
 		        return $this->schemaFaq($items, $title);
@@ -733,9 +916,22 @@ private function addFieldsMappingSettings($objSettings, $name, $paramsItems) {
 	private function a____________SCHEMA_FUNCTIONS________(){}
 
 /**
+ * custom schema
+ */
+private function schemaCustom($items, $title){
+	
+	
+	dmp("put custom schema");
+	dmp($items);
+	exit();
+	
+}
+	
+/**
  * FAQ
  */
 private function schemaFaq($items, $title = "") {
+	
     $schema = array(
         '@context' => self::SCHEMA_ORG_SITE,
         '@type' => 'FAQPage',
@@ -743,15 +939,24 @@ private function schemaFaq($items, $title = "") {
     if (!empty($title)) $schema['name'] = $title;
 
     $schema['mainEntity'] = array();
+    
     foreach ($items as $item) {
-        $schema['mainEntity'][] = array(
+    	
+		 $question = array(
             '@type' => 'Question',
-            'name' => $item[self::ROLE_TITLE],
+            'name'  => $item[self::ROLE_TITLE],
             'acceptedAnswer' => array(
                 '@type' => 'Answer',
-                'text' => $item[self::ROLE_CONTENT],
+                'text'  => $item[self::ROLE_CONTENT],
             ),
         );
+		
+        // Optional image on Question
+        if (!empty($item[self::ROLE_IMAGE])) {
+            $question['image'] = $item[self::ROLE_IMAGE];
+        }
+
+        $schema['mainEntity'][] = $question;        
     }
     return $schema;
 }
@@ -768,16 +973,57 @@ private function schemaHowTo($items, $title = "") {
 
     $schema['step'] = array();
     foreach ($items as $item) {
-        $schema['step'][] = array(
+    	
+		 $step = array(
             '@type' => 'HowToStep',
-            'name' => $item[self::ROLE_TITLE],
-            'text' => $item[self::ROLE_DESCRIPTION],
-            'image' => $item[self::ROLE_IMAGE],
-            'url' => $item[self::ROLE_LINK],
+            'name'  => $item[self::ROLE_TITLE],
+            'text'  => $item[self::ROLE_DESCRIPTION],
+            'url'   => $item[self::ROLE_LINK],
         );
+        if (!empty($item[self::ROLE_IMAGE])) {
+            $step['image'] = $item[self::ROLE_IMAGE];
+        }
+        $schema['step'][] = $step;
+        
     }
+    
     return $schema;
 }
+
+
+/**
+ * Recepy
+ */
+private function schemaRecepy($items, $title = "") {
+    
+	$schema = array(
+        '@context' => self::SCHEMA_ORG_SITE,
+        '@type' => 'Recipe',
+    );
+    
+    if (!empty($title)) 
+    	$schema['name'] = $title;
+	
+    $schema['step'] = array();
+    foreach ($items as $item) {
+    	
+		 $step = array(
+            '@type' => 'HowToStep',
+            'name'  => $item[self::ROLE_TITLE],
+            'text'  => $item[self::ROLE_DESCRIPTION],
+            'url'   => $item[self::ROLE_LINK],
+        );
+        if (!empty($item[self::ROLE_IMAGE])) {
+            $step['image'] = $item[self::ROLE_IMAGE];
+        }
+        
+        $schema['recipeInstructions'][] = $step;
+    }
+    
+    return $schema;
+}
+
+
 
 /**
  * ItemList
@@ -792,12 +1038,18 @@ private function schemaItemList($items, $title = "") {
     $schema['itemListElement'] = array();
     $position = 1;
     foreach ($items as $item) {
-        $schema['itemListElement'][] = array(
-            '@type' => 'ListItem',
+    	
+ 		$listItem = array(
+            '@type'    => 'ListItem',
             'position' => $position++,
-            'name' => $item[self::ROLE_TITLE],
-            'url' => $item[self::ROLE_LINK],
+            'name'     => $item[self::ROLE_TITLE],
+            'url'      => $item[self::ROLE_LINK],
         );
+        if (!empty($item[self::ROLE_IMAGE])) {
+            $listItem['image'] = $item[self::ROLE_IMAGE];
+        }
+        $schema['itemListElement'][] = $listItem;
+                
     }
     return $schema;
 }
@@ -819,36 +1071,22 @@ private function schemaSearchResultsPage($items, $title = "") {
 
     $position = 1;
     foreach ($items as $item) {
-        $schema['mainEntity']['itemListElement'][] = array(
-            '@type' => 'ListItem',
+    	
+ 		$listItem = array(
+            '@type'    => 'ListItem',
             'position' => $position++,
-            'name' => $item[self::ROLE_TITLE],
-            'url' => $item[self::ROLE_LINK],
+            'name'     => $item[self::ROLE_TITLE],
+            'url'      => $item[self::ROLE_LINK],
         );
+        if (!empty($item[self::ROLE_IMAGE])) {
+            $listItem['image'] = $item[self::ROLE_IMAGE];
+        }
+        $schema['mainEntity']['itemListElement'][] = $listItem;        
+        
     }
     return $schema;
 }
 
-/**
- * CourseCatalog
- */
-private function schemaCourseCatalog($items, $title = "") {
-    $schema = array(
-        '@context' => self::SCHEMA_ORG_SITE,
-        '@type' => 'CourseCatalog',
-    );
-    if (!empty($title)) $schema['name'] = $title;
-
-    $schema['hasCourse'] = array();
-    foreach ($items as $item) {
-        $schema['hasCourse'][] = array(
-            '@type' => 'Course',
-            'name' => $item[self::ROLE_TITLE],
-            'description' => $item[self::ROLE_DESCRIPTION],
-        );
-    }
-    return $schema;
-}
 
 /**
  * Person
@@ -873,22 +1111,62 @@ private function schemaPerson($items) {
  * Course
  */
 private function schemaCourse($items) {
-    $schema = array();
+    
+	$schema = array();
+    
     foreach ($items as $item) {
-        $schema[] = array(
-            '@context' => self::SCHEMA_ORG_SITE,
-            '@type' => 'Course',
-            'name' => $item[self::ROLE_TITLE],
+    	
+    	$course = array(
+            '@context'    => self::SCHEMA_ORG_SITE,
+            '@type'       => 'Course',
+            'name'        => $item[self::ROLE_TITLE],
             'description' => $item[self::ROLE_DESCRIPTION],
-            'provider' => array(
-                '@type' => 'Organization',
-                'name' => $item[self::ROLE_HEADING],
+            'provider'    => array(
+                '@type'  => 'Organization',
+                'name'   => $item[self::ROLE_HEADING],
                 'sameAs' => $item[self::ROLE_LINK],
             ),
         );
+        if (!empty($item[self::ROLE_IMAGE])) {
+            $course['image'] = $item[self::ROLE_IMAGE];
+        }
+        
     }
+    
     return $schema;
 }
+
+
+/**
+ * Book
+ */
+private function schemaBook($items) {
+    
+	$schema = array();
+    
+    foreach ($items as $item) {
+    	
+    	$course = array(
+            '@context'    => self::SCHEMA_ORG_SITE,
+            '@type'       => 'Book',
+            'name'        => $item[self::ROLE_TITLE],
+            'description' => $item[self::ROLE_DESCRIPTION],
+            'provider'    => array(
+                '@type'  => 'Person',
+                'name'   => $item[self::ROLE_HEADING],
+                'sameAs' => $item[self::ROLE_LINK],
+            ),
+        );
+        
+        if (!empty($item[self::ROLE_IMAGE])) {
+            $course['image'] = $item[self::ROLE_IMAGE];
+        }
+        
+    }
+    
+    return $schema;
+}
+
 
 /**
  * Event
@@ -932,12 +1210,16 @@ private function schemaEventSeries($items) {
 private function schemaMusicPlaylist($items) {
     $schema = array();
     foreach ($items as $item) {
-        $schema[] = array(
-            '@context' => self::SCHEMA_ORG_SITE,
-            '@type' => 'MusicPlaylist',
-            'name' => $item[self::ROLE_TITLE],
+        $playlist = array(
+            '@context'    => self::SCHEMA_ORG_SITE,
+            '@type'       => 'MusicPlaylist',
+            'name'        => $item[self::ROLE_TITLE],
             'description' => $item[self::ROLE_DESCRIPTION],
         );
+        if (!empty($item[self::ROLE_IMAGE])) {
+            $playlist['image'] = $item[self::ROLE_IMAGE];
+        }
+        $schema[] = $playlist;
     }
     return $schema;
 }
@@ -959,6 +1241,26 @@ private function schemaPlace($items) {
     }
     return $schema;
 }
+
+
+/**
+ * Product
+ */
+private function schemaProduct($items) {
+    $schema = array();
+    foreach ($items as $item) {
+        $schema[] = array(
+            '@context' => self::SCHEMA_ORG_SITE,
+            '@type' => 'Product',
+            'name' => $item[self::ROLE_TITLE],
+            'description' => $item[self::ROLE_DESCRIPTION],
+            'image' => $item[self::ROLE_IMAGE],
+            'sameAs' => $item[self::ROLE_LINK],
+        );
+    }
+    return $schema;
+}
+
 
 /**
  * TouristDestination

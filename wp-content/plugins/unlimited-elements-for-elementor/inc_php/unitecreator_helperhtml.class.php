@@ -245,7 +245,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 			$content = UniteFunctionsUC::fileGetContents($filepath);
 			$content = trim($content);
 			
-			//$content = substr($content, 0, 10000);
+			$content = substr($content, 0, 4000);
 			
 			return ($content);
 		}
@@ -1288,10 +1288,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 			UniteFunctionsUC::obStart();
 			HelperHtmlUC::putAddonTypesBrowserDialogs();
-			
-			//php info not available
+
 			phpinfo();
-			
+
 			$content = ob_get_contents();
 
 			ob_end_clean();
