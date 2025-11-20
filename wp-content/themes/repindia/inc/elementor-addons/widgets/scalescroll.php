@@ -235,16 +235,16 @@ class Scalescroll extends Widget_Base
                             </div>
                         </section>
                         <section class="panel animate-right">
-                            <img decoding="async" src="http://localhost/i2v/wp-content/uploads/2025/11/Frame-270.webp">
+                            <img decoding="async" src="http://localhost/i2v/wp-content/uploads/2025/11/video.webp">
                         </section>
                         <section class="panel animate-right">
-                            <img decoding="async" src="http://localhost/i2v/wp-content/uploads/2025/11/Frame-270-1.webp">
+                            <img decoding="async" src="http://localhost/i2v/wp-content/uploads/2025/11/video.webp">
                         </section>
                         <section class="panel animate-right">
-                            <img decoding="async" src="http://localhost/i2v/wp-content/uploads/2025/11/Frame-273.webp">
+                            <img decoding="async" src="http://localhost/i2v/wp-content/uploads/2025/11/video.webp">
                         </section>
                         <section class="panel animate-right">
-                            <img decoding="async" src="http://localhost/i2v/wp-content/uploads/2025/11/Frame-272.webp">
+                            <img decoding="async" src="http://localhost/i2v/wp-content/uploads/2025/11/video.webp">
                         </section>
                     </div>
                     <div class="container-page flex-center">
@@ -271,7 +271,7 @@ class Scalescroll extends Widget_Base
                                 <h2>Supports both Windows and Linux systems</h2>
                                 <p class="para-text">Flexible installation across your existing OS infrastructure — no vendor lock-in.</p>
                                 <div class="bolt">
-                                    <img src="http://localhost/i2v/wp-content/uploads/2025/11/icon-6.svg">
+                                    <img src="http://localhost/i2v/wp-content/uploads/2025/11/item-1.svg">
                                     <p>Deployed across 11+ smart cities without replacing existing hardware.</p>
                                     <div class="btn-bolt">
                                         <a href="#">Request a demo to lean more</a>

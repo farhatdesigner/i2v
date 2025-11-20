@@ -310,7 +310,7 @@ class Video_accordion extends Widget_Base
                             <div class="accordion_set">
                                 <div class="ac_icon_wrap lightback">
                                     <div class="ac_icon_border">
-                                        <span><img class="ac_icon" alt="null" src="http://localhost/i2v/wp-content/uploads/2025/11/Icon-Container-2.svg"></span>
+                                        <span><img class="ac_icon" alt="null" src="<?php echo esc_url( home_url( '/' ) ); ?>wp-content/uploads/2025/11/item-2.svg"></span>
                                     </div>
                                 </div>
                                 <button class="select_div" aria-label="expand accordion section for section" aria-expanded="false">
@@ -329,7 +329,7 @@ class Video_accordion extends Widget_Base
                             <div class="accordion_set">
                                 <div class="ac_icon_wrap lightback">
                                     <div class="ac_icon_border">
-                                        <span><img class="ac_icon" alt="null" src="http://localhost/i2v/wp-content/uploads/2025/11/Icon-Container-1.svg"></span>
+                                        <span><img class="ac_icon" alt="null" src="<?php echo esc_url( home_url( '/' ) ); ?>wp-content/uploads/2025/11/item-1.svg"></span>
                                     </div>
                                 </div>
                                 <button class="select_div" aria-label="expand accordion section for section" aria-expanded="false">
@@ -349,7 +349,7 @@ class Video_accordion extends Widget_Base
                             <div class="accordion_set">
                                 <div class="ac_icon_wrap lightback">
                                     <div class="ac_icon_border">
-                                        <span><img class="ac_icon" alt="null" src="http://localhost/i2v/wp-content/uploads/2025/11/Icon-Container-2.svg"></span>
+                                        <span><img class="ac_icon" alt="null" src="<?php echo esc_url( home_url( '/' ) ); ?>wp-content/uploads/2025/11/item-2.svg"></span>
                                     </div>
                                 </div>
                                 <button class="select_div" aria-label="expand accordion section for' aria-expanded=" false">
@@ -379,7 +379,7 @@ class Video_accordion extends Widget_Base
                     </div>
                     <div class="col-md-6 col-12 padd-accordion_video">
                         <div class="accordion_video">
-                            <img data-bs-toggle="modal" data-bs-target="#staticBackdrop" src="http://localhost/i2v/wp-content/uploads/2025/11/WhatsApp-Image-2025-11-19-at-12.15.58-PM.jpeg" alt="null" width="100%" height="100%">
+                            <img data-bs-toggle="modal" data-bs-target="#staticBackdrop" src="<?php echo esc_url( home_url( '/' ) ); ?>wp-content/uploads/2025/11/video.webp" alt="null" width="100%" height="100%">
                             <!-- Vertically centered modal -->
                             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
@@ -401,11 +401,11 @@ class Video_accordion extends Widget_Base
                             </div>
                         </div>
                         <div class="accordion_video">
-                            <img src="http://localhost/i2v/wp-content/uploads/2025/11/Frame-270.webp" alt="null" width="100%" height="100%">
+                            <img src="<?php echo esc_url( home_url( '/' ) ); ?>wp-content/uploads/2025/11/video.webp" alt="null" width="100%" height="100%">
 
                         </div>
                         <div class="accordion_video">
-                            <img src="http://localhost/i2v/wp-content/uploads/2025/11/Frame-270-1.webp" alt="null" width="100%" height="100%">
+                            <img src="<?php echo esc_url( home_url( '/' ) ); ?>wp-content/uploads/2025/11/video.webp" alt="null" width="100%" height="100%">
                         </div>
                     </div>
                 </div>
