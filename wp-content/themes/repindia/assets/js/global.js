@@ -215,22 +215,133 @@ jQuery(document).ready(function ($) {
 });
 
 $(document).ready(function () {
+    var scrollPosition = 0;
+    var isMenuOpen = false;
+
+    // Prevent body scroll when menu is open
+    function preventBodyScroll(e) {
+        // Allow scrolling inside the menu container
+        var $target = $(e.target);
+        if ($target.closest(".toggle-menu-container").length) {
+            return true;
+        }
+        // Prevent scrolling on body/overlay
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }
+
+    // Prevent wheel events on body when menu is open
+    function preventBodyWheel(e) {
+        // Get mouse position
+        var mouseX = e.clientX || (e.originalEvent && e.originalEvent.clientX) || 0;
+        var mouseY = e.clientY || (e.originalEvent && e.originalEvent.clientY) || 0;
+        
+        // Get the element at mouse position (most reliable method)
+        var elementAtPoint = null;
+        if (document.elementFromPoint && mouseX > 0 && mouseY > 0) {
+            try {
+                elementAtPoint = document.elementFromPoint(mouseX, mouseY);
+            } catch (err) {
+                // Fallback if elementFromPoint fails
+            }
+        }
+        
+        // Check if element at mouse position is inside menu
+        if (elementAtPoint) {
+            var $elementAtPoint = $(elementAtPoint);
+            if ($elementAtPoint.closest(".toggle-menu-container").length) {
+                return; // Allow scrolling - don't prevent
+            }
+        }
+        
+        // Also check event target
+        var $target = $(e.target);
+        if ($target.closest(".toggle-menu-container").length) {
+            return; // Allow scrolling - don't prevent
+        }
+        
+        // Check mouse position relative to menu container (fallback)
+        var $menuContainer = $(".toggle-menu-container");
+        if ($menuContainer.length && $menuContainer.hasClass("open-menu") && mouseX > 0 && mouseY > 0) {
+            var menuOffset = $menuContainer.offset();
+            if (menuOffset) {
+                var menuWidth = $menuContainer.outerWidth();
+                var menuHeight = $menuContainer.outerHeight();
+                
+                if (mouseX >= menuOffset.left && 
+                    mouseX <= menuOffset.left + menuWidth &&
+                    mouseY >= menuOffset.top && 
+                    mouseY <= menuOffset.top + menuHeight) {
+                    return; // Allow scrolling - don't prevent
+                }
+            }
+        }
+        
+        // Prevent wheel on body/overlay (outside menu)
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }
+
     // Function to close the menu
     function closeMenu() {
         $(".burger-icon").removeClass("active-burger");
         $(".toggle-menu-container").removeClass("open-menu");
         $("nav").removeClass("overlaynav-active");
         $(".overlay").removeClass("overlay-active");
-        $("body").css("overflow", "");
+        
+        // Remove event listeners
+        $(window).off("scroll", preventBodyScroll);
+        document.removeEventListener("wheel", preventBodyWheel, false);
+        $("body, .overlay").off("touchmove", preventBodyScroll);
+        $(".toggle-menu-container, .inside-menu-container-inner").off("wheel");
+        
+        // Restore body styles
+        $("body").css({
+            "overflow": "",
+            "position": "",
+            "top": "",
+            "width": ""
+        });
+        
+        // Restore scroll position
+        $(window).scrollTop(scrollPosition);
+        
+        isMenuOpen = false;
     }
 
     // Open menu when burger icon is clicked
     $(".burger-icon").click(function () {
+        // Save current scroll position
+        scrollPosition = $(window).scrollTop();
+        
         $(this).addClass("active-burger");
         $(".toggle-menu-container").addClass("open-menu");
         $("nav").addClass("overlaynav-active");
         $(".overlay").addClass("overlay-active");
-        $("body").css("overflow", "hidden");
+        
+        // Lock body scroll using position fixed
+        $("body").css({
+            "overflow": "hidden",
+            "position": "fixed",
+            "top": "-" + scrollPosition + "px",
+            "width": "100%"
+        });
+        
+        // Prevent scroll events on body/overlay (but allow on menu)
+        $(window).on("scroll", preventBodyScroll);
+        // Prevent wheel events - check if in menu, if not prevent
+        document.addEventListener("wheel", preventBodyWheel, { passive: false, capture: false });
+        $("body, .overlay").on("touchmove", preventBodyScroll);
+        
+        // Ensure menu can scroll by allowing wheel events on menu container
+        $(".toggle-menu-container, .inside-menu-container-inner").on("wheel", function(e) {
+            // Allow natural scrolling - don't prevent
+            e.stopPropagation(); // Stop from bubbling to document handler
+        });
+        
+        isMenuOpen = true;
     });
 
     // Close menu when cross icon or overlay is clicked

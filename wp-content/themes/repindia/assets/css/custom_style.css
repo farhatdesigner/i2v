@@ -1608,7 +1608,7 @@ h3 {
 .lisitng-inner .d-flex::after {
     position: absolute;
     content: '';
-    width: 78%;
+    width: 100vh;
     height: 1px;
     background: #D7DBE4;
     bottom: -10px;
