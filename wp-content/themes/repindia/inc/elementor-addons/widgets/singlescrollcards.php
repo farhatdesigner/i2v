@@ -70,12 +70,12 @@ class Singlescrollcards extends Widget_Base
                                             <h3>Configuration client</h3>
                                             <p>i2V Configuration Client offers a unified interface to manage devices, servers, storage, and alerts—both locally and remotely. It supports real-time testing, system health checks, structured device grouping, and reporting—making setup, maintenance, and troubleshooting efficient and user-friendly.</p>
                                             <ul class="p-0 m-0">
-                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/check.svg"></span>Centralized configuration</li>
-                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/check.svg"></span>Remote & local setup</li>
-                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/check.svg"></span>Device management</li>
-                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/check.svg"></span>Search & documentation</li>
-                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/check.svg"></span>System health monitoring</li>
-                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/check.svg"></span>Live testing & diagnostics and more</li>
+                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-2.svg"></span>Centralized configuration</li>
+                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-2.svg"></span>Remote & local setup</li>
+                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-2.svg"></span>Device management</li>
+                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-2.svg"></span>Search & documentation</li>
+                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-2.svg"></span>System health monitoring</li>
+                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-2.svg"></span>Live testing & diagnostics and more</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -96,12 +96,12 @@ class Singlescrollcards extends Widget_Base
                                             <h3>User management</h3>
                                             <p>i2V Configuration Client offers a unified interface to manage devices, servers, storage, and alerts—both locally and remotely. It supports real-time testing, system health checks, structured device grouping, and reporting—making setup, maintenance, and troubleshooting efficient and user-friendly.</p>
                                             <ul class="p-0 m-0">
-                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/check.svg"></span>Centralized configuration</li>
-                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/check.svg"></span>Remote & local setup</li>
-                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/check.svg"></span>Device management</li>
-                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/check.svg"></span>Search & documentation</li>
-                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/check.svg"></span>System health monitoring</li>
-                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/check.svg"></span>Live testing & diagnostics and more</li>
+                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-2.svg"></span>Centralized configuration</li>
+                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-2.svg"></span>Remote & local setup</li>
+                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-2.svg"></span>Device management</li>
+                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-2.svg"></span>Search & documentation</li>
+                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-2.svg"></span>System health monitoring</li>
+                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-2.svg"></span>Live testing & diagnostics and more</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -121,12 +121,12 @@ class Singlescrollcards extends Widget_Base
                                             <h3>Camera management</h3>
                                             <p>i2V Configuration Client offers a unified interface to manage devices, servers, storage, and alerts—both locally and remotely. It supports real-time testing, system health checks, structured device grouping, and reporting—making setup, maintenance, and troubleshooting efficient and user-friendly.</p>
                                             <ul class="p-0 m-0">
-                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/check.svg"></span>Centralized configuration</li>
-                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/check.svg"></span>Remote & local setup</li>
-                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/check.svg"></span>Device management</li>
-                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/check.svg"></span>Search & documentation</li>
-                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/check.svg"></span>System health monitoring</li>
-                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/check.svg"></span>Live testing & diagnostics and more</li>
+                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-2.svg"></span>Centralized configuration</li>
+                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-2.svg"></span>Remote & local setup</li>
+                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-2.svg"></span>Device management</li>
+                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-2.svg"></span>Search & documentation</li>
+                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-2.svg"></span>System health monitoring</li>
+                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-2.svg"></span>Live testing & diagnostics and more</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -146,12 +146,12 @@ class Singlescrollcards extends Widget_Base
                                             <h3>Failover/Redundancy</h3>
                                             <p>i2V Configuration Client offers a unified interface to manage devices, servers, storage, and alerts—both locally and remotely. It supports real-time testing, system health checks, structured device grouping, and reporting—making setup, maintenance, and troubleshooting efficient and user-friendly.</p>
                                             <ul class="p-0 m-0">
-                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/check.svg"></span>Centralized configuration</li>
-                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/check.svg"></span>Remote & local setup</li>
-                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/check.svg"></span>Device management</li>
-                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/check.svg"></span>Search & documentation</li>
-                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/check.svg"></span>System health monitoring</li>
-                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/check.svg"></span>Live testing & diagnostics and more</li>
+                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-2.svg"></span>Centralized configuration</li>
+                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-2.svg"></span>Remote & local setup</li>
+                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-2.svg"></span>Device management</li>
+                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-2.svg"></span>Search & documentation</li>
+                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-2.svg"></span>System health monitoring</li>
+                                                <li><span><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-2.svg"></span>Live testing & diagnostics and more</li>
                                             </ul>
                                         </div>
                                     </div>
