@@ -469,4 +469,46 @@
      .leadership_box .section_titlebox {
          position: static
      }
+
+     .flex-center .panel img, .flex-center>*, .panels, .sectionsscroll {
+        min-height: auto;
+        margin-bottom: 1rem;
+    }
+ }
+
+ @media(max-width: 767px) {
+
+     .padd-accordion {
+         padding: 20px;
+     }
+     
+.accordion_set>.select_div {    
+    padding-left: 1rem;
+    text-align: left;
+}
+.accontent {
+    padding-left: 1rem;
+}
+
+.logo_box ul {
+    grid-template-columns: repeat(3, 1fr);
+}
+h3 {
+    font-size: 24px !important;
+}
+
+.btn-colum {
+    flex-direction: row;
+}
+
+element.style {
+}
+.elementor *, .elementor :after, .elementor :before {
+    box-sizing: border-box;
+}
+.padd-accordion_video {
+  display: none;
+}
+
+
  }
