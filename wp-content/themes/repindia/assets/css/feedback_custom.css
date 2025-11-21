@@ -35,7 +35,7 @@
  .sections_box {
      width: 100%;
      position: relative;
-     height: 100vh;
+     min-height: 70vh;
      display: flex;
      gap: 142px;
  }
@@ -47,15 +47,17 @@
  .flex-center>* {
      display: flex;
      align-items: center;
-     height: 100vh;
+     justify-content: end;
+     min-height: 70vh;
      width: 100%;
      position: absolute;
      top: 0;
      left: 0
  }
 
- .flex-center .panel img {
+ .flex-center .panel>img {
      /* height: 100vh */
+     min-height: 576px;
  }
 
  .txtflex {
@@ -63,11 +65,14 @@
  }
 
  .container-page {
-     width: 30%
+     width: 30%;
+     align-items: center;
+     justify-content: center;
  }
 
  .contento {
-     background-color: #F2F5FA
+     background-color: #F2F5FA;
+     height: 100%;
  }
 
  .panels {

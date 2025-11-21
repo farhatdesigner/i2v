@@ -189,11 +189,9 @@ class Scalescroll extends Widget_Base
 
 
 
-
-
-        <div class="custom-container">
-            <div class="sectionsscroll">
-                <div class="col-lg-5 col-12">
+        <div class="sectionsscroll">
+            <div class="custom-container">
+                <div class="col-lg-6 col-12">
                     <h3 class="main_title quote">
                         Designed to fit. Ready to scale.
                     </h3>
