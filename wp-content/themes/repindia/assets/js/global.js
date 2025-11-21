@@ -362,10 +362,6 @@ $(document).ready(function () {
     });
 });
 
-
-
-
-
 var swiper2 = new Swiper(".brandslider", {
     spaceBetween: 30,
     slidesPerView: 7,
@@ -505,116 +501,131 @@ $(window).scroll(function() {
     }
 });
 
-$(".sticky-custom ul.elementor-icon-list-items.elementor-inline-items li.elementor-icon-list-item.elementor-inline-item:nth-child(1)").click(function () {
-    $("html , body").animate({
-        scrollTop: $(".live_monitoring").offset().top - 80
-    }, 1300);
-});
-$(".sticky-custom ul.elementor-icon-list-items.elementor-inline-items li.elementor-icon-list-item.elementor-inline-item:nth-child(2)").click(function () {
-    $("html , body").animate({
-        scrollTop: $(".system_setup").offset().top - 50
-    }, 1300);
-});
-$(".sticky-custom ul.elementor-icon-list-items.elementor-inline-items li.elementor-icon-list-item.elementor-inline-item:nth-child(3)").click(function () {
-    $("html , body").animate({
-        scrollTop: $(".intelligenc_alerts").offset().top - 80
-    }, 1300);
-});
-$(".sticky-custom ul.elementor-icon-list-items.elementor-inline-items li.elementor-icon-list-item.elementor-inline-item:nth-child(4)").click(function () {
-    $("html , body").animate({
-        scrollTop: $(".recording_storage").offset().top - 80
-    }, 1300);
-});
-$(".sticky-custom ul.elementor-icon-list-items.elementor-inline-items li.elementor-icon-list-item.elementor-inline-item:nth-child(5)").click(function () {
-    $("html , body").animate({
-        scrollTop: $(".security_integration").offset().top - 80
-    }, 1300);
-});
 
-// Set first li as active by default and setup scroll spy
-jQuery(document).ready(function($) {
-    var $listItems = $(".sticky-custom ul.elementor-icon-list-items.elementor-inline-items li.elementor-icon-list-item.elementor-inline-item");
-    
-    // Check if elements exist
-    if ($listItems.length === 0) {
-        return;
-    }
-    
-    // Set first li as active by default
-    $listItems.first().addClass("active-li");
-    
+
+jQuery(document).ready(function ($) {
+
+    var $items = $(".sticky-custom ul.elementor-icon-list-items.elementor-inline-items li");
+    var $menu = $(".sticky-custom"); // menu container
+
+    // Section selectors (order must match your menu)
     var sections = [
-        { selector: ".live_monitoring", index: 0 },
-        { selector: ".system_setup", index: 1 },
-        { selector: ".intelligenc_alerts", index: 2 },
-        { selector: ".recording_storage", index: 3 },
-        { selector: ".security_integration", index: 4 }
+        ".live_monitoring",
+        ".system_setup",
+        ".intelligenc_alerts",
+        ".recording_storage",
+        ".security_integration" // 5th section
     ];
 
-    function updateActiveSection() {
-        var scrollTop = $(window).scrollTop();
-        var offset = 150; // Offset from top to trigger active state
-        var activeIndex = 0; // Default to first section
+    var sectionData = [];
+    var lastActive = -1;
+    var triggerOffset = 220;
+    var rafID = null;
 
-        // Find which section is currently in view or closest to viewport top
-        var currentScrollPosition = scrollTop + offset;
-        var closestSection = null;
-        var closestDistance = Infinity;
+    // --------------------------------------------
+    // CLICK = Scroll to SAME trigger position
+    // --------------------------------------------
+    $items.each(function (i) {
+        $(this).on("click", function () {
 
-        sections.forEach(function(section) {
-            var $section = $(section.selector);
-            if ($section.length) {
-                var sectionTop = $section.offset().top;
-                var sectionBottom = sectionTop + $section.outerHeight();
-                
-                // Check if section is in viewport
-                if (currentScrollPosition >= sectionTop && currentScrollPosition < sectionBottom) {
-                    var distance = Math.abs(currentScrollPosition - sectionTop);
-                    if (distance < closestDistance) {
-                        closestDistance = distance;
-                        closestSection = section;
-                    }
-                }
+            var $target = $(sections[i]);
+            if ($target.length) {
+
+                $items.removeClass("active-li");
+                $(this).addClass("active-li");
+                lastActive = i;
+
+                var exactPosition = $target.offset().top - (triggerOffset - 1);
+
+                $("html, body").animate({
+                    scrollTop: exactPosition
+                }, 300);
             }
         });
-
-        // If no section is directly in view, find the last section we've scrolled past
-        if (!closestSection) {
-            sections.forEach(function(section) {
-                var $section = $(section.selector);
-                if ($section.length) {
-                    var sectionTop = $section.offset().top;
-                    if (currentScrollPosition >= sectionTop) {
-                        closestSection = section;
-                    }
-                }
-            });
-        }
-
-        // Update active class
-        if (closestSection !== null) {
-            activeIndex = closestSection.index;
-        } else if (scrollTop < 1800) {
-            // If scrolled back to top, activate first item
-            activeIndex = 0;
-        }
-
-        $listItems.removeClass("active-li");
-        $listItems.eq(activeIndex).addClass("active-li");
-    }
-
-    // Throttle scroll event for better performance
-    var scrollTimeout;
-    $(window).on('scroll', function() {
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(function() {
-            updateActiveSection();
-        }, 50);
     });
 
-    // Initial check on page load
-    updateActiveSection();
+    // --------------------------------------------
+    // CACHE SECTION POSITIONS
+    // --------------------------------------------
+    function updatePositions() {
+        sectionData = [];
+
+        sections.forEach(function (sel, i) {
+            var $sec = $(sel);
+            if ($sec.length) {
+                sectionData.push({
+                    index: i,
+                    top: $sec.offset().top,
+                    bottom: $sec.offset().top + $sec.outerHeight()
+                });
+            }
+        });
+    }
+
+    // --------------------------------------------
+    // SCROLL SPY + AUTO HIDE MENU AFTER 5TH SECTION
+    // --------------------------------------------
+    function detectActiveSection() {
+        var scrollTop = $(window).scrollTop() + triggerOffset;
+        var activeIndex = 0;
+
+        // Find active section
+        for (var i = 0; i < sectionData.length; i++) {
+            if (scrollTop >= sectionData[i].top) {
+                activeIndex = sectionData[i].index;
+            }
+        }
+
+        // Update active li
+        if (activeIndex !== lastActive) {
+            $items.removeClass("active-li");
+            $items.eq(activeIndex).addClass("active-li");
+            lastActive = activeIndex;
+        }
+
+        // ------------------------------------------
+        // HIDE MENU when 5th section scrolls above
+        // ------------------------------------------
+        var lastSection = sectionData[sectionData.length - 1];
+
+        if (scrollTop > lastSection.bottom) {
+            // User scrolled PAST the last section
+            $menu.addClass("menu-hidden");
+        } else {
+            // User scrolls back up → show menu again
+            $menu.removeClass("menu-hidden");
+        }
+    }
+
+    function onScroll() {
+        if (rafID) cancelAnimationFrame(rafID);
+        rafID = requestAnimationFrame(function () {
+            detectActiveSection();
+            rafID = null;
+        });
+    }
+
+    // INIT
+    updatePositions();
+    detectActiveSection();
+
+    $(window).on("scroll", onScroll);
+    $(window).on("resize", function () {
+        updatePositions();
+        detectActiveSection();
+    });
+
 });
+
+
+
+
+
+
+
+
+
+
 
 jQuery(document).ready(function() {
     // Check if accordion exists on the page

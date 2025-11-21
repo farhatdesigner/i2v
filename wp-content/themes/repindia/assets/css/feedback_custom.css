@@ -395,15 +395,7 @@
      padding-right: 12px;
  }
 
- /* 
- .flex-cards {
-     height: 100vh;
-     width: 100%;
-     position: absolute;
-     top: 0;
-     left: 0;
- } */
-
+.menu-hidden{display: none;transition: all 0.3s ease-in-out;}
 
 
 
