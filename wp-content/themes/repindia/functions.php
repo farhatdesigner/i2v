@@ -228,3 +228,22 @@ if (! function_exists('apl_get_categories')) {
 		return $options;
 	}
 }
+
+//breadcrumb for product pages
+add_filter( 'wpseo_breadcrumb_links', 'add_products_cpt_breadcrumb' );
+function add_products_cpt_breadcrumb( $links ) {
+    if ( is_singular( 'products' ) ) {
+        // Add "Products" after Home
+        $breadcrumb = array(
+            'url'  => home_url( '/i2vs-products/' ),
+            'text' => 'i2VS products',
+        );
+        array_splice( $links, 1, 0, array( $breadcrumb ) );
+    }
+
+    return $links;
+}
+
+add_filter( 'wpseo_breadcrumb_separator', function() {
+    return '<img class="yoast-sep-icon" src="' . esc_url( home_url( '/wp-content/uploads/2025/11/chevron-right.svg' ) ) . '" alt=">">';
+});

@@ -1610,7 +1610,7 @@ h3 {
 .lisitng-inner .d-flex::after {
     position: absolute;
     content: '';
-    width: 100vh;
+    width: 78%;
     height: 1px;
     background: #D7DBE4;
     bottom: -10px;
@@ -1973,21 +1973,32 @@ h3 {
     width: 100%;
     transition: all 0.3s ease;
 }
-
-.sticky-custom>ul>li.active-li {
+.sticky-custom>ul>li{
     padding: var(--XSM, 4px) 16px !important;
     align-items: center;
     gap: var(--XSM, 4px);
+    Border: 1px solid transparent;
+    background : transparent;
+    border-radius: 40px;
+    cursor: pointer;
+}
+.sticky-custom>ul>li:hover{
+    background : #F2F5FA;
+    Border: 1px solid #D7DBE4;
+}
+.sticky-custom>ul>li:hover span{ color: #5F6F94;}
+.sticky-custom>ul>li.active-li {
     background: #0099ED;
     color: #ffff;
-    border-radius: 40px;
     border: 1px solid var(--tabs-tab-btn-active-bg, #0099ED);
-    cursor: pointer;
+    
 }
 
 .sticky-custom>ul>li.active-li span {
     color: #ffff !important;
 }
+
+
 
 .view-bg {
     border-radius: var(--M, 12px);
@@ -2019,14 +2030,20 @@ h3 {
     display: inline-table;
     margin: 0 auto;
 }
-
+.cards-listing-section .card-body{ padding: 20px; }
+.cards-listing-section .card-body p{ color: #5C5C5C; }
 .border-second {
     .border-radius: var(--M, 12px);
     border: var(--XSM, 4px) solid var(--Golbal-backgrounds-global-bg-2, #F2F5FA);
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.20) 0%, rgba(0, 0, 0, 0.20) 100%),
         url(<path-to-image>) lightgray -237.268px 0px / 185.07% 113.143% no-repeat;
 }
-
+.card-image {
+    padding: 4px 4px 0 4px;
+}
+.enterprisebanner li.elementor-icon-list-item {
+    cursor: pointer;
+}
 .box-custom {
     box-shadow: 0 10px 20px 0 rgba(0, 82, 128, 0.10);
 }
@@ -2170,13 +2187,40 @@ h3 {
 .reversetestimonial .elementor-main-swiper {
     padding-bottom: 10px !important;
 }
-.reversetestimonial .elementor-main-swiper .elementor-testimonial{ justify-content: flex-end; }
-.reversetestimonial .swiper-pagination-bullets{ left: 115px!important;width: auto!important; }
+.elementor-main-swiper .elementor-testimonial{ justify-content: flex-end;gap: 20px; }
+.reversetestimonial.elementor-widget-testimonial-carousel .swiper-slide {
+    padding: 40px;
+}
+.reversetestimonial .swiper-pagination-bullets{ left: 126px!important;width: auto!important;bottom: 10px !important; }
 .reversetestimonial cite.elementor-testimonial__cite{ margin-top: 8px!important; }
 .reversetestimonial .elementor-testimonial__content { padding-top: 6px; }
 .leadersslider.elementor-element .swiper .elementor-swiper-button{ z-index: 6;padding: 5px;background: #fff;border-radius: 100px;display: flex;align-items: center;justify-content: center;border: 1px solid #E5E9EC; }
 .elementor-element.leadersslider .swiper .elementor-swiper-button-prev{ left: 36px; }
 .elementor-element.leadersslider .swiper~.elementor-swiper-button-prev{ right: 36px; }
+.reversetestimonial .swiper-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet, .reversetestimonial .swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet{ margin: 0 6px;background-color: hwb(0deg 100% 0% / 10%); }
+.enterprz_env figcaption.elementor-image-carousel-caption {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    z-index: 2;
+}
+.enterprz_env.elementor-widget-image-carousel .swiper-slide {
+    border-radius: 12px;
+}
+.enterprz_env figure.swiper-slide-inner::after{
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    background: linear-gradient(#00000000 0%, #000000c7 100%);
+    z-index: 1;
+}
+.enterprz_env .elementor-widget-image-carousel .swiper-slide {
+    border-radius: 12px;
+}
 
 @media (min-width: 768px) {
     .footer-accordion-icon {

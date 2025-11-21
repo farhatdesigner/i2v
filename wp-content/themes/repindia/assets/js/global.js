@@ -786,7 +786,7 @@ if (window.innerWidth >= 1180) {
             end: () => "+=" + 200 * panels.length + "%",
             pin: true,
             pinSpacing: true,
-            markers: true,
+            markers: false,
             scrub: 1,
             autoRefreshEvents: "load",
         }
