@@ -310,7 +310,7 @@ class Video_accordion extends Widget_Base
                             <div class="accordion_set">
                                 <div class="ac_icon_wrap lightback">
                                     <div class="ac_icon_border">
-                                        <span><img class="ac_icon" alt="null" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/check.svg"></span>
+                                        <span><img class="ac_icon" alt="null" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/icon1.svg"></span>
                                     </div>
                                 </div>
                                 <button class="select_div" aria-label="expand accordion section for section" aria-expanded="false">
@@ -329,7 +329,7 @@ class Video_accordion extends Widget_Base
                             <div class="accordion_set">
                                 <div class="ac_icon_wrap lightback">
                                     <div class="ac_icon_border">
-                                        <span><img class="ac_icon" alt="null" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/check.svg"></span>
+                                        <span><img class="ac_icon" alt="null" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/icon2.svg"></span>
                                     </div>
                                 </div>
                                 <button class="select_div" aria-label="expand accordion section for section" aria-expanded="false">
@@ -349,7 +349,7 @@ class Video_accordion extends Widget_Base
                             <div class="accordion_set">
                                 <div class="ac_icon_wrap lightback">
                                     <div class="ac_icon_border">
-                                        <span><img class="ac_icon" alt="null" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/check.svg"></span>
+                                        <span><img class="ac_icon" alt="null" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/icon3.svg"></span>
                                     </div>
                                 </div>
                                 <button class="select_div" aria-label="expand accordion section for' aria-expanded=" false">

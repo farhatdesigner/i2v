@@ -2177,6 +2177,26 @@ h3 {
 .leadersslider.elementor-element .swiper .elementor-swiper-button{ z-index: 6;padding: 5px;background: #fff;border-radius: 100px;display: flex;align-items: center;justify-content: center;border: 1px solid #E5E9EC; }
 .elementor-element.leadersslider .swiper .elementor-swiper-button-prev{ left: 36px; }
 .elementor-element.leadersslider .swiper~.elementor-swiper-button-prev{ right: 36px; }
+.enterprz_env figcaption.elementor-image-carousel-caption {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    z-index: 2;
+}
+.enterprz_env figure.swiper-slide-inner::after{
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    background: linear-gradient(#00000000 0%, #000000c7 100%);
+    z-index: 1;
+}
+.enterprz_env .elementor-widget-image-carousel .swiper-slide {
+    border-radius: 12px;
+}
 
 @media (min-width: 768px) {
     .footer-accordion-icon {
