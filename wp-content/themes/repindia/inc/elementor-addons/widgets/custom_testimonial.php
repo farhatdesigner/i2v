@@ -1321,6 +1321,26 @@ class Custom_Testimonial extends Widget_Base
             .custom-testimonial-tabs-swiper {
                 flex: 1;
                 overflow: hidden;
+                width: 100%;
+                position: relative;
+            }
+
+            .custom-testimonial-tabs-swiper.swiper {
+                width: 100%;
+            }
+
+            .custom-testimonial-tabs-swiper .swiper-wrapper {
+                display: flex;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .custom-testimonial-tabs-swiper .swiper-slide {
+                /* Swiper will calculate width based on slidesPerView */
+                flex-shrink: 0;
+                width: auto;
+                height: auto;
+                box-sizing: border-box;
             }
 
             .custom-testimonial-tab-item {
@@ -1332,6 +1352,10 @@ class Custom_Testimonial extends Widget_Base
                 transition: all 0.3s ease;
                 background-color: #f5f5f5;
                 border-radius: 8px;
+                box-sizing: border-box;
+                height: auto;
+                width: 100%;
+                min-width: 0;
             }
 
             .custom-testimonial-tab-item img {
@@ -1417,26 +1441,47 @@ class Custom_Testimonial extends Widget_Base
 
                 var slidesToShow = <?php 
                     $slides_to_show = $settings['slider_slides_to_show'] ?? [];
+                    $desktop_val = 4;
+                    $tablet_val = 3;
+                    $mobile_val = 2;
+                    
                     if (is_array($slides_to_show)) {
-                        echo wp_json_encode([
-                            'desktop' => intval($slides_to_show['desktop'] ?? $slides_to_show ?? 4),
-                            'tablet' => intval($slides_to_show['tablet'] ?? 3),
-                            'mobile' => intval($slides_to_show['mobile'] ?? 2)
-                        ]);
-                    } else {
-                        echo wp_json_encode(['desktop' => intval($slides_to_show ?: 4), 'tablet' => 3, 'mobile' => 2]);
+                        // Check if it's a responsive control structure
+                        if (isset($slides_to_show['desktop'])) {
+                            $desktop_val = intval($slides_to_show['desktop']);
+                        } elseif (isset($slides_to_show['size'])) {
+                            $desktop_val = intval($slides_to_show['size']);
+                        } elseif (is_numeric($slides_to_show)) {
+                            $desktop_val = intval($slides_to_show);
+                        }
+                        
+                        if (isset($slides_to_show['tablet'])) {
+                            $tablet_val = intval($slides_to_show['tablet']);
+                        }
+                        
+                        if (isset($slides_to_show['mobile'])) {
+                            $mobile_val = intval($slides_to_show['mobile']);
+                        }
+                    } elseif (is_numeric($slides_to_show)) {
+                        $desktop_val = intval($slides_to_show);
                     }
+                    
+                    echo wp_json_encode([
+                        'desktop' => $desktop_val,
+                        'tablet' => $tablet_val,
+                        'mobile' => $mobile_val
+                    ]);
                 ?>;
                 
                 var settings = {
-                    autoplay: <?php echo !empty($settings['slider_autoplay']) ? 'true' : 'false'; ?>,
+                    autoplay: <?php echo ($settings['slider_autoplay'] === 'yes') ? 'true' : 'false'; ?>,
                     autoplaySpeed: <?php echo intval($settings['slider_autoplay_speed'] ?? 3000); ?>,
                     speed: <?php echo intval($settings['slider_speed'] ?? 500); ?>,
-                    loop: <?php echo !empty($settings['slider_loop']) ? 'true' : 'false'; ?>,
+                    loop: <?php echo ($settings['slider_loop'] === 'yes') ? 'true' : 'false'; ?>,
                     slidesToShow: slidesToShow,
                     slidesToScroll: <?php echo intval($settings['slider_slides_to_scroll'] ?? 1); ?>,
-                    navigation: <?php echo !empty($settings['slider_navigation']) ? 'true' : 'false'; ?>,
-                    pagination: <?php echo !empty($settings['slider_pagination']) ? 'true' : 'false'; ?>
+                    navigation: <?php echo ($settings['slider_navigation'] === 'yes') ? 'true' : 'false'; ?>,
+                    pagination: <?php echo ($settings['slider_pagination'] === 'yes') ? 'true' : 'false'; ?>
                 };
 
                 var swiperInstance = null;
@@ -1457,42 +1502,62 @@ class Custom_Testimonial extends Widget_Base
                         return;
                     }
 
+                    // Ensure container has width before initializing
+                    var containerWidth = swiperElement.offsetWidth || swiperElement.clientWidth;
+                    if (!containerWidth || containerWidth === 0) {
+                        setTimeout(initSwiper, 100);
+                        return;
+                    }
+
                     var nextButton = widgetElement.querySelector('.custom-testimonial-nav-next');
                     var prevButton = widgetElement.querySelector('.custom-testimonial-nav-prev');
                     var totalSlides = testimonials.length;
 
-                    // Don't enable loop if slides are less than or equal to slides per view
-                    var canLoop = settings.loop && totalSlides > settings.slidesToShow.desktop;
+                    // Ensure slides to show is a valid number
+                    var desktopSlides = parseInt(settings.slidesToShow.desktop) || 4;
+                    var tabletSlides = parseInt(settings.slidesToShow.tablet) || 3;
+                    var mobileSlides = parseInt(settings.slidesToShow.mobile) || 2;
+                    var slidesToScroll = parseInt(settings.slidesToScroll) || 1;
 
-                    var swiperConfig = {
-                        slidesPerView: settings.slidesToShow.desktop,
-                        slidesPerGroup: settings.slidesToScroll,
-                        spaceBetween: 20,
-                        loop: canLoop,
-                        speed: settings.speed,
-                        autoplay: settings.autoplay && totalSlides > 1 ? {
-                            delay: settings.autoplaySpeed,
+                    // Don't enable loop if slides are less than or equal to slides per view
+                    var canLoop = settings.loop === true && totalSlides > desktopSlides;
+
+                    // Configure autoplay
+                    var autoplayConfig = false;
+                    if (settings.autoplay === true && totalSlides > 1) {
+                        autoplayConfig = {
+                            delay: parseInt(settings.autoplaySpeed) || 3000,
                             disableOnInteraction: false,
                             pauseOnMouseEnter: true,
-                        } : false,
+                            stopOnLastSlide: false,
+                        };
+                    }
+
+                    // Set default to desktop, then override for smaller screens
+                    var swiperConfig = {
+                        slidesPerView: desktopSlides,
+                        slidesPerGroup: slidesToScroll,
+                        spaceBetween: 20,
+                        loop: canLoop,
+                        speed: parseInt(settings.speed) || 500,
+                        autoplay: autoplayConfig,
+                        watchOverflow: true,
+                        centeredSlides: false,
+                        freeMode: false,
                         breakpoints: {
-                            320: {
-                                slidesPerView: settings.slidesToShow.mobile,
-                                slidesPerGroup: settings.slidesToScroll,
-                                spaceBetween: 10,
-                                loop: canLoop && totalSlides > settings.slidesToShow.mobile,
-                            },
+                            // For screens smaller than 1024px, use tablet settings
                             768: {
-                                slidesPerView: settings.slidesToShow.tablet,
-                                slidesPerGroup: settings.slidesToScroll,
+                                slidesPerView: tabletSlides,
+                                slidesPerGroup: slidesToScroll,
                                 spaceBetween: 15,
-                                loop: canLoop && totalSlides > settings.slidesToShow.tablet,
+                                loop: canLoop && totalSlides > tabletSlides,
                             },
-                            1024: {
-                                slidesPerView: settings.slidesToShow.desktop,
-                                slidesPerGroup: settings.slidesToScroll,
-                                spaceBetween: 20,
-                                loop: canLoop,
+                            // For screens smaller than 768px, use mobile settings
+                            320: {
+                                slidesPerView: mobileSlides,
+                                slidesPerGroup: slidesToScroll,
+                                spaceBetween: 10,
+                                loop: canLoop && totalSlides > mobileSlides,
                             },
                         },
                     };
@@ -1517,21 +1582,109 @@ class Custom_Testimonial extends Widget_Base
 
                     swiperConfig.on = {
                         init: function() {
-                            var activeIndex = canLoop && this.realIndex !== undefined ? this.realIndex : 0;
+                            var swiper = this;
+                            var activeIndex = 0;
+                            if (canLoop && swiper.realIndex !== undefined) {
+                                activeIndex = swiper.realIndex;
+                            } else if (swiper.activeIndex !== undefined) {
+                                activeIndex = swiper.activeIndex;
+                            }
                             switchTestimonial(activeIndex);
                         },
                         slideChange: function() {
-                            var activeIndex = canLoop && this.realIndex !== undefined ? this.realIndex : this.activeIndex || 0;
+                            var swiper = this;
+                            var activeIndex = 0;
+                            if (canLoop && swiper.realIndex !== undefined) {
+                                activeIndex = swiper.realIndex;
+                            } else if (swiper.activeIndex !== undefined) {
+                                activeIndex = swiper.activeIndex;
+                            }
                             switchTestimonial(activeIndex);
                         }
                     };
 
                     try {
-                        swiperInstance = elementorFrontend.utils.swiper(swiperElement, swiperConfig);
+                        var swiperResult = elementorFrontend.utils.swiper(swiperElement, swiperConfig);
                         
-                        // Store swiper instance reference
-                        if (swiperInstance && swiperInstance.swiper) {
-                            swiperInstance = swiperInstance.swiper;
+                        // Store swiper instance reference - Elementor returns an object with swiper property
+                        if (swiperResult) {
+                            if (swiperResult.swiper) {
+                                swiperInstance = swiperResult.swiper;
+                            } else if (swiperResult.slideTo) {
+                                swiperInstance = swiperResult;
+                            } else {
+                                swiperInstance = swiperResult;
+                            }
+                            
+                            // Force update to ensure slidesPerView is applied correctly
+                            if (swiperInstance) {
+                                setTimeout(function() {
+                                    // Get current breakpoint
+                                    var currentWidth = window.innerWidth || swiperElement.offsetWidth;
+                                    var currentSlidesPerView = desktopSlides;
+                                    
+                                    if (currentWidth < 640) {
+                                        currentSlidesPerView = mobileSlides;
+                                    } else if (currentWidth < 1024) {
+                                        currentSlidesPerView = tabletSlides;
+                                    }
+                                    
+                                    // Update Swiper
+                                    if (typeof swiperInstance.update === 'function') {
+                                        swiperInstance.update();
+                                    }
+                                    if (typeof swiperInstance.updateSlides === 'function') {
+                                        swiperInstance.updateSlides();
+                                    }
+                                    if (typeof swiperInstance.updateSize === 'function') {
+                                        swiperInstance.updateSize();
+                                    }
+                                    
+                                    // Ensure params match current breakpoint
+                                    if (swiperInstance.params && swiperInstance.params.slidesPerView !== currentSlidesPerView) {
+                                        // Don't force override - let breakpoints handle it
+                                        // Just trigger update
+                                        if (typeof swiperInstance.update === 'function') {
+                                            swiperInstance.update();
+                                        }
+                                    }
+                                }, 200);
+                                
+                                // Also update on window resize
+                                var resizeHandler = function() {
+                                    if (swiperInstance && typeof swiperInstance.update === 'function') {
+                                        swiperInstance.update();
+                                    }
+                                };
+                                window.addEventListener('resize', resizeHandler);
+                                
+                                // Store resize handler for cleanup if needed
+                                if (!widgetElement.resizeHandler) {
+                                    widgetElement.resizeHandler = resizeHandler;
+                                }
+                            }
+                            
+                            // Ensure autoplay starts if configured
+                            if (autoplayConfig) {
+                                setTimeout(function() {
+                                    if (swiperInstance) {
+                                        // Try to start autoplay if it exists
+                                        if (swiperInstance.autoplay) {
+                                            if (typeof swiperInstance.autoplay.start === 'function') {
+                                                swiperInstance.autoplay.start();
+                                            } else if (swiperInstance.autoplay.running === false) {
+                                                swiperInstance.autoplay.start();
+                                            }
+                                        }
+                                        // Alternative: update autoplay delay if needed
+                                        if (swiperInstance.params && swiperInstance.params.autoplay) {
+                                            if (swiperInstance.params.autoplay.delay !== autoplayConfig.delay) {
+                                                swiperInstance.params.autoplay.delay = autoplayConfig.delay;
+                                            }
+                                        }
+                                    }
+                                }, 200);
+                            }
                         }
                     } catch(e) {
                         console.warn('Swiper initialization failed:', e);
