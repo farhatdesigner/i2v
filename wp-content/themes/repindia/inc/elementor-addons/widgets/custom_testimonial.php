@@ -861,7 +861,7 @@ class Custom_Testimonial extends Widget_Base
     }
 
     protected function render()
-{
+    {
     $settings = $this->get_settings_for_display();
     $testimonials = $settings['testimonials_list'] ?? [];
 
@@ -888,7 +888,7 @@ class Custom_Testimonial extends Widget_Base
                             <?php if (!empty($testimonial['author_photo']['url'])) : ?>
                                 <div class="custom-testimonial-author-photo">
                                     <img src="<?php echo esc_url($testimonial['author_photo']['url']); ?>" 
-                                         alt="<?php echo esc_attr($testimonial['author_name'] ?? ''); ?>">
+                                            alt="<?php echo esc_attr($testimonial['author_name'] ?? ''); ?>">
                                 </div>
                             <?php endif; ?>
 
@@ -917,7 +917,7 @@ class Custom_Testimonial extends Widget_Base
                         <?php if (($testimonial['media_type'] ?? '') === 'image' && !empty($testimonial['media_image']['url'])) : ?>
                             <div class="custom-testimonial-media">
                                 <img src="<?php echo esc_url($testimonial['media_image']['url']); ?>" 
-                                     alt="<?php echo esc_attr($testimonial['title'] ?? ''); ?>">
+                                        alt="<?php echo esc_attr($testimonial['title'] ?? ''); ?>">
                             </div>
                         <?php elseif (($testimonial['media_type'] ?? '') === 'video') : ?>
                             <?php
@@ -953,102 +953,99 @@ class Custom_Testimonial extends Widget_Base
                                     ]);
                                 }
                                 ?>
-                                <div class="custom-testimonial-media custom-testimonial-video-wrapper elementor-open-<?php echo $lightbox === 'yes' ? 'lightbox' : 'inline'; ?>" 
-                                     data-video-type="<?php echo esc_attr($video_type); ?>"
-                                     data-video-url="<?php echo esc_attr($video_url); ?>"
-                                     data-embed-url="<?php echo esc_attr($embed_url); ?>"
-                                     data-lightbox="<?php echo esc_attr($lightbox); ?>"
-                                     data-autoplay="<?php echo esc_attr($autoplay); ?>"
-                                     data-controls="<?php echo esc_attr($controls); ?>"
-                                     data-mute="<?php echo esc_attr($mute); ?>"
-                                     data-loop="<?php echo esc_attr($loop); ?>"
-                                     data-aspect-ratio="<?php echo esc_attr($aspect_ratio); ?>"
-                                     data-lazyload="<?php echo esc_attr($lazyload); ?>">
+                                <div class="custom-testimonial-media custom-testimonial-video-wrapper"
+                                    data-video-type="<?php echo esc_attr($video_type); ?>"
+                                    data-video-url="<?php echo esc_attr($video_url); ?>"
+                                    data-embed-url="<?php echo esc_attr($embed_url); ?>">
 
                                     <?php if ($lightbox === 'yes') : ?>
-                                        <?php if (!empty($overlay_image)) : ?>
-                                            <div class="custom-testimonial-video-overlay elementor-custom-embed-image-overlay">
-                                                <img src="<?php echo esc_url($overlay_image); ?>" 
-                                                     alt="<?php echo esc_attr($testimonial['title'] ?? ''); ?>">
-                                                <?php
-                                                $play_icon = $this->get_play_icon_html($testimonial['video_play_icon'] ?? []);
-                                                ?>
-                                                <div class="custom-testimonial-play-button">
-                                                    <?php echo $play_icon; ?>
+                                        <a href="<?php echo esc_url($video_url); ?>"
+                                        class="elementor-open-lightbox"
+                                        data-elementor-open-lightbox="yes"
+                                        data-elementor-lightbox-slideshow="video-gallery-<?php echo esc_attr($widget_id); ?>"
+                                        data-elementor-lightbox-title="<?php echo esc_attr($testimonial['title'] ?? ''); ?>">
+
+                                            <?php if (!empty($overlay_image)) : ?>
+                                                <div class="custom-testimonial-video-overlay elementor-custom-embed-image-overlay">
+                                                    <img src="<?php echo esc_url($overlay_image); ?>"
+                                                        alt="<?php echo esc_attr($testimonial['title'] ?? ''); ?>">
+
+                                                    <div class="custom-testimonial-play-button">
+                                                        <?php echo $this->get_play_icon_html($testimonial['video_play_icon'] ?? []); ?>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        <?php else : ?>
-                                            <?php
-                                            // Get thumbnail for YouTube
-                                            $thumbnail_url = '';
-                                            if ($video_type === 'youtube' && class_exists('\Elementor\Embed')) {
-                                                $post_id = get_queried_object_id();
-                                                $thumbnail_html = \Elementor\Embed::get_embed_thumbnail_html($video_url, $post_id);
-                                                if (!empty($thumbnail_html)) {
-                                                    preg_match('/src="([^"]+)"/', $thumbnail_html, $matches);
-                                                    if (!empty($matches[1])) {
-                                                        $thumbnail_url = $matches[1];
+
+                                            <?php else : ?>
+
+                                                <?php
+                                                // Thumbnail for YouTube
+                                                $thumbnail_url = '';
+                                                if ($video_type === 'youtube' && class_exists('\Elementor\Embed')) {
+                                                    $post_id = get_queried_object_id();
+                                                    $thumb_html = \Elementor\Embed::get_embed_thumbnail_html($video_url, $post_id);
+
+                                                    if (!empty($thumb_html)) {
+                                                        preg_match('/src="([^"]+)"/', $thumb_html, $m);
+                                                        $thumbnail_url = $m[1] ?? '';
                                                     }
                                                 }
-                                            }
-                                            $play_icon = $this->get_play_icon_html($testimonial['video_play_icon'] ?? []);
-                                            ?>
-                                            <div class="custom-testimonial-video-overlay elementor-custom-embed-image-overlay">
-                                                <?php if (!empty($thumbnail_url)) : ?>
-                                                    <img src="<?php echo esc_url($thumbnail_url); ?>" 
-                                                         alt="<?php echo esc_attr($testimonial['title'] ?? ''); ?>">
-                                                <?php endif; ?>
-                                                <div class="custom-testimonial-play-button">
-                                                    <?php echo $play_icon; ?>
+                                                ?>
+
+                                                <div class="custom-testimonial-video-overlay elementor-custom-embed-image-overlay">
+                                                    <?php if (!empty($thumbnail_url)) : ?>
+                                                        <img src="<?php echo esc_url($thumbnail_url); ?>"
+                                                            alt="<?php echo esc_attr($testimonial['title'] ?? ''); ?>">
+                                                    <?php endif; ?>
+
+                                                    <div class="custom-testimonial-play-button">
+                                                        <?php echo $this->get_play_icon_html($testimonial['video_play_icon'] ?? []); ?>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        <?php endif; ?>
+
+                                            <?php endif; ?>
+                                        </a>
+
                                     <?php elseif ($video_type === 'hosted') : ?>
-                                        <video <?php echo $autoplay === 'yes' ? 'autoplay' : ''; ?> 
-                                               <?php echo $controls === 'yes' ? 'controls' : ''; ?> 
-                                               <?php echo $mute === 'yes' ? 'muted' : ''; ?> 
-                                               <?php echo $loop === 'yes' ? 'loop' : ''; ?>
-                                               <?php echo $lazyload === 'yes' ? 'preload="none"' : ''; ?>
-                                               playsinline>
+
+                                        <video <?php echo $autoplay === 'yes' ? 'autoplay' : ''; ?>
+                                            <?php echo $controls === 'yes' ? 'controls' : ''; ?>
+                                            <?php echo $mute === 'yes' ? 'muted' : ''; ?>
+                                            <?php echo $loop === 'yes' ? 'loop' : ''; ?>
+                                            <?php echo $lazyload === 'yes' ? 'preload="none"' : ''; ?>
+                                            playsinline>
                                             <source src="<?php echo esc_url($video_url); ?>" type="video/mp4">
                                         </video>
+
                                     <?php else : ?>
+
                                         <?php
                                         // Inline YouTube embed
                                         if ($video_type === 'youtube' && class_exists('\Elementor\Embed')) {
                                             $embed_params = [
                                                 'autoplay' => $autoplay === 'yes' ? '1' : '0',
-                                                'mute' => $mute === 'yes' ? '1' : '0',
+                                                'mute'     => $mute === 'yes' ? '1' : '0',
                                                 'controls' => $controls === 'yes' ? '1' : '0',
-                                                'loop' => $loop === 'yes' ? '1' : '0',
+                                                'loop'     => $loop === 'yes' ? '1' : '0',
                                             ];
-                                            $embed_options = [];
-                                            $embed_html = \Elementor\Embed::get_embed_html($video_url, $embed_params, $embed_options);
+                                            $embed_html = \Elementor\Embed::get_embed_html($video_url, $embed_params, []);
+
                                             if (!empty($embed_html)) {
                                                 echo $embed_html;
                                             } else {
-                                                $play_icon = $this->get_play_icon_html($testimonial['video_play_icon'] ?? []);
                                                 ?>
                                                 <div class="custom-testimonial-video-placeholder">
                                                     <div class="custom-testimonial-play-button">
-                                                        <?php echo $play_icon; ?>
+                                                        <?php echo $this->get_play_icon_html($testimonial['video_play_icon'] ?? []); ?>
                                                     </div>
                                                 </div>
                                                 <?php
                                             }
-                                        } else {
-                                            $play_icon = $this->get_play_icon_html($testimonial['video_play_icon'] ?? []);
-                                            ?>
-                                            <div class="custom-testimonial-video-placeholder">
-                                                <div class="custom-testimonial-play-button">
-                                                    <?php echo $play_icon; ?>
-                                                </div>
-                                            </div>
-                                            <?php
                                         }
                                         ?>
+
                                     <?php endif; ?>
                                 </div>
+
                             <?php endif; ?>
                         <?php endif; ?>
                     </div>
@@ -1063,9 +1060,9 @@ class Custom_Testimonial extends Widget_Base
                     <?php foreach ($testimonials as $index => $testimonial) : ?>
                         <?php if (!empty($testimonial['logo_image']['url'])) : ?>
                             <div class="swiper-slide custom-testimonial-tab-item <?php echo $index === 1 ? 'active' : ''; ?>" 
-                                 data-index="<?php echo esc_attr($index); ?>">
+                                    data-index="<?php echo esc_attr($index); ?>">
                                 <img src="<?php echo esc_url($testimonial['logo_image']['url']); ?>" 
-                                     alt="<?php echo esc_attr($testimonial['title'] ?? ''); ?>">
+                                        alt="<?php echo esc_attr($testimonial['title'] ?? ''); ?>">
                             </div>
                         <?php endif; ?>
                     <?php endforeach; ?>
@@ -1252,66 +1249,117 @@ class Custom_Testimonial extends Widget_Base
             }
 
             // init video overlay/lightbox handlers (keeps your existing behavior)
+            // Replace existing initVideoHandlers with this robust version
+            function buildLightboxOptionsFromWrapper(wrapper) {
+                var videoType = wrapper.getAttribute('data-video-type') || 'youtube';
+                var embedUrl = wrapper.getAttribute('data-embed-url') || wrapper.getAttribute('data-video-url') || '';
+                var autoplay = wrapper.getAttribute('data-autoplay') === 'yes' ? 'yes' : 'no';
+                var controls = wrapper.getAttribute('data-controls') === 'yes' ? 'yes' : 'no';
+                var mute = wrapper.getAttribute('data-mute') === 'yes' ? 'yes' : 'no';
+                var loop = wrapper.getAttribute('data-loop') === 'yes' ? 'yes' : 'no';
+                var aspectRatio = wrapper.getAttribute('data-aspect-ratio') || '169';
+
+                var lightboxUrl = embedUrl;
+                // If elementor youtube helper available and autoplay requested, allow it
+                if (videoType === 'youtube' && typeof elementorFrontend !== 'undefined' && elementorFrontend.utils && elementorFrontend.utils.youtube && autoplay === 'yes') {
+                    if (elementorFrontend.utils.youtube.getAutoplayURL) {
+                        lightboxUrl = elementorFrontend.utils.youtube.getAutoplayURL(embedUrl);
+                    }
+                }
+
+                var opts = {
+                    type: 'video',
+                    videoType: videoType,
+                    url: lightboxUrl,
+                    autoplay: autoplay,
+                    modalOptions: {
+                        id: 'ct-lightbox-' + widgetId + '-' + Math.random().toString(36).substr(2,9),
+                        entranceAnimation: 'fadeIn',
+                        videoAspectRatio: aspectRatio
+                    }
+                };
+
+                if (videoType === 'hosted') {
+                    opts.videoParams = {
+                        autoplay: autoplay === 'yes' ? '1' : '0',
+                        controls: controls === 'yes' ? '1' : '0',
+                        muted: mute === 'yes' ? '1' : '0',
+                        loop: loop === 'yes' ? '1' : '0'
+                    };
+                }
+
+                return opts;
+            }
+
             function initVideoHandlers(scope) {
-                var videoWrappers = (scope || widgetEl).querySelectorAll('.custom-testimonial-video-wrapper');
+                scope = scope || widgetEl;
 
-                videoWrappers.forEach(function(wrapper) {
-                    if (wrapper._ct_initialized) return;
-                    wrapper._ct_initialized = true;
+                // idempotent: avoid double-init for same wrapper
+                var wrappers = scope.querySelectorAll('.custom-testimonial-video-wrapper');
+                wrappers.forEach(function(wrapper) {
+                    // ensure wrapper is marked to avoid repeated processing
+                    if (!wrapper._ct_data_prepared) {
+                        wrapper._ct_data_prepared = true;
 
-                    var lightbox = wrapper.getAttribute('data-lightbox') === 'yes';
-                    var videoType = wrapper.getAttribute('data-video-type');
-                    var videoUrl = wrapper.getAttribute('data-video-url');
-                    var embedUrl = wrapper.getAttribute('data-embed-url') || videoUrl;
-                    var overlay = wrapper.querySelector('.custom-testimonial-video-overlay');
+                        // prepare overlay attributes (Elementor expects these attrs on the clickable element)
+                        var overlay = wrapper.querySelector('.custom-testimonial-video-overlay');
+                        if (overlay) {
+                            var opts = buildLightboxOptionsFromWrapper(wrapper);
+                            // set attributes to let Elementor recognize this as a lightbox link
+                            overlay.setAttribute('data-elementor-open-lightbox', 'yes');
+                            overlay.setAttribute('data-elementor-lightbox', JSON.stringify(opts));
 
-                    if (overlay && lightbox && typeof elementorFrontend !== 'undefined') {
-                        var autoplay = wrapper.getAttribute('data-autoplay') === 'yes' ? 'yes' : 'no';
-                        var controls = wrapper.getAttribute('data-controls') === 'yes' ? 'yes' : 'no';
-                        var mute = wrapper.getAttribute('data-mute') === 'yes' ? 'yes' : 'no';
-                        var loop = wrapper.getAttribute('data-loop') === 'yes' ? 'yes' : 'no';
-                        var aspectRatio = wrapper.getAttribute('data-aspect-ratio') || '169';
-
-                        var lightboxUrl = embedUrl;
-                        if (videoType === 'youtube' && elementorFrontend && elementorFrontend.utils && elementorFrontend.utils.youtube && autoplay === 'yes') {
-                            if (elementorFrontend.utils.youtube.getAutoplayURL) {
-                                lightboxUrl = elementorFrontend.utils.youtube.getAutoplayURL(embedUrl);
+                            // create action hash for editor compatibility if possible
+                            try {
+                                if (typeof elementorFrontend !== 'undefined' && elementorFrontend.createActionHash) {
+                                    var ah = elementorFrontend.createActionHash('lightbox', opts);
+                                    overlay.setAttribute('data-e-action-hash', ah);
+                                }
+                            } catch (err) {
+                                // ignore if hash can't be created
                             }
                         }
-
-                        var lightboxOptions = {
-                            type: 'video',
-                            videoType: videoType,
-                            url: lightboxUrl,
-                            autoplay: autoplay,
-                            modalOptions: {
-                                id: 'ct-lightbox-' + widgetId + '-' + Math.random().toString(36).substr(2,9),
-                                entranceAnimation: 'fadeIn',
-                                videoAspectRatio: aspectRatio
-                            }
-                        };
-
-                        if (videoType === 'hosted') {
-                            lightboxOptions.videoParams = {
-                                autoplay: autoplay === 'yes' ? '1' : '0',
-                                controls: controls === 'yes' ? '1' : '0',
-                                muted: mute === 'yes' ? '1' : '0',
-                                loop: loop === 'yes' ? '1' : '0'
-                            };
-                        }
-
-                        overlay.setAttribute('data-elementor-open-lightbox', 'yes');
-                        overlay.setAttribute('data-elementor-lightbox', JSON.stringify(lightboxOptions));
-
-                        overlay.addEventListener('click', function(e) {
-                            if (typeof elementorFrontend !== 'undefined' && elementorFrontend.modules && elementorFrontend.modules.lightbox) {
-                                e.preventDefault();
-                                elementorFrontend.modules.lightbox.openModal(lightboxOptions);
-                            }
-                        });
                     }
                 });
+
+                // Event delegation: one click handler for the widget — works for clones too
+                if (!widgetEl._ct_lightbox_delegated) {
+                    widgetEl._ct_lightbox_delegated = true;
+
+                    widgetEl.addEventListener('click', function(e) {
+                        var overlay = e.target.closest('.custom-testimonial-video-overlay');
+                        if (!overlay) return;
+
+                        // find wrapper from the overlay (closest .custom-testimonial-video-wrapper)
+                        var wrapper = overlay.closest('.custom-testimonial-video-wrapper');
+                        if (!wrapper) return;
+
+                        // If overlay was set to open inline (not lightbox), just ignore here
+                        var isLight = overlay.getAttribute('data-elementor-open-lightbox') === 'yes' || wrapper.getAttribute('data-lightbox') === 'yes';
+                        if (!isLight) return;
+
+                        // Build options fresh (in case attributes changed)
+                        var opts = buildLightboxOptionsFromWrapper(wrapper);
+
+                        // Prevent default and open via Elementor modal where available
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        if (typeof elementorFrontend !== 'undefined' && elementorFrontend.modules && elementorFrontend.modules.lightbox) {
+                            try {
+                                elementorFrontend.modules.lightbox.openModal(opts);
+                            } catch (err) {
+                                // fallback: attempt to open as simple window
+                                window.open(opts.url, '_blank');
+                            }
+                        } else {
+                            // If Elementor's lightbox isn't available, open the url in a new tab as safe fallback
+                            window.open(opts.url, '_blank');
+                        }
+                    }, true); // use capture true to get it early
+                }
             }
+
 
             // Ensure Swiper available (Elementor loads Swiper on frontend / editor)
             function readyForSwiper(cb) {
@@ -1337,59 +1385,35 @@ class Custom_Testimonial extends Widget_Base
                     slidesPerGroup: 1,
                     loop: false,
                     speed: 600,
-
                     navigation: {
                         nextEl: '#' + widgetId + '-tabs-swiper .swiper-button-next, .' + '<?php echo esc_js($widget_id); ?>' + '-tabs-next',
                         prevEl: '#' + widgetId + '-tabs-swiper .swiper-button-prev, .' + '<?php echo esc_js($widget_id); ?>' + '-tabs-prev'
                     },
-
                     breakpoints: {
-                        0: {
-                            // MOBILE — only 1 slide
-                            slidesPerView: 1,
-                            slidesPerGroup: 1,
-                            centeredSlides: true
-                        },
-                        480: {
-                            // SMALL DEVICES (OPTIONAL)
-                            slidesPerView: 1,
-                            slidesPerGroup: 1,
-                            centeredSlides: true
-                        },
+                        // tablet
                         768: {
-                            // TABLET
-                            slidesPerView: 3,
-                            slidesPerGroup: 1,
-                            centeredSlides: false
+                            slidesPerView: 3
                         },
-                        1024: {
-                            // DESKTOP
-                            slidesPerView: 4,
-                            slidesPerGroup: 1,
-                            centeredSlides: false
+                        // mobile
+                        480: {
+                            slidesPerView: 2
                         }
                     },
-
                     on: {
-                        init: function () {
-                            // keep your existing logic — initialize active tab correctly
-                            setTimeout(function () {
+                        init: function(){
+                            // ensure correct active state on init (2nd visible)
+                            setTimeout(function(){
                                 setActiveByVisibleIndex(this.activeIndex || 0);
                             }.bind(this), 30);
                         },
-
-                        slideChange: function () {
-                            // keep your logic for active tab
+                        slideChange: function(){
                             setActiveByVisibleIndex(this.activeIndex || 0);
                         },
-
-                        resize: function () {
-                            // recalc active slide on resize (mobile/tablet/desktop)
+                        resize: function(){
                             setActiveByVisibleIndex(this.activeIndex || 0);
                         }
                     }
                 };
-
 
                 // Instantiate Swiper (works with global Swiper)
                 var swiperInstance;
@@ -1501,7 +1525,7 @@ class Custom_Testimonial extends Widget_Base
         })();
         </script>
     </div>
-<?php
-}
+    <?php
+    }
 
 }
