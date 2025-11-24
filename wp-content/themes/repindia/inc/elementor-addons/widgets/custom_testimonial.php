@@ -1337,35 +1337,59 @@ class Custom_Testimonial extends Widget_Base
                     slidesPerGroup: 1,
                     loop: false,
                     speed: 600,
+
                     navigation: {
                         nextEl: '#' + widgetId + '-tabs-swiper .swiper-button-next, .' + '<?php echo esc_js($widget_id); ?>' + '-tabs-next',
                         prevEl: '#' + widgetId + '-tabs-swiper .swiper-button-prev, .' + '<?php echo esc_js($widget_id); ?>' + '-tabs-prev'
                     },
+
                     breakpoints: {
-                        // tablet
-                        768: {
-                            slidesPerView: 3
+                        0: {
+                            // MOBILE — only 1 slide
+                            slidesPerView: 1,
+                            slidesPerGroup: 1,
+                            centeredSlides: true
                         },
-                        // mobile
                         480: {
-                            slidesPerView: 2
+                            // SMALL DEVICES (OPTIONAL)
+                            slidesPerView: 1,
+                            slidesPerGroup: 1,
+                            centeredSlides: true
+                        },
+                        768: {
+                            // TABLET
+                            slidesPerView: 3,
+                            slidesPerGroup: 1,
+                            centeredSlides: false
+                        },
+                        1024: {
+                            // DESKTOP
+                            slidesPerView: 4,
+                            slidesPerGroup: 1,
+                            centeredSlides: false
                         }
                     },
+
                     on: {
-                        init: function(){
-                            // ensure correct active state on init (2nd visible)
-                            setTimeout(function(){
+                        init: function () {
+                            // keep your existing logic — initialize active tab correctly
+                            setTimeout(function () {
                                 setActiveByVisibleIndex(this.activeIndex || 0);
                             }.bind(this), 30);
                         },
-                        slideChange: function(){
+
+                        slideChange: function () {
+                            // keep your logic for active tab
                             setActiveByVisibleIndex(this.activeIndex || 0);
                         },
-                        resize: function(){
+
+                        resize: function () {
+                            // recalc active slide on resize (mobile/tablet/desktop)
                             setActiveByVisibleIndex(this.activeIndex || 0);
                         }
                     }
                 };
+
 
                 // Instantiate Swiper (works with global Swiper)
                 var swiperInstance;
