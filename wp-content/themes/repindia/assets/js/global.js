@@ -638,6 +638,11 @@ jQuery(document).ready(function() {
     first.addClass('acactive');
     first.find('.select_div').attr("aria-expanded", "true");
     jQuery(".accontent").first().slideDown(200);
+    
+    // Initialize progress fill for first accordion
+    setTimeout(function() {
+        startProgressFill();
+    }, 200);
 
     // Initialize videos - show first video, hide others using opacity
     jQuery('.accordion_video').each(function(index) {
@@ -655,6 +660,7 @@ jQuery(document).ready(function() {
     let timer;
     let isPaused = false; // Track if auto-slide is paused
     let resumeTimeout = null; // Store resume timeout so we can cancel it
+    let progressInterval = null; // Track progress animation interval
 
     // Helper function to check if any modal is currently open
     function isModalOpen() {
@@ -672,6 +678,44 @@ jQuery(document).ready(function() {
         });
     }
 
+    // Function to start progress fill animation
+    function startProgressFill() {
+        // Clear any existing progress interval
+        if (progressInterval) {
+            clearInterval(progressInterval);
+            progressInterval = null;
+        }
+
+        // Reset progress on all accordion items
+        jQuery(".accordion_set").each(function() {
+            this.style.setProperty('--progress', '0%');
+        });
+
+        // Start progress for active accordion item
+        const activeAccordion = jQuery(".accordion_set.acactive")[0];
+        if (activeAccordion) {
+            let timeLeft = autoInterval / 1000; // Convert to seconds
+            const updateInterval = 50; // Update every 50ms for smooth animation
+
+            progressInterval = setInterval(function() {
+                if (isPaused || isModalOpen()) {
+                    return;
+                }
+                
+                timeLeft -= (updateInterval / 1000);
+                const progress = ((autoInterval / 1000 - timeLeft) / (autoInterval / 1000)) * 100;
+                
+                // Update progress CSS variable
+                activeAccordion.style.setProperty('--progress', progress + '%');
+
+                if (timeLeft <= 0) {
+                    clearInterval(progressInterval);
+                    progressInterval = null;
+                }
+            }, updateInterval);
+        }
+    }
+
     // function to open accordion by index
     function openAccordion(index) {
         let target = jQuery(".accordion_set").eq(index);
@@ -685,6 +729,9 @@ jQuery(document).ready(function() {
 
         // Switch to corresponding video
         switchVideo(index);
+        
+        // Start progress fill animation
+        startProgressFill();
     }
 
     // auto slide function
@@ -710,6 +757,11 @@ jQuery(document).ready(function() {
             clearInterval(timer);
             timer = null;
         }
+        // Pause progress animation
+        if (progressInterval) {
+            clearInterval(progressInterval);
+            progressInterval = null;
+        }
         // Cancel any pending resume timeout
         if (resumeTimeout) {
             clearTimeout(resumeTimeout);
@@ -727,6 +779,8 @@ jQuery(document).ready(function() {
         if (!timer) {
             startAutoSlide();
         }
+        // Restart progress fill animation
+        startProgressFill();
     }
 
     // start auto slide initially
@@ -743,6 +797,12 @@ jQuery(document).ready(function() {
             parent.removeClass("acactive");
             jQuery(this).attr("aria-expanded", "false");
             parent.find(".accontent").slideUp(200);
+            // Stop progress animation when closing
+            if (progressInterval) {
+                clearInterval(progressInterval);
+                progressInterval = null;
+            }
+            parent[0].style.setProperty('--progress', '0%');
         } else {
             openAccordion(autoIndex);
         }
