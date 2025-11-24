@@ -330,109 +330,6 @@ class Custom_Testimonial extends Widget_Base
 
         $this->end_controls_section();
 
-        // Slider Settings
-        $this->start_controls_section(
-            'section_slider_settings',
-            [
-                'label' => esc_html__('Slider Settings', 'repindia'),
-            ]
-        );
-
-        $this->add_control(
-            'slider_autoplay',
-            [
-                'label' => esc_html__('Autoplay', 'repindia'),
-                'type' => Controls_Manager::SWITCHER,
-                'label_on' => esc_html__('Yes', 'repindia'),
-                'label_off' => esc_html__('No', 'repindia'),
-                'default' => 'no',
-            ]
-        );
-
-        $this->add_control(
-            'slider_autoplay_speed',
-            [
-                'label' => esc_html__('Autoplay Speed (ms)', 'repindia'),
-                'type' => Controls_Manager::NUMBER,
-                'default' => 3000,
-                'condition' => [
-                    'slider_autoplay' => 'yes',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'slider_speed',
-            [
-                'label' => esc_html__('Transition Speed (ms)', 'repindia'),
-                'type' => Controls_Manager::NUMBER,
-                'default' => 500,
-            ]
-        );
-
-        $this->add_control(
-            'slider_loop',
-            [
-                'label' => esc_html__('Loop', 'repindia'),
-                'type' => Controls_Manager::SWITCHER,
-                'label_on' => esc_html__('Yes', 'repindia'),
-                'label_off' => esc_html__('No', 'repindia'),
-                'default' => 'yes',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'slider_slides_to_show',
-            [
-                'label' => esc_html__('Slides To Show', 'repindia'),
-                'type' => Controls_Manager::NUMBER,
-                'default' => 4,
-                'min' => 1,
-                'max' => 10,
-                'step' => 1,
-                'devices' => ['desktop', 'tablet', 'mobile'],
-                'desktop_default' => 4,
-                'tablet_default' => 3,
-                'mobile_default' => 2,
-            ]
-        );
-
-        $this->add_control(
-            'slider_slides_to_scroll',
-            [
-                'label' => esc_html__('Slides To Scroll', 'repindia'),
-                'type' => Controls_Manager::NUMBER,
-                'default' => 1,
-                'min' => 1,
-                'max' => 10,
-                'step' => 1,
-            ]
-        );
-
-        $this->add_control(
-            'slider_navigation',
-            [
-                'label' => esc_html__('Navigation Arrows', 'repindia'),
-                'type' => Controls_Manager::SWITCHER,
-                'label_on' => esc_html__('Show', 'repindia'),
-                'label_off' => esc_html__('Hide', 'repindia'),
-                'default' => 'yes',
-            ]
-        );
-
-        $this->add_control(
-            'slider_pagination',
-            [
-                'label' => esc_html__('Pagination Dots', 'repindia'),
-                'type' => Controls_Manager::SWITCHER,
-                'label_on' => esc_html__('Show', 'repindia'),
-                'label_off' => esc_html__('Hide', 'repindia'),
-                'default' => 'no',
-            ]
-        );
-
-        $this->end_controls_section();
-
         // Style: Tabs
         $this->start_controls_section(
             'section_style_tabs',
@@ -964,183 +861,171 @@ class Custom_Testimonial extends Widget_Base
     }
 
     protected function render()
-    {
-        $settings = $this->get_settings_for_display();
-        $testimonials = $settings['testimonials_list'] ?? [];
+{
+    $settings = $this->get_settings_for_display();
+    $testimonials = $settings['testimonials_list'] ?? [];
 
-        if (empty($testimonials)) {
-            return;
-        }
+    if (empty($testimonials)) {
+        return;
+    }
 
-        $widget_id = 'custom-testimonial-' . $this->get_id();
-        $first_testimonial = $testimonials[0] ?? [];
-        $show_navigation = !empty($settings['slider_navigation']);
-        $show_pagination = !empty($settings['slider_pagination']);
-        ?>
-        <div class="custom-testimonial-widget" id="<?php echo esc_attr($widget_id); ?>">
-            <div class="custom-testimonial-content-wrapper">
-                <!-- Left Side: Quote & Author -->
-                <div class="custom-testimonial-left">
-                    <?php foreach ($testimonials as $index => $testimonial) : ?>
-                        <div class="custom-testimonial-item <?php echo $index === 0 ? 'active' : ''; ?>" data-index="<?php echo esc_attr($index); ?>">
-                            <?php if (!empty($testimonial['description'])) : ?>
-                                <div class="custom-testimonial-quote">
-                                    <?php echo wp_kses_post($testimonial['description']); ?>
+    $widget_id = 'custom-testimonial-' . $this->get_id();
+    $first_testimonial = $testimonials[0] ?? [];
+    ?>
+    <div class="custom-testimonial-widget" id="<?php echo esc_attr($widget_id); ?>">
+        <div class="custom-testimonial-content-wrapper">
+            <!-- Left Side: Quote & Author -->
+            <div class="custom-testimonial-left">
+                <?php foreach ($testimonials as $index => $testimonial) : ?>
+                    <div class="custom-testimonial-item <?php echo $index === 1 ? 'active' : ''; ?>" data-index="<?php echo esc_attr($index); ?>">
+                        <?php if (!empty($testimonial['description'])) : ?>
+                            <div class="custom-testimonial-quote">
+                                <?php echo wp_kses_post($testimonial['description']); ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <div class="custom-testimonial-author">
+                            <?php if (!empty($testimonial['author_photo']['url'])) : ?>
+                                <div class="custom-testimonial-author-photo">
+                                    <img src="<?php echo esc_url($testimonial['author_photo']['url']); ?>" 
+                                         alt="<?php echo esc_attr($testimonial['author_name'] ?? ''); ?>">
                                 </div>
                             <?php endif; ?>
 
-                            <div class="custom-testimonial-author">
-                                <?php if (!empty($testimonial['author_photo']['url'])) : ?>
-                                    <div class="custom-testimonial-author-photo">
-                                        <img src="<?php echo esc_url($testimonial['author_photo']['url']); ?>" 
-                                             alt="<?php echo esc_attr($testimonial['author_name'] ?? ''); ?>">
+                            <div class="custom-testimonial-author-info">
+                                <?php if (!empty($testimonial['author_name'])) : ?>
+                                    <div class="custom-testimonial-author-name">
+                                        <?php echo esc_html($testimonial['author_name']); ?>
                                     </div>
                                 <?php endif; ?>
 
-                                <div class="custom-testimonial-author-info">
-                                    <?php if (!empty($testimonial['author_name'])) : ?>
-                                        <div class="custom-testimonial-author-name">
-                                            <?php echo esc_html($testimonial['author_name']); ?>
-                                        </div>
-                                    <?php endif; ?>
-
-                                    <?php if (!empty($testimonial['author_role'])) : ?>
-                                        <div class="custom-testimonial-author-role">
-                                            <?php echo esc_html($testimonial['author_role']); ?>
-                                        </div>
-                                    <?php endif; ?>
-                                </div>
+                                <?php if (!empty($testimonial['author_role'])) : ?>
+                                    <div class="custom-testimonial-author-role">
+                                        <?php echo esc_html($testimonial['author_role']); ?>
+                                    </div>
+                                <?php endif; ?>
                             </div>
                         </div>
-                    <?php endforeach; ?>
-                </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
 
-                <!-- Right Side: Media -->
-                <div class="custom-testimonial-right">
-                    <?php foreach ($testimonials as $index => $testimonial) : ?>
-                        <div class="custom-testimonial-media-item <?php echo $index === 0 ? 'active' : ''; ?>" data-index="<?php echo esc_attr($index); ?>">
-                            <?php if ($testimonial['media_type'] === 'image' && !empty($testimonial['media_image']['url'])) : ?>
-                                <div class="custom-testimonial-media">
-                                    <img src="<?php echo esc_url($testimonial['media_image']['url']); ?>" 
-                                         alt="<?php echo esc_attr($testimonial['title'] ?? ''); ?>">
-                                </div>
-                            <?php elseif ($testimonial['media_type'] === 'video') : ?>
-<?php
-                                $video_url = '';
+            <!-- Right Side: Media -->
+            <div class="custom-testimonial-right">
+                <?php foreach ($testimonials as $index => $testimonial) : ?>
+                    <div class="custom-testimonial-media-item <?php echo $index === 1 ? 'active' : ''; ?>" data-index="<?php echo esc_attr($index); ?>">
+                        <?php if (($testimonial['media_type'] ?? '') === 'image' && !empty($testimonial['media_image']['url'])) : ?>
+                            <div class="custom-testimonial-media">
+                                <img src="<?php echo esc_url($testimonial['media_image']['url']); ?>" 
+                                     alt="<?php echo esc_attr($testimonial['title'] ?? ''); ?>">
+                            </div>
+                        <?php elseif (($testimonial['media_type'] ?? '') === 'video') : ?>
+                            <?php
+                            $video_url = '';
+                            $video_type = 'youtube';
+
+                            if (($testimonial['video_source'] ?? '') === 'youtube' && !empty($testimonial['youtube_url'])) {
+                                $video_url = $testimonial['youtube_url'];
                                 $video_type = 'youtube';
-                                
-                                if ($testimonial['video_source'] === 'youtube' && !empty($testimonial['youtube_url'])) {
-                                    $video_url = $testimonial['youtube_url'];
-                                    $video_type = 'youtube';
-                                } elseif ($testimonial['video_source'] === 'hosted' && !empty($testimonial['hosted_video']['url'])) {
-                                    $video_url = $testimonial['hosted_video']['url'];
-                                    $video_type = 'hosted';
-                                }
+                            } elseif (($testimonial['video_source'] ?? '') === 'hosted' && !empty($testimonial['hosted_video']['url'])) {
+                                $video_url = $testimonial['hosted_video']['url'];
+                                $video_type = 'hosted';
+                            }
 
-                                if (!empty($video_url)) :
-                                    $overlay_image = !empty($testimonial['video_overlay_image']['url']) ? $testimonial['video_overlay_image']['url'] : '';
-                                    $lightbox = !empty($testimonial['video_lightbox']) ? 'yes' : 'no';
-                                    $autoplay = !empty($testimonial['video_autoplay']) ? 'yes' : 'no';
-                                    $controls = !empty($testimonial['video_controls']) ? 'yes' : 'no';
-                                    $mute = !empty($testimonial['video_mute']) ? 'yes' : 'no';
-                                    $loop = !empty($testimonial['video_loop']) ? 'yes' : 'no';
-                                    $aspect_ratio = $testimonial['video_aspect_ratio'] ?? '169';
-                                    $lazyload = !empty($testimonial['video_lazyload']) ? 'yes' : 'no';
-                                    
-                                    // Get embed URL for YouTube
-                                    $embed_url = $video_url;
-                                    if ($video_type === 'youtube' && class_exists('\Elementor\Embed')) {
-                                        $embed_url = Embed::get_embed_url($video_url, [
-                                            'autoplay' => $autoplay === 'yes' ? '1' : '0',
-                                            'mute' => $mute === 'yes' ? '1' : '0',
-                                            'controls' => $controls === 'yes' ? '1' : '0',
-                                            'loop' => $loop === 'yes' ? '1' : '0',
-                                        ]);
-                                    }
-                                    ?>
-                                    <div class="custom-testimonial-media custom-testimonial-video-wrapper elementor-open-<?php echo $lightbox === 'yes' ? 'lightbox' : 'inline'; ?>" 
-                                         data-video-type="<?php echo esc_attr($video_type); ?>"
-                                         data-video-url="<?php echo esc_attr($video_url); ?>"
-                                         data-embed-url="<?php echo esc_attr($embed_url); ?>"
-                                         data-lightbox="<?php echo esc_attr($lightbox); ?>"
-                                         data-autoplay="<?php echo esc_attr($autoplay); ?>"
-                                         data-controls="<?php echo esc_attr($controls); ?>"
-                                         data-mute="<?php echo esc_attr($mute); ?>"
-                                         data-loop="<?php echo esc_attr($loop); ?>"
-                                         data-aspect-ratio="<?php echo esc_attr($aspect_ratio); ?>"
-                                         data-lazyload="<?php echo esc_attr($lazyload); ?>">
-                                        
-                                        <?php if ($lightbox === 'yes') : ?>
-                                            <?php if (!empty($overlay_image)) : ?>
-                                                <div class="custom-testimonial-video-overlay elementor-custom-embed-image-overlay">
-                                                    <img src="<?php echo esc_url($overlay_image); ?>" 
-                                                         alt="<?php echo esc_attr($testimonial['title'] ?? ''); ?>">
-                                                    <?php
-                                                    $play_icon = $this->get_play_icon_html($testimonial['video_play_icon'] ?? []);
-                                                    ?>
-                                                    <div class="custom-testimonial-play-button">
-                                                        <?php echo $play_icon; ?>
-                                                    </div>
-                                                </div>
-                                            <?php else : ?>
+                            if (!empty($video_url)) :
+                                $overlay_image = !empty($testimonial['video_overlay_image']['url']) ? $testimonial['video_overlay_image']['url'] : '';
+                                $lightbox = !empty($testimonial['video_lightbox']) ? 'yes' : 'no';
+                                $autoplay = !empty($testimonial['video_autoplay']) ? 'yes' : 'no';
+                                $controls = !empty($testimonial['video_controls']) ? 'yes' : 'no';
+                                $mute = !empty($testimonial['video_mute']) ? 'yes' : 'no';
+                                $loop = !empty($testimonial['video_loop']) ? 'yes' : 'no';
+                                $aspect_ratio = $testimonial['video_aspect_ratio'] ?? '169';
+                                $lazyload = !empty($testimonial['video_lazyload']) ? 'yes' : 'no';
+
+                                // Get embed URL for YouTube (Elementor helper)
+                                $embed_url = $video_url;
+                                if ($video_type === 'youtube' && class_exists('\Elementor\Embed')) {
+                                    $embed_url = \Elementor\Embed::get_embed_url($video_url, [
+                                        'autoplay' => $autoplay === 'yes' ? '1' : '0',
+                                        'mute' => $mute === 'yes' ? '1' : '0',
+                                        'controls' => $controls === 'yes' ? '1' : '0',
+                                        'loop' => $loop === 'yes' ? '1' : '0',
+                                    ]);
+                                }
+                                ?>
+                                <div class="custom-testimonial-media custom-testimonial-video-wrapper elementor-open-<?php echo $lightbox === 'yes' ? 'lightbox' : 'inline'; ?>" 
+                                     data-video-type="<?php echo esc_attr($video_type); ?>"
+                                     data-video-url="<?php echo esc_attr($video_url); ?>"
+                                     data-embed-url="<?php echo esc_attr($embed_url); ?>"
+                                     data-lightbox="<?php echo esc_attr($lightbox); ?>"
+                                     data-autoplay="<?php echo esc_attr($autoplay); ?>"
+                                     data-controls="<?php echo esc_attr($controls); ?>"
+                                     data-mute="<?php echo esc_attr($mute); ?>"
+                                     data-loop="<?php echo esc_attr($loop); ?>"
+                                     data-aspect-ratio="<?php echo esc_attr($aspect_ratio); ?>"
+                                     data-lazyload="<?php echo esc_attr($lazyload); ?>">
+
+                                    <?php if ($lightbox === 'yes') : ?>
+                                        <?php if (!empty($overlay_image)) : ?>
+                                            <div class="custom-testimonial-video-overlay elementor-custom-embed-image-overlay">
+                                                <img src="<?php echo esc_url($overlay_image); ?>" 
+                                                     alt="<?php echo esc_attr($testimonial['title'] ?? ''); ?>">
                                                 <?php
-                                                // Get thumbnail for YouTube
-                                                $thumbnail_url = '';
-                                                if ($video_type === 'youtube' && class_exists('\Elementor\Embed')) {
-                                                    $post_id = get_queried_object_id();
-                                                    $thumbnail_html = Embed::get_embed_thumbnail_html($video_url, $post_id);
-                                                    if (!empty($thumbnail_html)) {
-                                                        preg_match('/src="([^"]+)"/', $thumbnail_html, $matches);
-                                                        if (!empty($matches[1])) {
-                                                            $thumbnail_url = $matches[1];
-                                                        }
-                                                    }
-                                                }
                                                 $play_icon = $this->get_play_icon_html($testimonial['video_play_icon'] ?? []);
                                                 ?>
-                                                <div class="custom-testimonial-video-overlay elementor-custom-embed-image-overlay">
-                                                    <?php if (!empty($thumbnail_url)) : ?>
-                                                        <img src="<?php echo esc_url($thumbnail_url); ?>" 
-                                                             alt="<?php echo esc_attr($testimonial['title'] ?? ''); ?>">
-                                                    <?php endif; ?>
-                                                    <div class="custom-testimonial-play-button">
-                                                        <?php echo $play_icon; ?>
-                                                    </div>
+                                                <div class="custom-testimonial-play-button">
+                                                    <?php echo $play_icon; ?>
                                                 </div>
-                                            <?php endif; ?>
-                                        <?php elseif ($video_type === 'hosted') : ?>
-                                            <video <?php echo $autoplay === 'yes' ? 'autoplay' : ''; ?> 
-                                                   <?php echo $controls === 'yes' ? 'controls' : ''; ?> 
-                                                   <?php echo $mute === 'yes' ? 'muted' : ''; ?> 
-                                                   <?php echo $loop === 'yes' ? 'loop' : ''; ?>
-                                                   <?php echo $lazyload === 'yes' ? 'preload="none"' : ''; ?>
-                                                   playsinline>
-                                                <source src="<?php echo esc_url($video_url); ?>" type="video/mp4">
-                                            </video>
+                                            </div>
                                         <?php else : ?>
                                             <?php
-                                            // Inline YouTube embed
+                                            // Get thumbnail for YouTube
+                                            $thumbnail_url = '';
                                             if ($video_type === 'youtube' && class_exists('\Elementor\Embed')) {
-                                                $embed_params = [
-                                                    'autoplay' => $autoplay === 'yes' ? '1' : '0',
-                                                    'mute' => $mute === 'yes' ? '1' : '0',
-                                                    'controls' => $controls === 'yes' ? '1' : '0',
-                                                    'loop' => $loop === 'yes' ? '1' : '0',
-                                                ];
-                                                $embed_options = [];
-                                                $embed_html = Embed::get_embed_html($video_url, $embed_params, $embed_options);
-                                                if (!empty($embed_html)) {
-                                                    echo $embed_html;
-                                                } else {
-                                                    $play_icon = $this->get_play_icon_html($testimonial['video_play_icon'] ?? []);
-                                                    ?>
-                                                    <div class="custom-testimonial-video-placeholder">
-                                                        <div class="custom-testimonial-play-button">
-                                                            <?php echo $play_icon; ?>
-                                                        </div>
-                                                    </div>
-                                                    <?php
+                                                $post_id = get_queried_object_id();
+                                                $thumbnail_html = \Elementor\Embed::get_embed_thumbnail_html($video_url, $post_id);
+                                                if (!empty($thumbnail_html)) {
+                                                    preg_match('/src="([^"]+)"/', $thumbnail_html, $matches);
+                                                    if (!empty($matches[1])) {
+                                                        $thumbnail_url = $matches[1];
+                                                    }
                                                 }
+                                            }
+                                            $play_icon = $this->get_play_icon_html($testimonial['video_play_icon'] ?? []);
+                                            ?>
+                                            <div class="custom-testimonial-video-overlay elementor-custom-embed-image-overlay">
+                                                <?php if (!empty($thumbnail_url)) : ?>
+                                                    <img src="<?php echo esc_url($thumbnail_url); ?>" 
+                                                         alt="<?php echo esc_attr($testimonial['title'] ?? ''); ?>">
+                                                <?php endif; ?>
+                                                <div class="custom-testimonial-play-button">
+                                                    <?php echo $play_icon; ?>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+                                    <?php elseif ($video_type === 'hosted') : ?>
+                                        <video <?php echo $autoplay === 'yes' ? 'autoplay' : ''; ?> 
+                                               <?php echo $controls === 'yes' ? 'controls' : ''; ?> 
+                                               <?php echo $mute === 'yes' ? 'muted' : ''; ?> 
+                                               <?php echo $loop === 'yes' ? 'loop' : ''; ?>
+                                               <?php echo $lazyload === 'yes' ? 'preload="none"' : ''; ?>
+                                               playsinline>
+                                            <source src="<?php echo esc_url($video_url); ?>" type="video/mp4">
+                                        </video>
+                                    <?php else : ?>
+                                        <?php
+                                        // Inline YouTube embed
+                                        if ($video_type === 'youtube' && class_exists('\Elementor\Embed')) {
+                                            $embed_params = [
+                                                'autoplay' => $autoplay === 'yes' ? '1' : '0',
+                                                'mute' => $mute === 'yes' ? '1' : '0',
+                                                'controls' => $controls === 'yes' ? '1' : '0',
+                                                'loop' => $loop === 'yes' ? '1' : '0',
+                                            ];
+                                            $embed_options = [];
+                                            $embed_html = \Elementor\Embed::get_embed_html($video_url, $embed_params, $embed_options);
+                                            if (!empty($embed_html)) {
+                                                echo $embed_html;
                                             } else {
                                                 $play_icon = $this->get_play_icon_html($testimonial['video_play_icon'] ?? []);
                                                 ?>
@@ -1151,815 +1036,448 @@ class Custom_Testimonial extends Widget_Base
                                                 </div>
                                                 <?php
                                             }
+                                        } else {
+                                            $play_icon = $this->get_play_icon_html($testimonial['video_play_icon'] ?? []);
                                             ?>
-                                        <?php endif; ?>
-                                    </div>
-                                <?php endif; ?>
-                            <?php endif; ?>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-
-            <!-- Bottom: Tabs Slider -->
-            <div class="custom-testimonial-tabs-wrapper">
-                <?php if ($show_navigation) : ?>
-                    <div class="custom-testimonial-nav-arrow custom-testimonial-nav-prev">
-                        <i class="eicon-chevron-left"></i>
-                    </div>
-                <?php endif; ?>
-                <div class="custom-testimonial-tabs-swiper swiper">
-                    <div class="swiper-wrapper">
-                        <?php foreach ($testimonials as $index => $testimonial) : ?>
-                            <?php if (!empty($testimonial['logo_image']['url'])) : ?>
-                                <div class="swiper-slide custom-testimonial-tab-item <?php echo $index === 0 ? 'swiper-slide-active' : ''; ?>" 
-                                     data-index="<?php echo esc_attr($index); ?>">
-                                    <img src="<?php echo esc_url($testimonial['logo_image']['url']); ?>" 
-                                         alt="<?php echo esc_attr($testimonial['title'] ?? ''); ?>">
+                                            <div class="custom-testimonial-video-placeholder">
+                                                <div class="custom-testimonial-play-button">
+                                                    <?php echo $play_icon; ?>
+                                                </div>
+                                            </div>
+                                            <?php
+                                        }
+                                        ?>
+                                    <?php endif; ?>
                                 </div>
                             <?php endif; ?>
-                        <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
-                    <?php if ($show_pagination) : ?>
-                        <div class="swiper-pagination"></div>
-                    <?php endif; ?>
-                </div>
-                <?php if ($show_navigation) : ?>
-                    <div class="custom-testimonial-nav-arrow custom-testimonial-nav-next">
-                        <i class="eicon-chevron-right"></i>
-                    </div>
-                <?php endif; ?>
+                <?php endforeach; ?>
             </div>
         </div>
 
-        <style>
-            .custom-testimonial-widget {
-                width: 100%;
-            }
+        <!-- Bottom: Swiper Tabs (4 visible, slide 1, 2nd visible = active) -->
+        <div class="custom-testimonial-tabs-wrapper">
+            <div class="custom-testimonial-tabs-swiper swiper" id="<?php echo esc_attr($widget_id); ?>-tabs-swiper">
+                <div class="swiper-wrapper">
+                    <?php foreach ($testimonials as $index => $testimonial) : ?>
+                        <?php if (!empty($testimonial['logo_image']['url'])) : ?>
+                            <div class="swiper-slide custom-testimonial-tab-item <?php echo $index === 1 ? 'active' : ''; ?>" 
+                                 data-index="<?php echo esc_attr($index); ?>">
+                                <img src="<?php echo esc_url($testimonial['logo_image']['url']); ?>" 
+                                     alt="<?php echo esc_attr($testimonial['title'] ?? ''); ?>">
+                            </div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </div>
 
-            .custom-testimonial-content-wrapper {
+                <!-- navigation -->
+                <div class="swiper-button-prev <?php echo esc_attr($widget_id); ?>-tabs-prev"></div>
+                <div class="swiper-button-next <?php echo esc_attr($widget_id); ?>-tabs-next"></div>
+            </div>
+        </div>
+
+        <!-- styles (scoped to widget) -->
+        <style>
+            /* Scoped by widget ID to avoid global override */
+            #<?php echo esc_attr($widget_id); ?> { --ct-gap: 40px; }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-widget,
+            #<?php echo esc_attr($widget_id); ?> { width: 100%; }
+
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-content-wrapper {
                 display: flex;
-                gap: 40px;
+                gap: var(--ct-gap);
                 margin-bottom: 40px;
                 align-items: flex-start;
             }
 
-            .custom-testimonial-left,
-            .custom-testimonial-right {
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-left,
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-right {
                 flex: 1;
                 position: relative;
             }
 
-            .custom-testimonial-item,
-            .custom-testimonial-media-item {
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-item,
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-media-item {
                 display: none;
                 opacity: 0;
-                transition: opacity 0.5s ease;
+                transition: opacity .45s ease;
             }
 
-            .custom-testimonial-item.active,
-            .custom-testimonial-media-item.active {
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-item.active,
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-media-item.active {
                 display: block;
                 opacity: 1;
             }
 
-            .custom-testimonial-quote {
+            /* Quote & author */
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-quote {
                 font-size: 24px;
                 line-height: 1.6;
                 margin-bottom: 30px;
-                color: #333;
+                color: #fff;
             }
 
-            .custom-testimonial-author {
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-author {
                 display: flex;
                 align-items: center;
                 gap: 20px;
             }
 
-            .custom-testimonial-author-photo img {
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-author-photo img {
                 width: 60px;
                 height: 60px;
                 border-radius: 50%;
                 object-fit: cover;
             }
 
-            .custom-testimonial-author-name {
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-author-name {
                 font-size: 18px;
                 font-weight: 600;
                 margin-bottom: 5px;
-                color: #333;
+                color: #fff;
             }
 
-            .custom-testimonial-author-role {
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-author-role {
                 font-size: 14px;
-                color: #666;
+                color: #cfcfcf;
             }
 
-            .custom-testimonial-media {
-                width: 100%;
-                position: relative;
-                overflow: hidden;
-            }
-
-            .custom-testimonial-media img,
-            .custom-testimonial-media video {
+            /* media */
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-media img,
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-media video {
                 width: 100%;
                 height: auto;
                 display: block;
             }
 
-            .custom-testimonial-video-wrapper {
-                position: relative;
-            }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-video-wrapper { position: relative; }
 
-            .custom-testimonial-video-overlay {
-                position: relative;
-                cursor: pointer;
-            }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-video-overlay { position: relative; cursor: pointer; }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-video-overlay img { width:100%; height:auto; display:block; }
 
-            .custom-testimonial-video-overlay img {
-                width: 100%;
-                height: auto;
-                display: block;
-            }
-
-            .custom-testimonial-play-button {
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-play-button {
                 position: absolute;
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
                 width: 80px;
                 height: 80px;
-                background-color: rgba(255, 255, 255, 0.9);
+                background-color: rgba(255,255,255,.95);
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 font-size: 30px;
-                color: #333;
+                color: #222;
                 cursor: pointer;
-                transition: all 0.3s ease;
                 z-index: 10;
+                transition: transform .25s ease, background .25s ease;
+            }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-play-button:hover { transform: translate(-50%,-50%) scale(1.06); }
+
+            /* Tabs swiper */
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-wrapper { position: relative; width: 100%; padding: 18px 40px; box-sizing: border-box; }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-wrapper { align-items: center; }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item { display:flex; align-items:center; justify-content:center; padding:14px; border-radius:10px; background:#fff0; transition: all .25s ease; border:2px solid transparent; }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item img { max-height:50px; opacity: .65; filter: grayscale(100%); transition: all .25s ease; display:block; }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item.active { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item.active img { opacity: 1; filter: grayscale(0%); }
+
+            /* arrows (scoped) */
+            #<?php echo esc_attr($widget_id); ?> .swiper-button-prev,
+            #<?php echo esc_attr($widget_id); ?> .swiper-button-next {
+                width:44px; height:44px; border-radius:50%; background: rgba(255,255,255,0.06);
+                display:flex; align-items:center; justify-content:center; color:#fff; opacity:1;
             }
 
-            .custom-testimonial-play-button:hover {
-                background-color: rgba(255, 255, 255, 1);
-                transform: translate(-50%, -50%) scale(1.1);
+            /* Responsiveness */
+            @media (max-width: 1024px) {
+                #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-slide img { max-height:40px; }
+                #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-wrapper { padding: 14px 18px; }
             }
-
-            .custom-testimonial-tabs-wrapper {
-                position: relative;
-                display: flex;
-                align-items: center;
-                gap: 20px;
-            }
-
-            .custom-testimonial-nav-arrow {
-                flex-shrink: 0;
-            }
-
-            .custom-testimonial-tabs-swiper {
-                flex: 1;
-                overflow: hidden;
-                width: 100%;
-                position: relative;
-            }
-
-            .custom-testimonial-tabs-swiper.swiper {
-                width: 100%;
-            }
-
-            .custom-testimonial-tabs-swiper .swiper-wrapper {
-                display: flex;
-                width: 100%;
-                box-sizing: border-box;
-            }
-
-            .custom-testimonial-tabs-swiper .swiper-slide {
-                /* Swiper will calculate width based on slidesPerView */
-                flex-shrink: 0;
-                width: auto;
-                height: auto;
-                box-sizing: border-box;
-            }
-
-            .custom-testimonial-tab-item {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 20px;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                background-color: #f5f5f5;
-                border-radius: 8px;
-                box-sizing: border-box;
-                height: auto;
-                width: 100%;
-                min-width: 0;
-            }
-
-            .custom-testimonial-tab-item img {
-                max-width: 100%;
-                max-height: 100%;
-                object-fit: contain;
-                filter: grayscale(100%);
-                opacity: 0.6;
-                transition: all 0.3s ease;
-            }
-
-            .custom-testimonial-tab-item.swiper-slide-active {
-                background-color: #fff;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            }
-
-            .custom-testimonial-tab-item.swiper-slide-active img {
-                filter: grayscale(0%);
-                opacity: 1;
-            }
-
-            .custom-testimonial-nav-arrow {
-                width: 40px;
-                height: 40px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-                background-color: #f5f5f5;
-                border-radius: 50%;
-                transition: all 0.3s ease;
-                font-size: 20px;
-                color: #333;
-            }
-
-            .custom-testimonial-nav-arrow:hover {
-                background-color: #333;
-                color: #fff;
-            }
-
-            .custom-testimonial-nav-arrow.swiper-button-disabled {
-                opacity: 0.5;
-                cursor: not-allowed;
-            }
-
-            .custom-testimonial-tabs-swiper .swiper-pagination {
-                position: relative;
-                margin-top: 20px;
-                text-align: center;
-            }
-
-            .custom-testimonial-tabs-swiper .swiper-pagination-bullet {
-                width: 10px;
-                height: 10px;
-                background-color: #ccc;
-                opacity: 1;
-                margin: 0 5px;
-                cursor: pointer;
-                transition: all 0.3s ease;
-            }
-
-            .custom-testimonial-tabs-swiper .swiper-pagination-bullet-active {
-                background-color: #333;
-                transform: scale(1.2);
-            }
-
             @media (max-width: 768px) {
-                .custom-testimonial-content-wrapper {
-                    flex-direction: column;
-                    gap: 30px;
-                }
+                #<?php echo esc_attr($widget_id); ?> .custom-testimonial-content-wrapper { flex-direction: column; gap: 20px; }
+                #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-slide img { max-height:34px; }
             }
         </style>
 
         <script>
-            (function() {
-                'use strict';
-                
-                var widgetId = '<?php echo esc_js($widget_id); ?>';
-                var widgetElement = document.getElementById(widgetId);
-                
-                if (!widgetElement) return;
+        (function(){
+            'use strict';
 
-                var slidesToShow = <?php 
-                    $slides_to_show = $settings['slider_slides_to_show'] ?? [];
-                    $desktop_val = 4;
-                    $tablet_val = 3;
-                    $mobile_val = 2;
-                    
-                    if (is_array($slides_to_show)) {
-                        // Check if it's a responsive control structure
-                        if (isset($slides_to_show['desktop'])) {
-                            $desktop_val = intval($slides_to_show['desktop']);
-                        } elseif (isset($slides_to_show['size'])) {
-                            $desktop_val = intval($slides_to_show['size']);
-                        } elseif (is_numeric($slides_to_show)) {
-                            $desktop_val = intval($slides_to_show);
-                        }
-                        
-                        if (isset($slides_to_show['tablet'])) {
-                            $tablet_val = intval($slides_to_show['tablet']);
-                        }
-                        
-                        if (isset($slides_to_show['mobile'])) {
-                            $mobile_val = intval($slides_to_show['mobile']);
-                        }
-                    } elseif (is_numeric($slides_to_show)) {
-                        $desktop_val = intval($slides_to_show);
+            var widgetId = '<?php echo esc_js($widget_id); ?>';
+            var selector = '#' + widgetId + '-tabs-swiper';
+            var widgetEl = document.getElementById(widgetId);
+            if (!widgetEl) return;
+
+            var testimonials = <?php echo json_encode(array_values($testimonials), JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT); ?>;
+            // helper to switch content (keeps your existing switchTestimonial behavior)
+            function switchTestimonial(index) {
+                var totalItems = testimonials.length;
+                if (index < 0) index = 0;
+                if (index >= totalItems) index = totalItems - 1;
+
+                var leftItems = widgetEl.querySelectorAll('.custom-testimonial-item');
+                var rightItems = widgetEl.querySelectorAll('.custom-testimonial-media-item');
+                var tabItems = widgetEl.querySelectorAll('.custom-testimonial-tab-item');
+
+                leftItems.forEach(function(item, i) {
+                    if (i === index) {
+                        item.classList.add('active');
+                        item.style.display = 'block';
+                    } else {
+                        item.classList.remove('active');
+                        item.style.display = 'none';
                     }
-                    
-                    echo wp_json_encode([
-                        'desktop' => $desktop_val,
-                        'tablet' => $tablet_val,
-                        'mobile' => $mobile_val
-                    ]);
-                ?>;
-                
-                var settings = {
-                    autoplay: <?php echo ($settings['slider_autoplay'] === 'yes') ? 'true' : 'false'; ?>,
-                    autoplaySpeed: <?php echo intval($settings['slider_autoplay_speed'] ?? 3000); ?>,
-                    speed: <?php echo intval($settings['slider_speed'] ?? 500); ?>,
-                    loop: <?php echo ($settings['slider_loop'] === 'yes') ? 'true' : 'false'; ?>,
-                    slidesToShow: slidesToShow,
-                    slidesToScroll: <?php echo intval($settings['slider_slides_to_scroll'] ?? 1); ?>,
-                    navigation: <?php echo ($settings['slider_navigation'] === 'yes') ? 'true' : 'false'; ?>,
-                    pagination: <?php echo ($settings['slider_pagination'] === 'yes') ? 'true' : 'false'; ?>
+                });
+
+                rightItems.forEach(function(item, i) {
+                    if (i === index) {
+                        item.classList.add('active');
+                        item.style.display = 'block';
+                    } else {
+                        item.classList.remove('active');
+                        item.style.display = 'none';
+                    }
+                });
+
+                tabItems.forEach(function(item, i) {
+                    if (i === index) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+            }
+
+            // init video overlay/lightbox handlers (keeps your existing behavior)
+            function initVideoHandlers(scope) {
+                var videoWrappers = (scope || widgetEl).querySelectorAll('.custom-testimonial-video-wrapper');
+
+                videoWrappers.forEach(function(wrapper) {
+                    if (wrapper._ct_initialized) return;
+                    wrapper._ct_initialized = true;
+
+                    var lightbox = wrapper.getAttribute('data-lightbox') === 'yes';
+                    var videoType = wrapper.getAttribute('data-video-type');
+                    var videoUrl = wrapper.getAttribute('data-video-url');
+                    var embedUrl = wrapper.getAttribute('data-embed-url') || videoUrl;
+                    var overlay = wrapper.querySelector('.custom-testimonial-video-overlay');
+
+                    if (overlay && lightbox && typeof elementorFrontend !== 'undefined') {
+                        var autoplay = wrapper.getAttribute('data-autoplay') === 'yes' ? 'yes' : 'no';
+                        var controls = wrapper.getAttribute('data-controls') === 'yes' ? 'yes' : 'no';
+                        var mute = wrapper.getAttribute('data-mute') === 'yes' ? 'yes' : 'no';
+                        var loop = wrapper.getAttribute('data-loop') === 'yes' ? 'yes' : 'no';
+                        var aspectRatio = wrapper.getAttribute('data-aspect-ratio') || '169';
+
+                        var lightboxUrl = embedUrl;
+                        if (videoType === 'youtube' && elementorFrontend && elementorFrontend.utils && elementorFrontend.utils.youtube && autoplay === 'yes') {
+                            if (elementorFrontend.utils.youtube.getAutoplayURL) {
+                                lightboxUrl = elementorFrontend.utils.youtube.getAutoplayURL(embedUrl);
+                            }
+                        }
+
+                        var lightboxOptions = {
+                            type: 'video',
+                            videoType: videoType,
+                            url: lightboxUrl,
+                            autoplay: autoplay,
+                            modalOptions: {
+                                id: 'ct-lightbox-' + widgetId + '-' + Math.random().toString(36).substr(2,9),
+                                entranceAnimation: 'fadeIn',
+                                videoAspectRatio: aspectRatio
+                            }
+                        };
+
+                        if (videoType === 'hosted') {
+                            lightboxOptions.videoParams = {
+                                autoplay: autoplay === 'yes' ? '1' : '0',
+                                controls: controls === 'yes' ? '1' : '0',
+                                muted: mute === 'yes' ? '1' : '0',
+                                loop: loop === 'yes' ? '1' : '0'
+                            };
+                        }
+
+                        overlay.setAttribute('data-elementor-open-lightbox', 'yes');
+                        overlay.setAttribute('data-elementor-lightbox', JSON.stringify(lightboxOptions));
+
+                        overlay.addEventListener('click', function(e) {
+                            if (typeof elementorFrontend !== 'undefined' && elementorFrontend.modules && elementorFrontend.modules.lightbox) {
+                                e.preventDefault();
+                                elementorFrontend.modules.lightbox.openModal(lightboxOptions);
+                            }
+                        });
+                    }
+                });
+            }
+
+            // Ensure Swiper available (Elementor loads Swiper on frontend / editor)
+            function readyForSwiper(cb) {
+                if (typeof Swiper !== 'undefined') {
+                    cb();
+                } else if (typeof elementorFrontend !== 'undefined' && elementorFrontend.utils && elementorFrontend.utils.swiper) {
+                    // Elementor provides a wrapper
+                    cb();
+                } else {
+                    setTimeout(function(){ readyForSwiper(cb); }, 60);
+                }
+            }
+
+            readyForSwiper(function(){
+                // Use a unique selector for this widget to avoid collisions
+                var swiperContainer = widgetEl.querySelector(selector);
+                if (!swiperContainer) return;
+
+                // Build Swiper config
+                var swiperConfig = {
+                    slidesPerView: 4,
+                    spaceBetween: 20,
+                    slidesPerGroup: 1,
+                    loop: false,
+                    speed: 600,
+                    navigation: {
+                        nextEl: '#' + widgetId + '-tabs-swiper .swiper-button-next, .' + '<?php echo esc_js($widget_id); ?>' + '-tabs-next',
+                        prevEl: '#' + widgetId + '-tabs-swiper .swiper-button-prev, .' + '<?php echo esc_js($widget_id); ?>' + '-tabs-prev'
+                    },
+                    breakpoints: {
+                        // tablet
+                        768: {
+                            slidesPerView: 3
+                        },
+                        // mobile
+                        480: {
+                            slidesPerView: 2
+                        }
+                    },
+                    on: {
+                        init: function(){
+                            // ensure correct active state on init (2nd visible)
+                            setTimeout(function(){
+                                setActiveByVisibleIndex(this.activeIndex || 0);
+                            }.bind(this), 30);
+                        },
+                        slideChange: function(){
+                            setActiveByVisibleIndex(this.activeIndex || 0);
+                        },
+                        resize: function(){
+                            setActiveByVisibleIndex(this.activeIndex || 0);
+                        }
+                    }
                 };
 
-                var swiperInstance = null;
-                var testimonials = <?php echo wp_json_encode($testimonials); ?>;
-
-                function initSwiper() {
-                    var swiperElement = widgetElement.querySelector('.custom-testimonial-tabs-swiper');
-                    if (!swiperElement) {
-                        // Fallback if swiper element not found
-                        initTabClickHandlers();
-                        initNavigationHandlers();
-                        return;
+                // Instantiate Swiper (works with global Swiper)
+                var swiperInstance;
+                try {
+                    // If elementorFrontend.utils.swiper exists, it will return proper instance
+                    if (typeof elementorFrontend !== 'undefined' && elementorFrontend.utils && elementorFrontend.utils.swiper) {
+                        swiperInstance = elementorFrontend.utils.swiper(swiperContainer, swiperConfig).swiper || elementorFrontend.utils.swiper(swiperContainer, swiperConfig);
+                    } else {
+                        swiperInstance = new Swiper(swiperContainer, swiperConfig);
                     }
-
-                    // Wait for Elementor Swiper utility
-                    if (typeof elementorFrontend === 'undefined' || !elementorFrontend.utils || !elementorFrontend.utils.swiper) {
-                        setTimeout(initSwiper, 100);
-                        return;
-                    }
-
-                    // Ensure container has width before initializing
-                    var containerWidth = swiperElement.offsetWidth || swiperElement.clientWidth;
-                    if (!containerWidth || containerWidth === 0) {
-                        setTimeout(initSwiper, 100);
-                        return;
-                    }
-
-                    var nextButton = widgetElement.querySelector('.custom-testimonial-nav-next');
-                    var prevButton = widgetElement.querySelector('.custom-testimonial-nav-prev');
-                    var totalSlides = testimonials.length;
-
-                    // Ensure slides to show is a valid number
-                    var desktopSlides = parseInt(settings.slidesToShow.desktop) || 4;
-                    var tabletSlides = parseInt(settings.slidesToShow.tablet) || 3;
-                    var mobileSlides = parseInt(settings.slidesToShow.mobile) || 2;
-                    var slidesToScroll = parseInt(settings.slidesToScroll) || 1;
-
-                    // Don't enable loop if slides are less than or equal to slides per view
-                    var canLoop = settings.loop === true && totalSlides > desktopSlides;
-
-                    // Configure autoplay
-                    var autoplayConfig = false;
-                    if (settings.autoplay === true && totalSlides > 1) {
-                        autoplayConfig = {
-                            delay: parseInt(settings.autoplaySpeed) || 3000,
-                            disableOnInteraction: false,
-                            pauseOnMouseEnter: true,
-                            stopOnLastSlide: false,
-                        };
-                    }
-
-                    // Set default to desktop, then override for smaller screens
-                    var swiperConfig = {
-                        slidesPerView: desktopSlides,
-                        slidesPerGroup: slidesToScroll,
-                        spaceBetween: 20,
-                        loop: canLoop,
-                        speed: parseInt(settings.speed) || 500,
-                        autoplay: autoplayConfig,
-                        watchOverflow: true,
-                        centeredSlides: false,
-                        freeMode: false,
-                        breakpoints: {
-                            // For screens smaller than 1024px, use tablet settings
-                            768: {
-                                slidesPerView: tabletSlides,
-                                slidesPerGroup: slidesToScroll,
-                                spaceBetween: 15,
-                                loop: canLoop && totalSlides > tabletSlides,
-                            },
-                            // For screens smaller than 768px, use mobile settings
-                            320: {
-                                slidesPerView: mobileSlides,
-                                slidesPerGroup: slidesToScroll,
-                                spaceBetween: 10,
-                                loop: canLoop && totalSlides > mobileSlides,
-                            },
-                        },
-                    };
-
-                    if (settings.navigation && nextButton && prevButton) {
-                        swiperConfig.navigation = {
-                            nextEl: nextButton,
-                            prevEl: prevButton,
-                        };
-                    }
-
-                    if (settings.pagination) {
-                        var paginationEl = swiperElement.querySelector('.swiper-pagination');
-                        if (paginationEl) {
-                            swiperConfig.pagination = {
-                                el: paginationEl,
-                                clickable: true,
-                                type: 'bullets',
-                            };
-                        }
-                    }
-
-                    swiperConfig.on = {
-                        init: function() {
-                            var swiper = this;
-                            var activeIndex = 0;
-                            if (canLoop && swiper.realIndex !== undefined) {
-                                activeIndex = swiper.realIndex;
-                            } else if (swiper.activeIndex !== undefined) {
-                                activeIndex = swiper.activeIndex;
-                            }
-                            switchTestimonial(activeIndex);
-                        },
-                        slideChange: function() {
-                            var swiper = this;
-                            var activeIndex = 0;
-                            if (canLoop && swiper.realIndex !== undefined) {
-                                activeIndex = swiper.realIndex;
-                            } else if (swiper.activeIndex !== undefined) {
-                                activeIndex = swiper.activeIndex;
-                            }
-                            switchTestimonial(activeIndex);
-                        }
-                    };
-
-                    try {
-                        var swiperResult = elementorFrontend.utils.swiper(swiperElement, swiperConfig);
-                        
-                        // Store swiper instance reference - Elementor returns an object with swiper property
-                        if (swiperResult) {
-                            if (swiperResult.swiper) {
-                                swiperInstance = swiperResult.swiper;
-                            } else if (swiperResult.slideTo) {
-                                swiperInstance = swiperResult;
-                            } else {
-                                swiperInstance = swiperResult;
-                            }
-                            
-                            // Force update to ensure slidesPerView is applied correctly
-                            if (swiperInstance) {
-                                setTimeout(function() {
-                                    // Get current breakpoint
-                                    var currentWidth = window.innerWidth || swiperElement.offsetWidth;
-                                    var currentSlidesPerView = desktopSlides;
-                                    
-                                    if (currentWidth < 640) {
-                                        currentSlidesPerView = mobileSlides;
-                                    } else if (currentWidth < 1024) {
-                                        currentSlidesPerView = tabletSlides;
-                                    }
-                                    
-                                    // Update Swiper
-                                    if (typeof swiperInstance.update === 'function') {
-                                        swiperInstance.update();
-                                    }
-                                    if (typeof swiperInstance.updateSlides === 'function') {
-                                        swiperInstance.updateSlides();
-                                    }
-                                    if (typeof swiperInstance.updateSize === 'function') {
-                                        swiperInstance.updateSize();
-                                    }
-                                    
-                                    // Ensure params match current breakpoint
-                                    if (swiperInstance.params && swiperInstance.params.slidesPerView !== currentSlidesPerView) {
-                                        // Don't force override - let breakpoints handle it
-                                        // Just trigger update
-                                        if (typeof swiperInstance.update === 'function') {
-                                            swiperInstance.update();
-                                        }
-                                    }
-                                }, 200);
-                                
-                                // Also update on window resize
-                                var resizeHandler = function() {
-                                    if (swiperInstance && typeof swiperInstance.update === 'function') {
-                                        swiperInstance.update();
-                                    }
-                                };
-                                window.addEventListener('resize', resizeHandler);
-                                
-                                // Store resize handler for cleanup if needed
-                                if (!widgetElement.resizeHandler) {
-                                    widgetElement.resizeHandler = resizeHandler;
-                                }
-                            }
-                            
-                            // Ensure autoplay starts if configured
-                            if (autoplayConfig) {
-                                setTimeout(function() {
-                                    if (swiperInstance) {
-                                        // Try to start autoplay if it exists
-                                        if (swiperInstance.autoplay) {
-                                            if (typeof swiperInstance.autoplay.start === 'function') {
-                                                swiperInstance.autoplay.start();
-                                            } else if (swiperInstance.autoplay.running === false) {
-                                                swiperInstance.autoplay.start();
-                                            }
-                                        }
-                                        // Alternative: update autoplay delay if needed
-                                        if (swiperInstance.params && swiperInstance.params.autoplay) {
-                                            if (swiperInstance.params.autoplay.delay !== autoplayConfig.delay) {
-                                                swiperInstance.params.autoplay.delay = autoplayConfig.delay;
-                                            }
-                                        }
-                                    }
-                                }, 200);
-                            }
-                        }
-                    } catch(e) {
-                        console.warn('Swiper initialization failed:', e);
-                        swiperInstance = null;
-                        // Fallback: manual tab switching
-                        initTabClickHandlers();
-                        initNavigationHandlers();
-                    }
+                } catch (e) {
+                    // fallback: do not break widget — keep tab click functionality
+                    console.warn('Swiper init failed in custom testimonial:', e);
+                    initVideoHandlers(widgetEl);
+                    initTabClicks();
+                    return;
                 }
 
-                function switchTestimonial(index) {
-                    // Ensure index is within bounds
-                    var totalItems = testimonials.length;
-                    if (index < 0) index = 0;
-                    if (index >= totalItems) index = totalItems - 1;
-                    
-                    var leftItems = widgetElement.querySelectorAll('.custom-testimonial-item');
-                    var rightItems = widgetElement.querySelectorAll('.custom-testimonial-media-item');
-                    var tabItems = widgetElement.querySelectorAll('.custom-testimonial-tab-item');
+                // all slides
+                var slides = widgetEl.querySelectorAll('.custom-testimonial-tab-item');
 
-                    leftItems.forEach(function(item, i) {
-                        if (i === index) {
-                            item.classList.add('active');
-                            item.style.display = 'block';
-                        } else {
-                            item.classList.remove('active');
-                            item.style.display = 'none';
-                        }
-                    });
+                // set the active pair such that second visible is active
+                function setActiveByVisibleIndex(visibleStart) {
+                    var firstVisible = parseInt(visibleStart, 10) || 0;
+                    var activeIndex = firstVisible + 1; // second visible
 
-                    rightItems.forEach(function(item, i) {
-                        if (i === index) {
-                            item.classList.add('active');
-                            item.style.display = 'block';
-                        } else {
-                            item.classList.remove('active');
-                            item.style.display = 'none';
-                        }
-                    });
+                    // clamp
+                    if (activeIndex < 0) activeIndex = 0;
+                    if (activeIndex > slides.length - 1) activeIndex = slides.length - 1;
 
-                    tabItems.forEach(function(item, i) {
-                        if (i === index) {
-                            item.classList.add('swiper-slide-active');
-                        } else {
-                            item.classList.remove('swiper-slide-active');
-                        }
-                    });
+                    // remove all active classes
+                    slides.forEach(function(s){ s.classList.remove('active'); });
+
+                    // add active to the second visible (and optionally to neighbor if you want two visible highlighted)
+                    var s1 = slides[activeIndex];
+                    if (s1) s1.classList.add('active');
+
+                    // Sync testimonial content to the single active index (second visible)
+                    switchTestimonial(activeIndex);
                 }
 
-                function initVideoHandlers() {
-                    var videoWrappers = widgetElement.querySelectorAll('.custom-testimonial-video-wrapper');
-                    
-                    videoWrappers.forEach(function(wrapper) {
-                        var lightbox = wrapper.getAttribute('data-lightbox') === 'yes';
-                        var videoType = wrapper.getAttribute('data-video-type');
-                        var videoUrl = wrapper.getAttribute('data-video-url');
-                        var embedUrl = wrapper.getAttribute('data-embed-url') || videoUrl;
-                        var overlay = wrapper.querySelector('.custom-testimonial-video-overlay');
-                        var playButton = wrapper.querySelector('.custom-testimonial-play-button');
-
-                        if (lightbox && overlay && typeof elementorFrontend !== 'undefined') {
-                            var autoplay = wrapper.getAttribute('data-autoplay') === 'yes' ? 'yes' : 'no';
-                            var controls = wrapper.getAttribute('data-controls') === 'yes' ? 'yes' : 'no';
-                            var mute = wrapper.getAttribute('data-mute') === 'yes' ? 'yes' : 'no';
-                            var loop = wrapper.getAttribute('data-loop') === 'yes' ? 'yes' : 'no';
-                            var aspectRatio = wrapper.getAttribute('data-aspect-ratio') || '169';
-
-                            var lightboxUrl = embedUrl;
-                            if (videoType === 'youtube' && typeof elementorFrontend !== 'undefined' && elementorFrontend.utils && elementorFrontend.utils.youtube) {
-                                // Use Elementor's YouTube utility if available
-                                if (autoplay === 'yes' && elementorFrontend.utils.youtube.getAutoplayURL) {
-                                    lightboxUrl = elementorFrontend.utils.youtube.getAutoplayURL(embedUrl);
-                                }
-                            }
-
-                            var lightboxOptions = {
-                                type: 'video',
-                                videoType: videoType,
-                                url: lightboxUrl,
-                                autoplay: autoplay,
-                                modalOptions: {
-                                    id: 'custom-testimonial-lightbox-' + widgetId + '-' + Math.random().toString(36).substr(2, 9),
-                                    entranceAnimation: 'fadeIn',
-                                    videoAspectRatio: aspectRatio,
-                                },
-                            };
-
-                            if (videoType === 'hosted') {
-                                lightboxOptions.videoParams = {
-                                    autoplay: autoplay === 'yes' ? '1' : '0',
-                                    controls: controls === 'yes' ? '1' : '0',
-                                    muted: mute === 'yes' ? '1' : '0',
-                                    loop: loop === 'yes' ? '1' : '0',
-                                };
-                            }
-
-                            overlay.setAttribute('data-elementor-open-lightbox', 'yes');
-                            overlay.setAttribute('data-elementor-lightbox', JSON.stringify(lightboxOptions));
-                            
-                            if (typeof elementorFrontend !== 'undefined' && elementorFrontend.createActionHash) {
-                                try {
-                                    var actionHash = elementorFrontend.createActionHash('lightbox', lightboxOptions);
-                                    overlay.setAttribute('data-e-action-hash', actionHash);
-                                } catch(e) {
-                                    // Fallback if createActionHash fails
-                                }
-                            }
-
-                            if (typeof elementorFrontend !== 'undefined' && elementorFrontend.isEditMode && elementorFrontend.isEditMode()) {
-                                overlay.classList.add('elementor-clickable');
-                            }
-
-                            // Add click handler for lightbox
-                            overlay.addEventListener('click', function(e) {
-                                if (typeof elementorFrontend !== 'undefined' && elementorFrontend.modules && elementorFrontend.modules.lightbox) {
-                                    e.preventDefault();
-                                    elementorFrontend.modules.lightbox.openModal(lightboxOptions);
-                                }
-                            });
+                // when clicking a slide, move slider so clicked becomes second visible
+                slides.forEach(function(slide, idx){
+                    slide.addEventListener('click', function(e){
+                        e.preventDefault();
+                        var targetIndex = idx - 1; // slide so that clicked index becomes the 2nd visible (firstVisible + 1)
+                        if (targetIndex < 0) {
+                            targetIndex = 0;
+                        }
+                        // slideTo accepts index of slide -> ensure it's within range
+                        if (typeof swiperInstance.slideTo === 'function') {
+                            // ensure targetIndex within slide count
+                            var maxFirstVisible = Math.max(0, swiperInstance.slides.length - (swiperInstance.params && swiperInstance.params.slidesPerView ? Math.floor(swiperInstance.params.slidesPerView) : 4));
+                            if (targetIndex > maxFirstVisible) targetIndex = maxFirstVisible;
+                            swiperInstance.slideTo(targetIndex);
+                        } else {
+                            // fallback
+                            setActiveByVisibleIndex(idx);
                         }
                     });
-                }
+                });
 
-                function initTabClickHandlers() {
-                    var tabItems = widgetElement.querySelectorAll('.custom-testimonial-tab-item');
-                    
+                // Initialize video handlers and tab click fallback
+                initVideoHandlers(widgetEl);
+                initTabClicks();
+
+                // helper to init tab click handlers (in case Swiper fails or editor needs it)
+                function initTabClicks() {
+                    var tabItems = widgetEl.querySelectorAll('.custom-testimonial-tab-item');
                     tabItems.forEach(function(tab, index) {
-                        // Remove existing listener if any
+                        // replace to avoid duplicate handlers
                         var newTab = tab.cloneNode(true);
                         tab.parentNode.replaceChild(newTab, tab);
-                        
                         newTab.addEventListener('click', function(e) {
                             e.preventDefault();
                             e.stopPropagation();
-                            var tabIndex = parseInt(this.getAttribute('data-index') || index, 10);
-                            
-                            if (swiperInstance) {
-                                try {
-                                    if (swiperInstance.slideTo) {
-                                        swiperInstance.slideTo(tabIndex);
-                                    } else if (swiperInstance.slideToLoop) {
-                                        swiperInstance.slideToLoop(tabIndex);
-                                    } else {
-                                        switchTestimonial(tabIndex);
-                                    }
-                                } catch(err) {
-                                    switchTestimonial(tabIndex);
-                                }
+                            var idx = parseInt(this.getAttribute('data-index') || index, 10);
+                            // mimic same behavior: make idx the active (2nd visible) by sliding
+                            if (swiperInstance && typeof swiperInstance.slideTo === 'function') {
+                                var target = Math.max(0, idx - 1);
+                                swiperInstance.slideTo(target);
                             } else {
-                                switchTestimonial(tabIndex);
+                                switchTestimonial(idx);
                             }
                         });
                     });
                 }
 
-                function initNavigationHandlers() {
-                    var nextButton = widgetElement.querySelector('.custom-testimonial-nav-next');
-                    var prevButton = widgetElement.querySelector('.custom-testimonial-nav-prev');
-                    var currentIndex = 0;
-                    var totalItems = testimonials.length;
-
-                    function goToNext() {
-                        currentIndex = (currentIndex + 1) % totalItems;
-                        if (swiperInstance) {
-                            try {
-                                if (swiperInstance.slideNext) {
-                                    swiperInstance.slideNext();
-                                } else {
-                                    switchTestimonial(currentIndex);
+            }); // readyForSwiper
+            // Elementor editor redraw hook — ensure it re-inits in editor
+            if (typeof elementorFrontend !== 'undefined' && elementorFrontend.hooks) {
+                elementorFrontend.hooks.addAction('frontend/element_ready/<?php echo esc_js($this->get_name()); ?>.default', function(scope){
+                    try {
+                        var el = document.getElementById('<?php echo esc_js($widget_id); ?>');
+                        if (el) {
+                            // re-init video handlers and show correct 2nd item
+                            initVideoHandlers(el);
+                            // small timeout for editor rendering
+                            setTimeout(function(){
+                                var container = el.querySelector('#<?php echo esc_js($widget_id); ?>-tabs-swiper');
+                                if (container && typeof elementorFrontend.utils !== 'undefined' && elementorFrontend.utils.swiper) {
+                                    elementorFrontend.utils.swiper(container, {}).swiper && elementorFrontend.utils.swiper(container, {}).swiper.update && elementorFrontend.utils.swiper(container, {}).swiper.update();
                                 }
-                            } catch(e) {
-                                switchTestimonial(currentIndex);
-                            }
-                        } else {
-                            switchTestimonial(currentIndex);
+                            }, 120);
                         }
-                    }
-
-                    function goToPrev() {
-                        currentIndex = (currentIndex - 1 + totalItems) % totalItems;
-                        if (swiperInstance) {
-                            try {
-                                if (swiperInstance.slidePrev) {
-                                    swiperInstance.slidePrev();
-                                } else {
-                                    switchTestimonial(currentIndex);
-                                }
-                            } catch(e) {
-                                switchTestimonial(currentIndex);
-                            }
-                        } else {
-                            switchTestimonial(currentIndex);
-                        }
-                    }
-
-                    if (nextButton) {
-                        nextButton.addEventListener('click', function(e) {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            goToNext();
-                        });
-                    }
-
-                    if (prevButton) {
-                        prevButton.addEventListener('click', function(e) {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            goToPrev();
-                        });
-                    }
-                }
-
-                function init() {
-                    // Initialize tab click handlers first (always needed)
-                    initTabClickHandlers();
-                    
-                    // Initialize navigation handlers (always needed as fallback)
-                    initNavigationHandlers();
-                    
-                    // Initialize Swiper
-                    initSwiper();
-                    
-                    // Initialize video handlers
-                    initVideoHandlers();
-                }
-
-                // Wait for DOM and Elementor to be ready
-                function waitForElementor() {
-                    // Always initialize basic handlers first
-                    initTabClickHandlers();
-                    initNavigationHandlers();
-                    
-                    // Then try to initialize Swiper
-                    if (typeof elementorFrontend !== 'undefined' && elementorFrontend.utils && elementorFrontend.utils.swiper) {
-                        initSwiper();
-                        initVideoHandlers();
-                    } else {
-                        // Wait a bit more for Elementor
-                        setTimeout(function() {
-                            if (typeof elementorFrontend !== 'undefined' && elementorFrontend.utils && elementorFrontend.utils.swiper) {
-                                initSwiper();
-                                initVideoHandlers();
-                            } else {
-                                // Still initialize video handlers even without Swiper
-                                initVideoHandlers();
-                                setTimeout(waitForElementor, 100);
-                            }
-                        }, 100);
-                    }
-                }
-
-                // Initialize immediately if DOM is ready
-                if (document.readyState === 'loading') {
-                    document.addEventListener('DOMContentLoaded', function() {
-                        setTimeout(waitForElementor, 50);
-                    });
-                } else {
-                    setTimeout(waitForElementor, 50);
-                }
-
-                // Elementor editor compatibility
-                if (typeof elementorFrontend !== 'undefined' && elementorFrontend.hooks) {
-                    elementorFrontend.hooks.addAction('frontend/element_ready/custom_testimonial.default', function(scope) {
-                        if (scope && scope.length > 0 && scope[0].id === widgetId) {
-                            setTimeout(function() {
-                                initTabClickHandlers();
-                                initNavigationHandlers();
-                                initSwiper();
-                                initVideoHandlers();
-                            }, 100);
-                        }
-                    });
-                }
-            })();
+                    } catch(err){}
+                });
+            }
+        })();
         </script>
+    </div>
 <?php
-    }
+}
+
 }
