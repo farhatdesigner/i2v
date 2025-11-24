@@ -91,6 +91,12 @@ class Custom_Image_Circle extends Widget_Base {
                         'name' => 'image',
                         'label' => __( 'Icon/Image', 'elementor-custom-widget' ),
                         'type' => \Elementor\Controls_Manager::MEDIA,
+                        'default' => [
+                            'url' => \Elementor\Utils::get_placeholder_image_src(),
+                        ],
+                        'dynamic' => [
+                            'active' => true,
+                        ],
                     ],
                     [
                         'name' => 'text',
