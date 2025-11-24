@@ -428,10 +428,33 @@
 
 .elementor-element .icc_based_box{width: 370px;}
 
-
-
-
 .mb-12{margin-bottom: 12px;}
+
+#breadcrumbs {
+    margin-bottom: 36px;
+}
+
+#breadcrumbs>span>span>a {
+    border-radius: var(--3XL, 28px);
+    border: 1px solid var(--Golbal-others-border, #E6EBF2);
+    background: var(--tabs-tab-fill-bg-default, #FFF);
+    padding: 4px 12px;
+    color: var(--tabs-tab-btn-text-default, #4A5673);
+    font-size: 14px;
+    font-weight: 500;
+}
+span.breadcrumb_last {
+    color: var(--Golbal-text-text-2-light, #5F6F94);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+p#breadcrumbs svg {
+    margin: 0 8px;
+}
+
+
+
 
  @media screen and (min-width: 768px) and (max-width:1179px) {
      .panels.flex-center {

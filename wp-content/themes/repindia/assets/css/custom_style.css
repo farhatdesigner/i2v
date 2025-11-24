@@ -932,7 +932,7 @@ a:hover {
 #header-main-menu>li>a:hover,
 .sub-menu li a:hover,
 #header-toggle-menu>li:nth-last-child(4)>a span:hover,
-.listing-inner>ul>li>:hover a > .span-text {
+.listing-inner>ul>li>:hover  .span-text {
     color: #06283D;
     position: relative;
 }
@@ -941,7 +941,7 @@ a:hover {
 #header-main-menu>li>a:hover:before,
 .sub-menu li a:hover:before,
 #header-toggle-menu>li:nth-last-child(4)>a span:hover:before,
-.listing-inner>ul>li>:hover a > .span-text:before {
+.listing-inner>ul>li>:hover  .span-text:before {
     content: '';
     position: absolute;
     width: 100%;
@@ -1084,7 +1084,7 @@ ul.social_media_links>li>a:hover small:before {
 }
 
 .rightmenu_statictxt h4 {
-    color: #5C5C5C;
+    color: #06283D;
     font-size: 16px;
     font-weight: 500;
     line-height: 140%;
