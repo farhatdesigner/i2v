@@ -154,7 +154,7 @@ class Custom_Image_Circle extends Widget_Base {
             .orbit-system-wrapper {
                 position: relative;
                 width: 100%;
-                min-height: 800px;
+                min-height: 900px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -166,7 +166,7 @@ class Custom_Image_Circle extends Widget_Base {
                 position: absolute;
                 border-radius: 50%;
                 top: 50%;
-                left: 50%;
+                left: 100%;
                 transform: translate(-50%, -50%);
                 pointer-events: none;
                 border-width: 1px;
@@ -181,22 +181,33 @@ class Custom_Image_Circle extends Widget_Base {
             }
             .orbit-content {
                 display: flex;
-                flex-direction: column;
+                flex-direction: row;
                 align-items: center;
                 text-align: center;
-                width: 120px;
+                width: 221px;
                 margin-left: -60px;
                 margin-top: -20px;
                 pointer-events: auto;
                 cursor: pointer;
+                gap: 10px;
             }
             .orbit-icon img { display: block; margin: 0 auto 5px auto; object-fit: contain; }
+            .orbit-icon svg,.orbit-icon img { width: 80px;height: 80px; }
+            .orbit-text{ text-align: left;}
     
             /* Animations */
             @keyframes orbit-cw { from { transform: translate(-50%, -50%) rotate(0deg);} to { transform: translate(-50%, -50%) rotate(360deg);} }
             @keyframes orbit-ccw { from { transform: translate(-50%, -50%) rotate(0deg);} to { transform: translate(-50%, -50%) rotate(-360deg);} }
             @keyframes content-cw { from { transform: rotate(0deg);} to { transform: rotate(-360deg);} }
             @keyframes content-ccw { from { transform: rotate(0deg);} to { transform: rotate(360deg);} }
+
+            @media(max-width: 768px){
+                .orbit-ring{ left: 45%;top: 100%; }
+                .orbit-system-wrapper{ min-height: 420px; }
+                .orbit-icon svg,.orbit-icon img { width: 40px;height: 40px; }
+                .orbit-content{ max-width: 141px; }
+                .elementor-element .orbit-text{ font-size: 14px!important;line-height: 21px!important; }
+            }
     
         <?php foreach ($rings as $i => $ring): 
     
