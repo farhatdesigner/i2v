@@ -247,3 +247,50 @@ function add_products_cpt_breadcrumb( $links ) {
 add_filter( 'wpseo_breadcrumb_separator', function() {
     return '<img class="yoast-sep-icon" src="' . esc_url( home_url( '/wp-content/uploads/2025/11/chevron-right.svg' ) ) . '" alt=">">';
 });
+
+/**
+ * Safe Elementor Optimization – Only runs when Elementor is active
+ */
+add_action('plugins_loaded', function () {
+    if ( ! did_action('elementor/loaded') ) {
+        return; // Elementor not active → stop
+    }
+    /* --------------------------------------------------
+     * 1. Disable Elementor Cloud Library (SAFE)
+     * -------------------------------------------------- */
+    add_filter( 'elementor_pro/utils/is_cloud_enabled', '__return_false' );
+    add_filter( 'elementor/app/is_library_enabled', '__return_false' );
+    /* --------------------------------------------------
+     * 2. Disable external remote API calls
+     *    (Does NOT affect templates / content)
+     * -------------------------------------------------- */
+    add_filter( 'elementor/api/is_allowed', '__return_false' );
+    add_filter( 'elementor/templates/allow_remote_sources', '__return_false' );
+    /* --------------------------------------------------
+     * 3. Disable only unstable Elementor Experiments
+     *    (Keeps all core features + stable experiments)
+     * -------------------------------------------------- */
+    add_filter( 'elementor_experiments_allowed', function() {
+        return [
+            'e_optimized_dom_output' => 'stable',
+            'e_font_icon_svg'        => 'stable',
+            'e_container'            => 'stable',
+            // All other experiments disabled safely
+        ];
+    });
+    /* --------------------------------------------------
+     * 4. Auto-cleanup old revisions (ONLY revisions)
+     *    (Never deletes posts/pages or Elementor content)
+     * -------------------------------------------------- */
+    add_action( 'init', function() {
+        global $wpdb;
+
+        // Clean revisions older than 30 days
+        $wpdb->query(
+            "DELETE FROM $wpdb->posts 
+             WHERE post_type = 'revision'
+             AND post_date < DATE_SUB(NOW(), INTERVAL 30 DAY)"
+        );
+    });
+
+});

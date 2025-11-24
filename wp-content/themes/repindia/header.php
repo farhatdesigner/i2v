@@ -63,19 +63,19 @@ global $repindia_option;
                                             <ul>
                                                 <li>
                                                     <a href="<?php echo esc_url(home_url('/')); ?>">
-                                                        <span><img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/customer.svg" alt="Customer Stories"></span> Our customer stories</a>
+                                                        <span><img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/customer.svg" alt="Customer Stories"></span> <span class="span-text">Our customer stories</span></a>
                                                 </li>
                                                 <li>
                                                     <a href="<?php echo esc_url(home_url('/')); ?>">
-                                                        <span><img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/partner.svg" alt="Partner and Integration Hub"></span> Partner and integration hub</a>
+                                                        <span><img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/partner.svg" alt="Partner and Integration Hub"></span> <span class="span-text">Partner and integration hub</span></a>
                                                 </li>
                                                 <li>
                                                     <a href="<?php echo esc_url(home_url('/')); ?>">
-                                                        <span><img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/device.svg" alt="supported Device"></span> Supported device</a>
+                                                        <span><img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/device.svg" alt="supported Device"></span> <span class="span-text">Supported device</span></a>
                                                 </li>
                                                 <li>
                                                     <a href="<?php echo esc_url(home_url('/')); ?>">
-                                                        <span><img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/hardware.svg" alt="Calculate Hardware Sizing"></span> Calculate hardware sizing</a>
+                                                        <span><img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/hardware.svg" alt="Calculate Hardware Sizing"></span> <span class="span-text">Calculate hardware sizing</span></a>
                                                 </li>
                                             </ul>
                                         </div>
