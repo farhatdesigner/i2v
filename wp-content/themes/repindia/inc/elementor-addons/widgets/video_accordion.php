@@ -379,7 +379,7 @@ class Video_accordion extends Widget_Base
                     </div>
                     <div class="col-md-6 col-12 padd-accordion_video">
                         <div class="accordion_video">
-                            <img data-bs-toggle="modal" data-bs-target="#staticBackdrop" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/video.webp" alt="null" width="100%" height="100%">
+                            <img data-bs-toggle="modal" data-bs-target="#staticBackdrop" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/no-helmet-detection.webp" alt="null" width="100%" height="100%">
                             <!-- Vertically centered modal -->
                             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
@@ -423,7 +423,7 @@ class Video_accordion extends Widget_Base
                             </div>
                         </div>
                         <div class="accordion_video">
-                            <img data-bs-toggle="modal" data-bs-target="#staticBackdropthree" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/video.webp" alt="null" width="100%" height="100%">
+                            <img data-bs-toggle="modal" data-bs-target="#staticBackdropthree" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/no-helmet-detection.webp" alt="null" width="100%" height="100%">
                             <!-- Vertically centered modal -->
                             <div class="modal fade" id="staticBackdropthree" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">

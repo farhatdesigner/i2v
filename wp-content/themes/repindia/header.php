@@ -129,7 +129,7 @@ global $repindia_option;
                         <ul class="header-right-box">
                             <li>
                                 <a class="theme-btn " href="<?php echo esc_url(home_url('/')); ?>">
-                                    Request a demo
+                                    Book a demo
                                 </a>
                             </li>
                             <li>

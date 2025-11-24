@@ -1280,7 +1280,6 @@ h3 {
     margin: 0 0 20px;
     /* text-transform: capitalize; */
     transition: all .4s ease;
-    color: #fff;
     font-family: "proxima-nova", sans-serif;
 }
 
@@ -1973,7 +1972,7 @@ h3 {
     width: 100%;
     transition: all 0.3s ease;
 }
-.sticky-custom>ul>li{
+.sticky-custom>ul>li, .sticky-tab>ul>li{
     padding: var(--XSM, 4px) 16px !important;
     align-items: center;
     gap: var(--XSM, 4px);
@@ -1982,19 +1981,19 @@ h3 {
     border-radius: 40px;
     cursor: pointer;
 }
-.sticky-custom>ul>li:hover{
+.sticky-custom>ul>li:hover, .sticky-tab>ul>li:hover{
     background : #F2F5FA;
     Border: 1px solid #D7DBE4;
 }
-.sticky-custom>ul>li:hover span{ color: #5F6F94;}
-.sticky-custom>ul>li.active-li {
+.sticky-custom>ul>li:hover span, .sticky-tab>ul>li:hover span{ color: #5F6F94;}
+.sticky-custom>ul>li.active-li, .sticky-tab>ul>li:first-child {
     background: #0099ED;
     color: #ffff;
     border: 1px solid var(--tabs-tab-btn-active-bg, #0099ED);
     
 }
 
-.sticky-custom>ul>li.active-li span {
+.sticky-custom>ul>li.active-li span, .sticky-tab>ul>li:first-child span {
     color: #ffff !important;
 }
 
@@ -2221,6 +2220,19 @@ h3 {
 .enterprz_env .elementor-widget-image-carousel .swiper-slide {
     border-radius: 12px;
 }
+
+.btn-sec_full{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 14px;
+    width: 100%;
+    gap: 12px;
+}
+
+
 
 @media (min-width: 768px) {
     .footer-accordion-icon {
