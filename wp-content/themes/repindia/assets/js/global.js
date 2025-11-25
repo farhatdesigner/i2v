@@ -396,7 +396,13 @@ var swiper2 = new Swiper(".brandslider", {
 // Tabs functionality
 jQuery(document).ready(function ($) {
 
-    $(document).on('click', '.tabsautoscroll li', function () {
+    $(document).on('click', '.tabsautoscroll li', function (e) {
+        // Prevent default anchor behavior if anchor exists
+        var $link = $(this).find("a.custom-tab-link");
+        if ($link.length) {
+            e.preventDefault();
+        }
+
         var $this = $(this);
         var t = $this.data("id"); // e.g., "content0", "content1", etc.
         var tabsContainer = $(".tabsautoscroll");
@@ -405,17 +411,19 @@ jQuery(document).ready(function ($) {
         $this.is(":last-child") ? $(".next").hide() : $(".next").show();
         $this.is(":first-child") ? $(".previous").hide() : $(".previous").show();
 
-        // Scroll tabs horizontally to center the clicked tab
-        var tabPosition = $this.position().left;
-        var tabWidth = $this.outerWidth();
-        var containerWidth = tabsContainer.width();
-        var currentScroll = tabsContainer.scrollLeft();
+        // Scroll tabs horizontally to center the clicked tab (only on desktop)
+        if ($(window).width() > 1024) {
+            var tabPosition = $this.position().left;
+            var tabWidth = $this.outerWidth();
+            var containerWidth = tabsContainer.width();
+            var currentScroll = tabsContainer.scrollLeft();
 
-        // Calculate scroll position to center the tab
-        var targetScroll = currentScroll + tabPosition - (containerWidth / 2) + (tabWidth / 2);
+            // Calculate scroll position to center the tab
+            var targetScroll = currentScroll + tabPosition - (containerWidth / 2) + (tabWidth / 2);
 
-        // Use jQuery animate for smooth scrolling
-        tabsContainer.stop().animate({ scrollLeft: targetScroll }, 300, 'swing');
+            // Use jQuery animate for smooth scrolling
+            tabsContainer.stop().animate({ scrollLeft: targetScroll }, 300, 'swing');
+        }
 
         // Toggle class only, no .show() or .hide()
         $(".tabContent .tabdiv").removeClass("active-tabcontent");
@@ -424,6 +432,18 @@ jQuery(document).ready(function ($) {
         // Active tab styling
         $(".tabsautoscroll li").removeClass("active");
         $this.addClass("active");
+
+        // Update select-brand text on mobile
+        if ($(window).width() <= 1024) {
+            var selectedText = $link.length ? $link.text() : $this.text();
+            $(".filter-menu .select-brand").text(selectedText.trim());
+        }
+    });
+
+    // Handle click on custom-tab-link to prevent default anchor behavior
+    $(document).on('click', '.tabsautoscroll li .custom-tab-link', function (e) {
+        e.preventDefault();
+        // Event will bubble to parent li, which handles the tab switching
     });
 
     // $(".tabdiv a").click(function (e) {
@@ -437,6 +457,23 @@ jQuery(document).ready(function ($) {
     $(document).on('click', '.previous', function (e) {
         e.preventDefault();
         $("li.active").prev("li").trigger("click");
+    });
+
+    // Mobile dropdown functionality for tabs (similar to rep-portfolio)
+    // Handle click on select-brand to toggle dropdown
+    $(document).on('click', '.filter-menu .select-brand', function () {
+        if ($(window).width() <= 1024) {
+            $(this).toggleClass("angle-icon");
+            $(this).next("ul.tabsautoscroll").slideToggle();
+        }
+    });
+
+    // Handle click on custom tabs li to close dropdown on mobile
+    $(document).on('click', '.filter-menu .tabsautoscroll li', function () {
+        if ($(window).width() <= 1024) {
+            $(".filter-menu .select-brand").removeClass("angle-icon");
+            $(this).parents("ul.tabsautoscroll").slideUp();
+        }
     });
 });
 
@@ -505,6 +542,15 @@ $(window).scroll(function() {
 
 jQuery(document).ready(function ($) {
 
+    // Check if sticky-custom or enterprisebanner exists on the page
+    var $stickyCustom = $(".sticky-custom");
+    var $enterpriseBanner = $("#enterprisebanner");
+    
+    // Only run this code if one of these elements exists
+    if ($stickyCustom.length === 0 && $enterpriseBanner.length === 0) {
+        return; // Exit early if neither element exists
+    }
+
     var $items = $(".sticky-custom ul.elementor-icon-list-items.elementor-inline-items li");
     var $menu = $(".sticky-custom"); // menu container
 
@@ -566,6 +612,11 @@ jQuery(document).ready(function ($) {
     // SCROLL SPY + AUTO HIDE MENU AFTER 5TH SECTION
     // --------------------------------------------
     function detectActiveSection() {
+        // Safety check: if no sections found, exit early
+        if (sectionData.length === 0) {
+            return;
+        }
+
         var scrollTop = $(window).scrollTop() + triggerOffset;
         var activeIndex = 0;
 
@@ -588,7 +639,8 @@ jQuery(document).ready(function ($) {
         // ------------------------------------------
         var lastSection = sectionData[sectionData.length - 1];
 
-        if (scrollTop > lastSection.bottom) {
+        // Safety check: ensure lastSection exists before accessing properties
+        if (lastSection && scrollTop > lastSection.bottom) {
             // User scrolled PAST the last section
             $menu.addClass("menu-hidden");
         } else {

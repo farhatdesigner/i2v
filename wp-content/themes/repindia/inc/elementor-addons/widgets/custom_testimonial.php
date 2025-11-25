@@ -1069,15 +1069,15 @@ class Custom_Testimonial extends Widget_Base
                 </div>
 
                 <!-- navigation -->
-                <div class="swiper-button-prev <?php echo esc_attr($widget_id); ?>-tabs-prev"></div>
-                <div class="swiper-button-next <?php echo esc_attr($widget_id); ?>-tabs-next"></div>
+                <div class="swiper-button-prev <?php echo esc_attr($widget_id); ?>-tabs-prev"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/left-arrow.svg" alt="Next"></div>
+                <div class="swiper-button-next <?php echo esc_attr($widget_id); ?>-tabs-next">  <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/right-arrow.svg" alt="Prev"></div>
             </div>
         </div>
 
         <!-- styles (scoped to widget) -->
         <style>
             /* Scoped by widget ID to avoid global override */
-            #<?php echo esc_attr($widget_id); ?> { --ct-gap: 40px; }
+            #<?php echo esc_attr($widget_id); ?> { --ct-gap: 80px; }
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-widget,
             #<?php echo esc_attr($widget_id); ?> { width: 100%; }
 
@@ -1085,14 +1085,16 @@ class Custom_Testimonial extends Widget_Base
                 display: flex;
                 gap: var(--ct-gap);
                 margin-bottom: 40px;
-                align-items: flex-start;
+                align-items: center;
+                padding: 0 60px;
             }
 
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-left,
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-right {
-                flex: 1;
                 position: relative;
             }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-left{width: 45%;}
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-right {width: 55%;}
 
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-item,
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-media-item {
@@ -1109,10 +1111,11 @@ class Custom_Testimonial extends Widget_Base
 
             /* Quote & author */
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-quote {
-                font-size: 24px;
-                line-height: 1.6;
-                margin-bottom: 30px;
-                color: #fff;
+                font-size: 28px;
+                line-height:  121.429%;
+                margin-bottom: 40px;
+                color: rgba(255, 255, 255, 0.90);
+                font-weight: 400;
             }
 
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-author {
@@ -1130,14 +1133,17 @@ class Custom_Testimonial extends Widget_Base
 
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-author-name {
                 font-size: 18px;
-                font-weight: 600;
+                font-weight: 500;
                 margin-bottom: 5px;
-                color: #fff;
+                color: #AEB6C9;
+                line-height: 142.857%;
             }
 
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-author-role {
                 font-size: 14px;
-                color: #cfcfcf;
+                color: #AEB6C9;
+                font-weight: 400;
+                line-height: 144.444%;
             }
 
             /* media */
@@ -1151,16 +1157,16 @@ class Custom_Testimonial extends Widget_Base
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-video-wrapper { position: relative; }
 
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-video-overlay { position: relative; cursor: pointer; }
-            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-video-overlay img { width:100%; height:auto; display:block; }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-video-overlay img { width:100%; height:auto; display:block;border-radius: 8px; }
 
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-play-button {
                 position: absolute;
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-                width: 80px;
-                height: 80px;
-                background-color: rgba(255,255,255,.95);
+                /* width: 80px;
+                height: 80px; */
+                /* background-color: rgba(255,255,255,.95); */
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
@@ -1171,21 +1177,32 @@ class Custom_Testimonial extends Widget_Base
                 z-index: 10;
                 transition: transform .25s ease, background .25s ease;
             }
+
+            
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-play-button:hover { transform: translate(-50%,-50%) scale(1.06); }
 
             /* Tabs swiper */
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-wrapper { position: relative; width: 100%; padding: 18px 40px; box-sizing: border-box; }
-            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-wrapper { align-items: center; }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-wrapper { align-items: center;padding-left: 50px;padding-right: 50px;overflow: hidden; }
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item { display:flex; align-items:center; justify-content:center; padding:14px; border-radius:10px; background:#fff0; transition: all .25s ease; border:2px solid transparent; }
-            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item img { max-height:50px; opacity: .65; filter: grayscale(100%); transition: all .25s ease; display:block; }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item img { transition: all .25s ease; display:block; }
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item.active { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); }
-            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item.active img { opacity: 1; filter: grayscale(0%); }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item.active img { opacity: 1; }
 
             /* arrows (scoped) */
             #<?php echo esc_attr($widget_id); ?> .swiper-button-prev,
             #<?php echo esc_attr($widget_id); ?> .swiper-button-next {
                 width:44px; height:44px; border-radius:50%; background: rgba(255,255,255,0.06);
                 display:flex; align-items:center; justify-content:center; color:#fff; opacity:1;
+            }
+            
+            /* Hide default Swiper arrow icons - using local icons instead */
+            #<?php echo esc_attr($widget_id); ?> .swiper-button-prev:after,
+            #<?php echo esc_attr($widget_id); ?> .swiper-button-next:after,
+            #<?php echo esc_attr($widget_id); ?> .swiper-rtl .swiper-button-prev:after,
+            #<?php echo esc_attr($widget_id); ?> .swiper-rtl .swiper-button-next:after {
+                display: none !important;
+                content: none !important;
             }
 
             /* Responsiveness */
@@ -1194,8 +1211,11 @@ class Custom_Testimonial extends Widget_Base
                 #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-wrapper { padding: 14px 18px; }
             }
             @media (max-width: 768px) {
-                #<?php echo esc_attr($widget_id); ?> .custom-testimonial-content-wrapper { flex-direction: column; gap: 20px; }
+                #<?php echo esc_attr($widget_id); ?> .custom-testimonial-content-wrapper { flex-direction: column-reverse; gap: 20px;padding: 40px 20px 15px 20px; margin-bottom: 0;}
                 #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-slide img { max-height:34px; }
+                #<?php echo esc_attr($widget_id); ?> .custom-testimonial-left,    #<?php echo esc_attr($widget_id); ?> .custom-testimonial-right{width: 100%;}
+                #<?php echo esc_attr($widget_id); ?> .custom-testimonial-quote {font-size: 18px;margin-bottom: 12px;margin-bottom: 20px;}
+                #<?php echo esc_attr($widget_id); ?> .custom-testimonial-play-button {width:20%}
             }
         </style>
 
@@ -1380,7 +1400,7 @@ class Custom_Testimonial extends Widget_Base
 
                 // Build Swiper config
                 var swiperConfig = {
-                    slidesPerView: 4,
+                    slidesPerView: 8,
                     spaceBetween: 20,
                     slidesPerGroup: 1,
                     loop: false,
