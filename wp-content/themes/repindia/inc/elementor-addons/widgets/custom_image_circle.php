@@ -184,7 +184,7 @@ class Custom_Image_Circle extends Widget_Base {
                 flex-direction: row;
                 align-items: center;
                 text-align: center;
-                width: 221px;
+                width: 204px;
                 margin-left: -60px;
                 margin-top: -20px;
                 pointer-events: auto;
