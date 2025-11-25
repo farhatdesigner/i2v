@@ -139,10 +139,10 @@ jQuery(document).ready(function ($) {
         loop: true,
         speed: 1000,
         parallax: true,
-        // autoplay: {
-        //     delay: 6500,
-        //     disableOnInteraction: false,
-        // },
+        autoplay: {
+            delay: 6500,
+            disableOnInteraction: false,
+        },
         watchSlidesProgress: true,
         pagination: {
             el: '.hero-swiper-container .swiper-pagination',
