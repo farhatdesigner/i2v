@@ -274,7 +274,7 @@ class Custom_Image_Circle extends Widget_Base {
 
             @media (max-width: 768px) {
                 {{WRAPPER}} .orbit-system-wrapper {
-                    min-height: 350px;
+                    min-height: 482px;
                 }
                 
                 {{WRAPPER}} .orbit-content {
