@@ -1196,7 +1196,7 @@ class Custom_Testimonial extends Widget_Base
                 width: auto !important;
                 flex-shrink: 0 !important;
                 padding: 0px;
-                width: 132px!important;
+                min-width: 132px!important;
                 height: 75px;
                 border-radius: 12px;
             }
@@ -1230,14 +1230,21 @@ class Custom_Testimonial extends Widget_Base
             /* Responsiveness */
             @media (max-width: 1024px) {
                 #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-slide img { max-height:40px; }
-                #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-wrapper { padding: 14px 18px; }
+                #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-wrapper { padding: 14px 0px; }
             }
             @media (max-width: 768px) {
-                #<?php echo esc_attr($widget_id); ?> .custom-testimonial-content-wrapper { flex-direction: column-reverse; gap: 20px;padding: 40px 20px 15px 20px; margin-bottom: 0;}
+                #<?php echo esc_attr($widget_id); ?> .custom-testimonial-content-wrapper { flex-direction: column-reverse; gap: 20px;padding: 40px 0px 15px 0px; margin-bottom: 0;}
                 #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-slide img { max-height:34px; }
                 #<?php echo esc_attr($widget_id); ?> .custom-testimonial-left,    #<?php echo esc_attr($widget_id); ?> .custom-testimonial-right{width: 100%;}
                 #<?php echo esc_attr($widget_id); ?> .custom-testimonial-quote {font-size: 18px;margin-bottom: 12px;margin-bottom: 20px;}
                 #<?php echo esc_attr($widget_id); ?> .custom-testimonial-play-button {width:20%}
+                .custom-testimonial-author-photo { max-width: 78px;max-height: 78px; }
+                .custom-testimonial-author-photo svg,.custom-testimonial-author-photo img{ max-width: 78px;max-height: 78px; }
+                #<?php echo esc_attr($widget_id); ?> .swiper-slide {
+                    width: 112px !important;
+                    min-width: unset!important;
+                    height: 75px;
+                }
             }
         </style>
 
