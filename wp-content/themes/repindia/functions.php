@@ -111,6 +111,7 @@ if (! function_exists('repindia_load_theme_scripts_and_styles')) {
 			wp_enqueue_style('custom-style', get_template_directory_uri() . '/assets/css/custom_style.css', null, REPINDIA_THEME_VERSION, 'all');
 			wp_enqueue_style('feedback-custom', get_template_directory_uri() . '/assets/css/feedback_custom.css', null, REPINDIA_THEME_VERSION, 'all');
 			wp_enqueue_style('repindia-style', get_stylesheet_uri(), null, REPINDIA_THEME_VERSION, 'all');
+			wp_enqueue_style('dark-theme', get_template_directory_uri() . '/assets/css/dark_theme.css', null, REPINDIA_THEME_VERSION, 'all');
 			wp_enqueue_style('repindia-responsive', get_template_directory_uri() . '/assets/css/responsive.css', null, REPINDIA_THEME_VERSION, 'all');
 
 		/* Register Scripts */
