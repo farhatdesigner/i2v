@@ -862,7 +862,7 @@ class Custom_Testimonial extends Widget_Base
 
     protected function render()
     {
-    $settings = $this->get_settings_for_display();
+        $settings = $this->get_settings_for_display();
     $testimonials = $settings['testimonials_list'] ?? [];
 
     if (empty($testimonials)) {
@@ -1402,7 +1402,7 @@ class Custom_Testimonial extends Widget_Base
                 var swiperConfig = {
                     slidesPerView: 8,
                     spaceBetween: 20,
-                    slidesPerGroup: 1,
+                    slidesPerGroup: 1, // Scroll 1 item at a time
                     loop: false,
                     speed: 600,
                     navigation: {
@@ -1412,11 +1412,13 @@ class Custom_Testimonial extends Widget_Base
                     breakpoints: {
                         // tablet
                         768: {
-                            slidesPerView: 3
+                            slidesPerView: 8,
+                            slidesPerGroup: 1 // Scroll 1 item at a time
                         },
                         // mobile
                         480: {
-                            slidesPerView: 2
+                            slidesPerView: 2,
+                            slidesPerGroup: 1 // Scroll 1 item at a time
                         }
                     },
                     on: {
@@ -1582,7 +1584,7 @@ class Custom_Testimonial extends Widget_Base
         })();
         </script>
     </div>
-    <?php
+<?php
     }
 
 }
