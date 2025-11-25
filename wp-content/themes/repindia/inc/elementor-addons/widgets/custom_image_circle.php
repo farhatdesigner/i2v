@@ -205,6 +205,7 @@ class Custom_Image_Circle extends Widget_Base {
             
             {{WRAPPER}} .orbit-icon {
                 flex-shrink: 0;
+                padding-left: 56px;
             }
             
             {{WRAPPER}} .orbit-icon img,
@@ -243,7 +244,7 @@ class Custom_Image_Circle extends Widget_Base {
 
             @media (max-width: 768px) {
                 {{WRAPPER}} .orbit-system-wrapper {
-                    min-height: 420px;
+                    min-height: 350px;
                 }
                 
                 {{WRAPPER}} .orbit-content {
@@ -307,6 +308,13 @@ class Custom_Image_Circle extends Widget_Base {
                 
                 {{WRAPPER}} .orbit-ring-<?php echo $i; ?> .orbit-item-wrapper {
                     --ring-radius: <?php echo $rad_mobile; ?>px;
+                }
+                .orbit-ring{
+                    top: 100%;
+                    left: 50%;
+                }
+                .orbit-icon {
+                    padding-left: 0;
                 }
             }
     
