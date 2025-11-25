@@ -139,10 +139,10 @@ jQuery(document).ready(function ($) {
         loop: true,
         speed: 1000,
         parallax: true,
-        autoplay: {
-            delay: 6500,
-            disableOnInteraction: false,
-        },
+        // autoplay: {
+        //     delay: 6500,
+        //     disableOnInteraction: false,
+        // },
         watchSlidesProgress: true,
         pagination: {
             el: '.hero-swiper-container .swiper-pagination',
@@ -483,6 +483,9 @@ jQuery(document).ready(function ($) {
     function handleFooterAccordion() {
         // Only enable accordion on mobile (767px and below)
         if ($(window).width() <= 767) {
+            // Initialize all accordion items as active (opened) on mobile
+            $('.footer-accordion-item').addClass('active');
+            
             $('.footer-accordion-title').off('click').on('click', function () {
                 var $accordionItem = $(this).closest('.footer-accordion-item');
 

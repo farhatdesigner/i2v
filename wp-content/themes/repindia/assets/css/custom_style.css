@@ -2950,34 +2950,8 @@ h3 {
 
 
     }
+}
 
-    @media (max-width: 380px) {
-        .hero-style .slide-title h2 {
-            font-size: 30px;
-        }
-
-        .badge-custom {
-            padding: 4px 5px;
-        }
-
-        .theme-btn.xl-btn {
-            padding: 8px 9px !important;
-            font-size: 13px !important;
-        }
-
-        .text-container {
-            padding: 0 10px;
-        }
-
-        .hero-style .slide-btns>a:first-child {
-            margin-right: 0px;
-        }
-
-        .theme-btn.xl-btn {
-            padding: 8px 8px !important;
-            font-size: 13px !important;
-        }
-    }
 
 
     @media (min-width: 768px) {
@@ -3049,6 +3023,39 @@ h3 {
 
         #mission_built span.elementor-icon-list-icon {
             width: 150px;
+        }
+
+    }
+
+    @media (max-width: 380px) {
+        .hero-style .slide-title h2 {
+            font-size: 30px;
+        }
+
+        .badge-custom {
+            padding: 4px 5px;
+        }
+
+        .theme-btn.xl-btn {
+            padding: 8px 9px !important;
+            font-size: 13px !important;
+        }
+
+        .text-container {
+            padding: 0 10px;
+        }
+
+        .hero-style .slide-btns>a:first-child {
+            margin-right: 0px;
+        }
+
+        .theme-btn.xl-btn {
+            padding: 8px 8px !important;
+            font-size: 13px !important;
+        }
+                
+        .hero-slider .hero-slide-inner,  .hero-slider {
+            height: 90vh;
         }
 
     }
