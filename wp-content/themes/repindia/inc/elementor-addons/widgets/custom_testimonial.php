@@ -1405,6 +1405,9 @@ class Custom_Testimonial extends Widget_Base
                     slidesPerGroup: 1, // Scroll 1 item at a time
                     loop: false,
                     speed: 600,
+                    watchSlidesProgress: true,
+                    watchSlidesVisibility: true,
+                    watchOverflow: true,
                     navigation: {
                         nextEl: '#' + widgetId + '-tabs-swiper .swiper-button-next, .' + '<?php echo esc_js($widget_id); ?>' + '-tabs-next',
                         prevEl: '#' + widgetId + '-tabs-swiper .swiper-button-prev, .' + '<?php echo esc_js($widget_id); ?>' + '-tabs-prev'
@@ -1446,6 +1449,15 @@ class Custom_Testimonial extends Widget_Base
                     } else {
                         swiperInstance = new Swiper(swiperContainer, swiperConfig);
                     }
+                    
+                    // Force Swiper to update and recognize all slides
+                    if (swiperInstance && typeof swiperInstance.update === 'function') {
+                        setTimeout(function() {
+                            swiperInstance.update();
+                            swiperInstance.updateSlides();
+                            swiperInstance.updateSlidesClasses();
+                        }, 100);
+                    }
                 } catch (e) {
                     // fallback: do not break widget — keep tab click functionality
                     console.warn('Swiper init failed in custom testimonial:', e);
@@ -1456,6 +1468,21 @@ class Custom_Testimonial extends Widget_Base
 
                 // all slides
                 var slides = widgetEl.querySelectorAll('.custom-testimonial-tab-item');
+                
+                // Ensure all slides are properly recognized by Swiper
+                if (swiperInstance && slides.length > 0) {
+                    // Force Swiper to re-calculate slides
+                    setTimeout(function() {
+                        if (swiperInstance.params && swiperInstance.params.slidesPerView) {
+                            // Ensure Swiper can scroll to show all slides
+                            var maxSlide = Math.max(0, slides.length - swiperInstance.params.slidesPerView);
+                            // Update Swiper to recognize all slides
+                            if (typeof swiperInstance.update === 'function') {
+                                swiperInstance.update();
+                            }
+                        }
+                    }, 200);
+                }
 
                 // Set active item directly by index
                 function setActiveByIndex(activeIndex) {
