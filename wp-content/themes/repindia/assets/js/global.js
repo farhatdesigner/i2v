@@ -852,7 +852,7 @@ if (window.innerWidth >= 1180) {
     const tl = gsap.timeline({
         scrollTrigger: {
             trigger: ".sectionsscroll",
-            start: "top 12%",
+            start: "top 20%",
             endTrigger: 'html',
             end: () => "+=" + 200 * panels.length + "%",
             pin: true,

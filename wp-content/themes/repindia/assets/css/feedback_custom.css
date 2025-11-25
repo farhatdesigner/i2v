@@ -408,6 +408,8 @@
      font-weight: 400;
      line-height: 150%;
      margin-top: 8px;
+     display: flex;
+     flex-wrap: wrap;
  }
 
  .card-contents ul li>span {
@@ -453,6 +455,7 @@ p#breadcrumbs svg {
     margin: 0 8px;
 }
 
+.intelligent_video{max-width:1645px !important;margin-left: auto !important;}
 
 
 

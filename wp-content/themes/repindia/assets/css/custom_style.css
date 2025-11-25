@@ -36,8 +36,13 @@
     background-color: rgba(255, 255, 255, 0.10) !important;
 }
 
+
+.js-dark .content-inner-icons li:first-child {
+    border-left: 1px solid rgba(193, 196, 198, 0.10) !important;
+}
 .js-dark .content-inner-icons li {
-    border: 1px solid #c1c4c61a;
+    border: 1px solid rgba(193, 196, 198, 0.10) !important;
+    border-left: 0 !important;
 }
 
 .js-dark .grey-light {
@@ -223,7 +228,7 @@ nav .logo-wdth img {
 header ul {
     padding: 0;
     margin: 0;
-    display: flex
+    display: flex;
 }
 
 header li,
@@ -628,7 +633,7 @@ h2 {
 
 .swiper-pagination {
     text-align: left !important;
-    top: 50pxa;
+    /* top: 50px; */
 }
 
 .trusted_sec .swiper-pagination-bullet {
@@ -894,11 +899,11 @@ a:hover {
     display: flex;
     gap: 20px;
     flex-direction: column;
-    max-height: 75vh;
+    max-height: 100vh;
     overflow: auto;
     scroll-behavior: smooth;
     scrollbar-width: thin;
-    scrollbar-color: D5D5D5 transparent;
+    scrollbar-color: #D5D5D5 transparent;
 }
 
 /* Custom scrollbar for webkit browsers (Chrome, Safari, Edge) */
@@ -923,7 +928,7 @@ a:hover {
 
 /* Hide scrollbar arrows/buttons */
 .toggle-menu::-webkit-scrollbar-button {
-    display: none;  
+    display: none;
     height: 0;
     width: 0;
 }
@@ -932,7 +937,7 @@ a:hover {
 #header-main-menu>li>a:hover,
 .sub-menu li a:hover,
 #header-toggle-menu>li:nth-last-child(4)>a span:hover,
-.listing-inner>ul>li>:hover  .span-text {
+.listing-inner>ul>li>:hover .span-text {
     color: #06283D;
     position: relative;
 }
@@ -941,15 +946,23 @@ a:hover {
 #header-main-menu>li>a:hover:before,
 .sub-menu li a:hover:before,
 #header-toggle-menu>li:nth-last-child(4)>a span:hover:before,
-.listing-inner>ul>li>:hover  .span-text:before {
+.listing-inner>ul>li>:hover .span-text:before,
+.footer ul li>a:hover:before {
     content: '';
     position: absolute;
     width: 100%;
     height: 8px;
     left: 0;
     bottom: 3px;
-    background: #5C5C5C;
-    opacity: 0.15;
+    background: #06283D;
+    opacity: 0.10;
+}
+.footer ul li>a:hover:before {
+    background: rgba(255, 255, 255, 0.90);
+}
+.footer ul li>a:hover {
+    color: #ffffff;
+    position: relative;
 }
 
 #header-toggle-menu>li:nth-last-child(4)>a:hover:before {
@@ -972,12 +985,14 @@ a:hover {
     position: relative;
 }
 
-.toggle-menu>li.active.parent>a, header #header-main-menu li.active.parent>a {
+.toggle-menu>li.active.parent>a,
+header #header-main-menu li.active.parent>a {
     color: #0074B2;
     position: relative;
 }
 
-.toggle-menu>li.active.parent>a::before, header #header-main-menu li.active.parent>a::before {
+.toggle-menu>li.active.parent>a::before,
+header #header-main-menu li.active.parent>a::before {
     content: '';
     position: absolute;
     width: 100%;
@@ -1518,9 +1533,14 @@ h3 {
     flex-direction: column;
     padding: 20px;
     border: 1px solid #E6EBF2;
+    border-left: 0;
     background: #ffffff;
     gap: 12px;
     align-items: baseline;
+}
+
+.content-inner-icons li:first-child {
+    border-left: 1px solid #E6EBF2;
 }
 
 .content-inner-icons ul li span {
@@ -1606,9 +1626,14 @@ h3 {
     font-size: 14px;
     color: #4A5673;
     padding: 4px 12px;
-    background: #ffffff;
     display: inline-block;
     border-radius: 28px;
+    border: 1px solid #E6EBF2;
+}
+.insights-updates-item-text_left-list li>a:hover {
+    color: #06283D;
+    border: 1px solid #D7DBE4;
+    background: #F2F5FA;
 }
 
 /* .lisitng-inner .d-flex:last-child .insights-updates-item-text{ border-bottom: none;} */
@@ -1988,7 +2013,7 @@ h3 {
     padding: var(--XSM, 4px) 16px !important;
     align-items: center;
     gap: var(--XSM, 4px);
-    Border: 1px solid transparent;
+    border: 1px solid transparent;
     background: transparent;
     border-radius: 40px;
     cursor: pointer;
@@ -1997,7 +2022,7 @@ h3 {
 .sticky-custom>ul>li:hover,
 .sticky-tab>ul>li:hover {
     background: #F2F5FA;
-    Border: 1px solid #D7DBE4;
+    border: 1px solid #D7DBE4;
 }
 
 .sticky-custom>ul>li:hover span,
@@ -2295,7 +2320,7 @@ h3 {
     border-radius: 12px;
 }
 
-<<<<<<< HEAD .btn-sec_full {
+.btn-sec_full {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -2307,7 +2332,7 @@ h3 {
 }
 
 
-=======>>>>>>>cefa88e1bc13efe8e2ec335f5fb4e950faf5ac82 @media (min-width: 768px) {
+@media (min-width: 768px) {
     .footer-accordion-icon {
         display: none;
     }

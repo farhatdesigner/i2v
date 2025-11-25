@@ -173,15 +173,15 @@ class Customtabsolution extends Widget_Base
 													</li>
 													<li>
 														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/e-map-client.svg" alt="i2V’s VMS">
-														<span>eMap Client</span>
+														<span>eMap </br> Client</span>
 													</li>
 													<li>
 														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/icon.svg" alt="i2V’s VMS">
-														<span>Auto PTZ tracking</span>
+														<span>Auto PTZ </br> tracking</span>
 													</li>
 													<li>
 														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/playback-client.svg" alt="i2V’s VMS">
-														<span>Playback Client</span>
+														<span>Playback </br> Client</span>
 													</li>
 													<li>
 														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/icon-1.svg" alt="i2V’s VMS">
@@ -723,7 +723,7 @@ class Customtabsolution extends Widget_Base
 													</li>
 													<li>
 														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/slow-traffic-alerting.svg" alt="i2V’s VMS">
-														<span>Slow traffic alerting</span>
+														<span>Slow traffic </br> alerting</span>
 													</li>
 													<li>
 														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/congestion-traffic-alerting.svg" alt="i2V’s VMS">
