@@ -26,7 +26,7 @@ global $repindia_option;
 
                     <div class="left-sidemenu">
                         <li class="burger-icon">
-                            <a href="javascript:void(0)"><img class="" src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/hamburger.svg" alt="Hamburger Menu"></a>
+                        <a href="javascript:void(0)"><img class="icon-sun" src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/dark_menu.svg" alt="Hamburger Menu"> <img class="icon-moon" src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/hamburger.svg" alt="Hamburger Menu"></a>
                         </li>
                         <div class="toggle-menu-container">
                             <div class="inside-menu-container-inner">

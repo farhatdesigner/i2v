@@ -1,10 +1,11 @@
 .js-dark .content-inner-icons li:last-child {
     border-radius: 12px !important;
 }
-.darklogo,.icon-sun,.js-dark .lightlogo,.js-dark .icon-moon{ display: none; }
+.darklogo,.icon-sun,.js-dark .lightlogo,.js-dark .icon-moon,
+header li.burger-icon .icon-sun,.js-dark header li.burger-icon .icon-moon{ display: none; }
 .js-dark li,.js-dark li span, .js-dark p,.js-dark.content-inner-icons ul li span,.js-dark .industry_box .elementor-icon-box-title,.js-dark .industry_box .elementor-icon-box-title span{ color: #AEB6C9!important; }
-.js-dark .darklogo,.js-dark .icon-sun{ display: block; }
- .js-dark span, .js-dark h1, .js-dark h2, .js-dark h3, .js-dark h4, .js-dark h5, .js-dark h6, .js-dark .toggle-menu>li>a { color: rgba(255, 255, 255, 0.90) !important; }
+.js-dark .darklogo,.js-dark .icon-sun,.js-dark header li.burger-icon .icon-sun{ display: block; }
+ .js-dark span, .js-dark h1, .js-dark h2, .js-dark h3, .js-dark h4, .js-dark h5, .js-dark h6 { color: rgba(255, 255, 255, 0.90) !important; }
 .js-dark .rounded-4 { background: #262A30; }
 .js-dark span.badge-custom { background: rgba(255, 255, 255, 0.10);border-color: rgba(255, 255, 255, 0.10);color: #D7DBE4!important; }
 .js-dark  p.card-text{ color: #AEB6C9!important; }
@@ -23,6 +24,20 @@
 .js-dark .content-inner-icons li{ border-color: rgba(193, 196, 198, 0.10); }
 .js-dark .border-btn-grey{ background: #464A4F;border-color: rgba(193, 196, 198, 0.20); }
 .js-dark a.theme-btn-white.border-btn-grey.color-btn-grey{ color: #D7DBE4;}
-.js-dark .date-author-txt span{ color: #AEB6C9!important;}
+.js-dark .date-author-txt span,.js-dark  .elementor-element .ctw-tooltip-inner{ color: #AEB6C9!important;}
 .js-dark .lisitng-inner .d-flex::after{ background: rgba(193, 196, 198, 0.20); }
 .js-dark .insights-updates-item-text_left-list li>a{ color: #D7DBE4;border: 1px solid rgba(193, 196, 198, 0.10);background: #262A30; }
+.js-dark .ctw-icon svg path{ fill: #D7DBE4; }
+.js-dark .toggle-menu>li.active.parent>a, .js-dark header #header-main-menu li.active.parent>a {
+    color: #0074B2!important;
+}
+.js-dark #header-toggle-menu .sub-menu li a{ color: #AEB6C9; }
+.js-dark .we-hiring-txt{ background: rgba(255, 255, 255, 0.10);border-color: rgba(193, 196, 198, 0.10); }
+.js-dark .rightmenu_statictxt h4{ color: #AEB6C9!important;}
+.js-dark .rightmenu_statictxt .listing-inner>ul>li>a{ border: 1px solid rgba(193, 196, 198, 0.10);background: #262A30; }
+.js-dark .rightmenu_statictxt .listing-inner svg path.forground_ic {
+    fill: rgba(255, 255, 255, 0.10);
+}
+.js-dark .rightmenu_statictxt .listing-inner svg path.background_ic { fill: #D7DBE4; }
+#header-toggle-menu .sub-menu{ border-left: 1px solidD7DBE4; }
+.js-dark #header-toggle-menu .sub-menu{ border-left: 1px solid rgba(193, 196, 198, 0.20); }
