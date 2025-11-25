@@ -26,61 +26,91 @@ class Custom_Image_Circle extends Widget_Base {
             ]
         );
 
+        $repeater = new \Elementor\Repeater();
+
+        $repeater->add_control(
+            'ring_radius_desktop',
+            [
+                'label' => __( 'Radius - Desktop (px)', 'elementor-custom-widget' ),
+                'type' => \Elementor\Controls_Manager::NUMBER,
+                'default' => 250,
+            ]
+        );
+        
+        $repeater->add_control(
+            'ring_radius_tablet',
+            [
+                'label' => __( 'Radius - Tablet (px)', 'elementor-custom-widget' ),
+                'type' => \Elementor\Controls_Manager::NUMBER,
+                'default' => 180,
+            ]
+        );
+        
+        $repeater->add_control(
+            'ring_radius_mobile',
+            [
+                'label' => __( 'Radius - Mobile (px)', 'elementor-custom-widget' ),
+                'type' => \Elementor\Controls_Manager::NUMBER,
+                'default' => 120,
+            ]
+        );
+        
+        $repeater->add_control(
+            'anim_duration',
+            [
+                'label' => __( 'Speed (Seconds)', 'elementor-custom-widget' ),
+                'type' => \Elementor\Controls_Manager::NUMBER,
+                'default' => 20,
+            ]
+        );
+        
+        $repeater->add_control(
+            'direction',
+            [
+                'label' => __( 'Direction', 'elementor-custom-widget' ),
+                'type' => \Elementor\Controls_Manager::SELECT,
+                'options' => [ 'normal' => 'Clockwise', 'reverse' => 'Counter-Clockwise' ],
+                'default' => 'normal',
+            ]
+        );
+        
+        $repeater->add_control(
+            'border_color',
+            [
+                'label' => __( 'Ring Color', 'elementor-custom-widget' ),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'default' => 'rgba(255, 255, 255, 0.15)',
+            ]
+        );
+        
+        $repeater->add_control(
+            'border_style',
+            [
+                'label' => __( 'Border Style', 'elementor-custom-widget' ),
+                'type' => \Elementor\Controls_Manager::SELECT,
+                'options' => [ 'solid' => 'Solid', 'dashed' => 'Dashed', 'dotted' => 'Dotted' ],
+                'default' => 'dashed',
+            ]
+        );
+
         $this->add_control(
             'rings_data',
             [
                 'label' => __( 'Define Rings', 'elementor-custom-widget' ),
                 'type' => \Elementor\Controls_Manager::REPEATER,
-                'fields' => [
+                'fields' => $repeater->get_controls(),
+                'default' => [
                     [
-                        'name' => 'ring_radius_desktop',
-                        'label' => __( 'Radius - Desktop (px)', 'elementor-custom-widget' ),
-                        'type' => \Elementor\Controls_Manager::NUMBER,
-                        'default' => 250,
-                    ],
-                    
-                    [
-                        'name' => 'ring_radius_tablet',
-                        'label' => __( 'Radius - Tablet (px)', 'elementor-custom-widget' ),
-                        'type' => \Elementor\Controls_Manager::NUMBER,
-                        'default' => 180,
-                    ],
-                    
-                    [
-                        'name' => 'ring_radius_mobile',
-                        'label' => __( 'Radius - Mobile (px)', 'elementor-custom-widget' ),
-                        'type' => \Elementor\Controls_Manager::NUMBER,
-                        'default' => 120,
-                    ],
-                    
-                    [
-                        'name' => 'anim_duration',
-                        'label' => __( 'Speed (Seconds)', 'elementor-custom-widget' ),
-                        'type' => \Elementor\Controls_Manager::NUMBER,
-                        'default' => 20,
-                    ],
-                    [
-                        'name' => 'direction',
-                        'label' => __( 'Direction', 'elementor-custom-widget' ),
-                        'type' => \Elementor\Controls_Manager::SELECT,
-                        'options' => [ 'normal' => 'Clockwise', 'reverse' => 'Counter-Clockwise' ],
-                        'default' => 'normal',
-                    ],
-                    [
-                        'name' => 'border_color',
-                        'label' => __( 'Ring Color', 'elementor-custom-widget' ),
-                        'type' => \Elementor\Controls_Manager::COLOR,
-                        'default' => 'rgba(255, 255, 255, 0.15)',
-                    ],
-                    [
-                        'name' => 'border_style',
-                        'label' => __( 'Border Style', 'elementor-custom-widget' ),
-                        'type' => \Elementor\Controls_Manager::SELECT,
-                        'options' => [ 'solid' => 'Solid', 'dashed' => 'Dashed', 'dotted' => 'Dotted' ],
-                        'default' => 'dashed',
+                        'ring_radius_desktop' => 250,
+                        'ring_radius_tablet' => 180,
+                        'ring_radius_mobile' => 120,
+                        'anim_duration' => 20,
+                        'direction' => 'normal',
+                        'border_color' => 'rgba(255, 255, 255, 0.15)',
+                        'border_style' => 'dashed',
                     ],
                 ],
-                'title_field' => 'Radius: {{{ ring_radius }}}px | {{{ direction }}}',
+                'title_field' => 'Ring - Desktop: {{{ ring_radius_desktop }}}px | {{{ direction }}}',
             ]
         );
         $this->end_controls_section();

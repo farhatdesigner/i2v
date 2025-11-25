@@ -862,7 +862,7 @@ class Custom_Testimonial extends Widget_Base
 
     protected function render()
     {
-    $settings = $this->get_settings_for_display();
+        $settings = $this->get_settings_for_display();
     $testimonials = $settings['testimonials_list'] ?? [];
 
     if (empty($testimonials)) {
@@ -1058,13 +1058,15 @@ class Custom_Testimonial extends Widget_Base
             <div class="custom-testimonial-tabs-swiper swiper" id="<?php echo esc_attr($widget_id); ?>-tabs-swiper">
                 <div class="swiper-wrapper">
                     <?php foreach ($testimonials as $index => $testimonial) : ?>
-                        <?php if (!empty($testimonial['logo_image']['url'])) : ?>
-                            <div class="swiper-slide custom-testimonial-tab-item <?php echo $index === 1 ? 'active' : ''; ?>" 
-                                    data-index="<?php echo esc_attr($index); ?>">
+                        <div class="swiper-slide custom-testimonial-tab-item <?php echo $index === 1 ? 'active' : ''; ?>" 
+                                data-index="<?php echo esc_attr($index); ?>">
+                            <?php if (!empty($testimonial['logo_image']['url'])) : ?>
                                 <img src="<?php echo esc_url($testimonial['logo_image']['url']); ?>" 
                                         alt="<?php echo esc_attr($testimonial['title'] ?? ''); ?>">
-                            </div>
-                        <?php endif; ?>
+                            <?php else : ?>
+                                <span class="custom-testimonial-tab-placeholder"><?php echo esc_html($testimonial['title'] ?? 'Tab ' . ($index + 1)); ?></span>
+                            <?php endif; ?>
+                        </div>
                     <?php endforeach; ?>
                 </div>
 
@@ -1183,9 +1185,29 @@ class Custom_Testimonial extends Widget_Base
 
             /* Tabs swiper */
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-wrapper { position: relative; width: 100%; padding: 18px 40px; box-sizing: border-box; }
-            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-wrapper { align-items: center;padding-left: 50px;padding-right: 50px;overflow: hidden; }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-wrapper {
+                align-items: center;
+                padding-left: 50px;
+                padding-right: 50px;
+                overflow: visible !important;
+                display: flex !important;
+            }
+            #<?php echo esc_attr($widget_id); ?> .swiper-slide {
+                width: auto !important;
+                flex-shrink: 0 !important;
+                padding: 0px;
+                width: 132px!important;
+                height: 75px;
+                border-radius: 12px;
+            }
+            #<?php echo esc_attr($widget_id); ?> .swiper-slide img,#<?php echo esc_attr($widget_id); ?> .swiper-slide svg { border-radius: 12px;width: 132px;height: 75px;}
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-slide { 
+                display: flex !important; 
+                flex-shrink: 0;
+            }
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item { display:flex; align-items:center; justify-content:center; padding:14px; border-radius:10px; background:#fff0; transition: all .25s ease; border:2px solid transparent; }
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item img { transition: all .25s ease; display:block; }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-placeholder { font-size: 12px; color: rgba(255,255,255,0.7); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px; }
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item.active { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); }
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item.active img { opacity: 1; }
 
@@ -1402,9 +1424,12 @@ class Custom_Testimonial extends Widget_Base
                 var swiperConfig = {
                     slidesPerView: 8,
                     spaceBetween: 20,
-                    slidesPerGroup: 1,
+                    slidesPerGroup: 1, // Scroll 1 item at a time
                     loop: false,
                     speed: 600,
+                    watchSlidesProgress: true,
+                    watchSlidesVisibility: true,
+                    watchOverflow: true,
                     navigation: {
                         nextEl: '#' + widgetId + '-tabs-swiper .swiper-button-next, .' + '<?php echo esc_js($widget_id); ?>' + '-tabs-next',
                         prevEl: '#' + widgetId + '-tabs-swiper .swiper-button-prev, .' + '<?php echo esc_js($widget_id); ?>' + '-tabs-prev'
@@ -1412,11 +1437,15 @@ class Custom_Testimonial extends Widget_Base
                     breakpoints: {
                         // tablet
                         768: {
-                            slidesPerView: 3
+                            slidesPerView: 8,
+                            slidesPerGroup: 1, // Scroll 1 item at a time
+                            spaceBetween: 10,
                         },
                         // mobile
                         480: {
-                            slidesPerView: 2
+                            slidesPerView: 2,
+                            slidesPerGroup: 1, // Scroll 1 item at a time
+                            spaceBetween: 10,
                         }
                     },
                     on: {
@@ -1444,6 +1473,35 @@ class Custom_Testimonial extends Widget_Base
                     } else {
                         swiperInstance = new Swiper(swiperContainer, swiperConfig);
                     }
+                    
+                    // Get all slides count before updates
+                    var allTestimonialSlides = widgetEl.querySelectorAll('.custom-testimonial-tab-item');
+                    var totalTestimonials = allTestimonialSlides.length;
+                    
+                    // Force Swiper to update and recognize all slides
+                    if (swiperInstance && typeof swiperInstance.update === 'function') {
+                        setTimeout(function() {
+                            // Force update to recognize all slides
+                            swiperInstance.update();
+                            if (typeof swiperInstance.updateSlides === 'function') {
+                                swiperInstance.updateSlides();
+                            }
+                            if (typeof swiperInstance.updateSlidesClasses === 'function') {
+                                swiperInstance.updateSlidesClasses();
+                            }
+                            
+                            // Verify slide count
+                            var swiperSlidesCount = swiperInstance.slides ? swiperInstance.slides.length : swiperContainer.querySelectorAll('.swiper-slide').length;
+                            if (swiperSlidesCount !== totalTestimonials) {
+                                console.warn('Swiper initialized with ' + swiperSlidesCount + ' slides, but ' + totalTestimonials + ' testimonials exist. Forcing update...');
+                                // Force another update
+                                swiperInstance.update();
+                                if (typeof swiperInstance.updateSlides === 'function') {
+                                    swiperInstance.updateSlides();
+                                }
+                            }
+                        }, 100);
+                    }
                 } catch (e) {
                     // fallback: do not break widget — keep tab click functionality
                     console.warn('Swiper init failed in custom testimonial:', e);
@@ -1452,46 +1510,158 @@ class Custom_Testimonial extends Widget_Base
                     return;
                 }
 
-                // all slides
+                // all slides - get all available testimonial tabs
                 var slides = widgetEl.querySelectorAll('.custom-testimonial-tab-item');
+                var swiperSlides = swiperContainer.querySelectorAll('.swiper-slide');
+                
+                // Verify all slides are in the DOM
+                if (slides.length !== swiperSlides.length) {
+                    console.warn('Slide count mismatch: testimonials=' + slides.length + ', swiper-slides=' + swiperSlides.length);
+                }
+                
+                // Ensure all slides are properly recognized by Swiper
+                if (swiperInstance && slides.length > 0) {
+                    // Force Swiper to re-calculate and recognize all slides
+                    setTimeout(function() {
+                        // Get all swiper slides from the instance
+                        var allSwiperSlides = swiperInstance.slides || swiperContainer.querySelectorAll('.swiper-slide');
+                        
+                        // Ensure Swiper recognizes all slides
+                        if (typeof swiperInstance.update === 'function') {
+                            swiperInstance.update();
+                        }
+                        if (typeof swiperInstance.updateSlides === 'function') {
+                            swiperInstance.updateSlides();
+                        }
+                        if (typeof swiperInstance.updateSlidesClasses === 'function') {
+                            swiperInstance.updateSlidesClasses();
+                        }
+                        if (typeof swiperInstance.updateSize === 'function') {
+                            swiperInstance.updateSize();
+                        }
+                        
+                        // Force Swiper to recalculate slide positions
+                        if (swiperInstance.params) {
+                            // Ensure Swiper can scroll to show all slides
+                            var slidesPerView = swiperInstance.params.slidesPerView || 1;
+                            var maxSlide = Math.max(0, allSwiperSlides.length - slidesPerView);
+                            
+                            // Verify Swiper has all slides
+                            if (allSwiperSlides.length !== slides.length) {
+                                console.warn('Swiper slide count (' + allSwiperSlides.length + ') does not match testimonial count (' + slides.length + ')');
+                            }
+                        }
+                    }, 200);
+                    
+                    // Additional update after a longer delay to ensure all slides are recognized
+                    setTimeout(function() {
+                        if (swiperInstance) {
+                            if (typeof swiperInstance.update === 'function') {
+                                swiperInstance.update();
+                            }
+                            if (typeof swiperInstance.updateSlides === 'function') {
+                                swiperInstance.updateSlides();
+                            }
+                        }
+                    }, 500);
+                }
 
-                // set the active pair such that second visible is active
-                function setActiveByVisibleIndex(visibleStart) {
-                    var firstVisible = parseInt(visibleStart, 10) || 0;
-                    var activeIndex = firstVisible + 1; // second visible
-
-                    // clamp
+                // Set active item directly by index
+                function setActiveByIndex(activeIndex) {
+                    // Clamp to valid range
                     if (activeIndex < 0) activeIndex = 0;
-                    if (activeIndex > slides.length - 1) activeIndex = slides.length - 1;
+                    if (activeIndex >= slides.length) activeIndex = slides.length - 1;
 
-                    // remove all active classes
+                    // Remove all active classes
                     slides.forEach(function(s){ s.classList.remove('active'); });
 
-                    // add active to the second visible (and optionally to neighbor if you want two visible highlighted)
-                    var s1 = slides[activeIndex];
-                    if (s1) s1.classList.add('active');
+                    // Add active to the selected item
+                    var activeSlide = slides[activeIndex];
+                    if (activeSlide) {
+                        activeSlide.classList.add('active');
+                    }
 
-                    // Sync testimonial content to the single active index (second visible)
+                    // Sync testimonial content to the active index
                     switchTestimonial(activeIndex);
                 }
 
-                // when clicking a slide, move slider so clicked becomes second visible
+                // Set active based on visible index (for automatic updates during scroll)
+                function setActiveByVisibleIndex(visibleStart) {
+                    var firstVisible = parseInt(visibleStart, 10) || 0;
+                    var slidesPerView = swiperInstance.params && swiperInstance.params.slidesPerView ? Math.floor(swiperInstance.params.slidesPerView) : 8;
+                    
+                    // Calculate which item should be active (prefer second visible)
+                    var activeIndex = firstVisible + 1;
+                    
+                    // Clamp to valid range
+                    if (activeIndex < 0) activeIndex = 0;
+                    if (activeIndex >= slides.length) activeIndex = slides.length - 1;
+
+                    setActiveByIndex(activeIndex);
+                }
+
+                // helper to init tab click handlers (in case Swiper fails or editor needs it)
+                function initTabClicks() {
+                    var tabItems = widgetEl.querySelectorAll('.custom-testimonial-tab-item');
+                    tabItems.forEach(function(tab, index) {
+                        // Check if already has event listener to avoid duplicates
+                        if (tab._ct_click_handler) return;
+                        tab._ct_click_handler = true;
+                        
+                        tab.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            var idx = parseInt(this.getAttribute('data-index') || index, 10);
+                            
+                            // Directly activate the clicked item
+                            setActiveByIndex(idx);
+                            
+                            // Scroll to show the clicked item (center it if possible)
+                            if (swiperInstance && typeof swiperInstance.slideTo === 'function') {
+                                var slidesPerView = swiperInstance.params && swiperInstance.params.slidesPerView ? Math.floor(swiperInstance.params.slidesPerView) : 8;
+                                
+                                // Calculate target slide position to center the clicked item
+                                var targetSlide = idx - Math.floor(slidesPerView / 2) + 1;
+                                
+                                // Clamp targetSlide
+                                if (targetSlide < 0) targetSlide = 0;
+                                var maxSlide = Math.max(0, slides.length - slidesPerView);
+                                if (targetSlide > maxSlide) targetSlide = maxSlide;
+                                
+                                swiperInstance.slideTo(targetSlide);
+                            } else {
+                                // Fallback if Swiper not available
+                                switchTestimonial(idx);
+                            }
+                        });
+                    });
+                }
+
+                // When clicking a slide, make it active and scroll to show it
                 slides.forEach(function(slide, idx){
                     slide.addEventListener('click', function(e){
                         e.preventDefault();
-                        var targetIndex = idx - 1; // slide so that clicked index becomes the 2nd visible (firstVisible + 1)
-                        if (targetIndex < 0) {
-                            targetIndex = 0;
-                        }
-                        // slideTo accepts index of slide -> ensure it's within range
+                        e.stopPropagation();
+                        
+                        // Get the real index
+                        var realIndex = parseInt(slide.getAttribute('data-index') || idx, 10);
+                        
+                        // Directly activate the clicked item
+                        setActiveByIndex(realIndex);
+                        
+                        // Scroll to show the clicked item (center it if possible)
                         if (typeof swiperInstance.slideTo === 'function') {
-                            // ensure targetIndex within slide count
-                            var maxFirstVisible = Math.max(0, swiperInstance.slides.length - (swiperInstance.params && swiperInstance.params.slidesPerView ? Math.floor(swiperInstance.params.slidesPerView) : 4));
-                            if (targetIndex > maxFirstVisible) targetIndex = maxFirstVisible;
-                            swiperInstance.slideTo(targetIndex);
-                        } else {
-                            // fallback
-                            setActiveByVisibleIndex(idx);
+                            var slidesPerView = swiperInstance.params && swiperInstance.params.slidesPerView ? Math.floor(swiperInstance.params.slidesPerView) : 8;
+                            
+                            // Calculate target slide position to center the clicked item
+                            var targetSlide = realIndex - Math.floor(slidesPerView / 2) + 1;
+                            
+                            // Clamp targetSlide
+                            if (targetSlide < 0) targetSlide = 0;
+                            var maxSlide = Math.max(0, slides.length - slidesPerView);
+                            if (targetSlide > maxSlide) targetSlide = maxSlide;
+                            
+                            swiperInstance.slideTo(targetSlide);
                         }
                     });
                 });
@@ -1499,28 +1669,6 @@ class Custom_Testimonial extends Widget_Base
                 // Initialize video handlers and tab click fallback
                 initVideoHandlers(widgetEl);
                 initTabClicks();
-
-                // helper to init tab click handlers (in case Swiper fails or editor needs it)
-                function initTabClicks() {
-                    var tabItems = widgetEl.querySelectorAll('.custom-testimonial-tab-item');
-                    tabItems.forEach(function(tab, index) {
-                        // replace to avoid duplicate handlers
-                        var newTab = tab.cloneNode(true);
-                        tab.parentNode.replaceChild(newTab, tab);
-                        newTab.addEventListener('click', function(e) {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            var idx = parseInt(this.getAttribute('data-index') || index, 10);
-                            // mimic same behavior: make idx the active (2nd visible) by sliding
-                            if (swiperInstance && typeof swiperInstance.slideTo === 'function') {
-                                var target = Math.max(0, idx - 1);
-                                swiperInstance.slideTo(target);
-                            } else {
-                                switchTestimonial(idx);
-                            }
-                        });
-                    });
-                }
 
             }); // readyForSwiper
             // Elementor editor redraw hook — ensure it re-inits in editor
@@ -1545,7 +1693,7 @@ class Custom_Testimonial extends Widget_Base
         })();
         </script>
     </div>
-    <?php
+<?php
     }
 
 }
