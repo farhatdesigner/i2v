@@ -1184,38 +1184,95 @@ class Custom_Testimonial extends Widget_Base
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-play-button:hover { transform: translate(-50%,-50%) scale(1.06); }
 
             /* Tabs swiper */
-            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-wrapper { position: relative; width: 100%; padding: 18px 40px; box-sizing: border-box; }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-wrapper { 
+                position: relative; 
+                width: 100%; 
+                padding: 18px 20px; 
+                box-sizing: border-box;
+                overflow: visible;
+            }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper { 
+                position: relative;
+                margin-left: 0px;
+                margin-right: 0px;
+                overflow: hidden;
+                box-sizing: border-box;
+                padding: 0 50px;
+            }
+            /* Allow arrows to extend beyond swiper container */
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-button-prev,
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-button-next {
+                overflow: visible;
+            }
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-wrapper {
                 align-items: center;
-                padding-left: 50px;
-                padding-right: 50px;
+                padding-left: 0;
+                padding-right: 0;
+                margin-left: 0;
+                margin-right: 0;
                 overflow: visible !important;
                 display: flex !important;
+                width: 100%;
+                box-sizing: border-box;
             }
             #<?php echo esc_attr($widget_id); ?> .swiper-slide {
-                width: auto !important;
+                /* width: auto !important; */
                 flex-shrink: 0 !important;
                 padding: 0px;
-                min-width: 132px!important;
+                /* min-width: 150px!important; */
                 height: 75px;
                 border-radius: 12px;
             }
-            #<?php echo esc_attr($widget_id); ?> .swiper-slide img,#<?php echo esc_attr($widget_id); ?> .swiper-slide svg { border-radius: 12px;width: 132px;height: 75px;}
+            #<?php echo esc_attr($widget_id); ?> .swiper-slide img,#<?php echo esc_attr($widget_id); ?> .swiper-slide svg { border-radius: 12px;
+                /* width: 150px; */
+                height: 75px;}
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-slide { 
                 display: flex !important; 
                 flex-shrink: 0;
             }
-            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item { display:flex; align-items:center; justify-content:center; padding:14px; border-radius:10px; background:#fff0; transition: all .25s ease; border:2px solid transparent; }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item { display:flex; align-items:center; justify-content:center; padding:0px; border-radius:10px; background:#fff0; transition: all .25s ease; border:2px solid transparent; }
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item img { transition: all .25s ease; display:block; }
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-placeholder { font-size: 12px; color: rgba(255,255,255,0.7); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px; }
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item.active { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); }
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item.active img { opacity: 1; }
 
-            /* arrows (scoped) */
-            #<?php echo esc_attr($widget_id); ?> .swiper-button-prev,
-            #<?php echo esc_attr($widget_id); ?> .swiper-button-next {
-                width:44px; height:44px; border-radius:50%; background: rgba(255,255,255,0.06);
-                display:flex; align-items:center; justify-content:center; color:#fff; opacity:1;
+            /* arrows (scoped) - positioned relative to wrapper */
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-wrapper .swiper-button-prev,
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-wrapper .swiper-button-next {
+                width:44px !important; 
+                height:44px !important; 
+                border-radius:50% !important; 
+                background: rgba(255,255,255,0.06) !important;
+                display:flex !important; 
+                align-items:center !important; 
+                justify-content:center !important; 
+                color:#fff !important; 
+                opacity:1 !important;
+                position: absolute !important;
+                top: 50% !important;
+                transform: translateY(-50%) !important;
+                z-index: 10 !important;
+                margin-top: 0 !important;
+            }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-wrapper .swiper-button-prev {
+                left: 50px !important;
+                right: auto !important;
+            }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-wrapper .swiper-button-next {
+                right: 50px !important;
+                left: auto !important;
+            }
+            
+            /* Also target arrows inside swiper for fallback */
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-button-prev,
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-button-next {
+                position: absolute !important;
+            }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-button-prev {
+                left: 0px !important;
+            }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-button-next {
+                right: 0px !important;
             }
             
             /* Hide default Swiper arrow icons - using local icons instead */
@@ -1231,19 +1288,43 @@ class Custom_Testimonial extends Widget_Base
             @media (max-width: 1024px) {
                 #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-slide img { max-height:40px; }
                 #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-wrapper { padding: 14px 0px; }
+                /* #<?php //echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper { 
+                    margin-right: 55px; 
+                    margin-left: 55px; 
+                }
+                #<?php //echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-button-prev {
+                    left: -55px !important;
+                }
+                #<?php //echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-button-next {
+                    right: -55px !important;
+                } */
+                #custom-testimonial-8eaa666 .custom-testimonial-tabs-wrapper .swiper-button-prev, #custom-testimonial-8eaa666 .custom-testimonial-tabs-wrapper .swiper-button-next{  width: 36px !important;height: 36px !important; }
             }
             @media (max-width: 768px) {
                 #<?php echo esc_attr($widget_id); ?> .custom-testimonial-content-wrapper { flex-direction: column-reverse; gap: 20px;padding: 40px 0px 15px 0px; margin-bottom: 0;}
-                #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-slide img { max-height:34px; }
+                #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-slide img { max-height:75px; }
                 #<?php echo esc_attr($widget_id); ?> .custom-testimonial-left,    #<?php echo esc_attr($widget_id); ?> .custom-testimonial-right{width: 100%;}
                 #<?php echo esc_attr($widget_id); ?> .custom-testimonial-quote {font-size: 18px;margin-bottom: 12px;margin-bottom: 20px;}
                 #<?php echo esc_attr($widget_id); ?> .custom-testimonial-play-button {width:20%}
                 .custom-testimonial-author-photo { max-width: 78px;max-height: 78px; }
-                .custom-testimonial-author-photo svg,.custom-testimonial-author-photo img{ max-width: 78px;max-height: 78px; }
+                /* .custom-testimonial-author-photo svg,.custom-testimonial-author-photo img{ max-width: 78px;max-height: 78px; } */
                 #<?php echo esc_attr($widget_id); ?> .swiper-slide {
-                    width: 112px !important;
-                    min-width: unset!important;
-                    height: 75px;
+                    /* width: 112px !important;
+                    min-width: unset!important; */
+                    /* height: 75px; */
+                }
+                /* #<?php //echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper { 
+                    margin-right: 50px; 
+                    margin-left: 50px; 
+                } */
+                /* #<?php //echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-button-prev {
+                    left: -50px !important;
+                }
+                #<?php //echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-button-next {
+                    right: -50px !important;
+                } */
+                #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper { 
+                    padding: 0 40px;
                 }
             }
         </style>
@@ -1443,16 +1524,22 @@ class Custom_Testimonial extends Widget_Base
                     },
                     breakpoints: {
                         // tablet
-                        768: {
-                            slidesPerView: 8,
+                        1024: {
+                            slidesPerView: 6,
                             slidesPerGroup: 1, // Scroll 1 item at a time
-                            spaceBetween: 10,
+                            spaceBetween: 20,
+                        },
+                        // tablet
+                        768: {
+                            slidesPerView: 4,
+                            slidesPerGroup: 1, // Scroll 1 item at a time
+                            spaceBetween: 20,
                         },
                         // mobile
                         480: {
                             slidesPerView: 2,
                             slidesPerGroup: 1, // Scroll 1 item at a time
-                            spaceBetween: 10,
+                            spaceBetween: 20,
                         }
                     },
                     on: {
