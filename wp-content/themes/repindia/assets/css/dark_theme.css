@@ -22,3 +22,7 @@
 .js-dark .main_title{ color: rgba(255, 255, 255, 0.90)!important; }
 .js-dark .content-inner-icons li{ border-color: rgba(193, 196, 198, 0.10); }
 .js-dark .border-btn-grey{ background: #464A4F;border-color: rgba(193, 196, 198, 0.20); }
+.js-dark a.theme-btn-white.border-btn-grey.color-btn-grey{ color: #D7DBE4;}
+.js-dark .date-author-txt span{ color: #AEB6C9!important;}
+.js-dark .lisitng-inner .d-flex::after{ background: rgba(193, 196, 198, 0.20); }
+.js-dark .insights-updates-item-text_left-list li>a{ color: #D7DBE4;border: 1px solid rgba(193, 196, 198, 0.10);background: #262A30; }
