@@ -1196,7 +1196,7 @@ class Custom_Testimonial extends Widget_Base
                 width: auto !important;
                 flex-shrink: 0 !important;
                 padding: 0px;
-                width: 132px;
+                width: 132px!important;
                 height: 75px;
                 border-radius: 12px;
             }
@@ -1438,12 +1438,14 @@ class Custom_Testimonial extends Widget_Base
                         // tablet
                         768: {
                             slidesPerView: 8,
-                            slidesPerGroup: 1 // Scroll 1 item at a time
+                            slidesPerGroup: 1, // Scroll 1 item at a time
+                            spaceBetween: 10,
                         },
                         // mobile
                         480: {
                             slidesPerView: 2,
-                            slidesPerGroup: 1 // Scroll 1 item at a time
+                            slidesPerGroup: 1, // Scroll 1 item at a time
+                            spaceBetween: 10,
                         }
                     },
                     on: {
