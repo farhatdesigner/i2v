@@ -914,6 +914,7 @@ a:hover {
     scroll-behavior: smooth;
     scrollbar-width: thin;
     scrollbar-color: #D5D5D5 transparent;
+    
 }
 
 /* Custom scrollbar for webkit browsers (Chrome, Safari, Edge) */
