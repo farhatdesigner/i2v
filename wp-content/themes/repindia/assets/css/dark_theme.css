@@ -1,7 +1,10 @@
-.darklogo{ display: none; }
-.js-dark .lightlogo{ display: none; }
-.js-dark .darklogo{ display: block; }
-.js-dark p, .js-dark li, .js-dark span, .js-dark h1, .js-dark h2, .js-dark h3, .js-dark h4, .js-dark h5, .js-dark h6, .js-dark .toggle-menu>li>a { color: rgba(255, 255, 255, 0.90) !important; }
+.js-dark .content-inner-icons li:last-child {
+    border-radius: 12px !important;
+}
+.darklogo,.icon-sun,.js-dark .lightlogo,.js-dark .icon-moon{ display: none; }
+.js-dark li,.js-dark li span, .js-dark p,.js-dark.content-inner-icons ul li span,.js-dark .industry_box .elementor-icon-box-title,.js-dark .industry_box .elementor-icon-box-title span{ color: #AEB6C9!important; }
+.js-dark .darklogo,.js-dark .icon-sun{ display: block; }
+ .js-dark span, .js-dark h1, .js-dark h2, .js-dark h3, .js-dark h4, .js-dark h5, .js-dark h6, .js-dark .toggle-menu>li>a { color: rgba(255, 255, 255, 0.90) !important; }
 .js-dark .rounded-4 { background: #262A30; }
 .js-dark span.badge-custom { background: rgba(255, 255, 255, 0.10);border-color: rgba(255, 255, 255, 0.10);color: #D7DBE4!important; }
 .js-dark  p.card-text{ color: #AEB6C9!important; }
@@ -11,6 +14,11 @@
 .js-dark .darksection .elementor-element .feature_dark .elementor-button span { color: #E6BA85 !important; }
 .js-dark .darksection .elementor-element.certificate_icon.e-con.e-child .elementor-element{ border-color: rgba(193, 196, 198, 0.10); }
 .js-dark  ul.header-right-box li.search_switch svg path, .js-dark  ul.header-right-box li.theme_switch svg path{ fill: #D7DBE4!important; }
-.js-dark .header-right-box>li:not(:first-child)>a:hover {
-    background-color: rgba(255, 255, 255, 0.10);
-}
+.js-dark .header-right-box>li:not(:first-child)>a:hover { background-color: rgba(255, 255, 255, 0.10); }
+.js-dark .tabsWrapper:before{ background: rgba(193, 196, 198, 0.10); }
+.js-dark .tabsautoscroll li.active{ color: #0099ED!important; }
+.js-dark .tabsautoscroll li:hover:before{ background:#C1C4C633; }
+.js-dark .tabsautoscroll li{ color: #D7DBE4!important; }
+.js-dark .main_title{ color: rgba(255, 255, 255, 0.90)!important; }
+.js-dark .content-inner-icons li{ border-color: rgba(193, 196, 198, 0.10); }
+.js-dark .border-btn-grey{ background: #464A4F;border-color: rgba(193, 196, 198, 0.20); }
