@@ -1224,7 +1224,7 @@ class Custom_Testimonial extends Widget_Base
                 border-radius: 12px;
             }
             #<?php echo esc_attr($widget_id); ?> .swiper-slide img,#<?php echo esc_attr($widget_id); ?> .swiper-slide svg { border-radius: 12px;
-                /* width: 150px; */
+                width: 100%;
                 height: 75px;}
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-slide { 
                 display: flex !important; 
