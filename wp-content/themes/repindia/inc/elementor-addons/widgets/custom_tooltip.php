@@ -517,7 +517,24 @@ class Custom_Tooltip extends Widget_Base
             echo '</script>';
         }
 ?>
-
+<style>
+    @media(max-width: 768px){
+        .elementor-element.tooltip_container {
+            position: relative;
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 10px;
+        }
+        .elementor-element.tooltip_container .elementor-widget-custom_tooltip {
+            --align-self: start!important;
+        }
+        .ctw-tooltip-bottom {
+            left: 0;
+            transform: translateX(0%);
+        }
+        .ctw-tooltip{ min-width: 328px; }
+    }
+</style>
         <div class="ctw-wrapper" data-trigger="<?php echo $trigger_type; ?>" data-position="<?php echo $position; ?>" style="--ctw-arrow-color: <?php echo $tooltip_bg_color; ?>;">
             <div class="ctw-trigger">
                 <span class="ctw-title ctw-icon-<?php echo $icon_position; ?>" style="text-align: <?php echo $title_align; ?>;">
