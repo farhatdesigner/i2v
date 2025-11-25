@@ -1455,43 +1455,102 @@ class Custom_Testimonial extends Widget_Base
                 // all slides
                 var slides = widgetEl.querySelectorAll('.custom-testimonial-tab-item');
 
-                // set the active pair such that second visible is active
-                function setActiveByVisibleIndex(visibleStart) {
-                    var firstVisible = parseInt(visibleStart, 10) || 0;
-                    var activeIndex = firstVisible + 1; // second visible
-
-                    // clamp
+                // Set active item directly by index
+                function setActiveByIndex(activeIndex) {
+                    // Clamp to valid range
                     if (activeIndex < 0) activeIndex = 0;
-                    if (activeIndex > slides.length - 1) activeIndex = slides.length - 1;
+                    if (activeIndex >= slides.length) activeIndex = slides.length - 1;
 
-                    // remove all active classes
+                    // Remove all active classes
                     slides.forEach(function(s){ s.classList.remove('active'); });
 
-                    // add active to the second visible (and optionally to neighbor if you want two visible highlighted)
-                    var s1 = slides[activeIndex];
-                    if (s1) s1.classList.add('active');
+                    // Add active to the selected item
+                    var activeSlide = slides[activeIndex];
+                    if (activeSlide) {
+                        activeSlide.classList.add('active');
+                    }
 
-                    // Sync testimonial content to the single active index (second visible)
+                    // Sync testimonial content to the active index
                     switchTestimonial(activeIndex);
                 }
 
-                // when clicking a slide, move slider so clicked becomes second visible
+                // Set active based on visible index (for automatic updates during scroll)
+                function setActiveByVisibleIndex(visibleStart) {
+                    var firstVisible = parseInt(visibleStart, 10) || 0;
+                    var slidesPerView = swiperInstance.params && swiperInstance.params.slidesPerView ? Math.floor(swiperInstance.params.slidesPerView) : 8;
+                    
+                    // Calculate which item should be active (prefer second visible)
+                    var activeIndex = firstVisible + 1;
+                    
+                    // Clamp to valid range
+                    if (activeIndex < 0) activeIndex = 0;
+                    if (activeIndex >= slides.length) activeIndex = slides.length - 1;
+
+                    setActiveByIndex(activeIndex);
+                }
+
+                // helper to init tab click handlers (in case Swiper fails or editor needs it)
+                function initTabClicks() {
+                    var tabItems = widgetEl.querySelectorAll('.custom-testimonial-tab-item');
+                    tabItems.forEach(function(tab, index) {
+                        // Check if already has event listener to avoid duplicates
+                        if (tab._ct_click_handler) return;
+                        tab._ct_click_handler = true;
+                        
+                        tab.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            var idx = parseInt(this.getAttribute('data-index') || index, 10);
+                            
+                            // Directly activate the clicked item
+                            setActiveByIndex(idx);
+                            
+                            // Scroll to show the clicked item (center it if possible)
+                            if (swiperInstance && typeof swiperInstance.slideTo === 'function') {
+                                var slidesPerView = swiperInstance.params && swiperInstance.params.slidesPerView ? Math.floor(swiperInstance.params.slidesPerView) : 8;
+                                
+                                // Calculate target slide position to center the clicked item
+                                var targetSlide = idx - Math.floor(slidesPerView / 2) + 1;
+                                
+                                // Clamp targetSlide
+                                if (targetSlide < 0) targetSlide = 0;
+                                var maxSlide = Math.max(0, slides.length - slidesPerView);
+                                if (targetSlide > maxSlide) targetSlide = maxSlide;
+                                
+                                swiperInstance.slideTo(targetSlide);
+                            } else {
+                                // Fallback if Swiper not available
+                                switchTestimonial(idx);
+                            }
+                        });
+                    });
+                }
+
+                // When clicking a slide, make it active and scroll to show it
                 slides.forEach(function(slide, idx){
                     slide.addEventListener('click', function(e){
                         e.preventDefault();
-                        var targetIndex = idx - 1; // slide so that clicked index becomes the 2nd visible (firstVisible + 1)
-                        if (targetIndex < 0) {
-                            targetIndex = 0;
-                        }
-                        // slideTo accepts index of slide -> ensure it's within range
+                        e.stopPropagation();
+                        
+                        // Get the real index
+                        var realIndex = parseInt(slide.getAttribute('data-index') || idx, 10);
+                        
+                        // Directly activate the clicked item
+                        setActiveByIndex(realIndex);
+                        
+                        // Scroll to show the clicked item (center it if possible)
                         if (typeof swiperInstance.slideTo === 'function') {
-                            // ensure targetIndex within slide count
-                            var maxFirstVisible = Math.max(0, swiperInstance.slides.length - (swiperInstance.params && swiperInstance.params.slidesPerView ? Math.floor(swiperInstance.params.slidesPerView) : 4));
-                            if (targetIndex > maxFirstVisible) targetIndex = maxFirstVisible;
-                            swiperInstance.slideTo(targetIndex);
-                        } else {
-                            // fallback
-                            setActiveByVisibleIndex(idx);
+                            var slidesPerView = swiperInstance.params && swiperInstance.params.slidesPerView ? Math.floor(swiperInstance.params.slidesPerView) : 8;
+                            
+                            // Calculate target slide position to center the clicked item
+                            var targetSlide = realIndex - Math.floor(slidesPerView / 2) + 1;
+                            
+                            // Clamp targetSlide
+                            if (targetSlide < 0) targetSlide = 0;
+                            var maxSlide = Math.max(0, slides.length - slidesPerView);
+                            if (targetSlide > maxSlide) targetSlide = maxSlide;
+                            
+                            swiperInstance.slideTo(targetSlide);
                         }
                     });
                 });
@@ -1499,28 +1558,6 @@ class Custom_Testimonial extends Widget_Base
                 // Initialize video handlers and tab click fallback
                 initVideoHandlers(widgetEl);
                 initTabClicks();
-
-                // helper to init tab click handlers (in case Swiper fails or editor needs it)
-                function initTabClicks() {
-                    var tabItems = widgetEl.querySelectorAll('.custom-testimonial-tab-item');
-                    tabItems.forEach(function(tab, index) {
-                        // replace to avoid duplicate handlers
-                        var newTab = tab.cloneNode(true);
-                        tab.parentNode.replaceChild(newTab, tab);
-                        newTab.addEventListener('click', function(e) {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            var idx = parseInt(this.getAttribute('data-index') || index, 10);
-                            // mimic same behavior: make idx the active (2nd visible) by sliding
-                            if (swiperInstance && typeof swiperInstance.slideTo === 'function') {
-                                var target = Math.max(0, idx - 1);
-                                swiperInstance.slideTo(target);
-                            } else {
-                                switchTestimonial(idx);
-                            }
-                        });
-                    });
-                }
 
             }); // readyForSwiper
             // Elementor editor redraw hook — ensure it re-inits in editor
