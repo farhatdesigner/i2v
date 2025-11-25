@@ -1900,7 +1900,9 @@ h3 {
 .footer_bottom span {
     padding-right: 20px;
 }
-
+.disclaimer-text {
+    width: 100%;
+}
 .footer_bottom {
     padding: 20px 0;
     position: relative;
