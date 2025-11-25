@@ -1058,13 +1058,15 @@ class Custom_Testimonial extends Widget_Base
             <div class="custom-testimonial-tabs-swiper swiper" id="<?php echo esc_attr($widget_id); ?>-tabs-swiper">
                 <div class="swiper-wrapper">
                     <?php foreach ($testimonials as $index => $testimonial) : ?>
-                        <?php if (!empty($testimonial['logo_image']['url'])) : ?>
-                            <div class="swiper-slide custom-testimonial-tab-item <?php echo $index === 1 ? 'active' : ''; ?>" 
-                                    data-index="<?php echo esc_attr($index); ?>">
+                        <div class="swiper-slide custom-testimonial-tab-item <?php echo $index === 1 ? 'active' : ''; ?>" 
+                                data-index="<?php echo esc_attr($index); ?>">
+                            <?php if (!empty($testimonial['logo_image']['url'])) : ?>
                                 <img src="<?php echo esc_url($testimonial['logo_image']['url']); ?>" 
                                         alt="<?php echo esc_attr($testimonial['title'] ?? ''); ?>">
-                            </div>
-                        <?php endif; ?>
+                            <?php else : ?>
+                                <span class="custom-testimonial-tab-placeholder"><?php echo esc_html($testimonial['title'] ?? 'Tab ' . ($index + 1)); ?></span>
+                            <?php endif; ?>
+                        </div>
                     <?php endforeach; ?>
                 </div>
 
@@ -1183,9 +1185,29 @@ class Custom_Testimonial extends Widget_Base
 
             /* Tabs swiper */
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-wrapper { position: relative; width: 100%; padding: 18px 40px; box-sizing: border-box; }
-            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-wrapper { align-items: center;padding-left: 50px;padding-right: 50px;overflow: hidden; }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-wrapper {
+                align-items: center;
+                padding-left: 50px;
+                padding-right: 50px;
+                overflow: visible !important;
+                display: flex !important;
+            }
+            #<?php echo esc_attr($widget_id); ?> .swiper-slide {
+                width: auto !important;
+                flex-shrink: 0 !important;
+                padding: 0px;
+                width: 132px;
+                height: 75px;
+                border-radius: 12px;
+            }
+            #<?php echo esc_attr($widget_id); ?> .swiper-slide img,#<?php echo esc_attr($widget_id); ?> .swiper-slide svg { border-radius: 12px;width: 132px;height: 75px;}
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-slide { 
+                display: flex !important; 
+                flex-shrink: 0;
+            }
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item { display:flex; align-items:center; justify-content:center; padding:14px; border-radius:10px; background:#fff0; transition: all .25s ease; border:2px solid transparent; }
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item img { transition: all .25s ease; display:block; }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-placeholder { font-size: 12px; color: rgba(255,255,255,0.7); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px; }
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item.active { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); }
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item.active img { opacity: 1; }
 
@@ -1450,12 +1472,32 @@ class Custom_Testimonial extends Widget_Base
                         swiperInstance = new Swiper(swiperContainer, swiperConfig);
                     }
                     
+                    // Get all slides count before updates
+                    var allTestimonialSlides = widgetEl.querySelectorAll('.custom-testimonial-tab-item');
+                    var totalTestimonials = allTestimonialSlides.length;
+                    
                     // Force Swiper to update and recognize all slides
                     if (swiperInstance && typeof swiperInstance.update === 'function') {
                         setTimeout(function() {
+                            // Force update to recognize all slides
                             swiperInstance.update();
-                            swiperInstance.updateSlides();
-                            swiperInstance.updateSlidesClasses();
+                            if (typeof swiperInstance.updateSlides === 'function') {
+                                swiperInstance.updateSlides();
+                            }
+                            if (typeof swiperInstance.updateSlidesClasses === 'function') {
+                                swiperInstance.updateSlidesClasses();
+                            }
+                            
+                            // Verify slide count
+                            var swiperSlidesCount = swiperInstance.slides ? swiperInstance.slides.length : swiperContainer.querySelectorAll('.swiper-slide').length;
+                            if (swiperSlidesCount !== totalTestimonials) {
+                                console.warn('Swiper initialized with ' + swiperSlidesCount + ' slides, but ' + totalTestimonials + ' testimonials exist. Forcing update...');
+                                // Force another update
+                                swiperInstance.update();
+                                if (typeof swiperInstance.updateSlides === 'function') {
+                                    swiperInstance.updateSlides();
+                                }
+                            }
                         }, 100);
                     }
                 } catch (e) {
@@ -1466,22 +1508,60 @@ class Custom_Testimonial extends Widget_Base
                     return;
                 }
 
-                // all slides
+                // all slides - get all available testimonial tabs
                 var slides = widgetEl.querySelectorAll('.custom-testimonial-tab-item');
+                var swiperSlides = swiperContainer.querySelectorAll('.swiper-slide');
+                
+                // Verify all slides are in the DOM
+                if (slides.length !== swiperSlides.length) {
+                    console.warn('Slide count mismatch: testimonials=' + slides.length + ', swiper-slides=' + swiperSlides.length);
+                }
                 
                 // Ensure all slides are properly recognized by Swiper
                 if (swiperInstance && slides.length > 0) {
-                    // Force Swiper to re-calculate slides
+                    // Force Swiper to re-calculate and recognize all slides
                     setTimeout(function() {
-                        if (swiperInstance.params && swiperInstance.params.slidesPerView) {
+                        // Get all swiper slides from the instance
+                        var allSwiperSlides = swiperInstance.slides || swiperContainer.querySelectorAll('.swiper-slide');
+                        
+                        // Ensure Swiper recognizes all slides
+                        if (typeof swiperInstance.update === 'function') {
+                            swiperInstance.update();
+                        }
+                        if (typeof swiperInstance.updateSlides === 'function') {
+                            swiperInstance.updateSlides();
+                        }
+                        if (typeof swiperInstance.updateSlidesClasses === 'function') {
+                            swiperInstance.updateSlidesClasses();
+                        }
+                        if (typeof swiperInstance.updateSize === 'function') {
+                            swiperInstance.updateSize();
+                        }
+                        
+                        // Force Swiper to recalculate slide positions
+                        if (swiperInstance.params) {
                             // Ensure Swiper can scroll to show all slides
-                            var maxSlide = Math.max(0, slides.length - swiperInstance.params.slidesPerView);
-                            // Update Swiper to recognize all slides
-                            if (typeof swiperInstance.update === 'function') {
-                                swiperInstance.update();
+                            var slidesPerView = swiperInstance.params.slidesPerView || 1;
+                            var maxSlide = Math.max(0, allSwiperSlides.length - slidesPerView);
+                            
+                            // Verify Swiper has all slides
+                            if (allSwiperSlides.length !== slides.length) {
+                                console.warn('Swiper slide count (' + allSwiperSlides.length + ') does not match testimonial count (' + slides.length + ')');
                             }
                         }
                     }, 200);
+                    
+                    // Additional update after a longer delay to ensure all slides are recognized
+                    setTimeout(function() {
+                        if (swiperInstance) {
+                            if (typeof swiperInstance.update === 'function') {
+                                swiperInstance.update();
+                            }
+                            if (typeof swiperInstance.updateSlides === 'function') {
+                                swiperInstance.updateSlides();
+                            }
+                        }
+                    }, 500);
                 }
 
                 // Set active item directly by index
