@@ -107,16 +107,34 @@ class Customtabsolution extends Widget_Base
 						<h3 class="main_title quote">Integrated solutions to secure and streamline every facet of your operations </h3>
 					</div>
 					<div class="contentWrapper">
-						<div class="tabsWrapper">
-							<ul class="tabsautoscroll">
-								<li data-id="content0" class="tracking-wide active">i2V’s VMS</li>
-								<li data-id="content1">AI based video analytics / VCA</li>
-								<li data-id="content2">Command and control (ICCC/PSCM)</li>
-								<li data-id="content3">CMS</li>
-								<li data-id="content4">ITMS / ITS</li>
-								<li data-id="content5">ANPR / LPR</li>
-								<li data-id="content6">VIDS</li>
-								<li data-id="content7">FRS</li>
+						<div class="filter-menu tabsWrapper">
+							<label class="dropdown-label">Solutions</label>
+							<span class="select-brand">i2V's VMS</span>
+							<ul class="tabsautoscroll custom-tabs-list" id="solutionTab">
+								<li data-id="content0" class="tracking-wide active custom-tab-item">
+									<a class="custom-tab-link" href="#content0">i2V's VMS</a>
+								</li>
+								<li data-id="content1" class="custom-tab-item">
+									<a class="custom-tab-link" href="#content1">AI based video analytics / VCA</a>
+								</li>
+								<li data-id="content2" class="custom-tab-item">
+									<a class="custom-tab-link" href="#content2">Command and control (ICCC/PSCM)</a>
+								</li>
+								<li data-id="content3" class="custom-tab-item">
+									<a class="custom-tab-link" href="#content3">CMS</a>
+								</li>
+								<li data-id="content4" class="custom-tab-item">
+									<a class="custom-tab-link" href="#content4">ITMS / ITS</a>
+								</li>
+								<li data-id="content5" class="custom-tab-item">
+									<a class="custom-tab-link" href="#content5">ANPR / LPR</a>
+								</li>
+								<li data-id="content6" class="custom-tab-item">
+									<a class="custom-tab-link" href="#content6">VIDS</a>
+								</li>
+								<li data-id="content7" class="custom-tab-item">
+									<a class="custom-tab-link" href="#content7">FRS</a>
+								</li>
 							</ul>
 						</div>
 						<div class="container-marketing">
