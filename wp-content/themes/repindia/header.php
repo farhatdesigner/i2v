@@ -104,7 +104,7 @@ global $repindia_option;
                         <ul class="logo-wdth">
                             <li>
                                 <a href="<?php echo esc_url(home_url('/')); ?>">
-                                    <span><img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/logo.svg" alt="Logo"></span>
+                                    <span><img class="lightlogo" src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/logo.svg" alt="Logo"><img class="darklogo" src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/darklogo.svg" alt="Logo"></span>
                                 </a>
                             </li>
                         </ul>
@@ -132,17 +132,17 @@ global $repindia_option;
                                     Book a demo
                                 </a>
                             </li>
-                            <li>
+                            <li class="lang_switch">
                                 <a href="<?php echo esc_url(home_url('/')); ?>">
                                     <span><img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/flag.svg" alt="flag"></span>
                                 </a>
                             </li>
-                            <li>
+                            <li class="search_switch">
                                 <a href="<?php echo esc_url(home_url('/')); ?>">
                                     <span><img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/search.svg" alt="Search"></span>
                                 </a>
                             </li>
-                            <li>
+                            <li class="theme_switch">
                                 <a class="dark-mode-toggle">
                                     <!-- Sun icon - shown in dark mode -->
                                     <svg class="icon-sun" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">

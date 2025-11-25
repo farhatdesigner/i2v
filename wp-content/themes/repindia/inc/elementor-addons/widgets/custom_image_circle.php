@@ -136,109 +136,185 @@ class Custom_Image_Circle extends Widget_Base {
 
     protected function render() {
         $settings = $this->get_settings_for_display();
-        $rings = $settings['rings_data'];
-        $items = $settings['items_list'];
+        $rings = $settings['rings_data'] ?? [];
+        $items = $settings['items_list'] ?? [];
     
-        // Group items
         $grouped_items = [];
         if (!empty($items)) {
             foreach ($items as $item) {
-                $index = $item['ring_index'];
-                if (!isset($grouped_items[$index])) $grouped_items[$index] = [];
+                $index = isset($item['ring_index']) ? (int)$item['ring_index'] : 0;
+                if (!isset($grouped_items[$index])) {
+                    $grouped_items[$index] = [];
+                }
                 $grouped_items[$index][] = $item;
             }
         }
         ?>
         
         <style>
-            .orbit-system-wrapper {
+            {{WRAPPER}} .orbit-system-wrapper {
                 position: relative;
                 width: 100%;
-                min-height: 900px;
+                min-height: 80vh;
+                height: auto;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 overflow: hidden;
                 background-color: transparent;
-                /* transform: translateX(46%); */
             }
-            .orbit-ring {
+            
+            {{WRAPPER}} .orbit-ring {
                 position: absolute;
-                border-radius: 50%;
                 top: 50%;
                 left: 100%;
                 transform: translate(-50%, -50%);
+                transform-origin: center center;
+                border-radius: 50%;
                 pointer-events: none;
                 border-width: 1px;
                 z-index: 1;
+                width: 0;
+                height: 0;
             }
-            .orbit-item-wrapper {
+            
+            {{WRAPPER}} .orbit-item-wrapper {
                 position: absolute;
                 top: 50%;
                 left: 50%;
-                width: 0; height: 0;
+                width: 0;
+                height: 0;
+                transform-origin: center center;
                 z-index: 5;
             }
-            .orbit-content {
+            
+            {{WRAPPER}} .orbit-content {
+                position: absolute;
                 display: flex;
                 flex-direction: row;
                 align-items: center;
-                text-align: center;
-                width: 221px;
-                margin-left: -60px;
-                margin-top: -20px;
+                text-align: left;
+                width: 204px;
                 pointer-events: auto;
                 cursor: pointer;
                 gap: 10px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
             }
-            .orbit-icon img { display: block; margin: 0 auto 5px auto; object-fit: contain; }
-            .orbit-icon svg,.orbit-icon img { width: 80px;height: 80px; }
-            .orbit-text{ text-align: left;}
+            
+            {{WRAPPER}} .orbit-icon {
+                flex-shrink: 0;
+                padding-left: 56px;
+            }
+            
+            {{WRAPPER}} .orbit-icon img,
+            {{WRAPPER}} .orbit-icon svg {
+                display: block;
+                width: 80px;
+                height: 80px;
+                object-fit: contain;
+                margin: 0;
+            }
+            
+            {{WRAPPER}} .orbit-text {
+                text-align: left;
+                flex: 1;
+            }
     
-            /* Animations */
-            @keyframes orbit-cw { from { transform: translate(-50%, -50%) rotate(0deg);} to { transform: translate(-50%, -50%) rotate(360deg);} }
-            @keyframes orbit-ccw { from { transform: translate(-50%, -50%) rotate(0deg);} to { transform: translate(-50%, -50%) rotate(-360deg);} }
-            @keyframes content-cw { from { transform: rotate(0deg);} to { transform: rotate(-360deg);} }
-            @keyframes content-ccw { from { transform: rotate(0deg);} to { transform: rotate(360deg);} }
+            @keyframes orbit-cw-<?php echo $this->get_id(); ?> {
+                from { transform: translate(-50%, -50%) rotate(0deg); }
+                to { transform: translate(-50%, -50%) rotate(360deg); }
+            }
+            
+            @keyframes orbit-ccw-<?php echo $this->get_id(); ?> {
+                from { transform: translate(-50%, -50%) rotate(0deg); }
+                to { transform: translate(-50%, -50%) rotate(-360deg); }
+            }
+            
+            @keyframes content-cw-<?php echo $this->get_id(); ?> {
+                from { transform: translate(-50%, -50%) rotate(0deg); }
+                to { transform: translate(-50%, -50%) rotate(-360deg); }
+            }
+            
+            @keyframes content-ccw-<?php echo $this->get_id(); ?> {
+                from { transform: translate(-50%, -50%) rotate(0deg); }
+                to { transform: translate(-50%, -50%) rotate(360deg); }
+            }
 
-            @media(max-width: 768px){
-                .orbit-ring{ left: 45%;top: 100%; }
-                .orbit-system-wrapper{ min-height: 420px; }
-                .orbit-icon svg,.orbit-icon img { width: 40px;height: 40px; }
-                .orbit-content{ max-width: 141px; }
-                .elementor-element .orbit-text{ font-size: 14px!important;line-height: 21px!important; }
+            @media (max-width: 768px) {
+                {{WRAPPER}} .orbit-system-wrapper {
+                    min-height: 350px;
+                }
+                
+                {{WRAPPER}} .orbit-content {
+                    max-width: 141px;
+                    width: auto;
+                }
+                
+                {{WRAPPER}} .orbit-icon img,
+                {{WRAPPER}} .orbit-icon svg {
+                    width: 40px;
+                    height: 40px;
+                }
+                
+                {{WRAPPER}} .elementor-element .orbit-text {
+                    font-size: 14px !important;
+                    line-height: 21px !important;
+                }
             }
     
-        <?php foreach ($rings as $i => $ring): 
-    
-            // Make sure values are numeric
-            $rad_desktop = is_array($ring['ring_radius_desktop']) ? $ring['ring_radius_desktop']['size'] : $ring['ring_radius_desktop'];
-            $rad_tablet  = is_array($ring['ring_radius_tablet']) ? $ring['ring_radius_tablet']['size'] : $ring['ring_radius_tablet'];
-            $rad_mobile  = is_array($ring['ring_radius_mobile']) ? $ring['ring_radius_mobile']['size'] : $ring['ring_radius_mobile'];
+        <?php 
+        foreach ($rings as $i => $ring): 
+            $rad_desktop = isset($ring['ring_radius_desktop']) 
+                ? (is_array($ring['ring_radius_desktop']) ? (float)$ring['ring_radius_desktop']['size'] : (float)$ring['ring_radius_desktop'])
+                : 250;
+            $rad_tablet = isset($ring['ring_radius_tablet']) 
+                ? (is_array($ring['ring_radius_tablet']) ? (float)$ring['ring_radius_tablet']['size'] : (float)$ring['ring_radius_tablet'])
+                : 180;
+            $rad_mobile = isset($ring['ring_radius_mobile']) 
+                ? (is_array($ring['ring_radius_mobile']) ? (float)$ring['ring_radius_mobile']['size'] : (float)$ring['ring_radius_mobile'])
+                : 120;
         ?>
     
-            /* Desktop */
-            .orbit-ring-<?php echo $i; ?> {
+            {{WRAPPER}} .orbit-ring-<?php echo $i; ?> {
                 --ring-radius: <?php echo $rad_desktop; ?>px;
                 width: calc(var(--ring-radius) * 2);
                 height: calc(var(--ring-radius) * 2);
             }
+            
+            {{WRAPPER}} .orbit-ring-<?php echo $i; ?> .orbit-item-wrapper {
+                --ring-radius: <?php echo $rad_desktop; ?>px;
+            }
 
-            /* Tablet */
-            @media(max-width: 1024px) {
-                .orbit-ring-<?php echo $i; ?> {
+            @media (max-width: 1024px) {
+                {{WRAPPER}} .orbit-ring-<?php echo $i; ?> {
                     --ring-radius: <?php echo $rad_tablet; ?>px;
                     width: calc(var(--ring-radius) * 2);
                     height: calc(var(--ring-radius) * 2);
                 }
+                
+                {{WRAPPER}} .orbit-ring-<?php echo $i; ?> .orbit-item-wrapper {
+                    --ring-radius: <?php echo $rad_tablet; ?>px;
+                }
             }
 
-            /* Mobile */
-            @media(max-width: 767px) {
-                .orbit-ring-<?php echo $i; ?> {
+            @media (max-width: 767px) {
+                {{WRAPPER}} .orbit-ring-<?php echo $i; ?> {
                     --ring-radius: <?php echo $rad_mobile; ?>px;
                     width: calc(var(--ring-radius) * 2);
                     height: calc(var(--ring-radius) * 2);
+                }
+                
+                {{WRAPPER}} .orbit-ring-<?php echo $i; ?> .orbit-item-wrapper {
+                    --ring-radius: <?php echo $rad_mobile; ?>px;
+                }
+                .orbit-ring{
+                    top: 100%;
+                    left: 50%;
+                }
+                .orbit-icon {
+                    padding-left: 0;
                 }
             }
     
@@ -248,46 +324,53 @@ class Custom_Image_Circle extends Widget_Base {
         <div class="orbit-system-wrapper">
             <?php if (!empty($rings)) :
                 foreach ($rings as $i => $ring) :
+                    $dur = isset($ring['anim_duration']) ? (float)$ring['anim_duration'] : 20;
+                    $dir = isset($ring['direction']) && $ring['direction'] === 'reverse' ? 'reverse' : 'normal';
+                    $color = isset($ring['border_color']) ? esc_attr($ring['border_color']) : 'rgba(255, 255, 255, 0.15)';
+                    $style = isset($ring['border_style']) ? esc_attr($ring['border_style']) : 'dashed';
     
-                    // Proper radius (desktop by default)
-                    $r = is_array($ring['ring_radius_desktop']) ? $ring['ring_radius_desktop']['size'] : $ring['ring_radius_desktop'];
-    
-                    $dur = $ring['anim_duration'];
-                    $dir = $ring['direction'];
-                    $color = $ring['border_color'];
-                    $style = $ring['border_style'];
-    
-                    $ring_anim = ($dir === 'reverse') ? 'orbit-ccw' : 'orbit-cw';
-                    $item_anim = ($dir === 'reverse') ? 'content-ccw' : 'content-cw';
+                    $ring_anim = ($dir === 'reverse') ? 'orbit-ccw-' . $this->get_id() : 'orbit-cw-' . $this->get_id();
+                    $item_anim = ($dir === 'reverse') ? 'content-ccw-' . $this->get_id() : 'content-cw-' . $this->get_id();
             ?>
-                <div class="orbit-ring orbit-ring-<?php echo $i; ?>" 
-                    style="
-                        border-color: <?php echo $color; ?>;
-                        border-style: <?php echo $style; ?>;
-                        animation: <?php echo $ring_anim; ?> <?php echo $dur; ?>s linear infinite;
-                    ">
+                <div class="orbit-ring orbit-ring-<?php echo esc_attr($i); ?>" 
+                    style="border-color: <?php echo $color; ?>; border-style: <?php echo $style; ?>; animation: <?php echo esc_attr($ring_anim); ?> <?php echo $dur; ?>s linear infinite;">
     
                     <?php 
-                    if (isset($grouped_items[$i])) :
+                    if (isset($grouped_items[$i]) && !empty($grouped_items[$i])) :
                         $these_items = $grouped_items[$i];
                         $count = count($these_items);
                         $step = $count > 0 ? 360 / $count : 0;
+                        
                         foreach ($these_items as $k => $item) :
                             $angle = $k * $step;
-                            $transform = "transform: rotate({$angle}deg) translate(var(--ring-radius)) rotate(-{$angle}deg);";
+                            $transform = "transform: translate(-50%, -50%) rotate({$angle}deg) translateX(var(--ring-radius)) rotate(-{$angle}deg);";
                     ?>
-                    <div class="orbit-item-wrapper" style="<?php echo $transform; ?>">
-                        <div class="orbit-content" style="animation: <?php echo $item_anim; ?> <?php echo $dur; ?>s linear infinite;">
+                    <div class="orbit-item-wrapper" 
+                         data-ring-index="<?php echo esc_attr($i); ?>"
+                         data-item-index="<?php echo esc_attr($k); ?>"
+                         style="<?php echo esc_attr($transform); ?>">
+                        <div class="orbit-content" 
+                             style="animation: <?php echo esc_attr($item_anim); ?> <?php echo $dur; ?>s linear infinite;">
                             <?php if (!empty($item['image']['url'])) : ?>
-                                <div class="orbit-icon"><img src="<?php echo esc_url($item['image']['url']); ?>"></div>
+                                <div class="orbit-icon">
+                                    <img src="<?php echo esc_url($item['image']['url']); ?>" alt="<?php echo esc_attr($item['text'] ?? ''); ?>" />
+                                </div>
                             <?php endif; ?>
-                            <div class="orbit-text"><?php echo esc_html($item['text']); ?></div>
+                            <?php if (!empty($item['text'])) : ?>
+                                <div class="orbit-text"><?php echo esc_html($item['text']); ?></div>
+                            <?php endif; ?>
                         </div>
                     </div>
     
-                    <?php endforeach; endif; ?>
+                    <?php 
+                        endforeach;
+                    endif; 
+                    ?>
                 </div>
-            <?php endforeach; endif; ?>
+            <?php 
+                endforeach;
+            endif; 
+            ?>
         </div>
     
         <?php
