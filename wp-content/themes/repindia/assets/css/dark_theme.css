@@ -41,4 +41,14 @@ header li.burger-icon .icon-sun,.js-dark header li.burger-icon .icon-moon{ displ
 .js-dark .rightmenu_statictxt .listing-inner svg path.background_ic { fill: #D7DBE4; }
 #header-toggle-menu .sub-menu{ border-left: 1px solidD7DBE4; }
 .js-dark #header-toggle-menu .sub-menu{ border-left: 1px solid rgba(193, 196, 198, 0.20); }
+.js-dark .toggle-menu, .js-dark .inside-menu-container-inner{  scrollbar-color: rgba(255, 255, 255, 0.30) transparent;}
+.js-dark ul.social_media_links{border-top: 1px solid var(--Golbal-others-border, rgba(193, 196, 198, 0.10));}
+
+
+.js-dark #header-toggle-menu>li>a:hover:before, .js-dark #header-main-menu>li>a:hover:before, .js-dark .sub-menu li a:hover:before, .js-dark #header-toggle-menu>li:nth-last-child(4)>a span:hover:before, .js-dark .listing-inner>ul>li>:hover .span-text:before {
+    background: rgba(255, 255, 255, 0.90);}
+
+.js-dark ul.social_media_links>li>a, .js-dark ul.social_media_links>li>a>small {
+    color: #AEB6C9;
+}
 
