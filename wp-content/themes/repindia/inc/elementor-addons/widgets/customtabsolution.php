@@ -15,7 +15,7 @@ use Elementor\Utils;
 if (!defined('ABSPATH'))
 	exit;
 
-class customtabsolution extends Widget_Base
+class Customtabsolution extends Widget_Base
 {
 	public function get_name()
 	{
@@ -23,7 +23,7 @@ class customtabsolution extends Widget_Base
 	}
 	public function get_title()
 	{
-		return 'Tab Solution';
+		return 'Custom Tab Solution';
 	}
 	public function get_icon()
 	{
@@ -101,34 +101,40 @@ class customtabsolution extends Widget_Base
 		$this->add_inline_editing_attributes('custom_class', 'basic'); ?>
 
 		<div class="customtabsolution">
-
-
 			<section class="microspace-inside">
 				<div class="custom-container">
-
-
 					<div class="col-lg-8 col-xxl-7">
-						<h3 class="main_title quote">
-							Integrated solutions to secure and streamline every facet of your operations
-						</h3>
+						<h3 class="main_title quote">Integrated solutions to secure and streamline every facet of your operations </h3>
 					</div>
-
-
-
-
-
-
 					<div class="contentWrapper">
-						<div class="tabsWrapper">
-							<ul class="tabsautoscroll">
-								<li data-id="content0" class="tracking-wide active">i2V’s VMS</li>
-								<li data-id="content1">AI based video analytics / VCA</li>
-								<li data-id="content2">Command and control (ICCC)</li>
-								<li data-id="content3">CMS</li>
-								<li data-id="content4">ITMS / ITS</li>
-								<li data-id="content5">ANPR / LPR</li>
-								<li data-id="content6">VIDS</li>
-								<li data-id="content7">FRS</li>
+						<div class="filter-menu tabsWrapper">
+							<label class="dropdown-label">Solutions</label>
+							<span class="select-brand">i2V's VMS</span>
+							<ul class="tabsautoscroll custom-tabs-list" id="solutionTab">
+								<li data-id="content0" class="tracking-wide active custom-tab-item">
+									<a class="custom-tab-link" href="#content0">i2V's VMS</a>
+								</li>
+								<li data-id="content1" class="custom-tab-item">
+									<a class="custom-tab-link" href="#content1">AI based video analytics / VCA</a>
+								</li>
+								<li data-id="content2" class="custom-tab-item">
+									<a class="custom-tab-link" href="#content2">Command and control (ICCC/PSCM)</a>
+								</li>
+								<li data-id="content3" class="custom-tab-item">
+									<a class="custom-tab-link" href="#content3">CMS</a>
+								</li>
+								<li data-id="content4" class="custom-tab-item">
+									<a class="custom-tab-link" href="#content4">ITMS / ITS</a>
+								</li>
+								<li data-id="content5" class="custom-tab-item">
+									<a class="custom-tab-link" href="#content5">ANPR / LPR</a>
+								</li>
+								<li data-id="content6" class="custom-tab-item">
+									<a class="custom-tab-link" href="#content6">VIDS</a>
+								</li>
+								<li data-id="content7" class="custom-tab-item">
+									<a class="custom-tab-link" href="#content7">FRS</a>
+								</li>
 							</ul>
 						</div>
 						<div class="container-marketing">
@@ -137,7 +143,7 @@ class customtabsolution extends Widget_Base
 									<div class="content0 tabdiv  active-tabcontent">
 										<div class="content-inner row">
 											<div class="content-inner-image col-lg-6">
-												<img class="img-fluid rounded-4" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/izv-mms-1-1.webp" alt="i2V’s VMS">
+												<img class="img-fluid rounded-4" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/thumbnail.webp" alt="i2V’s VMS">
 											</div>
 											<div class="content-inner-text col-lg-6">
 												<h4 class="sub_title">i2V’s video management system (VMS)</h4>
@@ -145,39 +151,27 @@ class customtabsolution extends Widget_Base
 												<p>Whether you're managing a city-wide network or a multi-site enterprise, i2V’s VMS ensures secure, scalable surveillance with complete operational control.</p>
 												<ul class="p-0 right_list">
 													<li>
-														<span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-																<path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-															</svg></span>
+														<span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" /></svg></span>
 														<p>Manage more cameras with less hardware, cutting costs and energy.</p>
 													</li>
 													<li>
-														<span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-																<path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-															</svg></span>
+														<span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" /></svg></span>
 														<p>Run seamlessly on both Windows and Linux for flexibility.</p>
 													</li>
 													<li>
-														<span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-																<path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-															</svg></span>
+														<span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" /></svg></span>
 														<p>Real-time monitoring with smart AI analytics and fewer false alerts.</p>
 													</li>
 													<li>
-														<span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-																<path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-															</svg></span>
+														<span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" /></svg></span>
 														<p>Built for heavy workloads and mission-critical deployments.</p>
 													</li>
 													<li>
-														<span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-																<path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-															</svg></span>
+														<span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" /></svg></span>
 														<p>Connect with third-party NVRs without replacing existing systems.</p>
 													</li>
 													<li>
-														<span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-																<path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-															</svg></span>
+														<span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" /></svg></span>
 														<p>Simple interface to manage cameras, alerts, and playback.</p>
 													</li>
 												</ul>
@@ -197,15 +191,15 @@ class customtabsolution extends Widget_Base
 													</li>
 													<li>
 														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/e-map-client.svg" alt="i2V’s VMS">
-														<span>eMap Client</span>
+														<span>eMap </br> Client</span>
 													</li>
 													<li>
 														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/icon.svg" alt="i2V’s VMS">
-														<span>Auto PTZ tracking</span>
+														<span>Auto PTZ </br> tracking</span>
 													</li>
 													<li>
 														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/playback-client.svg" alt="i2V’s VMS">
-														<span>Playback Client</span>
+														<span>Playback </br> Client</span>
 													</li>
 													<li>
 														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/icon-1.svg" alt="i2V’s VMS">
@@ -229,7 +223,7 @@ class customtabsolution extends Widget_Base
 									<div class="content1 tabdiv">
 										<div class="content-inner row">
 											<div class="content-inner-image col-lg-6">
-												<img class="img-fluid rounded-4" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/ai-based-video-analytics-vca-3.webp" alt="i2V’s VMS">
+												<img class="img-fluid rounded-4" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/image-1.webp" alt="i2V’s VMS">
 											</div>
 											<div class="content-inner-text col-lg-6">
 												<h4 class="sub_title">AI-Powered video analytics for next-gen surveillance</h4>
@@ -320,7 +314,7 @@ class customtabsolution extends Widget_Base
 									<div class="content2 tabdiv">
 										<div class="content-inner row">
 											<div class="content-inner-image col-lg-6">
-												<img class="img-fluid rounded-4" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/command-and-control-iccc-2.webp" alt="i2V’s VMS">
+												<img class="img-fluid rounded-4" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/image-3.webp" alt="i2V’s VMS">
 											</div>
 											<div class="content-inner-text col-lg-6">
 												<h4 class="sub_title">Empowering public safety through integrated command and control</h4>
@@ -411,7 +405,7 @@ class customtabsolution extends Widget_Base
 									<div class="content3 tabdiv">
 										<div class="content-inner row">
 											<div class="content-inner-image col-lg-6">
-												<img class="img-fluid rounded-4" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/cms-2.webp" alt="i2V’s VMS">
+												<img class="img-fluid rounded-4" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/image-6.webp" alt="i2V’s VMS">
 											</div>
 											<div class="content-inner-text col-lg-6">
 												<h4 class="sub_title">Centralized monitoring system for multi-site surveillance</h4>
@@ -502,7 +496,7 @@ class customtabsolution extends Widget_Base
 									<div class="content4 tabdiv">
 										<div class="content-inner row">
 											<div class="content-inner-image col-lg-6">
-												<img class="img-fluid rounded-4" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/itms-its-1.webp" alt="i2V’s VMS">
+												<img class="img-fluid rounded-4" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/image.webp" alt="i2V’s VMS">
 											</div>
 											<div class="content-inner-text col-lg-6">
 												<h4 class="sub_title">End-to-end intelligent traffic control solution</h4>
@@ -593,7 +587,7 @@ class customtabsolution extends Widget_Base
 									<div class="content5 tabdiv">
 										<div class="content-inner row">
 											<div class="content-inner-image col-lg-6">
-												<img class="img-fluid rounded-4" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/anpr-lpr-1.webp" alt="i2V’s VMS">
+												<img class="img-fluid rounded-4" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/image-2.webp" alt="i2V’s VMS">
 											</div>
 											<div class="content-inner-text col-lg-6">
 												<h4 class="sub_title">Advanced ANPR system for real-time detection and logging</h4>
@@ -684,7 +678,7 @@ class customtabsolution extends Widget_Base
 									<div class="content6 tabdiv">
 										<div class="content-inner row">
 											<div class="content-inner-image col-lg-6">
-												<img class="img-fluid rounded-4" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/VIDS-1.webp" alt="i2V’s VMS">
+												<img class="img-fluid rounded-4" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/image-4.webp" alt="i2V’s VMS">
 											</div>
 											<div class="content-inner-text col-lg-6">
 												<h4 class="sub_title">Automated video-based incident alerting and response platform</h4>
@@ -747,7 +741,7 @@ class customtabsolution extends Widget_Base
 													</li>
 													<li>
 														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/slow-traffic-alerting.svg" alt="i2V’s VMS">
-														<span>Slow traffic alerting</span>
+														<span>Slow traffic </br> alerting</span>
 													</li>
 													<li>
 														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/congestion-traffic-alerting.svg" alt="i2V’s VMS">
@@ -775,7 +769,7 @@ class customtabsolution extends Widget_Base
 									<div class="content7 tabdiv">
 										<div class="content-inner row">
 											<div class="content-inner-image col-lg-6">
-												<img class="img-fluid rounded-4" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/frs-1.webp" alt="i2V’s VMS">
+												<img class="img-fluid rounded-4" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/image-5.webp" alt="i2V’s VMS">
 											</div>
 											<div class="content-inner-text col-lg-6">
 												<h4 class="sub_title">Real-time face recognition system for surveillance, access, identity verification and more</h4>

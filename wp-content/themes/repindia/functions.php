@@ -109,7 +109,9 @@ if (! function_exists('repindia_load_theme_scripts_and_styles')) {
 			// Use Swiper 4.x local files
 			wp_enqueue_style('swiper-min', get_template_directory_uri() . '/assets/css/swiper-4.5.1.min.css', null, '4.5.1', 'all');
 			wp_enqueue_style('custom-style', get_template_directory_uri() . '/assets/css/custom_style.css', null, REPINDIA_THEME_VERSION, 'all');
+			wp_enqueue_style('feedback-custom', get_template_directory_uri() . '/assets/css/feedback_custom.css', null, REPINDIA_THEME_VERSION, 'all');
 			wp_enqueue_style('repindia-style', get_stylesheet_uri(), null, REPINDIA_THEME_VERSION, 'all');
+			wp_enqueue_style('dark-theme', get_template_directory_uri() . '/assets/css/dark_theme.css', null, REPINDIA_THEME_VERSION, 'all');
 			wp_enqueue_style('repindia-responsive', get_template_directory_uri() . '/assets/css/responsive.css', null, REPINDIA_THEME_VERSION, 'all');
 
 		/* Register Scripts */
@@ -123,9 +125,9 @@ if (! function_exists('repindia_load_theme_scripts_and_styles')) {
 		// Use Swiper 4.x local files
 		wp_enqueue_script('swiper-min', get_template_directory_uri() . '/assets/js/swiper-4.5.1.min.js', array('jquery'), '4.5.1', true);
 		wp_enqueue_script('gsap-min', get_template_directory_uri() . '/assets/js/gsap.min.js', array('jquery'), REPINDIA_THEME_VERSION, true);
-		wp_enqueue_script('scrolltrigger-min', get_template_directory_uri() . '/assets/js/scrolltrigger.js', array('jquery'), REPINDIA_THEME_VERSION, true);
-		wp_enqueue_script('lenis-min', get_template_directory_uri() . '/assets/js/lenis.min.js', array('jquery'), REPINDIA_THEME_VERSION, true);
-		wp_enqueue_script('repindia-global', get_template_directory_uri() . '/assets/js/global.js', array('jquery', 'swiper-min', 'gsap-min'), REPINDIA_THEME_VERSION, true);
+		wp_enqueue_script('scrolltrigger-min', get_template_directory_uri() . '/assets/js/scrolltrigger.js', array('gsap-min'), REPINDIA_THEME_VERSION, true);
+		wp_enqueue_script('lenis-min', get_template_directory_uri() . '/assets/js/lenis.min.js', array(), REPINDIA_THEME_VERSION, true);
+		wp_enqueue_script('repindia-global', get_template_directory_uri() . '/assets/js/global.js', array('jquery', 'swiper-min', 'gsap-min', 'scrolltrigger-min', 'lenis-min'), REPINDIA_THEME_VERSION, true);
 		
 		// Save Swiper 4.5.1 reference before Elementor's Swiper 8 loads (only on homepage)
 		if (is_front_page()) {
@@ -227,3 +229,69 @@ if (! function_exists('apl_get_categories')) {
 		return $options;
 	}
 }
+
+//breadcrumb for product pages
+add_filter( 'wpseo_breadcrumb_links', 'add_products_cpt_breadcrumb' );
+function add_products_cpt_breadcrumb( $links ) {
+    if ( is_singular( 'products' ) ) {
+        // Add "Products" after Home
+        $breadcrumb = array(
+            'url'  => home_url( '/i2vs-products/' ),
+            'text' => 'i2VS products',
+        );
+        array_splice( $links, 1, 0, array( $breadcrumb ) );
+    }
+
+    return $links;
+}
+
+add_filter( 'wpseo_breadcrumb_separator', function() {
+    return '<img class="yoast-sep-icon" src="' . esc_url( home_url( '/wp-content/uploads/2025/11/chevron-right.svg' ) ) . '" alt=">">';
+});
+
+/**
+ * Safe Elementor Optimization – Only runs when Elementor is active
+ */
+add_action('plugins_loaded', function () {
+    if ( ! did_action('elementor/loaded') ) {
+        return; // Elementor not active → stop
+    }
+    /* --------------------------------------------------
+     * 1. Disable Elementor Cloud Library (SAFE)
+     * -------------------------------------------------- */
+    add_filter( 'elementor_pro/utils/is_cloud_enabled', '__return_false' );
+    add_filter( 'elementor/app/is_library_enabled', '__return_false' );
+    /* --------------------------------------------------
+     * 2. Disable external remote API calls
+     *    (Does NOT affect templates / content)
+     * -------------------------------------------------- */
+    add_filter( 'elementor/api/is_allowed', '__return_false' );
+    add_filter( 'elementor/templates/allow_remote_sources', '__return_false' );
+    /* --------------------------------------------------
+     * 3. Disable only unstable Elementor Experiments
+     *    (Keeps all core features + stable experiments)
+     * -------------------------------------------------- */
+    add_filter( 'elementor_experiments_allowed', function() {
+        return [
+            'e_optimized_dom_output' => 'stable',
+            'e_font_icon_svg'        => 'stable',
+            'e_container'            => 'stable',
+            // All other experiments disabled safely
+        ];
+    });
+    /* --------------------------------------------------
+     * 4. Auto-cleanup old revisions (ONLY revisions)
+     *    (Never deletes posts/pages or Elementor content)
+     * -------------------------------------------------- */
+    add_action( 'init', function() {
+        global $wpdb;
+
+        // Clean revisions older than 30 days
+        $wpdb->query(
+            "DELETE FROM $wpdb->posts 
+             WHERE post_type = 'revision'
+             AND post_date < DATE_SUB(NOW(), INTERVAL 30 DAY)"
+        );
+    });
+
+});

@@ -215,22 +215,133 @@ jQuery(document).ready(function ($) {
 });
 
 $(document).ready(function () {
+    var scrollPosition = 0;
+    var isMenuOpen = false;
+
+    // Prevent body scroll when menu is open
+    function preventBodyScroll(e) {
+        // Allow scrolling inside the menu container
+        var $target = $(e.target);
+        if ($target.closest(".toggle-menu-container").length) {
+            return true;
+        }
+        // Prevent scrolling on body/overlay
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }
+
+    // Prevent wheel events on body when menu is open
+    function preventBodyWheel(e) {
+        // Get mouse position
+        var mouseX = e.clientX || (e.originalEvent && e.originalEvent.clientX) || 0;
+        var mouseY = e.clientY || (e.originalEvent && e.originalEvent.clientY) || 0;
+        
+        // Get the element at mouse position (most reliable method)
+        var elementAtPoint = null;
+        if (document.elementFromPoint && mouseX > 0 && mouseY > 0) {
+            try {
+                elementAtPoint = document.elementFromPoint(mouseX, mouseY);
+            } catch (err) {
+                // Fallback if elementFromPoint fails
+            }
+        }
+        
+        // Check if element at mouse position is inside menu
+        if (elementAtPoint) {
+            var $elementAtPoint = $(elementAtPoint);
+            if ($elementAtPoint.closest(".toggle-menu-container").length) {
+                return; // Allow scrolling - don't prevent
+            }
+        }
+        
+        // Also check event target
+        var $target = $(e.target);
+        if ($target.closest(".toggle-menu-container").length) {
+            return; // Allow scrolling - don't prevent
+        }
+        
+        // Check mouse position relative to menu container (fallback)
+        var $menuContainer = $(".toggle-menu-container");
+        if ($menuContainer.length && $menuContainer.hasClass("open-menu") && mouseX > 0 && mouseY > 0) {
+            var menuOffset = $menuContainer.offset();
+            if (menuOffset) {
+                var menuWidth = $menuContainer.outerWidth();
+                var menuHeight = $menuContainer.outerHeight();
+                
+                if (mouseX >= menuOffset.left && 
+                    mouseX <= menuOffset.left + menuWidth &&
+                    mouseY >= menuOffset.top && 
+                    mouseY <= menuOffset.top + menuHeight) {
+                    return; // Allow scrolling - don't prevent
+                }
+            }
+        }
+        
+        // Prevent wheel on body/overlay (outside menu)
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }
+
     // Function to close the menu
     function closeMenu() {
         $(".burger-icon").removeClass("active-burger");
         $(".toggle-menu-container").removeClass("open-menu");
         $("nav").removeClass("overlaynav-active");
         $(".overlay").removeClass("overlay-active");
-        $("body").css("overflow", "");
+        
+        // Remove event listeners
+        $(window).off("scroll", preventBodyScroll);
+        document.removeEventListener("wheel", preventBodyWheel, false);
+        $("body, .overlay").off("touchmove", preventBodyScroll);
+        $(".toggle-menu-container, .inside-menu-container-inner").off("wheel");
+        
+        // Restore body styles
+        $("body").css({
+            "overflow": "",
+            "position": "",
+            "top": "",
+            "width": ""
+        });
+        
+        // Restore scroll position
+        $(window).scrollTop(scrollPosition);
+        
+        isMenuOpen = false;
     }
 
     // Open menu when burger icon is clicked
     $(".burger-icon").click(function () {
+        // Save current scroll position
+        scrollPosition = $(window).scrollTop();
+        
         $(this).addClass("active-burger");
         $(".toggle-menu-container").addClass("open-menu");
         $("nav").addClass("overlaynav-active");
         $(".overlay").addClass("overlay-active");
-        $("body").css("overflow", "hidden");
+        
+        // Lock body scroll using position fixed
+        $("body").css({
+            "overflow": "hidden",
+            "position": "fixed",
+            "top": "-" + scrollPosition + "px",
+            "width": "100%"
+        });
+        
+        // Prevent scroll events on body/overlay (but allow on menu)
+        $(window).on("scroll", preventBodyScroll);
+        // Prevent wheel events - check if in menu, if not prevent
+        document.addEventListener("wheel", preventBodyWheel, { passive: false, capture: false });
+        $("body, .overlay").on("touchmove", preventBodyScroll);
+        
+        // Ensure menu can scroll by allowing wheel events on menu container
+        $(".toggle-menu-container, .inside-menu-container-inner").on("wheel", function(e) {
+            // Allow natural scrolling - don't prevent
+            e.stopPropagation(); // Stop from bubbling to document handler
+        });
+        
+        isMenuOpen = true;
     });
 
     // Close menu when cross icon or overlay is clicked
@@ -250,10 +361,6 @@ $(document).ready(function () {
         }
     });
 });
-
-
-
-
 
 var swiper2 = new Swiper(".brandslider", {
     spaceBetween: 30,
@@ -289,7 +396,13 @@ var swiper2 = new Swiper(".brandslider", {
 // Tabs functionality
 jQuery(document).ready(function ($) {
 
-    $(document).on('click', '.tabsautoscroll li', function () {
+    $(document).on('click', '.tabsautoscroll li', function (e) {
+        // Prevent default anchor behavior if anchor exists
+        var $link = $(this).find("a.custom-tab-link");
+        if ($link.length) {
+            e.preventDefault();
+        }
+
         var $this = $(this);
         var t = $this.data("id"); // e.g., "content0", "content1", etc.
         var tabsContainer = $(".tabsautoscroll");
@@ -298,17 +411,19 @@ jQuery(document).ready(function ($) {
         $this.is(":last-child") ? $(".next").hide() : $(".next").show();
         $this.is(":first-child") ? $(".previous").hide() : $(".previous").show();
 
-        // Scroll tabs horizontally to center the clicked tab
-        var tabPosition = $this.position().left;
-        var tabWidth = $this.outerWidth();
-        var containerWidth = tabsContainer.width();
-        var currentScroll = tabsContainer.scrollLeft();
+        // Scroll tabs horizontally to center the clicked tab (only on desktop)
+        if ($(window).width() > 1024) {
+            var tabPosition = $this.position().left;
+            var tabWidth = $this.outerWidth();
+            var containerWidth = tabsContainer.width();
+            var currentScroll = tabsContainer.scrollLeft();
 
-        // Calculate scroll position to center the tab
-        var targetScroll = currentScroll + tabPosition - (containerWidth / 2) + (tabWidth / 2);
+            // Calculate scroll position to center the tab
+            var targetScroll = currentScroll + tabPosition - (containerWidth / 2) + (tabWidth / 2);
 
-        // Use jQuery animate for smooth scrolling
-        tabsContainer.stop().animate({ scrollLeft: targetScroll }, 300, 'swing');
+            // Use jQuery animate for smooth scrolling
+            tabsContainer.stop().animate({ scrollLeft: targetScroll }, 300, 'swing');
+        }
 
         // Toggle class only, no .show() or .hide()
         $(".tabContent .tabdiv").removeClass("active-tabcontent");
@@ -317,6 +432,18 @@ jQuery(document).ready(function ($) {
         // Active tab styling
         $(".tabsautoscroll li").removeClass("active");
         $this.addClass("active");
+
+        // Update select-brand text on mobile
+        if ($(window).width() <= 1024) {
+            var selectedText = $link.length ? $link.text() : $this.text();
+            $(".filter-menu .select-brand").text(selectedText.trim());
+        }
+    });
+
+    // Handle click on custom-tab-link to prevent default anchor behavior
+    $(document).on('click', '.tabsautoscroll li .custom-tab-link', function (e) {
+        e.preventDefault();
+        // Event will bubble to parent li, which handles the tab switching
     });
 
     // $(".tabdiv a").click(function (e) {
@@ -331,6 +458,23 @@ jQuery(document).ready(function ($) {
         e.preventDefault();
         $("li.active").prev("li").trigger("click");
     });
+
+    // Mobile dropdown functionality for tabs (similar to rep-portfolio)
+    // Handle click on select-brand to toggle dropdown
+    $(document).on('click', '.filter-menu .select-brand', function () {
+        if ($(window).width() <= 1024) {
+            $(this).toggleClass("angle-icon");
+            $(this).next("ul.tabsautoscroll").slideToggle();
+        }
+    });
+
+    // Handle click on custom tabs li to close dropdown on mobile
+    $(document).on('click', '.filter-menu .tabsautoscroll li', function () {
+        if ($(window).width() <= 1024) {
+            $(".filter-menu .select-brand").removeClass("angle-icon");
+            $(this).parents("ul.tabsautoscroll").slideUp();
+        }
+    });
 });
 
 
@@ -339,6 +483,9 @@ jQuery(document).ready(function ($) {
     function handleFooterAccordion() {
         // Only enable accordion on mobile (767px and below)
         if ($(window).width() <= 767) {
+            // Initialize all accordion items as active (opened) on mobile
+            $('.footer-accordion-item').addClass('active');
+            
             $('.footer-accordion-title').off('click').on('click', function () {
                 var $accordionItem = $(this).closest('.footer-accordion-item');
 
@@ -386,28 +533,243 @@ const swiper = new Swiper(".testimonialSwiper", {
 });
 
 
-// $(window).scroll(function() {
-//     if ($(window).scrollTop() >= 120) {
-//         $('.sticky-custom').addClass('fixed-header');
-//     } else {
-//         $('.sticky-custom').removeClass('fixed-header');
-//     }
-// });
+$(window).scroll(function() {
+    if ($(window).scrollTop() >= 1800) {
+        $('.sticky-custom').addClass('fixed-header');
+    } else {
+        $('.sticky-custom').removeClass('fixed-header');
+    }
+});
+
+
+
+jQuery(document).ready(function ($) {
+
+    // Check if sticky-custom or enterprisebanner exists on the page
+    var $stickyCustom = $(".sticky-custom");
+    var $enterpriseBanner = $("#enterprisebanner");
+    
+    // Only run this code if one of these elements exists
+    if ($stickyCustom.length === 0 && $enterpriseBanner.length === 0) {
+        return; // Exit early if neither element exists
+    }
+
+    var $items = $(".sticky-custom ul.elementor-icon-list-items.elementor-inline-items li");
+    var $menu = $(".sticky-custom"); // menu container
+
+    // Section selectors (order must match your menu)
+    var sections = [
+        ".live_monitoring",
+        ".system_setup",
+        ".intelligenc_alerts",
+        ".recording_storage",
+        ".security_integration" // 5th section
+    ];
+
+    var sectionData = [];
+    var lastActive = -1;
+    var triggerOffset = 220;
+    var rafID = null;
+
+    // --------------------------------------------
+    // CLICK = Scroll to SAME trigger position
+    // --------------------------------------------
+    $items.each(function (i) {
+        $(this).on("click", function () {
+
+            var $target = $(sections[i]);
+            if ($target.length) {
+
+                $items.removeClass("active-li");
+                $(this).addClass("active-li");
+                lastActive = i;
+
+                var exactPosition = $target.offset().top - (triggerOffset - 1);
+
+                $("html, body").animate({
+                    scrollTop: exactPosition
+                }, 300);
+            }
+        });
+    });
+
+    // --------------------------------------------
+    // CACHE SECTION POSITIONS
+    // --------------------------------------------
+    function updatePositions() {
+        sectionData = [];
+
+        sections.forEach(function (sel, i) {
+            var $sec = $(sel);
+            if ($sec.length) {
+                sectionData.push({
+                    index: i,
+                    top: $sec.offset().top,
+                    bottom: $sec.offset().top + $sec.outerHeight()
+                });
+            }
+        });
+    }
+
+    // --------------------------------------------
+    // SCROLL SPY + AUTO HIDE MENU AFTER 5TH SECTION
+    // --------------------------------------------
+    function detectActiveSection() {
+        // Safety check: if no sections found, exit early
+        if (sectionData.length === 0) {
+            return;
+        }
+
+        var scrollTop = $(window).scrollTop() + triggerOffset;
+        var activeIndex = 0;
+
+        // Find active section
+        for (var i = 0; i < sectionData.length; i++) {
+            if (scrollTop >= sectionData[i].top) {
+                activeIndex = sectionData[i].index;
+            }
+        }
+
+        // Update active li
+        if (activeIndex !== lastActive) {
+            $items.removeClass("active-li");
+            $items.eq(activeIndex).addClass("active-li");
+            lastActive = activeIndex;
+        }
+
+        // ------------------------------------------
+        // HIDE MENU when 5th section scrolls above
+        // ------------------------------------------
+        var lastSection = sectionData[sectionData.length - 1];
+
+        // Safety check: ensure lastSection exists before accessing properties
+        if (lastSection && scrollTop > lastSection.bottom) {
+            // User scrolled PAST the last section
+            $menu.addClass("menu-hidden");
+        } else {
+            // User scrolls back up → show menu again
+            $menu.removeClass("menu-hidden");
+        }
+    }
+
+    function onScroll() {
+        if (rafID) cancelAnimationFrame(rafID);
+        rafID = requestAnimationFrame(function () {
+            detectActiveSection();
+            rafID = null;
+        });
+    }
+
+    // INIT
+    updatePositions();
+    detectActiveSection();
+
+    $(window).on("scroll", onScroll);
+    $(window).on("resize", function () {
+        updatePositions();
+        detectActiveSection();
+    });
+
+});
+
+
+
+
+
+
+
+
 
 
 
 jQuery(document).ready(function() {
+    // Check if accordion exists on the page
+    if (jQuery('.accordion_set').length === 0) {
+        return;
+    }
+
     // open first section by default
     let first = jQuery('.accordion_set').first();
     first.addClass('acactive');
     first.find('.select_div').attr("aria-expanded", "true");
     jQuery(".accontent").first().slideDown(200);
+    
+    // Initialize progress fill for first accordion
+    setTimeout(function() {
+        startProgressFill();
+    }, 200);
+
+    // Initialize videos - show first video, hide others using opacity
+    jQuery('.accordion_video').each(function(index) {
+        if (index === 0) {
+            jQuery(this).addClass('active');
+        } else {
+            jQuery(this).removeClass('active');
+        }
+    });
 
     // setup variables
     let autoIndex = 0;
     let total = jQuery(".accordion_set").length;
     let autoInterval = 4000; // 4 seconds
     let timer;
+    let isPaused = false; // Track if auto-slide is paused
+    let resumeTimeout = null; // Store resume timeout so we can cancel it
+    let progressInterval = null; // Track progress animation interval
+
+    // Helper function to check if any modal is currently open
+    function isModalOpen() {
+        return jQuery('.modal.show, .modal.in').length > 0 || jQuery('body').hasClass('modal-open');
+    }
+
+    // function to switch video by index using opacity transitions
+    function switchVideo(index) {
+        jQuery('.accordion_video').each(function(videoIndex) {
+            if (videoIndex === index) {
+                jQuery(this).addClass('active');
+            } else {
+                jQuery(this).removeClass('active');
+            }
+        });
+    }
+
+    // Function to start progress fill animation
+    function startProgressFill() {
+        // Clear any existing progress interval
+        if (progressInterval) {
+            clearInterval(progressInterval);
+            progressInterval = null;
+        }
+
+        // Reset progress on all accordion items
+        jQuery(".accordion_set").each(function() {
+            this.style.setProperty('--progress', '0%');
+        });
+
+        // Start progress for active accordion item
+        const activeAccordion = jQuery(".accordion_set.acactive")[0];
+        if (activeAccordion) {
+            let timeLeft = autoInterval / 1000; // Convert to seconds
+            const updateInterval = 50; // Update every 50ms for smooth animation
+
+            progressInterval = setInterval(function() {
+                if (isPaused || isModalOpen()) {
+                    return;
+                }
+                
+                timeLeft -= (updateInterval / 1000);
+                const progress = ((autoInterval / 1000 - timeLeft) / (autoInterval / 1000)) * 100;
+                
+                // Update progress CSS variable
+                activeAccordion.style.setProperty('--progress', progress + '%');
+
+                if (timeLeft <= 0) {
+                    clearInterval(progressInterval);
+                    progressInterval = null;
+                }
+            }, updateInterval);
+        }
+    }
 
     // function to open accordion by index
     function openAccordion(index) {
@@ -419,14 +781,61 @@ jQuery(document).ready(function() {
         target.addClass("acactive");
         target.find(".select_div").attr("aria-expanded", "true");
         target.find(".accontent").slideDown(200);
+
+        // Switch to corresponding video
+        switchVideo(index);
+        
+        // Start progress fill animation
+        startProgressFill();
     }
 
     // auto slide function
     function startAutoSlide() {
+        if (isPaused || isModalOpen()) {
+            return; // Don't start if paused or modal is open
+        }
+        if (timer) {
+            clearInterval(timer);
+        }
         timer = setInterval(function() {
-            autoIndex = (autoIndex + 1) % total;
-            openAccordion(autoIndex);
+            if (!isPaused && !isModalOpen()) {
+                autoIndex = (autoIndex + 1) % total;
+                openAccordion(autoIndex);
+            }
         }, autoInterval);
+    }
+
+    // pause auto slide function
+    function pauseAutoSlide() {
+        isPaused = true;
+        if (timer) {
+            clearInterval(timer);
+            timer = null;
+        }
+        // Pause progress animation
+        if (progressInterval) {
+            clearInterval(progressInterval);
+            progressInterval = null;
+        }
+        // Cancel any pending resume timeout
+        if (resumeTimeout) {
+            clearTimeout(resumeTimeout);
+            resumeTimeout = null;
+        }
+    }
+
+    // resume auto slide function
+    function resumeAutoSlide() {
+        // Don't resume if modal is open
+        if (isModalOpen()) {
+            return;
+        }
+        isPaused = false;
+        if (!timer) {
+            startAutoSlide();
+        }
+        // Restart progress fill animation
+        startProgressFill();
     }
 
     // start auto slide initially
@@ -434,7 +843,7 @@ jQuery(document).ready(function() {
 
     // on click — manual control + reset timer
     jQuery(".accordion_set > .select_div").click(function() {
-        clearInterval(timer); // stop auto slide
+        pauseAutoSlide(); // pause auto slide
 
         let parent = jQuery(this).parents('.accordion_set');
         autoIndex = jQuery(".accordion_set").index(parent); // update index
@@ -443,11 +852,119 @@ jQuery(document).ready(function() {
             parent.removeClass("acactive");
             jQuery(this).attr("aria-expanded", "false");
             parent.find(".accontent").slideUp(200);
+            // Stop progress animation when closing
+            if (progressInterval) {
+                clearInterval(progressInterval);
+                progressInterval = null;
+            }
+            parent[0].style.setProperty('--progress', '0%');
         } else {
             openAccordion(autoIndex);
         }
 
-        // restart auto slide after short delay
-        timer = setTimeout(() => startAutoSlide(), 1000);
+        // Cancel any existing resume timeout
+        if (resumeTimeout) {
+            clearTimeout(resumeTimeout);
+        }
+
+        // restart auto slide after short delay, but only if modal is not open
+        resumeTimeout = setTimeout(function() {
+            resumeTimeout = null;
+            if (!isModalOpen()) {
+                resumeAutoSlide();
+            }
+        }, 1000);
+    });
+
+    // Pause accordion when modal opens
+    jQuery(document).on('show.bs.modal', '.modal', function() {
+        pauseAutoSlide();
+    });
+
+    // Resume accordion when modal closes
+    jQuery(document).on('hidden.bs.modal', '.modal', function() {
+        // Small delay to ensure modal is fully closed
+        setTimeout(function() {
+            if (!isModalOpen()) {
+                resumeAutoSlide();
+            }
+        }, 100);
+    });
+});
+
+
+if (window.innerWidth >= 1180) {
+    gsap.registerPlugin(ScrollTrigger);
+    ScrollTrigger.config({
+        autoRefreshEvents: 'visibilitychange,DOMContentLoaded,load',
+    })
+    const resize = () => {
+        console.log('resize')
+        ScrollTrigger.refresh()
+    }
+    const panels = gsap.utils.toArray(".animate-right");
+    const content = gsap.utils.toArray(".animate-left");
+    const tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: ".sectionsscroll",
+            start: "top 20%",
+            endTrigger: 'html',
+            end: () => "+=" + 200 * panels.length + "%",
+            pin: true,
+            pinSpacing: true,
+            markers: false,
+            scrub: 1,
+            autoRefreshEvents: "load",
+        }
+    });
+    panels.forEach((panel, index) => {
+        tl.from(
+            panel,
+            {
+                yPercent: 100,
+                ease: "slow",
+            },
+            "+=0.1"
+        );
+        tl.from(
+            content[index],
+            {
+                yPercent: 100,
+                ease: "slow",
+            },
+            "<"
+        );
+    });
+
+}
+
+
+
+
+// Initialize Lenis smooth scroll
+const lenis = new Lenis();
+lenis.on("scroll", (e) => {
+    console.log(e);
+});
+lenis.on("scroll", ScrollTrigger.update);
+gsap.ticker.add((time) => {
+    lenis.raf(time * 1000); // Convert seconds to milliseconds
+});
+gsap.ticker.lagSmoothing(0);
+
+
+
+
+
+
+//Conver svg into svg code
+document.querySelectorAll('img[src$=".svg"]').forEach(function(img){
+    fetch(img.src)
+    .then(r => r.text())
+    .then(txt => {
+    const svg = new DOMParser().parseFromString(txt, "image/svg+xml").documentElement;
+    svg.classList = img.classList;
+    svg.style = img.style;
+    img.replaceWith(svg);
     });
 });
