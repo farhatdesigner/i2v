@@ -1242,7 +1242,7 @@ class Custom_Testimonial extends Widget_Base
                 width:44px !important; 
                 height:44px !important; 
                 border-radius:50% !important; 
-                background: rgba(255,255,255,0.06) !important;
+                background: #464A4F!important;
                 display:flex !important; 
                 align-items:center !important; 
                 justify-content:center !important; 
@@ -1288,17 +1288,8 @@ class Custom_Testimonial extends Widget_Base
             @media (max-width: 1024px) {
                 #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-slide img { max-height:40px; }
                 #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-wrapper { padding: 14px 0px; }
-                /* #<?php //echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper { 
-                    margin-right: 55px; 
-                    margin-left: 55px; 
-                }
-                #<?php //echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-button-prev {
-                    left: -55px !important;
-                }
-                #<?php //echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-button-next {
-                    right: -55px !important;
-                } */
-                #custom-testimonial-8eaa666 .custom-testimonial-tabs-wrapper .swiper-button-prev, #custom-testimonial-8eaa666 .custom-testimonial-tabs-wrapper .swiper-button-next{  width: 36px !important;height: 36px !important; }
+                #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-wrapper .swiper-button-prev, #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-wrapper .swiper-button-next
+                #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-wrapper .swiper-button-prev, #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-wrapper .swiper-button-next{  width: 36px !important;height: 36px !important; }
             }
             @media (max-width: 768px) {
                 #<?php echo esc_attr($widget_id); ?> .custom-testimonial-content-wrapper { flex-direction: column-reverse; gap: 20px;padding: 40px 0px 15px 0px; margin-bottom: 0;}
@@ -1524,7 +1515,7 @@ class Custom_Testimonial extends Widget_Base
                     },
                     breakpoints: {
                         // tablet
-                        1024: {
+                        991: {
                             slidesPerView: 6,
                             slidesPerGroup: 1, // Scroll 1 item at a time
                             spaceBetween: 20,
