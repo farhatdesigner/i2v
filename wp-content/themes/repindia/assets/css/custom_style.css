@@ -2029,6 +2029,7 @@ h3 {
 
 .grid-listing li {
     width: calc(33.33% - 40px);
+    border-radius: 12px;
 }
 
 .card-text {
@@ -2541,10 +2542,15 @@ h3 {
     .cards-listing-section ul li:is(:nth-child(4), :nth-child(5)) :is(.card-image, .card-body) {
         width: 50%;
     }
-
+    .cards-listing-section li .card{ border-radius: 12px; }
+    .elementor .card-image img{ border-top-left-radius: 12px;border-top-right-radius: 12px; }
     .cards-listing-section .grid-listing li:nth-child(4),
     .cards-listing-section .grid-listing li:nth-child(5) {
         width: calc(50% - 40px);
+    }
+    .cards-listing-section .grid-listing li:nth-child(4) img,
+    .cards-listing-section .grid-listing li:nth-child(5) img {
+        border-top-left-radius: 12px;border-top-right-radius: 0px;border-bottom-left-radius: 12px;
     }
 
     .chosse_circle:before {

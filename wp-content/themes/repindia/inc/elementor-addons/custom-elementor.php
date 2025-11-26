@@ -29,6 +29,7 @@ class Widget_Loader
 		require_once(__DIR__.'/widgets/singlescrollcards.php');
 		require_once(__DIR__.'/widgets/custom_testimonial.php');
 		require_once(__DIR__.'/widgets/custom_image_circle.php');
+		require_once(__DIR__.'/widgets/custom_purpose_slider.php');
     }
     public function register_widgets()
     {
@@ -48,6 +49,7 @@ class Widget_Loader
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Singlescrollcards() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Testimonial() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Image_Circle() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Purpose_Slider() );
     }
 	public function __construct()
 	{

@@ -98,9 +98,9 @@ class Cardslisting extends Widget_Base
 
                         <!-- Card 1 -->
                         <li>
-                            <div class="card h-100 border-0 shadow-sm rounded-4">
+                            <div class="card h-100 border-0 shadow-sm">
                                 <div class="card-image">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/crads_land.png" class="card-img-top rounded-top-4 h-100" alt="Enterprise Video Management Software">
+                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/crads_land.png" class="card-img-top h-100" alt="Enterprise Video Management Software">
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">Enterprise Video Management Software (VMS)</h5>
@@ -120,9 +120,9 @@ class Cardslisting extends Widget_Base
 
                         <!-- Card 2 -->
                         <li>
-                            <div class="card h-100 border-0 shadow-sm rounded-4">
+                            <div class="card h-100 border-0 shadow-sm">
                                 <div class="card-image">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/ai-based-video-analytics-vca.webp" class="card-img-top rounded-top-4 h-100" alt="AI-Based Video Analytics">
+                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/ai-based-video-analytics-vca.webp" class="card-img-top h-100" alt="AI-Based Video Analytics">
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">AI-Based Video Analytics (VA / VCA)</h5>
@@ -141,9 +141,9 @@ class Cardslisting extends Widget_Base
 
                         <!-- Card 3 -->
                         <li>
-                            <div class="card h-100 border-0 shadow-sm rounded-4">
+                            <div class="card h-100 border-0 shadow-sm">
                                 <div class="card-image">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/command-and-control-iccc.webp" class="card-img-top rounded-top-4 h-100" alt="Integrated Command Center">
+                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/command-and-control-iccc.webp" class="card-img-top h-100" alt="Integrated Command Center">
                                 </div>
                                 <div class="card-body p-4">
                                     <h5 class="card-title">Integrated/Traffic Command & Control Center (ICCC / PSIM)</h5>
@@ -162,9 +162,9 @@ class Cardslisting extends Widget_Base
 
                         <!-- Card 4 -->
                         <li>
-                            <div class="card h-100 border-0 shadow-sm rounded-4">
+                            <div class="card h-100 border-0 shadow-sm">
                                 <div class="card-image">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/crads_port.webp" class="card-img-top rounded-top-4 h-100" alt="Integrated Command Center">
+                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/crads_port.webp" class="card-img-top h-100" alt="Integrated Command Center">
                                 </div>
                                 <div class="card-body p-4">
                                     <h5 class="card-title">AI Based Face Recognition Software (FRS)</h5>
@@ -182,9 +182,9 @@ class Cardslisting extends Widget_Base
 
                         <!-- Card 5 -->
                         <li>
-                            <div class="card h-100 border-0 shadow-sm rounded-4">
+                            <div class="card h-100 border-0 shadow-sm">
                                 <div class="card-image">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/VIDS.webp" class="card-img-top rounded-top-4 h-100" alt="Integrated Command Center">
+                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/VIDS.webp" class="card-img-top h-100" alt="Integrated Command Center">
                                 </div>
                                 <div class="card-body p-4">
                                     <h5 class="card-title">Video Incident Detection System (VIDS)</h5>
@@ -201,9 +201,9 @@ class Cardslisting extends Widget_Base
 
                         <!-- Card 6 -->
                         <li>
-                            <div class="card h-100 border-0 shadow-sm rounded-4">
+                            <div class="card h-100 border-0 shadow-sm">
                                 <div class="card-image">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/cms.webp" class="card-img-top rounded-top-4 h-100" alt="Integrated Command Center">
+                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/cms.webp" class="card-img-top h-100" alt="Integrated Command Center">
                                 </div>
                                 <div class="card-body p-4">
                                     <h5 class="card-title">Central Monitoring Software (CMS)</h5>
@@ -222,9 +222,9 @@ class Cardslisting extends Widget_Base
 
                         <!-- Card 7 -->
                         <li>
-                            <div class="card h-100 border-0 shadow-sm rounded-4">
+                            <div class="card h-100 border-0 shadow-sm">
                                 <div class="card-image">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/itms-itZ.webp" class="card-img-top rounded-top-4 h-100" alt="Integrated Command Center">
+                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/itms-itZ.webp" class="card-img-top h-100" alt="Integrated Command Center">
                                 </div>
                                 <div class="card-body p-4">
                                     <h5 class="card-title">Integrated/Traffic Command & Control Center (ICCC / PSIM)</h5>
@@ -243,9 +243,9 @@ class Cardslisting extends Widget_Base
 
                         <!-- Card 8 -->
                         <li>
-                            <div class="card h-100 border-0 shadow-sm rounded-4">
+                            <div class="card h-100 border-0 shadow-sm">
                                 <div class="card-image">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/anpr-lpr.webp" class="card-img-top rounded-top-4 h-100" alt="Integrated Command Center">
+                                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/anpr-lpr.webp" class="card-img-top h-100" alt="Integrated Command Center">
                                 </div>
                                 <div class="card-body p-4">
                                     <h5 class="card-title">Automatic Number Plate Recognition
