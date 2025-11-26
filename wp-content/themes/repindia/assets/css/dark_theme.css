@@ -51,4 +51,12 @@ header li.burger-icon .icon-sun,.js-dark header li.burger-icon .icon-moon{ displ
 .js-dark ul.social_media_links>li>a, .js-dark ul.social_media_links>li>a>small {
     color: #AEB6C9;
 }
-
+.js-dark .elementor-element.e-con-full.withdark.e-flex.e-con.e-child{ background: transparent; }
+.js-dark #breadcrumbs>span>span>a{
+    border: 1px solid rgba(193, 196, 198, 0.10);
+    background: #262A30;
+    color: #D7DBE4;
+}
+.js-dark #breadcrumbs svg path{ fill: #D7DBE4;}
+.js-dark .elementor-element.ai_smart_dark .e-grid.e-con-full.e-con.e-child,.js-dark .elementor-element.ai_smart_dark .elementor-widget.elementor-widget-image{ background-color: #262A30; }
+.js-dark .elementor-element.ai_smart_dark svg path.forground_ic{ fill: #262A30; }
