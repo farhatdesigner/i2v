@@ -955,54 +955,130 @@ gsap.ticker.lagSmoothing(0);
 
 
 //Conver svg into svg code
-document.querySelectorAll('img[src$=".svg"]').forEach(function(img){
-    fetch(img.src)
-    .then(r => r.text())
-    .then(txt => {
-    const svg = new DOMParser().parseFromString(txt, "image/svg+xml").documentElement;
-    svg.classList = img.classList;
-    svg.style = img.style;
-    img.replaceWith(svg);
-    });
-});
+// document.querySelectorAll('img[src$=".svg"]').forEach(function(img){
+//     fetch(img.src)
+//     .then(r => r.text())
+//     .then(txt => {
+//     const svg = new DOMParser().parseFromString(txt, "image/svg+xml").documentElement;
+//     svg.classList = img.classList;
+//     svg.style = img.style;
+//     img.replaceWith(svg);
+//     });
+// });
 
 
-gsap.registerPlugin(ScrollTrigger);
-
-// collect sections + photos
-const sections = gsap.utils.toArray(".details");
-const photos   = gsap.utils.toArray(".photo");
-
-// set initial states
-gsap.set(photos, { opacity: 0 });
-gsap.set(photos[0], { opacity: 1 });
-
-// helper — show selected photo
-function showPhoto(index) {
-    gsap.to(photos, { opacity: 0, duration: 0.4, overwrite: true });
-    gsap.to(photos[index], { opacity: 1, duration: 0.4, overwrite: true });
+// Gallery Animation - Only on min-width 1200px and when gallery exists
+if (window.innerWidth >= 1200) {
+    const gallery = document.querySelector(".gallery");
+    
+    if (gallery) {
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // collect sections + photos
+        // Only select details from the left sidebar (.detailsWrapper), not from inside photos
+        const sections = gsap.utils.toArray(".detailsWrapper .details");
+        const photos   = gsap.utils.toArray(".photo");
+        
+        // set initial states
+        gsap.set(photos, { opacity: 0 });
+        gsap.set(photos[0], { opacity: 1 });
+        
+        // helper — show selected photo
+        function showPhoto(index) {
+            gsap.to(photos, { opacity: 0, duration: 0.4, overwrite: true });
+            gsap.to(photos[index], { opacity: 1, duration: 0.4, overwrite: true });
+        }
+        
+        // change image based on section
+        sections.forEach((section, index) => {
+            ScrollTrigger.create({
+                trigger: section,
+                start: "top 25%",
+                end: "bottom 25%",
+                scrub: true,
+                onEnter: () => showPhoto(index),
+                onEnterBack: () => showPhoto(index),
+                // markers: true,
+            });
+        });
+        
+        // pin the right panel until last section reaches mid
+        ScrollTrigger.create({
+            trigger: ".gallery",
+            start: "top 20%",
+            endTrigger: ".detailsWrapper .details:last-child",
+            end: "top 20%",
+            pin: ".right",
+            pinSpacing: true,
+            // markers: true,
+        });
+        
+        // Refresh ScrollTrigger on resize
+        let resizeTimer;
+        window.addEventListener("resize", () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                if (window.innerWidth >= 1200) {
+                    ScrollTrigger.refresh();
+                }
+            }, 250);
+        });
+    }
 }
 
-// change image based on section
-sections.forEach((section, index) => {
-    ScrollTrigger.create({
-        trigger: section,
-        start: "top 25%",
-        end: "bottom 25%",
-        scrub: true,
-        onEnter: () => showPhoto(index),
-        onEnterBack: () => showPhoto(index),
-        // markers: true,
-    });
-});
 
-// pin the right panel until last section reaches mid
-ScrollTrigger.create({
-    trigger: ".gallery",
-    start: "top 20%",
-    endTrigger: ".details:last-child",
-    end: "top 20%",
-    pin: ".right",
-    pinSpacing: true,
-    // markers: true,
-});
+
+
+
+// Card Stacking Animation - Only on min-width 1200px and when cards-custom-body exists
+if (window.innerWidth >= 1200) {
+    const cardsCustomBody = document.querySelector(".cards-custom-body");
+    
+    if (cardsCustomBody) {
+        console.clear();
+        
+        gsap.registerPlugin(ScrollTrigger);
+        
+        const cardsWrappers = gsap.utils.toArray(".card-wrapper");
+        const cards = gsap.utils.toArray(".card_display");
+        
+        cardsWrappers.forEach((wrapper, i) => {
+            const card = cards[i];
+            let scale = 1,
+                rotation = 0;
+            if (i !== cards.length - 1) {
+                scale = 0.9 + 0.025 * i;
+                rotation = -10;
+            }
+            gsap.to(card, {
+                scale: scale,
+                transformOrigin: "top center",
+                ease: "none",
+                scrollTrigger: {
+                    trigger: wrapper,
+                    start: "top " + (100 + 60 * i),
+                    end: "bottom 550",
+                    endTrigger: ".wrapper",
+                    scrub: true,
+                    pin: wrapper,
+                    pinSpacing: false,
+                    // markers: {
+                    //     indent: 150 * i
+                    // },
+                    id: i + 1
+                }
+            });
+        });
+        
+        // Refresh ScrollTrigger on resize
+        let resizeTimer;
+        window.addEventListener("resize", () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                if (window.innerWidth >= 1200) {
+                    ScrollTrigger.refresh();
+                }
+            }, 250);
+        });
+    }
+}
