@@ -67,7 +67,50 @@
         height: 80px !important;
     }
     .chosse_circle .elementor-icon-box-wrapper{ padding: 20px 0;}
+    p#breadcrumbs svg { margin: 0; }
+    span.breadcrumb_last{ line-height: 30px; }
+    .reversetestimonial.elementor-widget-testimonial-carousel .swiper-slide {
+        padding: 20px 20px 40px;
+    }
+    .elementor-element.leadersslider .swiper .elementor-swiper-button-prev{ left: 0px; }
+    .elementor-element.leadersslider .swiper .elementor-swiper-button-next{ right: 0px; }
     
+    .detailtbas .elementor-element.heading_tablemenu.elementor-widget-icon-list ul{         
+        width: 100%;
+        flex-wrap: unset;
+        height: 50px;
+        padding: 10px 10px 10px 45px; 
+        max-width: 400px;
+        overflow: scroll;
+    }
+    .detailtbas .elementor-element.heading_tablemenu.elementor-widget-icon-list ul li{ min-width: 200px;
+        width: 200px;
+        display: inline-block;
+        text-align: left; }
+    .comparison-wrapper{ max-width: 400px;overflow: scroll; }
+    .comparison-wrapper ul{ max-width: 100%;min-width: 200px; }
+    .comparison-wrapper li{ width: 100%; }
+    .enterprisebanner ul.elementor-icon-list-items.elementor-inline-items {
+        flex-wrap: unset;
+        max-width: 400px;
+        overflow: scroll;
+        justify-content: start;
+    }
+    .enterprisebanner ul.elementor-icon-list-items.elementor-inline-items li { width: auto;min-width: 200px; }
+    .enterprisebanner ul.elementor-icon-list-items.elementor-inline-items li span.elementor-icon-list-text{ font-size: 14px;line-height: 16px; }
+    .fixed-header{ top: 103px !important; }
+    p#breadcrumbs{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        padding-bottom: 0;
+        min-height: unset;
+    }
+    .accordion_set{ padding: 16px 10px;padding-left: 58px; }
+    .accordion_set.acactive{ padding-top: 16px; }
+    .ac_header, .btn_demo_box h3{ font-size: 18px; }
 }
 
 @media(max-width: 992px) and (min-width: 601px){
