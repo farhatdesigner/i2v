@@ -107,16 +107,34 @@ class Customtabsolution extends Widget_Base
 						<h3 class="main_title quote">Integrated solutions to secure and streamline every facet of your operations </h3>
 					</div>
 					<div class="contentWrapper">
-						<div class="tabsWrapper">
-							<ul class="tabsautoscroll">
-								<li data-id="content0" class="tracking-wide active">i2V’s VMS</li>
-								<li data-id="content1">AI based video analytics / VCA</li>
-								<li data-id="content2">Command and control (ICCC)</li>
-								<li data-id="content3">CMS</li>
-								<li data-id="content4">ITMS / ITS</li>
-								<li data-id="content5">ANPR / LPR</li>
-								<li data-id="content6">VIDS</li>
-								<li data-id="content7">FRS</li>
+						<div class="filter-menu tabsWrapper">
+							<label class="dropdown-label">Solutions</label>
+							<span class="select-brand">i2V's VMS</span>
+							<ul class="tabsautoscroll custom-tabs-list" id="solutionTab">
+								<li data-id="content0" class="tracking-wide active custom-tab-item">
+									<a class="custom-tab-link" href="#content0">i2V's VMS</a>
+								</li>
+								<li data-id="content1" class="custom-tab-item">
+									<a class="custom-tab-link" href="#content1">AI based video analytics / VCA</a>
+								</li>
+								<li data-id="content2" class="custom-tab-item">
+									<a class="custom-tab-link" href="#content2">Command and control (ICCC/PSCM)</a>
+								</li>
+								<li data-id="content3" class="custom-tab-item">
+									<a class="custom-tab-link" href="#content3">CMS</a>
+								</li>
+								<li data-id="content4" class="custom-tab-item">
+									<a class="custom-tab-link" href="#content4">ITMS / ITS</a>
+								</li>
+								<li data-id="content5" class="custom-tab-item">
+									<a class="custom-tab-link" href="#content5">ANPR / LPR</a>
+								</li>
+								<li data-id="content6" class="custom-tab-item">
+									<a class="custom-tab-link" href="#content6">VIDS</a>
+								</li>
+								<li data-id="content7" class="custom-tab-item">
+									<a class="custom-tab-link" href="#content7">FRS</a>
+								</li>
 							</ul>
 						</div>
 						<div class="container-marketing">
@@ -173,15 +191,15 @@ class Customtabsolution extends Widget_Base
 													</li>
 													<li>
 														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/e-map-client.svg" alt="i2V’s VMS">
-														<span>eMap Client</span>
+														<span>eMap </br> Client</span>
 													</li>
 													<li>
 														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/icon.svg" alt="i2V’s VMS">
-														<span>Auto PTZ tracking</span>
+														<span>Auto PTZ </br> tracking</span>
 													</li>
 													<li>
 														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/playback-client.svg" alt="i2V’s VMS">
-														<span>Playback Client</span>
+														<span>Playback </br> Client</span>
 													</li>
 													<li>
 														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/icon-1.svg" alt="i2V’s VMS">
@@ -723,7 +741,7 @@ class Customtabsolution extends Widget_Base
 													</li>
 													<li>
 														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/slow-traffic-alerting.svg" alt="i2V’s VMS">
-														<span>Slow traffic alerting</span>
+														<span>Slow traffic </br> alerting</span>
 													</li>
 													<li>
 														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/congestion-traffic-alerting.svg" alt="i2V’s VMS">

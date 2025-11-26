@@ -362,10 +362,6 @@ $(document).ready(function () {
     });
 });
 
-
-
-
-
 var swiper2 = new Swiper(".brandslider", {
     spaceBetween: 30,
     slidesPerView: 7,
@@ -400,7 +396,13 @@ var swiper2 = new Swiper(".brandslider", {
 // Tabs functionality
 jQuery(document).ready(function ($) {
 
-    $(document).on('click', '.tabsautoscroll li', function () {
+    $(document).on('click', '.tabsautoscroll li', function (e) {
+        // Prevent default anchor behavior if anchor exists
+        var $link = $(this).find("a.custom-tab-link");
+        if ($link.length) {
+            e.preventDefault();
+        }
+
         var $this = $(this);
         var t = $this.data("id"); // e.g., "content0", "content1", etc.
         var tabsContainer = $(".tabsautoscroll");
@@ -409,17 +411,19 @@ jQuery(document).ready(function ($) {
         $this.is(":last-child") ? $(".next").hide() : $(".next").show();
         $this.is(":first-child") ? $(".previous").hide() : $(".previous").show();
 
-        // Scroll tabs horizontally to center the clicked tab
-        var tabPosition = $this.position().left;
-        var tabWidth = $this.outerWidth();
-        var containerWidth = tabsContainer.width();
-        var currentScroll = tabsContainer.scrollLeft();
+        // Scroll tabs horizontally to center the clicked tab (only on desktop)
+        if ($(window).width() > 1024) {
+            var tabPosition = $this.position().left;
+            var tabWidth = $this.outerWidth();
+            var containerWidth = tabsContainer.width();
+            var currentScroll = tabsContainer.scrollLeft();
 
-        // Calculate scroll position to center the tab
-        var targetScroll = currentScroll + tabPosition - (containerWidth / 2) + (tabWidth / 2);
+            // Calculate scroll position to center the tab
+            var targetScroll = currentScroll + tabPosition - (containerWidth / 2) + (tabWidth / 2);
 
-        // Use jQuery animate for smooth scrolling
-        tabsContainer.stop().animate({ scrollLeft: targetScroll }, 300, 'swing');
+            // Use jQuery animate for smooth scrolling
+            tabsContainer.stop().animate({ scrollLeft: targetScroll }, 300, 'swing');
+        }
 
         // Toggle class only, no .show() or .hide()
         $(".tabContent .tabdiv").removeClass("active-tabcontent");
@@ -428,6 +432,18 @@ jQuery(document).ready(function ($) {
         // Active tab styling
         $(".tabsautoscroll li").removeClass("active");
         $this.addClass("active");
+
+        // Update select-brand text on mobile
+        if ($(window).width() <= 1024) {
+            var selectedText = $link.length ? $link.text() : $this.text();
+            $(".filter-menu .select-brand").text(selectedText.trim());
+        }
+    });
+
+    // Handle click on custom-tab-link to prevent default anchor behavior
+    $(document).on('click', '.tabsautoscroll li .custom-tab-link', function (e) {
+        e.preventDefault();
+        // Event will bubble to parent li, which handles the tab switching
     });
 
     // $(".tabdiv a").click(function (e) {
@@ -442,6 +458,23 @@ jQuery(document).ready(function ($) {
         e.preventDefault();
         $("li.active").prev("li").trigger("click");
     });
+
+    // Mobile dropdown functionality for tabs (similar to rep-portfolio)
+    // Handle click on select-brand to toggle dropdown
+    $(document).on('click', '.filter-menu .select-brand', function () {
+        if ($(window).width() <= 1024) {
+            $(this).toggleClass("angle-icon");
+            $(this).next("ul.tabsautoscroll").slideToggle();
+        }
+    });
+
+    // Handle click on custom tabs li to close dropdown on mobile
+    $(document).on('click', '.filter-menu .tabsautoscroll li', function () {
+        if ($(window).width() <= 1024) {
+            $(".filter-menu .select-brand").removeClass("angle-icon");
+            $(this).parents("ul.tabsautoscroll").slideUp();
+        }
+    });
 });
 
 
@@ -450,6 +483,9 @@ jQuery(document).ready(function ($) {
     function handleFooterAccordion() {
         // Only enable accordion on mobile (767px and below)
         if ($(window).width() <= 767) {
+            // Initialize all accordion items as active (opened) on mobile
+            $('.footer-accordion-item').addClass('active');
+            
             $('.footer-accordion-title').off('click').on('click', function () {
                 var $accordionItem = $(this).closest('.footer-accordion-item');
 
@@ -505,116 +541,146 @@ $(window).scroll(function() {
     }
 });
 
-$(".sticky-custom ul.elementor-icon-list-items.elementor-inline-items li.elementor-icon-list-item.elementor-inline-item:nth-child(1)").click(function () {
-    $("html , body").animate({
-        scrollTop: $(".live_monitoring").offset().top - 80
-    }, 1300);
-});
-$(".sticky-custom ul.elementor-icon-list-items.elementor-inline-items li.elementor-icon-list-item.elementor-inline-item:nth-child(2)").click(function () {
-    $("html , body").animate({
-        scrollTop: $(".system_setup").offset().top - 50
-    }, 1300);
-});
-$(".sticky-custom ul.elementor-icon-list-items.elementor-inline-items li.elementor-icon-list-item.elementor-inline-item:nth-child(3)").click(function () {
-    $("html , body").animate({
-        scrollTop: $(".intelligenc_alerts").offset().top - 80
-    }, 1300);
-});
-$(".sticky-custom ul.elementor-icon-list-items.elementor-inline-items li.elementor-icon-list-item.elementor-inline-item:nth-child(4)").click(function () {
-    $("html , body").animate({
-        scrollTop: $(".recording_storage").offset().top - 80
-    }, 1300);
-});
-$(".sticky-custom ul.elementor-icon-list-items.elementor-inline-items li.elementor-icon-list-item.elementor-inline-item:nth-child(5)").click(function () {
-    $("html , body").animate({
-        scrollTop: $(".security_integration").offset().top - 80
-    }, 1300);
-});
 
-// Set first li as active by default and setup scroll spy
-jQuery(document).ready(function($) {
-    var $listItems = $(".sticky-custom ul.elementor-icon-list-items.elementor-inline-items li.elementor-icon-list-item.elementor-inline-item");
+
+jQuery(document).ready(function ($) {
+
+    // Check if sticky-custom or enterprisebanner exists on the page
+    var $stickyCustom = $(".sticky-custom");
+    var $enterpriseBanner = $("#enterprisebanner");
     
-    // Check if elements exist
-    if ($listItems.length === 0) {
-        return;
+    // Only run this code if one of these elements exists
+    if ($stickyCustom.length === 0 && $enterpriseBanner.length === 0) {
+        return; // Exit early if neither element exists
     }
-    
-    // Set first li as active by default
-    $listItems.first().addClass("active-li");
-    
+
+    var $items = $(".sticky-custom ul.elementor-icon-list-items.elementor-inline-items li");
+    var $menu = $(".sticky-custom"); // menu container
+
+    // Section selectors (order must match your menu)
     var sections = [
-        { selector: ".live_monitoring", index: 0 },
-        { selector: ".system_setup", index: 1 },
-        { selector: ".intelligenc_alerts", index: 2 },
-        { selector: ".recording_storage", index: 3 },
-        { selector: ".security_integration", index: 4 }
+        ".live_monitoring",
+        ".system_setup",
+        ".intelligenc_alerts",
+        ".recording_storage",
+        ".security_integration" // 5th section
     ];
 
-    function updateActiveSection() {
-        var scrollTop = $(window).scrollTop();
-        var offset = 150; // Offset from top to trigger active state
-        var activeIndex = 0; // Default to first section
+    var sectionData = [];
+    var lastActive = -1;
+    var triggerOffset = 220;
+    var rafID = null;
 
-        // Find which section is currently in view or closest to viewport top
-        var currentScrollPosition = scrollTop + offset;
-        var closestSection = null;
-        var closestDistance = Infinity;
+    // --------------------------------------------
+    // CLICK = Scroll to SAME trigger position
+    // --------------------------------------------
+    $items.each(function (i) {
+        $(this).on("click", function () {
 
-        sections.forEach(function(section) {
-            var $section = $(section.selector);
-            if ($section.length) {
-                var sectionTop = $section.offset().top;
-                var sectionBottom = sectionTop + $section.outerHeight();
-                
-                // Check if section is in viewport
-                if (currentScrollPosition >= sectionTop && currentScrollPosition < sectionBottom) {
-                    var distance = Math.abs(currentScrollPosition - sectionTop);
-                    if (distance < closestDistance) {
-                        closestDistance = distance;
-                        closestSection = section;
-                    }
-                }
+            var $target = $(sections[i]);
+            if ($target.length) {
+
+                $items.removeClass("active-li");
+                $(this).addClass("active-li");
+                lastActive = i;
+
+                var exactPosition = $target.offset().top - (triggerOffset - 1);
+
+                $("html, body").animate({
+                    scrollTop: exactPosition
+                }, 300);
             }
         });
-
-        // If no section is directly in view, find the last section we've scrolled past
-        if (!closestSection) {
-            sections.forEach(function(section) {
-                var $section = $(section.selector);
-                if ($section.length) {
-                    var sectionTop = $section.offset().top;
-                    if (currentScrollPosition >= sectionTop) {
-                        closestSection = section;
-                    }
-                }
-            });
-        }
-
-        // Update active class
-        if (closestSection !== null) {
-            activeIndex = closestSection.index;
-        } else if (scrollTop < 1800) {
-            // If scrolled back to top, activate first item
-            activeIndex = 0;
-        }
-
-        $listItems.removeClass("active-li");
-        $listItems.eq(activeIndex).addClass("active-li");
-    }
-
-    // Throttle scroll event for better performance
-    var scrollTimeout;
-    $(window).on('scroll', function() {
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(function() {
-            updateActiveSection();
-        }, 50);
     });
 
-    // Initial check on page load
-    updateActiveSection();
+    // --------------------------------------------
+    // CACHE SECTION POSITIONS
+    // --------------------------------------------
+    function updatePositions() {
+        sectionData = [];
+
+        sections.forEach(function (sel, i) {
+            var $sec = $(sel);
+            if ($sec.length) {
+                sectionData.push({
+                    index: i,
+                    top: $sec.offset().top,
+                    bottom: $sec.offset().top + $sec.outerHeight()
+                });
+            }
+        });
+    }
+
+    // --------------------------------------------
+    // SCROLL SPY + AUTO HIDE MENU AFTER 5TH SECTION
+    // --------------------------------------------
+    function detectActiveSection() {
+        // Safety check: if no sections found, exit early
+        if (sectionData.length === 0) {
+            return;
+        }
+
+        var scrollTop = $(window).scrollTop() + triggerOffset;
+        var activeIndex = 0;
+
+        // Find active section
+        for (var i = 0; i < sectionData.length; i++) {
+            if (scrollTop >= sectionData[i].top) {
+                activeIndex = sectionData[i].index;
+            }
+        }
+
+        // Update active li
+        if (activeIndex !== lastActive) {
+            $items.removeClass("active-li");
+            $items.eq(activeIndex).addClass("active-li");
+            lastActive = activeIndex;
+        }
+
+        // ------------------------------------------
+        // HIDE MENU when 5th section scrolls above
+        // ------------------------------------------
+        var lastSection = sectionData[sectionData.length - 1];
+
+        // Safety check: ensure lastSection exists before accessing properties
+        if (lastSection && scrollTop > lastSection.bottom) {
+            // User scrolled PAST the last section
+            $menu.addClass("menu-hidden");
+        } else {
+            // User scrolls back up → show menu again
+            $menu.removeClass("menu-hidden");
+        }
+    }
+
+    function onScroll() {
+        if (rafID) cancelAnimationFrame(rafID);
+        rafID = requestAnimationFrame(function () {
+            detectActiveSection();
+            rafID = null;
+        });
+    }
+
+    // INIT
+    updatePositions();
+    detectActiveSection();
+
+    $(window).on("scroll", onScroll);
+    $(window).on("resize", function () {
+        updatePositions();
+        detectActiveSection();
+    });
+
 });
+
+
+
+
+
+
+
+
+
+
 
 jQuery(document).ready(function() {
     // Check if accordion exists on the page
@@ -627,6 +693,11 @@ jQuery(document).ready(function() {
     first.addClass('acactive');
     first.find('.select_div').attr("aria-expanded", "true");
     jQuery(".accontent").first().slideDown(200);
+    
+    // Initialize progress fill for first accordion
+    setTimeout(function() {
+        startProgressFill();
+    }, 200);
 
     // Initialize videos - show first video, hide others using opacity
     jQuery('.accordion_video').each(function(index) {
@@ -644,6 +715,7 @@ jQuery(document).ready(function() {
     let timer;
     let isPaused = false; // Track if auto-slide is paused
     let resumeTimeout = null; // Store resume timeout so we can cancel it
+    let progressInterval = null; // Track progress animation interval
 
     // Helper function to check if any modal is currently open
     function isModalOpen() {
@@ -661,6 +733,44 @@ jQuery(document).ready(function() {
         });
     }
 
+    // Function to start progress fill animation
+    function startProgressFill() {
+        // Clear any existing progress interval
+        if (progressInterval) {
+            clearInterval(progressInterval);
+            progressInterval = null;
+        }
+
+        // Reset progress on all accordion items
+        jQuery(".accordion_set").each(function() {
+            this.style.setProperty('--progress', '0%');
+        });
+
+        // Start progress for active accordion item
+        const activeAccordion = jQuery(".accordion_set.acactive")[0];
+        if (activeAccordion) {
+            let timeLeft = autoInterval / 1000; // Convert to seconds
+            const updateInterval = 50; // Update every 50ms for smooth animation
+
+            progressInterval = setInterval(function() {
+                if (isPaused || isModalOpen()) {
+                    return;
+                }
+                
+                timeLeft -= (updateInterval / 1000);
+                const progress = ((autoInterval / 1000 - timeLeft) / (autoInterval / 1000)) * 100;
+                
+                // Update progress CSS variable
+                activeAccordion.style.setProperty('--progress', progress + '%');
+
+                if (timeLeft <= 0) {
+                    clearInterval(progressInterval);
+                    progressInterval = null;
+                }
+            }, updateInterval);
+        }
+    }
+
     // function to open accordion by index
     function openAccordion(index) {
         let target = jQuery(".accordion_set").eq(index);
@@ -674,6 +784,9 @@ jQuery(document).ready(function() {
 
         // Switch to corresponding video
         switchVideo(index);
+        
+        // Start progress fill animation
+        startProgressFill();
     }
 
     // auto slide function
@@ -699,6 +812,11 @@ jQuery(document).ready(function() {
             clearInterval(timer);
             timer = null;
         }
+        // Pause progress animation
+        if (progressInterval) {
+            clearInterval(progressInterval);
+            progressInterval = null;
+        }
         // Cancel any pending resume timeout
         if (resumeTimeout) {
             clearTimeout(resumeTimeout);
@@ -716,6 +834,8 @@ jQuery(document).ready(function() {
         if (!timer) {
             startAutoSlide();
         }
+        // Restart progress fill animation
+        startProgressFill();
     }
 
     // start auto slide initially
@@ -732,6 +852,12 @@ jQuery(document).ready(function() {
             parent.removeClass("acactive");
             jQuery(this).attr("aria-expanded", "false");
             parent.find(".accontent").slideUp(200);
+            // Stop progress animation when closing
+            if (progressInterval) {
+                clearInterval(progressInterval);
+                progressInterval = null;
+            }
+            parent[0].style.setProperty('--progress', '0%');
         } else {
             openAccordion(autoIndex);
         }
@@ -781,12 +907,12 @@ if (window.innerWidth >= 1180) {
     const tl = gsap.timeline({
         scrollTrigger: {
             trigger: ".sectionsscroll",
-            start: "top top",
+            start: "top 20%",
             endTrigger: 'html',
             end: () => "+=" + 200 * panels.length + "%",
             pin: true,
             pinSpacing: true,
-            // markers: true,
+            markers: false,
             scrub: 1,
             autoRefreshEvents: "load",
         }

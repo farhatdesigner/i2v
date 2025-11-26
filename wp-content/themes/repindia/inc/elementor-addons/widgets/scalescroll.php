@@ -189,12 +189,10 @@ class Scalescroll extends Widget_Base
 
 
 
-
-
-        <div class="custom-container">
-            <div class="sectionsscroll">
-                <div class="col-lg-5 col-12">
-                    <h3 class="main_title quote">
+        <div class="sectionsscroll">
+            <div class="custom-container">
+                <div class="col-lg-6 col-12">
+                    <h3 class="main_title quote mb-12">
                         Designed to fit. Ready to scale.
                     </h3>
                     <div class="text-left">
@@ -206,45 +204,51 @@ class Scalescroll extends Widget_Base
                         <section class="panel ">
                             <div class="logo_box">
                                 <ul>
-                                    <li><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-13.svg"></li>
-                                    <li><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-17.svg"></li>
-                                    <li><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-13.svg"></li>
-                                    <li><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-17.svg"></li>
-                                    <li><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-13.svg"></li>
-                                    <li><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-17.svg"></li>
-                                    <li><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-13.svg"></li>
-                                    <li><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-17.svg"></li>
-                                    <li><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-13.svg"></li>
-                                    <li><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-17.svg"></li>
-                                    <li><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-13.svg"></li>
-                                    <li><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-17.svg"></li>
-                                    <li><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-13.svg"></li>
-                                    <li><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-17.svg"></li>
-                                    <li><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-13.svg"></li>
-                                    <li><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-17.svg"></li>
-                                    <li><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-13.svg"></li>
-                                    <li><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-17.svg"></li>
-                                    <li><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-13.svg"></li>
-                                    <li><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-17.svg"></li>
-                                    <li><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-13.svg"></li>
-                                    <li><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-17.svg"></li>
-                                    <li><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-13.svg"></li>
-                                    <li><img src="http://localhost/i2v/wp-content/uploads/2025/11/item-17.svg"></li>
+                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
+                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
+                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
+                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
+                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
+                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
+                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
+                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
+                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
+                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
+                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
+                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
+                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
+                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
+                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
+                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
+                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
+                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
+                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
+                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
+                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
+                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
+                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
+                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
+                                    <!-- <li>
+                                        <span>and more</span>
+                                        <div class="text-center ">
+                                            <a href="#" class="theme-btn bg-trans border_btnlight">View all supported devices</a>
+                                        </div>
+                                    </li> -->
 
                                 </ul>
                             </div>
                         </section>
-                        <section class="panel animate-right">
-                            <img decoding="async" src="http://localhost/i2v/wp-content/uploads/2025/11/video.webp">
+                        <section class="panel animate-right ">
+                            <img class="radius-12" decoding="async" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/video.webp">
                         </section>
-                        <section class="panel animate-right">
-                            <img decoding="async" src="http://localhost/i2v/wp-content/uploads/2025/11/video.webp">
+                        <section class="panel animate-right ">
+                            <img class="radius-12" decoding="async" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/no-helmet-detection.webp">
                         </section>
-                        <section class="panel animate-right">
-                            <img decoding="async" src="http://localhost/i2v/wp-content/uploads/2025/11/video.webp">
+                        <section class="panel animate-right ">
+                            <img class="radius-12" decoding="async" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/video.webp">
                         </section>
-                        <section class="panel animate-right">
-                            <img decoding="async" src="http://localhost/i2v/wp-content/uploads/2025/11/video.webp">
+                        <section class="panel animate-right ">
+                            <img class="radius-12" decoding="async" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/no-helmet-detection.webp">
                         </section>
                     </div>
                     <div class="container-page flex-center">
@@ -271,7 +275,7 @@ class Scalescroll extends Widget_Base
                                 <h2>Supports both Windows and Linux systems</h2>
                                 <p class="para-text">Flexible installation across your existing OS infrastructure — no vendor lock-in.</p>
                                 <div class="bolt">
-                                    <img src="http://localhost/i2v/wp-content/uploads/2025/11/item-1.svg">
+                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-1.svg">
                                     <p>Deployed across 11+ smart cities without replacing existing hardware.</p>
                                     <div class="btn-bolt">
                                         <a href="#">Request a demo to lean more</a>
