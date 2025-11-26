@@ -294,57 +294,28 @@ class Scalescroll extends Widget_Base
                     <div class="left">
                         <div class="detailsWrapper">
                             <div class="details 1">
-                                <!-- <div class="text"></div> -->
-                                <!-- <div class="text"></div> -->
-
                                 <div class="txtflex">
                                     <h2>100+ IP camera brands supported</h2>
                                     <p class="para-text">Seamlessly integrates with major camera vendors — no hardware replacement needed.</p>
                                 </div>
-
-                                <!-- <div class="text"></div> -->
-                                <!-- <div class="text"></div> -->
-                                <!-- <div class="text"></div> -->
-                                <!-- <div class="text"></div> -->
-                                <!-- <div class="text"></div> -->
-                                <!-- <div class="text"></div> -->
-                                <!-- <div class="text"></div> -->
-                                <!-- <div class="text"></div> -->
-                                <!-- <div class="text"></div> -->
                             </div>
 
                             <div class="details 2">
-                                <!-- <div class="text"></div> -->
                                 <div class="txtflex">
                                     <h2>ONVIF-compliant for plug-and-play compatibility</h2>
                                     <p class="para-text">Works out-of-the-box with ONVIF-compliant devices for simplified system integration.</p>
                                 </div>
-                                <!-- <div class="text"></div> -->
-                                <!-- <div class="text"></div> -->
-                                <!-- <div class="text"></div> -->
                             </div>
 
                             <div class="details 3">
                                 <div class="headline blue"></div>
-                                <!-- <div class="text"></div> -->
-                                <!-- <div class="text"></div> -->
-                                <!-- <div class="text"></div> -->
-
                                 <div class="txtflex">
                                     <h2>Works across LAN deployments — no internet needed</h2>
                                     <p class="para-text">Secure, reliable performance in offline environments with zero cloud dependency.</p>
                                 </div>
-
-                                <!-- <div class="text"></div> -->
-                                <!-- <div class="text"></div> -->
-                                <!-- <div class="text"></div> -->
                             </div>
 
                             <div class="details 4">
-
-                                <!-- <div class="text"></div> -->
-                                <!-- <div class="text"></div> -->
-
                                 <div class="txtflex">
                                     <h2>Supports both Windows and Linux systems</h2>
                                     <p class="para-text">Flexible installation across your existing OS infrastructure — no vendor lock-in.</p>
@@ -356,21 +327,13 @@ class Scalescroll extends Widget_Base
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
 
                             <div class="details 5">
-                            <!-- <div class="text"></div> -->
-                                <!-- <div class="text"></div> -->
-                                <!-- <div class="text"></div> -->
                                 <div class="txtflex">
                                     <h2>Available in web, desktop and mobile based client versions</h2>
                                     <p class="para-text">Access analytics through browser or installed software, depending on operational preference.</p>
                                 </div>
-
-                                <!-- <div class="text"></div> -->
-                                <!-- <div class="text"></div> -->
-                                <!-- <div class="text"></div> -->
                             </div>
 
                         </div>
@@ -409,14 +372,61 @@ class Scalescroll extends Widget_Base
 
                                     </ul>
                                 </div>
+
+                                <div class="details 1">
+                                    <div class="txtflex">
+                                        <h2>100+ IP camera brands supported</h2>
+                                        <p class="para-text">Seamlessly integrates with major camera vendors — no hardware replacement needed.</p>
+                                    </div>
+                                </div>
                             </div>
+
+
                             <div class="photo green"> <img class="radius-12" decoding="async" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-271.webp">
+                                <div class="details 2">
+                                    <div class="txtflex">
+                                        <h2>ONVIF-compliant for plug-and-play compatibility</h2>
+                                        <p class="para-text">Works out-of-the-box with ONVIF-compliant devices for simplified system integration.</p>
+                                    </div>
+                                </div>
                             </div>
+
+
                             <div class="photo blue"> <img class="radius-12" decoding="async" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-270.webp">
+                                <div class="details 3">
+                                    <div class="headline blue"></div>
+                                    <div class="txtflex">
+                                        <h2>Works across LAN deployments — no internet needed</h2>
+                                        <p class="para-text">Secure, reliable performance in offline environments with zero cloud dependency.</p>
+                                    </div>
+                                </div>
                             </div>
+
+
                             <div class="photo yellow"><img class="radius-12" decoding="async" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-273.webp">
+                                <div class="details 4">
+                                    <div class="txtflex">
+                                        <h2>Supports both Windows and Linux systems</h2>
+                                        <p class="para-text">Flexible installation across your existing OS infrastructure — no vendor lock-in.</p>
+                                        <div class="bolt">
+                                            <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-1.svg">
+                                            <p>Deployed across 11+ smart cities without replacing existing hardware.</p>
+                                            <div class="btn-bolt">
+                                                <a href="#">Request a demo to lean more</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
+
                             <div class="photo orange"> <img class="radius-12" decoding="async" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-272.webp">
+                                <div class="details 5">
+                                    <div class="txtflex">
+                                        <h2>Available in web, desktop and mobile based client versions</h2>
+                                        <p class="para-text">Access analytics through browser or installed software, depending on operational preference.</p>
+                                    </div>
+                                </div>
 
                             </div>
 
