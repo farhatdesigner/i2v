@@ -292,8 +292,8 @@ class Video_accordion extends Widget_Base
             <div class="custom-container radius-8 text-white">
 
 
-                <div class="row g-0 align-items-center bg-blacktheme">
-                    <div class="col-md-6 col-12 padd-accordion thene-bg">
+                <div class="row g-0 align-items-center thene-bg vertical_scroller">
+                    <div class="col-md-6 col-12 padd-accordion ">
 
 
                         <div class="main_title_box">
@@ -377,7 +377,7 @@ class Video_accordion extends Widget_Base
 
 
                     </div>
-                    <div class="col-md-6 col-12 padd-accordion_video">
+                    <div class="col-md-6 col-12 padd-accordion_video bg-blacktheme">
                         <div class="accordion_video">
                             <img data-bs-toggle="modal" data-bs-target="#staticBackdrop" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/no-helmet-detection.webp" alt="null" width="100%" height="100%">
                             <!-- Vertically centered modal -->

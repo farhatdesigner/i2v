@@ -60,3 +60,10 @@ header li.burger-icon .icon-sun,.js-dark header li.burger-icon .icon-moon{ displ
 .js-dark #breadcrumbs svg path{ fill: #D7DBE4;}
 .js-dark .elementor-element.ai_smart_dark .e-grid.e-con-full.e-con.e-child,.js-dark .elementor-element.ai_smart_dark .elementor-widget.elementor-widget-image{ background-color: #262A30; }
 .js-dark .elementor-element.ai_smart_dark svg path.forground_ic{ fill: #262A30; }
+.js-dark  .elementor-element.ai_explore_dark .box-custom.e-flex.e-con.e-child { background-color: #262A30; }
+.ac_header, .btn_demo_box h3{ color: #AEB6C9!important; }
+.accordion_set.acactive .ac_header, .accordion_set.acactive.btn_demo_box h3{ color: rgba(255, 255, 255, 0.90)!important; }
+.accordion_video{ top: 50%;transform: translateY(-50%); }
+.padd-accordion_video{ min-height: 700px; }
+.elementor .accordion_video iframe, .elementor .accordion_video video, .elementor .accordion_video img{ border-radius: 12px; }
+.vertical_scroller.thene-bg{ border-radius: 12px; }
