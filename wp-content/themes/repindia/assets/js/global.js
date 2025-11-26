@@ -954,9 +954,6 @@ gsap.ticker.lagSmoothing(0);
 
 
 
-
-
-
 //Conver svg into svg code
 document.querySelectorAll('img[src$=".svg"]').forEach(function(img){
     fetch(img.src)
@@ -967,4 +964,45 @@ document.querySelectorAll('img[src$=".svg"]').forEach(function(img){
     svg.style = img.style;
     img.replaceWith(svg);
     });
+});
+
+
+gsap.registerPlugin(ScrollTrigger);
+
+// collect sections + photos
+const sections = gsap.utils.toArray(".details");
+const photos   = gsap.utils.toArray(".photo");
+
+// set initial states
+gsap.set(photos, { opacity: 0 });
+gsap.set(photos[0], { opacity: 1 });
+
+// helper — show selected photo
+function showPhoto(index) {
+    gsap.to(photos, { opacity: 0, duration: 0.4, overwrite: true });
+    gsap.to(photos[index], { opacity: 1, duration: 0.4, overwrite: true });
+}
+
+// change image based on section
+sections.forEach((section, index) => {
+    ScrollTrigger.create({
+        trigger: section,
+        start: "top 25%",
+        end: "bottom 25%",
+        scrub: true,
+        onEnter: () => showPhoto(index),
+        onEnterBack: () => showPhoto(index),
+        // markers: true,
+    });
+});
+
+// pin the right panel until last section reaches mid
+ScrollTrigger.create({
+    trigger: ".gallery",
+    start: "top 20%",
+    endTrigger: ".details:last-child",
+    end: "top 20%",
+    pin: ".right",
+    pinSpacing: true,
+    // markers: true,
 });
