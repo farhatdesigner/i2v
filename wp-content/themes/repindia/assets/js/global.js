@@ -955,16 +955,16 @@ gsap.ticker.lagSmoothing(0);
 
 
 //Conver svg into svg code
-document.querySelectorAll('img[src$=".svg"]').forEach(function(img){
-    fetch(img.src)
-    .then(r => r.text())
-    .then(txt => {
-    const svg = new DOMParser().parseFromString(txt, "image/svg+xml").documentElement;
-    svg.classList = img.classList;
-    svg.style = img.style;
-    img.replaceWith(svg);
-    });
-});
+// document.querySelectorAll('img[src$=".svg"]').forEach(function(img){
+//     fetch(img.src)
+//     .then(r => r.text())
+//     .then(txt => {
+//     const svg = new DOMParser().parseFromString(txt, "image/svg+xml").documentElement;
+//     svg.classList = img.classList;
+//     svg.style = img.style;
+//     img.replaceWith(svg);
+//     });
+// });
 
 
 // Gallery Animation - Only on min-width 1200px and when gallery exists

@@ -2159,11 +2159,12 @@ h3 {
     text-align: center !important;
 }
 
-.intelligent_video .swiper-slide-image {
+.intelligent_video .swiper-slide-image, .purpose-swiper .swiper-slide figure>img {
     min-height: 420px;
     max-height: 420px;
     object-fit: cover;
     width: 100%;
+    border-radius: 12px 12px 12px 12px;
 }
 
 .fixed-header {
@@ -2266,6 +2267,7 @@ h3 {
 
 .enterprisebanner li.elementor-icon-list-item {
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .box-custom {
@@ -2469,12 +2471,19 @@ h3 {
     transform: translate(-50%, 0%);
     z-index: 2;
 }
+.enterprz_env figcaption.elementor-image-carousel-caption, .purpose-swiper .swiper-slide figure.caption-scroll figcaption {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    z-index: 2;
+}
 
 .enterprz_env.elementor-widget-image-carousel .swiper-slide {
     border-radius: 12px;
 }
 
-.enterprz_env figure.swiper-slide-inner::after {
+.enterprz_env figure.swiper-slide-inner::after, .purpose-swiper .swiper-slide figure.caption-scroll::after {
     position: absolute;
     content: '';
     width: 100%;

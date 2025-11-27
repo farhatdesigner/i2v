@@ -576,7 +576,6 @@ p#breadcrumbs svg {
     margin-bottom: 0;
 }
 
-.cards-custom-body {}
 
 .card_display {
     width: 100%;
@@ -586,6 +585,11 @@ p#breadcrumbs svg {
     align-items: center;
 }
 
+.purpose-slider-wrapper{position: relative;}
+.purpose-swiper {
+    overflow: visible;
+
+}
 
 
 
