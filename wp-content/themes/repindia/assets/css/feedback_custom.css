@@ -570,6 +570,8 @@ p#breadcrumbs svg {
     width: 100%;
     perspective: 500px;
     margin-bottom: 100px;
+    position: relative;
+    transform-style: preserve-3d;
 }
 
 .card-wrapper:last-child {
@@ -579,10 +581,15 @@ p#breadcrumbs svg {
 
 .card_display {
     width: 100%;
-    height: 600px;
+    /* height: 600px; */
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    transform-origin: top center;
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 .purpose-slider-wrapper{position: relative;}

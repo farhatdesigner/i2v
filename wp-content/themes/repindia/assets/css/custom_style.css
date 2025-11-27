@@ -914,7 +914,7 @@ a:hover {
     scroll-behavior: smooth;
     scrollbar-width: thin;
     scrollbar-color: #D5D5D5 transparent;
-    
+
 }
 
 /* Custom scrollbar for webkit browsers (Chrome, Safari, Edge) */
@@ -1366,7 +1366,7 @@ h3 {
     margin: 0;
     padding: 0;
     white-space: nowrap;
-    overflow-x: auto;
+    overflow-x: visible;
     overflow-y: hidden;
     scroll-behavior: smooth;
     position: relative;
@@ -1901,9 +1901,11 @@ h3 {
 .footer_bottom span {
     padding-right: 20px;
 }
+
 .disclaimer-text {
     width: 100%;
 }
+
 .footer_bottom {
     padding: 20px 0;
     position: relative;
@@ -2159,13 +2161,36 @@ h3 {
     text-align: center !important;
 }
 
-.intelligent_video .swiper-slide-image, .purpose-swiper .swiper-slide figure>img {
+.intelligent_video .swiper-slide-image,
+.purpose-swiper .swiper-slide figure>img {
     min-height: 420px;
     max-height: 420px;
     object-fit: cover;
     width: 100%;
     border-radius: 12px 12px 12px 12px;
 }
+
+.purpose-slider-wrapper:before {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 10%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(270deg, #F2F5FA 0%, rgb(255 255 255 / 0%) 83.82%);
+}
+
+.purpose-swiper .swiper-slide figure.caption-scroll figcaption h3 {
+    text-align: left;
+    color: #FFFFFF;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+    line-height: 125%;
+}
+
 
 .fixed-header {
     position: fixed !important;
@@ -2471,7 +2496,9 @@ h3 {
     transform: translate(-50%, 0%);
     z-index: 2;
 }
-.enterprz_env figcaption.elementor-image-carousel-caption, .purpose-swiper .swiper-slide figure.caption-scroll figcaption {
+
+.enterprz_env figcaption.elementor-image-carousel-caption,
+.purpose-swiper .swiper-slide figure.caption-scroll figcaption {
     position: absolute;
     bottom: 32px;
     left: 50%;
@@ -2483,7 +2510,8 @@ h3 {
     border-radius: 12px;
 }
 
-.enterprz_env figure.swiper-slide-inner::after, .purpose-swiper .swiper-slide figure.caption-scroll::after {
+.enterprz_env figure.swiper-slide-inner::after,
+.purpose-swiper .swiper-slide figure.caption-scroll::after {
     position: absolute;
     content: '';
     width: 100%;
@@ -2492,6 +2520,12 @@ h3 {
     bottom: 0;
     background: linear-gradient(#00000000 0%, #000000c7 100%);
     z-index: 1;
+    border-radius: 12px;
+}
+
+.purpose-swiper .swiper-slide {
+    width: 350px;
+    margin-right: 20px;
 }
 
 .enterprz_env .elementor-widget-image-carousel .swiper-slide {
@@ -2508,6 +2542,8 @@ h3 {
     width: 100%;
     gap: 12px;
 }
+
+
 
 
 @media (min-width: 768px) {
@@ -2551,15 +2587,26 @@ h3 {
     .cards-listing-section ul li:is(:nth-child(4), :nth-child(5)) :is(.card-image, .card-body) {
         width: 50%;
     }
-    .cards-listing-section li .card{ border-radius: 12px; }
-    .elementor .card-image img{ border-top-left-radius: 12px;border-top-right-radius: 12px; }
+
+    .cards-listing-section li .card {
+        border-radius: 12px;
+    }
+
+    .elementor .card-image img {
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+    }
+
     .cards-listing-section .grid-listing li:nth-child(4),
     .cards-listing-section .grid-listing li:nth-child(5) {
         width: calc(50% - 40px);
     }
+
     .cards-listing-section .grid-listing li:nth-child(4) img,
     .cards-listing-section .grid-listing li:nth-child(5) img {
-        border-top-left-radius: 12px;border-top-right-radius: 0px;border-bottom-left-radius: 12px;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 0px;
+        border-bottom-left-radius: 12px;
     }
 
     .chosse_circle:before {
@@ -2970,112 +3017,122 @@ h3 {
 
 
 
-    @media (min-width: 768px) {
-        .footer-accordion-title {
-            cursor: default;
-            pointer-events: none;
-        }
-
-        .footer-accordion-icon {
-            display: none;
-        }
-
-        .footer-accordion-content {
-            max-height: none !important;
-            overflow: visible !important;
-        }
+@media (min-width: 768px) {
+    .footer-accordion-title {
+        cursor: default;
+        pointer-events: none;
     }
 
-    @media (max-width: 767px) {
-
-        .footer-accordion-title {
-            cursor: pointer;
-            position: relative;
-            user-select: none;
-        }
-
-        .footer-accordion-icon {
-            position: absolute;
-            right: 0;
-            transition: transform 0.3s ease;
-            font-size: 20px;
-            font-weight: normal;
-        }
-
-        .footer-accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
-            padding-top: 0;
-        }
-
-        .footer-accordion-item.active .footer-accordion-content {
-            max-height: 600px;
-        }
-
-        .footer-accordion-item.active .footer-accordion-icon {
-            transform: rotate(45deg);
-            transition: transform 0.3s ease;
-        }
-
-        .footer-accordion-icon {
-            transition: transform 0.3s ease;
-        }
-
-
-        .footer-accordion-title {
-            padding-right: 30px;
-        }
-
-        .active+.footer-accordion-content {
-            padding-top: 10px;
-            max-height: 600px;
-            position: relative;
-        }
-
-        .footer-accordion-content {
-            transition: max-height 0.4s ease-in-out, padding-top 0.4s ease-in-out;
-        }
-
-        #mission_built span.elementor-icon-list-icon {
-            width: 150px;
-        }
-
+    .footer-accordion-icon {
+        display: none;
     }
 
-    @media (max-width: 380px) {
-        .hero-style .slide-title h2 {
-            font-size: 30px;
-        }
-
-        .badge-custom {
-            padding: 2px 13px;
-        }
-
-        .theme-btn.xl-btn {
-            padding: 8px 9px !important;
-            font-size: 13px !important;
-        }
-
-        .text-container {
-            padding: 0 10px;
-        }
-
-        .hero-style .slide-btns>a:first-child {
-            margin-right: 0px;
-        }
-
-        .theme-btn.xl-btn {
-            padding: 8px 8px !important;
-            font-size: 13px !important;
-        }
-                
-        .hero-slider .hero-slide-inner,  .hero-slider {
-            height: 90vh;
-        }
-
+    .footer-accordion-content {
+        max-height: none !important;
+        overflow: visible !important;
     }
-    /* .elementor-element .prd_detail_tooltip {
+}
+
+@media (max-width: 767px) {
+
+    .footer-accordion-title {
+        cursor: pointer;
+        position: relative;
+        user-select: none;
+    }
+
+    .footer-accordion-icon {
+        position: absolute;
+        right: 0;
+        transition: transform 0.3s ease;
+        font-size: 20px;
+        font-weight: normal;
+    }
+
+    .footer-accordion-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
+        padding-top: 0;
+    }
+
+    .footer-accordion-item.active .footer-accordion-content {
+        max-height: 600px;
+    }
+
+    .footer-accordion-item.active .footer-accordion-icon {
+        transform: rotate(45deg);
+        transition: transform 0.3s ease;
+    }
+
+    .footer-accordion-icon {
+        transition: transform 0.3s ease;
+    }
+
+
+    .footer-accordion-title {
+        padding-right: 30px;
+    }
+
+    .active+.footer-accordion-content {
+        padding-top: 10px;
+        max-height: 600px;
+        position: relative;
+    }
+
+    .footer-accordion-content {
+        transition: max-height 0.4s ease-in-out, padding-top 0.4s ease-in-out;
+    }
+
+    #mission_built span.elementor-icon-list-icon {
+        width: 150px;
+    }
+
+    .purpose-slider-wrapper:before {
+        background: none;
+    }
+
+
+
+
+
+}
+
+@media (max-width: 380px) {
+    .hero-style .slide-title h2 {
+        font-size: 30px;
+    }
+
+    .badge-custom {
+        padding: 2px 13px;
+    }
+
+    .theme-btn.xl-btn {
+        padding: 8px 9px !important;
+        font-size: 13px !important;
+    }
+
+    .text-container {
+        padding: 0 10px;
+    }
+
+    .hero-style .slide-btns>a:first-child {
+        margin-right: 0px;
+    }
+
+    .theme-btn.xl-btn {
+        padding: 8px 8px !important;
+        font-size: 13px !important;
+    }
+
+    .hero-slider .hero-slide-inner,
+    .hero-slider {
+        height: 90vh;
+    }
+
+}
+
+/* .elementor-element .prd_detail_tooltip {
         max-width: auto;
         margin: 0 auto;
     } */

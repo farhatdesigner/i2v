@@ -96,7 +96,7 @@
         overflow: scroll;
         justify-content: start;
     }
-    .enterprisebanner ul.elementor-icon-list-items.elementor-inline-items li { width: auto;min-width: 200px; }
+    .enterprisebanner ul.elementor-icon-list-items.elementor-inline-items li { width: auto; min-width: max-content;}
     .enterprisebanner ul.elementor-icon-list-items.elementor-inline-items li span.elementor-icon-list-text{ font-size: 14px;line-height: 16px; }
     .fixed-header{ top: 103px !important; }
     p#breadcrumbs{

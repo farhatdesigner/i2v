@@ -157,8 +157,12 @@ class Custom_Purpose_Slider extends Widget_Base
                     </div>
 
                     <!-- Navigation -->
-                    <div class="swiper-button-next swiper-horizontalmobile-next">Next</div>
-                    <div class="swiper-button-prev swiper-horizontalmobile-prev">Prev</div>
+                    <div class="swiper-button-next swiper-horizontalmobile-next">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-white.svg" alt="Next">
+                    </div>
+                    <div class="swiper-button-prev swiper-horizontalmobile-prev">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-white.svg" alt="Prev">
+                    </div>
                 </div>
             </div>
         </section>
@@ -177,26 +181,16 @@ class Custom_Purpose_Slider extends Widget_Base
             position: relative;
             overflow: visible;
         }
-        /* #<?php echo esc_attr($uid); ?> .purpose-swiper .swiper-wrapper {
-            display: flex;
-            align-items: stretch;
+        /* Hide default Swiper arrow icons - using custom arrow images instead */
+        #<?php echo esc_attr($uid); ?> .purpose-swiper .swiper-button-prev:after,
+        #<?php echo esc_attr($uid); ?> .purpose-swiper .swiper-button-next:after,
+        #<?php echo esc_attr($uid); ?> .purpose-swiper .swiper-rtl .swiper-button-prev:after,
+        #<?php echo esc_attr($uid); ?> .purpose-swiper .swiper-rtl .swiper-button-next:after {
+            display: none !important;
+            content: none !important;
         }
-        #<?php echo esc_attr($uid); ?> .purpose-swiper .swiper-slide {
-            height: auto;
-            display: flex;
-            box-sizing: border-box;
-        }
-        #<?php echo esc_attr($uid); ?> .purpose-swiper .swiper-slide figure {
-            width: 100%;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-        }
-        #<?php echo esc_attr($uid); ?> .purpose-swiper .swiper-slide img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
+        
+        /* Navigation buttons styling - matching homepage banner */
         #<?php echo esc_attr($uid); ?> .purpose-swiper .swiper-horizontalmobile-next,
         #<?php echo esc_attr($uid); ?> .purpose-swiper .swiper-horizontalmobile-prev {
             cursor: pointer;
@@ -206,39 +200,48 @@ class Custom_Purpose_Slider extends Widget_Base
             z-index: 10;
             user-select: none;
             -webkit-user-select: none;
-            background: rgba(0, 0, 0, 0.5);
-            color: #fff;
-            padding: 10px 15px;
-            border-radius: 4px;
-            transition: background 0.3s ease;
+            border-radius: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            transition: all 0.3s ease;
         }
-        #<?php echo esc_attr($uid); ?> .purpose-swiper .swiper-horizontalmobile-next:hover,
-        #<?php echo esc_attr($uid); ?> .purpose-swiper .swiper-horizontalmobile-prev:hover {
-            background: rgba(0, 0, 0, 0.7);
-        }
+        
+
+
+        
         #<?php echo esc_attr($uid); ?> .purpose-swiper .swiper-horizontalmobile-next {
             right: 10px;
         }
+        
         #<?php echo esc_attr($uid); ?> .purpose-swiper .swiper-horizontalmobile-prev {
             left: 10px;
+            transform: translateY(-20px) rotate(180deg);
         }
+        
+        /* Mobile-specific styles for touch/swipe (below 767px) */
         @media (max-width: 767px) {
+            #<?php echo esc_attr($uid); ?> .purpose-swiper {
+                overflow: hidden !important;
+                touch-action: pan-x;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            #<?php echo esc_attr($uid); ?> .purpose-swiper .swiper-wrapper {
+                touch-action: pan-x;
+                -webkit-transform: translate3d(0, 0, 0);
+            }
+            
             #<?php echo esc_attr($uid); ?> .purpose-swiper .swiper-slide {
-                width: auto !important;
-                min-width: 280px;
+                touch-action: pan-x;
+                -webkit-user-select: none;
+                user-select: none;
+                -webkit-tap-highlight-color: transparent;
             }
-            #<?php echo esc_attr($uid); ?> .purpose-swiper .swiper-horizontalmobile-next,
-            #<?php echo esc_attr($uid); ?> .purpose-swiper .swiper-horizontalmobile-prev {
-                padding: 8px 12px;
-                font-size: 14px;
-            }
-            #<?php echo esc_attr($uid); ?> .purpose-swiper .swiper-horizontalmobile-next {
-                right: 5px;
-            }
-            #<?php echo esc_attr($uid); ?> .purpose-swiper .swiper-horizontalmobile-prev {
-                left: 5px;
-            }
-        } */
+        }
+
         </style>
 
         <script>
@@ -284,25 +287,39 @@ class Custom_Purpose_Slider extends Widget_Base
                                 nextEl: nextBtn,
                                 prevEl: prevBtn,
                             },
-                            slidesPerView: 5,
                             spaceBetween: 20,
+                            // Enable touch/swipe by default (will be controlled by breakpoints)
+                            allowTouchMove: true,
+                            touchEventsTarget: 'container',
+                            simulateTouch: true,
+                            grabCursor: true,
+                            // Default for mobile
+                            slidesPerView: 1,
                             breakpoints: {
                                 // Mobile first approach - breakpoints are min-width
-                                360: {
-                                    slidesPerView: "auto",
-                                    spaceBetween: 24,
+                                // Below 768px: touch enabled, 1 slide
+                                0: {
+                                    slidesPerView: 1,
+                                    spaceBetween: 20,
+                                    allowTouchMove: true,
+                                    touchEventsTarget: 'container',
+                                    simulateTouch: true,
                                 },
+                                // 768px and above: touch disabled, multiple slides
                                 768: {
                                     slidesPerView: 3,
                                     spaceBetween: 20,
+                                    allowTouchMove: false,
                                 },
                                 1024: {
                                     slidesPerView: 4,
                                     spaceBetween: 20,
+                                    allowTouchMove: false,
                                 },
-                                1399: {
-                                    slidesPerView: 5,
+                                1200: {
+                                    slidesPerView: "auto",
                                     spaceBetween: 20,
+                                    allowTouchMove: false,
                                 }
                             }
                         };

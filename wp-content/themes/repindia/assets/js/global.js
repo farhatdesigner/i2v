@@ -556,6 +556,7 @@ jQuery(document).ready(function ($) {
 
     var $items = $(".sticky-custom ul.elementor-icon-list-items.elementor-inline-items li");
     var $menu = $(".sticky-custom"); // menu container
+    var $menuList = $(".sticky-custom ul.elementor-icon-list-items.elementor-inline-items"); // list container for scrolling
 
     // Section selectors (order must match your menu)
     var sections = [
@@ -570,25 +571,114 @@ jQuery(document).ready(function ($) {
     var lastActive = -1;
     var triggerOffset = 220;
     var rafID = null;
+    var isManualClick = false; // Flag to prevent scroll spy from overriding manual clicks
+    
+    // --------------------------------------------
+    // FUNCTION: Scroll active item to left (mobile only)
+    // --------------------------------------------
+    function scrollActiveItemToLeft() {
+        // Only on mobile view (below 768px)
+        if ($(window).width() > 768) {
+            return;
+        }
+        
+        var $activeItem = $items.filter(".active-li");
+        if (!$activeItem.length) {
+            return;
+        }
+        
+        // Find the scrollable container - try ul first, then parent
+        var $scrollContainer = $menuList;
+        
+        // Check if ul is scrollable, if not find scrollable parent
+        var hasScroll = $scrollContainer.length && (
+            $scrollContainer.css('overflow-x') === 'scroll' || 
+            $scrollContainer.css('overflow-x') === 'auto' ||
+            $scrollContainer.css('overflow') === 'scroll' ||
+            $scrollContainer.css('overflow') === 'auto'
+        );
+        
+        if (!hasScroll && $scrollContainer.length) {
+            // Find parent with horizontal scroll
+            $scrollContainer = $activeItem.closest('.sticky-custom');
+            // Check if parent is scrollable
+            var parentOverflow = $scrollContainer.css('overflow-x');
+            if (parentOverflow !== 'scroll' && parentOverflow !== 'auto') {
+                // Try to find any scrollable ancestor
+                $scrollContainer = $activeItem.parentsUntil('.sticky-custom').filter(function() {
+                    var overflow = $(this).css('overflow-x');
+                    return overflow === 'scroll' || overflow === 'auto';
+                }).first();
+                
+                // Final fallback to menu container
+                if (!$scrollContainer.length) {
+                    $scrollContainer = $menu;
+                }
+            }
+        }
+        
+        if ($scrollContainer.length) {
+            // Get item position relative to scrollable container
+            var itemOffset = $activeItem.offset().left;
+            var containerOffset = $scrollContainer.offset().left;
+            var currentScroll = $scrollContainer.scrollLeft();
+            
+            // Calculate position relative to container
+            var relativePosition = itemOffset - containerOffset + currentScroll;
+            
+            // Calculate target scroll to position item at left (with padding)
+            var targetScroll = relativePosition - 20; // 20px padding from left
+            
+            // Ensure target scroll is not negative
+            targetScroll = Math.max(0, targetScroll);
+            
+            // Smooth scroll to position
+            $scrollContainer.stop().animate({
+                scrollLeft: targetScroll
+            }, 300, 'swing');
+        }
+    }
 
     // --------------------------------------------
-    // CLICK = Scroll to SAME trigger position
+    // CLICK = Scroll to SAME trigger position + Set Active Class
     // --------------------------------------------
     $items.each(function (i) {
-        $(this).on("click", function () {
-
+        $(this).on("click", function (e) {
+            e.preventDefault(); // Prevent default anchor behavior if any
+            
             var $target = $(sections[i]);
             if ($target.length) {
-
+                // Set flag to prevent scroll spy from overriding
+                isManualClick = true;
+                
+                // Remove active class from all items
                 $items.removeClass("active-li");
+                
+                // Add active class to clicked item
                 $(this).addClass("active-li");
+                
+                // Update lastActive to prevent scroll spy from overriding
                 lastActive = i;
+                
+                // Scroll active item to left on mobile
+                setTimeout(function() {
+                    scrollActiveItemToLeft();
+                }, 50);
 
+                // Calculate exact scroll position
                 var exactPosition = $target.offset().top - (triggerOffset - 1);
 
+                // Smooth scroll to target section
                 $("html, body").animate({
                     scrollTop: exactPosition
-                }, 300);
+                }, 300, function() {
+                    // Update positions after scroll completes
+                    updatePositions();
+                    // Reset flag after scroll animation completes
+                    setTimeout(function() {
+                        isManualClick = false;
+                    }, 100);
+                });
             }
         });
     });
@@ -619,6 +709,11 @@ jQuery(document).ready(function ($) {
         if (sectionData.length === 0) {
             return;
         }
+        
+        // Don't update active class if user just clicked manually
+        if (isManualClick) {
+            return;
+        }
 
         var scrollTop = $(window).scrollTop() + triggerOffset;
         var activeIndex = 0;
@@ -630,11 +725,16 @@ jQuery(document).ready(function ($) {
             }
         }
 
-        // Update active li
+        // Update active li only if it changed and not during manual click
         if (activeIndex !== lastActive) {
             $items.removeClass("active-li");
             $items.eq(activeIndex).addClass("active-li");
             lastActive = activeIndex;
+            
+            // Scroll active item to left on mobile
+            setTimeout(function() {
+                scrollActiveItemToLeft();
+            }, 50);
         }
 
         // ------------------------------------------
@@ -668,6 +768,12 @@ jQuery(document).ready(function ($) {
     $(window).on("resize", function () {
         updatePositions();
         detectActiveSection();
+        // Re-scroll active item to left on mobile after resize
+        if ($(window).width() <= 768) {
+            setTimeout(function() {
+                scrollActiveItemToLeft();
+            }, 100);
+        }
     });
 
 });
@@ -1042,26 +1148,65 @@ if (window.innerWidth >= 1200) {
         const cardsWrappers = gsap.utils.toArray(".card-wrapper");
         const cards = gsap.utils.toArray(".card_display");
         
+        // Set initial states for all cards immediately to prevent flicker
+        // No transforms - cards stay in their natural state
+        cards.forEach((card, i) => {
+            // Set initial transform state immediately - prevents cards from appearing at wrong position
+            // This ensures cards start in their correct position before ScrollTrigger activates
+            // No scale, no rotation - cards stay in normal position
+            gsap.set(card, {
+                scale: 1, // No scaling - keep cards at natural size
+                rotation: 0, // No rotation - keep cards straight
+                transformOrigin: "top center",
+                y: 0, // Ensure Y position is set from start
+                x: 0, // Ensure X position is set from start
+                force3D: true // Enable hardware acceleration
+            });
+        });
+        
         cardsWrappers.forEach((wrapper, i) => {
             const card = cards[i];
-            let scale = 1,
-                rotation = 0;
-            if (i !== cards.length - 1) {
-                scale = 0.9 + 0.025 * i;
-                rotation = -10;
-            }
+            
+            // Create animation with immediateRender to prevent initial jump
+            // No scale, no rotation - cards remain in natural position
             gsap.to(card, {
-                scale: scale,
+                scale: 1, // No scaling - keep cards at natural size
+                rotation: 0, // No rotation - keep cards straight
                 transformOrigin: "top center",
+                y: 0, // Explicitly set Y to prevent vertical jumping
                 ease: "none",
+                immediateRender: true, // Render immediately to prevent flicker
+                force3D: true, // Hardware acceleration
                 scrollTrigger: {
                     trigger: wrapper,
-                    start: "top " + (100 + 60 * i),
+                    start: "top " + (200 + 70 * i),
                     end: "bottom 550",
                     endTrigger: ".wrapper",
                     scrub: true,
                     pin: wrapper,
                     pinSpacing: false,
+                    anticipatePin: 1, // Smooth pinning transitions
+                    invalidateOnRefresh: true, // Recalculate on refresh
+                    onEnter: () => {
+                        // Ensure card maintains correct position when entering
+                        gsap.set(card, {
+                            y: 0,
+                            x: 0,
+                            scale: 1, // Ensure no scaling
+                            rotation: 0, // Ensure no rotation
+                            force3D: true
+                        });
+                    },
+                    onEnterBack: () => {
+                        // Maintain position when scrolling back
+                        gsap.set(card, {
+                            y: 0,
+                            x: 0,
+                            scale: 1, // Ensure no scaling
+                            rotation: 0, // Ensure no rotation
+                            force3D: true
+                        });
+                    },
                     // markers: {
                     //     indent: 150 * i
                     // },
