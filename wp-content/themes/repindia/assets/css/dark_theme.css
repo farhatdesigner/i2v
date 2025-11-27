@@ -67,7 +67,7 @@ header li.burger-icon .icon-sun,.js-dark header li.burger-icon .icon-moon{ displ
 .js-dark ul.social_media_links>li>a, .js-dark ul.social_media_links>li>a>small {
     color: #AEB6C9;
 }
-.js-dark .elementor-element.e-con-full.withdark.e-flex.e-con.e-child{ background: transparent; }
+.js-dark .elementor-element.e-con-full.withdark.e-flex.e-con.e-child{ background: rgba(255, 206, 147, 0.10); }
 .js-dark #breadcrumbs>span>span>a{
     border: 1px solid rgba(193, 196, 198, 0.10);
     background: #262A30;
@@ -109,3 +109,10 @@ header li.burger-icon .icon-sun,.js-dark header li.burger-icon .icon-moon{ displ
 .js-dark .elementor-element.accor_dark .comparison-wrapper li{ border-color: rgba(193, 196, 198, 0.20)!important;}
 .js-dark .elementor-element.accor_dark .heading_tablemenu.elementor-list-item-link-full_width.elementor-widget.elementor-widget-icon-list{ border-top-left-radius: 8px;border-top-right-radius: 8px; }
 .js-dark .elementor-1581 .elementor-element.elementor-element-4cde0ab > .e-n-tabs > .e-n-tabs-heading > .e-n-tab-title[aria-selected='false']:not( :hover ){ background: transparent; }
+.js-dark .bolt{ border: 1px solid rgba(193, 196, 198, 0.20);background: rgba(255, 206, 147, 0.10); }
+.js-dark .btn-bolt a{ color: #E6BA85; }
+.js-dark .btn-bolt{ border-bottom: 1px solid rgba(255, 255, 255, 0.20); }
+.js-dark .elementor-element .iccc_actions .elementor-widget-icon-box,.js-dark .elementor-element .iccc_actions .e-con-full.e-flex{ border-color: rgba(193, 196, 198, 0.20); }
+.js-dark .cornerbtn .theme-btn, .js-dark .cornerbtn a.theme-btn.grey-btn{ background: #464A4F;border-color: rgba(193, 196, 198, 0.20); }
+.js-dark .cornerbtn a.theme-btn.grey-btn{ color: #D7DBE4; }
+.js-dark .elementor-element.iccc_scale{ background-color: #262A30!important; }
