@@ -10,6 +10,44 @@ if (!defined('ABSPATH'))
 
 class Custom_Tooltip extends Widget_Base
 {
+    /**
+     * Custom sanitization function that allows class attributes
+     */
+    private function sanitize_wysiwyg_content($content) {
+        if (empty($content)) {
+            return '';
+        }
+        
+        // Allow common HTML tags with class attributes
+        $allowed_html = wp_kses_allowed_html('post');
+        
+        // Ensure span tags can have class attribute
+        if (isset($allowed_html['span'])) {
+            $allowed_html['span']['class'] = true;
+        } else {
+            $allowed_html['span'] = array('class' => true);
+        }
+        
+        // Allow other common attributes on various tags
+        $allowed_html['div']['class'] = true;
+        $allowed_html['p']['class'] = true;
+        $allowed_html['strong']['class'] = true;
+        $allowed_html['em']['class'] = true;
+        $allowed_html['b']['class'] = true;
+        $allowed_html['i']['class'] = true;
+        $allowed_html['a']['class'] = true;
+        $allowed_html['h1']['class'] = true;
+        $allowed_html['h2']['class'] = true;
+        $allowed_html['h3']['class'] = true;
+        $allowed_html['h4']['class'] = true;
+        $allowed_html['h5']['class'] = true;
+        $allowed_html['h6']['class'] = true;
+        $allowed_html['ul']['class'] = true;
+        $allowed_html['ol']['class'] = true;
+        $allowed_html['li']['class'] = true;
+        
+        return wp_kses($content, $allowed_html);
+    }
     public function get_name()
     {
         return 'custom_tooltip';
@@ -745,7 +783,7 @@ class Custom_Tooltip extends Widget_Base
         if (!$css_added) {
             $css_added = true;
             echo '<style id="custom-tooltip-css">';
-            echo '.ctw-wrapper { position: relative; display: inline-block;width: 100%;text-align: center;vertical-align: sub; }';
+            echo '.ctw-wrapper { position: relative; display: inline-block;width: 100%;text-align: left;vertical-align: sub; }';
             echo '.ctw-trigger { cursor: pointer; display: inline-flex; align-items: center; }';
             echo '.ctw-title { display: inline-flex; align-items: center; }';
             echo '.ctw-icon { display: inline-flex; align-items: center; justify-content: center; }';
@@ -913,7 +951,7 @@ class Custom_Tooltip extends Widget_Base
                             </span>
                         <?php endif; ?>
                     <?php endif; ?>
-                    <span class="ctw-text"><?php echo wp_kses_post($title_text); ?></span>
+                    <span class="ctw-text"><?php echo $this->sanitize_wysiwyg_content($title_text); ?></span>
                     <?php if ($show_icon && $icon_position === 'right') : ?>
                         <?php if (!empty($settings['icon'])) : ?>
                             <span class="ctw-icon ctw-icon-light">
@@ -937,7 +975,7 @@ class Custom_Tooltip extends Widget_Base
                 </span>
                 <div class="ctw-tooltip ctw-tooltip-<?php echo $position; ?>">
                 <div class="ctw-tooltip-inner">
-                    <?php echo wp_kses_post($tooltip_description); ?>
+                    <?php echo $this->sanitize_wysiwyg_content($tooltip_description); ?>
                     <?php if ($show_learn_more) : ?>
                         <button class="ctw-learn-more-btn"><?php echo $learn_more_text; ?></button>
                     <?php endif; ?>
@@ -1009,7 +1047,7 @@ class Custom_Tooltip extends Widget_Base
                         <?php endif; ?>
                     <?php endif; ?>
                     <div class="ctw-popup-content-text">
-                        <?php echo wp_kses_post($popup_content); ?>
+                        <?php echo $this->sanitize_wysiwyg_content($popup_content); ?>
                     </div>
                 </div>
             </div>
