@@ -152,6 +152,43 @@ class Custom_Tooltip extends Widget_Base
             ]
         );
 
+        // Learn More Button
+        $this->add_control(
+            'show_learn_more',
+            [
+                'label' => esc_html__('Show Learn More Button', 'repindia'),
+                'type' => \Elementor\Controls_Manager::SWITCHER,
+                'label_on' => esc_html__('Yes', 'repindia'),
+                'label_off' => esc_html__('No', 'repindia'),
+                'return_value' => 'yes',
+                'default' => '',
+            ]
+        );
+
+        $this->add_control(
+            'learn_more_text',
+            [
+                'label' => esc_html__('Learn More Button Text', 'repindia'),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'default' => esc_html__('Learn more', 'repindia'),
+                'condition' => [
+                    'show_learn_more' => 'yes',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'popup_content',
+            [
+                'label' => esc_html__('Popup Content', 'repindia'),
+                'type' => \Elementor\Controls_Manager::WYSIWYG,
+                'default' => '',
+                'condition' => [
+                    'show_learn_more' => 'yes',
+                ],
+            ]
+        );
+
         $this->end_controls_section();
 
         // Style Section: Tooltip Box
@@ -431,6 +468,91 @@ class Custom_Tooltip extends Widget_Base
         );
 
         $this->end_controls_section();
+
+        // Style Section: Learn More Button
+        $this->start_controls_section(
+            'section_style_learn_more',
+            [
+                'label' => esc_html__('Learn More Button', 'repindia'),
+                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+                'condition' => [
+                    'show_learn_more' => 'yes',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            \Elementor\Group_Control_Typography::get_type(),
+            [
+                'name' => 'learn_more_typography',
+                'label' => esc_html__('Typography', 'repindia'),
+                'selector' => '{{WRAPPER}} .ctw-learn-more-btn',
+            ]
+        );
+
+        $this->add_control(
+            'learn_more_text_color',
+            [
+                'label' => esc_html__('Text Color', 'repindia'),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'default' => '#ffffff',
+                'selectors' => [
+                    '{{WRAPPER}} .ctw-learn-more-btn' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'learn_more_background_color',
+            [
+                'label' => esc_html__('Background Color', 'repindia'),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'default' => '#0073aa',
+                'selectors' => [
+                    '{{WRAPPER}} .ctw-learn-more-btn' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'learn_more_padding',
+            [
+                'label' => esc_html__('Padding', 'repindia'),
+                'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', 'em', '%'],
+                'default' => [
+                    'top' => '6',
+                    'right' => '14',
+                    'bottom' => '6',
+                    'left' => '14',
+                    'unit' => 'px',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .ctw-learn-more-btn' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'learn_more_border_radius',
+            [
+                'label' => esc_html__('Border Radius', 'repindia'),
+                'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'default' => [
+                    'top' => '6',
+                    'right' => '6',
+                    'bottom' => '6',
+                    'left' => '6',
+                    'unit' => 'px',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .ctw-learn-more-btn' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
     }
 
     // Php Render
@@ -446,6 +568,9 @@ class Custom_Tooltip extends Widget_Base
         $title_align = !empty($settings['title_align']) ? esc_attr($settings['title_align']) : 'left';
         $tooltip_description = !empty($settings['tooltip_description']) ? $settings['tooltip_description'] : '';
         $tooltip_bg_color = !empty($settings['tooltip_background_color']) ? esc_attr($settings['tooltip_background_color']) : '#333333';
+        $show_learn_more = !empty($settings['show_learn_more']) && $settings['show_learn_more'] === 'yes';
+        $learn_more_text = !empty($settings['learn_more_text']) ? esc_html($settings['learn_more_text']) : 'Learn more';
+        $popup_content = !empty($settings['popup_content']) ? $settings['popup_content'] : '';
 
         // Add inline CSS only once per page
         static $css_added = false;
@@ -470,6 +595,10 @@ class Custom_Tooltip extends Widget_Base
             echo '.ctw-tooltip-right .ctw-tooltip-inner::after { content: ""; position: absolute; right: 100%; top: 50%; transform: translateY(-50%); border: 6px solid transparent; border-right-color: var(--ctw-arrow-color, #333333); }';
             echo '.ctw-tooltip-inner p{ margin: 0;}';
             echo '.ctw-tooltip-inner b,.ctw-tooltip-inner strong{ font-weight: bold!important;}';
+            echo '.ctw-popup-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.55); z-index: 99997; }';
+            echo '.ctw-popup-box { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); background: #ffffff; padding: 30px; max-width: 600px; width: 90%; border-radius: 14px; z-index: 99998; }';
+            echo '.ctw-popup-close { position: absolute; top: 12px; right: 12px; cursor: pointer; font-size: 22px; }';
+            echo '.ctw-learn-more-btn { margin-top: 12px; cursor: pointer; display: inline-flex; padding: 6px 14px; border-radius: 6px; }';
             echo '</style>';
         }
 
@@ -513,6 +642,45 @@ class Custom_Tooltip extends Widget_Base
             echo '}';
             echo '}';
             echo 'runWhenJQueryReady();';
+            echo '})();';
+            echo '</script>';
+        }
+
+        // Add inline JS for popup only once per page
+        static $popup_js_added = false;
+        if (!$popup_js_added) {
+            $popup_js_added = true;
+            echo '<script id="custom-tooltip-popup-js">';
+            echo '(function() {';
+            echo 'function initCustomTooltipPopup() {';
+            echo 'if (typeof jQuery === "undefined") return;';
+            echo 'var $ = jQuery;';
+            echo '$(".ctw-learn-more-btn").off("click.ctw-popup").on("click.ctw-popup", function(e) {';
+            echo 'e.preventDefault();';
+            echo 'e.stopPropagation();';
+            echo 'var $btn = $(this);';
+            echo 'var $wrapper = $btn.closest(".ctw-wrapper");';
+            echo 'var $overlay = $wrapper.siblings(".ctw-popup-overlay").first();';
+            echo 'var $popup = $wrapper.siblings(".ctw-popup-box").first();';
+            echo 'if ($overlay.length && $popup.length) {';
+            echo '$overlay.fadeIn(200);';
+            echo '$popup.fadeIn(200);';
+            echo '}';
+            echo '});';
+            echo '$(".ctw-popup-overlay, .ctw-popup-close").off("click.ctw-popup").on("click.ctw-popup", function() {';
+            echo '$(".ctw-popup-overlay").fadeOut(200);';
+            echo '$(".ctw-popup-box").fadeOut(200);';
+            echo '});';
+            echo '}';
+            echo 'function runPopupWhenJQueryReady() {';
+            echo 'if (typeof jQuery !== "undefined") {';
+            echo 'jQuery(document).ready(function() { initCustomTooltipPopup(); });';
+            echo 'jQuery(window).on("elementor/frontend/init", function() { initCustomTooltipPopup(); });';
+            echo '} else {';
+            echo 'setTimeout(runPopupWhenJQueryReady, 100);';
+            echo '}';
+            echo '}';
+            echo 'runPopupWhenJQueryReady();';
             echo '})();';
             echo '</script>';
         }
@@ -561,11 +729,23 @@ class Custom_Tooltip extends Widget_Base
                 <div class="ctw-tooltip ctw-tooltip-<?php echo $position; ?>">
                 <div class="ctw-tooltip-inner">
                     <?php echo wp_kses_post($tooltip_description); ?>
+                    <?php if ($show_learn_more) : ?>
+                        <button class="ctw-learn-more-btn"><?php echo $learn_more_text; ?></button>
+                    <?php endif; ?>
                 </div>
             </div>
             </div>
             
         </div>
+        <?php if ($show_learn_more) : ?>
+            <div class="ctw-popup-overlay" style="display:none;"></div>
+            <div class="ctw-popup-box" style="display:none;">
+                <div class="ctw-popup-close">&times;</div>
+                <div class="ctw-popup-content">
+                    <?php echo wp_kses_post($popup_content); ?>
+                </div>
+            </div>
+        <?php endif; ?>
 
 <?php
     }
