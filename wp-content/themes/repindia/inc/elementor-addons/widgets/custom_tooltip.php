@@ -42,7 +42,7 @@ class Custom_Tooltip extends Widget_Base
             'title_text',
             [
                 'label' => esc_html__('Title Text', 'repindia'),
-                'type' => \Elementor\Controls_Manager::TEXT,
+                'type' => \Elementor\Controls_Manager::WYSIWYG,
                 'default' => esc_html__('Hover me', 'repindia'),
                 'label_block' => true,
             ]
@@ -57,6 +57,19 @@ class Custom_Tooltip extends Widget_Base
                     'value' => 'fas fa-info-circle',
                     'library' => 'fa-solid',
                 ],
+            ]
+        );
+
+        $this->add_control(
+            'icon_dark',
+            [
+                'label' => esc_html__('Icon (Dark Mode)', 'repindia'),
+                'type' => \Elementor\Controls_Manager::ICONS,
+                'default' => [
+                    'value' => 'fas fa-info-circle',
+                    'library' => 'fa-solid',
+                ],
+                'description' => esc_html__('Icon to display when dark mode is active (body has js-dark class)', 'repindia'),
             ]
         );
 
@@ -562,13 +575,14 @@ class Custom_Tooltip extends Widget_Base
         
         $trigger_type = !empty($settings['trigger_type']) ? esc_attr($settings['trigger_type']) : 'hover';
         $position = !empty($settings['position']) ? esc_attr($settings['position']) : 'top';
-        $title_text = !empty($settings['title_text']) ? esc_html($settings['title_text']) : '';
+        $title_text = !empty($settings['title_text']) ? $settings['title_text'] : '';
         $show_icon = !empty($settings['show_icon']) && $settings['show_icon'] === 'yes';
         $icon_position = !empty($settings['icon_position']) ? esc_attr($settings['icon_position']) : 'left';
         $title_align = !empty($settings['title_align']) ? esc_attr($settings['title_align']) : 'left';
         $tooltip_description = !empty($settings['tooltip_description']) ? $settings['tooltip_description'] : '';
         $tooltip_bg_color = !empty($settings['tooltip_background_color']) ? esc_attr($settings['tooltip_background_color']) : '#333333';
         $show_learn_more = !empty($settings['show_learn_more']) && $settings['show_learn_more'] === 'yes';
+        $icon_dark = !empty($settings['icon_dark']) ? $settings['icon_dark'] : (!empty($settings['icon']) ? $settings['icon'] : []);
         $learn_more_text = !empty($settings['learn_more_text']) ? esc_html($settings['learn_more_text']) : 'Learn more';
         $popup_content = !empty($settings['popup_content']) ? $settings['popup_content'] : '';
 
@@ -599,6 +613,16 @@ class Custom_Tooltip extends Widget_Base
             echo '.ctw-popup-box { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); background: #ffffff; padding: 30px; max-width: 600px; width: 90%; border-radius: 14px; z-index: 99998; }';
             echo '.ctw-popup-close { position: absolute; top: 12px; right: 12px; cursor: pointer; font-size: 22px; }';
             echo '.ctw-learn-more-btn { margin-top: 12px; cursor: pointer; display: inline-flex; padding: 6px 14px; border-radius: 6px; }';
+            echo '.ctw-wrapper:not(.ctw-has-learn-more) .ctw-tooltip-inner { background-color: #ffffff !important; color: #333333 !important; }';
+            echo '.ctw-wrapper:not(.ctw-has-learn-more) .ctw-tooltip-inner p { color: #333333 !important; }';
+            echo '.ctw-wrapper:not(.ctw-has-learn-more) .ctw-tooltip-inner * { color: #333333 !important; }';
+            echo '.ctw-wrapper:not(.ctw-has-learn-more) .ctw-tooltip-top .ctw-tooltip-inner::after { border-top-color: #ffffff !important; }';
+            echo '.ctw-wrapper:not(.ctw-has-learn-more) .ctw-tooltip-bottom .ctw-tooltip-inner::after { border-bottom-color: #ffffff !important; }';
+            echo '.ctw-wrapper:not(.ctw-has-learn-more) .ctw-tooltip-left .ctw-tooltip-inner::after { border-left-color: #ffffff !important; }';
+            echo '.ctw-wrapper:not(.ctw-has-learn-more) .ctw-tooltip-right .ctw-tooltip-inner::after { border-right-color: #ffffff !important; }';
+            echo '.ctw-icon-dark { display: none; }';
+            echo 'body.js-dark .ctw-icon-light { display: none; }';
+            echo 'body.js-dark .ctw-icon-dark { display: inline-flex; }';
             echo '</style>';
         }
 
@@ -703,27 +727,49 @@ class Custom_Tooltip extends Widget_Base
         .ctw-tooltip{ min-width: 328px; }
     }
 </style>
-        <div class="ctw-wrapper" data-trigger="<?php echo $trigger_type; ?>" data-position="<?php echo $position; ?>" style="--ctw-arrow-color: <?php echo $tooltip_bg_color; ?>;">
+        <div class="ctw-wrapper <?php echo $show_learn_more ? 'ctw-has-learn-more' : ''; ?>" data-trigger="<?php echo $trigger_type; ?>" data-position="<?php echo $position; ?>" style="--ctw-arrow-color: <?php echo $show_learn_more ? $tooltip_bg_color : '#ffffff'; ?>;">
             <div class="ctw-trigger">
                 <span class="ctw-title ctw-icon-<?php echo $icon_position; ?>" style="text-align: <?php echo $title_align; ?>;">
-                    <?php if ($show_icon && !empty($settings['icon']) && $icon_position === 'left') : ?>
-                        <span class="ctw-icon">
-                            <?php
-                            \Elementor\Icons_Manager::render_icon($settings['icon'], [
-                                'aria-hidden' => 'true',
-                            ]);
-                            ?>
-                        </span>
+                    <?php if ($show_icon && $icon_position === 'left') : ?>
+                        <?php if (!empty($settings['icon'])) : ?>
+                            <span class="ctw-icon ctw-icon-light">
+                                <?php
+                                \Elementor\Icons_Manager::render_icon($settings['icon'], [
+                                    'aria-hidden' => 'true',
+                                ]);
+                                ?>
+                            </span>
+                        <?php endif; ?>
+                        <?php if (!empty($icon_dark)) : ?>
+                            <span class="ctw-icon ctw-icon-dark">
+                                <?php
+                                \Elementor\Icons_Manager::render_icon($icon_dark, [
+                                    'aria-hidden' => 'true',
+                                ]);
+                                ?>
+                            </span>
+                        <?php endif; ?>
                     <?php endif; ?>
-                    <span class="ctw-text"><?php echo $title_text; ?></span>
-                    <?php if ($show_icon && !empty($settings['icon']) && $icon_position === 'right') : ?>
-                        <span class="ctw-icon">
-                            <?php
-                            \Elementor\Icons_Manager::render_icon($settings['icon'], [
-                                'aria-hidden' => 'true',
-                            ]);
-                            ?>
-                        </span>
+                    <span class="ctw-text"><?php echo wp_kses_post($title_text); ?></span>
+                    <?php if ($show_icon && $icon_position === 'right') : ?>
+                        <?php if (!empty($settings['icon'])) : ?>
+                            <span class="ctw-icon ctw-icon-light">
+                                <?php
+                                \Elementor\Icons_Manager::render_icon($settings['icon'], [
+                                    'aria-hidden' => 'true',
+                                ]);
+                                ?>
+                            </span>
+                        <?php endif; ?>
+                        <?php if (!empty($icon_dark)) : ?>
+                            <span class="ctw-icon ctw-icon-dark">
+                                <?php
+                                \Elementor\Icons_Manager::render_icon($icon_dark, [
+                                    'aria-hidden' => 'true',
+                                ]);
+                                ?>
+                            </span>
+                        <?php endif; ?>
                     <?php endif; ?>
                 </span>
                 <div class="ctw-tooltip ctw-tooltip-<?php echo $position; ?>">
