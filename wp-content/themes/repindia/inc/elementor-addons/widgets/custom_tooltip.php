@@ -202,6 +202,68 @@ class Custom_Tooltip extends Widget_Base
             ]
         );
 
+        $this->add_control(
+            'popup_icon_type',
+            [
+                'label' => esc_html__('Popup Icon Type', 'repindia'),
+                'type' => \Elementor\Controls_Manager::SELECT,
+                'default' => 'icon',
+                'options' => [
+                    'icon' => esc_html__('Icon', 'repindia'),
+                    'image' => esc_html__('Image', 'repindia'),
+                ],
+                'condition' => [
+                    'show_learn_more' => 'yes',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'popup_icon',
+            [
+                'label' => esc_html__('Popup Icon', 'repindia'),
+                'type' => \Elementor\Controls_Manager::ICONS,
+                'default' => [
+                    'value' => 'fas fa-info-circle',
+                    'library' => 'fa-solid',
+                ],
+                'condition' => [
+                    'show_learn_more' => 'yes',
+                    'popup_icon_type' => 'icon',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'popup_image',
+            [
+                'label' => esc_html__('Popup Image', 'repindia'),
+                'type' => \Elementor\Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => '',
+                ],
+                'condition' => [
+                    'show_learn_more' => 'yes',
+                    'popup_icon_type' => 'image',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'show_popup_icon',
+            [
+                'label' => esc_html__('Show Popup Icon/Image', 'repindia'),
+                'type' => \Elementor\Controls_Manager::SWITCHER,
+                'label_on' => esc_html__('Yes', 'repindia'),
+                'label_off' => esc_html__('No', 'repindia'),
+                'return_value' => 'yes',
+                'default' => 'yes',
+                'condition' => [
+                    'show_learn_more' => 'yes',
+                ],
+            ]
+        );
+
         $this->end_controls_section();
 
         // Style Section: Tooltip Box
@@ -566,6 +628,94 @@ class Custom_Tooltip extends Widget_Base
         );
 
         $this->end_controls_section();
+
+        // Style Section: Popup Icon/Image
+        $this->start_controls_section(
+            'section_style_popup_icon',
+            [
+                'label' => esc_html__('Popup Icon/Image', 'repindia'),
+                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+                'condition' => [
+                    'show_learn_more' => 'yes',
+                    'show_popup_icon' => 'yes',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'popup_icon_size',
+            [
+                'label' => esc_html__('Icon Size', 'repindia'),
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'size_units' => ['px', 'em'],
+                'range' => [
+                    'px' => [
+                        'min' => 10,
+                        'max' => 200,
+                        'step' => 1,
+                    ],
+                    'em' => [
+                        'min' => 0.5,
+                        'max' => 10,
+                        'step' => 0.1,
+                    ],
+                ],
+                'default' => [
+                    'unit' => 'px',
+                    'size' => 48,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .ctw-popup-icon-wrapper .ctw-popup-icon' => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .ctw-popup-icon-wrapper .ctw-popup-icon img' => 'width: {{SIZE}}{{UNIT}}; height: auto; max-width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'popup_icon_color',
+            [
+                'label' => esc_html__('Icon Color', 'repindia'),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'default' => '#0073aa',
+                'selectors' => [
+                    '{{WRAPPER}} .ctw-popup-icon-wrapper .ctw-popup-icon' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .ctw-popup-icon-wrapper .ctw-popup-icon svg' => 'fill: {{VALUE}};',
+                ],
+                'condition' => [
+                    'popup_icon_type' => 'icon',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'popup_icon_spacing',
+            [
+                'label' => esc_html__('Spacing', 'repindia'),
+                'type' => \Elementor\Controls_Manager::SLIDER,
+                'size_units' => ['px', 'em'],
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 100,
+                        'step' => 1,
+                    ],
+                    'em' => [
+                        'min' => 0,
+                        'max' => 5,
+                        'step' => 0.1,
+                    ],
+                ],
+                'default' => [
+                    'unit' => 'px',
+                    'size' => 20,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .ctw-popup-content-wrapper' => 'gap: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
     }
 
     // Php Render
@@ -585,6 +735,10 @@ class Custom_Tooltip extends Widget_Base
         $icon_dark = !empty($settings['icon_dark']) ? $settings['icon_dark'] : (!empty($settings['icon']) ? $settings['icon'] : []);
         $learn_more_text = !empty($settings['learn_more_text']) ? esc_html($settings['learn_more_text']) : 'Learn more';
         $popup_content = !empty($settings['popup_content']) ? $settings['popup_content'] : '';
+        $show_popup_icon = !empty($settings['show_popup_icon']) && $settings['show_popup_icon'] === 'yes';
+        $popup_icon_type = !empty($settings['popup_icon_type']) ? esc_attr($settings['popup_icon_type']) : 'icon';
+        $popup_icon = !empty($settings['popup_icon']) ? $settings['popup_icon'] : null;
+        $popup_image = !empty($settings['popup_image']) ? $settings['popup_image'] : null;
 
         // Add inline CSS only once per page
         static $css_added = false;
@@ -610,9 +764,14 @@ class Custom_Tooltip extends Widget_Base
             echo '.ctw-tooltip-inner p{ margin: 0;}';
             echo '.ctw-tooltip-inner b,.ctw-tooltip-inner strong{ font-weight: bold!important;}';
             echo '.ctw-popup-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.55); z-index: 99997; }';
-            echo '.ctw-popup-box { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); background: #ffffff; padding: 30px; max-width: 600px; width: 90%; border-radius: 14px; z-index: 99998; }';
+            echo '.ctw-popup-box { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); background: #ffffff; padding: 20px; max-width: 600px; width: 90%; border-radius: 12px; z-index: 99998;box-shadow: 0 0 15px 0 rgba(138, 149, 158, 0.40); }';
             echo '.ctw-popup-close { position: absolute; top: 12px; right: 12px; cursor: pointer; font-size: 22px; }';
             echo '.ctw-learn-more-btn { margin-top: 12px; cursor: pointer; display: inline-flex; padding: 6px 14px; border-radius: 6px; }';
+            echo '.ctw-popup-content-wrapper { display: flex; align-items: flex-start; gap: 20px; }';
+            echo '.ctw-popup-icon-wrapper { flex-shrink: 0; display: flex; align-items: center; justify-content: center; }';
+            echo '.ctw-popup-icon-wrapper .ctw-popup-icon { font-size: 24px; color: #0073aa;max-width: 40px;max-height: 40px; }';
+            echo '.ctw-popup-icon-wrapper .ctw-popup-icon img,.ctw-popup-icon-wrapper .ctw-popup-icon svg { max-width: 40px; height: 40px; display: block; }';
+            echo '.ctw-popup-content-text { flex: 1; }';
             echo '.ctw-wrapper:not(.ctw-has-learn-more) .ctw-tooltip-inner { background-color: #ffffff !important; color: #333333 !important; }';
             echo '.ctw-wrapper:not(.ctw-has-learn-more) .ctw-tooltip-inner p { color: #333333 !important; }';
             echo '.ctw-wrapper:not(.ctw-has-learn-more) .ctw-tooltip-inner * { color: #333333 !important; }';
@@ -710,6 +869,10 @@ class Custom_Tooltip extends Widget_Base
         }
 ?>
 <style>
+    span.ctw-text p{ margin: 0;}
+    .ctw-tooltip-inner{ text-align: left; }
+    .ctw-tooltip-inner p{ font-size: 14px;font-weight: 400;line-height: 20px; }
+    button.ctw-learn-more-btn{ box-shadow: none!important;border: none; }
     @media(max-width: 768px){
         .elementor-element.tooltip_container {
             position: relative;
@@ -787,8 +950,67 @@ class Custom_Tooltip extends Widget_Base
             <div class="ctw-popup-overlay" style="display:none;"></div>
             <div class="ctw-popup-box" style="display:none;">
                 <div class="ctw-popup-close">&times;</div>
-                <div class="ctw-popup-content">
-                    <?php echo wp_kses_post($popup_content); ?>
+                <div class="ctw-popup-content-wrapper">
+                    <?php if ($show_popup_icon) : ?>
+                        <?php 
+                        $has_icon = false;
+                        $has_image = false;
+                        $icon_to_render = null;
+                        
+                        if ($popup_icon_type === 'icon') {
+                            // Check processed variable first
+                            if ($popup_icon && is_array($popup_icon)) {
+                                if (isset($popup_icon['value']) && !empty($popup_icon['value'])) {
+                                    $has_icon = true;
+                                    $icon_to_render = $popup_icon;
+                                } elseif (isset($popup_icon['library']) && !empty($popup_icon['library'])) {
+                                    $has_icon = true;
+                                    $icon_to_render = $popup_icon;
+                                }
+                            }
+                            // Fallback to raw settings
+                            if (!$has_icon && !empty($settings['popup_icon']) && is_array($settings['popup_icon'])) {
+                                if (isset($settings['popup_icon']['value']) && !empty($settings['popup_icon']['value'])) {
+                                    $has_icon = true;
+                                    $icon_to_render = $settings['popup_icon'];
+                                } elseif (isset($settings['popup_icon']['library']) && !empty($settings['popup_icon']['library'])) {
+                                    $has_icon = true;
+                                    $icon_to_render = $settings['popup_icon'];
+                                }
+                            }
+                        }
+                        
+                        if ($popup_icon_type === 'image') {
+                            // Check processed variable first
+                            if ($popup_image && isset($popup_image['url']) && !empty($popup_image['url'])) {
+                                $has_image = true;
+                            }
+                            // Fallback to raw settings
+                            if (!$has_image && !empty($settings['popup_image']) && isset($settings['popup_image']['url']) && !empty($settings['popup_image']['url'])) {
+                                $has_image = true;
+                                $popup_image = $settings['popup_image'];
+                            }
+                        }
+                        ?>
+                        <?php if ($has_icon || $has_image) : ?>
+                            <div class="ctw-popup-icon-wrapper">
+                                <?php if ($has_icon && $icon_to_render) : ?>
+                                    <span class="ctw-popup-icon">
+                                        <?php
+                                        \Elementor\Icons_Manager::render_icon($icon_to_render, [
+                                            'aria-hidden' => 'true',
+                                        ]);
+                                        ?>
+                                    </span>
+                                <?php elseif ($has_image) : ?>
+                                    <img src="<?php echo esc_url($popup_image['url']); ?>" alt="<?php echo esc_attr(!empty($popup_image['alt']) ? $popup_image['alt'] : ''); ?>" class="ctw-popup-icon" />
+                                <?php endif; ?>
+                            </div>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                    <div class="ctw-popup-content-text">
+                        <?php echo wp_kses_post($popup_content); ?>
+                    </div>
                 </div>
             </div>
         <?php endif; ?>
