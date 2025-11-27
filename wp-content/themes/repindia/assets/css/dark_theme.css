@@ -9,6 +9,12 @@
     position: absolute;
     bottom: -36px;
 }
+.video_acc_reverse .vertical_scroller.thene-bg{ flex-direction: row-reverse; }
+.cornerbtn .theme-btn{ width: 100%; }
+.cornerbtn .theme-btn{ color: #0099ED;background: #fff;border: 1px solid #E5E9EC; }
+.cornerbtn a.theme-btn.grey-btn{ color: #5F6F94;background: #fff;border: 1px solid #E5E9EC; }
+.elementor-element.cornerbtn.elementor-widget{ width: 100%;}
+.cornerbtn .theme-btn:hover,.cornerbtn a.theme-btn.grey-btn:hover{ border: 1px solid #0099ED;}
 .darklogo,.icon-sun,.js-dark .lightlogo,.js-dark .icon-moon,
 header li.burger-icon .icon-sun,.js-dark header li.burger-icon .icon-moon{ display: none; }
 .js-dark li,.js-dark li span, .js-dark p,.js-dark.content-inner-icons ul li span,.js-dark .industry_box .elementor-icon-box-title,.js-dark .industry_box .elementor-icon-box-title span{ color: #AEB6C9!important; }
