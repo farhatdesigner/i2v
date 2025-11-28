@@ -533,19 +533,11 @@ const swiper = new Swiper(".testimonialSwiper", {
 });
 
 
-$(window).scroll(function() {
-    if ($(window).scrollTop() >= 1800) {
-        $('.sticky-custom').addClass('fixed-header');
-    } else {
-        $('.sticky-custom').removeClass('fixed-header');
-    }
-});
-
-
-
-jQuery(document).ready(function ($) {
-
-    // Check if sticky-custom or enterprisebanner exists on the page
+// ============================================
+// STICKY MENU WITH SCROLL SPY - CONFIGURABLE
+// ============================================
+// This function handles sticky menu functionality with different configurations per page
+function initStickyMenu(config) {
     var $stickyCustom = $(".sticky-custom");
     var $enterpriseBanner = $("#enterprisebanner");
     
@@ -558,20 +550,41 @@ jQuery(document).ready(function ($) {
     var $menu = $(".sticky-custom"); // menu container
     var $menuList = $(".sticky-custom ul.elementor-icon-list-items.elementor-inline-items"); // list container for scrolling
 
-    // Section selectors (order must match your menu)
-    var sections = [
-        ".live_monitoring",
-        ".system_setup",
-        ".intelligenc_alerts",
-        ".recording_storage",
-        ".security_integration" // 5th section
-    ];
+    // Use provided sections or auto-detect from menu items
+    var sections = config.sections || [];
+    
+    // If sections not provided, try to auto-detect from menu items
+    if (sections.length === 0) {
+        $items.each(function() {
+            var $link = $(this).find('a');
+            if ($link.length) {
+                var href = $link.attr('href');
+                if (href && href.indexOf('#') !== -1) {
+                    var sectionId = href.split('#')[1];
+                    sections.push('.' + sectionId);
+                } else {
+                    // Try data attribute or class
+                    var dataTarget = $link.data('target') || $(this).data('section');
+                    if (dataTarget) {
+                        sections.push('.' + dataTarget);
+                    }
+                }
+            }
+        });
+    }
+
+    // If still no sections found, exit
+    if (sections.length === 0) {
+        return;
+    }
 
     var sectionData = [];
     var lastActive = -1;
-    var triggerOffset = 220;
+    var triggerOffset = config.triggerOffset || 220; // Default 220, can be overridden
+    var scrollThreshold = config.scrollThreshold || 120; // Default 120px, can be overridden
     var rafID = null;
     var isManualClick = false; // Flag to prevent scroll spy from overriding manual clicks
+    var stickyElementInitialTop = null; // Store initial position of sticky element
     
     // --------------------------------------------
     // FUNCTION: Scroll active item to left (mobile only)
@@ -760,14 +773,51 @@ jQuery(document).ready(function ($) {
         });
     }
 
+    // Handle fixed-header class when sticky element reaches top of viewport
+    function handleFixedHeader() {
+        // Store initial position on first call (before element becomes fixed)
+        if (stickyElementInitialTop === null) {
+            var elementOffset = $menu.offset();
+            if (elementOffset) {
+                stickyElementInitialTop = elementOffset.top;
+            } else {
+                return; // Element not found or not visible
+            }
+        }
+        
+        var scrollTop = $(window).scrollTop();
+        var activationThreshold = stickyElementInitialTop - 120; // Activate 120px before element reaches top
+        
+        // Add fixed-header class 120px before the element reaches the top of the viewport
+        if (scrollTop >= activationThreshold) {
+            $menu.addClass('fixed-header');
+        } else {
+            $menu.removeClass('fixed-header');
+        }
+    }
+
     // INIT
     updatePositions();
     detectActiveSection();
+    handleFixedHeader(); // Initial check
 
-    $(window).on("scroll", onScroll);
+    $(window).on("scroll", function() {
+        onScroll();
+        handleFixedHeader(); // Check on every scroll
+    });
     $(window).on("resize", function () {
+        // Temporarily remove fixed-header to get natural position, then recalculate
+        var wasFixed = $menu.hasClass('fixed-header');
+        if (wasFixed) {
+            $menu.removeClass('fixed-header');
+        }
+        
+        // Reset initial position on resize so it recalculates
+        stickyElementInitialTop = null;
         updatePositions();
         detectActiveSection();
+        handleFixedHeader(); // Check on resize (will recalculate and re-apply if needed)
+        
         // Re-scroll active item to left on mobile after resize
         if ($(window).width() <= 768) {
             setTimeout(function() {
@@ -775,7 +825,69 @@ jQuery(document).ready(function ($) {
             }, 100);
         }
     });
+}
 
+// ============================================
+// PAGE CONFIGURATIONS
+// ============================================
+// Define configurations for different pages
+var stickyMenuConfigs = {
+    // Configuration for page with 5 sections (original)
+    default: {
+        sections: [
+            ".live_monitoring",
+            ".system_setup",
+            ".intelligenc_alerts",
+            ".recording_storage",
+            ".security_integration"
+        ],
+        triggerOffset: 220,
+        scrollThreshold: 120
+    },
+    // Configuration for page with 3 sections (enforcement page)
+    enforcement: {
+        sections: [
+            ".enforcement_automation",
+            ".rider_enforcement",
+            ".centralised_control"
+        ],
+        triggerOffset: 220, // Adjust if needed
+        scrollThreshold: 120 // Fixed at 120px from top of viewport
+    }
+};
+
+// ============================================
+// AUTO-DETECT AND INITIALIZE
+// ============================================
+jQuery(document).ready(function ($) {
+    // Function to detect which configuration to use
+    function detectConfiguration() {
+        // Check for enforcement page sections
+        var hasEnforcementSections = $(".enforcement_automation, .rider_enforcement, .centralised_control").length >= 2;
+        
+        if (hasEnforcementSections) {
+            return stickyMenuConfigs.enforcement;
+        }
+        
+        // Check for default page sections
+        var hasDefaultSections = $(".live_monitoring, .system_setup, .intelligenc_alerts, .recording_storage, .security_integration").length >= 3;
+        
+        if (hasDefaultSections) {
+            return stickyMenuConfigs.default;
+        }
+        
+        // If no specific sections found, try to auto-detect from menu
+        // Return a config with empty sections array to trigger auto-detection
+        return {
+            sections: [],
+            triggerOffset: 220,
+            scrollThreshold: 120
+        };
+    }
+    
+    // Initialize with detected configuration
+    var config = detectConfiguration();
+    initStickyMenu(config);
 });
 
 

@@ -388,6 +388,7 @@ header #header-main-menu li .sub-menu>li>a {
     text-align: left;
     font-size: 16px;
     font-weight: normal;
+    
 }
 
 #header-main-menu li>a>.caret {
@@ -3091,6 +3092,10 @@ h3 {
     .purpose-slider-wrapper:before {
         background: none;
     }
+    .accontent .accordion_video {
+    top: 50%;
+    transform: translateY(-50%);
+}
 
 
 
@@ -3132,7 +3137,3 @@ h3 {
 
 }
 
-/* .elementor-element .prd_detail_tooltip {
-        max-width: auto;
-        margin: 0 auto;
-    } */

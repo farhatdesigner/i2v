@@ -601,6 +601,37 @@ p#breadcrumbs svg {
 
 }
 
+.caption_impact>figure>img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.caption_impact figure figcaption {
+    position: absolute;
+    bottom: 32px;
+    left: 0;
+    right: 0;
+    z-index: 2;
+}
+
+.caption_impact figure:before {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    background: linear-gradient(#00000000 0%, #000000c7 100%);
+    z-index: 1;
+    border-radius: 12px;
+}
+
+.js-dark  .bg-blank{
+    background: #262a30 !important;
+}
+
 
 
 @media screen and (min-width: 768px) and (max-width:1179px) {
