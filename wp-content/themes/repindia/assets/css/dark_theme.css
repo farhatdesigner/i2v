@@ -21,7 +21,6 @@ header li.burger-icon .icon-sun,.js-dark header li.burger-icon .icon-moon{ displ
 .elementor-element.group_tooltip .e-con-inner,.elementor-element.group_tooltip .e-con-inner .elementor-widget,.elementor-element.group_tooltip .e-con-inner .elementor-widget p { display: inline-block;position: relative;width: auto; }
 .vids_inv .cornerbtn .theme-btn { width: auto;display: inline-block;max-width: 100%; }
 .vids_inv .btn-colum{ flex-direction: row;justify-content: flex-end; }
-a.theme-btn.bg-tran_lightcolor.whitbtn_color { color: #AEB6C9; }
 
 
 .js-dark li,.js-dark li span, .js-dark p,.js-dark.content-inner-icons ul li span,.js-dark .industry_box .elementor-icon-box-title,.js-dark .industry_box .elementor-icon-box-title span{ color: #AEB6C9!important; }
