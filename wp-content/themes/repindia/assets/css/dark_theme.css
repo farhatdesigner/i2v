@@ -18,6 +18,10 @@
 .darklogo,.icon-sun,.js-dark .lightlogo,.js-dark .icon-moon,
 header li.burger-icon .icon-sun,.js-dark header li.burger-icon .icon-moon{ display: none; }
 .whitebg .bg-tran_lightcolor{ border-bottom: 1px solid #E6EBF2;color: #0099ED; }
+.elementor-element.group_tooltip .e-con-inner,.elementor-element.group_tooltip .e-con-inner .elementor-widget,.elementor-element.group_tooltip .e-con-inner .elementor-widget p { display: inline-block;position: relative;width: auto; }
+.vids_inv .cornerbtn .theme-btn { width: auto;display: inline-block;max-width: 100%; }
+.vids_inv .btn-colum{ flex-direction: row;justify-content: flex-end; }
+
 
 .js-dark li,.js-dark li span, .js-dark p,.js-dark.content-inner-icons ul li span,.js-dark .industry_box .elementor-icon-box-title,.js-dark .industry_box .elementor-icon-box-title span{ color: #AEB6C9!important; }
 .js-dark .darklogo,.js-dark .icon-sun,.js-dark header li.burger-icon .icon-sun{ display: block; }
@@ -116,3 +120,5 @@ header li.burger-icon .icon-sun,.js-dark header li.burger-icon .icon-moon{ displ
 .js-dark .cornerbtn .theme-btn, .js-dark .cornerbtn a.theme-btn.grey-btn{ background: #464A4F;border-color: rgba(193, 196, 198, 0.20); }
 .js-dark .cornerbtn a.theme-btn.grey-btn{ color: #D7DBE4; }
 .js-dark .elementor-element.iccc_scale{ background-color: #262A30!important; }
+.js-dark .elementor-element.vidplateform{ border-color: rgba(193, 196, 198, 0.20)!important; }
+.js-dark .elementor-element.cms_platform .elementor-widget-icon-box{ background-color: #262A30; }

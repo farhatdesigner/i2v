@@ -788,12 +788,12 @@ class Custom_Tooltip extends Widget_Base
             echo '.ctw-title { display: inline-flex; align-items: center; }';
             echo '.ctw-icon { display: inline-flex; align-items: center; justify-content: center; }';
             echo '.ctw-text { display: inline-block; }';
-            echo '.ctw-tooltip { position: absolute; opacity: 0; visibility: hidden; transition: opacity 0.25s; z-index: 9999; pointer-events: none;min-width: 400px; }';
+            echo '.ctw-tooltip { position: absolute; opacity: 0; visibility: hidden; transition: opacity 0.25s; z-index: 9999; pointer-events: none;min-width: 250px;width: 100%; }';
             echo '.ctw-tooltip.show { opacity: 1; visibility: visible; pointer-events: auto; }';
             echo '.ctw-tooltip-inner { position: relative; word-wrap: break-word; }';
             echo '.ctw-tooltip-top { bottom: 100%; left: 50%; transform: translateX(-50%); margin-bottom: 8px; }';
             echo '.ctw-tooltip-top .ctw-tooltip-inner::after { content: ""; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--ctw-arrow-color, #333333); }';
-            echo '.ctw-tooltip-bottom { top: 100%; left: 50%; transform: translateX(-50%); margin-top: 8px; }';
+            echo '.ctw-tooltip-bottom { top: 100%; left: 50%; transform: translateX(-50%); margin-top: 0px; }';
             echo '.ctw-tooltip-bottom .ctw-tooltip-inner::after { content: ""; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-bottom-color: var(--ctw-arrow-color, #333333); }';
             echo '.ctw-tooltip-left { right: 100%; top: 50%; transform: translateY(-50%); margin-right: 8px; }';
             echo '.ctw-tooltip-left .ctw-tooltip-inner::after { content: ""; position: absolute; left: 100%; top: 50%; transform: translateY(-50%); border: 6px solid transparent; border-left-color: var(--ctw-arrow-color, #333333); }';
@@ -910,7 +910,7 @@ class Custom_Tooltip extends Widget_Base
     span.ctw-text p{ margin: 0;}
     .ctw-tooltip-inner{ text-align: left; }
     .ctw-tooltip-inner p{ font-size: 14px;font-weight: 400;line-height: 20px; }
-    button.ctw-learn-more-btn{ box-shadow: none!important;border: none; }
+    button.ctw-learn-more-btn{ box-shadow: none!important;border: none;border-bottom: 1px solid rgba(255, 255, 255, 0.20); }
     @media(max-width: 768px){
         .elementor-element.tooltip_container {
             position: relative;
