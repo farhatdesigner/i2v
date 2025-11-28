@@ -592,7 +592,10 @@ p#breadcrumbs svg {
     -webkit-backface-visibility: hidden;
 }
 
-.purpose-slider-wrapper{position: relative;}
+.purpose-slider-wrapper {
+    position: relative;
+}
+
 .purpose-swiper {
     overflow: visible;
 
@@ -611,6 +614,12 @@ p#breadcrumbs svg {
     .modal-dialog {
         max-width: 1200px;
 
+    }
+}
+
+@media(min-width: 768px) {
+    .accordion_set .accordion_video {
+        display: none;
     }
 }
 
@@ -673,7 +682,6 @@ p#breadcrumbs svg {
 
     .photo {
         position: static;
-        margin-bottom: 50px;
     }
 
     .gallery {
@@ -731,12 +739,12 @@ html {
     }
 
     .accordion_set>.select_div {
-        padding-left: 1rem;
+        padding-left: 4rem;
         text-align: left;
     }
 
     .accontent {
-        padding-left: 1rem;
+        padding-left: 0rem;
     }
 
     .logo_box ul {
@@ -755,6 +763,30 @@ html {
     .padd-accordion_video {
         display: none;
     }
+
+    .accordion_video {
+        width: 100%;
+        position: static;
+        padding: 40px 0;
+        border-radius: var(--M, 12px);
+        background: var(--Golbal-backgrounds-global-bg-3, #0D1117);
+        transform: none !important;
+        margin-bottom: 1rem;
+    }
+
+    /* Make videos inside accordion_sets visible on mobile */
+    .accordion_sets .accordion_video {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    .accordion_sets .btn-sec_gap {
+        padding-left: 4rem;
+    }
+
+
+
 
 
 }

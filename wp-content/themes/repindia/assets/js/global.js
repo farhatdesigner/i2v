@@ -780,219 +780,271 @@ jQuery(document).ready(function ($) {
 
 
 
-
-
-
-
-
-
-
-
 jQuery(document).ready(function() {
     // Check if accordion exists on the page
-    if (jQuery('.accordion_set').length === 0) {
+    if (jQuery('.accordion_wrap').length === 0) {
         return;
     }
 
-    // open first section by default
-    let first = jQuery('.accordion_set').first();
-    first.addClass('acactive');
-    first.find('.select_div').attr("aria-expanded", "true");
-    jQuery(".accontent").first().slideDown(200);
-    
-    // Initialize progress fill for first accordion
-    setTimeout(function() {
-        startProgressFill();
-    }, 200);
-
-    // Initialize videos - show first video, hide others using opacity
-    jQuery('.accordion_video').each(function(index) {
-        if (index === 0) {
-            jQuery(this).addClass('active');
-        } else {
-            jQuery(this).removeClass('active');
-        }
-    });
-
-    // setup variables
-    let autoIndex = 0;
-    let total = jQuery(".accordion_set").length;
-    let autoInterval = 4000; // 4 seconds
-    let timer;
-    let isPaused = false; // Track if auto-slide is paused
-    let resumeTimeout = null; // Store resume timeout so we can cancel it
-    let progressInterval = null; // Track progress animation interval
+    // Global registry to store accordion instances for pause/resume
+    var accordionInstances = [];
 
     // Helper function to check if any modal is currently open
     function isModalOpen() {
         return jQuery('.modal.show, .modal.in').length > 0 || jQuery('body').hasClass('modal-open');
     }
 
-    // function to switch video by index using opacity transitions
-    function switchVideo(index) {
-        jQuery('.accordion_video').each(function(videoIndex) {
-            if (videoIndex === index) {
+    // Initialize each accordion wrapper independently
+    jQuery('.accordion_wrap').each(function() {
+        var $accordionWrap = jQuery(this);
+        var $accordionSets = $accordionWrap.find('.accordion_set');
+        var $videoPanel = $accordionWrap.find('.padd-accordion_video');
+        var $accordionVideos = $videoPanel.find('.accordion_video');
+        
+        // Skip if no accordion sets found
+        if ($accordionSets.length === 0) {
+            return;
+        }
+
+        // Open first section by default
+        var $first = $accordionSets.first();
+        $first.addClass('acactive');
+        $first.find('.select_div').attr("aria-expanded", "true");
+        $first.find(".accontent").slideDown(200);
+        
+        // Initialize videos - show first video, hide others using opacity
+        // Only target right-side panel videos (desktop view)
+        $accordionVideos.each(function(index) {
+            if (index === 0) {
                 jQuery(this).addClass('active');
             } else {
                 jQuery(this).removeClass('active');
             }
         });
-    }
 
-    // Function to start progress fill animation
-    function startProgressFill() {
-        // Clear any existing progress interval
-        if (progressInterval) {
-            clearInterval(progressInterval);
-            progressInterval = null;
-        }
+        // Setup variables for this accordion instance
+        var autoIndex = 0;
+        var total = $accordionSets.length;
+        var autoInterval = 9000; // 9 seconds
+        var timer = null;
+        var isPaused = false;
+        var resumeTimeout = null;
+        var progressInterval = null;
 
-        // Reset progress on all accordion items
-        jQuery(".accordion_set").each(function() {
-            this.style.setProperty('--progress', '0%');
-        });
-
-        // Start progress for active accordion item
-        const activeAccordion = jQuery(".accordion_set.acactive")[0];
-        if (activeAccordion) {
-            let timeLeft = autoInterval / 1000; // Convert to seconds
-            const updateInterval = 50; // Update every 50ms for smooth animation
-
-            progressInterval = setInterval(function() {
-                if (isPaused || isModalOpen()) {
-                    return;
+        // Function to switch video by index using opacity transitions
+        // Only target right-side panel videos (desktop view) within this accordion
+        function switchVideo(index) {
+            $accordionVideos.each(function(videoIndex) {
+                if (videoIndex === index) {
+                    jQuery(this).addClass('active');
+                } else {
+                    jQuery(this).removeClass('active');
                 }
-                
-                timeLeft -= (updateInterval / 1000);
-                const progress = ((autoInterval / 1000 - timeLeft) / (autoInterval / 1000)) * 100;
-                
-                // Update progress CSS variable
-                activeAccordion.style.setProperty('--progress', progress + '%');
-
-                if (timeLeft <= 0) {
-                    clearInterval(progressInterval);
-                    progressInterval = null;
-                }
-            }, updateInterval);
+            });
         }
-    }
 
-    // function to open accordion by index
-    function openAccordion(index) {
-        let target = jQuery(".accordion_set").eq(index);
-        jQuery(".accordion_set").removeClass("acactive");
-        jQuery(".accordion_set > .select_div").attr("aria-expanded", "false");
-        jQuery(".accontent").slideUp(200);
-
-        target.addClass("acactive");
-        target.find(".select_div").attr("aria-expanded", "true");
-        target.find(".accontent").slideDown(200);
-
-        // Switch to corresponding video
-        switchVideo(index);
-        
-        // Start progress fill animation
-        startProgressFill();
-    }
-
-    // auto slide function
-    function startAutoSlide() {
-        if (isPaused || isModalOpen()) {
-            return; // Don't start if paused or modal is open
-        }
-        if (timer) {
-            clearInterval(timer);
-        }
-        timer = setInterval(function() {
-            if (!isPaused && !isModalOpen()) {
-                autoIndex = (autoIndex + 1) % total;
-                openAccordion(autoIndex);
-            }
-        }, autoInterval);
-    }
-
-    // pause auto slide function
-    function pauseAutoSlide() {
-        isPaused = true;
-        if (timer) {
-            clearInterval(timer);
-            timer = null;
-        }
-        // Pause progress animation
-        if (progressInterval) {
-            clearInterval(progressInterval);
-            progressInterval = null;
-        }
-        // Cancel any pending resume timeout
-        if (resumeTimeout) {
-            clearTimeout(resumeTimeout);
-            resumeTimeout = null;
-        }
-    }
-
-    // resume auto slide function
-    function resumeAutoSlide() {
-        // Don't resume if modal is open
-        if (isModalOpen()) {
-            return;
-        }
-        isPaused = false;
-        if (!timer) {
-            startAutoSlide();
-        }
-        // Restart progress fill animation
-        startProgressFill();
-    }
-
-    // start auto slide initially
-    startAutoSlide();
-
-    // on click — manual control + reset timer
-    jQuery(".accordion_set > .select_div").click(function() {
-        pauseAutoSlide(); // pause auto slide
-
-        let parent = jQuery(this).parents('.accordion_set');
-        autoIndex = jQuery(".accordion_set").index(parent); // update index
-
-        if (parent.hasClass("acactive")) {
-            parent.removeClass("acactive");
-            jQuery(this).attr("aria-expanded", "false");
-            parent.find(".accontent").slideUp(200);
-            // Stop progress animation when closing
+        // Function to start progress fill animation
+        function startProgressFill() {
+            // Clear any existing progress interval
             if (progressInterval) {
                 clearInterval(progressInterval);
                 progressInterval = null;
             }
-            parent[0].style.setProperty('--progress', '0%');
-        } else {
-            openAccordion(autoIndex);
-        }
 
-        // Cancel any existing resume timeout
-        if (resumeTimeout) {
-            clearTimeout(resumeTimeout);
-        }
+            // Reset progress on all accordion items in this accordion
+            $accordionSets.each(function() {
+                this.style.setProperty('--progress', '0%');
+            });
 
-        // restart auto slide after short delay, but only if modal is not open
-        resumeTimeout = setTimeout(function() {
-            resumeTimeout = null;
-            if (!isModalOpen()) {
-                resumeAutoSlide();
+            // Start progress for active accordion item
+            const activeAccordion = $accordionSets.filter('.acactive')[0];
+            if (activeAccordion) {
+                var timeLeft = autoInterval / 1000; // Convert to seconds
+                const updateInterval = 50; // Update every 50ms for smooth animation
+
+                progressInterval = setInterval(function() {
+                    if (isPaused || isModalOpen()) {
+                        return;
+                    }
+                    
+                    timeLeft -= (updateInterval / 1000);
+                    const progress = ((autoInterval / 1000 - timeLeft) / (autoInterval / 1000)) * 100;
+                    
+                    // Update progress CSS variable
+                    activeAccordion.style.setProperty('--progress', progress + '%');
+
+                    if (timeLeft <= 0) {
+                        clearInterval(progressInterval);
+                        progressInterval = null;
+                    }
+                }, updateInterval);
             }
-        }, 1000);
+        }
+
+        // Function to open accordion by index (scoped to this accordion)
+        function openAccordion(index) {
+            var $target = $accordionSets.eq(index);
+            $accordionSets.removeClass("acactive");
+            $accordionSets.find('.select_div').attr("aria-expanded", "false");
+            $accordionSets.find(".accontent").slideUp(200);
+
+            $target.addClass("acactive");
+            $target.find(".select_div").attr("aria-expanded", "true");
+            $target.find(".accontent").slideDown(200);
+
+            // Switch to corresponding video
+            switchVideo(index);
+            
+            // Start progress fill animation
+            startProgressFill();
+        }
+
+        // Auto slide function
+        function startAutoSlide() {
+            if (isPaused || isModalOpen()) {
+                return; // Don't start if paused or modal is open
+            }
+            if (timer) {
+                clearInterval(timer);
+            }
+            timer = setInterval(function() {
+                if (!isPaused && !isModalOpen()) {
+                    autoIndex = (autoIndex + 1) % total;
+                    openAccordion(autoIndex);
+                }
+            }, autoInterval);
+        }
+
+        // Pause auto slide function
+        function pauseAutoSlide() {
+            isPaused = true;
+            if (timer) {
+                clearInterval(timer);
+                timer = null;
+            }
+            // Pause progress animation
+            if (progressInterval) {
+                clearInterval(progressInterval);
+                progressInterval = null;
+            }
+            // Cancel any pending resume timeout
+            if (resumeTimeout) {
+                clearTimeout(resumeTimeout);
+                resumeTimeout = null;
+            }
+        }
+
+        // Resume auto slide function
+        function resumeAutoSlide() {
+            // Don't resume if modal is open
+            if (isModalOpen()) {
+                return;
+            }
+            isPaused = false;
+            if (!timer) {
+                startAutoSlide();
+            }
+            // Restart progress fill animation
+            startProgressFill();
+        }
+
+        // Initialize progress fill for first accordion
+        setTimeout(function() {
+            startProgressFill();
+        }, 200);
+
+        // Start auto slide initially
+        startAutoSlide();
+
+        // On click — manual control + reset timer (scoped to this accordion)
+        $accordionSets.find('.select_div').click(function() {
+            pauseAutoSlide(); // pause auto slide
+
+            var $parent = jQuery(this).parents('.accordion_set');
+            autoIndex = $accordionSets.index($parent); // update index (scoped to this accordion)
+
+            if ($parent.hasClass("acactive")) {
+                $parent.removeClass("acactive");
+                jQuery(this).attr("aria-expanded", "false");
+                $parent.find(".accontent").slideUp(200);
+                // Stop progress animation when closing
+                if (progressInterval) {
+                    clearInterval(progressInterval);
+                    progressInterval = null;
+                }
+                $parent[0].style.setProperty('--progress', '0%');
+            } else {
+                openAccordion(autoIndex);
+            }
+
+            // Cancel any existing resume timeout
+            if (resumeTimeout) {
+                clearTimeout(resumeTimeout);
+            }
+
+            // Restart auto slide after short delay, but only if modal is not open
+            resumeTimeout = setTimeout(function() {
+                resumeTimeout = null;
+                if (!isModalOpen()) {
+                    resumeAutoSlide();
+                }
+            }, 1000);
+        });
+
+        // Register this accordion instance for global pause/resume
+        accordionInstances.push({
+            pause: pauseAutoSlide,
+            resume: resumeAutoSlide
+        });
     });
 
-    // Pause accordion when modal opens
+    // Pause all accordions when modal opens
     jQuery(document).on('show.bs.modal', '.modal', function() {
-        pauseAutoSlide();
+        // Pause all accordion instances
+        accordionInstances.forEach(function(instance) {
+            instance.pause();
+        });
+        
+        // Load video with autoplay when modal opens
+        var modal = jQuery(this);
+        var iframe = modal.find('iframe');
+        if (iframe.length) {
+            // Get the base URL from data-src attribute
+            var baseSrc = iframe.attr('data-src') || iframe.data('original-src');
+            if (baseSrc) {
+                // Add autoplay parameter to the URL
+                var separator = baseSrc.indexOf('?') !== -1 ? '&' : '?';
+                var videoSrc = baseSrc + separator + 'autoplay=1';
+                iframe.attr('src', videoSrc);
+            }
+        }
     });
 
-    // Resume accordion when modal closes
+    // Resume all accordions when modal closes and stop video
     jQuery(document).on('hidden.bs.modal', '.modal', function() {
-        // Small delay to ensure modal is fully closed
+        // Stop video by removing src attribute
+        var modal = jQuery(this);
+        var iframe = modal.find('iframe');
+        if (iframe.length) {
+            // Store the base URL (without autoplay) if not already stored
+            if (!iframe.data('original-src')) {
+                var currentSrc = iframe.attr('src');
+                if (currentSrc) {
+                    // Remove autoplay parameter from URL
+                    var baseSrc = currentSrc.replace(/[?&]autoplay=1(&|$)/, '').replace(/[?&]$/, '');
+                    iframe.data('original-src', baseSrc);
+                }
+            }
+            // Remove src to stop video playback
+            iframe.attr('src', '');
+        }
+        
+        // Small delay to ensure modal is fully closed, then resume all accordions
         setTimeout(function() {
             if (!isModalOpen()) {
-                resumeAutoSlide();
+                accordionInstances.forEach(function(instance) {
+                    instance.resume();
+                });
             }
         }, 100);
     });
