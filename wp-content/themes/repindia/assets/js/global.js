@@ -751,13 +751,17 @@ function initStickyMenu(config) {
         }
 
         // ------------------------------------------
-        // HIDE MENU when 5th section scrolls above
+        // HIDE MENU when last section scrolls above
         // ------------------------------------------
         var lastSection = sectionData[sectionData.length - 1];
 
         // Safety check: ensure lastSection exists before accessing properties
-        if (lastSection && scrollTop > lastSection.bottom) {
-            // User scrolled PAST the last section
+        // IMPORTANT: Use actual scroll position (not scrollTop which includes triggerOffset)
+        // to check if we've scrolled past the last section
+        var actualScrollPosition = $(window).scrollTop();
+        
+        if (lastSection && actualScrollPosition > lastSection.bottom) {
+            // User scrolled PAST the last section (section bottom is above viewport)
             $menu.addClass("menu-hidden");
         } else {
             // User scrolls back up → show menu again

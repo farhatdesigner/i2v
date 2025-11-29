@@ -632,6 +632,18 @@ p#breadcrumbs svg {
     background: #262a30 !important;
 }
 
+.js-dark .elementor-element.enforcement_automation .view-bg {
+    background: #262A30;
+    border-color: #262A30;
+}
+
+
+
+.banner_content_txt {
+    position: absolute!important;
+    bottom: 80px;
+}
+
 
 
 @media screen and (min-width: 768px) and (max-width:1179px) {
@@ -816,7 +828,11 @@ html {
         padding-left: 4rem;
     }
 
-
+   .banner_content_txt{
+    background: #262a30;
+    padding: 20px 20px;
+    position: static !important;
+}
 
 
 
