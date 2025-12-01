@@ -224,57 +224,196 @@ class Analytic_Sidebar_Nav extends Widget_Base
         
         body.js-dark .icon img.icon-light { display: none; }
         body.js-dark .icon img.icon-dark { display: inline-block; }
+        .elementor-element.video_analytic_sidebar { max-height: 766px;overflow-y: scroll; }
+        .elementor-element.right_content_section{ max-height: 1914px;overflow-y: scroll; }
         </style>
 
         <script>
         (function(){
-
-            // Smooth Scroll on Click
-            document.querySelectorAll(".analytic-nav li").forEach(item => {
-                item.addEventListener("click", () => {
-                    const target = document.querySelector(item.dataset.target);
-                    if (target) {
-                        window.scrollTo({
-                            top: target.offsetTop - 80,
-                            behavior: "smooth"
-                        });
-                    }
-                });
-            });
-
-            // Search Filter
-            const searchInput = document.querySelector(".analytic-search");
-            searchInput.addEventListener("input", function(){
-                const q = this.value.toLowerCase();
-                document.querySelectorAll(".analytic-nav li").forEach(li => {
-                    li.style.display = li.innerText.toLowerCase().includes(q) ? "flex" : "none";
-                });
-            });
-
-            // Highlight Active Section on Scroll
-            const navItems = document.querySelectorAll(".analytic-nav li");
-
-            const sections = Array.from(navItems).map(item => {
-                const id = item.dataset.target;
-                return document.querySelector(id);
-            });
-
-            window.addEventListener("scroll", () => {
-                let scrollPos = window.pageYOffset + 120;
-
-                sections.forEach((sec, index) => {
-                    if (!sec) return;
-                    if (scrollPos >= sec.offsetTop && scrollPos < sec.offsetTop + sec.offsetHeight) {
-
+            'use strict';
+            
+            // Wait for DOM to be ready
+            function init() {
+                const rightContentSection = document.querySelector('.right_content_section');
+                const navItems = document.querySelectorAll(".analytic-nav li");
+                const searchInput = document.querySelector(".analytic-search");
+                
+                if (!rightContentSection || navItems.length === 0) {
+                    // Retry if elements not found
+                    setTimeout(init, 100);
+                    return;
+                }
+                
+                // Get all target sections
+                const sections = Array.from(navItems).map(item => {
+                    const id = item.dataset.target;
+                    return id ? document.querySelector(id) : null;
+                }).filter(sec => sec !== null);
+                
+                if (sections.length === 0) return;
+                
+                // Track currently active item
+                let currentActiveIndex = -1;
+                let isUserScrolling = false;
+                let scrollTimeout;
+                
+                // Set first item as active by default
+                if (navItems.length > 0) {
+                    navItems[0].classList.add("active");
+                    currentActiveIndex = 0;
+                }
+                
+                // Smooth Scroll on Click - scroll within right_content_section
+                navItems.forEach((item, index) => {
+                    item.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        // If clicking the same item, do nothing
+                        if (currentActiveIndex === index) {
+                            return;
+                        }
+                        
+                        const target = document.querySelector(item.dataset.target);
+                        if (!target || !rightContentSection) return;
+                        
+                        // Set user scrolling flag
+                        isUserScrolling = true;
+                        
+                        // Update active class immediately
                         navItems.forEach(n => n.classList.remove("active"));
-                        navItems[index].classList.add("active");
-
-                        navItems[index].scrollIntoView({
-                            block: "nearest",
+                        item.classList.add("active");
+                        currentActiveIndex = index;
+                        
+                        // Calculate relative position of target within right_content_section
+                        // Use getBoundingClientRect to get accurate positions
+                        const containerRect = rightContentSection.getBoundingClientRect();
+                        const targetRect = target.getBoundingClientRect();
+                        
+                        // Calculate the scroll position needed to bring target to top of container
+                        // Current visual offset + current scroll position = absolute offset
+                        const currentScroll = rightContentSection.scrollTop;
+                        const visualOffset = targetRect.top - containerRect.top;
+                        const absoluteOffset = currentScroll + visualOffset;
+                        
+                        // Scroll within the right_content_section container
+                        rightContentSection.scrollTo({
+                            top: absoluteOffset - 20, // Small offset from top of container
                             behavior: "smooth"
                         });
-                    }
+                        
+                        // Reset user scrolling flag after animation
+                        clearTimeout(scrollTimeout);
+                        scrollTimeout = setTimeout(() => {
+                            isUserScrolling = false;
+                        }, 1000);
+                    });
                 });
+                
+                // Search Filter
+                if (searchInput) {
+                    searchInput.addEventListener("input", function(){
+                        const q = this.value.toLowerCase();
+                        navItems.forEach(li => {
+                            const text = li.textContent || li.innerText || '';
+                            li.style.display = text.toLowerCase().includes(q) ? "flex" : "none";
+                        });
+                    });
+                }
+                
+                // Highlight Active Section based on scroll position in right_content_section
+                function updateActiveSection() {
+                    if (isUserScrolling) return;
+                    
+                    const scrollTop = rightContentSection.scrollTop;
+                    const containerHeight = rightContentSection.clientHeight;
+                    const viewportTop = scrollTop;
+                    const viewportBottom = scrollTop + containerHeight;
+                    
+                    let activeIndex = -1;
+                    let minDistance = Infinity;
+                    
+                    // Find which section is most visible in the viewport
+                    sections.forEach((sec, index) => {
+                        if (!sec) return;
+                        
+                        const secOffsetTop = sec.offsetTop;
+                        const secOffsetBottom = secOffsetTop + sec.offsetHeight;
+                        
+                        // Check if section is visible in viewport
+                        if (secOffsetTop <= viewportBottom && secOffsetBottom >= viewportTop) {
+                            // Section is visible, calculate how much is visible
+                            const visibleTop = Math.max(secOffsetTop, viewportTop);
+                            const visibleBottom = Math.min(secOffsetBottom, viewportBottom);
+                            const visibleHeight = visibleBottom - visibleTop;
+                            const distance = Math.abs(viewportTop - secOffsetTop);
+                            
+                            // Prefer section that starts closest to viewport top
+                            if (visibleHeight > 0 && distance < minDistance) {
+                                minDistance = distance;
+                                activeIndex = index;
+                            }
+                        }
+                    });
+                    
+                    // If no section is clearly visible, find the closest one
+                    if (activeIndex === -1 && sections.length > 0) {
+                        sections.forEach((sec, index) => {
+                            if (!sec) return;
+                            const secOffsetTop = sec.offsetTop;
+                            const distance = Math.abs(scrollTop - secOffsetTop);
+                            
+                            if (distance < minDistance) {
+                                minDistance = distance;
+                                activeIndex = index;
+                            }
+                        });
+                    }
+                    
+                    // Update active class
+                    if (activeIndex !== -1 && activeIndex !== currentActiveIndex) {
+                        navItems.forEach(n => n.classList.remove("active"));
+                        if (navItems[activeIndex]) {
+                            navItems[activeIndex].classList.add("active");
+                            currentActiveIndex = activeIndex;
+                            
+                            // Scroll sidebar item into view if needed
+                            const sidebar = document.querySelector('.analytic-sidebar');
+                            if (sidebar) {
+                                const itemRect = navItems[activeIndex].getBoundingClientRect();
+                                const sidebarRect = sidebar.getBoundingClientRect();
+                                if (itemRect.bottom > sidebarRect.bottom || itemRect.top < sidebarRect.top) {
+                                    navItems[activeIndex].scrollIntoView({
+                                        block: "nearest",
+                                        behavior: "smooth"
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                // Listen to scroll events on right_content_section container
+                rightContentSection.addEventListener("scroll", () => {
+                    updateActiveSection();
+                }, { passive: true });
+                
+                // Initial call to set active section
+                setTimeout(() => {
+                    updateActiveSection();
+                }, 200);
+            }
+            
+            // Initialize when DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+            
+            // Also try on window load for Elementor
+            window.addEventListener('load', () => {
+                setTimeout(init, 300);
             });
 
         })();
