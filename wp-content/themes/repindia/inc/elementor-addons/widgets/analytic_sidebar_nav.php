@@ -257,6 +257,24 @@ class Analytic_Sidebar_Nav extends Widget_Base
                 let isUserScrolling = false;
                 let scrollTimeout;
                 
+                // Helper function to calculate offsetTop relative to container
+                // Uses getBoundingClientRect for accurate calculation in all cases
+                function getOffsetTop(element, container) {
+                    // Get current scroll position
+                    const currentScroll = container.scrollTop;
+                    
+                    // Get bounding rectangles
+                    const containerRect = container.getBoundingClientRect();
+                    const elementRect = element.getBoundingClientRect();
+                    
+                    // Calculate the visual offset (difference in viewport positions)
+                    const visualOffset = elementRect.top - containerRect.top;
+                    
+                    // Absolute offset = current scroll + visual offset
+                    // This gives us the exact scroll position needed to bring element to top
+                    return currentScroll + visualOffset;
+                }
+                
                 // Set first item as active by default
                 if (navItems.length > 0) {
                     navItems[0].classList.add("active");
@@ -275,7 +293,7 @@ class Analytic_Sidebar_Nav extends Widget_Base
                         }
                         
                         const target = document.querySelector(item.dataset.target);
-                        if (!target || !rightContentSection) return;
+                        if (!target || !rightContentSection || !rightContentSection.contains(target)) return;
                         
                         // Set user scrolling flag
                         isUserScrolling = true;
@@ -285,20 +303,21 @@ class Analytic_Sidebar_Nav extends Widget_Base
                         item.classList.add("active");
                         currentActiveIndex = index;
                         
-                        // Calculate relative position of target within right_content_section
-                        // Use getBoundingClientRect to get accurate positions
-                        const containerRect = rightContentSection.getBoundingClientRect();
-                        const targetRect = target.getBoundingClientRect();
+                        // Calculate exact offsetTop of target relative to right_content_section
+                        // This ensures the section scrolls to the very top of the container
+                        const targetOffsetTop = getOffsetTop(target, rightContentSection);
                         
-                        // Calculate the scroll position needed to bring target to top of container
-                        // Current visual offset + current scroll position = absolute offset
-                        const currentScroll = rightContentSection.scrollTop;
-                        const visualOffset = targetRect.top - containerRect.top;
-                        const absoluteOffset = currentScroll + visualOffset;
+                        // Get maximum scroll position
+                        const maxScroll = rightContentSection.scrollHeight - rightContentSection.clientHeight;
                         
-                        // Scroll within the right_content_section container
+                        // Calculate the scroll position to bring target to top
+                        // Clamp between 0 and maxScroll to prevent over-scrolling
+                        const scrollPosition = Math.max(0, Math.min(targetOffsetTop, maxScroll));
+                        
+                        // Ensure target scrolls to the very top of the container
+                        // Previous sections will be hidden above the viewport (scrolled up)
                         rightContentSection.scrollTo({
-                            top: absoluteOffset - 20, // Small offset from top of container
+                            top: scrollPosition, // Bring to absolute top of container
                             behavior: "smooth"
                         });
                         
