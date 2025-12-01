@@ -149,7 +149,20 @@ class Analytic_Sidebar_Nav extends Widget_Base
         $settings = $this->get_settings_for_display();
 ?>
         <div class="analytic-sidebar">
-            <input type="text" class="analytic-search" placeholder="Search analytics...">
+            <button type="button" class="analytic-mobile-toggle" aria-label="Toggle menu">
+                <span>Select video analytic</span>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            
+            <div class="analytic-search-wrapper">
+                <svg class="analytic-search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.33333 12.6667C10.2789 12.6667 12.6667 10.2789 12.6667 7.33333C12.6667 4.38781 10.2789 2 7.33333 2C4.38781 2 2 4.38781 2 7.33333C2 10.2789 4.38781 12.6667 7.33333 12.6667Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M14 14L11.1 11.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <input type="text" class="analytic-search" placeholder="Search analytics...">
+            </div>
 
             <ul class="analytic-nav">
                 <?php foreach ($settings['nav_items'] as $item): ?>
@@ -158,8 +171,13 @@ class Analytic_Sidebar_Nav extends Widget_Base
                         // Output light and dark mode icons
                         $has_light_icon = !empty($item['icon_image']['url']);
                         $has_dark_icon = !empty($item['icon_image_dark']['url']);
-                        $item_title_attr = esc_attr($item['item_title']);
-                        
+                        $item_title_attr = esc_attr($item['item_title']); ?>
+                        <span class="check-icon">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M13.3333 4L6 11.3333L2.66667 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                        <?php
                         if ($has_light_icon || $has_dark_icon || !empty($item['icon_svg'])) {
                             echo '<span class="icon">';
                             
@@ -189,17 +207,35 @@ class Analytic_Sidebar_Nav extends Widget_Base
 
         <style>
         .analytic-sidebar {
-            position: sticky;
-            top: 80px;
-            max-height: calc(100vh - 80px);
-            overflow-y: auto;
+            position: sticky !important;
+            top: 80px !important;
+            max-height: calc(100vh - 80px) !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
             padding: 10px;
             border-radius: 8px;
+            -webkit-overflow-scrolling: touch !important; /* Smooth scrolling on iOS */
+            scroll-behavior: smooth;
+            overscroll-behavior: contain; /* Ensure mouse wheel scrolling works */
+        }
+        .analytic-sidebar .analytic-search-wrapper {
+            position: relative;
+            margin-bottom: 12px;
+        }
+        .analytic-sidebar .analytic-search-wrapper .analytic-search-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            color: #999;
+            pointer-events: none;
+            z-index: 1;
         }
         .analytic-sidebar .analytic-search {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 12px;
+            padding: 10px 38px 10px 10px;
             border: 1px solid #ddd;
             border-radius: 6px;
         }
@@ -214,9 +250,26 @@ class Analytic_Sidebar_Nav extends Widget_Base
             transition: 0.2s;
         }
         .analytic-nav li:hover { background: #f0f4ff; }
-        .analytic-nav li.active { background: #e8f2ff;font-weight: 600; }
+        .analytic-nav li.active { background: #E6E6E6!important;font-weight: 600; }
         .analytic-nav li .icon svg { width: 18px;height: 18px; }
         .analytic-nav li .icon img { width: 18px;height: 18px;object-fit: contain; }
+        
+        /* Check icon for active items */
+        .analytic-nav li .check-icon {
+            display: none;
+            margin-left: 0;
+            width: 16px;
+            height: 16px;
+            color: #418259;
+            flex-shrink: 0;
+        }
+        .analytic-nav li.active .check-icon {
+            display: block;
+        }
+        .analytic-nav li .check-icon svg {
+            width: 16px;
+            height: 16px;
+        }
         
         /* Light/Dark Mode Icon Switching */
         .icon img.icon-dark { display: none; }
@@ -224,13 +277,212 @@ class Analytic_Sidebar_Nav extends Widget_Base
         
         body.js-dark .icon img.icon-light { display: none; }
         body.js-dark .icon img.icon-dark { display: inline-block; }
-        .elementor-element.video_analytic_sidebar { max-height: 766px;overflow-y: scroll; }
-        .elementor-element.right_content_section{ max-height: 1914px;overflow-y: scroll; }
+        
+        /* Enable manual scrolling for sidebar - let the sticky sidebar handle its own scroll */
+        .video_analytic_sidebar,
+        .elementor-element.video_analytic_sidebar {
+            height: auto;
+            max-height: 766px;
+        }
+        
+        /* Enable manual scrolling for right content section */
+        .right_content_section,
+        .elementor-element.right_content_section {
+            max-height: 1914px !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+            -webkit-overflow-scrolling: touch !important;
+            scroll-behavior: smooth;
+            /* Ensure mouse wheel scrolling works */
+            overscroll-behavior: contain;
+        }
+        
+        
+        /* Mobile Dropdown Styles */
+        @media (max-width: 768px) {
+            .analytic-sidebar {
+                position: relative !important;
+                top: auto !important;
+                max-height: none !important;
+                overflow: visible !important;
+            }
+            
+            .analytic-sidebar .analytic-search-wrapper {
+                margin-bottom: 12px;
+            }
+            
+            /* Mobile dropdown button */
+            .analytic-mobile-toggle {
+                display: block;
+                width: 100%;
+                padding: 12px;
+                margin-bottom: 12px;
+                background: #f5f5f5;
+                border: 1px solid #ddd;
+                border-radius: 6px;
+                cursor: pointer;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            
+            .analytic-mobile-toggle svg {
+                width: 20px;
+                height: 20px;
+                transition: transform 0.3s ease;
+            }
+            
+            .analytic-mobile-toggle.active svg {
+                transform: rotate(180deg);
+            }
+            
+            /* Hide nav by default on mobile */
+            .analytic-nav {
+                display: none !important;
+                max-height: 400px;
+                overflow-y: auto;
+                border: 1px solid #ddd;
+                border-radius: 6px;
+                background: #fff;
+                margin-top: 12px;
+                position: relative;
+                z-index: 10;
+            }
+            
+            .analytic-nav.mobile-open {
+                display: block !important;
+            }
+            
+            /* Ensure toggle button is visible and clickable on mobile */
+            .analytic-mobile-toggle {
+                display: flex !important;
+                z-index: 10;
+                position: relative;
+            }
+            .right_content_section,
+            .elementor-element.right_content_section {
+                max-height: 600px !important;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .analytic-mobile-toggle {
+                display: none !important;
+            }
+            .analytic-nav {
+                display: block !important;
+            }
+        }
+        
+        /* Ensure search icon is visible on all screen sizes */
+        .analytic-sidebar .analytic-search-wrapper .analytic-search-icon {
+            display: block !important;
+        }
         </style>
 
         <script>
         (function(){
             'use strict';
+            
+            // Initialize mobile dropdown separately - runs immediately
+            let initAttempts = 0;
+            const maxInitAttempts = 50; // Try for 5 seconds
+            
+            function initMobileDropdown() {
+                initAttempts++;
+                if (initAttempts > maxInitAttempts) {
+                    console.warn('Analytic Sidebar: Mobile dropdown initialization timeout');
+                    return;
+                }
+                
+                const sidebar = document.querySelector('.analytic-sidebar');
+                if (!sidebar) {
+                    setTimeout(initMobileDropdown, 100);
+                    return;
+                }
+                
+                const toggleBtn = sidebar.querySelector(".analytic-mobile-toggle");
+                const navList = sidebar.querySelector(".analytic-nav");
+                
+                if (!toggleBtn || !navList) {
+                    setTimeout(initMobileDropdown, 100);
+                    return;
+                }
+                
+                // Prevent multiple initializations by checking for data attribute
+                if (toggleBtn.dataset.initialized === 'true') {
+                    return;
+                }
+                toggleBtn.dataset.initialized = 'true';
+                
+                // Get the currently active item text for the toggle button
+                function updateToggleText() {
+                    const activeItem = navList.querySelector('li.active');
+                    const toggleSpan = toggleBtn.querySelector('span');
+                    if (toggleSpan) {
+                        if (activeItem) {
+                            const titleElement = activeItem.querySelector('.title');
+                            if (titleElement) {
+                                toggleSpan.textContent = titleElement.textContent.trim();
+                            }
+                        } else {
+                            toggleSpan.textContent = 'Select video analytic';
+                        }
+                    }
+                }
+                
+                // Toggle dropdown on button click - use multiple handlers for compatibility
+                function toggleDropdown(e) {
+                    if (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                    
+                    const isActive = toggleBtn.classList.contains('active');
+                    
+                    if (isActive) {
+                        toggleBtn.classList.remove('active');
+                        navList.classList.remove('mobile-open');
+                    } else {
+                        toggleBtn.classList.add('active');
+                        navList.classList.add('mobile-open');
+                    }
+                }
+                
+                // Attach click handler
+                toggleBtn.addEventListener('click', toggleDropdown, false);
+                
+                // Also handle touch events for mobile devices
+                toggleBtn.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleDropdown(e);
+                }, false);
+                
+                // Make sure button is clickable and not disabled
+                toggleBtn.disabled = false;
+                toggleBtn.style.pointerEvents = 'auto';
+                toggleBtn.style.cursor = 'pointer';
+                
+                // Initial update
+                updateToggleText();
+                
+                // Watch for active class changes to update toggle text
+                const observer = new MutationObserver(function(mutations) {
+                    mutations.forEach(function(mutation) {
+                        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                            updateToggleText();
+                        }
+                    });
+                });
+                
+                // Observe all nav items for class changes
+                const navItems = navList.querySelectorAll('li');
+                navItems.forEach(function(item) {
+                    observer.observe(item, { attributes: true, attributeFilter: ['class'] });
+                });
+            }
             
             // Wait for DOM to be ready
             function init() {
@@ -242,6 +494,15 @@ class Analytic_Sidebar_Nav extends Widget_Base
                     // Retry if elements not found
                     setTimeout(init, 100);
                     return;
+                }
+                
+                // Check if already initialized to prevent duplicate event listeners
+                const sidebar = document.querySelector('.analytic-sidebar');
+                if (sidebar && sidebar.dataset.initialized === 'true') {
+                    return;
+                }
+                if (sidebar) {
+                    sidebar.dataset.initialized = 'true';
                 }
                 
                 // Get all target sections
@@ -293,7 +554,29 @@ class Analytic_Sidebar_Nav extends Widget_Base
                         }
                         
                         const target = document.querySelector(item.dataset.target);
-                        if (!target || !rightContentSection || !rightContentSection.contains(target)) return;
+                        if (!target || !rightContentSection) return;
+                        
+                        // Ensure target is visible (remove any display:none that might be hiding it)
+                        if (target.style.display === 'none') {
+                            target.style.display = '';
+                        }
+                        
+                        // Check if target is within rightContentSection or its children
+                        let targetInContainer = rightContentSection.contains(target);
+                        if (!targetInContainer) {
+                            // Try to find the target's parent that is within rightContentSection
+                            let parent = target.parentElement;
+                            while (parent && parent !== document.body) {
+                                if (rightContentSection.contains(parent)) {
+                                    targetInContainer = true;
+                                    break;
+                                }
+                                parent = parent.parentElement;
+                            }
+                        }
+                        
+                        // If target is not in container, try to scroll to it anyway (might be in a nested structure)
+                        // We'll still attempt to scroll
                         
                         // Set user scrolling flag
                         isUserScrolling = true;
@@ -303,23 +586,133 @@ class Analytic_Sidebar_Nav extends Widget_Base
                         item.classList.add("active");
                         currentActiveIndex = index;
                         
+                        // Ensure all content sections are visible (find all sections that match nav item targets)
+                        navItems.forEach(navItem => {
+                            const sectionId = navItem.dataset.target;
+                            if (sectionId) {
+                                const section = document.querySelector(sectionId);
+                                if (section) {
+                                    // Make sure section is visible
+                                    if (section.style.display === 'none') {
+                                        section.style.display = '';
+                                    }
+                                    // Also check parent elements
+                                    let parent = section.parentElement;
+                                    while (parent && parent !== document.body) {
+                                        if (parent.style.display === 'none') {
+                                            parent.style.display = '';
+                                        }
+                                        parent = parent.parentElement;
+                                    }
+                                }
+                            }
+                        });
+                        
                         // Calculate exact offsetTop of target relative to right_content_section
                         // This ensures the section scrolls to the very top of the container
-                        const targetOffsetTop = getOffsetTop(target, rightContentSection);
+                        let targetOffsetTop = 0;
+                        let scrollPosition = 0;
                         
-                        // Get maximum scroll position
-                        const maxScroll = rightContentSection.scrollHeight - rightContentSection.clientHeight;
+                        if (targetInContainer || rightContentSection.contains(target)) {
+                            targetOffsetTop = getOffsetTop(target, rightContentSection);
+                            // Get maximum scroll position
+                            const maxScroll = rightContentSection.scrollHeight - rightContentSection.clientHeight;
+                            // Calculate the scroll position to bring target to top
+                            // Clamp between 0 and maxScroll to prevent over-scrolling
+                            scrollPosition = Math.max(0, Math.min(targetOffsetTop, maxScroll));
+                        } else {
+                            // If target is not in container, calculate relative to document
+                            const targetRect = target.getBoundingClientRect();
+                            const containerRect = rightContentSection.getBoundingClientRect();
+                            const currentScroll = rightContentSection.scrollTop;
+                            targetOffsetTop = currentScroll + (targetRect.top - containerRect.top);
+                            const maxScroll = rightContentSection.scrollHeight - rightContentSection.clientHeight;
+                            scrollPosition = Math.max(0, Math.min(targetOffsetTop, maxScroll));
+                        }
                         
-                        // Calculate the scroll position to bring target to top
-                        // Clamp between 0 and maxScroll to prevent over-scrolling
-                        const scrollPosition = Math.max(0, Math.min(targetOffsetTop, maxScroll));
+                        // Function to perform the scroll - try multiple methods
+                        const performScroll = () => {
+                            // Always scroll the container first (this is the primary method)
+                            try {
+                                if (rightContentSection) {
+                                    if (rightContentSection.scrollTo) {
+                                        rightContentSection.scrollTo({
+                                            top: scrollPosition,
+                                            behavior: "smooth"
+                                        });
+                                    } else {
+                                        rightContentSection.scrollTop = scrollPosition;
+                                    }
+                                }
+                            } catch (e) {
+                                console.warn('Container scroll failed:', e);
+                            }
+                            
+                            // On mobile, also ensure the target is visible in viewport
+                            if (window.innerWidth <= 768) {
+                                setTimeout(() => {
+                                    try {
+                                        // Check if target is visible in the container viewport
+                                        const containerRect = rightContentSection.getBoundingClientRect();
+                                        const targetRect = target.getBoundingClientRect();
+                                        
+                                        // If target is not visible in container, scroll again
+                                        if (targetRect.top < containerRect.top || targetRect.bottom > containerRect.bottom) {
+                                            // Recalculate and scroll
+                                            const newTargetOffsetTop = getOffsetTop(target, rightContentSection);
+                                            const newMaxScroll = rightContentSection.scrollHeight - rightContentSection.clientHeight;
+                                            const newScrollPosition = Math.max(0, Math.min(newTargetOffsetTop, newMaxScroll));
+                                            
+                                            if (rightContentSection.scrollTo) {
+                                                rightContentSection.scrollTo({
+                                                    top: newScrollPosition,
+                                                    behavior: "smooth"
+                                                });
+                                            } else {
+                                                rightContentSection.scrollTop = newScrollPosition;
+                                            }
+                                        }
+                                    } catch (e) {
+                                        console.warn('Mobile scroll verification failed:', e);
+                                    }
+                                }, 200);
+                            }
+                        };
                         
-                        // Ensure target scrolls to the very top of the container
-                        // Previous sections will be hidden above the viewport (scrolled up)
-                        rightContentSection.scrollTo({
-                            top: scrollPosition, // Bring to absolute top of container
-                            behavior: "smooth"
-                        });
+                        // On mobile, handle dropdown and scroll
+                        if (window.innerWidth <= 768) {
+                            const mobileToggleBtn = document.querySelector(".analytic-mobile-toggle");
+                            const navList = document.querySelector(".analytic-nav");
+                            
+                            // Update mobile toggle text
+                            if (mobileToggleBtn) {
+                                const titleElement = item.querySelector('.title');
+                                if (titleElement) {
+                                    const toggleSpan = mobileToggleBtn.querySelector('span');
+                                    if (toggleSpan) {
+                                        toggleSpan.textContent = titleElement.textContent.trim();
+                                    }
+                                }
+                                
+                                // Close dropdown if open
+                                if (navList && navList.classList.contains('mobile-open')) {
+                                    mobileToggleBtn.classList.remove('active');
+                                    navList.classList.remove('mobile-open');
+                                    
+                                    // Scroll immediately (don't wait for dropdown animation)
+                                    performScroll();
+                                } else {
+                                    // Dropdown already closed, scroll immediately
+                                    performScroll();
+                                }
+                            } else {
+                                // No mobile toggle button, scroll immediately
+                                performScroll();
+                            }
+                        } else {
+                            // Desktop: scroll immediately
+                            performScroll();
+                        }
                         
                         // Reset user scrolling flag after animation
                         clearTimeout(scrollTimeout);
@@ -396,6 +789,18 @@ class Analytic_Sidebar_Nav extends Widget_Base
                             navItems[activeIndex].classList.add("active");
                             currentActiveIndex = activeIndex;
                             
+                            // Update mobile toggle text
+                            const mobileToggleBtn = document.querySelector(".analytic-mobile-toggle");
+                            if (mobileToggleBtn) {
+                                const titleElement = navItems[activeIndex].querySelector('.title');
+                                if (titleElement) {
+                                    const toggleSpan = mobileToggleBtn.querySelector('span');
+                                    if (toggleSpan) {
+                                        toggleSpan.textContent = titleElement.textContent.trim();
+                                    }
+                                }
+                            }
+                            
                             // Scroll sidebar item into view if needed
                             const sidebar = document.querySelector('.analytic-sidebar');
                             if (sidebar) {
@@ -424,16 +829,31 @@ class Analytic_Sidebar_Nav extends Widget_Base
             }
             
             // Initialize when DOM is ready
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', init);
-            } else {
+            function initAll() {
                 init();
+                initMobileDropdown();
+            }
+            
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initAll);
+            } else {
+                initAll();
             }
             
             // Also try on window load for Elementor
             window.addEventListener('load', () => {
-                setTimeout(init, 300);
+                setTimeout(initAll, 300);
             });
+            
+            // Support Elementor's frontend rendering
+            if (typeof elementorFrontend !== 'undefined') {
+                elementorFrontend.hooks.addAction('frontend/element_ready/global', () => {
+                    setTimeout(initAll, 200);
+                });
+            }
+            
+            // Immediate initialization attempt
+            setTimeout(initAll, 100);
 
         })();
         </script>
