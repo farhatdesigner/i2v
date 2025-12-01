@@ -37,7 +37,7 @@ class Analytic_Sidebar_Nav extends Widget_Base
         $this->start_controls_section(
             'section_sidebar',
             [
-                'label' => __('Sidebar Navigation', 'wpc'),
+                'label' => __('Sidebar Navigation', 'repindia'),
                 'tab'   => Controls_Manager::TAB_CONTENT,
             ]
         );
@@ -47,16 +47,16 @@ class Analytic_Sidebar_Nav extends Widget_Base
         $repeater->add_control(
             'item_title',
             [
-                'label'   => __('Title', 'wpc'),
+                'label'   => __('Title', 'repindia'),
                 'type'    => Controls_Manager::TEXT,
-                'default' => __('List Item', 'wpc'),
+                'default' => __('List Item', 'repindia'),
             ]
         );
 
         $repeater->add_control(
             'target_id',
             [
-                'label'   => __('Target Section ID', 'wpc'),
+                'label'   => __('Target Section ID', 'repindia'),
                 'type'    => Controls_Manager::TEXT,
                 'default' => '#section-id',
                 'description' => 'Example: #sec-abandoned',
@@ -66,31 +66,31 @@ class Analytic_Sidebar_Nav extends Widget_Base
         $repeater->add_control(
             'icon_image',
             [
-                'label' => __('Icon / Image - Light Mode (optional)', 'wpc'),
+                'label' => __('Icon / Image - Light Mode (optional)', 'repindia'),
                 'type' => \Elementor\Controls_Manager::MEDIA,
                 'default' => [
                     'url' => '',
                 ],
-                'description' => __('Upload an icon or image for light mode. Use SVG/PNG/JPG.', 'wpc'),
+                'description' => __('Upload an icon or image for light mode. Use SVG/PNG/JPG.', 'repindia'),
             ]
         );
 
         $repeater->add_control(
             'icon_image_dark',
             [
-                'label' => __('Icon / Image - Dark Mode (optional)', 'wpc'),
+                'label' => __('Icon / Image - Dark Mode (optional)', 'repindia'),
                 'type' => \Elementor\Controls_Manager::MEDIA,
                 'default' => [
                     'url' => '',
                 ],
-                'description' => __('Upload an icon or image for dark mode. Use SVG/PNG/JPG.', 'wpc'),
+                'description' => __('Upload an icon or image for dark mode. Use SVG/PNG/JPG.', 'repindia'),
             ]
         );
 
         $this->add_control(
             'nav_items',
             [
-                'label' => __('Navigation Items', 'wpc'),
+                'label' => __('Navigation Items', 'repindia'),
                 'type'  => Controls_Manager::REPEATER,
                 'fields'=> $repeater->get_controls(),
                 'default' => [],
@@ -103,7 +103,7 @@ class Analytic_Sidebar_Nav extends Widget_Base
         $this->start_controls_section(
             'style_section',
             [
-                'label' => __('Styles', 'wpc'),
+                'label' => __('Styles', 'repindia'),
                 'tab'   => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -111,7 +111,7 @@ class Analytic_Sidebar_Nav extends Widget_Base
         $this->add_control(
             'bg_color',
             [
-                'label' => __('Background', 'wpc'),
+                'label' => __('Background', 'repindia'),
                 'type'  => Controls_Manager::COLOR,
                 'default' => '#ffffff',
                 'selectors' => [
@@ -123,7 +123,7 @@ class Analytic_Sidebar_Nav extends Widget_Base
         $this->add_control(
             'active_color',
             [
-                'label' => __('Active Color', 'wpc'),
+                'label' => __('Active Color', 'repindia'),
                 'type'  => Controls_Manager::COLOR,
                 'default' => '#0056FF',
                 'selectors' => [
