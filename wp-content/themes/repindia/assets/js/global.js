@@ -1185,7 +1185,7 @@ jQuery(document).ready(function() {
 });
 
 
-if (window.innerWidth >= 1180) {
+if (window.innerWidth >= 1180 && document.querySelector(".sectionsscroll")) {
     gsap.registerPlugin(ScrollTrigger);
     ScrollTrigger.config({
         autoRefreshEvents: 'visibilitychange,DOMContentLoaded,load',
@@ -1413,3 +1413,67 @@ if (window.innerWidth >= 1200) {
         });
     }
 }
+
+
+
+
+if (document.querySelector(".hz-slider-section .swiper")) {
+  const hzSwiper = new Swiper(".hz-slider-section .swiper", {
+    // autoplay: {
+    //   delay: 5000,
+    //   disableOnInteraction: false
+    // },
+    speed: 500,
+    loop: false,
+    slidesPerView: 2,
+    spaceBetween: 30,
+    loopAddBlankSlides: false,
+    slideToClickedSlide: true,
+    centeredSlides: false,
+    allowTouchMove: false,
+    breakpoints: {
+      480: {
+        slidesPerView: 2,
+        spaceBetween: 30
+      },
+      768: {
+        slidesPerView: 2,
+        spaceBetween: 30
+      },
+      1230: {
+        slidesPerView: 3,
+        spaceBetween: 30
+      }
+    }
+  });
+  
+  hzSwiper.slideTo(0);
+  
+  // pin the slider section
+  gsap.registerPlugin(ScrollTrigger);
+  
+  let currentSlide = 0;
+  const totalSlides = hzSwiper.slides.length;
+  const snap = gsap.utils.snap(1 / totalSlides);
+  
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: ".hz-slider-section .slider",
+      pin: ".hz-slider-section",
+      pinSpacing: true,
+      pinReparent: true,
+      start: "top top",
+      end: "+=3000vh",
+      scrub: true,
+      markers: false,
+      onUpdate: (self) => {
+        const updatedIndex = Math.round(snap(self.progress) * totalSlides);
+        if (updatedIndex !== currentSlide) {
+          currentSlide = updatedIndex;
+          hzSwiper.slideTo(currentSlide);
+        }
+      }
+    }
+  });
+}
+  
