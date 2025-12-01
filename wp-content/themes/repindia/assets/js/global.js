@@ -857,6 +857,17 @@ var stickyMenuConfigs = {
         ],
         triggerOffset: 220, // Adjust if needed
         scrollThreshold: 120 // Fixed at 120px from top of viewport
+    },
+    // Configuration for page with 4 sections (city systems page)
+    citysystems: {
+        sections: [
+            ".security_systems",
+            ".access_identity",
+            ".infrastructure_sensors",
+            ".citysystems_services"
+        ],
+        triggerOffset: 220, // Adjust if needed
+        scrollThreshold: 120 // Fixed at 120px from top of viewport
     }
 };
 
@@ -871,6 +882,13 @@ jQuery(document).ready(function ($) {
         
         if (hasEnforcementSections) {
             return stickyMenuConfigs.enforcement;
+        }
+        
+        // Check for citysystems page sections
+        var hasCitysystemsSections = $(".security_systems, .access_identity, .infrastructure_sensors, .citysystems_services").length >= 2;
+        
+        if (hasCitysystemsSections) {
+            return stickyMenuConfigs.citysystems;
         }
         
         // Check for default page sections
