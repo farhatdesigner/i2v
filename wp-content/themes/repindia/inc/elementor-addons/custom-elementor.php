@@ -30,6 +30,8 @@ class Widget_Loader
 		require_once(__DIR__.'/widgets/custom_testimonial.php');
 		require_once(__DIR__.'/widgets/custom_image_circle.php');
 		require_once(__DIR__.'/widgets/custom_purpose_slider.php');
+		require_once(__DIR__.'/widgets/analytic_sidebar_nav.php');
+		
     }
     public function register_widgets()
     {
@@ -50,6 +52,7 @@ class Widget_Loader
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Testimonial() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Image_Circle() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Purpose_Slider() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Analytic_Sidebar_Nav() );
     }
 	public function __construct()
 	{
