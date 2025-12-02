@@ -122,3 +122,6 @@ header li.burger-icon .icon-sun,.js-dark header li.burger-icon .icon-moon{ displ
 .js-dark .elementor-element.iccc_scale{ background-color: #262A30!important; }
 .js-dark .elementor-element.vidplateform{ border-color: rgba(193, 196, 198, 0.20)!important; }
 .js-dark .elementor-element.cms_platform .elementor-widget-icon-box{ background-color: #262A30; }
+.js-dark .bg-dark_theme .elementor-testimonial__content .elementor-testimonial__text{color: rgba(255, 255, 255, 0.90) !important;}
+.js-dark .proven_sec  .bg-dark_theme .elementor-testimonial__footer span{color: rgba(255, 255, 255, 0.90);}
+.js-dark .proven_sec  .bg-dark_theme {background-color: #262a30 !important;}
