@@ -1296,6 +1296,7 @@ p {
     width: 25%;
 
 }
+.txt-greybtn{color:#AEB6C9}
 
 #mrg-head {
     margin-top: 114px;
@@ -3095,6 +3096,10 @@ h3 {
     .accontent .accordion_video {
     top: 50%;
     transform: translateY(-50%);
+}
+
+.two_arrow:before, .three_arrow:before, .four_arrow:before, .one_arrow:before {
+visibility: hidden;
 }
 
 

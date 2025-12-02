@@ -1418,6 +1418,11 @@ if (window.innerWidth >= 1200) {
 
 
 if (document.querySelector(".hz-slider-section .swiper")) {
+  // Store reference to ScrollTrigger instance for cleanup
+  let hzScrollTrigger = null;
+  let hzTimeline = null;
+  let currentSlide = 0;
+  
   const hzSwiper = new Swiper(".hz-slider-section .swiper", {
     // autoplay: {
     //   delay: 5000,
@@ -1430,10 +1435,11 @@ if (document.querySelector(".hz-slider-section .swiper")) {
     loopAddBlankSlides: false,
     slideToClickedSlide: true,
     centeredSlides: false,
-    allowTouchMove: false,
+    // Enable touch move on mobile, disable on desktop (will be controlled by GSAP)
+    allowTouchMove: window.innerWidth < 1024,
     breakpoints: {
       480: {
-        slidesPerView: 2,
+        slidesPerView: 1,
         spaceBetween: 30
       },
       768: {
@@ -1449,31 +1455,89 @@ if (document.querySelector(".hz-slider-section .swiper")) {
   
   hzSwiper.slideTo(0);
   
-  // pin the slider section
-  gsap.registerPlugin(ScrollTrigger);
-  
-  let currentSlide = 0;
-  const totalSlides = hzSwiper.slides.length;
-  const snap = gsap.utils.snap(1 / totalSlides);
-  
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: ".hz-slider-section .slider",
-      pin: ".hz-slider-section",
-      pinSpacing: true,
-      pinReparent: true,
-      start: "top top",
-      end: "+=3000vh",
-      scrub: true,
-      markers: false,
-      onUpdate: (self) => {
-        const updatedIndex = Math.round(snap(self.progress) * totalSlides);
-        if (updatedIndex !== currentSlide) {
-          currentSlide = updatedIndex;
-          hzSwiper.slideTo(currentSlide);
+  // Function to initialize GSAP pin animation (desktop only)
+  function initHzSliderGSAP() {
+    // Only initialize if screen width is 1024px or above
+    if (window.innerWidth < 1024) {
+      return;
+    }
+    
+    // Register GSAP plugin
+    gsap.registerPlugin(ScrollTrigger);
+    
+    const totalSlides = hzSwiper.slides.length;
+    const snap = gsap.utils.snap(1 / totalSlides);
+    
+    // Disable Swiper touch on desktop (controlled by scroll)
+    hzSwiper.allowTouchMove = false;
+    hzSwiper.update();
+    
+    hzTimeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".hz-slider-section .slider",
+        pin: ".hz-slider-section",
+        pinSpacing: true,
+        pinReparent: true,
+        start: "top 10%",
+        end: "+=3000vh",
+        scrub: true,
+        markers: false,
+        onUpdate: (self) => {
+          const updatedIndex = Math.round(snap(self.progress) * totalSlides);
+          if (updatedIndex !== currentSlide) {
+            currentSlide = updatedIndex;
+            hzSwiper.slideTo(currentSlide);
+          }
         }
       }
+    });
+    
+    // Store reference for cleanup
+    hzScrollTrigger = hzTimeline.scrollTrigger;
+  }
+  
+  // Function to destroy GSAP pin animation (for mobile)
+  function destroyHzSliderGSAP() {
+    if (hzScrollTrigger) {
+      hzScrollTrigger.kill();
+      hzScrollTrigger = null;
     }
+    if (hzTimeline) {
+      hzTimeline.kill();
+      hzTimeline = null;
+    }
+    
+    // Enable Swiper touch on mobile
+    hzSwiper.allowTouchMove = true;
+    hzSwiper.update();
+    
+    // Reset slide position
+    currentSlide = 0;
+    hzSwiper.slideTo(0);
+  }
+  
+  // Initialize on page load
+  initHzSliderGSAP();
+  
+  // Handle resize - enable/disable GSAP pin based on screen width
+  let hzResizeTimer;
+  window.addEventListener("resize", function() {
+    clearTimeout(hzResizeTimer);
+    hzResizeTimer = setTimeout(function() {
+      const isDesktop = window.innerWidth >= 1024;
+      const hasGSAP = hzScrollTrigger !== null;
+      
+      if (isDesktop && !hasGSAP) {
+        // Switched to desktop - initialize GSAP pin
+        initHzSliderGSAP();
+      } else if (!isDesktop && hasGSAP) {
+        // Switched to mobile - destroy GSAP pin
+        destroyHzSliderGSAP();
+      } else if (isDesktop && hasGSAP) {
+        // Still on desktop - refresh ScrollTrigger
+        ScrollTrigger.refresh();
+      }
+    }, 250);
   });
 }
   
