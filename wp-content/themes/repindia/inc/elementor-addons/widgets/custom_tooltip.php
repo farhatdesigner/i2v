@@ -783,14 +783,15 @@ class Custom_Tooltip extends Widget_Base
         if (!$css_added) {
             $css_added = true;
             echo '<style id="custom-tooltip-css">';
-            echo '.ctw-wrapper { position: relative; display: inline-block;width: 100%;text-align: left;vertical-align: sub; }';
+            echo '.ctw-wrapper { position: relative; display: inline-block;width: 100%;text-align: left;}';
             echo '.ctw-trigger { cursor: pointer; display: inline-flex; align-items: center; }';
-            echo '.ctw-title { display: inline-flex; align-items: center; }';
+            echo '.ctw-title { display: inline-flex; align-items: center;}';
+            echo '.ctw-has-learn-more .ctw-title .border-b {border-bottom: 2px solid #D7DBE4; }';
             echo '.ctw-icon { display: inline-flex; align-items: center; justify-content: center; }';
             echo '.ctw-text { display: inline-block; }';
             echo '.ctw-tooltip { position: absolute; opacity: 0; visibility: hidden; transition: opacity 0.25s; z-index: 9999; pointer-events: none;min-width: 250px;width: 100%; }';
             echo '.ctw-tooltip.show { opacity: 1; visibility: visible; pointer-events: auto; }';
-            echo '.ctw-tooltip-inner { position: relative; word-wrap: break-word; }';
+            echo '.ctw-tooltip-inner { position: relative; word-wrap: break-word;white-space: normal; }';
             echo '.ctw-tooltip-top { bottom: 100%; left: 50%; transform: translateX(-50%); margin-bottom: 8px; }';
             echo '.ctw-tooltip-top .ctw-tooltip-inner::after { content: ""; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--ctw-arrow-color, #333333); }';
             echo '.ctw-tooltip-bottom { top: 100%; left: 50%; transform: translateX(-50%); margin-top: 0px; }';
@@ -802,7 +803,7 @@ class Custom_Tooltip extends Widget_Base
             echo '.ctw-tooltip-inner p{ margin: 0;}';
             echo '.ctw-tooltip-inner b,.ctw-tooltip-inner strong{ font-weight: bold!important;}';
             echo '.ctw-popup-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.55); z-index: 99997; }';
-            echo '.ctw-popup-box { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); background: #ffffff; padding: 20px; max-width: 600px; width: 90%; border-radius: 12px; z-index: 99998;box-shadow: 0 0 15px 0 rgba(138, 149, 158, 0.40); }';
+            echo '.ctw-popup-box { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); background: #ffffff; padding: 20px; max-width: 600px; width: 90%; border-radius: 12px; z-index: 99998;box-shadow: 0 0 15px 0 rgba(138, 149, 158, 0.40);white-space: normal; }';
             echo '.ctw-popup-close { position: absolute; top: 12px; right: 12px; cursor: pointer; font-size: 22px; }';
             echo '.ctw-learn-more-btn { margin-top: 12px; cursor: pointer; display: inline-flex; padding: 6px 14px; border-radius: 6px; }';
             echo '.ctw-popup-content-wrapper { display: flex; align-items: flex-start; gap: 20px; }';

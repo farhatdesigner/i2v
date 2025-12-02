@@ -716,71 +716,134 @@ div.pin-spacer > .hz-slider-section {
   color: var(--Golbal-text-text-3, #5c5c5c);
   font-size: 18px;
   font-weight: 400;
-  line-height:  144.444%;
+  line-height: 144.444%;
 }
 
 .img-50 {
-    width: 50%;
+  width: 50%;
 }
 
-.proven_sec  .swiper-pagination-bullet {
-    height: 8px !important;
-    width: 8px !important;
-    background: var(--swiper-pagination-bullet-inactive-color, #000);
+.proven_sec .swiper-pagination-bullet {
+  height: 8px !important;
+  width: 8px !important;
+  background: var(--swiper-pagination-bullet-inactive-color, #000);
 }
-.proven_sec  .swiper-pagination-bullet-active {
-    background-color: #74C2ED;
-    height: 8px !important;
-    width: 30px !important;
-    border-radius: 4px;
+.proven_sec .swiper-pagination-bullet-active {
+  background-color: #74c2ed;
+  height: 8px !important;
+  width: 30px !important;
+  border-radius: 4px;
 }
 
-.proven_sec .elementor-testimonial--layout-image_inline .elementor-testimonial__footer {
-    margin-top: 10px;
-    margin-bottom: 0px;
+.proven_sec
+  .elementor-testimonial--layout-image_inline
+  .elementor-testimonial__footer {
+  margin-top: 10px;
+  margin-bottom: 0px;
 }
-#identy_sec p{color: #AEB6C9;margin: 0;}
+#identy_sec p {
+  color: #aeb6c9;
+  margin: 0;
+}
 
 .one_arrow:before {
-    position: absolute;
-    content: url("/i2v/wp-content/uploads/2025/12/Vector-8.svg");
-    position: absolute;
-    right: -38%;
-    top: 20%;
-    display: inline-block;
-    width: auto;
-    height: auto;
+  position: absolute;
+  content: url("/i2v/wp-content/uploads/2025/12/Vector-8.svg");
+  position: absolute;
+  right: -25%;
+  top: 25%;
+  display: inline-block;
+  width: auto;
+  height: auto;
 }
 .two_arrow:before {
-    position: absolute;
-    content: url("/i2v/wp-content/uploads/2025/12/Vector-9.svg");
-    position: absolute;
-    right: -50%;
-    top: 35%;
-    display: inline-block;
-    width: auto;
-    height: auto;
+  position: absolute;
+  content: url("/i2v/wp-content/uploads/2025/12/Vector-9.svg");
+  position: absolute;
+  right: -50%;
+  top: 35%;
+  display: inline-block;
+  width: auto;
+  height: auto;
 }
 .three_arrow:before {
-    position: absolute;
-    content: url("/i2v/wp-content/uploads/2025/12/Vector-10.svg");
-    position: absolute;
-    left: -40%;
-    top: 10%;
-    display: inline-block;
-    width: auto;
-    height: auto;
+  position: absolute;
+  content: url("/i2v/wp-content/uploads/2025/12/Vector-10.svg");
+  position: absolute;
+  left: -40%;
+  top: 10%;
+  display: inline-block;
+  width: auto;
+  height: auto;
 }
 .four_arrow:before {
-    position: absolute;
-    content: url("/i2v/wp-content/uploads/2025/12/Vector-11.svg");
-    position: absolute;
-    left: -40%;
-    top: 0%;
-    display: inline-block;
-    width: auto;
-    height: auto;
+  position: absolute;
+  content: url("/i2v/wp-content/uploads/2025/12/Vector-11.svg");
+  position: absolute;
+  left: -40%;
+  top: 0%;
+  display: inline-block;
+  width: auto;
+  height: auto;
 }
+
+.box-custom figure.wp-caption {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+/* Overlay (hidden at first) */
+.box-custom figure.wp-caption::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  bottom: 0;
+  background: linear-gradient(#00000000 0%, #000000c7 100%);
+  opacity: 0;
+  transition: 0.3s ease;
+  z-index: 1;
+  border-radius: 12px;
+}
+
+/* Show overlay on hover */
+.box-custom:hover figure.wp-caption::after {
+  opacity: 1;
+}
+
+/* Button styling */
+.box-custom figcaption.widget-image-caption.wp-caption-text {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%) translateY(30px) scale(0.3);
+  border: none;
+  opacity: 0;
+  transition: 0.35s ease;
+  pointer-events: none;
+  z-index: 2; /* Keep button above overlay */
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  color: #0099ed;
+  padding: 8px 16px;
+  width: 80%;
+  border-radius: 8px;
+  border: 1px solid #e5e9ec;
+  background: #fff;
+}
+
+/* Button hover effect */
+.box-custom:hover
+  figure.wp-caption
+  figcaption.widget-image-caption.wp-caption-text {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0) scale(1);
+  pointer-events: auto;
+}
+.group_tooltip {white-space: nowrap;}
 
 @media (min-width: 768px) {
   .hz-slider-section .swiper-slide h2 {
@@ -973,5 +1036,9 @@ html {
     background: #262a30;
     padding: 20px 20px;
     position: static !important;
+  }
+
+  .img-50 {
+    width: 100%;
   }
 }
