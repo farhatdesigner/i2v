@@ -1,3 +1,32 @@
+.icon_custom_text {
+    display: flex;
+    align-items: start;
+    gap: 20px;
+}
+.elementor img.toolmainimg {
+    width: 64px;
+    height: 64px;
+    max-width: 64px;
+}
+h4.contenttitle {
+    color: rgba(255, 255, 255, 0.90);
+    font-size: 20px;
+    line-height: 26px;
+    font-weight: 500;
+}
+.contentdesc p {
+    color: #AEB6C9;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    margin-bottom: 12px;
+}
+.contentdesc p.paracontsub{ font-size: 14px; font-weight: 600; }
+.contentdesc li{ color: #AEB6C9;font-size: 16px;font-weight: 500; line-height: 24px;margin-bottom: 8px;  display: flex;align-items: self-end;align-items: center;gap: 8px; }
+.elementor img.tool_list_icon {
+    width: 16px;
+    height: 16px;
+}
 
 @media(min-width: 1601px){
     
