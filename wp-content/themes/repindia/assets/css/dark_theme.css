@@ -96,7 +96,7 @@ header li.burger-icon .icon-sun,.js-dark header li.burger-icon .icon-moon{ displ
 .js-dark .elementor-element.record_dark .view-bg{ background: #262A30;box-shadow: 0 0 10px 0 rgba(0, 82, 128, 0.10);border-color: #262A30; }
 .js-dark .blurtab_slider .elementor-main-swiper.swiper:before{ background: linear-gradient(to right, #0b0b0c 60%, rgba(242, 245, 250, 0) 100%); }
 .js-dark .blurtab_slider .elementor-main-swiper.swiper:after{ background: linear-gradient(to left, #0b0b0c 60%, rgba(242, 245, 250, 0) 100%); }
-.js-dark .blurtab_slider .swiper-slide{ background: #262A30; }
+.js-dark .blurtab_slider .swiper-slide{ background: #262A30 !important; }
 .js-dark .blurtab_slider .swiper-slide .elementor-testimonial__text { color: #AEB6C9!important; }
 .js-dark .blurtab_slider .swiper-slide span.elementor-testimonial__title { color: #AEB6C9!important; }
 .js-dark .elementor-swiper-button { background-color: #262A30!important; }
@@ -125,3 +125,17 @@ header li.burger-icon .icon-sun,.js-dark header li.burger-icon .icon-moon{ displ
 .js-dark .bg-dark_theme .elementor-testimonial__content .elementor-testimonial__text{color: rgba(255, 255, 255, 0.90) !important;}
 .js-dark .proven_sec  .bg-dark_theme .elementor-testimonial__footer span{color: rgba(255, 255, 255, 0.90);}
 .js-dark .proven_sec  .bg-dark_theme {background-color: #262a30 !important;}
+
+
+
+.js-dark .bg-builddark  {background-color: #262A30 !important;}
+.js-dark  .works-box {background-color: #262a30 !important;}
+
+
+.js-dark .sec-tab-item {background: #0d1117; border: 1px solid  rgba(193, 196, 198, 0.20)}
+.js-dark .sec-tab-item.active{background: #262A30;border-color:rgba(255, 255, 255, 0.10);}
+.js-dark .sec-panel-inner{background: #262A30;}
+.js-dark .faq_bg .e-n-accordion-item-title{background-color: rgba(255, 255, 255, 0.10)!important;}
+
+.js-dark .faq_bg .faq-answer:before {background: #262a30 !important;}
+.js-dark .faq_bg  .faq-answer p{color: #AEB6C9!important;}

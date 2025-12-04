@@ -26,13 +26,14 @@ class Widget_Loader
 		require_once(__DIR__.'/widgets/custom_marquee.php');
 		require_once(__DIR__.'/widgets/scalescroll.php');
 		require_once(__DIR__.'/widgets/video_accordion.php');
+		require_once(__DIR__.'/widgets/video_accordionwhite.php');
 		require_once(__DIR__.'/widgets/singlescrollcards.php');
 		require_once(__DIR__.'/widgets/custom_testimonial.php');
 		require_once(__DIR__.'/widgets/custom_image_circle.php');
 		require_once(__DIR__.'/widgets/custom_purpose_slider.php');
 		require_once(__DIR__.'/widgets/analytic_sidebar_nav.php');
 		require_once(__DIR__.'/widgets/horizontal_slider.php');
-		
+		require_once(__DIR__.'/widgets/custom_tab_section.php');
     }
     public function register_widgets()
     {
@@ -49,12 +50,14 @@ class Widget_Loader
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Marquee() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Scalescroll() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Video_accordion() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Video_accordionwhite() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Singlescrollcards() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Testimonial() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Image_Circle() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Purpose_Slider() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Analytic_Sidebar_Nav() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Horizontal_Slider() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Tab_Section() );
     }
 	public function __construct()
 	{

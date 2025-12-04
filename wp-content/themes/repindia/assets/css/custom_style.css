@@ -108,7 +108,6 @@ body {
     overflow-x: hidden;
 }
 
-span,
 ul,
 li,
 p,
@@ -2457,7 +2456,12 @@ h3 {
     width: auto !important;
     bottom: 10px !important;
 }
-
+#two_testimonial.reversetestimonial .swiper-pagination-bullets {
+    left: 0 !important;
+    right: 0;
+    margin: 0 auto;
+    text-align: center !important;
+}
 .reversetestimonial cite.elementor-testimonial__cite {
     margin-top: 8px !important;
 }
