@@ -284,91 +284,186 @@ class Tabbed_Custom_Swiper extends Widget_Base
     // PHP Render
     protected function render()
     {
-        $settings = $this->get_settings_for_display();
-        $uid = 'tabbedSwiper_' . $this->get_id();
         ?>
 
-        <div class="swiper-container">
-            <div class="swiper mySwiper right_slidertabbed" id="<?php echo esc_attr($uid); ?>">
-                <div class="swiper-wrapper">
+        <style>
+            #tabbedSliderWrapper .tabbed-slider-tabs {
+                display: flex;
+                margin-bottom: 20px;
+            }
 
-                    <!-- Slide 1 -->
-                    <div class="swiper-slide">
-                        <img src="https://picsum.photos/400/200?random=1" alt="Slide 1">
-                        <div class="slide-content">
-                            <h3>Slide Title 1</h3>
-                            <p>This is the description for slide 1. Add your content here.</p>
-                        </div>
-                    </div>
+            #tabbedSliderWrapper .tab-btn {
+                color: #4A5673;
+                font-size: 16px;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                /* border-radius: var(--NA, 0) var(--21XL, 100px) var(--21XL, 100px) var(--NA, 0); */
+                border: 1px solid #E6EBF2;
+                background: #FFF;
+                padding: 8px 20px;
+            }
 
-                    <!-- Slide 2 -->
-                    <div class="swiper-slide">
-                        <img src="https://picsum.photos/400/200?random=2" alt="Slide 2">
-                        <div class="slide-content">
-                            <h3>Slide Title 2</h3>
-                            <p>This is the description for slide 2. Add your content here.</p>
-                        </div>
-                    </div>
+            #tabbedSliderWrapper .tab-btn.active {
+                /* border-radius: var(--21XL, 100px) var(--NA, 0) var(--NA, 0) var(--21XL, 100px); */
+                border: 1px solid #0099ED;
+                background: #0099ED;
+                color: #ffffff;
+            }
 
-                    <!-- Slide 3 -->
-                    <div class="swiper-slide">
-                        <img src="https://picsum.photos/400/200?random=3" alt="Slide 3">
-                        <div class="slide-content">
-                            <h3>Slide Title 3</h3>
-                            <p>This is the description for slide 3. Add your content here.</p>
-                        </div>
-                    </div>
+            button.tab-btn.active[data-tab="tab1"] {
+                border-radius: var(--21XL, 100px) var(--NA, 0) var(--NA, 0) var(--21XL, 100px);
+            }
 
-                    <!-- Slide 4 -->
-                    <div class="swiper-slide">
-                        <img src="https://picsum.photos/400/200?random=4" alt="Slide 4">
-                        <div class="slide-content">
-                            <h3>Slide Title 4</h3>
-                            <p>This is the description for slide 4. Add your content here.</p>
-                        </div>
-                    </div>
+            button.tab-btn.active[data-tab="tab2"] {
+                border-radius: var(--NA, 0) var(--21XL, 100px) var(--21XL, 100px) var(--NA, 0);
+            }
 
-                    <!-- Slide 5 -->
-                    <div class="swiper-slide">
-                        <img src="https://picsum.photos/400/200?random=5" alt="Slide 5">
-                        <div class="slide-content">
-                            <h3>Slide Title 5</h3>
-                            <p>This is the description for slide 5. Add your content here.</p>
-                        </div>
-                    </div>
+            #tabbedSliderWrapper .tab-content {
+                display: none;
+            }
 
-                </div>
+            #tabbedSliderWrapper .tab-content.active {
+                display: block;
+            }
 
-                <!-- Pagination -->
-                <div class="swiper-pagination"></div>
+            #tabbedSliderWrapper .swiper-slide {
+                background: #fff;
+                border-radius: 10px;
+                overflow: hidden;
+            }
 
-                <!-- Navigation Arrows -->
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
+            #tabbedSliderWrapper .swiper-slide img {
+                width: 100%;
+                height: 180px;
+                object-fit: cover;
+            }
+
+            #tabbedSliderWrapper .slide-content {
+                padding: 15px;
+            }
+
+            #tabbedSliderWrapper .slide-content h3 {
+                font-size: 24px;
+                margin: 0 0 8px 0;
+                color: #06283D;
+                line-height: 125%;
+            }
+
+            #tabbedSliderWrapper .slide-content p {
+                font-size: 14px;
+                color: #666;
+                margin: 0;
+            }
+        </style>
+
+        <div class="tabbed-slider-wrapper" id="tabbedSliderWrapper">
+
+            <!-- Tab Buttons -->
+            <div class="tabbed-slider-tabs">
+                <button class="tab-btn active" data-tab="tab1">Government & institutional bodies</button>
+                <button class="tab-btn" data-tab="tab2">Private sector innovators & integrators</button>
             </div>
+
+            <!-- Tab 1 Content - Slider 1 -->
+            <div class="tab-content active" data-content="tab1">
+                <div class="swiper" id="tabbedSlider1">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img src="https://picsum.photos/400/200?random=1" alt="Slide 1">
+                            <div class="slide-content">
+                                <h3>Smart city mission teams</h3>
+                                <p>Deploying city-wide surveillance and traffic automation.</p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://picsum.photos/400/200?random=2" alt="Slide 2">
+                            <div class="slide-content">
+                                <h3>Urban planners</h3>
+                                <p>Designing safer, smarter infrastructure.</p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://picsum.photos/400/200?random=3" alt="Slide 3">
+                            <div class="slide-content">
+                                <h3>Traffic management</h3>
+                                <p>Real-time traffic monitoring solutions.</p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://picsum.photos/400/200?random=4" alt="Slide 4">
+                            <div class="slide-content">
+                                <h3>Security teams</h3>
+                                <p>Enhanced surveillance capabilities.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+
+            <!-- Tab 2 Content - Slider 2 -->
+            <div class="tab-content" data-content="tab2">
+                <div class="swiper" id="tabbedSlider2">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img src="https://picsum.photos/400/200?random=5" alt="Slide 1">
+                            <div class="slide-content">
+                                <h3>Industrial safety</h3>
+                                <p>Monitoring workplace compliance and safety.</p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://picsum.photos/400/200?random=6" alt="Slide 2">
+                            <div class="slide-content">
+                                <h3>Retail analytics</h3>
+                                <p>Customer behavior and store optimization.</p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://picsum.photos/400/200?random=7" alt="Slide 3">
+                            <div class="slide-content">
+                                <h3>Healthcare facilities</h3>
+                                <p>Patient safety and access control.</p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://picsum.photos/400/200?random=8" alt="Slide 4">
+                            <div class="slide-content">
+                                <h3>Education sector</h3>
+                                <p>Campus security and monitoring.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+
         </div>
 
         <script>
-            (function() {
-                var uid = '<?php echo esc_js($uid); ?>';
-                
+            (function () {
+                var swiper1, swiper2;
+
                 function initTabbedSwiper() {
                     if (typeof Swiper === 'undefined') {
                         setTimeout(initTabbedSwiper, 100);
                         return;
                     }
-                    
-                    new Swiper("#" + uid, {
-                        slidesPerView: 3,
+
+                    var wrapper = document.getElementById('tabbedSliderWrapper');
+                    if (!wrapper) return;
+
+                    // Initialize Slider 1
+                    swiper1 = new Swiper('#tabbedSlider1', {
+                        slidesPerView: 1,
                         spaceBetween: 20,
                         grabCursor: true,
-                        pagination: {
-                            el: "#" + uid + " .swiper-pagination",
-                            clickable: true,
-                        },
                         navigation: {
-                            nextEl: "#" + uid + " .swiper-button-next",
-                            prevEl: "#" + uid + " .swiper-button-prev",
+                            nextEl: '#tabbedSlider1 .swiper-button-next',
+                            prevEl: '#tabbedSlider1 .swiper-button-prev',
                         },
                         breakpoints: {
                             640: {
@@ -377,12 +472,57 @@ class Tabbed_Custom_Swiper extends Widget_Base
                             },
                             1024: {
                                 slidesPerView: 3,
-                                spaceBetween: 30,
+                                spaceBetween: 20,
                             },
                         },
                     });
+
+                    // Initialize Slider 2
+                    swiper2 = new Swiper('#tabbedSlider2', {
+                        slidesPerView: 1,
+                        spaceBetween: 20,
+                        grabCursor: true,
+                        navigation: {
+                            nextEl: '#tabbedSlider2 .swiper-button-next',
+                            prevEl: '#tabbedSlider2 .swiper-button-prev',
+                        },
+                        breakpoints: {
+                            640: {
+                                slidesPerView: 2,
+                                spaceBetween: 20,
+                            },
+                            1024: {
+                                slidesPerView: 3,
+                                spaceBetween: 20,
+                            },
+                        },
+                    });
+
+                    // Tab click handler
+                    var tabBtns = wrapper.querySelectorAll('.tab-btn');
+                    var tabContents = wrapper.querySelectorAll('.tab-content');
+
+                    tabBtns.forEach(function (btn) {
+                        btn.addEventListener('click', function () {
+                            var tabId = this.getAttribute('data-tab');
+
+                            // Remove active from all
+                            tabBtns.forEach(function (b) { b.classList.remove('active'); });
+                            tabContents.forEach(function (c) { c.classList.remove('active'); });
+
+                            // Add active to clicked
+                            this.classList.add('active');
+                            wrapper.querySelector('[data-content="' + tabId + '"]').classList.add('active');
+
+                            // Update swiper on tab change
+                            setTimeout(function () {
+                                if (tabId === 'tab1' && swiper1) swiper1.update();
+                                if (tabId === 'tab2' && swiper2) swiper2.update();
+                            }, 100);
+                        });
+                    });
                 }
-                
+
                 if (document.readyState === 'loading') {
                     document.addEventListener('DOMContentLoaded', initTabbedSwiper);
                 } else {

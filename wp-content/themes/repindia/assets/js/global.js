@@ -477,6 +477,58 @@ jQuery(document).ready(function ($) {
     });
 });
 
+// Smart Tabs functionality (for customtabsmart widget) - No auto scroll
+jQuery(document).ready(function ($) {
+
+    $(document).on('click', '.smart-tabsautoscroll li', function (e) {
+        // Prevent default anchor behavior if anchor exists
+        var $link = $(this).find("a.smart-tab-link");
+        if ($link.length) {
+            e.preventDefault();
+        }
+
+        var $this = $(this);
+        var t = $this.data("id"); // e.g., "content0", "content1", etc.
+
+        // Toggle class only, no .show() or .hide()
+        $(".smart-tabContent .smart-tabdiv").removeClass("smart-active-tabcontent");
+        $(".smart-tabContent .smart-tabdiv." + t).addClass("smart-active-tabcontent");
+
+        // Active tab styling
+        $(".smart-tabsautoscroll li").removeClass("active");
+        $this.addClass("active");
+
+        // Update select-brand text on mobile
+        if ($(window).width() <= 1024) {
+            var selectedText = $link.length ? $link.text() : $this.text();
+            $(".smart-filter-menu .smart-select-brand").text(selectedText.trim());
+        }
+    });
+
+    // Handle click on smart-tab-link to prevent default anchor behavior
+    $(document).on('click', '.smart-tabsautoscroll li .smart-tab-link', function (e) {
+        e.preventDefault();
+        // Event will bubble to parent li, which handles the tab switching
+    });
+
+    // Mobile dropdown functionality for smart tabs
+    // Handle click on select-brand to toggle dropdown
+    $(document).on('click', '.smart-filter-menu .smart-select-brand', function () {
+        if ($(window).width() <= 1024) {
+            $(this).toggleClass("angle-icon");
+            $(this).next("ul.smart-tabsautoscroll").slideToggle();
+        }
+    });
+
+    // Handle click on smart tabs li to close dropdown on mobile
+    $(document).on('click', '.smart-filter-menu .smart-tabsautoscroll li', function () {
+        if ($(window).width() <= 1024) {
+            $(".smart-filter-menu .smart-select-brand").removeClass("angle-icon");
+            $(this).parents("ul.smart-tabsautoscroll").slideUp();
+        }
+    });
+});
+
 
 // Footer Accordion - Mobile Only (max-width: 767px)
 jQuery(document).ready(function ($) {
