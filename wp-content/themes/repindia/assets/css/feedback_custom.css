@@ -936,6 +936,16 @@ div.pin-spacer > .hz-slider-section {
 
 .choose_i2v p.elementor-icon-box-description {margin-top: 8px;}
 
+.elementor-shortcode>span a {
+  border-radius: var(--3XL, 28px);
+  border: 1px solid var(--Golbal-others-border, #e6ebf2);
+  background: var(--tabs-tab-fill-bg-default, #fff);
+  padding: 4px 12px;
+  color: var(--tabs-tab-btn-text-default, #4a5673);
+  font-size: 14px;
+  font-weight: 500;
+}
+
 
 @media (min-width: 768px) {
   .hz-slider-section .swiper-slide h2 {
