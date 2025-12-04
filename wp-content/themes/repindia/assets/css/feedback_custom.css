@@ -341,6 +341,52 @@ html.lenis body {
   pointer-events: auto;
 }
 
+/* Hide left-side accordion videos on desktop - only show in right panel */
+@media (min-width: 768px) {
+  /* Dark theme accordion - hide left-side videos on desktop */
+  .accontent .accordion_video {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+
+  /* White theme accordion - hide left-side videos on desktop (override inline active state) */
+  .vaw_accordion_set.active .vaw_accontent .vaw_accordion_video {
+    display: none !important;
+  }
+}
+
+/* Show left-side accordion videos on mobile (tablet and below) */
+@media (max-width: 767px) {
+  /* Show accordion video inside content on mobile when accordion is active */
+  .accordion_set.acactive .accontent .accordion_video {
+    display: block !important;
+    position: relative !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    margin-top: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .accordion_set.acactive .accontent .accordion_video img,
+  .accordion_set.acactive .accontent .accordion_video video,
+  .accordion_set.acactive .accontent .accordion_video iframe {
+    height: auto !important;
+    max-height: 300px;
+  }
+
+  /* Hide right-side video panel on mobile */
+  .padd-accordion_video {
+    display: none !important;
+  }
+}
+
 .accordion_video iframe,
 .accordion_video video,
 .accordion_video img {
@@ -866,6 +912,31 @@ div.pin-spacer > .hz-slider-section {
   border-radius: 12px 12px 0 0 !important;
 }
 
+.absolute_slider.e-flex.e-con.e-child {
+  position: absolute;
+  bottom: -60px;
+  background: #fff;
+  left: -14%;
+  padding: 24px;
+  width: 500px;
+}
+.absolute_slider .elementor-testimonial__footer, .deployed_slider .elementor-testimonial__footer {
+  margin-top: 4px !important;
+}
+.absolute_slider .elementor-widget-testimonial-carousel.elementor-pagination-type-bullets .swiper, .deployed_slider .elementor-widget-testimonial-carousel.elementor-pagination-type-bullets .swiper {
+  padding-bottom: 30px !important;
+}
+
+.absolute_slider .swiper-pagination-bullet-active, .deployed_slider .swiper-pagination-bullet-active {
+  width: 24px !important;
+}
+.absolute_slider .swiper-pagination-bullet, .deployed_slider .swiper-pagination-bullet {
+  border-radius: 8px;
+}
+
+.choose_i2v p.elementor-icon-box-description {margin-top: 8px;}
+
+
 @media (min-width: 768px) {
   .hz-slider-section .swiper-slide h2 {
     font-size: 32px;
@@ -1051,6 +1122,21 @@ html {
 
   .accordion_sets .btn-sec_gap {
     padding-left: 4rem;
+  }
+
+  /* ============================================
+     Video Accordion White - Mobile Responsive
+     Hide right-side panel, show inline videos
+     ============================================ */
+  
+  /* Hide right-side video panel on mobile for white accordion */
+  .vaw_padd-accordion_video {
+    display: none !important;
+  }
+
+  /* Ensure left-side videos in white accordion show on mobile when active */
+  .vaw_accordion_set.active .vaw_accontent .vaw_accordion_video {
+    display: block !important;
   }
 
   .banner_content_txt {

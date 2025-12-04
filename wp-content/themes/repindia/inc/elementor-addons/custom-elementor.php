@@ -34,6 +34,8 @@ class Widget_Loader
 		require_once(__DIR__.'/widgets/analytic_sidebar_nav.php');
 		require_once(__DIR__.'/widgets/horizontal_slider.php');
 		require_once(__DIR__.'/widgets/custom_tab_section.php');
+		require_once(__DIR__.'/widgets/tabbed_custom_swiper.php');
+		require_once(__DIR__.'/widgets/simple_swiper_slider.php');
     }
     public function register_widgets()
     {
@@ -58,6 +60,8 @@ class Widget_Loader
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Analytic_Sidebar_Nav() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Horizontal_Slider() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Tab_Section() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Tabbed_Custom_Swiper() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Simple_Swiper_Slider() );
     }
 	public function __construct()
 	{
