@@ -27,6 +27,13 @@ h4.contenttitle {
     width: 16px;
     height: 16px;
 }
+a.blank_anchor {
+    color: #5F6F94;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 26px;
+    border-bottom: 1px solid #E6E6E6;
+}
 
 @media(min-width: 1601px){
     
