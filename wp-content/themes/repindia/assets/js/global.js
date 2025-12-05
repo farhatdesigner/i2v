@@ -920,6 +920,15 @@ var stickyMenuConfigs = {
         ],
         triggerOffset: 220, // Adjust if needed
         scrollThreshold: 120 // Fixed at 120px from top of viewport
+    },
+    // Configuration for partner page
+    partnersystems: {
+        sections: [
+            ".channel_partner",
+            ".technology_partner",
+        ],
+        triggerOffset: 220, // Adjust if needed
+        scrollThreshold: 120 // Fixed at 120px from top of viewport
     }
 };
 
@@ -948,6 +957,13 @@ jQuery(document).ready(function ($) {
         
         if (hasDefaultSections) {
             return stickyMenuConfigs.default;
+        }
+
+        // Check for partner page sections
+        var hasPartnerSections = $(".channel_partner, .technology_partner").length >= 2;
+        
+        if (hasPartnerSections) {
+            return stickyMenuConfigs.partnersystems;
         }
         
         // If no specific sections found, try to auto-detect from menu
