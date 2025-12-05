@@ -329,18 +329,22 @@ class Tabbed_Custom_Swiper extends Widget_Base
 
             #tabbedSliderWrapper .swiper-slide {
                 background: #fff;
-                border-radius: 10px;
                 overflow: hidden;
+                border-radius: 12px;
+                width: 350px;
             }
 
             #tabbedSliderWrapper .swiper-slide img {
                 width: 100%;
-                height: 180px;
+                height: 300px;
                 object-fit: cover;
             }
 
             #tabbedSliderWrapper .slide-content {
-                padding: 15px;
+                padding: 24px;
+                box-shadow: 0 10px 20px 0 rgba(0, 82, 128, 0.10);
+                margin-bottom: 10px;
+                border-radius: 0 0 12px 12px;
             }
 
             #tabbedSliderWrapper .slide-content h3 {
@@ -354,6 +358,7 @@ class Tabbed_Custom_Swiper extends Widget_Base
                 font-size: 14px;
                 color: #666;
                 margin: 0;
+                min-height: 50px;
             }
         </style>
 
@@ -398,8 +403,8 @@ class Tabbed_Custom_Swiper extends Widget_Base
                             </div>
                         </div>
                     </div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"><img src="<?php echo esc_url(home_url('/')); ?>wp-content/themes/repindia/assets/images/icons/arrow-white.svg" alt="Next"></div>
+                    <div class="swiper-button-prev"><img src="<?php echo esc_url(home_url('/')); ?>wp-content/themes/repindia/assets/images/icons/arrow-white.svg" alt="Prev"></div>
                 </div>
             </div>
 
@@ -436,8 +441,8 @@ class Tabbed_Custom_Swiper extends Widget_Base
                             </div>
                         </div>
                     </div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"><img src="<?php echo esc_url(home_url('/')); ?>wp-content/themes/repindia/assets/images/icons/arrow-white.svg" alt="Next"></div>
+                    <div class="swiper-button-prev"><img src="<?php echo esc_url(home_url('/')); ?>wp-content/themes/repindia/assets/images/icons/arrow-white.svg" alt="Prev"></div>
                 </div>
             </div>
 
@@ -458,7 +463,7 @@ class Tabbed_Custom_Swiper extends Widget_Base
 
                     // Initialize Slider 1
                     swiper1 = new Swiper('#tabbedSlider1', {
-                        slidesPerView: 1,
+                        slidesPerView: "auto",
                         spaceBetween: 20,
                         grabCursor: true,
                         navigation: {
@@ -467,11 +472,11 @@ class Tabbed_Custom_Swiper extends Widget_Base
                         },
                         breakpoints: {
                             640: {
-                                slidesPerView: 2,
+                                slidesPerView: "auto",
                                 spaceBetween: 20,
                             },
                             1024: {
-                                slidesPerView: 3,
+                                slidesPerView: "auto",
                                 spaceBetween: 20,
                             },
                         },
@@ -479,7 +484,7 @@ class Tabbed_Custom_Swiper extends Widget_Base
 
                     // Initialize Slider 2
                     swiper2 = new Swiper('#tabbedSlider2', {
-                        slidesPerView: 1,
+                        slidesPerView: "auto",
                         spaceBetween: 20,
                         grabCursor: true,
                         navigation: {

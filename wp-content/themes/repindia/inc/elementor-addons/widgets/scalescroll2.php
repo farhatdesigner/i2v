@@ -15,16 +15,16 @@ use Elementor\Utils;
 if (!defined('ABSPATH'))
     exit;
 
-class Scalescroll extends Widget_Base
+class Scalescroll2 extends Widget_Base
 {
     public function get_name()
     {
-        return 'scalescroll';
+        return 'scalescroll2';
     }
 
     public function get_title()
     {
-        return 'Scale Scroll';
+        return 'Scale Scroll 2';
     }
 
     public function get_icon()
@@ -50,7 +50,7 @@ class Scalescroll extends Widget_Base
             'content',
             [
                 'label' => esc_html__('Content', 'repindia'),
-                'type' => \Elementor\Controls_Manager::WYSIWYG,
+                'type' => Controls_Manager::WYSIWYG,
                 'default' => '<h2>Scale on Scroll</h2><p>This content will scale as you scroll.</p>',
                 'label_block' => true,
             ]
@@ -60,7 +60,7 @@ class Scalescroll extends Widget_Base
             'min_scale',
             [
                 'label' => esc_html__('Minimum Scale', 'repindia'),
-                'type' => \Elementor\Controls_Manager::SLIDER,
+                'type' => Controls_Manager::SLIDER,
                 'size_units' => ['px'],
                 'range' => [
                     'px' => [
@@ -81,7 +81,7 @@ class Scalescroll extends Widget_Base
             'max_scale',
             [
                 'label' => esc_html__('Maximum Scale', 'repindia'),
-                'type' => \Elementor\Controls_Manager::SLIDER,
+                'type' => Controls_Manager::SLIDER,
                 'size_units' => ['px'],
                 'range' => [
                     'px' => [
@@ -102,7 +102,7 @@ class Scalescroll extends Widget_Base
             'scroll_offset',
             [
                 'label' => esc_html__('Scroll Offset', 'repindia'),
-                'type' => \Elementor\Controls_Manager::SLIDER,
+                'type' => Controls_Manager::SLIDER,
                 'size_units' => ['px', '%'],
                 'range' => [
                     'px' => [
@@ -130,7 +130,7 @@ class Scalescroll extends Widget_Base
             'section_style',
             [
                 'label' => 'Style',
-                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+                'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
 
@@ -138,7 +138,7 @@ class Scalescroll extends Widget_Base
             'text_align',
             [
                 'label' => esc_html__('Text Alignment', 'repindia'),
-                'type' => \Elementor\Controls_Manager::CHOOSE,
+                'type' => Controls_Manager::CHOOSE,
                 'options' => [
                     'left' => [
                         'title' => esc_html__('Left', 'repindia'),
@@ -162,7 +162,7 @@ class Scalescroll extends Widget_Base
             'content_color',
             [
                 'label' => esc_html__('Text Color', 'repindia'),
-                'type' => \Elementor\Controls_Manager::COLOR,
+                'type' => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .scale-scroll-content' => 'color: {{VALUE}};',
                 ],
@@ -170,7 +170,7 @@ class Scalescroll extends Widget_Base
         );
 
         $this->add_group_control(
-            \Elementor\Group_Control_Typography::get_type(),
+            Group_Control_Typography::get_type(),
             [
                 'name' => 'content_typography',
                 'label' => esc_html__('Typography', 'repindia'),
@@ -188,25 +188,23 @@ class Scalescroll extends Widget_Base
         $this->add_inline_editing_attributes('custom_class', 'basic'); ?>
 
         <style>
-          .gallery {
+          .scalescroll2-widget .gallery {
             flex-direction: row;
           }
-          .detailsWrapper {
+          .scalescroll2-widget .detailsWrapper {
             float: left;
           }
         </style>
 
-
-        <div class="makdmks">
+        <div class="makdmks scalescroll2-widget">
             <div class="custom-container">
                 <div class="title-box">
-                    <div class="col-lg-6 col-12">
+                    <div class="col-lg-5 col-xl-4 col-12">
                         <h3 class="main_title quote mb-12">
                         Real-world impact of i2V in oil & gas operations
                         </h3>
                         <div class="text-left">
-                            <p>i2V VA integrates smoothly into your existing infrastructure — no rip-and-replace needed. From
-                                ONVIF cameras to control room software, it just works.</p>
+                            <p>Our solutions are designed for real challenges on the ground. From remote pipelines to high-risk refineries, here’s how i2V delivers measurable value in critical scenarios.</p>
                         </div>
                     </div>
                 </div>
@@ -306,16 +304,14 @@ class Scalescroll extends Widget_Base
                             <div class="details 1">
                                 <div class="txtflex">
                                     <h2>100+ IP camera brands supported</h2>
-                                    <p class="para-text">Seamlessly integrates with major camera vendors — no hardware
-                                        replacement needed.</p>
+                                    <p class="para-text">Seamlessly integrates with major camera vendors — no hardware replacement needed.</p>
                                 </div>
                             </div>
 
                             <div class="details 2">
                                 <div class="txtflex">
                                     <h2>ONVIF-compliant for plug-and-play compatibility</h2>
-                                    <p class="para-text">Works out-of-the-box with ONVIF-compliant devices for simplified system
-                                        integration.</p>
+                                    <p class="para-text">Works out-of-the-box with ONVIF-compliant devices for simplified system integration.</p>
                                 </div>
                             </div>
 
@@ -323,16 +319,14 @@ class Scalescroll extends Widget_Base
                                 <div class="headline blue"></div>
                                 <div class="txtflex">
                                     <h2>Works across LAN deployments — no internet needed</h2>
-                                    <p class="para-text">Secure, reliable performance in offline environments with zero cloud
-                                        dependency.</p>
+                                    <p class="para-text">Secure, reliable performance in offline environments with zero cloud dependency.</p>
                                 </div>
                             </div>
 
                             <div class="details 4">
                                 <div class="txtflex">
                                     <h2>Supports both Windows and Linux systems</h2>
-                                    <p class="para-text">Flexible installation across your existing OS infrastructure — no
-                                        vendor lock-in.</p>
+                                    <p class="para-text">Flexible installation across your existing OS infrastructure — no vendor lock-in.</p>
                                     <div class="bolt">
                                         <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-1.svg">
                                         <p>Deployed across 11+ smart cities without replacing existing hardware.</p>
@@ -346,8 +340,7 @@ class Scalescroll extends Widget_Base
                             <div class="details 5">
                                 <div class="txtflex">
                                     <h2>Available in web, desktop and mobile based client versions</h2>
-                                    <p class="para-text">Access analytics through browser or installed software, depending on
-                                        operational preference.</p>
+                                    <p class="para-text">Access analytics through browser or installed software, depending on operational preference.</p>
                                 </div>
                             </div>
 
@@ -359,78 +352,30 @@ class Scalescroll extends Widget_Base
                             <div class="photo red">
                                 <div class="logo_box">
                                     <ul>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg">
-                                        </li>
+                                        <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
+                                        <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
+                                        <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
+                                        <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
+                                        <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
+                                        <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
+                                        <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
+                                        <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
+                                        <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
+                                        <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
+                                        <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
+                                        <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
+                                        <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
+                                        <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
+                                        <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
+                                        <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
+                                        <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
+                                        <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
+                                        <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
+                                        <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
+                                        <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
+                                        <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
+                                        <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
+                                        <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
 
 
                                     </ul>
@@ -439,48 +384,40 @@ class Scalescroll extends Widget_Base
                                 <div class="details 1">
                                     <div class="txtflex">
                                         <h2>100+ IP camera brands supported</h2>
-                                        <p class="para-text">Seamlessly integrates with major camera vendors — no hardware
-                                            replacement needed.</p>
+                                        <p class="para-text">Seamlessly integrates with major camera vendors — no hardware replacement needed.</p>
                                     </div>
                                 </div>
                             </div>
 
 
-                            <div class="photo green"> <img class="radius-12" decoding="async"
-                                    src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-271.webp">
+                            <div class="photo green"> <img class="radius-12" decoding="async" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-271.webp">
                                 <div class="details 2">
                                     <div class="txtflex">
                                         <h2>ONVIF-compliant for plug-and-play compatibility</h2>
-                                        <p class="para-text">Works out-of-the-box with ONVIF-compliant devices for simplified
-                                            system integration.</p>
+                                        <p class="para-text">Works out-of-the-box with ONVIF-compliant devices for simplified system integration.</p>
                                     </div>
                                 </div>
                             </div>
 
 
-                            <div class="photo blue"> <img class="radius-12" decoding="async"
-                                    src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-270.webp">
+                            <div class="photo blue"> <img class="radius-12" decoding="async" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-270.webp">
                                 <div class="details 3">
                                     <div class="headline blue"></div>
                                     <div class="txtflex">
                                         <h2>Works across LAN deployments — no internet needed</h2>
-                                        <p class="para-text">Secure, reliable performance in offline environments with zero
-                                            cloud dependency.</p>
+                                        <p class="para-text">Secure, reliable performance in offline environments with zero cloud dependency.</p>
                                     </div>
                                 </div>
                             </div>
 
 
-                            <div class="photo yellow"><img class="radius-12" decoding="async"
-                                    src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-273.webp">
+                            <div class="photo yellow"><img class="radius-12" decoding="async" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-273.webp">
                                 <div class="details 4">
                                     <div class="txtflex">
                                         <h2>Supports both Windows and Linux systems</h2>
-                                        <p class="para-text">Flexible installation across your existing OS infrastructure — no
-                                            vendor lock-in.</p>
+                                        <p class="para-text">Flexible installation across your existing OS infrastructure — no vendor lock-in.</p>
                                         <div class="bolt">
-                                            <img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-1.svg">
+                                            <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-1.svg">
                                             <p>Deployed across 11+ smart cities without replacing existing hardware.</p>
                                             <div class="btn-bolt">
                                                 <a href="#">Request a demo to lean more</a>
@@ -491,13 +428,11 @@ class Scalescroll extends Widget_Base
                             </div>
 
 
-                            <div class="photo orange"> <img class="radius-12" decoding="async"
-                                    src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-272.webp">
+                            <div class="photo orange"> <img class="radius-12" decoding="async" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-272.webp">
                                 <div class="details 5">
                                     <div class="txtflex">
                                         <h2>Available in web, desktop and mobile based client versions</h2>
-                                        <p class="para-text">Access analytics through browser or installed software, depending
-                                            on operational preference.</p>
+                                        <p class="para-text">Access analytics through browser or installed software, depending on operational preference.</p>
                                     </div>
                                 </div>
 
@@ -517,7 +452,8 @@ class Scalescroll extends Widget_Base
         </div>
 
 
-        <?php
+<?php
     }
 }
 ?>
+

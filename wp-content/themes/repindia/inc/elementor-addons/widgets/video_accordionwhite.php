@@ -292,26 +292,24 @@ class Video_accordionwhite extends Widget_Base
             /* Video Accordion White - Unique Styles */
             .vaw_accordion_wrap {
                 background: #fff;
-                padding: 60px 0;
                 border-radius: 12px;
+                padding: 80px 0;
             }
 
             .vaw_vertical_scroller {
                 align-items: flex-start;
+                gap: 80px;
+                flex-wrap: nowrap;
             }
 
-            .vaw_padd-accordion {
-                padding: 40px;
-            }
 
             .vaw_padd-accordion_video {
-                padding: 40px;
                 position: sticky;
                 top: 100px;
             }
 
             .vaw_main_title_box {
-                margin-bottom: 40px;
+                margin-bottom: 48px;
             }
 
             .vaw_main_title {
@@ -502,7 +500,7 @@ class Video_accordionwhite extends Widget_Base
                 left: 0;
                 height: 100%;
                 width: var(--vaw-progress, 0%);
-                background: linear-gradient(90deg, #0099ED, #0066cc);
+                background: linear-gradient(90deg, #74C2ED,#74C2ED);
                 transition: width 0.05s linear;
             }
 

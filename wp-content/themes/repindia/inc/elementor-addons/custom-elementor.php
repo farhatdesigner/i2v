@@ -37,6 +37,7 @@ class Widget_Loader
 		require_once(__DIR__.'/widgets/custom_tab_section.php');
 		require_once(__DIR__.'/widgets/tabbed_custom_swiper.php');
 		require_once(__DIR__.'/widgets/simple_swiper_slider.php');
+		require_once(__DIR__.'/widgets/scalescroll2.php');
     }
     public function register_widgets()
     {
@@ -64,6 +65,7 @@ class Widget_Loader
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Tab_Section() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Tabbed_Custom_Swiper() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Simple_Swiper_Slider() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Scalescroll2() );
     }
 	public function __construct()
 	{

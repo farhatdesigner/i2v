@@ -1158,8 +1158,33 @@ html {
   .img-50 {
     width: 100%;
   }
-
   .banner_content_txt-industries {
     left: 0;
   }
+
+  .absolute_slider.e-flex.e-con.e-child {
+    left: auto;
+    width: 100%;
+    max-width: 500px;
+}
+
+#tabbedSliderWrapper .tabbed-slider-tabs {
+  flex-direction: column;
+  margin-bottom: 20px;
+  margin-top: 30px;
+}
+
+button.tab-btn.active[data-tab="tab1"] {
+  border-radius: 0;
+}
+
+#tabbedSliderWrapper .swiper-button-next, #tabbedSliderWrapper .swiper-button-prev {
+  top: auto !important;
+  bottom: -40px !important;
+}
+.customtabsmart .smart-content-inner-text {
+  padding: 10px ;
+}
+
+
 }

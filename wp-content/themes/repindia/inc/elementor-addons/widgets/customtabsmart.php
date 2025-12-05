@@ -102,10 +102,10 @@ class Customtabsmart extends Widget_Base
 
 		<div class="customtabsmart">
 			<section class="smart-microspace-inside">
-				<div class="customcontainer">
+				<div class="custom-container">
 					<div class="col-lg-8 col-xxl-7">
 						<h3 class="smart-main_title quote">Smart city solution ecosystem — connecting
-						technology, people, and cities with i2V</h3>
+							technology, people, and cities with i2V</h3>
 					</div>
 					<div class="smart-contentWrapper">
 						<div class="smart-filter-menu smart-tabsWrapper">
@@ -142,27 +142,174 @@ class Customtabsmart extends Widget_Base
 							<div class="row overflow-hidden">
 								<div class="smart-tabContent position-relative" id="smart-tabs-content">
 									<div class="content0 smart-tabdiv  smart-active-tabcontent">
-										<div class="smart-content-inner row">
-											<div class="smart-content-inner-image col-lg-6">
-												<img class="img-fluid rounded-4" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/thumbnail.webp" alt="i2V’s VMS">
+										<div class="smart-content-inner row g-0">
+											<div class="smart-content-inner-image col-lg-7">
+												<img class="img-fluid rounded-4"
+													src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/thumbnail.webp"
+													alt="i2V’s VMS">
 											</div>
-											<div class="smart-content-inner-text col-lg-6">
+											<div class="smart-content-inner-text col-lg-5">
 												<h4 class="smart-sub_title">Centralized visibility with i2V VMS</h4>
-												<p>i2V’s enterprise-grade Video Management System is a powerful IP-based solution engineered for large-scale, mission-critical environments. It offers seamless integration with unlimited cameras, servers, and users—delivering real-time monitoring, playback, and analytics from a single, unified platform.</p>
-												<p>Whether you're managing a city-wide network or a multi-site enterprise, i2V’s VMS ensures secure, scalable surveillance with complete operational control.</p>
-												<ul class="p-0 smart-right_list">
-													<li>
-														<p>Our scalable Video Management System offers real-time monitoring and playback across all connected cameras, crucial for City-Wide Surveillance, Emergency Response, and coordinating across multiple zones.</p>
-													</li>
-												</ul>
-												<div class="text-left">
-													<a href="#" class="theme-btn bg-trans border_btnlight">Learn i2V VMS solutions</a>
+												<p>Our scalable Video Management System offers real-time monitoring and playback
+													across all connected cameras, crucial for City-Wide Surveillance, Emergency
+													Response, and coordinating across multiple zones.</p>
+												<p>It also supports Mobile View + Edge Recording for extended reach.</p>
+												<div class="btn-sec_gap">
+													<a class="theme-btn-white  border-btn-grey" href="#">Request a VMS demo</a>
+													<a href="#" class="theme-btn bg-trans border_btnlight">Learn more about centralized VMS</a>
 												</div>
 											</div>
-											
+
 										</div>
 									</div>
-							
+									<div class="content1 smart-tabdiv">
+										<div class="smart-content-inner row g-0">
+											<div class="smart-content-inner-image col-lg-7">
+												<img class="img-fluid rounded-4"
+													src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/thumbnail.webp"
+													alt="i2V’s VMS">
+											</div>
+											<div class="smart-content-inner-text col-lg-5">
+												<h4 class="smart-sub_title">Intelligence behind every camera</h4>
+												<p>Our scalable Video Management System offers real-time monitoring and playback
+													across all connected cameras, crucial for City-Wide Surveillance, Emergency
+													Response, and coordinating across multiple zones.</p>
+												<p>It also supports Mobile View + Edge Recording for extended reach.</p>
+												<div class="btn-sec_gap">
+													<a class="theme-btn-white  border-btn-grey" href="#">Request a VMS demo</a>
+													<a href="#" class="theme-btn bg-trans border_btnlight">Learn more about centralized VMS</a>
+												</div>
+											</div>
+
+										</div>
+									</div>
+									<div class="content2 smart-tabdiv">
+										<div class="smart-content-inner row g-0">
+											<div class="smart-content-inner-image col-lg-7">
+												<img class="img-fluid rounded-4"
+													src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/thumbnail.webp"
+													alt="i2V’s VMS">
+											</div>
+											<div class="smart-content-inner-text col-lg-5">
+												<h4 class="smart-sub_title">The nerve center of urban safety</h4>
+												<p>Our scalable Video Management System offers real-time monitoring and playback
+													across all connected cameras, crucial for City-Wide Surveillance, Emergency
+													Response, and coordinating across multiple zones.</p>
+												<p>It also supports Mobile View + Edge Recording for extended reach.</p>
+												<div class="btn-sec_gap">
+													<a class="theme-btn-white  border-btn-grey" href="#">Request a VMS demo</a>
+													<a href="#" class="theme-btn bg-trans border_btnlight">Learn more about centralized VMS</a>
+												</div>
+											</div>
+
+										</div>
+									</div>
+									<div class="content3 smart-tabdiv">
+										<div class="smart-content-inner row g-0">
+											<div class="smart-content-inner-image col-lg-7">
+												<img class="img-fluid rounded-4"
+													src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/thumbnail.webp"
+													alt="i2V’s VMS">
+											</div>
+											<div class="smart-content-inner-text col-lg-5">
+												<h4 class="smart-sub_title">Centralized visibility with i2V VMS</h4>
+												<p>Our scalable Video Management System offers real-time monitoring and playback
+													across all connected cameras, crucial for City-Wide Surveillance, Emergency
+													Response, and coordinating across multiple zones.</p>
+												<p>It also supports Mobile View + Edge Recording for extended reach.</p>
+												<div class="btn-sec_gap">
+													<a class="theme-btn-white  border-btn-grey" href="#">Request a VMS demo</a>
+													<a href="#" class="theme-btn bg-trans border_btnlight">Learn more about centralized VMS</a>
+												</div>
+											</div>
+
+										</div>
+									</div>
+									<div class="content4 smart-tabdiv">
+										<div class="smart-content-inner row g-0">
+											<div class="smart-content-inner-image col-lg-7">
+												<img class="img-fluid rounded-4"
+													src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/thumbnail.webp"
+													alt="i2V’s VMS">
+											</div>
+											<div class="smart-content-inner-text col-lg-5">
+												<h4 class="smart-sub_title">Centralized visibility with i2V VMS</h4>
+												<p>Our scalable Video Management System offers real-time monitoring and playback
+													across all connected cameras, crucial for City-Wide Surveillance, Emergency
+													Response, and coordinating across multiple zones.</p>
+												<p>It also supports Mobile View + Edge Recording for extended reach.</p>
+												<div class="btn-sec_gap">
+													<a class="theme-btn-white  border-btn-grey" href="#">Request a VMS demo</a>
+													<a href="#" class="theme-btn bg-trans border_btnlight">Learn more about centralized VMS</a>
+												</div>
+											</div>
+
+										</div>
+									</div>
+									<div class="content5 smart-tabdiv">
+										<div class="smart-content-inner row g-0">
+											<div class="smart-content-inner-image col-lg-7">
+												<img class="img-fluid rounded-4"
+													src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/thumbnail.webp"
+													alt="i2V’s VMS">
+											</div>
+											<div class="smart-content-inner-text col-lg-5">
+												<h4 class="smart-sub_title">Centralized visibility with i2V VMS</h4>
+												<p>Our scalable Video Management System offers real-time monitoring and playback
+													across all connected cameras, crucial for City-Wide Surveillance, Emergency
+													Response, and coordinating across multiple zones.</p>
+												<p>It also supports Mobile View + Edge Recording for extended reach.</p>
+												<div class="btn-sec_gap">
+													<a class="theme-btn-white  border-btn-grey" href="#">Request a VMS demo</a>
+													<a href="#" class="theme-btn bg-trans border_btnlight">Learn more about centralized VMS</a>
+												</div>
+											</div>
+
+										</div>
+									</div>
+									<div class="content6 smart-tabdiv">
+										<div class="smart-content-inner row g-0">
+											<div class="smart-content-inner-image col-lg-7">
+												<img class="img-fluid rounded-4"
+													src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/thumbnail.webp"
+													alt="i2V’s VMS">
+											</div>
+											<div class="smart-content-inner-text col-lg-5">
+												<h4 class="smart-sub_title">Centralized visibility with i2V VMS</h4>
+												<p>Our scalable Video Management System offers real-time monitoring and playback
+													across all connected cameras, crucial for City-Wide Surveillance, Emergency
+													Response, and coordinating across multiple zones.</p>
+												<p>It also supports Mobile View + Edge Recording for extended reach.</p>
+												<div class="btn-sec_gap">
+													<a class="theme-btn-white  border-btn-grey" href="#">Request a VMS demo</a>
+													<a href="#" class="theme-btn bg-trans border_btnlight">Learn more about centralized VMS</a>
+												</div>
+											</div>
+
+										</div>
+									</div>
+									<div class="content7 smart-tabdiv">
+										<div class="smart-content-inner row g-0">
+											<div class="smart-content-inner-image col-lg-7">
+												<img class="img-fluid rounded-4"
+													src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/thumbnail.webp"
+													alt="i2V’s VMS">
+											</div>
+											<div class="smart-content-inner-text col-lg-5">
+												<h4 class="smart-sub_title">Centralized visibility with i2V VMS</h4>
+												<p>Our scalable Video Management System offers real-time monitoring and playback
+													across all connected cameras, crucial for City-Wide Surveillance, Emergency
+													Response, and coordinating across multiple zones.</p>
+												<p>It also supports Mobile View + Edge Recording for extended reach.</p>
+												<div class="btn-sec_gap">
+													<a class="theme-btn-white  border-btn-grey" href="#">Request a VMS demo</a>
+													<a href="#" class="theme-btn bg-trans border_btnlight">Learn more about centralized VMS</a>
+												</div>
+											</div>
+
+										</div>
+									</div>
+
 								</div>
 							</div>
 						</div>
@@ -175,6 +322,6 @@ class Customtabsmart extends Widget_Base
 			</section>
 
 		</div>
-<?php
+		<?php
 	}
 } ?>
