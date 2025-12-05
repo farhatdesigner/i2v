@@ -303,7 +303,7 @@ class Scalescroll extends Widget_Base
                 <div class="gallery">
                     <div class="left">
                         <div class="detailsWrapper">
-                            <div class="details 1">
+                            <div class="details details-1">
                                 <div class="txtflex">
                                     <h2>100+ IP camera brands supported</h2>
                                     <p class="para-text">Seamlessly integrates with major camera vendors — no hardware
@@ -311,7 +311,7 @@ class Scalescroll extends Widget_Base
                                 </div>
                             </div>
 
-                            <div class="details 2">
+                            <div class="details details-2">
                                 <div class="txtflex">
                                     <h2>ONVIF-compliant for plug-and-play compatibility</h2>
                                     <p class="para-text">Works out-of-the-box with ONVIF-compliant devices for simplified system
@@ -319,7 +319,7 @@ class Scalescroll extends Widget_Base
                                 </div>
                             </div>
 
-                            <div class="details 3">
+                            <div class="details details-3">
                                 <div class="headline blue"></div>
                                 <div class="txtflex">
                                     <h2>Works across LAN deployments — no internet needed</h2>
@@ -328,7 +328,7 @@ class Scalescroll extends Widget_Base
                                 </div>
                             </div>
 
-                            <div class="details 4">
+                            <div class="details details-4">
                                 <div class="txtflex">
                                     <h2>Supports both Windows and Linux systems</h2>
                                     <p class="para-text">Flexible installation across your existing OS infrastructure — no
@@ -343,7 +343,7 @@ class Scalescroll extends Widget_Base
                                 </div>
                             </div>
 
-                            <div class="details 5">
+                            <div class="details details-5">
                                 <div class="txtflex">
                                     <h2>Available in web, desktop and mobile based client versions</h2>
                                     <p class="para-text">Access analytics through browser or installed software, depending on
@@ -356,7 +356,7 @@ class Scalescroll extends Widget_Base
 
                     <div class="right">
                         <div class="photos">
-                            <div class="photo red">
+                            <div class="photo photo_custom">
                                 <div class="logo_box">
                                     <ul>
                                         <li><img
@@ -436,7 +436,7 @@ class Scalescroll extends Widget_Base
                                     </ul>
                                 </div>
 
-                                <div class="details 1">
+                                <div class="details details-1">
                                     <div class="txtflex">
                                         <h2>100+ IP camera brands supported</h2>
                                         <p class="para-text">Seamlessly integrates with major camera vendors — no hardware
@@ -446,9 +446,9 @@ class Scalescroll extends Widget_Base
                             </div>
 
 
-                            <div class="photo green"> <img class="radius-12" decoding="async"
+                            <div class="photo photo_custom"> <img class="radius-12" decoding="async"
                                     src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-271.webp">
-                                <div class="details 2">
+                                <div class="details details-2">
                                     <div class="txtflex">
                                         <h2>ONVIF-compliant for plug-and-play compatibility</h2>
                                         <p class="para-text">Works out-of-the-box with ONVIF-compliant devices for simplified
@@ -458,9 +458,9 @@ class Scalescroll extends Widget_Base
                             </div>
 
 
-                            <div class="photo blue"> <img class="radius-12" decoding="async"
+                            <div class="photo photo_custom"> <img class="radius-12" decoding="async"
                                     src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-270.webp">
-                                <div class="details 3">
+                                <div class="details details-3">
                                     <div class="headline blue"></div>
                                     <div class="txtflex">
                                         <h2>Works across LAN deployments — no internet needed</h2>
@@ -471,9 +471,9 @@ class Scalescroll extends Widget_Base
                             </div>
 
 
-                            <div class="photo yellow"><img class="radius-12" decoding="async"
+                            <div class="photo photo_custom"><img class="radius-12" decoding="async"
                                     src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-273.webp">
-                                <div class="details 4">
+                                <div class="details details-4">
                                     <div class="txtflex">
                                         <h2>Supports both Windows and Linux systems</h2>
                                         <p class="para-text">Flexible installation across your existing OS infrastructure — no
@@ -491,9 +491,9 @@ class Scalescroll extends Widget_Base
                             </div>
 
 
-                            <div class="photo orange"> <img class="radius-12" decoding="async"
+                            <div class="photo photo_custom"> <img class="radius-12" decoding="async"
                                     src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-272.webp">
-                                <div class="details 5">
+                                <div class="details details-5">
                                     <div class="txtflex">
                                         <h2>Available in web, desktop and mobile based client versions</h2>
                                         <p class="para-text">Access analytics through browser or installed software, depending

@@ -375,28 +375,28 @@ class Tabbed_Custom_Swiper extends Widget_Base
                 <div class="swiper" id="tabbedSlider1">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                            <img src="https://picsum.photos/400/200?random=1" alt="Slide 1">
+                            <img src="<?php echo esc_url(home_url('/')); ?>/wp-content/uploads/2025/11/thumbnail.webp" alt="Slide 1">
                             <div class="slide-content">
                                 <h3>Smart city mission teams</h3>
                                 <p>Deploying city-wide surveillance and traffic automation.</p>
                             </div>
                         </div>
                         <div class="swiper-slide">
-                            <img src="https://picsum.photos/400/200?random=2" alt="Slide 2">
+                            <img src="<?php echo esc_url(home_url('/')); ?>/wp-content/uploads/2025/11/thumbnail.webp" alt="Slide 2">
                             <div class="slide-content">
                                 <h3>Urban planners</h3>
                                 <p>Designing safer, smarter infrastructure.</p>
                             </div>
                         </div>
                         <div class="swiper-slide">
-                            <img src="https://picsum.photos/400/200?random=3" alt="Slide 3">
+                            <img src="<?php echo esc_url(home_url('/')); ?>/wp-content/uploads/2025/11/thumbnail.webp" alt="Slide 3">
                             <div class="slide-content">
                                 <h3>Traffic management</h3>
                                 <p>Real-time traffic monitoring solutions.</p>
                             </div>
                         </div>
                         <div class="swiper-slide">
-                            <img src="https://picsum.photos/400/200?random=4" alt="Slide 4">
+                            <img src="<?php echo esc_url(home_url('/')); ?>/wp-content/uploads/2025/11/thumbnail.webp" alt="Slide 4">
                             <div class="slide-content">
                                 <h3>Security teams</h3>
                                 <p>Enhanced surveillance capabilities.</p>
@@ -413,28 +413,28 @@ class Tabbed_Custom_Swiper extends Widget_Base
                 <div class="swiper" id="tabbedSlider2">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                            <img src="https://picsum.photos/400/200?random=5" alt="Slide 1">
+                            <img src="<?php echo esc_url(home_url('/')); ?>/wp-content/uploads/2025/11/thumbnail.webp" alt="Slide 1">
                             <div class="slide-content">
                                 <h3>Industrial safety</h3>
                                 <p>Monitoring workplace compliance and safety.</p>
                             </div>
                         </div>
                         <div class="swiper-slide">
-                            <img src="https://picsum.photos/400/200?random=6" alt="Slide 2">
+                            <img src="<?php echo esc_url(home_url('/')); ?>/wp-content/uploads/2025/11/thumbnail.webp" alt="Slide 2">
                             <div class="slide-content">
                                 <h3>Retail analytics</h3>
                                 <p>Customer behavior and store optimization.</p>
                             </div>
                         </div>
                         <div class="swiper-slide">
-                            <img src="https://picsum.photos/400/200?random=7" alt="Slide 3">
+                            <img src="<?php echo esc_url(home_url('/')); ?>/wp-content/uploads/2025/11/thumbnail.webp" alt="Slide 3">
                             <div class="slide-content">
                                 <h3>Healthcare facilities</h3>
                                 <p>Patient safety and access control.</p>
                             </div>
                         </div>
                         <div class="swiper-slide">
-                            <img src="https://picsum.photos/400/200?random=8" alt="Slide 4">
+                            <img src="<?php echo esc_url(home_url('/')); ?>/wp-content/uploads/2025/11/thumbnail.webp" alt="Slide 4">
                             <div class="slide-content">
                                 <h3>Education sector</h3>
                                 <p>Campus security and monitoring.</p>
