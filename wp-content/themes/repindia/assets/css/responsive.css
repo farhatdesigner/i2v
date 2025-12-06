@@ -49,6 +49,16 @@ a.blank_anchor {
 }
 .js-dark .elementor-element.partner_choose_desc .elementor-widget-n-accordion .e-n-accordion-item .e-n-accordion-item-title-icon span>svg,
 .js-dark .elementor-element.partner_tech_desc .elementor-widget-n-accordion .e-n-accordion-item .e-n-accordion-item-title-icon span>svg{ fill: #fff; }
+.btn-sec_gap.titlegrep .grey-btn {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    color: #D7DBE4;
+    border-color: rgba(193, 196, 198, 0.20);
+    padding: 4px 12px;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.15);
+}
 
 
 
