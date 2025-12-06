@@ -53,7 +53,20 @@ a.blank_anchor {
 
 
 @media(min-width: 1601px){
-    
+    .elementor-element.channel_partner .partner_choose_title.sticky, .elementor-element.technology_partner .partner_tech_title.sticky {
+        left: 9%;
+    }
+    .elementor-element.technology_partner .partner_tech_img.sticky,.elementor-element.channel_partner .partner_choose_img.sticky {
+        left: 9%;
+    }
+}
+@media (max-width: 1601px) and (min-width: 1201px){
+    .elementor-element.channel_partner .partner_choose_title.sticky, .elementor-element.technology_partner .partner_tech_title.sticky {
+        left: 1%;
+    }
+    .elementor-element.technology_partner .partner_tech_img.sticky,.elementor-element.channel_partner .partner_choose_img.sticky {
+        left: 1%;
+    }
 }
 @media(min-width: 1400px){
     
@@ -74,7 +87,6 @@ a.blank_anchor {
         position: fixed !important;
         top: 140px !important;
         z-index: 10 !important;
-        left: 9%;
         max-width: 540px;
     }
     .elementor-element.channel_partner,
@@ -91,7 +103,6 @@ a.blank_anchor {
         position: fixed !important;
         top: 336px !important;
         z-index: 10 !important;
-        left: 9%;
         max-width: 770px;
     }
 }
@@ -105,9 +116,6 @@ a.blank_anchor {
 
 }
 
-@media (max-width: 1699px) and (min-width: 992px){
-    
-}
 @media(max-width: 1450px){
     
 }
