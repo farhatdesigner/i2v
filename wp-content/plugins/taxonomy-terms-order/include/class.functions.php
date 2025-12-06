@@ -59,7 +59,7 @@
                     $query = "SHOW COLUMNS FROM $wpdb->terms 
                                 LIKE 'term_order'";
                     // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared WordPress.DB.DirectDatabaseQuery.DirectQuery
-                    $result = $wpdb->query($query);
+                    $result = $wpdb->query( $query );
                     
                     if ($result == 0)
                         {
