@@ -67,9 +67,18 @@ class Custom_Technology_Tab extends Widget_Base
         $repeater->add_control(
             'tab_images',
             [
-                'label' => __('Upload Multiple Images', 'repindia'),
+                'label' => __('Upload Multiple Images (Light Theme)', 'repindia'),
                 'type' => Controls_Manager::GALLERY,
-                'description' => __('Select multiple images for this tab', 'repindia'),
+                'description' => __('Select multiple images for this tab in light theme', 'repindia'),
+            ]
+        );
+
+        $repeater->add_control(
+            'tab_images_dark',
+            [
+                'label' => __('Upload Multiple Images (Dark Theme)', 'repindia'),
+                'type' => Controls_Manager::GALLERY,
+                'description' => __('Select multiple images for this tab in dark theme. Leave empty to use light theme images.', 'repindia'),
             ]
         );
 
@@ -186,8 +195,26 @@ class Custom_Technology_Tab extends Widget_Base
                 border-radius: 8px;
             }
             .js-dark .<?php echo esc_attr($widget_id); ?> .tech-image-item{ background: #262A30; }
-            .<?php echo esc_attr($widget_id); ?> .tech-image-item.hidden {
+            /* Light theme images - show by default, hide in dark theme (unless fallback) */
+            .<?php echo esc_attr($widget_id); ?> .tech-image-light {
+                display: flex;
+            }
+            .js-dark .<?php echo esc_attr($widget_id); ?> .tech-image-light {
                 display: none;
+            }
+            /* Light theme images as fallback - show in dark theme when no dark images exist */
+            .js-dark .<?php echo esc_attr($widget_id); ?> .tech-image-light.tech-image-fallback {
+                display: flex;
+            }
+            /* Dark theme images - hide by default, show in dark theme */
+            .<?php echo esc_attr($widget_id); ?> .tech-image-dark {
+                display: none;
+            }
+            .js-dark .<?php echo esc_attr($widget_id); ?> .tech-image-dark {
+                display: flex;
+            }
+            .<?php echo esc_attr($widget_id); ?> .tech-image-item.hidden {
+                display: none !important;
             }
             .<?php echo esc_attr($widget_id); ?> .tech-image-item img {
                 max-width: 100%;
@@ -286,29 +313,57 @@ class Custom_Technology_Tab extends Widget_Base
             </select>
             <div class="tech-images-grid">
                 <?php 
-                // Render all images from all tabs
+                // Render all images from all tabs (both light and dark theme)
                 foreach ($tabs_list as $tab): 
                     $tab_name = !empty($tab['tab_name']) ? trim($tab['tab_name']) : '';
                     $tab_slug = !empty($tab_name) ? sanitize_title($tab_name) : '';
                     $tab_images = !empty($tab['tab_images']) ? $tab['tab_images'] : [];
+                    $tab_images_dark = !empty($tab['tab_images_dark']) ? $tab['tab_images_dark'] : [];
                     
-                    if (empty($tab_images)) {
+                    // Use dark images if available, otherwise use light images
+                    $images_to_use = !empty($tab_images_dark) ? $tab_images_dark : $tab_images;
+                    $is_dark_fallback = empty($tab_images_dark) && !empty($tab_images);
+                    
+                    if (empty($tab_images) && empty($tab_images_dark)) {
                         continue;
                     }
                     
-                    foreach ($tab_images as $image):
-                        $image_url = !empty($image['url']) ? $image['url'] : '';
-                        $image_alt = !empty($image['alt']) ? $image['alt'] : $tab_name;
-                        
-                        if (empty($image_url)) {
-                            continue;
-                        }
+                    // Check if this tab has dark images
+                    $has_dark_images = !empty($tab_images_dark);
+                    
+                    // Render light theme images
+                    if (!empty($tab_images)):
+                        foreach ($tab_images as $image):
+                            $image_url = !empty($image['url']) ? $image['url'] : '';
+                            $image_alt = !empty($image['alt']) ? $image['alt'] : $tab_name;
+                            
+                            if (empty($image_url)) {
+                                continue;
+                            }
                 ?>
-                    <div class="tech-image-item" data-tab="<?php echo esc_attr($tab_slug); ?>">
+                    <div class="tech-image-item tech-image-light<?php echo !$has_dark_images ? ' tech-image-fallback' : ''; ?>" data-tab="<?php echo esc_attr($tab_slug); ?>" data-has-dark="<?php echo $has_dark_images ? '1' : '0'; ?>">
                         <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($image_alt); ?>">
                     </div>
                 <?php 
-                    endforeach;
+                        endforeach;
+                    endif;
+                    
+                    // Render dark theme images
+                    if (!empty($tab_images_dark)):
+                        foreach ($tab_images_dark as $image):
+                            $image_url = !empty($image['url']) ? $image['url'] : '';
+                            $image_alt = !empty($image['alt']) ? $image['alt'] : $tab_name;
+                            
+                            if (empty($image_url)) {
+                                continue;
+                            }
+                ?>
+                    <div class="tech-image-item tech-image-dark" data-tab="<?php echo esc_attr($tab_slug); ?>">
+                        <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($image_alt); ?>">
+                    </div>
+                <?php 
+                        endforeach;
+                    endif;
                 endforeach; 
                 ?>
             </div>
@@ -372,7 +427,7 @@ class Custom_Technology_Tab extends Widget_Base
                         dropdown.value = activeTab;
                     }
                     
-                    // Filter images
+                    // Filter images (CSS handles theme visibility)
                     imageItems.forEach(function(item) {
                         var itemTab = item.getAttribute('data-tab');
                         if (activeTab === 'all' || itemTab === activeTab) {
@@ -403,6 +458,28 @@ class Custom_Technology_Tab extends Widget_Base
                     dropdown.addEventListener('change', function() {
                         var tab = this.value;
                         filterImages(tab);
+                    });
+                }
+                
+                // Observe body class changes for theme switching (CSS handles most of it, but this ensures proper filtering)
+                var bodyObserver = new MutationObserver(function(mutations) {
+                    mutations.forEach(function(mutation) {
+                        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                            // Re-apply current filter to ensure theme images are properly shown/hidden
+                            var activeTab = dropdown ? dropdown.value : 'all';
+                            var activeBtn = container.querySelector('.tech-tab-btn.active');
+                            if (activeBtn) {
+                                activeTab = activeBtn.getAttribute('data-tab') || 'all';
+                            }
+                            filterImages(activeTab);
+                        }
+                    });
+                });
+                
+                if (document.body) {
+                    bodyObserver.observe(document.body, {
+                        attributes: true,
+                        attributeFilter: ['class']
                     });
                 }
             })();
