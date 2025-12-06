@@ -118,6 +118,9 @@ class Custom_Technology_Tab extends Widget_Base
                 height: fit-content;
                 box-shadow: 0 0 15px 0 rgba(138, 149, 158, 0.40);
             }
+            .js-dark .<?php echo esc_attr($widget_id); ?> .tech-tabs-nav {
+                background: #262A30;
+            }
             .<?php echo esc_attr($widget_id); ?> .tech-tabs-nav ul {
                 list-style: none;
                 margin: 0;
@@ -146,6 +149,7 @@ class Custom_Technology_Tab extends Widget_Base
                 font-weight: 500;
                 line-height: 24px;
             }
+            .js-dark .<?php echo esc_attr($widget_id); ?> .tech-tabs-nav button{ color: #aeb6c9; }
             .<?php echo esc_attr($widget_id); ?> .tech-tabs-nav button:hover {
                 background: rgba(255, 255, 255, 0.5);
             }
@@ -154,6 +158,7 @@ class Custom_Technology_Tab extends Widget_Base
                 font-weight: 500;
                 color: #06283D;
             }
+            .js-dark .<?php echo esc_attr($widget_id); ?> .tech-tabs-nav button:hover,.js-dark .<?php echo esc_attr($widget_id); ?> .tech-tabs-nav button.active{ background: #000;color: #fff; }
             .<?php echo esc_attr($widget_id); ?> .tech-tabs-nav button .checkmark-svg {
                 display: inline-block;
                 width: 24px;
@@ -180,6 +185,7 @@ class Custom_Technology_Tab extends Widget_Base
                 transition: opacity 0.3s ease, transform 0.3s ease;
                 border-radius: 8px;
             }
+            .js-dark .<?php echo esc_attr($widget_id); ?> .tech-image-item{ background: #262A30; }
             .<?php echo esc_attr($widget_id); ?> .tech-image-item.hidden {
                 display: none;
             }
@@ -195,6 +201,31 @@ class Custom_Technology_Tab extends Widget_Base
                 left: 8px;
                 top: 10px;
             }
+            .<?php echo esc_attr($widget_id); ?> .tech-tabs-dropdown {
+                display: none;
+                width: 100%;
+                padding: 12px 16px;
+                font-size: 16px;
+                color: #5F6F94;
+                background: #fff;
+                border: 1px solid #e0e0e0;
+                border-radius: 8px;
+                cursor: pointer;
+                font-family: inherit;
+                font-weight: 500;
+                line-height: 24px;
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235F6F94' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: right 16px center;
+                padding-right: 40px;
+            }
+            .<?php echo esc_attr($widget_id); ?> .tech-tabs-dropdown:focus {
+                outline: none;
+                border-color: #06283D;
+            }
             @media (max-width: 1200px) {
                 .<?php echo esc_attr($widget_id); ?> .tech-images-grid {
                     grid-template-columns: repeat(3, 1fr);
@@ -202,18 +233,24 @@ class Custom_Technology_Tab extends Widget_Base
             }
             @media (max-width: 768px) {
                 .<?php echo esc_attr($widget_id); ?> {
+                    gap: 20px;
+                }
+                .<?php echo esc_attr($widget_id); ?> {
                     flex-direction: column;
                 }
                 .<?php echo esc_attr($widget_id); ?> .tech-tabs-nav {
-                    flex: 1;
+                    display: none;
+                }
+                .<?php echo esc_attr($widget_id); ?> .tech-tabs-dropdown {
+                    display: block;
                 }
                 .<?php echo esc_attr($widget_id); ?> .tech-images-grid {
                     grid-template-columns: repeat(2, 1fr);
                 }
             }
-            @media (max-width: 480px) {
-                .<?php echo esc_attr($widget_id); ?> .tech-images-grid {
-                    grid-template-columns: 1fr;
+            @media (min-width: 769px) {
+                .<?php echo esc_attr($widget_id); ?> .tech-tabs-dropdown {
+                    display: none;
                 }
             }
         </style>
@@ -237,6 +274,16 @@ class Custom_Technology_Tab extends Widget_Base
                     <?php endforeach; ?>
                 </ul>
             </div>
+            <select class="tech-tabs-dropdown" aria-label="<?php esc_attr_e('Select tab', 'repindia'); ?>">
+                <option value="all">All</option>
+                <?php foreach ($tabs_list as $tab): 
+                    $tab_name = !empty($tab['tab_name']) ? trim($tab['tab_name']) : '';
+                    if (empty($tab_name)) continue;
+                    $tab_slug = sanitize_title($tab_name);
+                ?>
+                    <option value="<?php echo esc_attr($tab_slug); ?>"><?php echo esc_html($tab_name); ?></option>
+                <?php endforeach; ?>
+            </select>
             <div class="tech-images-grid">
                 <?php 
                 // Render all images from all tabs
@@ -274,6 +321,7 @@ class Custom_Technology_Tab extends Widget_Base
                 
                 var tabButtons = container.querySelectorAll('.tech-tab-btn');
                 var imageItems = container.querySelectorAll('.tech-image-item');
+                var dropdown = container.querySelector('.tech-tabs-dropdown');
                 
                 // Function to create SVG checkmark
                 function createCheckmarkSVG() {
@@ -319,6 +367,11 @@ class Custom_Technology_Tab extends Widget_Base
                         }
                     });
                     
+                    // Update dropdown value
+                    if (dropdown) {
+                        dropdown.value = activeTab;
+                    }
+                    
                     // Filter images
                     imageItems.forEach(function(item) {
                         var itemTab = item.getAttribute('data-tab');
@@ -337,13 +390,21 @@ class Custom_Technology_Tab extends Widget_Base
                     activeBtn.insertBefore(checkmarkSVG, activeBtn.firstChild);
                 }
                 
-                // Add click handlers
+                // Add click handlers for tab buttons
                 tabButtons.forEach(function(btn) {
                     btn.addEventListener('click', function() {
                         var tab = this.getAttribute('data-tab');
                         filterImages(tab);
                     });
                 });
+                
+                // Add change handler for dropdown
+                if (dropdown) {
+                    dropdown.addEventListener('change', function() {
+                        var tab = this.value;
+                        filterImages(tab);
+                    });
+                }
             })();
         </script>
 
