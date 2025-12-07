@@ -59,7 +59,8 @@ a.blank_anchor {
     border-radius: 28px;
     background: rgba(255, 255, 255, 0.15);
 }
-
+.js-dark .elementor-element.contactdark_bg.e-flex.e-con{ background-color: #262A30!important; }
+.elementor-element.contactdark_inner_bg.e-flex.e-con{ background-color: rgba(255, 255, 255, 0.10)!important;}
 
 
 @media(min-width: 1601px){
