@@ -60,7 +60,128 @@ a.blank_anchor {
     background: rgba(255, 255, 255, 0.15);
 }
 .js-dark .elementor-element.contactdark_bg.e-flex.e-con{ background-color: #262A30!important; }
-.elementor-element.contactdark_inner_bg.e-flex.e-con{ background-color: rgba(255, 255, 255, 0.10)!important;}
+.js-dark .elementor-element.contactdark_inner_bg.e-flex.e-con{ background-color: rgba(255, 255, 255, 0.10)!important;}
+label.form-label {
+    color: #5C5C5C;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+}
+.form-control {
+    border-radius: 12px;
+    border: 1px solid #E5E9EC;
+    height: 48px;
+    background: #fff;
+    padding: 5px 12px;
+    text-align: left;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+    color: #5F6F94;
+    -webkit-appearance: auto;
+    -moz-appearance: auto;
+    appearance: auto;
+    margin-bottom: 16px;
+}
+input.form-control,select.form-control {
+    height: 48px;
+    width: 100%;
+}
+.country-select.inside input[type=text].form-control{ margin-bottom: 16px!important; }
+.intl-tel-input.separate-dial-code .selected-flag{ background-color: #fff;border-right-color: rgba(0,0,0,.05);border-bottom-left-radius: 12px;border-top-left-radius: 12px; }
+.intl-tel-input.separate-dial-code .selected-dial-code{ border-right: 2px solid rgba(0,0,0,.05); }
+.intl-tel-input .country-list .country-name, .intl-tel-input .country-list .flag-box,.intl-tel-input.separate-dial-code .selected-dial-code{ 
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+    color: #5F6F94;
+}
+.wpcf7-checkbox.form-control,.js-dark .wpcf7-checkbox.form-control {
+    background: transparent;
+    border: 0;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+}
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+}
+.wpcf7-list-item {
+    margin: 0 0 12px 0;
+    width: 100%;
+    max-width: 45%;
+}
+.wpcf7-form-control-wrap {
+    display: inline-block;width: 100%;
+}
+.wpcf7-list-item label {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+span.wpcf7-list-item-label {
+    color: #5F6F94;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+}
+textarea.form-control {
+    height: 124px;margin-bottom: 0;
+}
+.contactus_form p{ margin: 0; }
+label.form-label.label_notic {
+    margin-bottom: 16px;
+    margin-top: 16px;
+    font-weight: 400;
+}
+input.wpcf7-submit.form-control.submitbtn {
+    height: auto;
+    width: auto;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: #0099ED;
+    color: #fff;
+    text-align: center;
+    line-height: normal;
+    margin: 0;
+}
+.wpcf7-spinner{
+    width: 15px;
+    height: 15px;
+    margin: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+}
+.btn-sections {
+    width: auto;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 16px;
+}
+.wpcf7-spinner::before{ top: 0px;left: 0px; }
+label.form-label.required_note {
+    margin: 0;
+    color: #949494;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+}
+.js-dark .elementor-element.contactform_box.e-con{ background-color: #0D1117!important; }
+.js-dark .form-control{ border: 1px solid #464A4F;background: #464A4F;color: rgba(255, 255, 255, 0.60); }
+.js-dark .intl-tel-input.separate-dial-code .selected-flag{ border-right-color: #464A4F;background: #464A4F;color: rgba(255, 255, 255, 0.60); }
+.js-dark .intl-tel-input .country-list .country-name, .js-dark .intl-tel-input .country-list .flag-box, .js-dark .intl-tel-input.separate-dial-code .selected-dial-code{ color: rgba(255, 255, 255, 0.60); }
+.js-dark label.form-label,.js-dark span.wpcf7-list-item-label{ color: rgba(255, 255, 255, 0.60)!important; }
+.js-dark input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+}
+.js-dark .wpcf7 input::placeholder,
+.js-dark .wpcf7 textarea::placeholder { color: rgba(255, 255, 255, 0.60)!important; }
+label.form-label.label_notic a{ color: #5C5C5C;font-weight: 500; }
 
 
 @media(min-width: 1601px){
@@ -118,6 +239,7 @@ a.blank_anchor {
     }
 }
 @media(min-width: 991px){
+    
 
 }
 @media(min-width: 768px){
@@ -221,6 +343,8 @@ a.blank_anchor {
     .cornerbtn .btn-colum { flex-direction: column;gap: 10px; }
     .txtflex h2 { font-size: 24px;line-height: 1.2em;text-align: center; }
     .txtflex p{ font-size: 16px; text-align: center; }
+    input.form-control, select.form-control{ margin-bottom: 10px;height: 40px; }
+    .wpcf7-list-item { margin: 0 0 10px 0;max-width: 100%; }
 }
 
 @media(max-width: 992px) and (min-width: 601px){
