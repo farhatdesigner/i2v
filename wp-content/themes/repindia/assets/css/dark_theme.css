@@ -486,3 +486,10 @@ header li.burger-icon .icon-sun,
 .js-dark .elementor-6235 .elementor-element.elementor-element-39a9393 .elementor-main-swiper .swiper-slide, .js-dark  .elementor-6235 .elementor-element.elementor-element-36994c4 .elementor-main-swiper .swiper-slide{
   background: #262A30 !important;
 }
+.js-dark .color_lightwhite p {
+  color: #5C5C5C !important;
+}
+.js-dark .dark_choose {background-color: #464A4F !important;}
+.js-dark .dark-circle-txt .elementor-icon-box-description {
+  color: #fff !important;
+}

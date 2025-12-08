@@ -105,11 +105,10 @@ class Horizontal_Slider_Topcaption extends Widget_Base
     {
         ?>
 
-        <section class="custom-container">
-            <div class="hz-slider-topcaption">
-                <section class="slider">
-                    <div class="swiper">
-                        <div class="swiper-wrapper">
+        <div class="hz-slider-topcaption">
+            <section class="slider">
+                <div class="swiper">
+                    <div class="swiper-wrapper">
                             <div class="swiper-slide">
                                 <div class="slider-content">
                                     <h3>Highways & expressways</h3>
@@ -169,70 +168,10 @@ class Horizontal_Slider_Topcaption extends Widget_Base
                                         alt="Object Tagging and Metadata based search for faster investigations">
                                 </div>
                             </div>
-                            <div class="swiper-slide">
-                                <div class="slider-content">
-                                    <h3>Highways & expressways</h3>
-                                    <p>
-                                        Enforce rules, detect accidents, and monitor traffic flow with precision ANPR.
-                                    </p>
-                                </div>
-                                <div class="slider-image">
-                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/oil-and-gas.webp"
-                                        alt="Object Tagging and Metadata based search for faster investigations">
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="slider-content">
-                                    <h3>Tunnels & bridges</h3>
-                                    <p>
-                                        Spot incidents fast, monitor smoke/fire, and ensure safe emergency access.
-                                    </p>
-                                </div>
-                                <div class="slider-image">
-                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/transportation.webp"
-                                        alt="Object Tagging and Metadata based search for faster investigations">
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="slider-content">
-                                    <h3>Ports & shipping yards</h3>
-                                    <p>
-                                        Secure perimeters, protect cargo, and safeguard workforce operations.
-                                    </p>
-                                </div>
-                                <div class="slider-image">
-                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Energy.webp"
-                                        alt="Object Tagging and Metadata based search for faster investigations">
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="slider-content">
-                                    <h3>Bus fleets & depots</h3>
-                                    <p>
-                                        Ensure passenger safety, monitor occupancy, and capture critical incidents.
-                                    </p>
-                                </div>
-                                <div class="slider-image">
-                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/government.webp"
-                                        alt="Object Tagging and Metadata based search for faster investigations">
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="slider-content">
-                                    <h3>Brand, Strategy & Reputation</h3>
-                                    <p>
-                                        Protect your reputation, unlok growth and gain a competitive </p>
-                                </div>
-                                <div class="slider-image">
-                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/transportation.webp"
-                                        alt="Object Tagging and Metadata based search for faster investigations">
-                                </div>
-                            </div>
-                        </div>
                     </div>
-                </section>
-            </div>
-        </section>
+                </div>
+            </section>
+        </div>
 
         <?php
     }

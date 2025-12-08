@@ -1644,7 +1644,7 @@ if (document.querySelector(".hz-slider-topcaption .swiper")) {
   const hzTopcaptionSwiper = new Swiper(".hz-slider-topcaption .swiper", {
     speed: 500,
     loop: false,
-    slidesPerView: 4,
+    slidesPerView: 1,
     spaceBetween: 20,
     loopAddBlankSlides: false,
     slideToClickedSlide: true,
@@ -1653,11 +1653,15 @@ if (document.querySelector(".hz-slider-topcaption .swiper")) {
     allowTouchMove: window.innerWidth < 1024,
     breakpoints: {
       480: {
-        slidesPerView: 1,
+        slidesPerView: 1.5,
         spaceBetween: 20
       },
       768: {
         slidesPerView: 2,
+        spaceBetween: 20
+      },
+      1024: {
+        slidesPerView: 3,
         spaceBetween: 20
       },
       1230: {
@@ -1695,7 +1699,7 @@ if (document.querySelector(".hz-slider-topcaption .swiper")) {
         pin: ".hz-slider-topcaption",
         pinSpacing: true,
         pinReparent: false,
-        start: "top 30%",
+        start: "top 20%",
         end: "+=" + scrollDistance + "vh",
         scrub: true,
         markers: false,
