@@ -41,6 +41,7 @@ class Widget_Loader
 		require_once(__DIR__.'/widgets/scalescroll2.php');
 		require_once(__DIR__.'/widgets/custom_technology_tab.php');
 		require_once(__DIR__.'/widgets/testimonial_slider.php');
+		require_once(__DIR__.'/widgets/custom_career_slider.php');
 		
     }
     public function register_widgets()
@@ -73,6 +74,7 @@ class Widget_Loader
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Scalescroll2() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Technology_Tab() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Testimonial_Slider() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Career_Slider() );
     }
 	public function __construct()
 	{
