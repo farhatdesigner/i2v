@@ -628,10 +628,33 @@ p#breadcrumbs svg {
 
 .purpose-slider-wrapper {
   position: relative;
+  z-index: 1;
 }
 
 .purpose-swiper {
   overflow: visible;
+}
+
+/* Scalescroll / Gallery Section - Higher z-index to prevent overlap */
+.makdmks {
+  position: relative;
+  z-index: 2;
+  background: #f2f5fa;
+}
+
+.js-dark .makdmks {
+  background: #0d1117;
+}
+
+/* Ensure gallery pinned elements stay above previous sections */
+.gallery .right {
+  z-index: 3;
+}
+
+/* GSAP pin-spacer for gallery */
+.pin-spacer:has(.right),
+div.pin-spacer > .right {
+  z-index: 3;
 }
 
 .caption_impact > figure > img {
@@ -920,23 +943,33 @@ div.pin-spacer > .hz-slider-section {
   padding: 24px;
   width: 500px;
 }
-.absolute_slider .elementor-testimonial__footer, .deployed_slider .elementor-testimonial__footer {
+.absolute_slider .elementor-testimonial__footer,
+.deployed_slider .elementor-testimonial__footer {
   margin-top: 4px !important;
 }
-.absolute_slider .elementor-widget-testimonial-carousel.elementor-pagination-type-bullets .swiper, .deployed_slider .elementor-widget-testimonial-carousel.elementor-pagination-type-bullets .swiper {
+.absolute_slider
+  .elementor-widget-testimonial-carousel.elementor-pagination-type-bullets
+  .swiper,
+.deployed_slider
+  .elementor-widget-testimonial-carousel.elementor-pagination-type-bullets
+  .swiper {
   padding-bottom: 30px !important;
 }
 
-.absolute_slider .swiper-pagination-bullet-active, .deployed_slider .swiper-pagination-bullet-active {
+.absolute_slider .swiper-pagination-bullet-active,
+.deployed_slider .swiper-pagination-bullet-active {
   width: 24px !important;
 }
-.absolute_slider .swiper-pagination-bullet, .deployed_slider .swiper-pagination-bullet {
+.absolute_slider .swiper-pagination-bullet,
+.deployed_slider .swiper-pagination-bullet {
   border-radius: 8px;
 }
 
-.choose_i2v p.elementor-icon-box-description {margin-top: 8px;}
+.choose_i2v p.elementor-icon-box-description {
+  margin-top: 8px;
+}
 
-.elementor-shortcode>span a {
+.elementor-shortcode > span a {
   border-radius: var(--3XL, 28px);
   border: 1px solid var(--Golbal-others-border, #e6ebf2);
   background: var(--tabs-tab-fill-bg-default, #fff);
@@ -946,7 +979,7 @@ div.pin-spacer > .hz-slider-section {
   font-weight: 500;
 }
 
-.bredstyle>a {
+.bredstyle > a {
   margin-bottom: 12px;
   border-radius: var(--3XL, 28px);
   border: 1px solid var(--Golbal-others-border, #e6ebf2);
@@ -964,13 +997,103 @@ div.pin-spacer > .hz-slider-section {
   float: left;
 }
 
-
 @media (min-width: 768px) {
   .hz-slider-section .swiper-slide h2 {
     font-size: 32px;
   }
 }
 .hz-slider-section .swiper-slide-active {
+  overflow: visible;
+  scale: 1;
+  z-index: 99;
+  opacity: 1;
+}
+
+/* Horizontal Slider Topcaption Styles (unique - no conflict with hz-slider-section) */
+.hz-slider-topcaption {
+  position: relative;
+  max-width: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+/* Override GSAP pin-spacer margins for topcaption */
+.pin-spacer:has(.hz-slider-topcaption),
+div.pin-spacer > .hz-slider-topcaption {
+  margin: 0 !important;
+  padding: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* Remove Elementor container padding for topcaption widget */
+.elementor-widget-horizontal_slider_topcaption,
+.elementor-widget-horizontal_slider_topcaption > .elementor-widget-container,
+.elementor-widget-horizontal_slider_topcaption .custom-container {
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+.hz-slider-topcaption section:not(.slider) {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+}
+
+.hz-slider-topcaption .slider-image img {
+  width: 100%;
+  height: 375px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+.hz-slider-topcaption .slider .swiper-container-horizontal {
+  overflow: visible;
+}
+
+.hz-slider-topcaption .swiper-wrapper {
+  transition-timing-function: ease-out;
+  color: #06283d;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600 !important;
+  line-height: 34px;
+  margin-bottom: 0;
+  align-items: flex-start;
+}
+
+.hz-slider-topcaption .swiper-slide {
+  opacity: 1;
+  border-radius: var(--M, 12px);
+  background: var(--Golbal-backgrounds-global-bg-1, #fff);
+  padding: 8px;
+}
+
+.hz-slider-topcaption .slider-content {
+  padding: 8px;
+}
+
+.hz-slider-topcaption .swiper-slide h3 {
+  color: #06283d;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600 !important;
+  line-height: 34px;
+  margin-bottom: 0;
+}
+.hz-slider-topcaption .swiper-slide p {
+  color: #5c5c5c;
+  font-size: 16px;
+  font-style: normal;
+}
+
+@media (min-width: 768px) {
+  .hz-slider-topcaption .swiper-slide h2 {
+    font-size: 32px;
+  }
+}
+.hz-slider-topcaption .swiper-slide-active {
   overflow: visible;
   scale: 1;
   z-index: 99;
@@ -1156,7 +1279,7 @@ html {
      Video Accordion White - Mobile Responsive
      Hide right-side panel, show inline videos
      ============================================ */
-  
+
   /* Hide right-side video panel on mobile for white accordion */
   .vaw_padd-accordion_video {
     display: none !important;
@@ -1173,7 +1296,7 @@ html {
   .vaw_accordion_set.active .vaw_accontent {
     max-height: 600px !important;
 } */
-  
+
   .banner_content_txt {
     background: #262a30;
     padding: 20px 20px;
@@ -1191,25 +1314,24 @@ html {
     left: auto;
     width: 100%;
     max-width: 500px;
-}
+  }
 
-#tabbedSliderWrapper .tabbed-slider-tabs {
-  flex-direction: column;
-  margin-bottom: 20px;
-  margin-top: 30px;
-}
+  #tabbedSliderWrapper .tabbed-slider-tabs {
+    flex-direction: column;
+    margin-bottom: 20px;
+    margin-top: 30px;
+  }
 
-button.tab-btn.active[data-tab="tab1"] {
-  border-radius: 0;
-}
+  button.tab-btn.active[data-tab="tab1"] {
+    border-radius: 0;
+  }
 
-#tabbedSliderWrapper .swiper-button-next, #tabbedSliderWrapper .swiper-button-prev {
-  top: auto !important;
-  bottom: -40px !important;
-}
-.customtabsmart .smart-content-inner-text {
-  padding: 10px ;
-}
-
-
+  #tabbedSliderWrapper .swiper-button-next,
+  #tabbedSliderWrapper .swiper-button-prev {
+    top: auto !important;
+    bottom: -40px !important;
+  }
+  .customtabsmart .smart-content-inner-text {
+    padding: 10px;
+  }
 }

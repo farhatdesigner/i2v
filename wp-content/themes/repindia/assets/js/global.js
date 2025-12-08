@@ -1262,40 +1262,48 @@ if (window.innerWidth >= 1180 && document.querySelector(".sectionsscroll")) {
         console.log('resize')
         ScrollTrigger.refresh()
     }
-    const panels = gsap.utils.toArray(".animate-right");
-    const content = gsap.utils.toArray(".animate-left");
-    const tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: ".sectionsscroll",
-            start: "top 20%",
-            endTrigger: 'html',
-            end: () => "+=" + 200 * panels.length + "%",
-            pin: true,
-            pinSpacing: true,
-            markers: false,
-            scrub: 1,
-            autoRefreshEvents: "load",
-        }
-    });
-    panels.forEach((panel, index) => {
-        tl.from(
-            panel,
-            {
-                yPercent: 100,
-                ease: "slow",
-            },
-            "+=0.1"
-        );
-        tl.from(
-            content[index],
-            {
-                yPercent: 100,
-                ease: "slow",
-            },
-            "<"
-        );
-    });
-
+    
+    // Only select panels within sectionsscroll to avoid conflicts
+    const sectionsscrollEl = document.querySelector(".sectionsscroll");
+    const panels = gsap.utils.toArray(".sectionsscroll .animate-right");
+    const content = gsap.utils.toArray(".sectionsscroll .animate-left");
+    
+    // Skip if no panels found
+    if (panels.length > 0) {
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".sectionsscroll",
+                start: "top 20%",
+                endTrigger: '.sectionsscroll',
+                end: () => "+=" + 200 * panels.length + "%",
+                pin: true,
+                pinSpacing: true,
+                markers: false,
+                scrub: 1,
+                invalidateOnRefresh: true,
+                refreshPriority: 1, // Higher priority, refreshes first
+                id: "sectionsscroll-pin"
+            }
+        });
+        panels.forEach((panel, index) => {
+            tl.from(
+                panel,
+                {
+                    yPercent: 100,
+                    ease: "slow",
+                },
+                "+=0.1"
+            );
+            tl.from(
+                content[index],
+                {
+                    yPercent: 100,
+                    ease: "slow",
+                },
+                "<"
+            );
+        });
+    }
 }
 
 
@@ -1329,49 +1337,59 @@ gsap.ticker.lagSmoothing(0);
 
 // Gallery Animation - Only on min-width 1200px and when gallery exists
 if (window.innerWidth >= 1200) {
-    const gallery = document.querySelector(".gallery");
+    // Scope gallery animation to .makdmks container to avoid conflicts
+    const makdmks = document.querySelector(".makdmks");
+    const gallery = makdmks ? makdmks.querySelector(".gallery") : null;
     
     if (gallery) {
         gsap.registerPlugin(ScrollTrigger);
         
-        // collect sections + photos
+        // collect sections + photos - scoped to makdmks container
         // Only select details from the left sidebar (.detailsWrapper), not from inside photos
-        const sections = gsap.utils.toArray(".detailsWrapper .details");
-        const photos   = gsap.utils.toArray(".photo");
+        const sections = gsap.utils.toArray(".makdmks .detailsWrapper .details");
+        const photos   = gsap.utils.toArray(".makdmks .photo");
         
-        // set initial states
-        gsap.set(photos, { opacity: 0 });
-        gsap.set(photos[0], { opacity: 1 });
-        
-        // helper — show selected photo
-        function showPhoto(index) {
-            gsap.to(photos, { opacity: 0, duration: 0.4, overwrite: true });
-            gsap.to(photos[index], { opacity: 1, duration: 0.4, overwrite: true });
-        }
-        
-        // change image based on section
-        sections.forEach((section, index) => {
-            ScrollTrigger.create({
-                trigger: section,
-                start: "top 25%",
-                end: "bottom 25%",
-                scrub: true,
-                onEnter: () => showPhoto(index),
-                onEnterBack: () => showPhoto(index),
-                // markers: true,
+        // Skip if no sections found
+        if (sections.length > 0 && photos.length > 0) {
+            // set initial states
+            gsap.set(photos, { opacity: 0 });
+            gsap.set(photos[0], { opacity: 1 });
+            
+            // helper — show selected photo
+            function showPhoto(index) {
+                gsap.to(photos, { opacity: 0, duration: 0.4, overwrite: true });
+                gsap.to(photos[index], { opacity: 1, duration: 0.4, overwrite: true });
+            }
+            
+            // change image based on section
+            sections.forEach((section, index) => {
+                ScrollTrigger.create({
+                    trigger: section,
+                    start: "top 25%",
+                    end: "bottom 25%",
+                    scrub: true,
+                    onEnter: () => showPhoto(index),
+                    onEnterBack: () => showPhoto(index),
+                    invalidateOnRefresh: true,
+                    // markers: true,
+                    id: "gallery-section-" + index
+                });
             });
-        });
-        
-        // pin the right panel until last section reaches mid
-        ScrollTrigger.create({
-            trigger: ".gallery",
-            start: "top 20%",
-            endTrigger: ".detailsWrapper .details:last-child",
-            end: "top 20%",
-            pin: ".right",
-            pinSpacing: true,
-            // markers: true,
-        });
+            
+            // pin the right panel until last section reaches mid
+            ScrollTrigger.create({
+                trigger: ".makdmks .gallery",
+                start: "top 20%",
+                endTrigger: ".makdmks .detailsWrapper .details:last-child",
+                end: "top 20%",
+                pin: ".makdmks .right",
+                pinSpacing: false, // Changed to false to prevent spacing conflicts
+                invalidateOnRefresh: true,
+                refreshPriority: -1, // Lower priority, refreshes after others
+                // markers: true,
+                id: "gallery-pin"
+            });
+        }
         
         // Refresh ScrollTrigger on resize
         let resizeTimer;
@@ -1441,6 +1459,7 @@ if (window.innerWidth >= 1200) {
                     pinSpacing: false,
                     anticipatePin: 1, // Smooth pinning transitions
                     invalidateOnRefresh: true, // Recalculate on refresh
+                    refreshPriority: 0, // Middle priority
                     onEnter: () => {
                         // Ensure card maintains correct position when entering
                         gsap.set(card, {
@@ -1464,7 +1483,7 @@ if (window.innerWidth >= 1200) {
                     // markers: {
                     //     indent: 150 * i
                     // },
-                    id: i + 1
+                    id: "card-" + (i + 1)
                 }
             });
         });
@@ -1536,6 +1555,9 @@ if (document.querySelector(".hz-slider-section .swiper")) {
     const totalSlides = hzSwiper.slides.length;
     const snap = gsap.utils.snap(1 / totalSlides);
     
+    // Calculate scroll distance based on number of slides (100vh per slide)
+    const scrollDistance = totalSlides * 100;
+    
     // Disable Swiper touch on desktop (controlled by scroll)
     hzSwiper.allowTouchMove = false;
     hzSwiper.update();
@@ -1545,11 +1567,14 @@ if (document.querySelector(".hz-slider-section .swiper")) {
         trigger: ".hz-slider-section .slider",
         pin: ".hz-slider-section",
         pinSpacing: true,
-        pinReparent: true,
+        pinReparent: false, // Changed to false to prevent DOM reparenting issues
         start: "top 10%",
-        end: "+=3000vh",
+        end: "+=" + scrollDistance + "vh", // Dynamic based on slides
         scrub: true,
         markers: false,
+        invalidateOnRefresh: true,
+        refreshPriority: 2, // Higher priority than gallery
+        id: "hz-slider-pin",
         onUpdate: (self) => {
           const updatedIndex = Math.round(snap(self.progress) * totalSlides);
           if (updatedIndex !== currentSlide) {
@@ -1607,5 +1632,143 @@ if (document.querySelector(".hz-slider-section .swiper")) {
       }
     }, 250);
   });
+}
+
+// Horizontal Slider Topcaption (unique instance - no conflict with hz-slider-section)
+if (document.querySelector(".hz-slider-topcaption .swiper")) {
+  // Store reference to ScrollTrigger instance for cleanup
+  let hzTopcaptionScrollTrigger = null;
+  let hzTopcaptionTimeline = null;
+  let currentTopcaptionSlide = 0;
+  
+  const hzTopcaptionSwiper = new Swiper(".hz-slider-topcaption .swiper", {
+    speed: 500,
+    loop: false,
+    slidesPerView: 4,
+    spaceBetween: 20,
+    loopAddBlankSlides: false,
+    slideToClickedSlide: true,
+    centeredSlides: false,
+    // Enable touch move on mobile, disable on desktop (will be controlled by GSAP)
+    allowTouchMove: window.innerWidth < 1024,
+    breakpoints: {
+      480: {
+        slidesPerView: 1,
+        spaceBetween: 20
+      },
+      768: {
+        slidesPerView: 2,
+        spaceBetween: 20
+      },
+      1230: {
+        slidesPerView: 4,
+        spaceBetween: 20
+      }
+    }
+  });
+  
+  hzTopcaptionSwiper.slideTo(0);
+  
+  // Function to initialize GSAP pin animation (desktop only)
+  function initHzTopcaptionGSAP() {
+    // Only initialize if screen width is 1024px or above
+    if (window.innerWidth < 1024) {
+      return;
+    }
+    
+    // Register GSAP plugin
+    gsap.registerPlugin(ScrollTrigger);
+    
+    const totalSlides = hzTopcaptionSwiper.slides.length;
+    const snap = gsap.utils.snap(1 / totalSlides);
+    
+    // Calculate scroll distance based on number of slides (100vh per slide)
+    const scrollDistance = totalSlides * 100;
+    
+    // Disable Swiper touch on desktop (controlled by scroll)
+    hzTopcaptionSwiper.allowTouchMove = false;
+    hzTopcaptionSwiper.update();
+    
+    hzTopcaptionTimeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".hz-slider-topcaption .slider",
+        pin: ".hz-slider-topcaption",
+        pinSpacing: true,
+        pinReparent: false,
+        start: "top 30%",
+        end: "+=" + scrollDistance + "vh",
+        scrub: true,
+        markers: false,
+        invalidateOnRefresh: true,
+        refreshPriority: 1,
+        id: "hz-slider-topcaption-pin",
+        onUpdate: (self) => {
+          const updatedIndex = Math.round(snap(self.progress) * totalSlides);
+          if (updatedIndex !== currentTopcaptionSlide) {
+            currentTopcaptionSlide = updatedIndex;
+            hzTopcaptionSwiper.slideTo(currentTopcaptionSlide);
+          }
+        }
+      }
+    });
+    
+    // Store reference for cleanup
+    hzTopcaptionScrollTrigger = hzTopcaptionTimeline.scrollTrigger;
+  }
+  
+  // Function to destroy GSAP pin animation (for mobile)
+  function destroyHzTopcaptionGSAP() {
+    if (hzTopcaptionScrollTrigger) {
+      hzTopcaptionScrollTrigger.kill();
+      hzTopcaptionScrollTrigger = null;
+    }
+    if (hzTopcaptionTimeline) {
+      hzTopcaptionTimeline.kill();
+      hzTopcaptionTimeline = null;
+    }
+    
+    // Enable Swiper touch on mobile
+    hzTopcaptionSwiper.allowTouchMove = true;
+    hzTopcaptionSwiper.update();
+    
+    // Reset slide position
+    currentTopcaptionSlide = 0;
+    hzTopcaptionSwiper.slideTo(0);
+  }
+  
+  // Initialize on page load
+  initHzTopcaptionGSAP();
+  
+  // Handle resize - enable/disable GSAP pin based on screen width
+  let hzTopcaptionResizeTimer;
+  window.addEventListener("resize", function() {
+    clearTimeout(hzTopcaptionResizeTimer);
+    hzTopcaptionResizeTimer = setTimeout(function() {
+      const isDesktop = window.innerWidth >= 1024;
+      const hasGSAP = hzTopcaptionScrollTrigger !== null;
+      
+      if (isDesktop && !hasGSAP) {
+        // Switched to desktop - initialize GSAP pin
+        initHzTopcaptionGSAP();
+      } else if (!isDesktop && hasGSAP) {
+        // Switched to mobile - destroy GSAP pin
+        destroyHzTopcaptionGSAP();
+      } else if (isDesktop && hasGSAP) {
+        // Still on desktop - refresh ScrollTrigger
+        ScrollTrigger.refresh();
+      }
+    }, 250);
+  });
+}
+
+// Global ScrollTrigger refresh after all triggers are initialized
+// This ensures all ScrollTriggers are properly calculated relative to each other
+if (typeof ScrollTrigger !== 'undefined' && window.innerWidth >= 1024) {
+    // Wait for DOM to be fully ready and all triggers to be created
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            ScrollTrigger.refresh();
+        }, 500);
+    });
 }
   
