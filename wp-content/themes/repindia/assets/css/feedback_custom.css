@@ -1165,8 +1165,15 @@ html {
   /* Ensure left-side videos in white accordion show on mobile when active */
   .vaw_accordion_set.active .vaw_accontent .vaw_accordion_video {
     display: block !important;
+    /* max-height: 600px !important; */
   }
+  /* .vaw_accontent .vaw_accordion_video{max-height: 600px !important;}
 
+
+  .vaw_accordion_set.active .vaw_accontent {
+    max-height: 600px !important;
+} */
+  
   .banner_content_txt {
     background: #262a30;
     padding: 20px 20px;

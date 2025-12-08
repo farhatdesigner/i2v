@@ -287,9 +287,7 @@ class Video_accordionwhite extends Widget_Base
         $settings = $this->get_settings_for_display();
         $this->add_inline_editing_attributes('custom_class', 'basic'); ?>
 
-        <!-- Video Accordion White - Inline CSS -->
         <style>
-            /* Video Accordion White - Unique Styles */
             .vaw_accordion_wrap {
                 background: #fff;
                 border-radius: 12px;
@@ -482,14 +480,12 @@ class Video_accordionwhite extends Widget_Base
                 transform: scale(1.02);
             }
 
-            /* Progress Bar - Bottom Position with CSS Variable */
             .vaw_progress_bar {
                 position: absolute;
                 bottom: 0;
                 left: 0;
                 width: 100%;
                 height: 4px;
-                /* background: #E6EBF2; */
                 overflow: hidden;
             }
 
@@ -504,12 +500,10 @@ class Video_accordionwhite extends Widget_Base
                 transition: width 0.05s linear;
             }
 
-            /* Hide progress bar on inactive accordion items */
             .vaw_accordion_set:not(.active) .vaw_progress_bar::after {
                 width: 0%;
             }
 
-            /* Right Side Image Container */
             .vaw_padd-accordion_video .vaw_accordion_video {
                 display: none;
                 border-radius: 12px;
@@ -536,7 +530,6 @@ class Video_accordionwhite extends Widget_Base
                 display: block;
             }
 
-            /* Responsive Styles */
             @media (max-width: 991px) {
 
                 .vaw_padd-accordion,
@@ -581,7 +574,38 @@ class Video_accordionwhite extends Widget_Base
 
                 .vaw_accontent,
                 .vaw_accordion_set.active .vaw_accontent {
-                    padding-left: 55px;
+                    padding-left: 0;
+                    padding-right: 0;
+                    overflow: visible;
+                }
+                
+                .vaw_accordion_set.active .vaw_accontent {
+                    max-height: 500px;
+                }
+                
+                .vaw_accontent p { 
+                    margin: 8px 15px 0px 75px; 
+                }
+                
+                .vaw_accontent .vaw_accordion_video {
+                    margin-top: 10px;
+                    margin-left: 0;
+                    margin-right: 0;
+                    width: 100%;
+                    overflow: visible;
+                }
+                
+                .vaw_accordion_set.active .vaw_accontent .vaw_accordion_video {
+                    max-height: 250px;
+                }
+                
+                .vaw_accontent .vaw_accordion_video img {
+                    width: 100%;
+                    height: auto;
+                    max-height: 200px;
+                    object-fit: cover;
+                    border-radius: 8px;
+                    display: block;
                 }
             }
         </style>

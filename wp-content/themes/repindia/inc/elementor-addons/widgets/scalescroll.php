@@ -187,15 +187,6 @@ class Scalescroll extends Widget_Base
         $settings = $this->get_settings_for_display();
         $this->add_inline_editing_attributes('custom_class', 'basic'); ?>
 
-        <style>
-          .gallery {
-            flex-direction: row;
-          }
-          .detailsWrapper {
-            float: left;
-          }
-        </style>
-
 
         <div class="makdmks">
             <div class="custom-container">
