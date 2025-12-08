@@ -480,3 +480,6 @@ header li.burger-icon .icon-sun,
 .js-dark .vaw_accordion_set.active {
     background: #464A4F;
 }
+.js-dark .hz-slider-topcaption .swiper-slide {
+  background: #262a30 !important;
+}
