@@ -182,7 +182,24 @@ label.form-label.required_note {
 .js-dark .wpcf7 input::placeholder,
 .js-dark .wpcf7 textarea::placeholder { color: rgba(255, 255, 255, 0.60)!important; }
 label.form-label.label_notic a{ color: #5C5C5C;font-weight: 500; }
-
+.btn-sec_gap.titlegrep.with_whitebg .grey-btn{ border-color: #E6EBF2;background: #fff; }
+.career_whywork .purpose-swiper .swiper-slide {
+    width: 550px;
+}
+.career_whywork .purpose-swiper .swiper-slide figure.caption-scroll figcaption {
+    position: relative;
+    bottom: unset;
+    left: unset;
+    transform: unset;
+    z-index: 2;
+    text-align: left;
+    padding: 32px;
+    background: #f2f5fa;
+}
+.career_whywork .purpose-swiper .swiper-slide figure.caption-scroll figcaption h3{
+    color: #06283D;font-size: 28px;font-weight: 500;line-height: 34px;
+}
+.career_whywork .purpose-swiper .swiper-slide figure.caption-scroll::after{ max-height: 420px;bottom: unset;top:0; }
 
 @media(min-width: 1601px){
     .elementor-element.channel_partner .partner_choose_title.sticky, .elementor-element.technology_partner .partner_tech_title.sticky {

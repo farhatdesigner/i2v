@@ -7,14 +7,14 @@ use Elementor\Controls_Manager;
 
 if (!defined('ABSPATH')) exit;
 
-class Custom_Career_Slider extends Widget_Base {
+class Custom_Career_List extends Widget_Base {
 
     public function get_name() {
-        return 'custom_career_slider';
+        return 'custom_career_list';
     }
 
     public function get_title() {
-        return 'Custom Career Slider';
+        return 'Custom Career List';
     }
 
     public function get_icon() {
