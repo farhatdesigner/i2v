@@ -305,7 +305,17 @@ label.form-label.label_notic a{ color: #5C5C5C;font-weight: 500; }
     text-decoration-color: #D7DBE4;
     color: #5C5C5C;
 }
-/* .career-apply-form input.wpcf7-submit.form-control.submitbtn{ font-size: 16px;color: #757575;background: #D5D5D5; } */
+.js-dark .career-apply-form.styled-career-form { background: #262A30; }
+.js-dark .career-apply-form span.wpcf7-form-control.wpcf7-radio .wpcf7-list-item label {
+    border-color: #464A4F;
+    background: #464A4F;
+    color: rgba(255, 255, 255, 0.60);
+}
+.js-dark .styled-career-form .file-upload-box{ border-color: #464A4F; }
+.js-dark .career-apply-form label.form-label.notice-text a {
+    text-decoration-color: #464A4F;
+    color: rgba(255, 255, 255, 0.60);
+}
 
 @media(min-width: 1601px){
     .elementor-element.channel_partner .partner_choose_title.sticky, .elementor-element.technology_partner .partner_tech_title.sticky {
