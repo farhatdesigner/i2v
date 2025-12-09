@@ -1253,6 +1253,10 @@ p {
   background: transparent;
   border-bottom: 1px solid #74c2ed;
 }
+.smarter_seamless .bg-tran_lightcolor:hover {
+  color: #d7dbe4;
+  border-bottom: 1px solid #d7dbe4;
+}
 
 .theme-btn-white {
   font-size: 16px;

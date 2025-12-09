@@ -1087,6 +1087,15 @@ div.pin-spacer > .hz-slider-topcaption {
   font-size: 16px;
   font-style: normal;
 }
+.transparent_bg .vaw_accordion_wrap{background-color: transparent;}
+
+.vac_padd-accordion_video>h3, .vac_padd-accordion>h3 {
+  font-size: 16px;
+  color: #06283D;
+  font-weight: 500 !important;
+  margin-bottom: 12px;
+}
+
 
 @media (min-width: 768px) {
   .hz-slider-topcaption .swiper-slide h2 {
