@@ -58,4 +58,87 @@ document.addEventListener("DOMContentLoaded", function () {
         "partner_tech_desc"
     );
 
+    /* ---- Career Form File Upload ---- */
+    const fileUploadBoxes = document.querySelectorAll('.styled-career-form .file-upload-box');
+    
+    fileUploadBoxes.forEach(function(uploadBox) {
+        const fileInput = uploadBox.querySelector('input[type="file"]');
+        if (!fileInput) return;
+        
+        // Make the entire box clickable
+        uploadBox.addEventListener('click', function(e) {
+            // Don't trigger if clicking on the browse link (it has its own handler)
+            if (e.target.classList.contains('browse-link')) {
+                return;
+            }
+            fileInput.click();
+        });
+        
+        // Handle browse link click
+        const browseLink = uploadBox.querySelector('.browse-link');
+        if (browseLink) {
+            browseLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                fileInput.click();
+            });
+        }
+        
+        // Handle file selection
+        fileInput.addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name;
+            if (fileName) {
+                uploadBox.classList.add('has-file');
+                const fileNameElement = uploadBox.querySelector('.file-name');
+                if (fileNameElement) {
+                    fileNameElement.textContent = fileName;
+                }
+            } else {
+                uploadBox.classList.remove('has-file');
+            }
+        });
+        
+        // Prevent default drag behaviors
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadBox.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        // Handle drag and drop
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadBox.addEventListener(eventName, highlight, false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadBox.addEventListener(eventName, unhighlight, false);
+        });
+        
+        function highlight(e) {
+            uploadBox.style.borderColor = '#4A90E2';
+            uploadBox.style.backgroundColor = '#F2F5FA';
+        }
+        
+        function unhighlight(e) {
+            uploadBox.style.borderColor = '#C9CED3';
+            uploadBox.style.backgroundColor = '';
+        }
+        
+        uploadBox.addEventListener('drop', handleDrop, false);
+        
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            
+            if (files.length > 0) {
+                fileInput.files = files;
+                const changeEvent = new Event('change', { bubbles: true });
+                fileInput.dispatchEvent(changeEvent);
+            }
+        }
+    });
+
 });
