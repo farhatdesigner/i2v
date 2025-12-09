@@ -28,6 +28,7 @@ class Widget_Loader
 		require_once(__DIR__.'/widgets/scalescroll.php');
 		require_once(__DIR__.'/widgets/video_accordion.php');
 		require_once(__DIR__.'/widgets/video_accordionwhite.php');
+		require_once(__DIR__.'/widgets/video_accordioncaption.php');
 		require_once(__DIR__.'/widgets/singlescrollcards.php');
 		require_once(__DIR__.'/widgets/custom_testimonial.php');
 		require_once(__DIR__.'/widgets/custom_image_circle.php');
@@ -62,6 +63,7 @@ class Widget_Loader
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Scalescroll() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Video_accordion() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Video_accordionwhite() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Video_accordioncaption() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Singlescrollcards() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Testimonial() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Image_Circle() );
