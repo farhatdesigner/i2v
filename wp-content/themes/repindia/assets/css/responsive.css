@@ -179,6 +179,7 @@ label.form-label.required_note {
     width: 20px;
     height: 20px;
 }
+.wpcf7 input::placeholder, .wpcf7 textarea::placeholder { color: #8793AF; }
 .js-dark .wpcf7 input::placeholder,
 .js-dark .wpcf7 textarea::placeholder { color: rgba(255, 255, 255, 0.60)!important; }
 label.form-label.label_notic a{ color: #5C5C5C;font-weight: 500; }
@@ -200,6 +201,40 @@ label.form-label.label_notic a{ color: #5C5C5C;font-weight: 500; }
     color: #06283D;font-size: 28px;font-weight: 500;line-height: 34px;
 }
 .career_whywork .purpose-swiper .swiper-slide figure.caption-scroll::after{ max-height: 420px;bottom: unset;top:0; }
+.single-careers ul { list-style: disc;padding-inline-start: 18px; }
+.styled-career-form .file-upload-box {
+    border: 2px dashed #C9CED3;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: left;
+    position: relative;
+}
+.styled-career-form .file-upload-box p { font-size: 14px;margin-bottom: 6px; }
+.styled-career-form .file-upload-box .browse-link { color: #4A90E2;text-decoration: underline;cursor: pointer; }
+.styled-career-form .file-upload-box input[type="file"] { margin-top: 10px; }
+.career-apply-form.styled-career-form {
+    padding: 40px;
+    background: #fff;
+    border-radius: 16px;
+}
+.career-apply-form .wpcf7-list-item {
+    margin: 0 15px 0 0;
+    width: 100%;
+    max-width: 30%;
+}
+.career-apply-form .wpcf7-list-item label {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+.career-apply-form span.wpcf7-form-control.wpcf7-radio.form-control {
+    height: auto;
+    display: flex;
+    align-items: center;
+}
+.topinput {
+    margin-top: 16px;
+}
 
 @media(min-width: 1601px){
     .elementor-element.channel_partner .partner_choose_title.sticky, .elementor-element.technology_partner .partner_tech_title.sticky {
