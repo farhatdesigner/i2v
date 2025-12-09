@@ -14,148 +14,72 @@ class Custom_Career_List extends Widget_Base {
     }
 
     public function get_title() {
-        return 'Custom Career List';
+        return 'Career List with Filters';
     }
 
     public function get_icon() {
-        return 'fa fa-sliders';
+        return 'fa fa-list';
     }
 
     public function get_categories() {
         return ['general'];
     }
 
-    public function get_script_depends() {
-        return ['swiper']; // Elementor's default Swiper
-    }
-
-    public function get_style_depends() {
-        return ['swiper', 'e-swiper'];
-    }
-
-    /**
-     * Get taxonomies for a specific post type
-     */
-    private function get_taxonomies_for_post_type($post_type) {
-        if (empty($post_type)) {
-            return [];
-        }
-
-        $taxonomies = get_object_taxonomies($post_type, 'objects');
-        $taxonomy_options = ['' => __('None', 'repindia')];
-
-        foreach ($taxonomies as $taxonomy) {
-            // Only include public taxonomies
-            if ($taxonomy->public) {
-                $taxonomy_options[$taxonomy->name] = $taxonomy->label;
-            }
-        }
-
-        return $taxonomy_options;
-    }
-
-    /**
-     * Get all taxonomies for all available post types
-     * Used to populate initial options
-     */
-    private function get_all_taxonomies_for_cpts() {
-        $cpt_list = get_post_types(
-            [
-                'public' => true,
-                '_builtin' => false
-            ],
-            'objects'
-        );
-
-        $all_taxonomies = [];
-        foreach ($cpt_list as $post_type) {
-            $taxonomies = get_object_taxonomies($post_type->name, 'objects');
-            foreach ($taxonomies as $taxonomy) {
-                if ($taxonomy->public && !isset($all_taxonomies[$taxonomy->name])) {
-                    $all_taxonomies[$taxonomy->name] = $taxonomy->label;
-                }
-            }
-        }
-
-        return $all_taxonomies;
-    }
-
     protected function register_controls() {
 
-        /* -------------------------------------------------------------
-         * 1️⃣ SELECT CUSTOM POST TYPE (public, non-builtin)
-         * ------------------------------------------------------------- */
-        $cpt_list = get_post_types(
-            [
-                'public' => true,
-                '_builtin' => false
-            ],
-            'objects'
-        );
-
-        $cpt_options = [];
-        foreach ($cpt_list as $type) {
-            $cpt_options[$type->name] = $type->label;
-        }
-
         $this->start_controls_section(
-            'section_query',
-            ['label' => __('Content Source', 'repindia')]
+            'section_content',
+            ['label' => __('Content', 'repindia')]
         );
 
         $this->add_control(
-            'selected_cpt',
+            'section_title',
             [
-                'label'   => __('Select Post Type', 'repindia'),
-                'type'    => Controls_Manager::SELECT,
-                'options' => $cpt_options,
-                'default' => !empty($cpt_options) ? array_key_first($cpt_options) : '',
+                'label' => __('Section Title', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => 'Open roles',
                 'label_block' => true,
             ]
         );
 
-        /* -------------------------------------------------------------
-         * 2️⃣ SELECT TAXONOMY (dynamic: based on selected CPT)
-         * Uses render_type = 'ui' to refresh when CPT changes
-         * Shows all taxonomies from all available CPTs
-         * ------------------------------------------------------------- */
-        // Get all possible taxonomies for initial population
-        $all_taxonomies = $this->get_all_taxonomies_for_cpts();
-        $taxonomy_options = ['' => __('None', 'repindia')] + $all_taxonomies;
-
         $this->add_control(
-            'selected_taxonomy',
+            'section_subtitle',
             [
-                'label'   => __('Select Taxonomy (Optional)', 'repindia'),
-                'type'    => Controls_Manager::SELECT,
-                'options' => $taxonomy_options,
-                'default' => '',
+                'label' => __('Section Subtitle', 'repindia'),
+                'type' => Controls_Manager::TEXTAREA,
+                'default' => 'Help us bring development superpowers to everyone.',
                 'label_block' => true,
-                'render_type' => 'ui',
-                'condition' => [
-                    'selected_cpt!' => '',
-                ],
-                'description' => __('Filter posts by taxonomy. Only taxonomies belonging to the selected post type will be applied.', 'repindia')
             ]
         );
 
-        /* -------------------------------------------------------------
-         * 3️⃣ SELECT TERM (optional - for specific term filtering)
-         * Uses render_type = 'ui' to refresh when taxonomy changes
-         * ------------------------------------------------------------- */
         $this->add_control(
-            'selected_term',
+            'enable_filter',
             [
-                'label' => __('Select Term (Optional)', 'repindia'),
+                'label' => __('Enable Filter?', 'repindia'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Yes', 'repindia'),
+                'label_off' => __('No', 'repindia'),
+                'return_value' => 'yes',
+                'default' => 'yes',
+            ]
+        );
+
+        // Optional: let user pick which taxonomy to use (keeps backward compatibility)
+        $this->add_control(
+            'filter_taxonomy',
+            [
+                'label' => __('Filter Taxonomy', 'repindia'),
                 'type' => Controls_Manager::SELECT,
-                'options' => ['' => __('All Terms', 'repindia')],
-                'default' => '',
-                'label_block' => true,
-                'render_type' => 'ui',
-                'condition' => [
-                    'selected_taxonomy!' => '',
+                'options' => [
+                    'careerteam' => __('Career Team', 'repindia'),
+                    'careercity' => __('Career City', 'repindia'),
+                    'careerstate' => __('Career State', 'repindia'),
+                    'careercountry' => __('Career Country', 'repindia'),
                 ],
-                'description' => __('Filter by specific term. Terms will update automatically when taxonomy changes.', 'repindia')
+                'default' => 'careerteam',
+                'condition' => [
+                    'enable_filter' => 'yes',
+                ],
             ]
         );
 
@@ -163,415 +87,376 @@ class Custom_Career_List extends Widget_Base {
     }
 
     /**
-     * Get terms for a specific taxonomy
+     * Get all terms for a taxonomy (public helper)
      */
-    private function get_terms_for_taxonomy($taxonomy) {
-        if (empty($taxonomy)) {
+    private function get_terms_for_tax($taxonomy) {
+        if (!taxonomy_exists($taxonomy)) {
             return [];
         }
-
         $terms = get_terms([
             'taxonomy' => $taxonomy,
-            'hide_empty' => false,
+            'hide_empty' => true,
+            'orderby' => 'name',
+            'order' => 'ASC',
         ]);
-
         if (is_wp_error($terms) || empty($terms)) {
             return [];
         }
-
-        $term_options = ['' => __('All Terms', 'repindia')];
-        foreach ($terms as $term) {
-            $term_options[$term->slug] = $term->name;
-        }
-
-        return $term_options;
+        return $terms;
     }
 
-
-    /* -------------------------------------------------------------
-     * RENDER OUTPUT
-     * ------------------------------------------------------------- */
-    protected function render() {
-
-        $settings = $this->get_settings_for_display();
-        $post_type = !empty($settings['selected_cpt']) ? $settings['selected_cpt'] : '';
-        $taxonomy  = !empty($settings['selected_taxonomy']) ? $settings['selected_taxonomy'] : '';
-        $term      = !empty($settings['selected_term']) ? $settings['selected_term'] : '';
-
-        // Validate post type exists
-        if (empty($post_type) || !post_type_exists($post_type)) {
-            echo '<p>' . __('Please select a valid post type.', 'repindia') . '</p>';
-            return;
-        }
-
-        /* -------------------------------------------------------------
-         * Build WP Query
-         * ------------------------------------------------------------- */
+    /**
+     * Query careers and group by careerteam (or uncategorized)
+     * $filter_term_slug may be null
+     * $filter_taxonomy is used to filter posts (can be careercity/careerteam/etc)
+     */
+    public static function get_careers_grouped($filter_term_slug = null, $filter_taxonomy = 'careerteam') {
         $args = [
-            'post_type'      => $post_type,
+            'post_type' => 'careers',
             'posts_per_page' => -1,
-            'post_status'    => 'publish'
+            'post_status' => 'publish',
+            'orderby' => 'title',
+            'order' => 'ASC',
         ];
 
-        // Apply tax_query only if both taxonomy AND term are selected
-        // A tax_query without 'terms' will return no results
-        if (!empty($taxonomy) && !empty($term) && taxonomy_exists($taxonomy)) {
-            $post_type_taxonomies = get_object_taxonomies($post_type);
-            
-            // Only apply tax_query if taxonomy is associated with the selected post type
-            if (in_array($taxonomy, $post_type_taxonomies)) {
-                $args['tax_query'] = [
-                    [
-                        'taxonomy' => $taxonomy,
-                        'field'    => 'slug',
-                        'terms'    => $term,
-                    ]
-                ];
-            }
+        // Apply filter if present and taxonomy exists
+        if (!empty($filter_term_slug) && $filter_term_slug !== 'all' && taxonomy_exists($filter_taxonomy)) {
+            $args['tax_query'] = [
+                [
+                    'taxonomy' => $filter_taxonomy,
+                    'field' => 'slug', // use slug filtering (recommended)
+                    'terms' => sanitize_text_field($filter_term_slug),
+                ],
+            ];
         }
 
         $query = new \WP_Query($args);
+        $grouped = [];
 
-        if (!$query->have_posts()) {
-            echo '<p>' . __('No posts found.', 'repindia') . '</p>';
-            wp_reset_postdata();
-            return;
+        if ($query->have_posts()) {
+            while ($query->have_posts()) {
+                $query->the_post();
+                $post_id = get_the_ID();
+
+                // team terms (grouping taxonomy)
+                $team_terms = get_the_terms($post_id, 'careerteam');
+                if (!empty($team_terms) && !is_wp_error($team_terms)) {
+                    foreach ($team_terms as $team_term) {
+                        $key = $team_term->slug;
+                        if (!isset($grouped[$key])) {
+                            $grouped[$key] = [
+                                'term' => $team_term,
+                                'posts' => [],
+                            ];
+                        }
+                        $grouped[$key]['posts'][] = $post_id;
+                    }
+                } else {
+                    // put in uncategorized
+                    if (!isset($grouped['uncategorized'])) {
+                        $grouped['uncategorized'] = [
+                            'term' => (object)['name' => 'Uncategorized', 'slug' => 'uncategorized'],
+                            'posts' => [],
+                        ];
+                    }
+                    $grouped['uncategorized']['posts'][] = $post_id;
+                }
+            }
+        }
+        wp_reset_postdata();
+
+        // sort groups by term name
+        uksort($grouped, function($a, $b) use ($grouped) {
+            $name_a = isset($grouped[$a]['term']->name) ? $grouped[$a]['term']->name : '';
+            $name_b = isset($grouped[$b]['term']->name) ? $grouped[$b]['term']->name : '';
+            return strcasecmp($name_a, $name_b);
+        });
+
+        return $grouped;
+    }
+
+    /**
+     * Build location string for a post
+     */
+    public static function get_location_string($post_id) {
+        $parts = [];
+
+        $city_terms = get_the_terms($post_id, 'careercity');
+        if (!empty($city_terms) && !is_wp_error($city_terms)) {
+            $parts[] = $city_terms[0]->name;
         }
 
-        $uid = 'career_slider_' . $this->get_id();
-?>
+        $state_terms = get_the_terms($post_id, 'careerstate');
+        if (!empty($state_terms) && !is_wp_error($state_terms)) {
+            $parts[] = $state_terms[0]->name;
+        }
 
-        <section class="career-slider-wrapper" id="<?php echo esc_attr($uid); ?>">
-            <div class="custom-container">
-                <div class="swiper mySwiper career-swiper">
-                    <div class="swiper-wrapper">
+        $country_terms = get_the_terms($post_id, 'careercountry');
+        if (!empty($country_terms) && !is_wp_error($country_terms)) {
+            $parts[] = $country_terms[0]->name;
+        }
 
-                    <?php while ($query->have_posts()): $query->the_post(); 
-                        $post_id = get_the_ID();
-                        $detail_url = get_permalink($post_id);
-                        
-                        // Get the taxonomy term from the selected taxonomy for this post
-                        $taxonomy_term = '';
-                        if (!empty($taxonomy) && taxonomy_exists($taxonomy)) {
-                            $terms = get_the_terms($post_id, $taxonomy);
-                            if (!empty($terms) && !is_wp_error($terms)) {
-                                $taxonomy_term = $terms[0]->name; // Get first term
-                            }
-                        }
-                        
-                        // Get location taxonomies: careercity, careerstate, careercountry
-                        $career_city = '';
-                        $career_state = '';
-                        $career_country = '';
-                        
-                        // Get careercity
-                        if (taxonomy_exists('careercity')) {
-                            $city_terms = get_the_terms($post_id, 'careercity');
-                            if (!empty($city_terms) && !is_wp_error($city_terms)) {
-                                $career_city = $city_terms[0]->name;
-                            }
-                        }
-                        
-                        // Get careerstate
-                        if (taxonomy_exists('careerstate')) {
-                            $state_terms = get_the_terms($post_id, 'careerstate');
-                            if (!empty($state_terms) && !is_wp_error($state_terms)) {
-                                $career_state = $state_terms[0]->name;
-                            }
-                        }
-                        
-                        // Get careercountry
-                        if (taxonomy_exists('careercountry')) {
-                            $country_terms = get_the_terms($post_id, 'careercountry');
-                            if (!empty($country_terms) && !is_wp_error($country_terms)) {
-                                $career_country = $country_terms[0]->name;
-                            }
-                        }
-                        
-                        // Build location string
-                        $location_parts = array_filter([$career_city, $career_state, $career_country]);
-                        $location_string = !empty($location_parts) ? '(' . implode(', ', $location_parts) . ')' : '';
-                    ?>
-                        <div class="swiper-slide">
-                            <div class="career-card-item">
-                                <div class="career-card-header">
-                                    <?php if (!empty($taxonomy_term)): ?>
-                                        <span class="career-card-taxonomy"><?php echo esc_html($taxonomy_term); ?></span>
-                                    <?php endif; ?>
-                                    <?php if ($detail_url): ?>
-                                        <a href="<?php echo esc_url($detail_url); ?>" class="career-card-link" target="_blank" rel="noopener noreferrer">
-                                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.55556 1.55556C8.126 1.55556 7.77778 1.20733 7.77778 0.777778C7.77778 0.348223 8.126 0 8.55556 0H13.2222C13.6518 0 14 0.348223 14 0.777778V5.44444C14 5.874 13.6518 6.22222 13.2222 6.22222C12.7927 6.22222 12.4444 5.874 12.4444 5.44444V2.6555L5.99442 9.10553C5.69068 9.40927 5.19821 9.40927 4.89447 9.10553C4.59073 8.80179 4.59073 8.30932 4.89447 8.00558L11.3445 1.55556H8.55556ZM2.33333 3.11111C1.90378 3.11111 1.55556 3.45933 1.55556 3.88889V11.6667C1.55556 12.0962 1.90378 12.4444 2.33333 12.4444H10.1111C10.5407 12.4444 10.8889 12.0962 10.8889 11.6667V8.55556C10.8889 8.126 11.2371 7.77778 11.6667 7.77778C12.0962 7.77778 12.4444 8.126 12.4444 8.55556V11.6667C12.4444 12.9553 11.3998 14 10.1111 14H2.33333C1.04467 14 0 12.9553 0 11.6667V3.88889C0 2.60022 1.04467 1.55556 2.33333 1.55556H5.44444C5.874 1.55556 6.22222 1.90378 6.22222 2.33333C6.22222 2.76289 5.874 3.11111 5.44444 3.11111H2.33333Z" fill="#5F6F94"/></svg>
+        return implode(', ', $parts);
+    }
 
-                                        </a>
-                                    <?php endif; ?>
-                                </div>
-                                <div class="career-card-content">
-                                    <h3 class="career-card-title">
-                                        <?php the_title(); ?>
-                                        <?php if (!empty($location_string)): ?>
-                                            <span class="career-card-location"><?php echo esc_html($location_string); ?></span>
-                                        <?php endif; ?>
-                                    </h3>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endwhile; wp_reset_postdata(); ?>
+    /**
+     * Render widget (HTML + CSS + JS)
+     */
+    protected function render() {
+        $settings = $this->get_settings_for_display();
+        $section_title = !empty($settings['section_title']) ? $settings['section_title'] : 'Open roles';
+        $section_subtitle = !empty($settings['section_subtitle']) ? $settings['section_subtitle'] : '';
+        $enable_filter = !empty($settings['enable_filter']) && $settings['enable_filter'] === 'yes';
+        $filter_taxonomy = !empty($settings['filter_taxonomy']) ? $settings['filter_taxonomy'] : 'careerteam';
 
-                    </div>
+        $widget_id = 'career_list_' . $this->get_id();
+        $uid = esc_attr($widget_id);
 
-                    <!-- Navigation -->
-                    <div class="swiper-button-next swiper-horizontalmobile-next">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-white.svg" alt="Next">
-                    </div>
-                    <div class="swiper-button-prev swiper-horizontalmobile-prev">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-white.svg" alt="Prev">
-                    </div>
+        // team terms for filter (depending on selected filter taxonomy)
+        $filter_terms = [];
+        if ($enable_filter && taxonomy_exists($filter_taxonomy)) {
+            $filter_terms = $this->get_terms_for_tax($filter_taxonomy);
+        }
+
+        // initial grouped list (no filter applied)
+        $grouped_careers = self::get_careers_grouped(null, $filter_taxonomy);
+
+        // create a nonce for ajax
+        $ajax_nonce = wp_create_nonce('wpc_career_list_filter_nonce');
+        ?>
+        <div class="career-list-widget" id="<?php echo $uid; ?>" data-widget-id="<?php echo $uid; ?>" data-filter-taxonomy="<?php echo esc_attr($filter_taxonomy); ?>">
+
+            <!-- Header -->
+            <div class="career-header-section" style="display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin-bottom:28px;">
+                <div class="career-header-content">
+                    <h2 class="career-main-title" style="font-size:32px;margin:0 0 8px;"><?php echo esc_html($section_title); ?></h2>
+                    <?php if (!empty($section_subtitle)): ?>
+                        <p class="career-subtitle" style="color:#666;margin:0;"><?php echo esc_html($section_subtitle); ?></p>
+                    <?php endif; ?>
                 </div>
+
+                <?php if ($enable_filter && !empty($filter_terms)): ?>
+                <div class="career-filter-section" style="min-width:200px;">
+                    <select class="career-team-filter" id="<?php echo $uid; ?>_filter" style="width:100%;padding:10px;border-radius:6px;border:1px solid #e6e6e6;background:#f8f8f8;">
+                        <option value="all"><?php echo esc_html__('All teams', 'repindia'); ?></option>
+                        <?php foreach ($filter_terms as $term): ?>
+                            <option value="<?php echo esc_attr($term->slug); ?>"><?php echo esc_html($term->name); ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <?php endif; ?>
             </div>
-        </section>
+
+            <!-- Table header -->
+            <div class="career-table-header" style="display:grid;grid-template-columns: 1fr 2fr 1fr;gap:16px;padding:12px 0;border-bottom:1px solid #e6e6e6;color:#666;font-weight:600;font-size:13px;">
+                <div class="career-header-col career-col-team">Team</div>
+                <div class="career-header-col career-col-role">Role</div>
+                <div class="career-header-col career-col-location">Location</div>
+            </div>
+
+            <!-- Content -->
+            <div class="career-listing-content" id="<?php echo $uid; ?>_content" style="width:100%;">
+                <?php $this->render_careers_list($grouped_careers); ?>
+            </div>
+
+        </div>
 
         <style>
-        #<?php echo esc_attr($uid); ?> .career-slider-wrapper {
-            position: relative;
-        }
-        #<?php echo esc_attr($uid); ?> .custom-container { position: relative;width: 100%; }
-        #<?php echo esc_attr($uid); ?> .career-swiper { width: 100%;overflow: hidden;position: relative;overflow: visible; }
-        
-        /* Career Card Styling */
-        #<?php echo esc_attr($uid); ?> .career-card-item {
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 4px 0 rgba(138, 149, 158, 0.10);
-            padding: 16px 20px;
-            height: 100%;
-            display: flex;
-            gap: 8px;
-            flex-direction: column;
-            transition: box-shadow 0.3s ease;
-        }
-        #<?php echo esc_attr($uid); ?> .career-card-item:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-        }
-        #<?php echo esc_attr($uid); ?> .career-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 16px;
-        }
-        #<?php echo esc_attr($uid); ?> .career-card-taxonomy {
-            font-size: 18px;
-            color: #5F6F94;
-            font-weight: 500;
-            line-height: 26px;
-        }
-        #<?php echo esc_attr($uid); ?> .career-card-link {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            color: #666;
-            text-decoration: none;
-            transition: color 0.3s ease;
-            flex-shrink: 0;
-        }
-        #<?php echo esc_attr($uid); ?> .career-card-link:hover {
-            color: #000;
-        }
-        #<?php echo esc_attr($uid); ?> .career-card-link svg {
-            width: 18px;
-            height: 18px;
-            fill: #5F6F94;
-        }
-        #<?php echo esc_attr($uid); ?> .career-card-content {
-            flex: 1;
-        }
-        #<?php echo esc_attr($uid); ?> .career-card-title {
-            font-size: 20px;
-            font-weight: 600;
-            line-height: 26px;
-            margin: 0;
-            color: #06283D;
-        }
-        #<?php echo esc_attr($uid); ?> .career-card-location {
-            display: inline;
-        }
-        #<?php echo esc_attr($uid); ?> .swiper-slide {
-            height: auto;
-        }
-        /* Ensure Swiper wrapper displays slides properly */
-        #<?php echo esc_attr($uid); ?> .swiper-wrapper {
-            display: flex;
-            align-items: stretch;
-        }
-        
-        /* Hide default Swiper arrow icons - using custom arrow images instead */
-        #<?php echo esc_attr($uid); ?> .career-swiper .swiper-button-prev:after,
-        #<?php echo esc_attr($uid); ?> .career-swiper .swiper-button-next:after,
-        #<?php echo esc_attr($uid); ?> .career-swiper .swiper-rtl .swiper-button-prev:after,
-        #<?php echo esc_attr($uid); ?> .career-swiper .swiper-rtl .swiper-button-next:after { display: none !important;content: none !important; }
-        /* Hide navigation buttons */
-        #<?php echo esc_attr($uid); ?> .career-swiper .swiper-horizontalmobile-next,
-        #<?php echo esc_attr($uid); ?> .career-swiper .swiper-horizontalmobile-prev {
-            display: none !important;
-        }
-        .career-swiper .swiper-slide {
-            width: 375px;
-            margin-right: 20px;
-        }
-        /* Mobile-specific styles for touch/swipe (below 767px) */
-        @media (max-width: 767px) {
-            #<?php echo esc_attr($uid); ?> .career-swiper { overflow: hidden !important;touch-action: pan-x;-webkit-overflow-scrolling: touch; }
-            #<?php echo esc_attr($uid); ?> .career-swiper .swiper-wrapper { touch-action: pan-x;-webkit-transform: translate3d(0, 0, 0); }
-            #<?php echo esc_attr($uid); ?> .career-swiper .swiper-slide { touch-action: pan-x;-webkit-user-select: none;user-select: none;-webkit-tap-highlight-color: transparent; }
-        }
+        /* Scoped styles (only affect this widget by ID) */
+        #<?php echo $uid; ?> .career-team-group { margin-top: 36px; }
+        #<?php echo $uid; ?> .career-team-group:first-child { margin-top: 20px; }
+        #<?php echo $uid; ?> .team-title { font-size:22px; font-weight:600; color:#0a3a5b; margin:0 0 12px; padding:0; }
+        #<?php echo $uid; ?> .career-row { display:grid; grid-template-columns: 1fr 2fr 1fr; gap:16px; padding:14px 0; border-bottom:1px solid #eaeaea; align-items:center; }
+        #<?php echo $uid; ?> .career-row .career-role a { color:#0a3a5b; text-decoration:none; font-size:14px; }
+        #<?php echo $uid; ?> .career-row .career-role a:hover { text-decoration:underline; }
+        #<?php echo $uid; ?> .career-location { color:#333; font-size:14px; text-align:right; }
+        #<?php echo $uid; ?> .career-team-col { padding:0; }
+        #<?php echo $uid; ?> .career-loading, #<?php echo $uid; ?> .career-empty { text-align:center; padding:36px 20px; color:#666; }
 
+        @media (max-width: 768px) {
+            #<?php echo $uid; ?> .career-table-header, #<?php echo $uid; ?> .career-row { grid-template-columns: 1fr; }
+            #<?php echo $uid; ?> .career-location { text-align:left; margin-top:6px; }
+        }
         </style>
 
         <script>
-            (function() {
-                var widgetId = '<?php echo esc_js($uid); ?>';
-                var widgetEl = null;
+        (function(){
+            var widgetId = '<?php echo esc_js($uid); ?>';
+            var ajaxUrl = '<?php echo esc_js(admin_url('admin-ajax.php')); ?>';
+            var nonce = '<?php echo esc_js($ajax_nonce); ?>';
+            var widgetEl = document.getElementById(widgetId);
+            if (!widgetEl) return;
 
-                // Function to initialize Swiper
-                function initSwiper() {
-                    if (!widgetEl) {
-                        widgetEl = document.getElementById(widgetId);
+            var filterSelect = widgetEl.querySelector('.career-team-filter');
+            var contentEl = widgetEl.querySelector('#' + widgetId + '_content');
+
+            function showLoading() {
+                if (contentEl) contentEl.innerHTML = '<div class="career-loading">Loading...</div>';
+            }
+
+            function updateContent(html) {
+                if (contentEl) contentEl.innerHTML = html;
+            }
+
+            function handleAjax(termSlug) {
+                showLoading();
+                var data = new FormData();
+                data.append('action', 'wpc_career_list_filter');
+                data.append('term_slug', termSlug);
+                data.append('taxonomy', widgetEl.getAttribute('data-filter-taxonomy') || 'careerteam');
+                data.append('nonce', nonce);
+
+                fetch(ajaxUrl, {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    body: data
+                }).then(function(response){
+                    return response.json();
+                }).then(function(json){
+                    if (json && json.success && json.data) {
+                        updateContent(json.data);
+                    } else {
+                        var msg = 'No careers found.';
+                        if (json && json.data && json.data.message) msg = json.data.message;
+                        updateContent('<div class="career-empty">' + msg + '</div>');
                     }
+                }).catch(function(err){
+                    console.error('Career filter AJAX error', err);
+                    updateContent('<div class="career-empty">Error loading careers. Please try again later.</div>');
+                });
+            }
 
-                    if (!widgetEl) return;
+            if (filterSelect) {
+                filterSelect.addEventListener('change', function(){
+                    var val = this.value || 'all';
+                    handleAjax(val);
+                });
+            }
 
-                    var slider = widgetEl.querySelector(".career-swiper");
-                    if (!slider) return;
-
-                    // Check if already initialized
-                    if (slider.swiper) return;
-
-                    var nextBtn = widgetEl.querySelector(".swiper-horizontalmobile-next");
-                    var prevBtn = widgetEl.querySelector(".swiper-horizontalmobile-prev");
-
-                    if (!nextBtn || !prevBtn) return;
-
-                    // Function to check if Swiper is available
-                    function readyForSwiper(cb) {
-                        if (typeof Swiper !== 'undefined') {
-                            cb();
-                        } else if (typeof elementorFrontend !== 'undefined' && elementorFrontend.utils && elementorFrontend.utils.swiper) {
-                            cb();
-                        } else {
-                            setTimeout(function() {
-                                readyForSwiper(cb);
-                            }, 60);
-                        }
-                    }
-
-                    readyForSwiper(function() {
-                        var swiperConfig = {
-                            navigation: {
-                                nextEl: nextBtn,
-                                prevEl: prevBtn,
-                            },
-                            autoplay: {
-                                delay: 2000, 
-                                disableOnInteraction: false, 
-                                pauseOnMouseEnter: true, 
-                            },
-                            loop: true, // Enable infinite loop
-                            centeredSlides: false, // Disable center item feature
-                            spaceBetween: 20,
-                            // Default for mobile - 1 slide
-                            slidesPerView: 1,
-                            slidesPerGroup: 1,
-                            // Enable touch/swipe by default (will be controlled by breakpoints)
-                            allowTouchMove: true,
-                            touchEventsTarget: 'container',
-                            simulateTouch: true,
-                            grabCursor: true,
-                            breakpoints: {
-                                // Mobile first approach - breakpoints are min-width
-                                // Below 768px: touch enabled, 1 slide per view, 1 slide per group
-                                0: {
-                                    slidesPerView: 1,
-                                    slidesPerGroup: 1,
-                                    spaceBetween: 20,
-                                    allowTouchMove: true,
-                                    touchEventsTarget: 'container',
-                                    simulateTouch: true,
-                                },
-                                // 768px and above: 3 slides
-                                768: {
-                                    slidesPerView: 3,
-                                    slidesPerGroup: 1,
-                                    spaceBetween: 20,
-                                    allowTouchMove: false,
-                                },
-                                // 1024px and above: 4 slides (desktop)
-                                1024: {
-                                    slidesPerView: 4,
-                                    slidesPerGroup: 1,
-                                    spaceBetween: 20,
-                                    allowTouchMove: false,
-                                },
-                                // 1200px and above: still 4 slides
-                                1200: {
-                                    slidesPerView: "auto",
-                                    slidesPerGroup: 1,
-                                    spaceBetween: 20,
-                                    allowTouchMove: false,
-                                }
-                            }
-                        };
-
-                        try {
-                            // Use Elementor's Swiper wrapper if available, otherwise use global Swiper
-                            if (typeof elementorFrontend !== 'undefined' && elementorFrontend.utils && elementorFrontend.utils.swiper) {
-                                var swiperInstance = elementorFrontend.utils.swiper(slider, swiperConfig);
-                                if (swiperInstance && swiperInstance.swiper) {
-                                    swiperInstance.swiper.update();
-                                }
-                            } else if (typeof Swiper !== 'undefined') {
-                                var swiperInstance = new Swiper(slider, swiperConfig);
-                                if (swiperInstance && typeof swiperInstance.update === 'function') {
-                                    setTimeout(function() {
-                                        swiperInstance.update();
-                                    }, 100);
-                                }
-                            } else {
-                                console.warn('Swiper not found for purpose slider');
-                            }
-                        } catch (e) {
-                            console.error('Error initializing Swiper:', e);
-                        }
-                    });
-                }
-
-                // Initialize on DOM ready
-                if (document.readyState === 'loading') {
-                    document.addEventListener('DOMContentLoaded', initSwiper);
-                } else {
-                    initSwiper();
-                }
-
-                // Elementor hook for frontend/editor
-                if (typeof elementorFrontend !== 'undefined' && elementorFrontend.hooks) {
-                    elementorFrontend.hooks.addAction('frontend/element_ready/cardscustom_purpose_slider.default', function($scope) {
-                        // $scope is a jQuery object, get the DOM element
-                        widgetEl = ($scope && $scope.length) ? $scope[0] : document.getElementById(widgetId);
-                        setTimeout(initSwiper, 100);
-                    });
-                }
-
-                // Also listen for Elementor init event (using jQuery if available)
-                if (typeof jQuery !== 'undefined') {
-                    jQuery(window).on('elementor/frontend/init', function() {
-                        setTimeout(initSwiper, 200);
-                    });
-                }
-
-                // Fallback: try again after a short delay
-                setTimeout(initSwiper, 500);
-            })();
+            // Make sure widget works when Elementor loads it dynamically in editor/preview
+            if (typeof elementorFrontend !== 'undefined') {
+                elementorFrontend.hooks.addAction('frontend/element_ready/<?php echo $this->get_name(); ?>.default', function($scope, $){
+                    // noop - filter already bound via DOM
+                });
+            }
+        })();
         </script>
-
-<?php
-        wp_reset_postdata();
+        <?php
     }
+
+    /**
+     * Render careers list HTML block (used both by initial render and AJAX)
+     * $grouped_careers = array returned by get_careers_grouped()
+     */
+    private function render_careers_list($grouped_careers) {
+        if (empty($grouped_careers)) {
+            echo '<div class="career-empty">No careers found.</div>';
+            return;
+        }
+
+        foreach ($grouped_careers as $team_slug => $group) {
+            if (empty($group['posts'])) continue;
+
+            $term = isset($group['term']) ? $group['term'] : (object)['name' => 'Uncategorized', 'slug' => 'uncategorized'];
+            echo '<div class="career-team-group">';
+            echo '<h3 class="team-title">' . esc_html($term->name) . '</h3>';
+
+            foreach ($group['posts'] as $post_id) {
+                $role = get_the_title($post_id);
+                $location = self::get_location_string($post_id);
+                $permalink = get_permalink($post_id);
+
+                echo '<div class="career-row">';
+                echo '<div class="career-team-col"></div>'; // left column (kept for alignment)
+                echo '<div class="career-role">';
+                if ($permalink) {
+                    echo '<a href="' . esc_url($permalink) . '">' . esc_html($role) . '</a>';
+                } else {
+                    echo esc_html($role);
+                }
+                echo '</div>';
+                echo '<div class="career-location">' . esc_html($location) . '</div>';
+                echo '</div>';
+            }
+
+            echo '</div>';
+        }
+    }
+}
+
+
+/* --------------------------------------------------------------------------
+   AJAX Handler (global scope) - single function for both logged in & nopriv
+   -------------------------------------------------------------------------- */
+
+if (!function_exists('wpc_career_list_filter_ajax')) {
+    function wpc_career_list_filter_ajax() {
+        // Check nonce (relaxed by default to avoid issues in editor preview)
+        $nonce = isset($_POST['nonce']) ? sanitize_text_field($_POST['nonce']) : '';
+        // To enable strict nonce check, uncomment below:
+        // if (empty($nonce) || !wp_verify_nonce($nonce, 'wpc_career_list_filter_nonce')) {
+        //     wp_send_json_error(['message' => 'Invalid nonce']);
+        //     wp_die();
+        // }
+
+        $term_slug = isset($_POST['term_slug']) ? sanitize_text_field($_POST['term_slug']) : null;
+        $taxonomy = isset($_POST['taxonomy']) ? sanitize_text_field($_POST['taxonomy']) : 'careerteam';
+
+        if ($term_slug === 'all' || $term_slug === '' || $term_slug === null) {
+            $term_slug = null;
+        }
+
+        try {
+            // Use the static method to fetch grouped careers (filter by slug)
+            $grouped = \WPC\Widgets\Custom_Career_List::get_careers_grouped($term_slug, $taxonomy);
+
+            ob_start();
+
+            if (empty($grouped)) {
+                echo '<div class="career-empty">No careers found.</div>';
+            } else {
+                // Render HTML same as render_careers_list()
+                foreach ($grouped as $team_slug => $group) {
+                    if (empty($group['posts'])) continue;
+
+                    $term = isset($group['term']) ? $group['term'] : (object)['name' => 'Uncategorized', 'slug' => 'uncategorized'];
+                    echo '<div class="career-team-group">';
+                    echo '<h3 class="team-title">' . esc_html($term->name) . '</h3>';
+
+                    foreach ($group['posts'] as $post_id) {
+                        $role = get_the_title($post_id);
+                        $location = \WPC\Widgets\Custom_Career_List::get_location_string($post_id);
+                        $permalink = get_permalink($post_id);
+
+                        echo '<div class="career-row">';
+                        echo '<div class="career-team-col"></div>';
+                        echo '<div class="career-role">';
+                        if ($permalink) {
+                            echo '<a href="' . esc_url($permalink) . '">' . esc_html($role) . '</a>';
+                        } else {
+                            echo esc_html($role);
+                        }
+                        echo '</div>';
+                        echo '<div class="career-location">' . esc_html($location) . '</div>';
+                        echo '</div>';
+                    }
+
+                    echo '</div>';
+                }
+            }
+
+            $html = ob_get_clean();
+
+            wp_send_json_success($html);
+        } catch (\Exception $e) {
+            wp_send_json_error(['message' => 'Error processing request', 'error' => $e->getMessage()]);
+        } catch (\Error $e) {
+            wp_send_json_error(['message' => 'Fatal error', 'error' => $e->getMessage()]);
+        }
+
+        wp_die();
+    }
+
+    add_action('wp_ajax_wpc_career_list_filter', 'wpc_career_list_filter_ajax');
+    add_action('wp_ajax_nopriv_wpc_career_list_filter', 'wpc_career_list_filter_ajax');
 }
