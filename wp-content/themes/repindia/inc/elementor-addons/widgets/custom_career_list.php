@@ -178,7 +178,7 @@ class Custom_Career_List extends Widget_Base {
                 <?php endif; ?>
             </div>
             <div class="career-table-header">
-                <div>Team</div><div>Role</div><div>Location</div>
+                <div>Team</div><div class="rolehead">Role</div><div class="locationhead">Location</div>
             </div>
 
             <div class="career-listing-content" id="<?php echo $uid; ?>_content">
@@ -201,10 +201,10 @@ class Custom_Career_List extends Widget_Base {
         #<?php echo $uid; ?> .career-team-group:last-child{ margin-bottom: 0;}
         /* #<?php //echo $uid; ?> .career-team-group:first-child { margin-top: 20px; } */
         #<?php echo $uid; ?> .team-title { font-size: 32px;font-weight: 500 !important;color: #06283D;margin: 0; }
-        #<?php echo $uid; ?> .career-row { 
-            /* display:grid; grid-template-columns: 1fr 3fr;  */
-            gap:16px; padding: 0; border-bottom:0; align-items:center; }
-        #<?php echo $uid; ?> .career-row .career-role a,#<?php echo $uid; ?> .career-location { color:#06283D; font-size: 24px;font-weight: 400; line-height: normal; }
+        #<?php echo $uid; ?> .career-row { gap:16px; border-bottom:0; align-items:center;background: transparent;border-radius: 12px;padding: 0 20px;display: inline-block;width: 100%; }
+        #<?php echo $uid; ?> .career-row:hover { background: #E5F6FF; }
+        #<?php echo $uid; ?> .career-row .career-role,#<?php echo $uid; ?> .career-location { color:#06283D; font-size: 24px;font-weight: 400; line-height: normal;text-decoration: underline;text-decoration-color: transparent; }
+        #<?php echo $uid; ?> .career-row:hover .career-role,#<?php echo $uid; ?> .career-row:hover  .career-location{ text-decoration: underline;text-decoration-color: #D7DBE4 ; }
         /* #<?php //echo $uid; ?> .career-row .career-role a:hover { text-decoration:underline; } */
         #<?php echo $uid; ?> .career-role { width: 70%; }
         #<?php echo $uid; ?> .career-location { text-align:left;width: 35%; }
@@ -216,9 +216,41 @@ class Custom_Career_List extends Widget_Base {
             align-items: center;
             justify-content: space-between;
         }
+        .rolehead { padding: 0 20px; }
+        .js-dark .elementor-element.career_life .elementor-widget.elementor-widget-icon-box,.js-dark .elementor-element.career_purpose.e-con,.js-dark .elementor-element.career_filter_list.e-con{ background-color: #262A30; }
+        .js-dark .btn-sec_gap.titlegrep.with_whitebg .grey-btn { border-color: #262A30;background: #262A30;color: rgba(255, 255, 255, 0.9); }
+        .js-dark .career_whywork .purpose-swiper .swiper-slide figure.caption-scroll figcaption{ background: #262A30; border-bottom-left-radius: 12px;border-bottom-right-radius: 12px; }
+        .js-dark .elementor-element.career_faq .e-n-accordion-item .e-flex.e-con.e-child,.js-dark .elementor-element.career_faq  .elementor-widget-n-accordion .e-n-accordion-item-title{
+            background-color: #262A30 !important;
+        }
+        .js-dark .elementor-element.career_faq .e-n-accordion-item .e-flex.e-con.e-child{
+            border-color: #3e4144 !important;
+        }
+        .js-dark .elementor-element.career_faq .e-n-accordion > .e-n-accordion-item[open] > .e-n-accordion-item-title{
+            background-color: #0074B2!important;
+            border-color: #0074B2;
+        }
+        .js-dark .elementor-element.career_faq  .e-n-accordion > .e-n-accordion-item > .e-n-accordion-item-title:hover { border-color: #3e4144; }
+        .js-dark .elementor-element.career_faq .elementor-widget-n-accordion .e-n-accordion-item .e-n-accordion-item-title-icon span>svg{ fill: #fff; }
+        .js-dark #<?php echo $uid; ?> .career-row .career-role,.js-dark #<?php echo $uid; ?> .career-location{ color: rgba(255, 255, 255, 0.9); }
+        .js-dark #<?php echo $uid; ?> .career-table-header,.js-dark #<?php echo $uid; ?> .career-team-col-in{ border-bottom: 1px solid #3e4144; }
+        .js-dark #<?php echo $uid; ?> .career-row:hover .career-role, .js-dark #<?php echo $uid; ?> .career-row:hover .career-location{ color: #06283D; }
+        .js-dark #<?php echo $uid; ?> .career-team-filter{ border-color: #464a4f;background: #464a4f;color: rgba(255, 255, 255, 0.9); }
+        .js-dark #<?php echo $uid; ?> .career-table-header{ color: rgba(255, 255, 255, 0.9); }
+
+
         @media (max-width: 768px) {
-            #<?php echo $uid; ?> .career-table-header, #<?php echo $uid; ?> .career-row { grid-template-columns: 1fr; }
-            #<?php echo $uid; ?> .career-location { text-align:left; margin-top:6px; }
+            #<?php echo $uid; ?> .career-header-section { flex-direction:column; gap:20px; margin-bottom:32px; }
+            #<?php echo $uid; ?> .career-main-title { font-size:32px; margin-bottom:8px; }
+            #<?php echo $uid; ?> .career-subtitle { font-size:16px; line-height:24px; }
+            #<?php echo $uid; ?> .career-filter-section { min-width:100%; width:100%; }
+            #<?php echo $uid; ?> .career-table-header { display:none; }
+            #<?php echo $uid; ?> .career-team-group { grid-template-columns: 1fr; gap:20px; margin-bottom:32px; }
+            #<?php echo $uid; ?> .team-title { font-size:24px; margin-bottom: 0px; }
+            #<?php echo $uid; ?> .career-team-col-in { flex-direction:column; align-items:flex-start; gap:8px; padding:10px 0; }
+            #<?php echo $uid; ?> .career-role { width:100%; }
+            #<?php echo $uid; ?> .career-location { width:100%; text-align:left; font-size:16px; }
+            #<?php echo $uid; ?> .career-row .career-role { font-size: 18px; }
         }
         </style>
 
@@ -315,13 +347,15 @@ class Custom_Career_List extends Widget_Base {
                 $filter_slug = (!empty($filter_terms) && !is_wp_error($filter_terms)) ? $filter_terms[0]->slug : 'all';
                 $permalink = get_permalink($post_id);
                 
-                echo '<div class="career-row" data-filter-value="' . esc_attr($filter_slug) . '">';
+                // echo '<div class="career-row" data-filter-value="' . esc_attr($filter_slug) . '">';
+                echo '<a class="career-row" data-filter-value="' . esc_attr($filter_slug) . '" href="' . esc_url($permalink) . '">';
                 echo '<div class="career-team-col"></div>';
                 echo '<div class="career-team-col-in">';
-                echo '<div class="career-role">' . ($permalink ? '<a href="' . esc_url($permalink) . '">' . esc_html(get_the_title($post_id)) . '</a>' : esc_html(get_the_title($post_id))) . '</div>';
+                echo '<div class="career-role">' . esc_html(get_the_title($post_id)) . '</div>';
                 echo '<div class="career-location">' . esc_html(self::get_location_string($post_id)) . '</div>';
                 echo '</div>';
-                echo '</div>';
+                echo '</a>';
+                // echo '</div>';
             }
             echo '</div>';
             echo '</div>';

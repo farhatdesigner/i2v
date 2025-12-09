@@ -352,6 +352,7 @@ class Custom_Career_Slider extends Widget_Base {
         #<?php echo esc_attr($uid); ?> .career-card-item:hover {
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
         }
+        .js-dark #<?php echo esc_attr($uid); ?> .career-card-item{ background: #262A30; }
         #<?php echo esc_attr($uid); ?> .career-card-header {
             display: flex;
             justify-content: space-between;
