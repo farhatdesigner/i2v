@@ -16,6 +16,7 @@ class Widget_Loader
     {
 		require_once(__DIR__.'/widgets/home_banner.php');
 		require_once(__DIR__.'/widgets/customtabsolution.php');
+		require_once(__DIR__.'/widgets/customtabsmart.php');
 		require_once(__DIR__.'/widgets/insightsupdates.php');
 		require_once(__DIR__.'/widgets/cardslisting.php');
 		require_once(__DIR__.'/widgets/carosoulslider.php');
@@ -26,15 +27,31 @@ class Widget_Loader
 		require_once(__DIR__.'/widgets/custom_marquee.php');
 		require_once(__DIR__.'/widgets/scalescroll.php');
 		require_once(__DIR__.'/widgets/video_accordion.php');
+		require_once(__DIR__.'/widgets/video_accordionwhite.php');
+		require_once(__DIR__.'/widgets/video_accordioncaption.php');
 		require_once(__DIR__.'/widgets/singlescrollcards.php');
 		require_once(__DIR__.'/widgets/custom_testimonial.php');
 		require_once(__DIR__.'/widgets/custom_image_circle.php');
+		require_once(__DIR__.'/widgets/custom_purpose_slider.php');
+		require_once(__DIR__.'/widgets/analytic_sidebar_nav.php');
+		require_once(__DIR__.'/widgets/horizontal_slider.php');
+		require_once(__DIR__.'/widgets/horizontal_slider_topcaption.php');
+		require_once(__DIR__.'/widgets/custom_tab_section.php');
+		require_once(__DIR__.'/widgets/tabbed_custom_swiper.php');
+		require_once(__DIR__.'/widgets/simple_swiper_slider.php');
+		require_once(__DIR__.'/widgets/scalescroll2.php');
+		require_once(__DIR__.'/widgets/custom_technology_tab.php');
+		require_once(__DIR__.'/widgets/testimonial_slider.php');
+		require_once(__DIR__.'/widgets/custom_career_slider.php');
+		require_once(__DIR__.'/widgets/custom_career_list.php');
+		
     }
     public function register_widgets()
     {
     	$this->include_widgets_files();
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Home_Banner() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Customtabsolution() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Customtabsmart() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Insightsupdates() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Cardslisting() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Carosoulslider() );
@@ -45,9 +62,23 @@ class Widget_Loader
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Marquee() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Scalescroll() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Video_accordion() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Video_accordionwhite() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Video_accordioncaption() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Singlescrollcards() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Testimonial() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Image_Circle() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Purpose_Slider() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Analytic_Sidebar_Nav() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Horizontal_Slider() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Horizontal_Slider_Topcaption() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Tab_Section() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Tabbed_Custom_Swiper() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Simple_Swiper_Slider() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Scalescroll2() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Technology_Tab() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Testimonial_Slider() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Career_Slider() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Career_List() );
     }
 	public function __construct()
 	{

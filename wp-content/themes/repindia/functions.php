@@ -128,6 +128,8 @@ if (! function_exists('repindia_load_theme_scripts_and_styles')) {
 		wp_enqueue_script('scrolltrigger-min', get_template_directory_uri() . '/assets/js/scrolltrigger.js', array('gsap-min'), REPINDIA_THEME_VERSION, true);
 		wp_enqueue_script('lenis-min', get_template_directory_uri() . '/assets/js/lenis.min.js', array(), REPINDIA_THEME_VERSION, true);
 		wp_enqueue_script('repindia-global', get_template_directory_uri() . '/assets/js/global.js', array('jquery', 'swiper-min', 'gsap-min', 'scrolltrigger-min', 'lenis-min'), REPINDIA_THEME_VERSION, true);
+		wp_enqueue_script('repindia-custom', get_template_directory_uri() . '/assets/js/custom.js', array('jquery', 'swiper-min', 'gsap-min', 'scrolltrigger-min', 'lenis-min'), REPINDIA_THEME_VERSION, true);
+		
 		
 		// Save Swiper 4.5.1 reference before Elementor's Swiper 8 loads (only on homepage)
 		if (is_front_page()) {

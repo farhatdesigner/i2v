@@ -477,6 +477,58 @@ jQuery(document).ready(function ($) {
     });
 });
 
+// Smart Tabs functionality (for customtabsmart widget) - No auto scroll
+jQuery(document).ready(function ($) {
+
+    $(document).on('click', '.smart-tabsautoscroll li', function (e) {
+        // Prevent default anchor behavior if anchor exists
+        var $link = $(this).find("a.smart-tab-link");
+        if ($link.length) {
+            e.preventDefault();
+        }
+
+        var $this = $(this);
+        var t = $this.data("id"); // e.g., "content0", "content1", etc.
+
+        // Toggle class only, no .show() or .hide()
+        $(".smart-tabContent .smart-tabdiv").removeClass("smart-active-tabcontent");
+        $(".smart-tabContent .smart-tabdiv." + t).addClass("smart-active-tabcontent");
+
+        // Active tab styling
+        $(".smart-tabsautoscroll li").removeClass("active");
+        $this.addClass("active");
+
+        // Update select-brand text on mobile
+        if ($(window).width() <= 1024) {
+            var selectedText = $link.length ? $link.text() : $this.text();
+            $(".smart-filter-menu .smart-select-brand").text(selectedText.trim());
+        }
+    });
+
+    // Handle click on smart-tab-link to prevent default anchor behavior
+    $(document).on('click', '.smart-tabsautoscroll li .smart-tab-link', function (e) {
+        e.preventDefault();
+        // Event will bubble to parent li, which handles the tab switching
+    });
+
+    // Mobile dropdown functionality for smart tabs
+    // Handle click on select-brand to toggle dropdown
+    $(document).on('click', '.smart-filter-menu .smart-select-brand', function () {
+        if ($(window).width() <= 1024) {
+            $(this).toggleClass("angle-icon");
+            $(this).next("ul.smart-tabsautoscroll").slideToggle();
+        }
+    });
+
+    // Handle click on smart tabs li to close dropdown on mobile
+    $(document).on('click', '.smart-filter-menu .smart-tabsautoscroll li', function () {
+        if ($(window).width() <= 1024) {
+            $(".smart-filter-menu .smart-select-brand").removeClass("angle-icon");
+            $(this).parents("ul.smart-tabsautoscroll").slideUp();
+        }
+    });
+});
+
 
 // Footer Accordion - Mobile Only (max-width: 767px)
 jQuery(document).ready(function ($) {
@@ -533,19 +585,11 @@ const swiper = new Swiper(".testimonialSwiper", {
 });
 
 
-$(window).scroll(function() {
-    if ($(window).scrollTop() >= 1800) {
-        $('.sticky-custom').addClass('fixed-header');
-    } else {
-        $('.sticky-custom').removeClass('fixed-header');
-    }
-});
-
-
-
-jQuery(document).ready(function ($) {
-
-    // Check if sticky-custom or enterprisebanner exists on the page
+// ============================================
+// STICKY MENU WITH SCROLL SPY - CONFIGURABLE
+// ============================================
+// This function handles sticky menu functionality with different configurations per page
+function initStickyMenu(config) {
     var $stickyCustom = $(".sticky-custom");
     var $enterpriseBanner = $("#enterprisebanner");
     
@@ -556,39 +600,150 @@ jQuery(document).ready(function ($) {
 
     var $items = $(".sticky-custom ul.elementor-icon-list-items.elementor-inline-items li");
     var $menu = $(".sticky-custom"); // menu container
+    var $menuList = $(".sticky-custom ul.elementor-icon-list-items.elementor-inline-items"); // list container for scrolling
 
-    // Section selectors (order must match your menu)
-    var sections = [
-        ".live_monitoring",
-        ".system_setup",
-        ".intelligenc_alerts",
-        ".recording_storage",
-        ".security_integration" // 5th section
-    ];
+    // Use provided sections or auto-detect from menu items
+    var sections = config.sections || [];
+    
+    // If sections not provided, try to auto-detect from menu items
+    if (sections.length === 0) {
+        $items.each(function() {
+            var $link = $(this).find('a');
+            if ($link.length) {
+                var href = $link.attr('href');
+                if (href && href.indexOf('#') !== -1) {
+                    var sectionId = href.split('#')[1];
+                    sections.push('.' + sectionId);
+                } else {
+                    // Try data attribute or class
+                    var dataTarget = $link.data('target') || $(this).data('section');
+                    if (dataTarget) {
+                        sections.push('.' + dataTarget);
+                    }
+                }
+            }
+        });
+    }
+
+    // If still no sections found, exit
+    if (sections.length === 0) {
+        return;
+    }
 
     var sectionData = [];
     var lastActive = -1;
-    var triggerOffset = 220;
+    var triggerOffset = config.triggerOffset || 220; // Default 220, can be overridden
+    var scrollThreshold = config.scrollThreshold || 120; // Default 120px, can be overridden
     var rafID = null;
+    var isManualClick = false; // Flag to prevent scroll spy from overriding manual clicks
+    var stickyElementInitialTop = null; // Store initial position of sticky element
+    
+    // --------------------------------------------
+    // FUNCTION: Scroll active item to left (mobile only)
+    // --------------------------------------------
+    function scrollActiveItemToLeft() {
+        // Only on mobile view (below 768px)
+        if ($(window).width() > 768) {
+            return;
+        }
+        
+        var $activeItem = $items.filter(".active-li");
+        if (!$activeItem.length) {
+            return;
+        }
+        
+        // Find the scrollable container - try ul first, then parent
+        var $scrollContainer = $menuList;
+        
+        // Check if ul is scrollable, if not find scrollable parent
+        var hasScroll = $scrollContainer.length && (
+            $scrollContainer.css('overflow-x') === 'scroll' || 
+            $scrollContainer.css('overflow-x') === 'auto' ||
+            $scrollContainer.css('overflow') === 'scroll' ||
+            $scrollContainer.css('overflow') === 'auto'
+        );
+        
+        if (!hasScroll && $scrollContainer.length) {
+            // Find parent with horizontal scroll
+            $scrollContainer = $activeItem.closest('.sticky-custom');
+            // Check if parent is scrollable
+            var parentOverflow = $scrollContainer.css('overflow-x');
+            if (parentOverflow !== 'scroll' && parentOverflow !== 'auto') {
+                // Try to find any scrollable ancestor
+                $scrollContainer = $activeItem.parentsUntil('.sticky-custom').filter(function() {
+                    var overflow = $(this).css('overflow-x');
+                    return overflow === 'scroll' || overflow === 'auto';
+                }).first();
+                
+                // Final fallback to menu container
+                if (!$scrollContainer.length) {
+                    $scrollContainer = $menu;
+                }
+            }
+        }
+        
+        if ($scrollContainer.length) {
+            // Get item position relative to scrollable container
+            var itemOffset = $activeItem.offset().left;
+            var containerOffset = $scrollContainer.offset().left;
+            var currentScroll = $scrollContainer.scrollLeft();
+            
+            // Calculate position relative to container
+            var relativePosition = itemOffset - containerOffset + currentScroll;
+            
+            // Calculate target scroll to position item at left (with padding)
+            var targetScroll = relativePosition - 20; // 20px padding from left
+            
+            // Ensure target scroll is not negative
+            targetScroll = Math.max(0, targetScroll);
+            
+            // Smooth scroll to position
+            $scrollContainer.stop().animate({
+                scrollLeft: targetScroll
+            }, 300, 'swing');
+        }
+    }
 
     // --------------------------------------------
-    // CLICK = Scroll to SAME trigger position
+    // CLICK = Scroll to SAME trigger position + Set Active Class
     // --------------------------------------------
     $items.each(function (i) {
-        $(this).on("click", function () {
-
+        $(this).on("click", function (e) {
+            e.preventDefault(); // Prevent default anchor behavior if any
+            
             var $target = $(sections[i]);
             if ($target.length) {
-
+                // Set flag to prevent scroll spy from overriding
+                isManualClick = true;
+                
+                // Remove active class from all items
                 $items.removeClass("active-li");
+                
+                // Add active class to clicked item
                 $(this).addClass("active-li");
+                
+                // Update lastActive to prevent scroll spy from overriding
                 lastActive = i;
+                
+                // Scroll active item to left on mobile
+                setTimeout(function() {
+                    scrollActiveItemToLeft();
+                }, 50);
 
+                // Calculate exact scroll position
                 var exactPosition = $target.offset().top - (triggerOffset - 1);
 
+                // Smooth scroll to target section
                 $("html, body").animate({
                     scrollTop: exactPosition
-                }, 300);
+                }, 300, function() {
+                    // Update positions after scroll completes
+                    updatePositions();
+                    // Reset flag after scroll animation completes
+                    setTimeout(function() {
+                        isManualClick = false;
+                    }, 100);
+                });
             }
         });
     });
@@ -619,6 +774,11 @@ jQuery(document).ready(function ($) {
         if (sectionData.length === 0) {
             return;
         }
+        
+        // Don't update active class if user just clicked manually
+        if (isManualClick) {
+            return;
+        }
 
         var scrollTop = $(window).scrollTop() + triggerOffset;
         var activeIndex = 0;
@@ -630,21 +790,30 @@ jQuery(document).ready(function ($) {
             }
         }
 
-        // Update active li
+        // Update active li only if it changed and not during manual click
         if (activeIndex !== lastActive) {
             $items.removeClass("active-li");
             $items.eq(activeIndex).addClass("active-li");
             lastActive = activeIndex;
+            
+            // Scroll active item to left on mobile
+            setTimeout(function() {
+                scrollActiveItemToLeft();
+            }, 50);
         }
 
         // ------------------------------------------
-        // HIDE MENU when 5th section scrolls above
+        // HIDE MENU when last section scrolls above
         // ------------------------------------------
         var lastSection = sectionData[sectionData.length - 1];
 
         // Safety check: ensure lastSection exists before accessing properties
-        if (lastSection && scrollTop > lastSection.bottom) {
-            // User scrolled PAST the last section
+        // IMPORTANT: Use actual scroll position (not scrollTop which includes triggerOffset)
+        // to check if we've scrolled past the last section
+        var actualScrollPosition = $(window).scrollTop();
+        
+        if (lastSection && actualScrollPosition > lastSection.bottom) {
+            // User scrolled PAST the last section (section bottom is above viewport)
             $menu.addClass("menu-hidden");
         } else {
             // User scrolls back up → show menu again
@@ -660,240 +829,431 @@ jQuery(document).ready(function ($) {
         });
     }
 
+    // Handle fixed-header class when sticky element reaches top of viewport
+    function handleFixedHeader() {
+        // Store initial position on first call (before element becomes fixed)
+        if (stickyElementInitialTop === null) {
+            var elementOffset = $menu.offset();
+            if (elementOffset) {
+                stickyElementInitialTop = elementOffset.top;
+            } else {
+                return; // Element not found or not visible
+            }
+        }
+        
+        var scrollTop = $(window).scrollTop();
+        var activationThreshold = stickyElementInitialTop - 120; // Activate 120px before element reaches top
+        
+        // Add fixed-header class 120px before the element reaches the top of the viewport
+        if (scrollTop >= activationThreshold) {
+            $menu.addClass('fixed-header');
+        } else {
+            $menu.removeClass('fixed-header');
+        }
+    }
+
     // INIT
     updatePositions();
     detectActiveSection();
+    handleFixedHeader(); // Initial check
 
-    $(window).on("scroll", onScroll);
+    $(window).on("scroll", function() {
+        onScroll();
+        handleFixedHeader(); // Check on every scroll
+    });
     $(window).on("resize", function () {
+        // Temporarily remove fixed-header to get natural position, then recalculate
+        var wasFixed = $menu.hasClass('fixed-header');
+        if (wasFixed) {
+            $menu.removeClass('fixed-header');
+        }
+        
+        // Reset initial position on resize so it recalculates
+        stickyElementInitialTop = null;
         updatePositions();
         detectActiveSection();
+        handleFixedHeader(); // Check on resize (will recalculate and re-apply if needed)
+        
+        // Re-scroll active item to left on mobile after resize
+        if ($(window).width() <= 768) {
+            setTimeout(function() {
+                scrollActiveItemToLeft();
+            }, 100);
+        }
     });
+}
 
+// ============================================
+// PAGE CONFIGURATIONS
+// ============================================
+// Define configurations for different pages
+var stickyMenuConfigs = {
+    // Configuration for page with 5 sections (original)
+    default: {
+        sections: [
+            ".live_monitoring",
+            ".system_setup",
+            ".intelligenc_alerts",
+            ".recording_storage",
+            ".security_integration"
+        ],
+        triggerOffset: 220,
+        scrollThreshold: 120
+    },
+    // Configuration for page with 3 sections (enforcement page)
+    enforcement: {
+        sections: [
+            ".enforcement_automation",
+            ".rider_enforcement",
+            ".centralised_control"
+        ],
+        triggerOffset: 220, // Adjust if needed
+        scrollThreshold: 120 // Fixed at 120px from top of viewport
+    },
+    // Configuration for page with 4 sections (city systems page)
+    citysystems: {
+        sections: [
+            ".security_systems",
+            ".access_identity",
+            ".infrastructure_sensors",
+            ".citysystems_services"
+        ],
+        triggerOffset: 220, // Adjust if needed
+        scrollThreshold: 120 // Fixed at 120px from top of viewport
+    },
+    // Configuration for partner page
+    partnersystems: {
+        sections: [
+            ".channel_partner",
+            ".technology_partner",
+        ],
+        triggerOffset: 220, // Adjust if needed
+        scrollThreshold: 120 // Fixed at 120px from top of viewport
+    }
+};
+
+// ============================================
+// AUTO-DETECT AND INITIALIZE
+// ============================================
+jQuery(document).ready(function ($) {
+    // Function to detect which configuration to use
+    function detectConfiguration() {
+        // Check for enforcement page sections
+        var hasEnforcementSections = $(".enforcement_automation, .rider_enforcement, .centralised_control").length >= 2;
+        
+        if (hasEnforcementSections) {
+            return stickyMenuConfigs.enforcement;
+        }
+        
+        // Check for citysystems page sections
+        var hasCitysystemsSections = $(".security_systems, .access_identity, .infrastructure_sensors, .citysystems_services").length >= 2;
+        
+        if (hasCitysystemsSections) {
+            return stickyMenuConfigs.citysystems;
+        }
+        
+        // Check for default page sections
+        var hasDefaultSections = $(".live_monitoring, .system_setup, .intelligenc_alerts, .recording_storage, .security_integration").length >= 3;
+        
+        if (hasDefaultSections) {
+            return stickyMenuConfigs.default;
+        }
+
+        // Check for partner page sections
+        var hasPartnerSections = $(".channel_partner, .technology_partner").length >= 2;
+        
+        if (hasPartnerSections) {
+            return stickyMenuConfigs.partnersystems;
+        }
+        
+        // If no specific sections found, try to auto-detect from menu
+        // Return a config with empty sections array to trigger auto-detection
+        return {
+            sections: [],
+            triggerOffset: 220,
+            scrollThreshold: 120
+        };
+    }
+    
+    // Initialize with detected configuration
+    var config = detectConfiguration();
+    initStickyMenu(config);
 });
-
-
-
-
-
-
-
-
 
 
 
 jQuery(document).ready(function() {
     // Check if accordion exists on the page
-    if (jQuery('.accordion_set').length === 0) {
+    if (jQuery('.accordion_wrap').length === 0) {
         return;
     }
 
-    // open first section by default
-    let first = jQuery('.accordion_set').first();
-    first.addClass('acactive');
-    first.find('.select_div').attr("aria-expanded", "true");
-    jQuery(".accontent").first().slideDown(200);
-    
-    // Initialize progress fill for first accordion
-    setTimeout(function() {
-        startProgressFill();
-    }, 200);
-
-    // Initialize videos - show first video, hide others using opacity
-    jQuery('.accordion_video').each(function(index) {
-        if (index === 0) {
-            jQuery(this).addClass('active');
-        } else {
-            jQuery(this).removeClass('active');
-        }
-    });
-
-    // setup variables
-    let autoIndex = 0;
-    let total = jQuery(".accordion_set").length;
-    let autoInterval = 4000; // 4 seconds
-    let timer;
-    let isPaused = false; // Track if auto-slide is paused
-    let resumeTimeout = null; // Store resume timeout so we can cancel it
-    let progressInterval = null; // Track progress animation interval
+    // Global registry to store accordion instances for pause/resume
+    var accordionInstances = [];
 
     // Helper function to check if any modal is currently open
     function isModalOpen() {
         return jQuery('.modal.show, .modal.in').length > 0 || jQuery('body').hasClass('modal-open');
     }
 
-    // function to switch video by index using opacity transitions
-    function switchVideo(index) {
-        jQuery('.accordion_video').each(function(videoIndex) {
-            if (videoIndex === index) {
+    // Initialize each accordion wrapper independently
+    jQuery('.accordion_wrap').each(function() {
+        var $accordionWrap = jQuery(this);
+        var $accordionSets = $accordionWrap.find('.accordion_set');
+        var $videoPanel = $accordionWrap.find('.padd-accordion_video');
+        var $accordionVideos = $videoPanel.find('.accordion_video');
+        
+        // Skip if no accordion sets found
+        if ($accordionSets.length === 0) {
+            return;
+        }
+
+        // Open first section by default
+        var $first = $accordionSets.first();
+        $first.addClass('acactive');
+        $first.find('.select_div').attr("aria-expanded", "true");
+        $first.find(".accontent").slideDown(200);
+        
+        // Initialize videos - show first video, hide others using opacity
+        // Only target right-side panel videos (desktop view)
+        $accordionVideos.each(function(index) {
+            if (index === 0) {
                 jQuery(this).addClass('active');
             } else {
                 jQuery(this).removeClass('active');
             }
         });
-    }
 
-    // Function to start progress fill animation
-    function startProgressFill() {
-        // Clear any existing progress interval
-        if (progressInterval) {
-            clearInterval(progressInterval);
-            progressInterval = null;
-        }
+        // Setup variables for this accordion instance
+        var autoIndex = 0;
+        var total = $accordionSets.length;
+        var autoInterval = 9000; // 9 seconds
+        var timer = null;
+        var isPaused = false;
+        var resumeTimeout = null;
+        var progressInterval = null;
 
-        // Reset progress on all accordion items
-        jQuery(".accordion_set").each(function() {
-            this.style.setProperty('--progress', '0%');
-        });
-
-        // Start progress for active accordion item
-        const activeAccordion = jQuery(".accordion_set.acactive")[0];
-        if (activeAccordion) {
-            let timeLeft = autoInterval / 1000; // Convert to seconds
-            const updateInterval = 50; // Update every 50ms for smooth animation
-
-            progressInterval = setInterval(function() {
-                if (isPaused || isModalOpen()) {
-                    return;
+        // Function to switch video by index using opacity transitions
+        // Only target right-side panel videos (desktop view) within this accordion
+        function switchVideo(index) {
+            $accordionVideos.each(function(videoIndex) {
+                if (videoIndex === index) {
+                    jQuery(this).addClass('active');
+                } else {
+                    jQuery(this).removeClass('active');
                 }
-                
-                timeLeft -= (updateInterval / 1000);
-                const progress = ((autoInterval / 1000 - timeLeft) / (autoInterval / 1000)) * 100;
-                
-                // Update progress CSS variable
-                activeAccordion.style.setProperty('--progress', progress + '%');
-
-                if (timeLeft <= 0) {
-                    clearInterval(progressInterval);
-                    progressInterval = null;
-                }
-            }, updateInterval);
+            });
         }
-    }
 
-    // function to open accordion by index
-    function openAccordion(index) {
-        let target = jQuery(".accordion_set").eq(index);
-        jQuery(".accordion_set").removeClass("acactive");
-        jQuery(".accordion_set > .select_div").attr("aria-expanded", "false");
-        jQuery(".accontent").slideUp(200);
-
-        target.addClass("acactive");
-        target.find(".select_div").attr("aria-expanded", "true");
-        target.find(".accontent").slideDown(200);
-
-        // Switch to corresponding video
-        switchVideo(index);
-        
-        // Start progress fill animation
-        startProgressFill();
-    }
-
-    // auto slide function
-    function startAutoSlide() {
-        if (isPaused || isModalOpen()) {
-            return; // Don't start if paused or modal is open
-        }
-        if (timer) {
-            clearInterval(timer);
-        }
-        timer = setInterval(function() {
-            if (!isPaused && !isModalOpen()) {
-                autoIndex = (autoIndex + 1) % total;
-                openAccordion(autoIndex);
-            }
-        }, autoInterval);
-    }
-
-    // pause auto slide function
-    function pauseAutoSlide() {
-        isPaused = true;
-        if (timer) {
-            clearInterval(timer);
-            timer = null;
-        }
-        // Pause progress animation
-        if (progressInterval) {
-            clearInterval(progressInterval);
-            progressInterval = null;
-        }
-        // Cancel any pending resume timeout
-        if (resumeTimeout) {
-            clearTimeout(resumeTimeout);
-            resumeTimeout = null;
-        }
-    }
-
-    // resume auto slide function
-    function resumeAutoSlide() {
-        // Don't resume if modal is open
-        if (isModalOpen()) {
-            return;
-        }
-        isPaused = false;
-        if (!timer) {
-            startAutoSlide();
-        }
-        // Restart progress fill animation
-        startProgressFill();
-    }
-
-    // start auto slide initially
-    startAutoSlide();
-
-    // on click — manual control + reset timer
-    jQuery(".accordion_set > .select_div").click(function() {
-        pauseAutoSlide(); // pause auto slide
-
-        let parent = jQuery(this).parents('.accordion_set');
-        autoIndex = jQuery(".accordion_set").index(parent); // update index
-
-        if (parent.hasClass("acactive")) {
-            parent.removeClass("acactive");
-            jQuery(this).attr("aria-expanded", "false");
-            parent.find(".accontent").slideUp(200);
-            // Stop progress animation when closing
+        // Function to start progress fill animation
+        function startProgressFill() {
+            // Clear any existing progress interval
             if (progressInterval) {
                 clearInterval(progressInterval);
                 progressInterval = null;
             }
-            parent[0].style.setProperty('--progress', '0%');
-        } else {
-            openAccordion(autoIndex);
-        }
 
-        // Cancel any existing resume timeout
-        if (resumeTimeout) {
-            clearTimeout(resumeTimeout);
-        }
+            // Reset progress on all accordion items in this accordion
+            $accordionSets.each(function() {
+                this.style.setProperty('--progress', '0%');
+            });
 
-        // restart auto slide after short delay, but only if modal is not open
-        resumeTimeout = setTimeout(function() {
-            resumeTimeout = null;
-            if (!isModalOpen()) {
-                resumeAutoSlide();
+            // Start progress for active accordion item
+            const activeAccordion = $accordionSets.filter('.acactive')[0];
+            if (activeAccordion) {
+                var timeLeft = autoInterval / 1000; // Convert to seconds
+                const updateInterval = 50; // Update every 50ms for smooth animation
+
+                progressInterval = setInterval(function() {
+                    if (isPaused || isModalOpen()) {
+                        return;
+                    }
+                    
+                    timeLeft -= (updateInterval / 1000);
+                    const progress = ((autoInterval / 1000 - timeLeft) / (autoInterval / 1000)) * 100;
+                    
+                    // Update progress CSS variable
+                    activeAccordion.style.setProperty('--progress', progress + '%');
+
+                    if (timeLeft <= 0) {
+                        clearInterval(progressInterval);
+                        progressInterval = null;
+                    }
+                }, updateInterval);
             }
-        }, 1000);
+        }
+
+        // Function to open accordion by index (scoped to this accordion)
+        function openAccordion(index) {
+            var $target = $accordionSets.eq(index);
+            $accordionSets.removeClass("acactive");
+            $accordionSets.find('.select_div').attr("aria-expanded", "false");
+            $accordionSets.find(".accontent").slideUp(200);
+
+            $target.addClass("acactive");
+            $target.find(".select_div").attr("aria-expanded", "true");
+            $target.find(".accontent").slideDown(200);
+
+            // Switch to corresponding video
+            switchVideo(index);
+            
+            // Start progress fill animation
+            startProgressFill();
+        }
+
+        // Auto slide function
+        function startAutoSlide() {
+            if (isPaused || isModalOpen()) {
+                return; // Don't start if paused or modal is open
+            }
+            if (timer) {
+                clearInterval(timer);
+            }
+            timer = setInterval(function() {
+                if (!isPaused && !isModalOpen()) {
+                    autoIndex = (autoIndex + 1) % total;
+                    openAccordion(autoIndex);
+                }
+            }, autoInterval);
+        }
+
+        // Pause auto slide function
+        function pauseAutoSlide() {
+            isPaused = true;
+            if (timer) {
+                clearInterval(timer);
+                timer = null;
+            }
+            // Pause progress animation
+            if (progressInterval) {
+                clearInterval(progressInterval);
+                progressInterval = null;
+            }
+            // Cancel any pending resume timeout
+            if (resumeTimeout) {
+                clearTimeout(resumeTimeout);
+                resumeTimeout = null;
+            }
+        }
+
+        // Resume auto slide function
+        function resumeAutoSlide() {
+            // Don't resume if modal is open
+            if (isModalOpen()) {
+                return;
+            }
+            isPaused = false;
+            if (!timer) {
+                startAutoSlide();
+            }
+            // Restart progress fill animation
+            startProgressFill();
+        }
+
+        // Initialize progress fill for first accordion
+        setTimeout(function() {
+            startProgressFill();
+        }, 200);
+
+        // Start auto slide initially
+        startAutoSlide();
+
+        // On click — manual control + reset timer (scoped to this accordion)
+        $accordionSets.find('.select_div').click(function() {
+            pauseAutoSlide(); // pause auto slide
+
+            var $parent = jQuery(this).parents('.accordion_set');
+            autoIndex = $accordionSets.index($parent); // update index (scoped to this accordion)
+
+            if ($parent.hasClass("acactive")) {
+                $parent.removeClass("acactive");
+                jQuery(this).attr("aria-expanded", "false");
+                $parent.find(".accontent").slideUp(200);
+                // Stop progress animation when closing
+                if (progressInterval) {
+                    clearInterval(progressInterval);
+                    progressInterval = null;
+                }
+                $parent[0].style.setProperty('--progress', '0%');
+            } else {
+                openAccordion(autoIndex);
+            }
+
+            // Cancel any existing resume timeout
+            if (resumeTimeout) {
+                clearTimeout(resumeTimeout);
+            }
+
+            // Restart auto slide after short delay, but only if modal is not open
+            resumeTimeout = setTimeout(function() {
+                resumeTimeout = null;
+                if (!isModalOpen()) {
+                    resumeAutoSlide();
+                }
+            }, 1000);
+        });
+
+        // Register this accordion instance for global pause/resume
+        accordionInstances.push({
+            pause: pauseAutoSlide,
+            resume: resumeAutoSlide
+        });
     });
 
-    // Pause accordion when modal opens
+    // Pause all accordions when modal opens
     jQuery(document).on('show.bs.modal', '.modal', function() {
-        pauseAutoSlide();
+        // Pause all accordion instances
+        accordionInstances.forEach(function(instance) {
+            instance.pause();
+        });
+        
+        // Load video with autoplay when modal opens
+        var modal = jQuery(this);
+        var iframe = modal.find('iframe');
+        if (iframe.length) {
+            // Get the base URL from data-src attribute
+            var baseSrc = iframe.attr('data-src') || iframe.data('original-src');
+            if (baseSrc) {
+                // Add autoplay parameter to the URL
+                var separator = baseSrc.indexOf('?') !== -1 ? '&' : '?';
+                var videoSrc = baseSrc + separator + 'autoplay=1';
+                iframe.attr('src', videoSrc);
+            }
+        }
     });
 
-    // Resume accordion when modal closes
+    // Resume all accordions when modal closes and stop video
     jQuery(document).on('hidden.bs.modal', '.modal', function() {
-        // Small delay to ensure modal is fully closed
+        // Stop video by removing src attribute
+        var modal = jQuery(this);
+        var iframe = modal.find('iframe');
+        if (iframe.length) {
+            // Store the base URL (without autoplay) if not already stored
+            if (!iframe.data('original-src')) {
+                var currentSrc = iframe.attr('src');
+                if (currentSrc) {
+                    // Remove autoplay parameter from URL
+                    var baseSrc = currentSrc.replace(/[?&]autoplay=1(&|$)/, '').replace(/[?&]$/, '');
+                    iframe.data('original-src', baseSrc);
+                }
+            }
+            // Remove src to stop video playback
+            iframe.attr('src', '');
+        }
+        
+        // Small delay to ensure modal is fully closed, then resume all accordions
         setTimeout(function() {
             if (!isModalOpen()) {
-                resumeAutoSlide();
+                accordionInstances.forEach(function(instance) {
+                    instance.resume();
+                });
             }
         }, 100);
     });
 });
 
 
-if (window.innerWidth >= 1180) {
+if (window.innerWidth >= 1180 && document.querySelector(".sectionsscroll")) {
     gsap.registerPlugin(ScrollTrigger);
     ScrollTrigger.config({
         autoRefreshEvents: 'visibilitychange,DOMContentLoaded,load',
@@ -902,40 +1262,48 @@ if (window.innerWidth >= 1180) {
         console.log('resize')
         ScrollTrigger.refresh()
     }
-    const panels = gsap.utils.toArray(".animate-right");
-    const content = gsap.utils.toArray(".animate-left");
-    const tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: ".sectionsscroll",
-            start: "top 20%",
-            endTrigger: 'html',
-            end: () => "+=" + 200 * panels.length + "%",
-            pin: true,
-            pinSpacing: true,
-            markers: false,
-            scrub: 1,
-            autoRefreshEvents: "load",
-        }
-    });
-    panels.forEach((panel, index) => {
-        tl.from(
-            panel,
-            {
-                yPercent: 100,
-                ease: "slow",
-            },
-            "+=0.1"
-        );
-        tl.from(
-            content[index],
-            {
-                yPercent: 100,
-                ease: "slow",
-            },
-            "<"
-        );
-    });
-
+    
+    // Only select panels within sectionsscroll to avoid conflicts
+    const sectionsscrollEl = document.querySelector(".sectionsscroll");
+    const panels = gsap.utils.toArray(".sectionsscroll .animate-right");
+    const content = gsap.utils.toArray(".sectionsscroll .animate-left");
+    
+    // Skip if no panels found
+    if (panels.length > 0) {
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".sectionsscroll",
+                start: "top 20%",
+                endTrigger: '.sectionsscroll',
+                end: () => "+=" + 200 * panels.length + "%",
+                pin: true,
+                pinSpacing: true,
+                markers: false,
+                scrub: 1,
+                invalidateOnRefresh: true,
+                refreshPriority: 1, // Higher priority, refreshes first
+                id: "sectionsscroll-pin"
+            }
+        });
+        panels.forEach((panel, index) => {
+            tl.from(
+                panel,
+                {
+                    yPercent: 100,
+                    ease: "slow",
+                },
+                "+=0.1"
+            );
+            tl.from(
+                content[index],
+                {
+                    yPercent: 100,
+                    ease: "slow",
+                },
+                "<"
+            );
+        });
+    }
 }
 
 
@@ -954,17 +1322,457 @@ gsap.ticker.lagSmoothing(0);
 
 
 
-
-
-
 //Conver svg into svg code
-document.querySelectorAll('img[src$=".svg"]').forEach(function(img){
-    fetch(img.src)
-    .then(r => r.text())
-    .then(txt => {
-    const svg = new DOMParser().parseFromString(txt, "image/svg+xml").documentElement;
-    svg.classList = img.classList;
-    svg.style = img.style;
-    img.replaceWith(svg);
+// document.querySelectorAll('img[src$=".svg"]').forEach(function(img){
+//     fetch(img.src)
+//     .then(r => r.text())
+//     .then(txt => {
+//     const svg = new DOMParser().parseFromString(txt, "image/svg+xml").documentElement;
+//     svg.classList = img.classList;
+//     svg.style = img.style;
+//     img.replaceWith(svg);
+//     });
+// });
+
+
+// Gallery Animation - Only on min-width 1200px and when gallery exists
+if (window.innerWidth >= 1200) {
+    // Scope gallery animation to .makdmks container to avoid conflicts
+    const makdmks = document.querySelector(".makdmks");
+    const gallery = makdmks ? makdmks.querySelector(".gallery") : null;
+    
+    if (gallery) {
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // collect sections + photos - scoped to makdmks container
+        // Only select details from the left sidebar (.detailsWrapper), not from inside photos
+        const sections = gsap.utils.toArray(".makdmks .detailsWrapper .details");
+        const photos   = gsap.utils.toArray(".makdmks .photo");
+        
+        // Skip if no sections found
+        if (sections.length > 0 && photos.length > 0) {
+            // set initial states
+            gsap.set(photos, { opacity: 0 });
+            gsap.set(photos[0], { opacity: 1 });
+            
+            // helper — show selected photo
+            function showPhoto(index) {
+                gsap.to(photos, { opacity: 0, duration: 0.4, overwrite: true });
+                gsap.to(photos[index], { opacity: 1, duration: 0.4, overwrite: true });
+            }
+            
+            // change image based on section
+            sections.forEach((section, index) => {
+                ScrollTrigger.create({
+                    trigger: section,
+                    start: "top 25%",
+                    end: "bottom 25%",
+                    scrub: true,
+                    onEnter: () => showPhoto(index),
+                    onEnterBack: () => showPhoto(index),
+                    invalidateOnRefresh: true,
+                    // markers: true,
+                    id: "gallery-section-" + index
+                });
+            });
+            
+            // pin the right panel until last section reaches mid
+            ScrollTrigger.create({
+                trigger: ".makdmks .gallery",
+                start: "top 20%",
+                endTrigger: ".makdmks .detailsWrapper .details:last-child",
+                end: "top 20%",
+                pin: ".makdmks .right",
+                pinSpacing: false, // Changed to false to prevent spacing conflicts
+                invalidateOnRefresh: true,
+                refreshPriority: -1, // Lower priority, refreshes after others
+                // markers: true,
+                id: "gallery-pin"
+            });
+        }
+        
+        // Refresh ScrollTrigger on resize
+        let resizeTimer;
+        window.addEventListener("resize", () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                if (window.innerWidth >= 1200) {
+                    ScrollTrigger.refresh();
+                }
+            }, 250);
+        });
+    }
+}
+
+
+
+
+
+// Card Stacking Animation - Only on min-width 1200px and when cards-custom-body exists
+if (window.innerWidth >= 1200) {
+    const cardsCustomBody = document.querySelector(".cards-custom-body");
+    
+    if (cardsCustomBody) {
+        console.clear();
+        
+        gsap.registerPlugin(ScrollTrigger);
+        
+        const cardsWrappers = gsap.utils.toArray(".card-wrapper");
+        const cards = gsap.utils.toArray(".card_display");
+        
+        // Set initial states for all cards immediately to prevent flicker
+        // No transforms - cards stay in their natural state
+        cards.forEach((card, i) => {
+            // Set initial transform state immediately - prevents cards from appearing at wrong position
+            // This ensures cards start in their correct position before ScrollTrigger activates
+            // No scale, no rotation - cards stay in normal position
+            gsap.set(card, {
+                scale: 1, // No scaling - keep cards at natural size
+                rotation: 0, // No rotation - keep cards straight
+                transformOrigin: "top center",
+                y: 0, // Ensure Y position is set from start
+                x: 0, // Ensure X position is set from start
+                force3D: true // Enable hardware acceleration
+            });
+        });
+        
+        cardsWrappers.forEach((wrapper, i) => {
+            const card = cards[i];
+            
+            // Create animation with immediateRender to prevent initial jump
+            // No scale, no rotation - cards remain in natural position
+            gsap.to(card, {
+                scale: 1, // No scaling - keep cards at natural size
+                rotation: 0, // No rotation - keep cards straight
+                transformOrigin: "top center",
+                y: 0, // Explicitly set Y to prevent vertical jumping
+                ease: "none",
+                immediateRender: true, // Render immediately to prevent flicker
+                force3D: true, // Hardware acceleration
+                scrollTrigger: {
+                    trigger: wrapper,
+                    start: "top " + (200 + 70 * i),
+                    end: "bottom 550",
+                    endTrigger: ".wrapper",
+                    scrub: true,
+                    pin: wrapper,
+                    pinSpacing: false,
+                    anticipatePin: 1, // Smooth pinning transitions
+                    invalidateOnRefresh: true, // Recalculate on refresh
+                    refreshPriority: 0, // Middle priority
+                    onEnter: () => {
+                        // Ensure card maintains correct position when entering
+                        gsap.set(card, {
+                            y: 0,
+                            x: 0,
+                            scale: 1, // Ensure no scaling
+                            rotation: 0, // Ensure no rotation
+                            force3D: true
+                        });
+                    },
+                    onEnterBack: () => {
+                        // Maintain position when scrolling back
+                        gsap.set(card, {
+                            y: 0,
+                            x: 0,
+                            scale: 1, // Ensure no scaling
+                            rotation: 0, // Ensure no rotation
+                            force3D: true
+                        });
+                    },
+                    // markers: {
+                    //     indent: 150 * i
+                    // },
+                    id: "card-" + (i + 1)
+                }
+            });
+        });
+        
+        // Refresh ScrollTrigger on resize
+        let resizeTimer;
+        window.addEventListener("resize", () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                if (window.innerWidth >= 1200) {
+                    ScrollTrigger.refresh();
+                }
+            }, 250);
+        });
+    }
+}
+
+
+
+
+if (document.querySelector(".hz-slider-section .swiper")) {
+  // Store reference to ScrollTrigger instance for cleanup
+  let hzScrollTrigger = null;
+  let hzTimeline = null;
+  let currentSlide = 0;
+  
+  const hzSwiper = new Swiper(".hz-slider-section .swiper", {
+    // autoplay: {
+    //   delay: 5000,
+    //   disableOnInteraction: false
+    // },
+    speed: 500,
+    loop: false,
+    slidesPerView: 2,
+    spaceBetween: 30,
+    loopAddBlankSlides: false,
+    slideToClickedSlide: true,
+    centeredSlides: false,
+    // Enable touch move on mobile, disable on desktop (will be controlled by GSAP)
+    allowTouchMove: window.innerWidth < 1024,
+    breakpoints: {
+      480: {
+        slidesPerView: 1,
+        spaceBetween: 30
+      },
+      768: {
+        slidesPerView: 2,
+        spaceBetween: 30
+      },
+      1230: {
+        slidesPerView: 3,
+        spaceBetween: 30
+      }
+    }
+  });
+  
+  hzSwiper.slideTo(0);
+  
+  // Function to initialize GSAP pin animation (desktop only)
+  function initHzSliderGSAP() {
+    // Only initialize if screen width is 1024px or above
+    if (window.innerWidth < 1024) {
+      return;
+    }
+    
+    // Register GSAP plugin
+    gsap.registerPlugin(ScrollTrigger);
+    
+    const totalSlides = hzSwiper.slides.length;
+    const snap = gsap.utils.snap(1 / totalSlides);
+    
+    // Calculate scroll distance based on number of slides (100vh per slide)
+    const scrollDistance = totalSlides * 100;
+    
+    // Disable Swiper touch on desktop (controlled by scroll)
+    hzSwiper.allowTouchMove = false;
+    hzSwiper.update();
+    
+    hzTimeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".hz-slider-section .slider",
+        pin: ".hz-slider-section",
+        pinSpacing: true,
+        pinReparent: false, // Changed to false to prevent DOM reparenting issues
+        start: "top 10%",
+        end: "+=" + scrollDistance + "vh", // Dynamic based on slides
+        scrub: true,
+        markers: false,
+        invalidateOnRefresh: true,
+        refreshPriority: 2, // Higher priority than gallery
+        id: "hz-slider-pin",
+        onUpdate: (self) => {
+          const updatedIndex = Math.round(snap(self.progress) * totalSlides);
+          if (updatedIndex !== currentSlide) {
+            currentSlide = updatedIndex;
+            hzSwiper.slideTo(currentSlide);
+          }
+        }
+      }
     });
-});
+    
+    // Store reference for cleanup
+    hzScrollTrigger = hzTimeline.scrollTrigger;
+  }
+  
+  // Function to destroy GSAP pin animation (for mobile)
+  function destroyHzSliderGSAP() {
+    if (hzScrollTrigger) {
+      hzScrollTrigger.kill();
+      hzScrollTrigger = null;
+    }
+    if (hzTimeline) {
+      hzTimeline.kill();
+      hzTimeline = null;
+    }
+    
+    // Enable Swiper touch on mobile
+    hzSwiper.allowTouchMove = true;
+    hzSwiper.update();
+    
+    // Reset slide position
+    currentSlide = 0;
+    hzSwiper.slideTo(0);
+  }
+  
+  // Initialize on page load
+  initHzSliderGSAP();
+  
+  // Handle resize - enable/disable GSAP pin based on screen width
+  let hzResizeTimer;
+  window.addEventListener("resize", function() {
+    clearTimeout(hzResizeTimer);
+    hzResizeTimer = setTimeout(function() {
+      const isDesktop = window.innerWidth >= 1024;
+      const hasGSAP = hzScrollTrigger !== null;
+      
+      if (isDesktop && !hasGSAP) {
+        // Switched to desktop - initialize GSAP pin
+        initHzSliderGSAP();
+      } else if (!isDesktop && hasGSAP) {
+        // Switched to mobile - destroy GSAP pin
+        destroyHzSliderGSAP();
+      } else if (isDesktop && hasGSAP) {
+        // Still on desktop - refresh ScrollTrigger
+        ScrollTrigger.refresh();
+      }
+    }, 250);
+  });
+}
+
+// Horizontal Slider Topcaption (unique instance - no conflict with hz-slider-section)
+if (document.querySelector(".hz-slider-topcaption .swiper")) {
+  // Store reference to ScrollTrigger instance for cleanup
+  let hzTopcaptionScrollTrigger = null;
+  let hzTopcaptionTimeline = null;
+  let currentTopcaptionSlide = 0;
+  
+  const hzTopcaptionSwiper = new Swiper(".hz-slider-topcaption .swiper", {
+    speed: 500,
+    loop: false,
+    slidesPerView: 1,
+    spaceBetween: 20,
+    loopAddBlankSlides: false,
+    slideToClickedSlide: true,
+    centeredSlides: false,
+    // Enable touch move on mobile, disable on desktop (will be controlled by GSAP)
+    allowTouchMove: window.innerWidth < 1024,
+    breakpoints: {
+      480: {
+        slidesPerView: 1,
+        spaceBetween: 20
+      },
+      768: {
+        slidesPerView: 2,
+        spaceBetween: 20
+      },
+      1024: {
+        slidesPerView: 3,
+        spaceBetween: 20
+      },
+      1230: {
+        slidesPerView: 4,
+        spaceBetween: 20
+      }
+    }
+  });
+  
+  hzTopcaptionSwiper.slideTo(0);
+  
+  // Function to initialize GSAP pin animation (desktop only)
+  function initHzTopcaptionGSAP() {
+    // Only initialize if screen width is 1024px or above
+    if (window.innerWidth < 1024) {
+      return;
+    }
+    
+    // Register GSAP plugin
+    gsap.registerPlugin(ScrollTrigger);
+    
+    const totalSlides = hzTopcaptionSwiper.slides.length;
+    const snap = gsap.utils.snap(1 / totalSlides);
+    
+    // Calculate scroll distance based on number of slides (100vh per slide)
+    const scrollDistance = totalSlides * 100;
+    
+    // Disable Swiper touch on desktop (controlled by scroll)
+    hzTopcaptionSwiper.allowTouchMove = false;
+    hzTopcaptionSwiper.update();
+    
+    hzTopcaptionTimeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".hz-slider-topcaption .slider",
+        pin: ".hz-slider-topcaption",
+        pinSpacing: true,
+        pinReparent: false,
+        start: "top 20%",
+        end: "+=" + scrollDistance + "vh",
+        scrub: true,
+        markers: false,
+        invalidateOnRefresh: true,
+        refreshPriority: 1,
+        id: "hz-slider-topcaption-pin",
+        onUpdate: (self) => {
+          const updatedIndex = Math.round(snap(self.progress) * totalSlides);
+          if (updatedIndex !== currentTopcaptionSlide) {
+            currentTopcaptionSlide = updatedIndex;
+            hzTopcaptionSwiper.slideTo(currentTopcaptionSlide);
+          }
+        }
+      }
+    });
+    
+    // Store reference for cleanup
+    hzTopcaptionScrollTrigger = hzTopcaptionTimeline.scrollTrigger;
+  }
+  
+  // Function to destroy GSAP pin animation (for mobile)
+  function destroyHzTopcaptionGSAP() {
+    if (hzTopcaptionScrollTrigger) {
+      hzTopcaptionScrollTrigger.kill();
+      hzTopcaptionScrollTrigger = null;
+    }
+    if (hzTopcaptionTimeline) {
+      hzTopcaptionTimeline.kill();
+      hzTopcaptionTimeline = null;
+    }
+    
+    // Enable Swiper touch on mobile
+    hzTopcaptionSwiper.allowTouchMove = true;
+    hzTopcaptionSwiper.update();
+    
+    // Reset slide position
+    currentTopcaptionSlide = 0;
+    hzTopcaptionSwiper.slideTo(0);
+  }
+  
+  // Initialize on page load
+  initHzTopcaptionGSAP();
+  
+  // Handle resize - enable/disable GSAP pin based on screen width
+  let hzTopcaptionResizeTimer;
+  window.addEventListener("resize", function() {
+    clearTimeout(hzTopcaptionResizeTimer);
+    hzTopcaptionResizeTimer = setTimeout(function() {
+      const isDesktop = window.innerWidth >= 1024;
+      const hasGSAP = hzTopcaptionScrollTrigger !== null;
+      
+      if (isDesktop && !hasGSAP) {
+        // Switched to desktop - initialize GSAP pin
+        initHzTopcaptionGSAP();
+      } else if (!isDesktop && hasGSAP) {
+        // Switched to mobile - destroy GSAP pin
+        destroyHzTopcaptionGSAP();
+      } else if (isDesktop && hasGSAP) {
+        // Still on desktop - refresh ScrollTrigger
+        ScrollTrigger.refresh();
+      }
+    }, 250);
+  });
+}
+
+// Global ScrollTrigger refresh after all triggers are initialized
+// This ensures all ScrollTriggers are properly calculated relative to each other
+if (typeof ScrollTrigger !== 'undefined' && window.innerWidth >= 1024) {
+    // Wait for DOM to be fully ready and all triggers to be created
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            ScrollTrigger.refresh();
+        }, 500);
+    });
+}
+  
