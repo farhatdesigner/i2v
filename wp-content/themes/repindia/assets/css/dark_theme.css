@@ -493,3 +493,25 @@ header li.burger-icon .icon-sun,
 .js-dark .dark-circle-txt .elementor-icon-box-description {
   color: #fff !important;
 }
+.js-dark  .modal-demo-form .modal-content {
+  background: #262A30 !important;
+}
+.js-dark .modal-demo-form .btn-demo_close p {
+    color: #D7DBE4 !important;
+}
+.js-dark .modal-demo-form .btn-demo_close .btn_cancel {
+    color: #D7DBE4;
+}
+/* Dark mode styles for smart tabs */
+.js-dark .customtabsmart .smart-content-inner-icons li {
+  border: 1px solid rgba(193, 196, 198, 0.1) !important;
+  border-left: 0 !important;
+}
+
+.js-dark .customtabsmart .smart-content-inner-icons li:first-child {
+  border-left: 1px solid rgba(193, 196, 198, 0.1) !important;
+}
+
+.customtabsmart .smart-content-inner-text {
+  padding: 20px;
+}

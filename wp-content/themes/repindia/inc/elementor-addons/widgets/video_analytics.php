@@ -36,165 +36,9 @@ class Video_Analytics extends Widget_Base
 
     protected function render()
     {
-        $widget_id = 'video-analytics-' . $this->get_id();
         ?>
 
-        <style>
-            .video-analytics-widget-<?php echo esc_attr($widget_id); ?> {
-                width: 100%;
-                /* padding: 60px 20px; */
-                background-color: #f0f5ff;
-                position: relative;
-                overflow: hidden;
-                min-height: 500px;
-                align-items: center;
-            }
-
-            .video-analytics-widget-<?php echo esc_attr($widget_id); ?> .video-analytics-container {
-                width: 100%;
-                position: relative;
-
-            }
-
-            .video-analytics-widget-<?php echo esc_attr($widget_id); ?> .center-oval {
-                position: absolute;
-                left: 52%;
-                top: 30vh;
-                width: 120px;
-                z-index: 10;
-                text-align: center;
-            }
-
-            .right-connection_lines {
-                position: absolute;
-                top: 40vh;
-                right: 0;
-                overflow: visible;
-            }
-
-            .right-connection_lines svg {
-                overflow: visible;
-            }
-
-            .video-analytics-widget-<?php echo esc_attr($widget_id); ?> .logo-i-stem {
-                color: #000000;
-            }
-
-            .video-analytics-widget-<?php echo esc_attr($widget_id); ?> .subtitle {
-                font-size: 20px;
-                color: #06283D;
-                margin-top: 5px;
-                font-weight: 700;
-                line-height: 130%;
-            }
-
-
-            svg[class^="connection-line-"] {
-                position: absolute;
-                width: 331px;
-                overflow: visible;
-                left: 0 !important;
-            }
-
-            svg.connection-line-1 {
-                top: 35px;
-            }
-
-            svg.connection-line-2 {
-                top: 105px;
-            }
-
-            svg.connection-line-3 {
-                top: 190px;
-            }
-
-            svg.connection-line-4 {
-                top: 260px;
-            }
-
-            svg.connection-line-5 {
-                top: 255px;
-            }
-
-            svg.connection-line-6 {
-                top: 260px;
-            }
-
-            svg.connection-line-7 {
-                top: 265px;
-            }
-
-
-            .animtion_sec {
-                width: calc(100% - 750px);
-            }
-
-            .animation_cards-text {
-                width: 300px !important;
-            }
-
-            .online_image-graph{
-                width: 450px !important;
-            }
-
-            @media (min-width: 1400px) {
-
-                .video-analytics-widget-<?php echo esc_attr($widget_id); ?> .center-oval {
-                    left: 45%;
-                    top: 18vh;
-                    width: 160px;
-                }
-
-                .right-connection_lines {
-                    top: 26vh;
-                }
-
-
-                svg[class^="connection-line-"] {
-                    width: 331px;
-                }
-
-                svg.connection-line-1 {
-                    top: 35px;
-                }
-
-                svg.connection-line-2 {
-                    top: 105px;
-                }
-
-                svg.connection-line-3 {
-                    top: 190px;
-                }
-
-                svg.connection-line-4 {
-                    top: 260px;
-                }
-
-                svg.connection-line-5 {
-                    top: 255px;
-                }
-
-                svg.connection-line-6 {
-                    top: 260px;
-                }
-
-                svg.connection-line-7 {
-                    top: 265px;
-                }
-
-                .animtion_sec {
-                    width: calc(100% - 910px);
-                }
-
-
-            }
-
-
-
-       
-        </style>
-
-        <div class="video-analytics-widget-<?php echo esc_attr($widget_id); ?>">
+        <div class="video-analytics-widget">
             <div class="video-analytics-container">
                 <!-- Connection Lines SVG -->
                 <div class="connection-lines">
@@ -297,6 +141,28 @@ class Video_Analytics extends Widget_Base
 
 
                 <div class="right-connection_lines">
+                    <svg width="100%" height="31" viewBox="0 0 210 31" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        style="min-width: 210px;">
+                        <path id="path-right-top" d="M210 0.5L0 0.5" stroke="#D7DBE4" stroke-dasharray="8 8" />
+                        <path id="path-right-bottom" d="M210 30.5L0 30.5" stroke="#D7DBE4" stroke-dasharray="8 8" />
+                        <!-- Circle for top path -->
+                        <circle r="4" fill="#0066cc">
+                            <animateMotion dur="3s" repeatCount="indefinite" calcMode="linear" keyPoints="0;1;0"
+                                keyTimes="0;0.5;1">
+                                <mpath href="#path-right-top" />
+                            </animateMotion>
+                        </circle>
+                        <!-- Circle for bottom path -->
+                        <circle r="4" fill="#0066cc">
+                            <animateMotion dur="3s" repeatCount="indefinite" calcMode="linear" keyPoints="0;1;0"
+                                keyTimes="0;0.5;1" begin="1.5s">
+                                <mpath href="#path-right-bottom" />
+                            </animateMotion>
+                        </circle>
+                    </svg>
+                </div>
+
+                     <div class="right-connection_lines vertical_line">
                     <svg width="100%" height="31" viewBox="0 0 210 31" fill="none" xmlns="http://www.w3.org/2000/svg"
                         style="min-width: 210px;">
                         <path id="path-right-top" d="M210 0.5L0 0.5" stroke="#D7DBE4" stroke-dasharray="8 8" />
