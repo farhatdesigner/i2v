@@ -38,10 +38,20 @@ html.lenis body {
   min-height: 70vh;
   display: flex;
   gap: 142px;
+  /* Prevent glitching on scroll */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .flex-center {
   position: relative;
+  /* Prevent glitching on scroll */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .flex-center > * {
@@ -53,6 +63,14 @@ html.lenis body {
   position: absolute;
   top: 0;
   left: 0;
+  /* Fix glitching when section reaches top */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
+  /* Optimize rendering performance */
+  isolation: isolate;
 }
 
 .flex-center .panel > img {

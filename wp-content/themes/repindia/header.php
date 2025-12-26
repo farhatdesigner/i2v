@@ -128,7 +128,7 @@ global $repindia_option;
 
                         <ul class="header-right-box">
                             <li>
-                                <a class="theme-btn " href="<?php echo esc_url(home_url('/')); ?>">
+                                <a class="theme-btn " href="<?php echo esc_url(home_url('/')); ?>" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                     Book a demo
                                 </a>
                             </li>

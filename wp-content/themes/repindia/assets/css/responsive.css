@@ -320,17 +320,25 @@ label.form-label.label_notic a{ color: #5C5C5C;font-weight: 500; }
 @media(min-width: 1601px){
     .elementor-element.channel_partner .partner_choose_title.sticky, .elementor-element.technology_partner .partner_tech_title.sticky {
         left: 9%;
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
     }
     .elementor-element.technology_partner .partner_tech_img.sticky,.elementor-element.channel_partner .partner_choose_img.sticky {
         left: 9%;
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
     }
 }
 @media (max-width: 1601px) and (min-width: 1201px){
     .elementor-element.channel_partner .partner_choose_title.sticky, .elementor-element.technology_partner .partner_tech_title.sticky {
         left: 1%;
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
     }
     .elementor-element.technology_partner .partner_tech_img.sticky,.elementor-element.channel_partner .partner_choose_img.sticky {
         left: 1%;
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
     }
 }
 @media(min-width: 1400px){
@@ -347,12 +355,43 @@ label.form-label.label_notic a{ color: #5C5C5C;font-weight: 500; }
     .elementor-element.channel_partner .partner_choose_img,.elementor-element.technology_partner .partner_tech_title,
     .elementor-element.technology_partner .partner_tech_img,.elementor-element.fixarea   {
         position: relative!important;
+        /* Optimize for smooth sticky behavior */
+        will-change: transform;
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        /* Prevent sub-pixel rendering issues */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        /* Prevent layout shifts */
+        min-height: 0;
+        transition: none;
+    }
+    
+    /* Wrapper styles to maintain layout */
+    .sticky-wrapper-title,
+    .sticky-wrapper-img {
+        position: relative;
+        width: 100%;
+        /* Smooth transition for min-height changes */
+        transition: min-height 0.2s ease-out;
     }
     .elementor-element.channel_partner .partner_choose_title.sticky, .elementor-element.technology_partner .partner_tech_title.sticky {
         position: fixed !important;
         top: 140px !important;
         z-index: 10 !important;
         max-width: 540px;
+        /* Smooth sticky transition */
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        /* Prevent repaints during transition */
+        will-change: transform;
+        /* Prevent layout shift glitch */
+        left: auto !important;
+        right: auto !important;
     }
     .elementor-element.channel_partner,
     .elementor-element.channel_partner .elementor-container,
@@ -363,12 +402,27 @@ label.form-label.label_notic a{ color: #5C5C5C;font-weight: 500; }
     .elementor-element.technology_partner .elementor-widget-wrap {
         /* overflow: visible !important; */
         position: relative!important;
+        /* Prevent layout shifts when child elements become sticky */
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
     }
     .elementor-element.technology_partner .partner_tech_img.sticky,.elementor-element.channel_partner .partner_choose_img.sticky {
         position: fixed !important;
         top: 336px !important;
         z-index: 10 !important;
         max-width: 770px;
+        /* Smooth sticky transition */
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        /* Prevent repaints during transition */
+        will-change: transform;
+        /* Prevent layout shift glitch */
+        left: auto !important;
+        right: auto !important;
     }
 }
 @media(min-width: 991px){
@@ -510,3 +564,6 @@ label.form-label.label_notic a{ color: #5C5C5C;font-weight: 500; }
 }
 @media (max-width: 1500px) and (min-width: 1337px){
 }
+
+
+.sticky-wrapper-img{width: 570px !important;}

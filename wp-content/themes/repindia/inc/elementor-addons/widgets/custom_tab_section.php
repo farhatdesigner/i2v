@@ -129,10 +129,10 @@ class Custom_Tab_Section extends Widget_Base
 
             .sec-panel-inner {
                 display: flex;
-                gap: 80px;
+                gap: 20px;
                 border-radius: 0 var(--M, 12px) var(--M, 12px) var(--M, 12px);
-                background: var(--Golbal-backgrounds-secondary-bg-2, #FFF);
-                padding: 80px;
+                background: #FFF;
+                padding: 20px;
                 align-items: center;
                 flex-direction: row-reverse;
             }
@@ -186,14 +186,112 @@ class Custom_Tab_Section extends Widget_Base
                 color: #fff;
             }
 
-            /* Mobile Responsive */
-            @media (max-width: 991px) {
+            /* Dropdown label and select-brand - hidden on desktop */
+            .sec-dropdown-label,
+            .sec-select-brand {
+                display: none;
+            }
+
+            /* Mobile styles for dropdown (up to 1024px) */
+            @media (max-width: 1024px) {
+                .sec-tabs-nav {
+                    margin-bottom: 30px;
+                    position: relative;
+                }
+
+                .sec-dropdown-label {
+                    display: inline-block;
+                    font-size: 18px;
+                    font-family: Geometria-Medium, sans-serif;
+                    padding-right: 15px;
+                    color: #000000;
+                }
+
+                .sec-select-brand {
+                    display: inline-block;
+                    color: #06283d;
+                    width: auto;
+                    font-size: 18px;
+                    text-decoration: underline;
+                    font-family: Geometria-Medium, sans-serif;
+                    cursor: pointer;
+                    position: relative;
+                }
+
+                .sec-select-brand:after {
+                    content: "";
+                    position: absolute;
+                    right: auto;
+                    margin-left: 15px;
+                    width: 20px;
+                    height: 20px;
+                    display: inline-block;
+                    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5L6 7.5L9 4.5' stroke='%2306283D' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    background-size: contain;
+                    -webkit-transition: transform 0.4s ease-in-out;
+                    -moz-transition: transform 0.4s ease-in-out;
+                    -ms-transition: transform 0.4s ease-in-out;
+                    -o-transition: transform 0.4s ease-in-out;
+                    transition: transform 0.4s ease-in-out;
+                }
+
+                .sec-select-brand.angle-icon:after {
+                    transform: rotate(180deg);
+                }
+
                 .sec-tabs-list {
+                    display: none;
+                    position: absolute;
+                    left: 0;
+                    top: 100%;
+                    bottom: auto;
+                    z-index: 1000;
+                    background: #fff;
+                    width: 100%;
+                    border-radius: 0;
+                    -webkit-box-shadow: 0 1px 2px -2px #000000a1;
+                    -moz-box-shadow: 0 1px 2px -2px #000000a1;
+                    box-shadow: 0 1px 2px -2px #000000ed;
+                    margin-top: 10px;
+                    border: 1px solid #e6ebf2;
+                    padding: 0;
+                    white-space: normal;
+                    overflow: visible;
+                    /* max-height: 400px; */
+                    overflow-y: auto;
                     flex-direction: column;
+                    gap: 0;
+                }
+
+                .sec-tabs-list.show-dropdown {
+                    display: flex;
                 }
 
                 .sec-tab-item {
+                    display: block;
                     width: 100%;
+                    margin-right: 0;
+                    margin-bottom: 0;
+                    padding: 12px 15px;
+                    border-bottom: 1px solid #e6ebf2;
+                    border-radius: 0;
+                    border-left: none;
+                    border-right: none;
+                    border-top: none;
+                    flex-direction: row;
+                    gap: 12px;
+                }
+
+                .sec-tab-item:last-child {
+                    border-bottom: none;
+                }
+
+                .sec-tab-item.active {
+                    border-radius: 0;
+                    margin-bottom: 0;
+                    border-bottom: 1px solid #e6ebf2;
                 }
 
                 .sec-panel-inner {
@@ -205,11 +303,25 @@ class Custom_Tab_Section extends Widget_Base
                     max-width: 100%;
                 }
             }
+
+            /* Desktop styles - show tabs, hide dropdown */
+            @media (min-width: 1025px) {
+                .sec-tabs-list {
+                    display: flex !important;
+                }
+
+                .sec-dropdown-label,
+                .sec-select-brand {
+                    display: none !important;
+                }
+            }
         </style>
 
         <div class="sec-tabs-wrapper">
             <!-- Tab Navigation -->
             <div class="sec-tabs-nav">
+                <label class="sec-dropdown-label">Security Features</label>
+                <span class="sec-select-brand">System hardening and network-level protection</span>
                 <ul class="sec-tabs-list">
                     <li class="sec-tab-item active" data-target="secPanel0">
                         <span class="sec-tab-icon">
@@ -385,10 +497,13 @@ class Custom_Tab_Section extends Widget_Base
                 // Simple Tab Switching for Security Tabs
                 var secTabs = document.querySelectorAll('.sec-tab-item');
                 var secPanels = document.querySelectorAll('.sec-tab-panel');
+                var secSelectBrand = document.querySelector('.sec-select-brand');
+                var secTabsList = document.querySelector('.sec-tabs-list');
 
                 secTabs.forEach(function (tab) {
                     tab.addEventListener('click', function () {
                         var targetId = this.getAttribute('data-target');
+                        var tabText = this.querySelector('.sec-tab-text') ? this.querySelector('.sec-tab-text').textContent.trim() : '';
 
                         // Remove active class from all tabs
                         secTabs.forEach(function (t) {
@@ -408,8 +523,29 @@ class Custom_Tab_Section extends Widget_Base
                         if (targetPanel) {
                             targetPanel.classList.add('active');
                         }
+
+                        // Update select-brand text on mobile
+                        if (window.innerWidth <= 1024 && secSelectBrand && tabText) {
+                            secSelectBrand.textContent = tabText;
+                        }
+
+                        // Close dropdown on mobile after selection
+                        if (window.innerWidth <= 1024 && secSelectBrand && secTabsList) {
+                            secSelectBrand.classList.remove('angle-icon');
+                            secTabsList.classList.remove('show-dropdown');
+                        }
                     });
                 });
+
+                // Mobile dropdown functionality
+                if (secSelectBrand && secTabsList) {
+                    secSelectBrand.addEventListener('click', function () {
+                        if (window.innerWidth <= 1024) {
+                            this.classList.toggle('angle-icon');
+                            secTabsList.classList.toggle('show-dropdown');
+                        }
+                    });
+                }
             });
         </script>
         <?php
