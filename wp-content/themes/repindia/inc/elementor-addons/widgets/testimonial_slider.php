@@ -68,278 +68,6 @@ class Testimonial_Slider extends Widget_Base
         ?>
 
 
-        <style>
-            .ts_testimonial_section {
-                background: #262A30;
-                color: #ffffff;
-                padding: 80px 0;
-                overflow: hidden;
-            }
-
-            .ts_testimonial_container {
-                margin: 0 auto;
-                padding: 0 15px;
-            }
-
-            .ts_header_row {
-                align-items: flex-start;
-                margin-bottom: 48px;
-            }
-
-            .ts_main_title {
-                font-size: 40px;
-                font-weight: 600;
-                color: rgba(255, 255, 255, 0.90);
-                margin: 0;
-                line-height:
-            }
-
-            .ts_header_description {
-                font-size: 16px;
-                color: #b8c5d6;
-                line-height: 1.6;
-                margin: 0;
-            }
-
-            .ts_slider_wrapper {
-                position: relative;
-            }
-
-            .ts_swiper {
-                overflow: visible;
-                padding: 10px 0;
-            }
-
-            .ts_slide_content {
-                display: flex;
-                gap: 30px;
-                align-items: stretch;
-            }
-
-            .ts_testimonial_card {
-                border-radius: 16px;
-                padding: 40px;
-                flex: 0 0 45%;
-                max-width: 45%;
-                display: flex;
-                flex-direction: column;
-            }
-
-            .ts_company_logo {
-                margin-bottom: 30px;
-            }
-
-            .ts_company_logo img {
-                height: 32px;
-                width: auto;
-                filter: brightness(0) invert(1);
-            }
-
-            .ts_quote_icon {
-                margin-bottom: 20px;
-            }
-
-            .ts_quote_icon svg {
-                width: 40px;
-                height: 30px;
-                fill: #8793AF;
-            }
-
-            .ts_testimonial_text {
-                font-size: 18px;
-                color: #b8c5d6;
-                line-height: 1.7;
-                margin-bottom: 20px;
-                flex-grow: 1;
-            }
-
-            .ts_author {
-                font-size: 14px;
-                color: #8899aa;
-                margin-bottom: 30px;
-            }
-
-            .ts_stats_row {
-                display: flex;
-                gap: 15px;
-                margin-top: auto;
-            }
-
-            .ts_stat_box {
-                border-radius: var(--SM, 8px);
-                background: var(--Golbal-backgrounds-secondary-bg-1, rgba(255, 255, 255, 0.10));
-                padding: 20px;
-                gap: 4px;
-                width: 100%;
-            }
-
-            .ts_stat_number {
-                font-size: 28px;
-                font-weight: 700;
-                color: #ffffff;
-                margin-bottom: 5px;
-            }
-
-            .ts_stat_label {
-                font-size: 13px;
-                color: #8899aa;
-                line-height: 1.4;
-            }
-
-            .ts_media_card {
-                flex: 0 0 50%;
-                max-width: 50%;
-                border-radius: 16px;
-                overflow: hidden;
-                position: relative;
-                min-height: 450px;
-                background: linear-gradient(135deg, #2a3a4a 0%, #1a2a3a 100%);
-            }
-
-            .ts_media_card img,
-            .ts_media_card video {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                position: absolute;
-                top: 0;
-                left: 0;
-            }
-
-            .ts_media_placeholder {
-                width: 100%;
-                height: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: #5a6a7a;
-                font-size: 16px;
-                position: absolute;
-                top: 0;
-                left: 0;
-                background: repeating-conic-gradient(#3a4a5a 0% 25%, #2a3a4a 0% 50%) 50% / 20px 20px;
-            }
-
-            /* Navigation Arrows */
-            .ts_nav_arrow {
-                position: absolute;
-                top: 50%;
-                transform: translateY(-50%);
-                width: 50px;
-                height: 50px;
-                background: rgba(255, 255, 255, 0.1);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-                z-index: 10;
-                transition: all 0.3s ease;
-            }
-
-            .ts_nav_arrow:hover {
-                background: rgba(255, 255, 255, 0.2);
-                border-color: rgba(255, 255, 255, 0.4);
-            }
-
-            .ts_nav_arrow svg {
-                width: 20px;
-                height: 20px;
-                stroke: #ffffff;
-                stroke-width: 2;
-                fill: none;
-            }
-
-            .ts_nav_prev {
-                left: -25px;
-            }
-
-            .ts_nav_next {
-                right: -25px;
-            }
-
-            .ts_nav_arrow.swiper-button-disabled {
-                opacity: 0.3;
-                cursor: not-allowed;
-            }
-
-            /* Responsive */
-            @media (max-width: 1200px) {
-                .ts_nav_prev {
-                    left: 10px;
-                }
-
-                .ts_nav_next {
-                    right: 10px;
-                }
-            }
-
-            @media (max-width: 991px) {
-                .ts_header_row {
-                    gap: 20px;
-                }
-
-                .ts_main_title {
-                    font-size: 32px;
-                }
-
-                .ts_slide_content {
-                    flex-direction: column;
-                }
-
-                .ts_testimonial_card,
-                .ts_media_card {
-                    flex: 0 0 100%;
-                    max-width: 100%;
-                }
-
-                .ts_media_card {
-                    min-height: 300px;
-                }
-            }
-
-            @media (max-width: 576px) {
-                .ts_testimonial_section {
-                    padding: 50px 0;
-                }
-
-                .ts_main_title {
-                    font-size: 26px;
-                    padding-left: 15px;
-                }
-
-                .ts_testimonial_card {
-                    padding: 25px;
-                }
-
-                .ts_testimonial_text {
-                    font-size: 16px;
-                }
-
-                .ts_stats_row {
-                    flex-direction: column;
-                }
-
-                .ts_stat_number {
-                    font-size: 24px;
-                }
-
-                .ts_nav_arrow {
-                    width: 40px;
-                    height: 40px;
-                }
-
-                .ts_nav_prev {
-                    left: 5px;
-                }
-
-                .ts_nav_next {
-                    right: 5px;
-                }
-            }
-        </style>
-
         <section class="ts_testimonial_section">
             <div class="custom-container">
                 <div class="ts_testimonial_container">
@@ -363,22 +91,30 @@ class Testimonial_Slider extends Widget_Base
                                 <div class="swiper-slide">
                                     <div class="ts_slide_content">
                                         <div class="ts_testimonial_card">
-                                            <div class="ts_company_logo">
-                                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Vector.svg"
-                                                    alt="Hanwha Techwin">
+                                            <div class="ts_testimonial_card_content">
+                                                <div class="ts_company_logo">
+                                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Vector.svg"
+                                                        alt="Hanwha Techwin">
+                                                </div>
+                                                <div class="ts_quote_icon">
+
+                                                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M6.32951 30.4779C4.45685 28.4559 3.33325 26.25 3.33325 22.5735C3.33325 16.1397 8.0149 10.4412 14.5692 7.5L16.2546 9.88971C10.0748 13.1985 8.76396 17.4265 8.38943 20.1838C9.32576 19.6324 10.6366 19.4485 11.9475 19.6324C15.3183 20 17.94 22.5735 17.94 26.0662C17.94 27.7206 17.1909 29.375 16.0673 30.6618C14.7565 31.9485 13.2583 32.5 11.3857 32.5C9.32576 32.5 7.4531 31.5809 6.32951 30.4779ZM25.0561 30.4779C23.1834 28.4559 22.0598 26.25 22.0598 22.5735C22.0598 16.1397 26.7415 10.4412 33.2958 7.5L34.9812 9.88971C28.8014 13.1985 27.4906 17.4265 27.116 20.1838C28.0524 19.6324 29.3632 19.4485 30.6741 19.6324C34.0449 20 36.6666 22.5735 36.6666 26.0662C36.6666 27.7206 35.9175 29.375 34.7939 30.6618C33.6703 31.9485 31.9849 32.5 30.1123 32.5C28.0524 32.5 26.1797 31.5809 25.0561 30.4779Z"
+                                                            fill="#8793AF" />
+                                                    </svg>
+
+                                                </div>
+                                                <p class="ts_testimonial_text">
+                                                    With i2V's surveillance and analytics in place, we reduced unauthorized
+                                                    access
+                                                    incidents by over 60%. The system gives our team peace of mind knowing
+                                                    high-risk
+                                                    areas are always monitored.
+                                                </p>
+                                                <p class="ts_author">- Operations Head, Middle East Refinery</p>
                                             </div>
-                                            <div class="ts_quote_icon">
-                                                <svg viewBox="0 0 40 30" xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M0 30V18.75C0 15.4167 0.625 12.2917 1.875 9.375C3.125 6.45833 5.20833 3.54167 8.125 0.625L13.125 4.375C11.0417 6.70833 9.53125 8.90625 8.59375 10.9688C7.65625 13.0312 7.1875 15.2083 7.1875 17.5H12.5V30H0ZM20 30V18.75C20 15.4167 20.625 12.2917 21.875 9.375C23.125 6.45833 25.2083 3.54167 28.125 0.625L33.125 4.375C31.0417 6.70833 29.5312 8.90625 28.5938 10.9688C27.6562 13.0312 27.1875 15.2083 27.1875 17.5H32.5V30H20Z" />
-                                                </svg>
-                                            </div>
-                                            <p class="ts_testimonial_text">
-                                                With i2V's surveillance and analytics in place, we reduced unauthorized access
-                                                incidents by over 60%. The system gives our team peace of mind knowing high-risk
-                                                areas are always monitored.
-                                            </p>
-                                            <p class="ts_author">- Operations Head, Middle East Refinery</p>
                                             <div class="ts_stats_row">
                                                 <div class="ts_stat_box">
                                                     <div class="ts_stat_number">98.6% uptime</div>
@@ -403,36 +139,46 @@ class Testimonial_Slider extends Widget_Base
                                 <div class="swiper-slide">
                                     <div class="ts_slide_content">
                                         <div class="ts_testimonial_card">
-                                            <div class="ts_company_logo">
-                                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Vector.svg"
-                                                    alt="Hanwha Techwin">
+                                            <div class="ts_testimonial_card_content">
+                                                <div class="ts_company_logo">
+                                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Vector.svg"
+                                                        alt="Hanwha Techwin">
+                                                </div>
+                                                <div class="ts_quote_icon">
+
+                                                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M6.32951 30.4779C4.45685 28.4559 3.33325 26.25 3.33325 22.5735C3.33325 16.1397 8.0149 10.4412 14.5692 7.5L16.2546 9.88971C10.0748 13.1985 8.76396 17.4265 8.38943 20.1838C9.32576 19.6324 10.6366 19.4485 11.9475 19.6324C15.3183 20 17.94 22.5735 17.94 26.0662C17.94 27.7206 17.1909 29.375 16.0673 30.6618C14.7565 31.9485 13.2583 32.5 11.3857 32.5C9.32576 32.5 7.4531 31.5809 6.32951 30.4779ZM25.0561 30.4779C23.1834 28.4559 22.0598 26.25 22.0598 22.5735C22.0598 16.1397 26.7415 10.4412 33.2958 7.5L34.9812 9.88971C28.8014 13.1985 27.4906 17.4265 27.116 20.1838C28.0524 19.6324 29.3632 19.4485 30.6741 19.6324C34.0449 20 36.6666 22.5735 36.6666 26.0662C36.6666 27.7206 35.9175 29.375 34.7939 30.6618C33.6703 31.9485 31.9849 32.5 30.1123 32.5C28.0524 32.5 26.1797 31.5809 25.0561 30.4779Z"
+                                                            fill="#8793AF" />
+                                                    </svg>
+
+                                                </div>
+                                                <p class="ts_testimonial_text">
+                                                    With i2V's surveillance and analytics in place, we reduced unauthorized
+                                                    access
+                                                    incidents by over 60%. The system gives our team peace of mind knowing
+                                                    high-risk
+                                                    areas are always monitored.
+                                                </p>
+                                                <p class="ts_author">- Operations Head, Middle East Refinery</p>
                                             </div>
-                                            <div class="ts_quote_icon">
-                                                <svg viewBox="0 0 40 30" xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M0 30V18.75C0 15.4167 0.625 12.2917 1.875 9.375C3.125 6.45833 5.20833 3.54167 8.125 0.625L13.125 4.375C11.0417 6.70833 9.53125 8.90625 8.59375 10.9688C7.65625 13.0312 7.1875 15.2083 7.1875 17.5H12.5V30H0ZM20 30V18.75C20 15.4167 20.625 12.2917 21.875 9.375C23.125 6.45833 25.2083 3.54167 28.125 0.625L33.125 4.375C31.0417 6.70833 29.5312 8.90625 28.5938 10.9688C27.6562 13.0312 27.1875 15.2083 27.1875 17.5H32.5V30H20Z" />
-                                                </svg>
-                                            </div>
-                                            <p class="ts_testimonial_text">
-                                                The AI-powered analytics transformed our security operations. We now detect
-                                                threats
-                                                in real-time and respond 50% faster than before implementing i2V's solutions.
-                                            </p>
-                                            <p class="ts_author">- Security Director, Smart City Project</p>
                                             <div class="ts_stats_row">
                                                 <div class="ts_stat_box">
-                                                    <div class="ts_stat_number">98.6% uptime</div>
-                                                    <div class="ts_stat_label">Faster threat response time</div>
+                                                    <div class="ts_stat_number">100% uptime</div>
+                                                    <div class="ts_stat_label">Over 10 lakh violations processed monthly</div>
                                                 </div>
                                                 <div class="ts_stat_box">
-                                                    <div class="ts_stat_number">24/7</div>
-                                                    <div class="ts_stat_label">Continuous monitoring coverage</div>
+                                                    <div class="ts_stat_number">40%</div>
+                                                    <div class="ts_stat_label">Reduced violation-related incidents</div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="ts_media_card">
                                             <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025//11/Image-2-2.webp"
                                                 alt="Testimonial Video">
+                                            <!-- Or use placeholder if no image -->
+                                            <!-- <div class="ts_media_placeholder">Placeholder</div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -441,36 +187,46 @@ class Testimonial_Slider extends Widget_Base
                                 <div class="swiper-slide">
                                     <div class="ts_slide_content">
                                         <div class="ts_testimonial_card">
-                                            <div class="ts_company_logo">
-                                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Vector.svg"
-                                                    alt="Hanwha Techwin">
+                                            <div class="ts_testimonial_card_content">
+                                                <div class="ts_company_logo">
+                                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Vector.svg"
+                                                        alt="Hanwha Techwin">
+                                                </div>
+                                                <div class="ts_quote_icon">
+
+                                                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M6.32951 30.4779C4.45685 28.4559 3.33325 26.25 3.33325 22.5735C3.33325 16.1397 8.0149 10.4412 14.5692 7.5L16.2546 9.88971C10.0748 13.1985 8.76396 17.4265 8.38943 20.1838C9.32576 19.6324 10.6366 19.4485 11.9475 19.6324C15.3183 20 17.94 22.5735 17.94 26.0662C17.94 27.7206 17.1909 29.375 16.0673 30.6618C14.7565 31.9485 13.2583 32.5 11.3857 32.5C9.32576 32.5 7.4531 31.5809 6.32951 30.4779ZM25.0561 30.4779C23.1834 28.4559 22.0598 26.25 22.0598 22.5735C22.0598 16.1397 26.7415 10.4412 33.2958 7.5L34.9812 9.88971C28.8014 13.1985 27.4906 17.4265 27.116 20.1838C28.0524 19.6324 29.3632 19.4485 30.6741 19.6324C34.0449 20 36.6666 22.5735 36.6666 26.0662C36.6666 27.7206 35.9175 29.375 34.7939 30.6618C33.6703 31.9485 31.9849 32.5 30.1123 32.5C28.0524 32.5 26.1797 31.5809 25.0561 30.4779Z"
+                                                            fill="#8793AF" />
+                                                    </svg>
+
+                                                </div>
+                                                <p class="ts_testimonial_text">
+                                                    With i2V's surveillance and analytics in place, we reduced unauthorized
+                                                    access
+                                                    incidents by over 60%. The system gives our team peace of mind knowing
+                                                    high-risk
+                                                    areas are always monitored.
+                                                </p>
+                                                <p class="ts_author">- Operations Head, Middle East Refinery</p>
                                             </div>
-                                            <div class="ts_quote_icon">
-                                                <svg viewBox="0 0 40 30" xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M0 30V18.75C0 15.4167 0.625 12.2917 1.875 9.375C3.125 6.45833 5.20833 3.54167 8.125 0.625L13.125 4.375C11.0417 6.70833 9.53125 8.90625 8.59375 10.9688C7.65625 13.0312 7.1875 15.2083 7.1875 17.5H12.5V30H0ZM20 30V18.75C20 15.4167 20.625 12.2917 21.875 9.375C23.125 6.45833 25.2083 3.54167 28.125 0.625L33.125 4.375C31.0417 6.70833 29.5312 8.90625 28.5938 10.9688C27.6562 13.0312 27.1875 15.2083 27.1875 17.5H32.5V30H20Z" />
-                                                </svg>
-                                            </div>
-                                            <p class="ts_testimonial_text">
-                                                Implementing i2V's traffic management solution reduced congestion by 35% in our
-                                                city. The real-time analytics help us make data-driven decisions for urban
-                                                planning.
-                                            </p>
-                                            <p class="ts_author">- Commissioner, Municipal Corporation</p>
                                             <div class="ts_stats_row">
                                                 <div class="ts_stat_box">
-                                                    <div class="ts_stat_number">35%</div>
-                                                    <div class="ts_stat_label">Reduction in traffic congestion</div>
+                                                    <div class="ts_stat_number">98.6% uptime</div>
+                                                    <div class="ts_stat_label">Over 10 lakh violations processed monthly</div>
                                                 </div>
                                                 <div class="ts_stat_box">
-                                                    <div class="ts_stat_number">1000+</div>
-                                                    <div class="ts_stat_label">Cameras integrated citywide</div>
+                                                    <div class="ts_stat_number">40%</div>
+                                                    <div class="ts_stat_label">Reduced violation-related incidents</div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="ts_media_card">
-                                            <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Image-2-2.webp"
+                                            <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025//11/Image-2-2.webp"
                                                 alt="Testimonial Video">
+                                            <!-- Or use placeholder if no image -->
+                                            <!-- <div class="ts_media_placeholder">Placeholder</div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -480,13 +236,17 @@ class Testimonial_Slider extends Widget_Base
 
                         <!-- Navigation Arrows -->
                         <div class="ts_nav_arrow ts_nav_prev">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M15 18L9 12L15 6" stroke-linecap="round" stroke-linejoin="round" />
+                            <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 27 27" fill="none">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M13.0079 6.99145C13.4418 7.42537 13.4418 8.12889 13.0079 8.5628L9.34911 12.2216L20 12.2216C20.6136 12.2216 21.1111 12.719 21.1111 13.3327C21.1111 13.9463 20.6136 14.4438 20 14.4438L9.34911 14.4438L13.0079 18.1026C13.4418 18.5365 13.4418 19.24 13.0079 19.6739C12.574 20.1078 11.8704 20.1078 11.4365 19.6739L5.88098 14.1184C5.67261 13.91 5.55554 13.6274 5.55554 13.3327C5.55554 13.038 5.67261 12.7554 5.88098 12.547L11.4365 6.99145C11.8705 6.55754 12.574 6.55754 13.0079 6.99145Z"
+                                    fill="white" fill-opacity="0.5" />
                             </svg>
                         </div>
                         <div class="ts_nav_arrow ts_nav_next">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M9 6L15 12L9 18" stroke-linecap="round" stroke-linejoin="round" />
+                            <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 27 27" fill="none">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M13.6589 6.99145C14.0928 6.55754 14.7963 6.55754 15.2302 6.99145L20.7858 12.547C20.9942 12.7554 21.1112 13.038 21.1112 13.3327C21.1112 13.6274 20.9942 13.91 20.7858 14.1184L15.2302 19.6739C14.7963 20.1078 14.0928 20.1078 13.6589 19.6739C13.225 19.24 13.225 18.5365 13.6589 18.1026L17.3176 14.4438L6.66678 14.4438C6.05313 14.4438 5.55566 13.9463 5.55566 13.3327C5.55566 12.719 6.05313 12.2216 6.66678 12.2216L17.3176 12.2216L13.6589 8.5628C13.225 8.12889 13.225 7.42537 13.6589 6.99145Z"
+                                    fill="#D7DBE4" />
                             </svg>
                         </div>
                     </div>
@@ -508,7 +268,7 @@ class Testimonial_Slider extends Widget_Base
                         spaceBetween: 30,
                         loop: true,
                         speed: 600,
-                  
+
                         navigation: {
                             nextEl: '.ts_nav_next',
                             prevEl: '.ts_nav_prev',
