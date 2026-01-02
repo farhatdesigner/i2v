@@ -49,158 +49,191 @@
 		'submenu' => true,
         'fields'    => array(
 				           array(
-								'id'       =>'header1_logo',
+								'id'       =>'light_theme_logo',
 								'url'      => false,
 								'type'     => 'media',
-								'title'    => esc_attr__('Logo', 'repindia'),
+								'title'    => esc_attr__('Light Theme Logo', 'repindia'),
 								'default'  => '',
 							),
 							array(
-								'id'       =>'hamburger_menu_logo',
+								'id'       =>'dark_theme_logo',
 								'url'      => false,
 								'type'     => 'media',
-								'title'    => esc_attr__('Hamburger menu Logo', 'repindia'),
+								'title'    => esc_attr__('Dark Theme Logo', 'repindia'),
 								'default'  => '',
 							),
 							array(
-								'id'       =>'header1_sticky_logo',
-								'url'      => false,
-								'type'     => 'media',
-								'title'    => esc_attr__('Sticky Logo', 'repindia'),
-								'default'  => '',
-							),
-							array(
-								'id'       => 'header1_search_switch',
+								'id'       => 'header_demo_btn',
 								'type'     => 'switch',
-								'title'    => esc_attr__('Search Tab', 'repindia'),
+								'title'    => esc_attr__('Demo Button Switch', 'repindia'),
+								'subtitle' => __('Enable / Disable Button', 'repindia'),
+								'default'  => true,
+						    ),
+							array(
+								'id'       => 'demo_btn_url',
+								'type'     => 'text',
+								'title'    => esc_attr__('Demo Button Url', 'repindia'),
+								'default'  => '',
+								'required' => array('header_demo_btn','=',true)
+							),
+							array(
+								'id'       => 'langauge_btn_switch',
+								'type'     => 'switch',
+								'title'    => esc_attr__('Language Button Switch', 'repindia'),
+								'subtitle' => __('Enable / Disable Button', 'repindia'),
+								'default'  => true,
+						    ),
+							array(
+								'id'       => 'search_btn_switch',
+								'type'     => 'switch',
+								'title'    => esc_attr__('Search Button Switch', 'repindia'),
 								'subtitle' => __('Enable / Disable Search Tab', 'repindia'),
 								'default'  => true,
 						    ),
 							array(
-								'id'       => 'header_warrantycheck',
+								'id'       => 'theme_switch_btn',
 								'type'     => 'switch',
-								'title'    => esc_attr__('Warranty Check Tab', 'repindia'),
-								'subtitle' => __('Enable / Disable Warranty Check at Header', 'repindia'),
+								'title'    => esc_attr__('Theme Switch Button', 'repindia'),
+								'subtitle' => __('Enable / Disable Button', 'repindia'),
 								'default'  => true,
-							),
-							array(
-								'id'       => 'warranty_check_url',
-								'type'     => 'text',
-								'title'    => esc_attr__('Warranty Check Url', 'repindia'),
-								'default'  => '',
-								'required' => array('header_warrantycheck','=',true)
-							),
-						    array(
-								'id'       => 'header1_store_switch',
-								'type'     => 'switch',
-								'title'    => esc_attr__('Store Locator Tab', 'repindia'),
-								'subtitle' => __('Enable / Disable Store Locator Tab', 'repindia'),
-								'default'  => true,
-						    ),
-							array(
-								'id'       => 'store_locator_url',
-								'type'     => 'text',
-								'title'    => esc_attr__('Store Locator Url', 'repindia'),
-								'default'  => '',
-								'required' => array('header1_store_switch','=',true)
-							),
-						    array(
-								'id'       => 'header1_humburgar_switch',
-								'type'     => 'switch',
-								'title'    => esc_attr__('Humburgar Tab', 'repindia'),
-								'subtitle' => __('Enable / Disable Humburgar Tab', 'repindia'),
-								'default'  => true,
-						    ),
-							array(
-								'id'       => 'floating_quickaccess',
-								'type'     => 'switch',
-								'title'    => esc_attr__('Enable Quick Access', 'repindia'),
-								'subtitle' => __('Enable / Disable Quick Access Tab', 'repindia'),
-								'default'  => true,
-						    ),
-							array(
-								'id'       =>'quick_enquiry_icon',
-								'url'      => false,
-								'type'     => 'media',
-								'title'    => esc_html__('Enquiry Icon ', 'repindia'),
-								'default'  => '',
-								'required' => array('floating_quickaccess','=',true)
-							),
-							array(
-								'id'       => 'quick_enquiry_title',
-								'type'     => 'text',
-								'title'    => esc_attr__('Enquiry Title', 'repindia'),
-								'default'  => "",
-								'required' => array('floating_quickaccess','=',true)
-							),
-							array(
-								'id'       =>'download_catalog_icon',
-								'url'      => false,
-								'type'     => 'media',
-								'title'    => esc_html__('Download Catalog Icon ', 'repindia'),
-								'default'  => '',
-								'required' => array('floating_quickaccess','=',true)
-							),
-							array(
-								'id'       => 'download_catalog_title',
-								'type'     => 'text',
-								'title'    => esc_attr__('Download Catalog Title', 'repindia'),
-								'default'  => "",
-								'required' => array('floating_quickaccess','=',true)
-							),
-							array(
-								'id'       => 'download_catalog_url',
-								'type'     => 'text',
-								'title'    => esc_attr__('Download Catalog URL', 'repindia'),
-								'default'  => "",
-								'required' => array('floating_quickaccess','=',true)
-							),
-							array(
-								'id'       =>'warranty_icon',
-								'url'      => false,
-								'type'     => 'media',
-								'title'    => esc_html__('Warranty Icon ', 'repindia'),
-								'default'  => '',
-								'required' => array('floating_quickaccess','=',true)
-							),
-							array(
-								'id'       => 'warranty_title',
-								'type'     => 'text',
-								'title'    => esc_attr__('Warranty title', 'repindia'),
-								'default'  => "",
-								'required' => array('floating_quickaccess','=',true)
-							),
-							array(
-								'id'       => 'warranty_url',
-								'type'     => 'text',
-								'title'    => esc_attr__('Warranty URL', 'repindia'),
-								'default'  => "",
-								'required' => array('floating_quickaccess','=',true)
-							),
-							array(
-								'id'       =>'partner_icon',
-								'url'      => false,
-								'type'     => 'media',
-								'title'    => esc_html__('Partner Icon ', 'repindia'),
-								'default'  => '',
-								'required' => array('floating_quickaccess','=',true)
-							),
-							array(
-								'id'       => 'partner_title',
-								'type'     => 'text',
-								'title'    => esc_attr__('Partner title', 'repindia'),
-								'default'  => "",
-								'required' => array('floating_quickaccess','=',true)
-							),
-							array(
-								'id'       => 'partner_url',
-								'type'     => 'text',
-								'title'    => esc_attr__('Partner URL', 'repindia'),
-								'default'  => "",
-								'required' => array('floating_quickaccess','=',true)
 							),
 			)
-		) 
+		)
+	);
+	
+	/* Header Hamburger /--------------------------------------------------------- */
+	Redux::set_section( 
+		$opt_name, 
+		array(
+			'title'     => esc_html__('Header Hamburger', 'repindia'),
+			'background-color' => '#ef9a9a',
+			'desc'   => '',
+			'class'     => 'main_background',
+			'icon'   => 'el el-credit-card',
+			'submenu' => true,
+			'fields'    => array(
+				array(
+					'id'       => 'hamburger_demo_btn',
+					'type'     => 'switch',
+					'title'    => esc_attr__('Hamburger Button Switch', 'repindia'),
+					'subtitle' => __('Enable / Disable Button', 'repindia'),
+					'default'  => true,
+				),
+				array(
+					'id'       => 'hamburger_btn_url',
+					'type'     => 'text',
+					'title'    => esc_attr__('Hamburger Button Url', 'repindia'),
+					'default'  => '',
+					'required' => array('hamburger_demo_btn','=',true)
+				),
+				array(
+					'id'       => 'hamburger_editor',
+					'type'     => 'editor',
+					'title'    => esc_html__('Hamburger Content', 'repindia'),
+					'subtitle' => __('Add content for hamburger menu', 'repindia'),
+					'default'  => '',
+					'args'     => array(
+						'teeny'            => true,
+						'textarea_rows'    => 10
+					)
+				),
+				array(
+					'id'       => 'hamburger_menu_item_1_icon',
+					'type'     => 'media',
+					'url'      => false,
+					'title'    => esc_html__('Menu Item 1 - Icon/Image', 'repindia'),
+					'subtitle' => __('Upload icon or image for menu item 1', 'repindia'),
+					'default'  => '',
+				),
+				array(
+					'id'       => 'hamburger_menu_item_1_title',
+					'type'     => 'text',
+					'title'    => esc_html__('Menu Item 1 - Title', 'repindia'),
+					'subtitle' => __('Enter title for menu item 1', 'repindia'),
+					'default'  => '',
+				),
+				array(
+					'id'       => 'hamburger_menu_item_1_url',
+					'type'     => 'text',
+					'title'    => esc_html__('Menu Item 1 - URL', 'repindia'),
+					'subtitle' => __('Enter URL for menu item 1', 'repindia'),
+					'default'  => '',
+				),
+				array(
+					'id'       => 'hamburger_menu_item_2_icon',
+					'type'     => 'media',
+					'url'      => false,
+					'title'    => esc_html__('Menu Item 2 - Icon/Image', 'repindia'),
+					'subtitle' => __('Upload icon or image for menu item 2', 'repindia'),
+					'default'  => '',
+				),
+				array(
+					'id'       => 'hamburger_menu_item_2_title',
+					'type'     => 'text',
+					'title'    => esc_html__('Menu Item 2 - Title', 'repindia'),
+					'subtitle' => __('Enter title for menu item 2', 'repindia'),
+					'default'  => '',
+				),
+				array(
+					'id'       => 'hamburger_menu_item_2_url',
+					'type'     => 'text',
+					'title'    => esc_html__('Menu Item 2 - URL', 'repindia'),
+					'subtitle' => __('Enter URL for menu item 2', 'repindia'),
+					'default'  => '',
+				),
+				array(
+					'id'       => 'hamburger_menu_item_3_icon',
+					'type'     => 'media',
+					'url'      => false,
+					'title'    => esc_html__('Menu Item 3 - Icon/Image', 'repindia'),
+					'subtitle' => __('Upload icon or image for menu item 3', 'repindia'),
+					'default'  => '',
+				),
+				array(
+					'id'       => 'hamburger_menu_item_3_title',
+					'type'     => 'text',
+					'title'    => esc_html__('Menu Item 3 - Title', 'repindia'),
+					'subtitle' => __('Enter title for menu item 3', 'repindia'),
+					'default'  => '',
+				),
+				array(
+					'id'       => 'hamburger_menu_item_3_url',
+					'type'     => 'text',
+					'title'    => esc_html__('Menu Item 3 - URL', 'repindia'),
+					'subtitle' => __('Enter URL for menu item 3', 'repindia'),
+					'default'  => '',
+				),
+				array(
+					'id'       => 'hamburger_menu_item_4_icon',
+					'type'     => 'media',
+					'url'      => false,
+					'title'    => esc_html__('Menu Item 4 - Icon/Image', 'repindia'),
+					'subtitle' => __('Upload icon or image for menu item 4', 'repindia'),
+					'default'  => '',
+				),
+				array(
+					'id'       => 'hamburger_menu_item_4_title',
+					'type'     => 'text',
+					'title'    => esc_html__('Menu Item 4 - Title', 'repindia'),
+					'subtitle' => __('Enter title for menu item 4', 'repindia'),
+					'default'  => '',
+				),
+				array(
+					'id'       => 'hamburger_menu_item_4_url',
+					'type'     => 'text',
+					'title'    => esc_html__('Menu Item 4 - URL', 'repindia'),
+					'subtitle' => __('Enter URL for menu item 4', 'repindia'),
+					'default'  => '',
+				),
+				array(
+					'id'       => 'hamburger_social',
+					'type'     => 'switch',
+					'title'    => esc_attr__('Hamburger Social Media', 'repindia'),
+					'subtitle' => __('Enable / Disable Social Media at haeder', 'repindia'),
+					'default'  => true,
+				),
+			)
+		)
 	);
 	
 	/* Social Media /--------------------------------------------------------- */
@@ -219,22 +252,34 @@
 									'default'  => true,
 								),
 								array(
-									'id'       =>'facebook-value',
+									'id'       =>'social_media_title',
 									'type'     => 'text',
-									'title'    => esc_html__('Facebook', 'repindia'),
-									'subtitle' => '',
-									'desc'     => esc_html__('Enter your Facebook URL.', 'repindia'),
-									'default'  => esc_html__('#','repindia'),
+									'title'    => esc_html__('Social Media Section Title', 'repindia'),
+									'default'  => esc_html__('Follow us on','repindia'),
 									'required' => array('enable_social','=',true)
 											   
 								),
 								array(
-									'id'       =>'twitter-value',
+									'id'       => 'linkedin_icon',
+									'type'     => 'media',
+									'url'      => false,
+									'title'    => esc_html__('LinkedIn - Icon/Image', 'repindia'),
+									'subtitle' => __('Upload icon or image for Linkedin', 'repindia'),
+									'default'  => '',
+								),
+								array(
+									'id'       => 'linkedin_footer_icon',
+									'type'     => 'media',
+									'url'      => false,
+									'title'    => esc_html__('LinkedIn Footer - Icon/Image', 'repindia'),
+									'subtitle' => __('Upload icon or image for Footer Linkedin', 'repindia'),
+									'default'  => '',
+								),
+								array(
+									'id'       =>'linkedin_title',
 									'type'     => 'text',
-									'title'    => esc_html__('Twitter', 'repindia'),
-									'subtitle' => '',
-									'desc'     => esc_html__('Enter your Twitter URL.', 'repindia'),
-									'default'  => esc_html__('#','repindia'),
+									'title'    => esc_html__('LinkedIn Title', 'repindia'),
+									'default'  => esc_html__('LinkedIn','repindia'),
 									'required' => array('enable_social','=',true)
 											   
 								),
@@ -249,48 +294,26 @@
 											   
 								),
 								array(
-									'id'       =>'instagram-value',
-									'type'     => 'text',
-									'title'    => esc_html__('Instagram', 'repindia'),
-									'subtitle' => '',
-									'desc'     => esc_html__('Enter your Instagram URL.', 'repindia'),
-									'default'  => esc_html__('#','repindia'),
-									'required' => array('enable_social','=',true)		   
+									'id'       => 'youtube_icon',
+									'type'     => 'media',
+									'url'      => false,
+									'title'    => esc_html__('Youtube - Icon/Image', 'repindia'),
+									'subtitle' => __('Upload icon or image for Youtube', 'repindia'),
+									'default'  => '',
 								),
 								array(
-									'id'       =>'pinterest-value',
-									'type'     => 'text',
-									'title'    => esc_html__('Pinterest', 'repindia'),
-									'subtitle' => '',
-									'desc'     => esc_html__('Enter your Pinterest URL.', 'repindia'),
-									'required' => array('enable_social','=',true)
-											   
-								),
-								
-								array(
-									'id'       =>'yelp-value',
-									'type'     => 'text',
-									'title'    => esc_html__('Yelp', 'repindia'),
-									'subtitle' => '',
-									'desc'     => esc_html__('Enter your Yelp URL.', 'repindia'),
-									'required' => array('enable_social','=',true)
-											   
+									'id'       => 'youtube_footer_icon',
+									'type'     => 'media',
+									'url'      => false,
+									'title'    => esc_html__('Youtube Footer - Icon/Image', 'repindia'),
+									'subtitle' => __('Upload icon or image for FooterYoutube', 'repindia'),
+									'default'  => '',
 								),
 								array(
-									'id'       =>'foursquare-value',
+									'id'       =>'youtube_title',
 									'type'     => 'text',
-									'title'    => esc_html__('Foursquare', 'repindia'),
-									'subtitle' => '',
-									'desc'     => esc_html__('Enter your Foursquare URL.', 'repindia'),
-									'required' => array('enable_social','=',true)
-											   
-								),
-								array(
-									'id'       =>'flickr-value',
-									'type'     => 'text',
-									'title'    => esc_html__('Flickr', 'repindia'),
-									'subtitle' => '',
-									'desc'     => esc_html__('Enter your Flickr URL.', 'repindia'),
+									'title'    => esc_html__('Youtube Title', 'repindia'),
+									'default'  => esc_html__('Youtube','repindia'),
 									'required' => array('enable_social','=',true)
 											   
 								),
@@ -302,23 +325,6 @@
 									'desc'     => esc_html__('Enter your Youtube URL.', 'repindia'),
 									'required' => array('enable_social','=',true)
 											   
-								),
-								array(
-									'id'       =>'email-value',
-									'type'     => 'text',
-									'title'    => esc_html__('Email', 'repindia'),
-									'subtitle' => '',
-									'desc'     => esc_html__('Enter your Email URL.', 'repindia'),
-									'required' => array('enable_social','=',true)
-											   
-								),
-								array(
-									'id'       =>'rss-value',
-									'type'     => 'text',
-									'title'    => esc_html__('Rss', 'repindia'),
-									'subtitle' => '',
-									'desc'     => esc_html__('Enter your Rss URL.', 'repindia'),
-									'required' => array('enable_social','=',true)		   
 								),
 						),
 			) 
@@ -336,16 +342,6 @@
 			'submenu'   => true,
 			'fields'    =>  array(
 								array(
-										'id'       => 'footer_bg',
-										'type'    => 'background',				
-										'title'   => esc_attr__( 'Footer Background Image & Color', 'repindia' ),
-										'output'  => '',
-										'default'  => array(
-											'background-color' => '#F5F5F5',
-											'background-image' => '',
-										),
-									),
-								array(
 									'id'       =>   'footer_seprater_footer_widget',
 									'url'      =>   false,
 									'type'     =>   'text',
@@ -360,97 +356,58 @@
 									'default'  => '',
 								),
 								array(
-									'id'       =>'footer_sort_desc',
-									'type'     => 'editor',
-									'title'    => esc_html__('Footer Sort Description', 'repindia'),
-									'default'  => '',
-									'args'   => array(
-										'teeny'            => true,
-										'textarea_rows'    => 5
-									)
-								),
-								array(
-									'id'       => 'footer_contact_title',
+									'id'       => 'footer_product_title',
 									'type'     => 'text',
-									'title'    => esc_attr__('Contact Detail Title', 'repindia'),
-									'default'  => "",
+									'title'    => esc_attr__('Product Title', 'repindia'),
+									'default'  => esc_attr__( 'Products', 'repindia'),
 								),
 								array(
-									'id'       =>'footer_contact_addrr_icon',
-									'url'      => false,
-									'type'     => 'media',
-									'title'    => esc_html__('Footer Contact Address Icon ', 'repindia'),
-									'default'  => '',
-								),
-								array(
-									'id'       => 'footer_contact_addrr',
+									'id'       => 'footer_industry_title',
 									'type'     => 'text',
-									'title'    => esc_attr__('Contact Detail Address', 'repindia'),
-									'default'  => "",
+									'title'    => esc_attr__('Industry Title', 'repindia'),
+									'default'  => esc_attr__( 'Industries', 'repindia'),
 								),
 								array(
-									'id'       =>'footer_contact_phn_con',
-									'url'      => false,
-									'type'     => 'media',
-									'title'    => esc_html__('Footer Contact Phone Icon ', 'repindia'),
-									'default'  => '',
-								),
-								array(
-									'id'       => 'footer_contact_phn',
+									'id'       => 'footer_company_title',
 									'type'     => 'text',
-									'title'    => esc_attr__('Contact Detail Phone Number', 'repindia'),
-									'default'  => "",
+									'title'    => esc_attr__('Company Title', 'repindia'),
+									'default'  => esc_attr__( 'Company', 'repindia'),
 								),
 								array(
-									'id'       => 'footer_main_menu_title',
+									'id'       => 'footer_resource_title',
 									'type'     => 'text',
-									'title'    => esc_attr__('Main Menu Title', 'repindia'),
-									'default'  => esc_attr__( 'Main Menu', 'repindia'),
+									'title'    => esc_attr__('Resource Title', 'repindia'),
+									'default'  => esc_attr__( 'Resources', 'repindia'),
 								),
 								array(
-									'id'       => 'footer_brand_menu_title',
+									'id'       => 'footer_legal_title',
 									'type'     => 'text',
-									'title'    => esc_attr__('Brand Menu Title', 'repindia'),
-									'default'  => esc_attr__( 'Brand Menu', 'repindia'),
+									'title'    => esc_attr__('Legal Title', 'repindia'),
+									'default'  => esc_attr__( 'Legal', 'repindia'),
 								),
-								array(
-									'id'       => 'footer_service_menu_title',
-									'type'     => 'text',
-									'title'    => esc_attr__('Service Menu Title', 'repindia'),
-									'default'  => esc_attr__( 'Service Menu', 'repindia'),
-								),
-								array(
-									'id'       => 'footer_news_menu_title',
-									'type'     => 'text',
-									'title'    => esc_attr__('News & Media Menu Title', 'repindia'),
-									'default'  => esc_attr__( 'News & Media Menu', 'repindia'),
-								),
-								array(
-									'id'       => 'footer_gallery_menu_title',
-									'type'     => 'text',
-									'title'    => esc_attr__('Gallery Menu Title', 'repindia'),
-									'default'  => esc_attr__( 'Gallery Menu', 'repindia'),
-								),
-								array(
-									'id'       => 'footer_resource_menu_title',
-									'type'     => 'text',
-									'title'    => esc_attr__('Resource Menu Title', 'repindia'),
-									'default'  => esc_attr__( 'Resource Menu', 'repindia'),
-								),
-								
 								array(
 									'id'       =>   'copyright_seprater_footer_widget',
 									'url'      =>   false,
 									'type'     =>   'text',
 									'class'    =>   'background_color',
 									'title'    =>   esc_attr__('Footer Copyright', 'repindia'),
-									'required' => array('footer_copyright_switch','=',true)
 								),
 								array(
-									'id'       => 'footer_copyright_switch',
-									'type'     => 'switch',
-									'title'    => esc_attr__('Enable / Disable Copyright', 'repindia'),
-									'default'  => true,
+									'id'       =>'footer_dscl_icon',
+									'url'      => false,
+									'type'     => 'media',
+									'title'    => esc_html__('Footer Disclaimer Icon ', 'repindia'),
+									'default'  => '',
+								),
+								array(
+									'id'       =>'footer_disclaimer_desc',
+									'type'     => 'editor',
+									'title'    => esc_html__('Footer disclaimer contents', 'repindia'),
+									'default'  => '',
+									'args'   => array(
+										'teeny'            => true,
+										'textarea_rows'    => 5
+									)
 								),
 								array(
 									'id'       =>'footer_copyright',
@@ -472,13 +429,6 @@
 									'default'  => true,
 									'required' => array('footer_copyright_switch','=',true)
 							    ),
-								array(
-									'id'       => 'footer_social_title',
-									'type'     => 'text',
-									'title'    => esc_attr__('Footer Social Title', 'repindia'),
-									'default'  => esc_attr__( 'Follow us on:', 'repindia'),
-									'required' => array('footer_social','=',true)
-								),
 								
 					)
 			) 

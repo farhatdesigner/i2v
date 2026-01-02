@@ -567,7 +567,7 @@ class Custom_Marquee extends Widget_Base
                                         $img_height = !empty($item['image_height']['size']) ? $item['image_height']['size'] . $item['image_height']['unit'] : '100px';
                                         $img_object_fit = !empty($item['image_object_fit']) ? $item['image_object_fit'] : 'contain';
                                         ?>
-                                        <img src="<?php echo esc_url($item['image']['url']); ?>" alt="<?php echo esc_attr($item['image']['alt']); ?>" style="width: <?php echo esc_attr($img_width); ?>; height: <?php echo esc_attr($img_height); ?>; object-fit: <?php echo esc_attr($img_object_fit); ?>;">
+                                        <img src="<?php echo esc_url($item['image']['url']); ?>" alt="<?php echo esc_attr($item['image']['alt'] ?? ''); ?>" style="width: <?php echo esc_attr($img_width); ?>; height: <?php echo esc_attr($img_height); ?>; object-fit: <?php echo esc_attr($img_object_fit); ?>;">
                                     <?php elseif ($item_type === 'text' && !empty($item['text_content'])) : ?>
                                         <span class="cmarq-content"><?php echo wp_kses_post($item['text_content']); ?></span>
                                     <?php endif; ?>
@@ -580,7 +580,7 @@ class Custom_Marquee extends Widget_Base
                                     $img_object_fit = !empty($item['image_object_fit']) ? $item['image_object_fit'] : 'contain';
                                     ?>
                                     <span class="cmarq-content">
-                                        <img src="<?php echo esc_url($item['image']['url']); ?>" alt="<?php echo esc_attr($item['image']['alt']); ?>" style="width: <?php echo esc_attr($img_width); ?>; height: <?php echo esc_attr($img_height); ?>; object-fit: <?php echo esc_attr($img_object_fit); ?>;">
+                                        <img src="<?php echo esc_url($item['image']['url']); ?>" alt="<?php echo esc_attr($item['image']['alt'] ?? ''); ?>" style="width: <?php echo esc_attr($img_width); ?>; height: <?php echo esc_attr($img_height); ?>; object-fit: <?php echo esc_attr($img_object_fit); ?>;">
                                     </span>
                                 <?php elseif ($item_type === 'text' && !empty($item['text_content'])) : ?>
                                     <span class="cmarq-content"><?php echo wp_kses_post($item['text_content']); ?></span>
