@@ -637,6 +637,9 @@ function initStickyMenu(config) {
     var rafID = null;
     var isManualClick = false; // Flag to prevent scroll spy from overriding manual clicks
     var stickyElementInitialTop = null; // Store initial position of sticky element
+    var previousFixedHeaderState = false; // Track previous fixed-header state
+    var previousMenuHiddenState = false; // Track previous menu-hidden state
+    var refreshTimeout = null; // Debounce ScrollTrigger refresh calls
     
     // --------------------------------------------
     // FUNCTION: Scroll active item to left (mobile only)
@@ -812,12 +815,29 @@ function initStickyMenu(config) {
         // to check if we've scrolled past the last section
         var actualScrollPosition = $(window).scrollTop();
         
+        var currentMenuHiddenState = false;
         if (lastSection && actualScrollPosition > lastSection.bottom) {
             // User scrolled PAST the last section (section bottom is above viewport)
             $menu.addClass("menu-hidden");
+            currentMenuHiddenState = true;
         } else {
             // User scrolls back up → show menu again
             $menu.removeClass("menu-hidden");
+            currentMenuHiddenState = false;
+        }
+        
+        // Refresh ScrollTrigger when menu-hidden state changes (affects layout)
+        if (currentMenuHiddenState !== previousMenuHiddenState) {
+            previousMenuHiddenState = currentMenuHiddenState;
+            // Debounce ScrollTrigger refresh to avoid excessive calls
+            if (refreshTimeout) {
+                clearTimeout(refreshTimeout);
+            }
+            refreshTimeout = setTimeout(function() {
+                if (typeof ScrollTrigger !== 'undefined') {
+                    ScrollTrigger.refresh();
+                }
+            }, 50);
         }
     }
 
@@ -844,11 +864,29 @@ function initStickyMenu(config) {
         var scrollTop = $(window).scrollTop();
         var activationThreshold = stickyElementInitialTop - 120; // Activate 120px before element reaches top
         
-        // Add fixed-header class 120px before the element reaches the top of the viewport
-        if (scrollTop >= activationThreshold) {
+        // Determine if fixed-header should be active
+        var shouldBeFixed = scrollTop >= activationThreshold;
+        var currentFixedHeaderState = $menu.hasClass('fixed-header');
+        
+        // Add or remove fixed-header class based on scroll position
+        if (shouldBeFixed && !currentFixedHeaderState) {
             $menu.addClass('fixed-header');
-        } else {
+        } else if (!shouldBeFixed && currentFixedHeaderState) {
             $menu.removeClass('fixed-header');
+        }
+        
+        // Refresh ScrollTrigger when fixed-header state changes (affects layout)
+        if (shouldBeFixed !== previousFixedHeaderState) {
+            previousFixedHeaderState = shouldBeFixed;
+            // Debounce ScrollTrigger refresh to avoid excessive calls
+            if (refreshTimeout) {
+                clearTimeout(refreshTimeout);
+            }
+            refreshTimeout = setTimeout(function() {
+                if (typeof ScrollTrigger !== 'undefined') {
+                    ScrollTrigger.refresh();
+                }
+            }, 50);
         }
     }
 
@@ -856,6 +894,9 @@ function initStickyMenu(config) {
     updatePositions();
     detectActiveSection();
     handleFixedHeader(); // Initial check
+    // Initialize previous states after first check
+    previousFixedHeaderState = $menu.hasClass('fixed-header');
+    previousMenuHiddenState = $menu.hasClass('menu-hidden');
 
     $(window).on("scroll", function() {
         onScroll();
@@ -1420,53 +1461,62 @@ if (window.innerWidth >= 1200) {
         const cardsWrappers = gsap.utils.toArray(".card-wrapper");
         const cards = gsap.utils.toArray(".card_display");
         
-        // Set initial states for all cards immediately to prevent flicker
-        // No transforms - cards stay in their natural state
-        cards.forEach((card, i) => {
-            // Set initial transform state immediately - prevents cards from appearing at wrong position
-            // This ensures cards start in their correct position before ScrollTrigger activates
-            // No scale, no rotation - cards stay in normal position
-            gsap.set(card, {
-                scale: 1, // No scaling - keep cards at natural size
-                rotation: 0, // No rotation - keep cards straight
-                transformOrigin: "top center",
-                y: 0, // Ensure Y position is set from start
-                x: 0, // Ensure X position is set from start
-                force3D: true // Enable hardware acceleration
-            });
-        });
+        const totalCards = cards.length;
         
         cardsWrappers.forEach((wrapper, i) => {
             const card = cards[i];
             
-            // Create animation with immediateRender to prevent initial jump
-            // No scale, no rotation - cards remain in natural position
-            gsap.to(card, {
-                scale: 1, // No scaling - keep cards at natural size
-                rotation: 0, // No rotation - keep cards straight
+            // Calculate reverse index matching CSS reference demo exactly
+            // CSS: --index0 = calc(var(--index) - 1) [0-based index]
+            // CSS: --reverse-index = calc(var(--numcards) - var(--index0))
+            // In JS: i is already 0-based, so index0 = i
+            // Reverse index = totalCards - i (matching CSS formula)
+            const reverseIndex = totalCards - i;
+            
+            // Calculate scale values matching reference demo formula exactly
+            // Reference: scale(calc(1.1 - calc(0.1 * var(--reverse-index))))
+            // Cards scale down as they stack: from 1.1 to smaller values
+            const targetScale = 1.1 - (0.1 * reverseIndex);
+            
+            // Set initial scale (cards start at full size, matching reference demo)
+            // Cards start at scale 1.0 and animate to targetScale as they scroll
+            gsap.set(card, {
+                scale: 1.0, // Start at normal size (matches CSS initial state)
+                rotation: 0,
                 transformOrigin: "top center",
-                y: 0, // Explicitly set Y to prevent vertical jumping
+                y: 0,
+                x: 0,
+                force3D: true,
+                zIndex: i // Higher z-index for cards that stack on top (last card has highest z-index)
+            });
+            
+            // Create animation with scale effect (like reference demo)
+            // Card scales down as it gets pinned/stuck
+            gsap.to(card, {
+                scale: targetScale, // Scale down to target scale when pinned
+                rotation: 0,
+                transformOrigin: "top center",
+                y: 0,
                 ease: "none",
-                immediateRender: true, // Render immediately to prevent flicker
-                force3D: true, // Hardware acceleration
+                immediateRender: true,
+                force3D: true,
                 scrollTrigger: {
                     trigger: wrapper,
-                    start: "top " + (200 + 70 * i),
+                    start: "top " + (150 + 50 * i),
                     end: "bottom 550",
                     endTrigger: ".wrapper",
                     scrub: true,
                     pin: wrapper,
                     pinSpacing: false,
-                    anticipatePin: 1, // Smooth pinning transitions
-                    invalidateOnRefresh: true, // Recalculate on refresh
-                    refreshPriority: 0, // Middle priority
+                    anticipatePin: 1,
+                    invalidateOnRefresh: true,
+                    refreshPriority: 0,
                     onEnter: () => {
                         // Ensure card maintains correct position when entering
                         gsap.set(card, {
                             y: 0,
                             x: 0,
-                            scale: 1, // Ensure no scaling
-                            rotation: 0, // Ensure no rotation
+                            rotation: 0,
                             force3D: true
                         });
                     },
@@ -1475,8 +1525,7 @@ if (window.innerWidth >= 1200) {
                         gsap.set(card, {
                             y: 0,
                             x: 0,
-                            scale: 1, // Ensure no scaling
-                            rotation: 0, // Ensure no rotation
+                            rotation: 0,
                             force3D: true
                         });
                     },
