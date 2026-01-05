@@ -1,32 +1,39 @@
 <?php
 global $repindia_option;
-$backStyle = '';
-$backStyle = repindia_backgroundstyle('footer_bg');
-$backStyle = implode('', $backStyle);
 ?>
 <div class="footer">
 	<div class="custom-container">
 		
-		<?php
-		if (isset($repindia_option['footer_copyright_switch']) && $repindia_option['footer_copyright_switch'] == 1) {
-			?>
 			<div class="footer_copyright">
 				<div class="row g-0">
 					<div class="col-md-3 border-right grid-column4">
 						<ul class="p-0 m-0 footer-accordion-menu">
 							<li class="footer-accordion-item">
-								<h3 class="footer-accordion-title">Products <span class="footer-accordion-icon">+</span>
+								<h3 class="footer-accordion-title"><?php echo esc_attr($repindia_option['footer_product_title']); ?> <span class="footer-accordion-icon">+</span>
 								</h3>
 							</li>
 							<div class="footer-accordion-content">
-								<li><a href="#">i2V's VMS</a></li>
+								<!-- <li><a href="#">i2V's VMS</a></li>
 								<li><a href="#">AI based video analytics / VCA</a></li>
 								<li><a href="#">Command and control (ICCC / PSIM)</a></li>
 								<li><a href="#">Central monitoring software (CMS)</a></li>
 								<li><a href="#">FRS</a></li>
 								<li><a href="#">ITMS / ITS</a></li>
 								<li><a href="#">VIDS</a></li>
-								<li><a href="#">ANPR / LPR</a></li>
+								<li><a href="#">ANPR / LPR</a></li> -->
+								<?php
+                                if (has_nav_menu('footer-product-menu')) {
+                                    wp_nav_menu(
+                                        array(
+                                            'menu_id' => 'footermenu',
+                                            'theme_location' => 'footer-product-menu',
+                                            'container'      => false,
+                                            'depth'          => 1,
+                                            'menu_class'     => 'footer_product'
+                                        )
+                                    );
+                                }
+                                ?>
 							</div>
 						</ul>
 					</div>
@@ -51,11 +58,10 @@ $backStyle = implode('', $backStyle);
 
 								<ul class="p-0 m-0 footer-accordion-menu">
 									<li class="footer-accordion-item">
-										<h3 class="footer-accordion-title">Industries <span
-												class="footer-accordion-icon">+</span></h3>
+										<h3 class="footer-accordion-title"><?php echo esc_attr($repindia_option['footer_industry_title']); ?> <span class="footer-accordion-icon">+</span></h3>
 									</li>
 									<div class="footer-accordion-content">
-										<li><a href="#">Oil and Gas</a></li>
+										<!-- <li><a href="#">Oil and Gas</a></li>
 										<li><a href="#">Energy</a> </li>
 										<li><a href="#">Smart cities</a></li>
 										<li><a href="#">Transportation</a></li>
@@ -64,53 +70,95 @@ $backStyle = implode('', $backStyle);
 										<li><a href="#">Education</a></li>
 										<li><a href="#">Healthcare</a></li>
 										<li><a href="#">Hospitality</a></li>
-										<li><a href="#">Financial institutions</a></li>
+										<li><a href="#">Financial institutions</a></li> -->
+										<?php
+										if (has_nav_menu('footer-industry-menu')) {
+											wp_nav_menu(
+												array(
+													'menu_id' => 'footermenu',
+													'theme_location' => 'footer-industry-menu',
+													'container'      => false,
+													'depth'          => 1,
+													'menu_class'     => 'footer_industry'
+												)
+											);
+										}
+										?>
 									</div>
 								</ul>
 							</div>
 							<div class="column-4">
 								<ul class="p-0 m-0 footer-accordion-menu">
 									<li class="footer-accordion-item">
-										<h3 class="footer-accordion-title">Company <span
-												class="footer-accordion-icon">+</span></h3>
+										<h3 class="footer-accordion-title"><?php echo esc_attr($repindia_option['footer_company_title']); ?> <span class="footer-accordion-icon">+</span></h3>
 									</li>
 									<div class="footer-accordion-content">
-										<li><a href="#">Who we are</a></li>
-										<li><a href="#">Mission vision</a></li>
-										<li><a href="#">Our partners</a></li>
-										<li><a href="#">News and events</a></li>
-										<li><a href="#">Careers</a></li>
-										<li><a href="#">FAQs</a></li>
-										<li><a href="#">Contact us</a></li>
+										<?php
+										if (has_nav_menu('footer-company-menu')) {
+											wp_nav_menu(
+												array(
+													'menu_id' => 'footermenu',
+													'theme_location' => 'footer-company-menu',
+													'container'      => false,
+													'depth'          => 1,
+													'menu_class'     => 'footer_company'
+												)
+											);
+										}
+										?>
 									</div>
 								</ul>
 							</div>
 							<div class="column-4">
 								<ul class="p-0 m-0 footer-accordion-menu">
 									<li class="footer-accordion-item">
-										<h3 class="footer-accordion-title">Resources <span
-												class="footer-accordion-icon">+</span></h3>
+										<h3 class="footer-accordion-title"><?php echo esc_attr($repindia_option['footer_resource_title']); ?> <span class="footer-accordion-icon">+</span></h3>
 									</li>
 									<div class="footer-accordion-content">
-										<li><a href="#">Blogs</a></li>
+										<!-- <li><a href="#">Blogs</a></li>
 										<li><a href="#">Data sheets</a></li>
 										<li><a href="#">Download our free trail software</a></li>
 										<li><a href="#">Calculate hardware sizing</a></li>
 										<li><a href="#">Help</a></li>
-										<li><a href="#">Sitemap</a></li>
+										<li><a href="#">Sitemap</a></li> -->
+										<?php
+										if (has_nav_menu('footer-resource-menu')) {
+											wp_nav_menu(
+												array(
+													'menu_id' => 'footermenu',
+													'theme_location' => 'footer-resource-menu',
+													'container'      => false,
+													'depth'          => 1,
+													'menu_class'     => 'footer_resource'
+												)
+											);
+										}
+										?>
 									</div>
 								</ul>
 							</div>
 							<div class="column-4">
 								<ul class="p-0 m-0 footer-accordion-menu">
 									<li class="footer-accordion-item">
-										<h3 class="footer-accordion-title">Legal <span
-												class="footer-accordion-icon">+</span></h3>
+										<h3 class="footer-accordion-title"><?php echo esc_attr($repindia_option['footer_legal_title']); ?> <span class="footer-accordion-icon">+</span></h3>
 									</li>
 									<div class="footer-accordion-content">
-										<li><a href="#">Terms of Service</a></li>
+										<!-- <li><a href="#">Terms of Service</a></li>
 										<li><a href="#">Privacy Policy</a></li>
-										<li><a href="#">Cookie Policy</a></li>
+										<li><a href="#">Cookie Policy</a></li> -->
+										<?php
+										if (has_nav_menu('footer-legal-menu')) {
+											wp_nav_menu(
+												array(
+													'menu_id' => 'footermenu',
+													'theme_location' => 'footer-legal-menu',
+													'container'      => false,
+													'depth'          => 1,
+													'menu_class'     => 'footer_legal'
+												)
+											);
+										}
+										?>
 									</div>
 								</ul>
 							</div>
@@ -119,7 +167,6 @@ $backStyle = implode('', $backStyle);
 
 				</div>
 			</div>
-		<?php } ?>
 		<!-- </div> -->
 			<!-- Mobile: logo left, social right | Desktop: left logo -->
 				<div class="footer_bottom">

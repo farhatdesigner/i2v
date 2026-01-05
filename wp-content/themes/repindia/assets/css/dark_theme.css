@@ -1,3 +1,6 @@
+ul#footermenu {
+  padding-left: 0;
+}
 .js-dark .content-inner-icons li:last-child {
   border-radius: 12px !important;
 }
