@@ -179,7 +179,8 @@ class Custom_Resource_List extends Widget_Base {
                 .resource-filter-item img { width: 24px; height: 24px; object-fit: contain; flex-shrink: 0; }
                 .resource-filter-item span { font-size: 16px; color: #06283D; }
                 .resource-filter-item.active span { font-weight: 500; }
-                .resource-filter-clear { color: #0074B2; text-decoration: none; font-size: 14px; margin-top: 16px; display: inline-block; }
+                .resource-filter-clear-wrapper { margin-top: 20px; }
+                .resource-filter-clear { color: #0074B2; text-decoration: none; font-size: 14px; display: inline-block; }
                 .resource-filter-clear:hover { text-decoration: underline; }
                 .resource-main-content { flex: 1; }
                 .resource-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
@@ -290,9 +291,15 @@ class Custom_Resource_List extends Widget_Base {
                     <?php endforeach; ?>
                 </div>
                 
-                <?php if (!empty($url_type_slug) || !empty($url_product_slug)) : ?>
-                    <a href="<?php echo esc_url(remove_query_arg(['resource_type', 'resource_product', 'page'])); ?>" class="resource-filter-clear">Clear filters</a>
-                <?php endif; ?>
+                <?php
+                $clear_filters_url = remove_query_arg(['resource_type', 'resource_product', 'page']);
+                if (empty($url_type_slug) && empty($url_product_slug)) {
+                    $clear_filters_url = '#';
+                }
+                ?>
+                <div class="resource-filter-clear-wrapper">
+                    <a href="<?php echo esc_url($clear_filters_url); ?>" class="resource-filter-clear"<?php echo (empty($url_type_slug) && empty($url_product_slug)) ? ' style="pointer-events: none; opacity: 0.5;"' : ''; ?>>Clear filters</a>
+                </div>
             </div>
             
             <div class="resource-main-content">
