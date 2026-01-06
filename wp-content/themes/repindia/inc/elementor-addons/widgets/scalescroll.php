@@ -429,7 +429,8 @@ class Scalescroll extends Widget_Base
 
                                     </ul>
                                 </div> -->
-                                 <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2026/01/logo_image.svg">
+                                 <img class="white_theme_img radius-12" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2026/01/logo_image.svg">
+                                 <img class="black_theme_img radius-12" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2026/01/logo_image.svg">
                                
                                 <div class="details details-1">
                                     <div class="txtflex">
@@ -473,8 +474,11 @@ class Scalescroll extends Widget_Base
                                 </div>
                             </div>
 
-
-                            <div class="photo photo_custom"> <img class="radius-12" decoding="async"
+        
+                            <div class="photo photo_custom"> 
+                                <img class="white_theme_img radius-12" decoding="async"
+                                    src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-270.webp">
+                                <img class="black_theme_img radius-12" decoding="async"
                                     src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-270.webp">
                                 <div class="details details-3">
                                     <div class="headline blue"></div>
@@ -487,7 +491,10 @@ class Scalescroll extends Widget_Base
                             </div>
 
 
-                            <div class="photo photo_custom"><img class="radius-12" decoding="async"
+                            <div class="photo photo_custom">
+                                <img class="white_theme_img radius-12" decoding="async"
+                                    src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-273.webp">
+                                <img class="black_theme_img radius-12" decoding="async"
                                     src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-273.webp">
                                 <div class="details details-4">
                                     <div class="txtflex">
@@ -507,7 +514,10 @@ class Scalescroll extends Widget_Base
                             </div>
 
 
-                            <div class="photo photo_custom"> <img class="radius-12" decoding="async"
+                            <div class="photo photo_custom"> 
+                                <img class="white_theme_img radius-12" decoding="async"
+                                    src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-272.webp">
+                                <img class="black_theme_img radius-12" decoding="async"
                                     src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-272.webp">
                                 <div class="details details-5">
                                     <div class="txtflex">

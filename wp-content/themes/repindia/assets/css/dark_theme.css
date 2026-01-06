@@ -518,3 +518,13 @@ header li.burger-icon .icon-sun,
 .customtabsmart .smart-content-inner-text {
   padding: 20px;
 }
+
+.card-img_single .black_theme_img, .photo_custom .black_theme_img {
+  display: none;
+}
+.js-dark .card-img_single .black_theme_img, .photo_custom .black_theme_img {
+  display: block;
+}
+.js-dark .card-img_single .white_theme_img, .photo_custom .white_theme_img {
+  display: none;
+}
