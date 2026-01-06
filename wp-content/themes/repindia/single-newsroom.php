@@ -25,6 +25,14 @@ $newscategories = get_the_category();
                 transition: stroke-dasharray 0.2s ease;
             }
             .reading-progress .percentage { font-size: 6px;fill: #333;font-weight: 600; }
+            .auto_timer .elementor-shortcode {
+                color: #5C5C5C;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 20px;
+            }
+            .auto_timer .elementor-icon-wrapper { display: flex;align-items: center; }
 
         </style>
     <!-- <div class="custom-container">
