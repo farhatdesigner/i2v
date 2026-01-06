@@ -167,55 +167,71 @@ class Custom_Resource_List extends Widget_Base {
         <div class="resource-filter-section" id="resource-filter-section">
             <style>
                 .resource-filter-section { display: flex; gap: 40px; max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
-                .resource-filter-sidebar { width: 300px; flex-shrink: 0; }
-                .resource-filter-sidebar h2 { font-size: 32px; font-weight: 600; margin: 0 0 12px 0; color: #06283D; }
-                .resource-filter-sidebar p { font-size: 16px; color: #666; margin: 0 0 32px 0; line-height: 1.5; }
-                .resource-filter-group { margin-bottom: 32px; }
-                .resource-filter-group h3 { font-size: 18px; font-weight: 500; margin: 0 0 16px 0; color: #06283D; text-transform: lowercase; }
+                .resource-filter-sidebar { width: 385px;flex-shrink: 0;background: #fff;border-radius: 12px;padding: 8px; }
+                .resource-filter-sidebar h2 { margin: 0 0 2px 0;color: #06283D;font-size: 18px;font-style: normal;font-weight: 500;line-height: 26px; }
+                .resource-filter-sidebar p { color: #5C5C5C;font-size: 14px;font-style: normal;font-weight: 400;line-height: 20px; }
+                .resource-filter-group h3 { color: #5C5C5C;font-size: 16px;font-style: normal;font-weight: 500;line-height: 24px; }
                 .resource-filter-group h3:first-letter { text-transform: uppercase; }
-                .resource-filter-item { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 8px; cursor: pointer; margin-bottom: 8px; transition: background 0.2s; }
-                .resource-filter-item:hover { background: #f5f5f5; }
-                .resource-filter-item.active { background: #E5F6FF; }
-                .resource-filter-item img { width: 24px; height: 24px; object-fit: contain; flex-shrink: 0; }
-                .resource-filter-item span { font-size: 16px; color: #06283D; }
-                .resource-filter-item.active span { font-weight: 500; }
-                .resource-filter-clear-wrapper { margin-top: 20px; }
-                .resource-filter-clear { color: #0074B2; text-decoration: none; font-size: 14px; display: inline-block; }
-                .resource-filter-clear:hover { text-decoration: underline; }
+                .resource-filter-item { display: flex; align-items: center; gap: 4px; padding: 11.5px; border-radius: 4px; cursor: pointer; margin-bottom: 2px; transition: background 0.2s; }
+                .resource-filter-item:hover { background: #F2F5FA; }
+                .resource-filter-item.active { background: #F2F5FA; }
+                .resource-filter-item img { width: 24px; height: 24px; object-fit: contain; flex-shrink: 0;padding: 3px; }
+                .resource-filter-item span { color: #5F6F94;font-size: 16px;font-style: normal;font-weight: 500;line-height: 24px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;min-height: unset; }
+                .resource-filter-item:hover span{ color: #4A5673; }
+                .resource-filter-item.active span{ color: #06283D; }
+                .resource-filter-clear-wrapper { margin-top: 0;padding: 8px; }
+                a.resource-filter-clear { color: #949494;text-decoration: none;border-bottom: 1px solid #E6E6E6;font-size: 16px;font-style: normal;font-weight: 600;line-height: 24px; }
+                a.resource-filter-clear:hover { color: #7b7676; }
                 .resource-main-content { flex: 1; }
-                .resource-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
+                .resource-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
                 .resource-header h2 { font-size: 32px; font-weight: 600; margin: 0; color: #06283D; }
                 .resource-header-info { display: flex; align-items: center; gap: 24px; }
-                .resource-count { font-size: 16px; color: #666; }
+                .resource-count { color: #5C5C5C;font-size: 14px;font-style: normal;font-weight: 400;line-height: 20px; }
                 .resource-sort { position: relative; }
-                .resource-sort select { padding: 8px 32px 8px 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 16px; background: white; cursor: pointer; appearance: none; }
-                .resource-sort::after { content: '▼'; position: absolute; right: 12px; top: 50%; transform: translateY(-50%); pointer-events: none; font-size: 12px; color: #666; }
-                .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; margin-bottom: 40px; }
-                .resource-card { border: 1px solid #e5e5e5; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; background: white; transition: box-shadow 0.2s; height: 100%; }
-                .resource-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-                .resource-image { width: 100%; height: 200px; overflow: hidden; background: #f5f5f5; flex-shrink: 0; }
-                .resource-image img { width: 100%; height: 100%; object-fit: cover; }
-                .resource-content { padding: 20px; flex: 1; display: flex; flex-direction: column; }
-                .resource-type-badge { display: inline-block; padding: 4px 12px; background: #E5F6FF; color: #0074B2; border-radius: 4px; font-size: 12px; font-weight: 500; margin-bottom: 12px; width: fit-content; }
-                .resource-title { margin: 0 0 8px 0; font-size: 20px; font-weight: 500; line-height: 1.4; }
-                .resource-title a { color: #06283D; text-decoration: none; }
-                .resource-title a:hover { text-decoration: underline; }
-                .resource-file-size { font-size: 14px; color: #666; margin-top: auto; }
-                .resource-load-more { text-align: center; margin-top: 40px; }
-                .load-more-btn { padding: 12px 32px; border: 1px solid #0074B2; background: white; color: #0074B2; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: 500; transition: all 0.2s; }
+                .resource-sort select { width:100%;min-width: 180px; padding:12px; border-radius:8px; border:1px solid #E5E9EC; background:#fff; height:auto; color:#06283D; font-size:16px; font-weight:400; cursor:pointer; appearance:none; background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%234A5673' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center;text-overflow: ellipsis;white-space: nowrap; }
+                .resource-sort select:focus { outline:none; border-color:#E5E9EC; }
+                .resource-sort select option { border:1px solid #E5E9EC; padding:8px; background:#FFFFFF; color:#4A5673; }
+                .resource-sort select option:checked, .resource-sort select option:hover { background:#06283D; color:#FFFFFF; }
+                .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(24%, 3fr)); gap: 28px; margin-bottom: 0; }
+                .resource-card { border: 0;border-radius: 12px;display: flex;flex-direction: column;background: #fff;transition: box-shadow 0.2s;height: 100%;gap: 12px;padding: 8px; }
+                .resource-image { width: 100%; height: 200px; overflow: hidden; background: #f5f5f5; flex-shrink: 0;border-radius: 12px; }
+                .resource-image img { width: 100%; height: 100%; object-fit: cover;border-radius: 12px; }
+                .resource-content { padding: 12px;flex: 1;display: flex;flex-direction: column;gap: 8px; }
+                .resource-type-badge { display: inline-block;padding: 4px 12px;background: #F2F5FA;color: #5F6F94;margin-bottom: 0;width: fit-content;border: 1px solid #F2F5FA;border-radius: 28px;font-size: 14px;font-style: normal;font-weight: 500;line-height: 20px; }
+                .resource-title { color: #06283D;font-size: 24px;font-style: normal;font-weight: 500;line-height: 32px;margin: 0; }
+                .resource-file-size { color: #5C5C5C;font-size: 14px;font-style: normal;font-weight: 400;line-height: 20px; }
+                .resource-load-more { text-align: center; margin-top: 20px; }
+                .load-more-btn { padding: 8px 16px;border: 1px solid #E5E9EC;background: #fff;color: #0099ED;transition: all 0.2s;border-radius: 8px;font-size: 16px;font-style: normal;font-weight: 600;line-height: 24px; }
                 .load-more-btn:hover { background: #0074B2; color: white; }
                 .load-more-btn:disabled { opacity: 0.5; cursor: not-allowed; }
                 .resource-no-results { text-align: center; padding: 40px; color: #666; }
+                .resource_filter_cont { padding: 8px; }
+                .resource-filter-group { padding: 8px 0px; }
+                .resource-filter-group h3{ padding: 0 8px; }
+                .resource-card:hover .resource-type-badge{ border-color: #D7DBE4; }
+                .js-dark .resource-filter-sidebar,.js-dark .resource-sort select,.js-dark .resource-card{ background: #262A30; }
+                .js-dark .resource-sort select{ border-color: #464a4f;;color: rgba(255, 255, 255, 0.9);background: #262A30;appearance:none; background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%234A5673' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center;text-overflow: ellipsis;white-space: nowrap; }
+                .js-dark .resource-sort select option{ border-color: #262A30; }
+                .js-dark .resource-file-size{ color: rgba(255, 255, 255, 0.9); }
+                .js-dark .resource-type-badge{ background: rgba(255, 206, 147, 0.1);color: #fff; }
+                img.filter-icon-dark{ display: none; }
+                .js-dark img.filter-icon{ display: none; }
+                .js-dark img.filter-icon-dark{ display: block; }
+                .js-dark .resource-filter-item:hover ,.js-dark .resource-filter-item.active{ background: rgb(147, 147, 147); }
+                
                 @media (max-width: 768px) {
                     .resource-filter-section { flex-direction: column; }
                     .resource-filter-sidebar { width: 100%; }
                     .resource-grid { grid-template-columns: 1fr; }
+                    .resource-filter-section{ padding: 40px 0px; }
                 }
             </style>
             
             <div class="resource-filter-sidebar">
-                <h2><?php echo esc_html($section_title); ?></h2>
-                <p><?php echo esc_html($section_subtitle); ?></p>
+                <div class="resource_filter_cont">
+                    <h2><?php echo esc_html($section_title); ?></h2>
+                    <p><?php echo esc_html($section_subtitle); ?></p>
+                </div>
                 
                 <div class="resource-filter-group">
                     <h3>by resource type</h3>
@@ -244,9 +260,9 @@ class Custom_Resource_List extends Widget_Base {
                             }
                             
                             if (!empty($light_img_url)) : ?>
-                                <img src="<?php echo esc_url($light_img_url); ?>" alt="<?php echo esc_attr($term['name']); ?>" class="filter-icon" style="<?php echo $is_active ? 'display:none;' : ''; ?>">
+                                <img src="<?php echo esc_url($light_img_url); ?>" alt="<?php echo esc_attr($term['name']); ?>" class="filter-icon">
                                 <?php if (!empty($dark_img_url)) : ?>
-                                    <img src="<?php echo esc_url($dark_img_url); ?>" alt="<?php echo esc_attr($term['name']); ?>" class="filter-icon-dark" style="<?php echo $is_active ? '' : 'display:none;'; ?>">
+                                    <img src="<?php echo esc_url($dark_img_url); ?>" alt="<?php echo esc_attr($term['name']); ?>" class="filter-icon-dark">
                                 <?php endif; ?>
                             <?php endif; ?>
                             <span><?php echo esc_html($term['name']); ?></span>
@@ -281,9 +297,9 @@ class Custom_Resource_List extends Widget_Base {
                             }
                             
                             if (!empty($light_img_url)) : ?>
-                                <img src="<?php echo esc_url($light_img_url); ?>" alt="<?php echo esc_attr($term['name']); ?>" class="filter-icon" style="<?php echo $is_active ? 'display:none;' : ''; ?>">
+                                <img src="<?php echo esc_url($light_img_url); ?>" alt="<?php echo esc_attr($term['name']); ?>" class="filter-icon" >
                                 <?php if (!empty($dark_img_url)) : ?>
-                                    <img src="<?php echo esc_url($dark_img_url); ?>" alt="<?php echo esc_attr($term['name']); ?>" class="filter-icon-dark" style="<?php echo $is_active ? '' : 'display:none;'; ?>">
+                                    <img src="<?php echo esc_url($dark_img_url); ?>" alt="<?php echo esc_attr($term['name']); ?>" class="filter-icon-dark" >
                                 <?php endif; ?>
                             <?php endif; ?>
                             <span><?php echo esc_html($term['name']); ?></span>
@@ -292,27 +308,27 @@ class Custom_Resource_List extends Widget_Base {
                 </div>
                 
                 <?php
-                $clear_filters_url = remove_query_arg(['resource_type', 'resource_product', 'page']);
-                if (empty($url_type_slug) && empty($url_product_slug)) {
+                $clear_filters_url = remove_query_arg(['resource_type', 'resource_product', 'sort', 'page']);
+                if (empty($url_type_slug) && empty($url_product_slug) && empty($url_sort)) {
                     $clear_filters_url = '#';
                 }
                 ?>
                 <div class="resource-filter-clear-wrapper">
-                    <a href="<?php echo esc_url($clear_filters_url); ?>" class="resource-filter-clear"<?php echo (empty($url_type_slug) && empty($url_product_slug)) ? ' style="pointer-events: none; opacity: 0.5;"' : ''; ?>>Clear filters</a>
+                    <a href="<?php echo esc_url($clear_filters_url); ?>" class="resource-filter-clear"<?php echo (empty($url_type_slug) && empty($url_product_slug) && empty($url_sort)) ? ' style="pointer-events: none; opacity: 0.5;"' : ''; ?>>Clear filters</a>
                 </div>
             </div>
             
             <div class="resource-main-content">
                 <div class="resource-header">
-                    <h2><?php echo esc_html($section_title); ?></h2>
+                    <div class="resource-sort">
+                        <select id="resource-sort">
+                            <option value="newest" <?php selected($url_sort, 'newest'); ?>>Sort by newest</option>
+                            <option value="oldest" <?php selected($url_sort, 'oldest'); ?>>Sort by oldest</option>
+                        </select>
+                    </div>
                     <div class="resource-header-info">
                         <span class="resource-count">Showing <?php echo esc_html($query->post_count); ?> of <?php echo esc_html($query->found_posts); ?></span>
-                        <div class="resource-sort">
-                            <select id="resource-sort">
-                                <option value="newest" <?php selected($url_sort, 'newest'); ?>>Sort by newest</option>
-                                <option value="oldest" <?php selected($url_sort, 'oldest'); ?>>Sort by oldest</option>
-                            </select>
-                        </div>
+                        
                     </div>
                 </div>
                 
@@ -324,24 +340,22 @@ class Custom_Resource_List extends Widget_Base {
                                 $file_size = get_field('resource_file_size', $post_id);
                                 $resource_types_terms = get_the_terms($post_id, 'resource_type');
                             ?>
-                                <div class="resource-card">
+                                <a href="<?php echo esc_url(get_permalink($post_id)); ?>" class="resource-card" >
                                     <div class="resource-content">
                                         <?php if (!empty($resource_types_terms) && !is_wp_error($resource_types_terms)) : ?>
                                             <div class="resource-type-badge"><?php echo esc_html($resource_types_terms[0]->name); ?></div>
                                         <?php endif; ?>
-                                        <h3 class="resource-title">
-                                            <a href="<?php echo esc_url(get_permalink($post_id)); ?>"><?php echo esc_html(get_the_title($post_id)); ?></a>
-                                        </h3>
+                                        <h3 class="resource-title"><?php echo esc_html(get_the_title($post_id)); ?></h3>
                                         <?php if (!empty($file_size)) : ?>
                                             <div class="resource-file-size"><?php echo esc_html($file_size); ?></div>
                                         <?php endif; ?>
                                     </div>
                                     <div class="resource-image">
                                         <?php if (has_post_thumbnail($post_id)) : ?>
-                                            <a href="<?php echo esc_url(get_permalink($post_id)); ?>"><?php echo get_the_post_thumbnail($post_id, 'medium'); ?></a>
+                                            <?php echo get_the_post_thumbnail($post_id, 'medium'); ?>
                                         <?php endif; ?>
                                     </div>
-                                </div>
+                                </a>
                             <?php endwhile; ?>
                         </div>
                         

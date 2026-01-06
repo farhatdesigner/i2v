@@ -1,6 +1,5 @@
-ul#footermenu {
-  padding-left: 0;
-}
+ul#footermenu { padding-left: 0; }
+.resource_form .notice-text { margin-bottom: 16px; }
 .js-dark .content-inner-icons li:last-child {
   border-radius: 12px !important;
 }
