@@ -312,7 +312,8 @@ class Singlescrollcards extends Widget_Base
                                     </div>
                                     <div class="col-lg-6 col-12">
                                         <div class="card-img_single">
-                                            <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/camera-management.webp">
+                                            <img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/camera-management.webp">
+                                            <img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/camera-management.webp">
                                         </div>
                                     </div>
                                 </div>
@@ -363,7 +364,8 @@ class Singlescrollcards extends Widget_Base
                                     </div>
                                     <div class="col-lg-6 col-12">
                                         <div class="card-img_single">
-                                            <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/camera-management.webp">
+                                            <img  class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/camera-management.webp">
+                                            <img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/camera-management.webp">
                                         </div>
                                     </div>
                                 </div>
@@ -414,7 +416,8 @@ class Singlescrollcards extends Widget_Base
                                     </div>
                                     <div class="col-lg-6 col-12">
                                         <div class="card-img_single">
-                                            <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/camera-management.webp">
+                                            <img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/camera-management.webp">
+                                            <img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/camera-management.webp">
                                         </div>
                                     </div>
                                 </div>
@@ -465,7 +468,8 @@ class Singlescrollcards extends Widget_Base
                                     </div>
                                     <div class="col-lg-6 col-12">
                                         <div class="card-img_single">
-                                            <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/camera-management.webp">
+                                            <img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/camera-management.webp">
+                                            <img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/camera-management.webp">
                                         </div>
                                     </div>
                                 </div>
