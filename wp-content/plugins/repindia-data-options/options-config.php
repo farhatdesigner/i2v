@@ -418,7 +418,6 @@
 										'teeny'            => true,
 										'textarea_rows'    => 5
 									),
-									'required' => array('footer_copyright_switch','=',true)
 								),
 								
 								array(
@@ -427,7 +426,6 @@
 									'title'    => esc_attr__('Footer Social Media', 'repindia'),
 									'subtitle' => __('Enable / Disable Social Media at Footer', 'repindia'),
 									'default'  => true,
-									'required' => array('footer_copyright_switch','=',true)
 							    ),
 								
 					)
