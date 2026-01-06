@@ -3054,6 +3054,7 @@ svg.connection-line-7 {
   text-align: center !important;
   bottom: 140px !important;
 }
+.height_full-image{height: 100% !important;}
 
 @media (min-width: 768px) {
   .footer-accordion-icon {
