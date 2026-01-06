@@ -229,7 +229,7 @@ global $repindia_option;
                             { ?>
                                 <li>
                                     <a class="theme-btn " href="<?php echo esc_attr($repindia_option['demo_btn_url']); ?>" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                        <?php echo esc_html__( 'Book a demo', 'repindia' ); ?>
+                                        <?php echo esc_html__( 'Request a demo', 'repindia' ); ?>
                                     </a>
                                 </li>
                                 <?php 

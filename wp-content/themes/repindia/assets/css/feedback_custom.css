@@ -743,8 +743,7 @@ div.pin-spacer > .hz-slider-section {
 
 /* Remove Elementor container padding for this widget */
 .elementor-widget-horizontal_slider,
-.elementor-widget-horizontal_slider > .elementor-widget-container,
-.elementor-widget-horizontal_slider .custom-container {
+.elementor-widget-horizontal_slider > .elementor-widget-container {
   padding: 0 !important;
   margin: 0 !important;
   max-width: 100% !important;
@@ -760,6 +759,7 @@ div.pin-spacer > .hz-slider-section {
 .hz-slider-section .slider-image img {
   width: 100%;
   height: 100%;
+  /* max-width: 588px; */
   object-fit: cover;
 }
 .hz-slider-section .slider .swiper-container-horizontal {

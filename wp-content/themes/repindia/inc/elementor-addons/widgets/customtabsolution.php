@@ -118,7 +118,7 @@ class Customtabsolution extends Widget_Base
 									<a class="custom-tab-link" href="#content1">AI based video analytics / VCA</a>
 								</li>
 								<li data-id="content2" class="custom-tab-item">
-									<a class="custom-tab-link" href="#content2">Command and control (ICCC/PSCM)</a>
+									<a class="custom-tab-link" href="#content2">Command and control (ICCC / PSIM)</a>
 								</li>
 								<li data-id="content3" class="custom-tab-item">
 									<a class="custom-tab-link" href="#content3">CMS</a>
@@ -176,7 +176,7 @@ class Customtabsolution extends Widget_Base
 													</li>
 												</ul>
 												<div class="text-left">
-													<a href="#" class="theme-btn bg-trans border_btnlight">Learn i2V VMS solutions</a>
+													<a href="#" class="theme-btn bg-trans border_btnlight">Learn i2V's VMS</a>
 												</div>
 											</div>
 											<div class="content-inner-icons col-12">
@@ -267,7 +267,7 @@ class Customtabsolution extends Widget_Base
 													</li>
 												</ul>
 												<div class="text-left">
-													<a href="#" class="theme-btn bg-trans border_btnlight">Learn i2V video analytics solutions</a>
+													<a href="#" class="theme-btn bg-trans border_btnlight">Learn AI based video analytics / VCA</a>
 												</div>
 											</div>
 											<div class="content-inner-icons col-12">
@@ -358,7 +358,7 @@ class Customtabsolution extends Widget_Base
 													</li>
 												</ul>
 												<div class="text-left">
-													<a href="#" class="theme-btn bg-trans border_btnlight">Learn i2V ICCC solutions</a>
+													<a href="#" class="theme-btn bg-trans border_btnlight">Learn Command and control (ICCC / PSIM)</a>
 												</div>
 											</div>
 											<div class="content-inner-icons col-12">
@@ -449,7 +449,7 @@ class Customtabsolution extends Widget_Base
 													</li>
 												</ul>
 												<div class="text-left">
-													<a href="#" class="theme-btn bg-trans border_btnlight">Learn i2V CMS solutions</a>
+													<a href="#" class="theme-btn bg-trans border_btnlight">Learn  CMS</a>
 												</div>
 											</div>
 											<div class="content-inner-icons col-12">
@@ -487,7 +487,7 @@ class Customtabsolution extends Widget_Base
 														<span>Unified dashboard view</span>
 													</li>
 													<div class="text-left pt-4">
-														<a href="#" class="theme-btn bg-trans border_btnlight">View all features</a>
+														<a href="#" class="theme-btn bg-trans border_btnlight">View ITMS / ITS</a>
 													</div>
 												</ul>
 											</div>
@@ -540,7 +540,7 @@ class Customtabsolution extends Widget_Base
 													</li>
 												</ul>
 												<div class="text-left">
-													<a href="#" class="theme-btn bg-trans border_btnlight">Learn i2V ITMS solutions</a>
+													<a href="#" class="theme-btn bg-trans border_btnlight">Learn ANPR / LPR</a>
 												</div>
 											</div>
 											<div class="content-inner-icons col-12">
@@ -578,7 +578,7 @@ class Customtabsolution extends Widget_Base
 														<span>Violation evidence dashboard</span>
 													</li>
 													<div class="text-left pt-4">
-														<a href="#" class="theme-btn bg-trans border_btnlight">View all features</a>
+														<a href="#" class="theme-btn bg-trans border_btnlight">View VIDS</a>
 													</div>
 												</ul>
 											</div>
@@ -631,7 +631,7 @@ class Customtabsolution extends Widget_Base
 													</li>
 												</ul>
 												<div class="text-left">
-													<a href="#" class="theme-btn bg-trans border_btnlight">Learn i2V ANPR solutions</a>
+													<a href="#" class="theme-btn bg-trans border_btnlight">Learn  FRS</a>
 												</div>
 											</div>
 											<div class="content-inner-icons col-12">

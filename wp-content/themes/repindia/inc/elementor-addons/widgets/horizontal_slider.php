@@ -112,7 +112,7 @@ class Horizontal_Slider extends Widget_Base
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
                                 <div class="slider-image">
-                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Frame-324.png"
+                                    <img class="radius-12" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Frame-324.png"
                                         alt="Object Tagging and Metadata based search for faster investigations">
                                 </div>
                                 <div class="slider-content">
@@ -148,7 +148,7 @@ class Horizontal_Slider extends Widget_Base
                             </div>
                             <div class="swiper-slide">
                                 <div class="slider-image">
-                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Frame-324.png"
+                                    <img class="radius-12" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Frame-324.png"
                                         alt="Object Tagging and Metadata based search for faster investigations">
                                 </div>
                                 <div class="slider-content">
@@ -184,7 +184,7 @@ class Horizontal_Slider extends Widget_Base
                             </div>
                             <div class="swiper-slide">
                                 <div class="slider-image">
-                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Frame-324.png"
+                                    <img class="radius-12" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Frame-324.png"
                                         alt="Object Tagging and Metadata based search for faster investigations">
                                 </div>
                                 <div class="slider-content">
@@ -220,7 +220,7 @@ class Horizontal_Slider extends Widget_Base
                             </div>
                             <div class="swiper-slide">
                                 <div class="slider-image">
-                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Frame-324.png"
+                                    <img class="radius-12"  src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Frame-324.png"
                                         alt="Object Tagging and Metadata based search for faster investigations">
                                 </div>
                                 <div class="slider-content">
@@ -256,7 +256,288 @@ class Horizontal_Slider extends Widget_Base
                             </div>
                             <div class="swiper-slide">
                                 <div class="slider-image">
-                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Frame-324.png"
+                                    <img class="radius-12"  src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Frame-324.png"
+                                        alt="Object Tagging and Metadata based search for faster investigations">
+                                </div>
+                                <div class="slider-content">
+                                    <h3>Brand, Strategy & Reputation</h3>
+                                    <p>
+                                        Protect your reputation, unlok growth and gain a competitive
+                                        advantage with resilient blue building
+                                    </p>
+                                    <ul>
+                                        <li>
+                                            <span>
+                                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Icon.svg"
+                                                    alt="Object Tagging and Metadata based search for faster investigations">
+                                            </span>
+                                            Recognize faces from live video, snapshots, and archives
+                                        </li>
+                                        <li>
+                                            <span>
+                                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Icon.svg"
+                                                    alt="Object Tagging and Metadata based search for faster investigations">
+                                            </span>
+                                            Recognize faces from live video, snapshots, and archives
+                                        </li>
+                                        <li>
+                                            <span>
+                                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Icon.svg"
+                                                    alt="Object Tagging and Metadata based search for faster investigations">
+                                            </span>
+                                            Recognize faces from live video, snapshots, and archives
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="slider-image">
+                                    <img class="radius-12"  src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Frame-324.png"
+                                        alt="Object Tagging and Metadata based search for faster investigations">
+                                </div>
+                                <div class="slider-content">
+                                    <h3>Brand, Strategy & Reputation</h3>
+                                    <p>
+                                        Protect your reputation, unlok growth and gain a competitive
+                                        advantage with resilient blue building
+                                    </p>
+                                    <ul>
+                                        <li>
+                                            <span>
+                                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Icon.svg"
+                                                    alt="Object Tagging and Metadata based search for faster investigations">
+                                            </span>
+                                            Recognize faces from live video, snapshots, and archives
+                                        </li>
+                                        <li>
+                                            <span>
+                                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Icon.svg"
+                                                    alt="Object Tagging and Metadata based search for faster investigations">
+                                            </span>
+                                            Recognize faces from live video, snapshots, and archives
+                                        </li>
+                                        <li>
+                                            <span>
+                                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Icon.svg"
+                                                    alt="Object Tagging and Metadata based search for faster investigations">
+                                            </span>
+                                            Recognize faces from live video, snapshots, and archives
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div> <div class="swiper-slide">
+                                <div class="slider-image">
+                                    <img class="radius-12"  src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Frame-324.png"
+                                        alt="Object Tagging and Metadata based search for faster investigations">
+                                </div>
+                                <div class="slider-content">
+                                    <h3>Brand, Strategy & Reputation</h3>
+                                    <p>
+                                        Protect your reputation, unlok growth and gain a competitive
+                                        advantage with resilient blue building
+                                    </p>
+                                    <ul>
+                                        <li>
+                                            <span>
+                                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Icon.svg"
+                                                    alt="Object Tagging and Metadata based search for faster investigations">
+                                            </span>
+                                            Recognize faces from live video, snapshots, and archives
+                                        </li>
+                                        <li>
+                                            <span>
+                                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Icon.svg"
+                                                    alt="Object Tagging and Metadata based search for faster investigations">
+                                            </span>
+                                            Recognize faces from live video, snapshots, and archives
+                                        </li>
+                                        <li>
+                                            <span>
+                                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Icon.svg"
+                                                    alt="Object Tagging and Metadata based search for faster investigations">
+                                            </span>
+                                            Recognize faces from live video, snapshots, and archives
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div> <div class="swiper-slide">
+                                <div class="slider-image">
+                                    <img class="radius-12"  src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Frame-324.png"
+                                        alt="Object Tagging and Metadata based search for faster investigations">
+                                </div>
+                                <div class="slider-content">
+                                    <h3>Brand, Strategy & Reputation</h3>
+                                    <p>
+                                        Protect your reputation, unlok growth and gain a competitive
+                                        advantage with resilient blue building
+                                    </p>
+                                    <ul>
+                                        <li>
+                                            <span>
+                                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Icon.svg"
+                                                    alt="Object Tagging and Metadata based search for faster investigations">
+                                            </span>
+                                            Recognize faces from live video, snapshots, and archives
+                                        </li>
+                                        <li>
+                                            <span>
+                                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Icon.svg"
+                                                    alt="Object Tagging and Metadata based search for faster investigations">
+                                            </span>
+                                            Recognize faces from live video, snapshots, and archives
+                                        </li>
+                                        <li>
+                                            <span>
+                                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Icon.svg"
+                                                    alt="Object Tagging and Metadata based search for faster investigations">
+                                            </span>
+                                            Recognize faces from live video, snapshots, and archives
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div> <div class="swiper-slide">
+                                <div class="slider-image">
+                                    <img class="radius-12"  src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Frame-324.png"
+                                        alt="Object Tagging and Metadata based search for faster investigations">
+                                </div>
+                                <div class="slider-content">
+                                    <h3>Brand, Strategy & Reputation</h3>
+                                    <p>
+                                        Protect your reputation, unlok growth and gain a competitive
+                                        advantage with resilient blue building
+                                    </p>
+                                    <ul>
+                                        <li>
+                                            <span>
+                                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Icon.svg"
+                                                    alt="Object Tagging and Metadata based search for faster investigations">
+                                            </span>
+                                            Recognize faces from live video, snapshots, and archives
+                                        </li>
+                                        <li>
+                                            <span>
+                                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Icon.svg"
+                                                    alt="Object Tagging and Metadata based search for faster investigations">
+                                            </span>
+                                            Recognize faces from live video, snapshots, and archives
+                                        </li>
+                                        <li>
+                                            <span>
+                                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Icon.svg"
+                                                    alt="Object Tagging and Metadata based search for faster investigations">
+                                            </span>
+                                            Recognize faces from live video, snapshots, and archives
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div> <div class="swiper-slide">
+                                <div class="slider-image">
+                                    <img class="radius-12"  src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Frame-324.png"
+                                        alt="Object Tagging and Metadata based search for faster investigations">
+                                </div>
+                                <div class="slider-content">
+                                    <h3>Brand, Strategy & Reputation</h3>
+                                    <p>
+                                        Protect your reputation, unlok growth and gain a competitive
+                                        advantage with resilient blue building
+                                    </p>
+                                    <ul>
+                                        <li>
+                                            <span>
+                                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Icon.svg"
+                                                    alt="Object Tagging and Metadata based search for faster investigations">
+                                            </span>
+                                            Recognize faces from live video, snapshots, and archives
+                                        </li>
+                                        <li>
+                                            <span>
+                                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Icon.svg"
+                                                    alt="Object Tagging and Metadata based search for faster investigations">
+                                            </span>
+                                            Recognize faces from live video, snapshots, and archives
+                                        </li>
+                                        <li>
+                                            <span>
+                                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Icon.svg"
+                                                    alt="Object Tagging and Metadata based search for faster investigations">
+                                            </span>
+                                            Recognize faces from live video, snapshots, and archives
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div> <div class="swiper-slide">
+                                <div class="slider-image">
+                                    <img class="radius-12"  src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Frame-324.png"
+                                        alt="Object Tagging and Metadata based search for faster investigations">
+                                </div>
+                                <div class="slider-content">
+                                    <h3>Brand, Strategy & Reputation</h3>
+                                    <p>
+                                        Protect your reputation, unlok growth and gain a competitive
+                                        advantage with resilient blue building
+                                    </p>
+                                    <ul>
+                                        <li>
+                                            <span>
+                                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Icon.svg"
+                                                    alt="Object Tagging and Metadata based search for faster investigations">
+                                            </span>
+                                            Recognize faces from live video, snapshots, and archives
+                                        </li>
+                                        <li>
+                                            <span>
+                                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Icon.svg"
+                                                    alt="Object Tagging and Metadata based search for faster investigations">
+                                            </span>
+                                            Recognize faces from live video, snapshots, and archives
+                                        </li>
+                                        <li>
+                                            <span>
+                                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Icon.svg"
+                                                    alt="Object Tagging and Metadata based search for faster investigations">
+                                            </span>
+                                            Recognize faces from live video, snapshots, and archives
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div> <div class="swiper-slide">
+                                <div class="slider-image">
+                                    <img class="radius-12"  src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Frame-324.png"
+                                        alt="Object Tagging and Metadata based search for faster investigations">
+                                </div>
+                                <div class="slider-content">
+                                    <h3>Brand, Strategy & Reputation</h3>
+                                    <p>
+                                        Protect your reputation, unlok growth and gain a competitive
+                                        advantage with resilient blue building
+                                    </p>
+                                    <ul>
+                                        <li>
+                                            <span>
+                                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Icon.svg"
+                                                    alt="Object Tagging and Metadata based search for faster investigations">
+                                            </span>
+                                            Recognize faces from live video, snapshots, and archives
+                                        </li>
+                                        <li>
+                                            <span>
+                                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Icon.svg"
+                                                    alt="Object Tagging and Metadata based search for faster investigations">
+                                            </span>
+                                            Recognize faces from live video, snapshots, and archives
+                                        </li>
+                                        <li>
+                                            <span>
+                                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Icon.svg"
+                                                    alt="Object Tagging and Metadata based search for faster investigations">
+                                            </span>
+                                            Recognize faces from live video, snapshots, and archives
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div> <div class="swiper-slide">
+                                <div class="slider-image">
+                                    <img class="radius-12"  src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Frame-324.png"
                                         alt="Object Tagging and Metadata based search for faster investigations">
                                 </div>
                                 <div class="slider-content">

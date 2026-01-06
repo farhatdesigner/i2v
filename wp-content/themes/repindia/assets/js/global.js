@@ -1564,15 +1564,19 @@ if (document.querySelector(".hz-slider-section .swiper")) {
     //   delay: 5000,
     //   disableOnInteraction: false
     // },
-    speed: 500,
+    speed: 1200,
     loop: false,
-    slidesPerView: 2,
+    slidesPerView: 2.3,
     spaceBetween: 30,
     loopAddBlankSlides: false,
     slideToClickedSlide: true,
     centeredSlides: false,
     // Enable touch move on mobile, disable on desktop (will be controlled by GSAP)
     allowTouchMove: window.innerWidth < 1024,
+    // Add smooth easing for transitions
+    effect: 'slide',
+    resistance: true,
+    resistanceRatio: 0.85,
     breakpoints: {
       480: {
         slidesPerView: 1,
@@ -1582,8 +1586,8 @@ if (document.querySelector(".hz-slider-section .swiper")) {
         slidesPerView: 2,
         spaceBetween: 30
       },
-      1230: {
-        slidesPerView: 3,
+      1400: {
+        slidesPerView: 3.6,
         spaceBetween: 30
       }
     }
@@ -1604,8 +1608,8 @@ if (document.querySelector(".hz-slider-section .swiper")) {
     const totalSlides = hzSwiper.slides.length;
     const snap = gsap.utils.snap(1 / totalSlides);
     
-    // Calculate scroll distance based on number of slides (100vh per slide)
-    const scrollDistance = totalSlides * 100;
+    // Calculate scroll distance based on number of slides (150vh per slide for slower scroll)
+    const scrollDistance = totalSlides * 150;
     
     // Disable Swiper touch on desktop (controlled by scroll)
     hzSwiper.allowTouchMove = false;
@@ -1619,7 +1623,7 @@ if (document.querySelector(".hz-slider-section .swiper")) {
         pinReparent: false, // Changed to false to prevent DOM reparenting issues
         start: "top 10%",
         end: "+=" + scrollDistance + "vh", // Dynamic based on slides
-        scrub: true,
+        scrub: 2, // Increased from true to 2 for smoother, slower scroll response
         markers: false,
         invalidateOnRefresh: true,
         refreshPriority: 2, // Higher priority than gallery
@@ -1628,7 +1632,7 @@ if (document.querySelector(".hz-slider-section .swiper")) {
           const updatedIndex = Math.round(snap(self.progress) * totalSlides);
           if (updatedIndex !== currentSlide) {
             currentSlide = updatedIndex;
-            hzSwiper.slideTo(currentSlide);
+            hzSwiper.slideTo(currentSlide, 1200); // Use slower speed for programmatic slide changes
           }
         }
       }
@@ -1691,7 +1695,7 @@ if (document.querySelector(".hz-slider-topcaption .swiper")) {
   let currentTopcaptionSlide = 0;
   
   const hzTopcaptionSwiper = new Swiper(".hz-slider-topcaption .swiper", {
-    speed: 500,
+    speed: 1200,
     loop: false,
     slidesPerView: 1,
     spaceBetween: 20,
@@ -1700,6 +1704,10 @@ if (document.querySelector(".hz-slider-topcaption .swiper")) {
     centeredSlides: false,
     // Enable touch move on mobile, disable on desktop (will be controlled by GSAP)
     allowTouchMove: window.innerWidth < 1024,
+    // Add smooth easing for transitions
+    effect: 'slide',
+    resistance: true,
+    resistanceRatio: 0.85,
     breakpoints: {
       480: {
         slidesPerView: 1,
@@ -1735,8 +1743,8 @@ if (document.querySelector(".hz-slider-topcaption .swiper")) {
     const totalSlides = hzTopcaptionSwiper.slides.length;
     const snap = gsap.utils.snap(1 / totalSlides);
     
-    // Calculate scroll distance based on number of slides (100vh per slide)
-    const scrollDistance = totalSlides * 100;
+    // Calculate scroll distance based on number of slides (150vh per slide for slower scroll)
+    const scrollDistance = totalSlides * 150;
     
     // Disable Swiper touch on desktop (controlled by scroll)
     hzTopcaptionSwiper.allowTouchMove = false;
@@ -1750,7 +1758,7 @@ if (document.querySelector(".hz-slider-topcaption .swiper")) {
         pinReparent: false,
         start: "top 20%",
         end: "+=" + scrollDistance + "vh",
-        scrub: true,
+        scrub: 2, // Increased from true to 2 for smoother, slower scroll response
         markers: false,
         invalidateOnRefresh: true,
         refreshPriority: 1,
@@ -1759,7 +1767,7 @@ if (document.querySelector(".hz-slider-topcaption .swiper")) {
           const updatedIndex = Math.round(snap(self.progress) * totalSlides);
           if (updatedIndex !== currentTopcaptionSlide) {
             currentTopcaptionSlide = updatedIndex;
-            hzTopcaptionSwiper.slideTo(currentTopcaptionSlide);
+            hzTopcaptionSwiper.slideTo(currentTopcaptionSlide, 1200); // Use slower speed for programmatic slide changes
           }
         }
       }

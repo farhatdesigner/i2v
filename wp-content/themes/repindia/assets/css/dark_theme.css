@@ -192,7 +192,7 @@ header li.burger-icon .icon-sun,
   fill: #d7dbe4;
 }
 #header-toggle-menu .sub-menu {
-  border-left: 1px solidD7DBE4;
+  border-left: 1px solid#D7DBE4;
 }
 .js-dark #header-toggle-menu .sub-menu {
   border-left: 1px solid rgba(193, 196, 198, 0.2);
