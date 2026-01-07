@@ -667,6 +667,8 @@ h2 {
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  min-width: 1ch;
+  display: inline-block;
 }
 
 .hero-slider .swiper-pagination .swiper-pagination-bullets,
@@ -694,7 +696,7 @@ h2 {
 }
 
 .trusted_sec .swiper-pagination-bullet-active {
-  background-color: #74c2ed;
+  background-color: #0099ED;
   height: 4px !important;
   width: 30px !important;
   border-radius: 4px;
@@ -1190,7 +1192,7 @@ p {
 }
 
 .theme-btn:hover {
-  background: #008edb;
+  background: #0099ED;
 }
 
 .xl-btn {
@@ -1199,28 +1201,31 @@ p {
 }
 
 .blue-txt {
-  color: #0099ed;
+  color: #0099ED;
 }
 
 .bg-trans {
   background: transparent;
   padding: 0;
-  color: #0099ed;
+  color: #0099ED;
 }
 
 .bg-trans:hover {
   background: transparent;
-  border-bottom: 1px solid #74c2ed;
+  border-bottom: 1px solid #0099ED;
+}
+.theme-btn:focus {
+    background: #0074B2;
 }
 
 .grey-btn {
   border: 1px solid rgba(193, 196, 198, 0.2);
   background: #464a4f;
-  color: #74c2ed;
+  color: #74C2ED;
 }
 
 .grey-btn:hover {
-  border: 1px solid #74c2ed;
+  border: 1px solid #0099ED;
   background: #464a4f;
 }
 
@@ -1234,7 +1239,7 @@ p {
 }
 
 .bg-tran_lightcolor {
-  color: #74c2ed;
+  color: #0099ED;
   background: transparent;
   border-radius: 0;
   padding: 0;
@@ -1242,9 +1247,9 @@ p {
 }
 
 .bg-tran_lightcolor:hover {
-  color: #74c2ed;
+  color: #0099ED;
   background: transparent;
-  border-bottom: 1px solid #74c2ed;
+  border-bottom: 1px solid #0099ED;
 }
 .smarter_seamless .bg-tran_lightcolor:hover {
   color: #d7dbe4;
@@ -1490,7 +1495,7 @@ label.form-label.required_note-demo {
 }
 
 .tabsautoscroll li.active:before {
-  height: 3px;
+  height: 2px;
 }
 
 .tabsautoscroll li:hover:before {
@@ -1955,7 +1960,7 @@ label.form-label.required_note-demo {
 
 .swiper-pagination-bullet-active {
   border-radius: 4px;
-  background: var(--Golbal-utlities-primary, #74c2ed);
+  background: var(--Golbal-utlities-primary, #0099ED);
   width: 30px;
 }
 
@@ -2115,7 +2120,7 @@ label.form-label.required_note-demo {
 }
 
 .testimonialSwiper .swiper-pagination-bullet-active {
-  background: #74c2ed;
+  background: #0099ED;
   opacity: 1;
 }
 
@@ -3758,6 +3763,7 @@ svg.connection-line-7 {
 
   .btn-sec_gap {
     gap: 12px;
+    flex-direction: column;
   }
 
   .theme-btn.xl-btn {

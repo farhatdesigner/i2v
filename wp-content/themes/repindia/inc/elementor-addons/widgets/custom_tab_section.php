@@ -33,11 +33,7 @@ class Custom_Tab_Section extends Widget_Base
     protected function render()
     { ?>
         <style>
-            /* Security Tabs - Simple Tab UI */
-            .sec-tabs-wrapper {
-                padding: 40px 0;
-            }
-
+     
             /* Tab Navigation */
             .sec-tabs-nav {
                 margin-bottom: 0;

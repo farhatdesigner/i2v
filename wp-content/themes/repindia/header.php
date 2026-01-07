@@ -249,7 +249,10 @@ global $repindia_option;
                             { ?>
                                 <li class="search_switch">
                                     <a href="<?php echo esc_url(home_url('/')); ?>">
-                                        <span><img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/search.svg" alt="Search"></span>
+                                        <span>
+                                            <img class="white-theme-img" src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/search.svg" alt="Search">
+                                            <!-- <img class="black-theme-img" src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/search_black.svg" alt="Search"> -->
+                                        </span>
                                     </a>
                                 </li>
                                 <?php 
