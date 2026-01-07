@@ -561,3 +561,8 @@ header li.burger-icon .icon-sun,
 .js-dark .box-custom figcaption.widget-image-caption.wp-caption-text {
   background: #262a2f;
 }
+.js-dark .custom-latest-resource-title,.js-dark .custom-blog-filter-title,.js-dark .custom-blog-filter-date-overlay,.js-dark .custom-latest-resource-date-overlay,.js-dark .custom-latest-resource-taxonomy,.js-dark .custom-blog-filter-taxonomy,.js-dark .custom-blog-filter-accordion-header h3,.js-dark .custom-blog-filter-category-item label{ color: #aeb6c9 !important; }
+.js-dark .custom-blog-filter-accordion-toggle svg{ stroke: #aeb6c9 !important; }
+.js-dark .custom-blog-filter-category-count, .js-dark .custom-blog-filter-featured-count,.js-dark .custom-blog-filter-category-item input[type="checkbox"]{ background: #464A4F;#aeb6c9 !important; }
+.js-dark .custom-blog-filter-toggle-slider{ background-color: #464A4F; }
+.js-dark .custom-blog-filter-toggle-slider:before{ background-color: #aeb6c9 !important; }

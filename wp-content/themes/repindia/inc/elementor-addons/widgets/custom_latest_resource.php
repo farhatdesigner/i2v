@@ -467,6 +467,8 @@ class Custom_Latest_Resource extends Widget_Base
                 padding: 40px;
                 color: #666;
             }
+            .js-dark .custom-latest-resource-card,.js-dark .custom-latest-resource-card a{ background: #262a30; }
+            .js-dark .custom-latest-resource-taxonomy{ background: #464A4F;border: 1px solid #464A4F; }
             @media (max-width: 1200px) {
                 .custom-latest-resource-posts {
                     grid-template-columns: repeat(3, 1fr);
@@ -475,13 +477,16 @@ class Custom_Latest_Resource extends Widget_Base
             @media (max-width: 768px) {
                 .custom-latest-resource-posts {
                     grid-template-columns: repeat(2, 1fr);
-                    gap: 20px;
+                    gap: 5px;
                 }
-            }
-            @media (max-width: 480px) {
-                .custom-latest-resource-posts {
-                    grid-template-columns: 1fr;
-                }
+                .custom-latest-resource-image-wrapper img,.custom-latest-resource-image-wrapper{ height: 170px; }
+                .custom-latest-resource-date-overlay{ padding: 3px 14px;font-size: 12px; }
+                .custom-latest-resource-taxonomy{ padding: 4px 10px;font-size: 12px; }
+                .custom-latest-resource-card-content{ padding: 8px 0;gap: 8px; }
+                .custom-latest-resource-title{ font-size: 18px !important;line-height: 22px; }
+                .custom-blog-filter-card-content{ padding: 8px 0 2px; }
+                .custom-blog-filter-load-more{ margin-top: 30px; }
+                .custom-blog-filter-load-more-btn{ padding: 6px 18px;font-size: 18px; }
             }
         </style>
         
