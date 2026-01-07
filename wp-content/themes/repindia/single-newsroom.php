@@ -7,12 +7,18 @@ $newscategories = get_the_category();
 		global $repindia_option,$post; 
 		?>
         <style>
+            .socialshare_section {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                max-width: 56px;
+            }
             .reading-progress {
-                position: fixed;
-                right: 24px;
-                bottom: 120px;
-                width: 72px;
-                height: 72px;
+                position: relative;
+                /* right: 24px;
+                bottom: 120px; */
+                width: 56px;
+                height: 56px;
                 z-index: 999;
             }
             .reading-progress svg { width: 100%;height: 100%; }
@@ -33,6 +39,18 @@ $newscategories = get_the_category();
                 line-height: 20px;
             }
             .auto_timer .elementor-icon-wrapper { display: flex;align-items: center; }
+            .news_detail_taxonomy h4 {
+                display: flex;
+                align-items: center;
+                width: auto;
+            }
+            .news_detail_taxonomy h4 {
+                border-radius: 100px;
+                border: 1px solid #E6EBF2;
+                background: #E5F6FF;
+                display: inline-block;
+                padding: 4px 16px;
+            }
 
         </style>
     <!-- <div class="custom-container">

@@ -82,13 +82,41 @@ class Custom_Social_Share extends Widget_Base {
         ?>
         <div class="socialshare_section">
             <style>
+                .socialshare_section ul.shocial_media{
+                    max-width: 62px;
+                    background: #fff;
+                    display: flex;
+                    flex-direction: column;
+                    padding: 20px;
+                    border-radius: 100px;
+                    margin: 0;
+                    gap: 4px;
+                }
                 .socialshare_section .shocial_media li a img,
                 .socialshare_section .shocial_media li button img {
-                    max-width: 100%;
-                    height: auto;
+                    max-width: 22px;
+                    width: 22px;
+                    height: 22px;
                     display: inline-block;
                     vertical-align: middle;
                 }
+                .socialshare_section li.tooltip.dropdown-item {
+                    display: inline-block;
+                    width: auto;
+                }
+                .socialshare_section button#copyButton {
+                    display: inline-block;
+                    width: auto;
+                    border: 0;
+                    background: transparent;
+                    padding: 0;
+                    max-width: 22px;
+                }
+                .socialshare_section .tooltip { position: relative;display: inline-block;opacity: 1;z-index: 2; }
+                .socialshare_section .tooltip .tooltiptext { visibility: hidden;width: 140px;background-color: #555;color: #fff;text-align: center;border-radius: 6px;padding: 5px;position: absolute;z-index: 1;bottom: 80%;left: 50%;margin-left: -75px;opacity: 0;transition: opacity 0.3s; }
+                .socialshare_section .tooltip .tooltiptext::after { content: "";position: absolute;top: 100%;left: 50%;margin-left: -5px;border-width: 5px;border-style: solid;border-color: #555 transparent transparent transparent; }
+                .socialshare_section .tooltip:hover .tooltiptext { visibility: visible;opacity: 1; }
+                .socialshare_section .share .dropdown-menu button { padding: 0;background: transparent;border: 0; }
             </style>
             <ul class="shocial_media" aria-labelledby="dropdownMenuLink">
                 <li>
@@ -135,6 +163,24 @@ class Custom_Social_Share extends Widget_Base {
                     </button>
                 </li>
             </ul>
+
+            <div class="reading-progress">
+                <svg viewBox="0 0 36 36">
+                    <path class="bg"
+                        d="M18 2.0845
+                        a 15.9155 15.9155 0 0 1 0 31.831
+                        a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <path class="progress"
+                        stroke-dasharray="0,100"
+                        d="M18 2.0845
+                        a 15.9155 15.9155 0 0 1 0 31.831
+                        a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <text x="18" y="20"
+                        text-anchor="middle"
+                        class="percentage">0%</text>
+                </svg>
+            </div>
+
             
         </div>
         <script>
