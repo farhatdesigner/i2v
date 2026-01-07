@@ -177,6 +177,13 @@ html.lenis body {
   font-style: normal;
   font-weight: 600;
   line-height: 24px;
+  padding-bottom: 2px;
+  border-radius: 0;
+  border-bottom: 1px solid #e6ebf2;
+  /* 150% */
+}
+.btn-bolt a:hover {
+  border-bottom: 1px solid #a65b00;
   /* 150% */
 }
 
@@ -207,7 +214,7 @@ html.lenis body {
 
 .accordion_set::before {
   content: "";
-  width: 5px;
+  width: 4px;
   height: 100%;
   background: #3c3f45;
   position: absolute;
@@ -1113,15 +1120,17 @@ div.pin-spacer > .hz-slider-topcaption {
   font-size: 16px;
   font-style: normal;
 }
-.transparent_bg .vaw_accordion_wrap{background-color: transparent;}
+.transparent_bg .vaw_accordion_wrap {
+  background-color: transparent;
+}
 
-.vac_padd-accordion_video>h3, .vac_padd-accordion>h3 {
+.vac_padd-accordion_video > h3,
+.vac_padd-accordion > h3 {
   font-size: 16px;
-  color: #06283D;
+  color: #06283d;
   font-weight: 500 !important;
   margin-bottom: 12px;
 }
-
 
 @media (min-width: 768px) {
   .hz-slider-topcaption .swiper-slide h2 {
@@ -1369,9 +1378,8 @@ html {
   .customtabsmart .smart-content-inner-text {
     padding: 10px;
   }
-  
-.slider-content {
-  padding: 30px 0 0;
-}
 
+  .slider-content {
+    padding: 30px 0 0;
+  }
 }

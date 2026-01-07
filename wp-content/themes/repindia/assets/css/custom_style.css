@@ -1187,7 +1187,7 @@ p {
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
-  line-height: 150%;
+  line-height: 130%;
   color: #ffffff;
   /* transition: all .4s ease; */
   display: inline-block;
@@ -1207,13 +1207,13 @@ p {
 }
 
 .bg-trans {
-  background: transparent;
+  background: transparent !important;
   padding: 0;
   color: #0099ED;
 }
 
 .bg-trans:hover {
-  background: transparent;
+  background: transparent !important;
   border-bottom: 1px solid #0099ED;
 }
 .theme-btn:focus {
@@ -2212,6 +2212,9 @@ label.form-label.required_note-demo {
   color: #ffff !important;
 }
 
+.sticky-custom > ul > li.active-li:hover {
+  background: #008EDB;
+}
 .view-bg {
   border-radius: var(--M, 12px);
   background: linear-gradient(
@@ -3073,6 +3076,11 @@ svg.connection-line-7 {
 .enterprisebanner {
   width: max-content !important;
   max-width: max-content !important;
+}
+
+.iccc_actions .elementor-icon-box-content .elementor-icon-box-description {
+  margin-top: 8px !important;
+  display: block;
 }
 
 @media (min-width: 768px) {
