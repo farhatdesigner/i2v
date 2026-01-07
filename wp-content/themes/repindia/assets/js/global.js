@@ -102,8 +102,9 @@ jQuery(document).ready(function ($) {
                 timeLeft -= 0.1;
                 const progress = (6.5 - timeLeft) / 6.5;
 
-                // Update countdown number
-                countdownElement.textContent = `${Math.ceil(timeLeft)}`;
+                // Update countdown number - ensure it never shows 0, minimum is 1
+                const displayNumber = Math.max(1, Math.ceil(timeLeft));
+                countdownElement.textContent = `${displayNumber}`;
 
                 // Update progress stroke
                 if (progressCircleBullet) {
@@ -126,7 +127,9 @@ jQuery(document).ready(function ($) {
                 timeLeft -= 0.1;
                 const progress = (6.5 - timeLeft) / 6.5;
                 progressCircle.style.setProperty("--progress", progress);
-                progressContent.textContent = `${Math.ceil(timeLeft)}`;
+                // Update countdown number - ensure it never shows 0, minimum is 1
+                const displayNumber = Math.max(1, Math.ceil(timeLeft));
+                progressContent.textContent = `${displayNumber}`;
 
                 if (timeLeft <= 0) {
                     clearInterval(circularInterval);
