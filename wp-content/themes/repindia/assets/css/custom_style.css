@@ -31,6 +31,7 @@
 .js-dark .partner_sec:before {
   background-color: #262a30 !important;
 }
+.js-dark nav{border: 1px solid rgba(193, 196, 198, 0.10);}
 
 .js-dark .listing-inner {
   background-color: rgba(255, 255, 255, 0.1) !important;
@@ -969,6 +970,7 @@ a:hover {
 .sub-menu li a:hover:before,
 #header-toggle-menu > li:nth-last-child(4) > a span:hover:before,
 .listing-inner > ul > li > :hover .span-text:before,
+.cards-listing-section li:hover .card-title:before,
 .footer ul li > a:hover:before {
   content: "";
   position: absolute;
@@ -1192,7 +1194,7 @@ p {
 }
 
 .theme-btn:hover {
-  background: #0099ED;
+  background: #008EDB;
 }
 
 .xl-btn {
@@ -1986,6 +1988,13 @@ label.form-label.required_note-demo {
   font-weight: 500;
   color: #5f6f94;
 }
+.bg-trans_txt {
+  background-color: transparent !important;
+  border: none;
+  line-height: 2;
+  color: #5f6f94;
+  font-weight: 500;
+}
 
 .grid-listing {
   display: flex;
@@ -2421,7 +2430,7 @@ label.form-label.required_note-demo {
 }
 
 .reversetestimonial .swiper-pagination-bullets {
-  left: 126px !important;
+  left: 135px !important;
   width: auto !important;
   bottom: 10px !important;
 }
@@ -3060,6 +3069,11 @@ svg.connection-line-7 {
   bottom: 140px !important;
 }
 .height_full-image{height: 100% !important;}
+.bg-trans_txt{background-color: transparent !important;border: none;}
+.enterprisebanner {
+  width: max-content !important;
+  max-width: max-content !important;
+}
 
 @media (min-width: 768px) {
   .footer-accordion-icon {
@@ -3113,6 +3127,7 @@ svg.connection-line-7 {
   }
   .filter-menu .tabsautoscroll {
     display: block !important;
+    bottom: 0px;
   }
 
   .dropdown-label,
@@ -3168,6 +3183,7 @@ svg.connection-line-7 {
     border-top-left-radius: 12px;
     border-top-right-radius: 0px;
     border-bottom-left-radius: 12px;
+    max-height: 100% !important;
   }
 
   .chosse_circle:before {

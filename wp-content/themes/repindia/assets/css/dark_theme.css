@@ -554,3 +554,6 @@ header li.burger-icon .icon-sun,
 .js-dark .border-btn-grey:hover {
   border: 1px solid #74C2ED;
 }
+.js-dark .cards-listing-section li .card {
+  background: #262A30;
+}
