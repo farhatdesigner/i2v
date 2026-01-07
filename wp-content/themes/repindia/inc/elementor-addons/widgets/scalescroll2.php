@@ -275,7 +275,7 @@ class Scalescroll2 extends Widget_Base
                                     <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-1.svg">
                                     <p>Deployed across 11+ smart cities without replacing existing hardware.</p>
                                     <div class="btn-bolt">
-                                        <a href="#">Request a demo to lean more</a>
+                                        <a href="#">Request a demo to learn  more</a>
                                     </div>
                                 </div>
                             </div>
@@ -325,7 +325,7 @@ class Scalescroll2 extends Widget_Base
                                         <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-1.svg">
                                         <p>Deployed across 11+ smart cities without replacing existing hardware.</p>
                                         <div class="btn-bolt">
-                                            <a href="#">Request a demo to lean more</a>
+                                            <a href="#">Request a demo to learn  more</a>
                                         </div>
                                     </div>
                                 </div>
@@ -414,7 +414,7 @@ class Scalescroll2 extends Widget_Base
                                             <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-1.svg">
                                             <p>Deployed across 11+ smart cities without replacing existing hardware.</p>
                                             <div class="btn-bolt">
-                                                <a href="#">Request a demo to lean more</a>
+                                                <a href="#">Request a demo to learn  more</a>
                                             </div>
                                         </div>
                                     </div>

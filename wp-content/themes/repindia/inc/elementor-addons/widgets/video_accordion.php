@@ -325,7 +325,7 @@ class Video_accordion extends Widget_Base
                                         <img data-bs-toggle="modal" data-bs-target="#staticBackdrop" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/no-helmet-detection.webp" alt="null" width="100%" height="100%">
                                     </div>
 
-                                    <div class="btn-sec_gap">
+                                    <div class="btn-sec_gap whitebg">
                                         <a class="theme-btn bg-tran_lightcolor" href="#">Learn more</a>
                                     </div>
                                 </div>
@@ -348,7 +348,7 @@ class Video_accordion extends Widget_Base
                                     <div class="accordion_video">
                                         <img data-bs-toggle="modal" data-bs-target="#staticBackdroptwo" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/video.webp" alt="null" width="100%" height="100%">
                                     </div>
-                                    <div class="btn-sec_gap">
+                                    <div class="btn-sec_gap whitebg">
                                         <a class="theme-btn bg-tran_lightcolor" href="#">Learn more</a>
                                     </div>
                                 </div>
@@ -371,7 +371,7 @@ class Video_accordion extends Widget_Base
                                     <div class="accordion_video">
                                         <img data-bs-toggle="modal" data-bs-target="#staticBackdropthree" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/no-helmet-detection.webp" alt="null" width="100%" height="100%">
                                     </div>
-                                    <div class="btn-sec_gap">
+                                    <div class="btn-sec_gap whitebg">
                                         <a class="theme-btn bg-tran_lightcolor" href="#">Learn more</a>
                                     </div>
                                 </div>

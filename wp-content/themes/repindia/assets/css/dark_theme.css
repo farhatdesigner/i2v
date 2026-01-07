@@ -557,3 +557,7 @@ header li.burger-icon .icon-sun,
 .js-dark .cards-listing-section li .card {
   background: #262A30;
 }
+.js-dark .border_black{border-left: 1px solid var(--Golbal-others-border, rgba(193, 196, 198, 0.10));}
+.js-dark .box-custom figcaption.widget-image-caption.wp-caption-text {
+  background: #262a2f;
+}
