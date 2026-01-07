@@ -78,7 +78,7 @@ $newscategories = get_the_category();
             }
             .js-dark .elementor-element.newsroom_detail_content{ border-color: #aeb6c9; }
             .js-dark .custom-latest-resource-card,.js-dark .custom-latest-resource-card a{ background: #262a30; }
-            .custom-latest-resource-taxonomy{ background: #464A4F;border: 1px solid #464A4F; }
+            .js-dark .custom-latest-resource-taxonomy{ background: #464A4F;border: 1px solid #464A4F; }
 
         </style>
     <!-- <div class="custom-container">
