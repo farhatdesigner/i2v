@@ -43,7 +43,7 @@ $newscategories = get_the_category();
                 stroke-linecap: round;
                 transition: stroke-dasharray 0.2s ease;
             }
-            .reading-progress .percentage { font-size: 6px;fill: #333;font-weight: 600; }
+            .reading-progress .percentage { font-size: 9px;fill: #333;font-weight: 600; }
             .auto_timer .elementor-shortcode {
                 color: #5C5C5C;
                 font-size: 14px;
@@ -67,20 +67,18 @@ $newscategories = get_the_category();
             .elementor-element.newsroom_detail_content {
                 position: relative;
             }
-            @media(max-width: 768px){
-                .socialshare_section{
-                    flex-direction: row;
-                    right: unset;
-                    top: unset;
-                    bottom: 0;
-                    z-index: 2;
-                }
-                .socialshare_section ul.shocial_media {
-                    max-width: max-content;
-                    width: auto;
-                    flex-direction: row;
-                }
+            .js-dark .news_detail_taxonomy h4{
+                border: 1px solid rgba(193, 196, 198, 0.1);
+                background: #262a30;
+                color: #d7dbe4;
             }
+            .js-dark .e-con .elementor-widget.elementor-widget, .js-dark .auto_timer .elementor-shortcode,
+            .js-dark p.elementor-icon-box-title span{
+                color: #aeb6c9 !important;
+            }
+            .js-dark .elementor-element.newsroom_detail_content{ border-color: #aeb6c9; }
+            .js-dark .custom-latest-resource-card,.js-dark .custom-latest-resource-card a{ background: #262a30; }
+            .custom-latest-resource-taxonomy{ background: #464A4F;border: 1px solid #464A4F; }
 
         </style>
     <!-- <div class="custom-container">

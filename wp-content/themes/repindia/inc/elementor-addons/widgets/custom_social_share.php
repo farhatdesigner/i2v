@@ -123,6 +123,30 @@ class Custom_Social_Share extends Widget_Base {
                 .socialshare_section .tooltip .tooltiptext::after { content: "";position: absolute;top: 100%;left: 50%;margin-left: -5px;border-width: 5px;border-style: solid;border-color: #555 transparent transparent transparent; }
                 .socialshare_section .tooltip:hover .tooltiptext { visibility: visible;opacity: 1; }
                 .socialshare_section .share .dropdown-menu button { padding: 0;background: transparent;border: 0; }
+                @media(max-width: 768px){
+                    .socialshare_section{
+                        flex-direction: row;
+                        right: unset;
+                        top: unset;
+                        bottom: 0;
+                        z-index: 2;
+                        justify-content: center;
+                        width: 100%;
+                        max-width: 100%;
+                    }
+                    .socialshare_section ul.shocial_media {
+                        max-width: max-content;
+                        width: auto;
+                        flex-direction: row;
+                        padding: 10px 20px;
+                    }
+                    .socialshare_section ul.shocial_media li{ height: auto; }
+                    .reading-progress{
+                        width: 46px;
+                        height: 46px;
+                        min-width: 46px;
+                    }
+                }
             </style>
             <ul class="shocial_media" aria-labelledby="dropdownMenuLink">
                 <li>
