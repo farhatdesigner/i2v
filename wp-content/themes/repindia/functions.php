@@ -297,3 +297,151 @@ add_action('plugins_loaded', function () {
     });
 
 });
+
+// Disable automatic updates for plugins and themes
+add_filter( 'auto_update_plugin', '__return_false' );
+add_filter( 'auto_update_theme', '__return_false' );
+
+//Newsroom features for auto time calculator and page scroll percentage
+/**
+ * Calculate reading time from Elementor content
+ */
+function mytheme_get_blog_reading_time() {
+
+    // Only Blog Detail Page
+    if ( ! is_singular( 'newsroom' ) ) {
+        return '';
+    }
+
+    $post_id = get_the_ID();
+
+    // Elementor check
+    if (
+        ! class_exists( '\Elementor\Plugin' ) ||
+        ! \Elementor\Plugin::$instance->db->is_built_with_elementor( $post_id )
+    ) {
+        return '';
+    }
+
+    $raw_data = get_post_meta( $post_id, '_elementor_data', true );
+    if ( empty( $raw_data ) ) {
+        return '';
+    }
+
+    $data = json_decode( $raw_data, true );
+    if ( ! is_array( $data ) ) {
+        return '';
+    }
+
+    $text = '';
+
+    // Text fields that typically contain readable content
+    $text_fields = array(
+        'editor', 'text', 'title', 'description', 'content', 'html', 
+        'heading', 'subheading', 'caption', 'label', 'placeholder',
+        'button_text', 'link_text', 'tab_title', 'accordion_title',
+        'accordion_content', 'icon_list_text', 'text_editor'
+    );
+
+    $walker = function ( $elements ) use ( &$walker, &$text, $text_fields ) {
+        foreach ( $elements as $el ) {
+            if ( ! empty( $el['settings'] ) && is_array( $el['settings'] ) ) {
+                foreach ( $el['settings'] as $key => $value ) {
+                    // Only process text-related settings
+                    if ( ! is_string( $value ) || empty( trim( $value ) ) ) {
+                        continue;
+                    }
+
+                    // Skip if key suggests it's not readable text (IDs, URLs, classes, etc.)
+                    $key_lower = strtolower( $key );
+                    if ( 
+                        strpos( $key_lower, 'id' ) !== false ||
+                        strpos( $key_lower, 'url' ) !== false ||
+                        strpos( $key_lower, 'link' ) !== false ||
+                        strpos( $key_lower, 'class' ) !== false ||
+                        strpos( $key_lower, 'css' ) !== false ||
+                        strpos( $key_lower, 'image' ) !== false ||
+                        strpos( $key_lower, 'icon' ) !== false ||
+                        strpos( $key_lower, 'color' ) !== false ||
+                        strpos( $key_lower, 'size' ) !== false ||
+                        strpos( $key_lower, 'margin' ) !== false ||
+                        strpos( $key_lower, 'padding' ) !== false ||
+                        strpos( $key_lower, 'border' ) !== false ||
+                        preg_match( '/^#[0-9a-f]{3,6}$/i', trim( $value ) ) || // Hex colors
+                        filter_var( trim( $value ), FILTER_VALIDATE_URL ) || // URLs
+                        preg_match( '/^[a-z0-9_-]+$/i', trim( $value ) ) && strlen( trim( $value ) ) < 20 // Likely IDs/classes
+                    ) {
+                        continue;
+                    }
+
+                    // Prefer fields that are known to contain text content
+                    $is_text_field = false;
+                    foreach ( $text_fields as $field ) {
+                        if ( strpos( $key_lower, $field ) !== false ) {
+                            $is_text_field = true;
+                            break;
+                        }
+                    }
+
+                    // Extract text, strip HTML tags and decode entities
+                    $clean_text = wp_strip_all_tags( html_entity_decode( $value, ENT_QUOTES | ENT_HTML5, 'UTF-8' ) );
+                    $clean_text = trim( $clean_text );
+
+                    // Only add if it looks like readable text (has spaces or is reasonably long)
+                    if ( ! empty( $clean_text ) && ( strpos( $clean_text, ' ' ) !== false || strlen( $clean_text ) > 10 ) ) {
+                        $text .= ' ' . $clean_text;
+                    }
+                }
+            }
+
+            if ( ! empty( $el['elements'] ) && is_array( $el['elements'] ) ) {
+                $walker( $el['elements'] );
+            }
+        }
+    };
+
+    $walker( $data );
+
+    // Clean up text: remove extra spaces, normalize
+    $text = preg_replace( '/\s+/', ' ', trim( $text ) );
+
+    // Calculate word count (more accurate for multilingual)
+    $word_count = str_word_count( $text, 0, 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789àáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞŸ' );
+    
+    if ( $word_count < 1 ) {
+        return '';
+    }
+
+    $minutes = max( 1, ceil( $word_count / 200 ) );
+
+    return sprintf(
+        esc_html__( '%d min read', 'repindia' ),
+        $minutes
+    );
+}
+
+/**
+ * Shortcode for Elementor
+ */
+function mytheme_blog_reading_time_shortcode() {
+    return mytheme_get_blog_reading_time();
+}
+add_shortcode( 'blog_reading_time', 'mytheme_blog_reading_time_shortcode' );
+
+function mytheme_blog_scroll_assets() {
+
+    if ( ! is_singular( 'newsroom' ) ) {
+        return;
+    }
+
+    wp_enqueue_script(
+        'blog-scroll-progress',
+        get_template_directory_uri() . '/assets/js/blog-scroll.js',
+        [],
+        '1.0',
+        true
+    );
+}
+add_action( 'wp_enqueue_scripts', 'mytheme_blog_scroll_assets' );
+
+

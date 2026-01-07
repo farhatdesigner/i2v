@@ -38,10 +38,20 @@ html.lenis body {
   min-height: 70vh;
   display: flex;
   gap: 142px;
+  /* Prevent glitching on scroll */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .flex-center {
   position: relative;
+  /* Prevent glitching on scroll */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .flex-center > * {
@@ -53,6 +63,14 @@ html.lenis body {
   position: absolute;
   top: 0;
   left: 0;
+  /* Fix glitching when section reaches top */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
+  /* Optimize rendering performance */
+  isolation: isolate;
 }
 
 .flex-center .panel > img {
@@ -725,8 +743,7 @@ div.pin-spacer > .hz-slider-section {
 
 /* Remove Elementor container padding for this widget */
 .elementor-widget-horizontal_slider,
-.elementor-widget-horizontal_slider > .elementor-widget-container,
-.elementor-widget-horizontal_slider .custom-container {
+.elementor-widget-horizontal_slider > .elementor-widget-container {
   padding: 0 !important;
   margin: 0 !important;
   max-width: 100% !important;
@@ -742,6 +759,7 @@ div.pin-spacer > .hz-slider-section {
 .hz-slider-section .slider-image img {
   width: 100%;
   height: 100%;
+  /* max-width: 588px; */
   object-fit: cover;
 }
 .hz-slider-section .slider .swiper-container-horizontal {
@@ -1343,4 +1361,9 @@ html {
   .customtabsmart .smart-content-inner-text {
     padding: 10px;
   }
+  
+.slider-content {
+  padding: 30px 0 0;
+}
+
 }

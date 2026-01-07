@@ -1,3 +1,14 @@
+.blog-container{ max-width: 800px!important; }
+.elementor_breadcrumbs .elementor-shortcode{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    padding-bottom: 0;
+    min-height: unset; }
+ul#footermenu { padding-left: 0; }
+.resource_form .notice-text { margin-bottom: 16px; }
 .js-dark .content-inner-icons li:last-child {
   border-radius: 12px !important;
 }
@@ -166,7 +177,10 @@ header li.burger-icon .icon-sun,
 }
 .js-dark .toggle-menu > li.active.parent > a,
 .js-dark header #header-main-menu li.active.parent > a {
-  color: #0074b2 !important;
+  color: #74C2ED !important;
+}
+.js-dark .toggle-menu > li.active.parent > a, .js-dark header #header-main-menu li.active.parent > a {
+  color: #74C2ED;
 }
 .js-dark #header-toggle-menu .sub-menu li a {
   color: #aeb6c9;
@@ -189,7 +203,7 @@ header li.burger-icon .icon-sun,
   fill: #d7dbe4;
 }
 #header-toggle-menu .sub-menu {
-  border-left: 1px solidD7DBE4;
+  border-left: 1px solid#D7DBE4;
 }
 .js-dark #header-toggle-menu .sub-menu {
   border-left: 1px solid rgba(193, 196, 198, 0.2);
@@ -319,10 +333,11 @@ header li.burger-icon .icon-sun,
   color: #d7dbe4 !important;
 }
 .js-dark span.swiper-pagination-bullet {
-  background-color: #262a30 !important;
+  background-color: #464a4f !important;
+  opacity: 1;
 }
 .js-dark span.swiper-pagination-bullet.swiper-pagination-bullet-active {
-  background-color: #74c2ed !important;
+  /* background-color: #74c2ed !important; */
 }
 .js-dark #tab_table .e-n-tabs-heading {
   background: #262a30;
@@ -487,9 +502,55 @@ header li.burger-icon .icon-sun,
   background: #262A30 !important;
 }
 .js-dark .color_lightwhite p {
-  color: #5C5C5C !important;
+  /* color: #5C5C5C !important; */
 }
 .js-dark .dark_choose {background-color: #464A4F !important;}
 .js-dark .dark-circle-txt .elementor-icon-box-description {
   color: #fff !important;
+}
+.js-dark  .modal-demo-form .modal-content {
+  background: #262A30 !important;
+}
+.js-dark .modal-demo-form .btn-demo_close p {
+    color: #D7DBE4 !important;
+}
+.js-dark .modal-demo-form .btn-demo_close .btn_cancel {
+    color: #D7DBE4;
+}
+/* Dark mode styles for smart tabs */
+.js-dark .customtabsmart .smart-content-inner-icons li {
+  border: 1px solid rgba(193, 196, 198, 0.1) !important;
+  border-left: 0 !important;
+}
+
+.js-dark .customtabsmart .smart-content-inner-icons li:first-child {
+  border-left: 1px solid rgba(193, 196, 198, 0.1) !important;
+}
+
+.customtabsmart .smart-content-inner-text {
+  padding: 20px;
+}
+
+.card-img_single .black_theme_img, .photo_custom .black_theme_img, .black_theme_img {
+  display: none;
+}
+.js-dark .card-img_single .black_theme_img, .photo_custom .black_theme_img, .black_theme_img {
+  display: block;
+}
+.js-dark .card-img_single .white_theme_img, .photo_custom .white_theme_img, .white_theme_img {
+  display: none;
+}
+/* .js-dark .theme-btn  {background-color:#007ABE;} */
+.js-dark .grey-btn {
+  background: #464a4f;
+}
+.js-dark header #header-main-menu li a:hover, .js-dark .toggle-menu > li > a:hover, .js-dark .listing-inner > ul > li > a:hover, .js-dark #header-toggle-menu .sub-menu li a:hover {
+  color: rgb(255 255 255 / 90%) !important;
+}
+
+.js-dark .border-btn-grey {
+  color: #74C2ED;
+}
+.js-dark .border-btn-grey:hover {
+  border: 1px solid #74C2ED;
 }

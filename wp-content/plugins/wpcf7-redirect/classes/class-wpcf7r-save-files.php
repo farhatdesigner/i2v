@@ -178,6 +178,12 @@ class WPCF7R_Save_File {
 	 * @return string|false The destination path if successful, false otherwise.
 	 */
 	public function move_file_to_upload( $file_path ) {
+
+		$validate = wp_check_filetype( $file_path );
+		if ( ! $validate['type'] || preg_match( '#^[a-zA-Z0-9+.-]+://#', $file_path ) ) {
+			die( esc_html__( 'File type is not allowed', 'wpcf7-redirect' ) );
+		}
+
 		global $wp_filesystem;
 		$this->filesystem_init();
 
@@ -263,6 +269,7 @@ class WPCF7R_Save_File {
 		$dir = $this->get_uploads_dir();
 
 		if ( is_dir( $dir ) && is_writable( $dir ) ) {
+			$this->init_index_file( $dir );
 			$htaccess_file = path_join( $dir, '.htaccess' );
 
 			if ( file_exists( $htaccess_file ) ) {
@@ -291,6 +298,36 @@ class WPCF7R_Save_File {
 
 				fclose( $handle );
 			}
+		}
+	}
+
+	/**
+	 * Initializes the index.php file.
+	 *
+	 * @param string $dir Upload dir path.
+	 * @return void
+	 */
+	private function init_index_file( $dir ) {
+		$index_file    = path_join( $dir, 'index.php' );
+
+		if ( file_exists( $index_file ) ) {
+			list( , $second_line_comment ) = (array) file(
+				$index_file,
+				FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES
+			);
+
+			if ( '// Silence is golden.' === $second_line_comment ) {
+				return;
+			}
+		}
+
+		$handle = @fopen( $index_file, 'w' );
+
+		if ( $handle ) {
+			fwrite( $handle, "<?php\n" );
+			fwrite( $handle, '// Silence is golden.' );
+
+			fclose( $handle );
 		}
 	}
 }

@@ -193,7 +193,7 @@ class Scalescroll extends Widget_Base
                 <div class="title-box">
                     <div class="col-lg-6 col-12">
                         <h3 class="main_title quote mb-12">
-                        Real-world impact of i2V in oil & gas operations
+                            Real-world impact of i2V in oil & gas operations
                         </h3>
                         <div class="text-left">
                             <p>i2V VA integrates smoothly into your existing infrastructure — no rip-and-replace needed. From
@@ -299,6 +299,9 @@ class Scalescroll extends Widget_Base
                                     <h2>100+ IP camera brands supported</h2>
                                     <p class="para-text">Seamlessly integrates with major camera vendors — no hardware
                                         replacement needed.</p>
+                                    <div class="text-left">
+                                        <a class="theme-btn bg-trans border_btnlight" href="#">View all supported devices</a>
+                                    </div>
                                 </div>
                             </div>
 
@@ -348,7 +351,7 @@ class Scalescroll extends Widget_Base
                     <div class="right">
                         <div class="photos">
                             <div class="photo photo_custom">
-                                <div class="logo_box">
+                                <!-- <div class="logo_box">
                                     <ul>
                                         <li><img
                                                 src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg">
@@ -425,8 +428,10 @@ class Scalescroll extends Widget_Base
 
 
                                     </ul>
-                                </div>
-
+                                </div> -->
+                                 <img class="white_theme_img radius-12" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2026/01/logo_image.svg">
+                                 <img class="black_theme_img radius-12" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2026/01/logo_image.svg">
+                               
                                 <div class="details details-1">
                                     <div class="txtflex">
                                         <h2>100+ IP camera brands supported</h2>
@@ -437,8 +442,29 @@ class Scalescroll extends Widget_Base
                             </div>
 
 
-                            <div class="photo photo_custom"> <img class="radius-12" decoding="async"
-                                    src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-271.webp">
+                            <div class="photo photo_custom">
+                                <div class="youtube-wrapper radius-12" style="position: relative; width: 100%; height: 60vh; overflow: hidden; cursor: pointer;">
+                                    <iframe class="radius-12 youtube-iframe" 
+                                        data-video-id="R3GfuzLMPkA"
+                                        src="" 
+                                        width="100%" 
+                                        height="60vh" 
+                                        frameborder="0"
+                                        allow="autoplay; encrypted-media; picture-in-picture"
+                                        allowfullscreen
+                                        style="width: 100%; height: 60vh; position: absolute; top: 0; left: 0; z-index: 1;">
+                                    </iframe>
+                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-271.webp"
+                                        alt="Video thumbnail" 
+                                        class="youtube-thumb" 
+                                        style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; top: 0; left: 0; z-index: 2; cursor: pointer;" />
+                                    <button class="play-btn" aria-label="Play video">
+                                        <svg width="32" height="32" viewBox="0 0 24 24" fill="white" style="margin-left: 4px;">
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+
                                 <div class="details details-2">
                                     <div class="txtflex">
                                         <h2>ONVIF-compliant for plug-and-play compatibility</h2>
@@ -448,8 +474,11 @@ class Scalescroll extends Widget_Base
                                 </div>
                             </div>
 
-
-                            <div class="photo photo_custom"> <img class="radius-12" decoding="async"
+        
+                            <div class="photo photo_custom"> 
+                                <img class="white_theme_img radius-12" decoding="async"
+                                    src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-270.webp">
+                                <img class="black_theme_img radius-12" decoding="async"
                                     src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-270.webp">
                                 <div class="details details-3">
                                     <div class="headline blue"></div>
@@ -462,7 +491,10 @@ class Scalescroll extends Widget_Base
                             </div>
 
 
-                            <div class="photo photo_custom"><img class="radius-12" decoding="async"
+                            <div class="photo photo_custom">
+                                <img class="white_theme_img radius-12" decoding="async"
+                                    src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-273.webp">
+                                <img class="black_theme_img radius-12" decoding="async"
                                     src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-273.webp">
                                 <div class="details details-4">
                                     <div class="txtflex">
@@ -482,7 +514,10 @@ class Scalescroll extends Widget_Base
                             </div>
 
 
-                            <div class="photo photo_custom"> <img class="radius-12" decoding="async"
+                            <div class="photo photo_custom"> 
+                                <img class="white_theme_img radius-12" decoding="async"
+                                    src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-272.webp">
+                                <img class="black_theme_img radius-12" decoding="async"
                                     src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-272.webp">
                                 <div class="details details-5">
                                     <div class="txtflex">
@@ -507,6 +542,43 @@ class Scalescroll extends Widget_Base
             </div>
         </div>
 
+        <script>
+        (function() {
+            document.addEventListener('DOMContentLoaded', function() {
+                const youtubeWrappers = document.querySelectorAll('.youtube-wrapper');
+                youtubeWrappers.forEach(function(wrapper) {
+                    const thumb = wrapper.querySelector('.youtube-thumb');
+                    const iframe = wrapper.querySelector('.youtube-iframe');
+                    const playBtn = wrapper.querySelector('.play-btn');
+                    
+                    if (thumb && iframe) {
+                        const videoId = iframe.getAttribute('data-video-id');
+                        
+                        function playVideo() {
+                            thumb.style.display = 'none';
+                            if (playBtn) {
+                                playBtn.style.display = 'none';
+                            }
+                            iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
+                        }
+                        
+                        thumb.addEventListener('click', playVideo);
+                        if (playBtn) {
+                            playBtn.addEventListener('click', function(e) {
+                                e.stopPropagation();
+                                playVideo();
+                            });
+                        }
+                        wrapper.addEventListener('click', function(e) {
+                            if (e.target === wrapper || e.target === thumb) {
+                                playVideo();
+                            }
+                        });
+                    }
+                });
+            });
+        })();
+        </script>
 
         <?php
     }
