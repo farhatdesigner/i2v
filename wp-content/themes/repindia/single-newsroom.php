@@ -8,18 +8,31 @@ $newscategories = get_the_category();
 		?>
         <style>
             .socialshare_section {
-                display: flex;
+                display: none;
                 flex-direction: column;
                 gap: 20px;
                 max-width: 56px;
+                position: fixed;
+                right: 80px;
+                top: 128px;
+                opacity: 0;
+                transition: opacity 0.3s ease;
             }
+
+            .socialshare_section.stick_social {
+                display: flex;
+                opacity: 1;
+            }
+
+
             .reading-progress {
                 position: relative;
-                /* right: 24px;
-                bottom: 120px; */
                 width: 56px;
                 height: 56px;
                 z-index: 999;
+                min-width: 56px;
+                background: #F2F5FA;
+                border-radius: 100%;
             }
             .reading-progress svg { width: 100%;height: 100%; }
             .reading-progress .bg { fill: none;stroke: #e6e6e6;stroke-width: 3; }
@@ -51,6 +64,23 @@ $newscategories = get_the_category();
                 display: inline-block;
                 padding: 4px 16px;
             }
+            .elementor-element.newsroom_detail_content {
+                position: relative;
+            }
+            @media(max-width: 768px){
+                .socialshare_section{
+                    flex-direction: row;
+                    right: unset;
+                    top: unset;
+                    bottom: 0;
+                    z-index: 2;
+                }
+                .socialshare_section ul.shocial_media {
+                    max-width: max-content;
+                    width: auto;
+                    flex-direction: row;
+                }
+            }
 
         </style>
     <!-- <div class="custom-container">
@@ -64,4 +94,64 @@ $newscategories = get_the_category();
 	<?php 
 	}
 	?>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const triggerSection = document.querySelector(
+                '.elementor-element.trigger_section' // ← section ABOVE
+            );
+
+            const parentSection = document.querySelector(
+                '.elementor-element.newsroom_detail_content'
+            );
+
+            const social = document.querySelector('.socialshare_section');
+
+            if (!triggerSection || !parentSection || !social) return;
+
+            let triggerPassed = false;
+            let insideParent = false;
+
+            // Observer for trigger section
+            const triggerObserver = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach(entry => {
+                        triggerPassed = !entry.isIntersecting;
+                        toggleSocial();
+                    });
+                },
+                {
+                    root: null,
+                    threshold: 0,
+                }
+            );
+
+            // Observer for parent section
+            const parentObserver = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach(entry => {
+                        insideParent = entry.isIntersecting;
+                        toggleSocial();
+                    });
+                },
+                {
+                    root: null,
+                    threshold: 0,
+                }
+            );
+
+            function toggleSocial() {
+                if (triggerPassed && insideParent) {
+                    social.classList.add('stick_social');
+                } else {
+                    social.classList.remove('stick_social');
+                }
+            }
+
+            triggerObserver.observe(triggerSection);
+            parentObserver.observe(parentSection);
+        });
+        </script>
+
+
+
 <?php get_footer(); ?>

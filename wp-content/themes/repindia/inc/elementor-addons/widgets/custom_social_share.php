@@ -84,13 +84,14 @@ class Custom_Social_Share extends Widget_Base {
             <style>
                 .socialshare_section ul.shocial_media{
                     max-width: 62px;
+                    width: 62px;
                     background: #fff;
                     display: flex;
                     flex-direction: column;
                     padding: 20px;
                     border-radius: 100px;
                     margin: 0;
-                    gap: 4px;
+                    gap: 20px;
                 }
                 .socialshare_section .shocial_media li a img,
                 .socialshare_section .shocial_media li button img {
@@ -111,6 +112,11 @@ class Custom_Social_Share extends Widget_Base {
                     background: transparent;
                     padding: 0;
                     max-width: 22px;
+                }
+                .socialshare_section ul.shocial_media li {
+                    width: 23px;
+                    max-width: 23px;
+                    height: 22px;
                 }
                 .socialshare_section .tooltip { position: relative;display: inline-block;opacity: 1;z-index: 2; }
                 .socialshare_section .tooltip .tooltiptext { visibility: hidden;width: 140px;background-color: #555;color: #fff;text-align: center;border-radius: 6px;padding: 5px;position: absolute;z-index: 1;bottom: 80%;left: 50%;margin-left: -75px;opacity: 0;transition: opacity 0.3s; }
