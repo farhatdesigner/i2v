@@ -46,6 +46,9 @@ class Widget_Loader
 		require_once(__DIR__.'/widgets/custom_career_list.php');
 		require_once(__DIR__.'/widgets/video_analytics.php');
 		require_once(__DIR__.'/widgets/hotel_security_map.php');
+		require_once(__DIR__.'/widgets/custom_resource_list.php');
+		require_once(__DIR__.'/widgets/custom_social_share.php');
+		require_once(__DIR__.'/widgets/custom_latest_resource.php');
 		
     }
     public function register_widgets()
@@ -83,6 +86,10 @@ class Widget_Loader
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Career_List() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Video_Analytics() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Hotel_Security_Map() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Resource_List() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Social_Share() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Latest_Resource() );
+		
     }
 	public function __construct()
 	{

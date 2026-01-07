@@ -1187,7 +1187,7 @@ class Custom_Testimonial extends Widget_Base
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-wrapper { 
                 position: relative; 
                 width: 100%; 
-                padding: 18px 20px; 
+                padding: 18px 60px; 
                 box-sizing: border-box;
                 overflow: visible;
             }
