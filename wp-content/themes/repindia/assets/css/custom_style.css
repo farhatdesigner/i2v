@@ -801,7 +801,7 @@ h2 {
   margin: 0 0 20px;
   /* text-transform: capitalize; */
   transition: all 0.4s ease;
-  color: #fff;
+  color: rgb(255 255 255 / 90%);
 }
 
 .hero-style .slide-text p {
@@ -1506,7 +1506,7 @@ label.form-label.required_note-demo {
   max-width: 100%;
   content: "";
   background: #4a5673;
-  height: 3px;
+  height: 2px;
   margin: 0 auto;
   bottom: 4px;
   position: absolute;
