@@ -5,11 +5,6 @@
 <?php get_header(); ?>
 
 
-
-<style>
-
-</style>
-
 <?php the_content(); ?>
 
 
