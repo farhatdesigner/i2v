@@ -657,6 +657,7 @@ class Custom_Blog_Filter extends Widget_Base
                 grid-template-columns: repeat(<?php echo esc_attr($columns); ?>, 1fr);
                 gap: 28px;
             }
+            .custom-blog-filter-posts.noblogdiv{ display: inline-block;width: 100%;height: 100%; }
             .custom-blog-filter-card {
                 display: flex;
                 flex-direction: column;
@@ -752,6 +753,11 @@ class Custom_Blog_Filter extends Widget_Base
                 border-radius: 12px;
                 margin: 20px 0;
                 box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
             }
             .custom-blog-filter-no-results-icon {
                 width: 120px;
@@ -850,12 +856,14 @@ class Custom_Blog_Filter extends Widget_Base
                 .custom-blog-filter-posts {
                     grid-template-columns: repeat(3, 1fr);
                 }
+                .custom-blog-filter-posts.noblogdiv{ display: inline-block;width: 100%;height: 100%; }
             }
             @media (max-width: 768px) {
                 .custom-blog-filter-posts {
                     grid-template-columns: repeat(2, 1fr);
                     gap: 5px;
                 }
+                .custom-blog-filter-posts.noblogdiv{ display: inline-block;width: 100%;height: 100%; }
                 .custom-blog-filter-search {
                     margin-bottom: 15px;
                     padding-bottom: 15px;
@@ -987,10 +995,18 @@ class Custom_Blog_Filter extends Widget_Base
             
             <!-- Content Area -->
             <div class="custom-blog-filter-content">
-                <div class="custom-blog-filter-posts" id="blog-posts-<?php echo esc_attr($this->get_id()); ?>">
+                <?php 
+                $render_query = new \WP_Query($query_args);
+                if ($render_query->have_posts()) {
+                   $validvar = '';
+                }else{
+                    $validvar = 'noblogdiv';
+                }
+                ?>
+                <div class="custom-blog-filter-posts <?php echo esc_attr($validvar); ?>" id="blog-posts-<?php echo esc_attr($this->get_id()); ?>">
                     <?php 
                     // Fresh query to render posts
-                    $render_query = new \WP_Query($query_args);
+                    
                     if ($render_query->have_posts()) : 
                         while ($render_query->have_posts()) : $render_query->the_post(); 
                             $post_id = get_the_ID();
@@ -1062,12 +1078,7 @@ class Custom_Blog_Filter extends Widget_Base
                     else : ?>
                         <div class="custom-blog-filter-no-results">
                             <div class="custom-blog-filter-no-results-icon">
-                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="11" cy="11" r="8" stroke="#0099ED" stroke-width="2" fill="none"/>
-                                    <path d="m21 21-4.35-4.35" stroke="#0099ED" stroke-width="2" stroke-linecap="round"/>
-                                    <path d="M11 8.5C10.5 8.5 10 8.7 9.6 9.1C9.2 9.5 9 10 9 10.5" stroke="#0099ED" stroke-width="2" stroke-linecap="round" fill="none"/>
-                                    <circle cx="11" cy="14" r="1" fill="#0099ED"/>
-                                </svg>
+                                <img src="<?php echo esc_url(home_url('/wp-content/uploads/2026/01/no-result.gif')); ?>" alt="No results" />
                             </div>
                             <h3><?php esc_html_e('No results found...', 'repindia'); ?></h3>
                             <p><?php esc_html_e('Please try to use different keyword or use different filter.', 'repindia'); ?></p>
@@ -1146,6 +1157,7 @@ class Custom_Blog_Filter extends Widget_Base
         <script>
         (function() {
             var widgetId = '<?php echo esc_js($this->get_id()); ?>';
+            var baseUrl = '<?php echo esc_js(home_url()); ?>';
             var container = document.getElementById('custom-blog-filter-' + widgetId);
             if (!container) return;
             
@@ -1311,15 +1323,13 @@ class Custom_Blog_Filter extends Widget_Base
                 // Show no results message if needed
                 var noResultsEl = postsContainer.querySelector('.custom-blog-filter-no-results');
                 if (totalFiltered === 0) {
+                    // Add noblogdiv class when no results found
+                    postsContainer.classList.add('noblogdiv');
                     if (!noResultsEl) {
+                        var noResultImageUrl = baseUrl + '/wp-content/uploads/2026/01/no-result.gif';
                         postsContainer.innerHTML = '<div class="custom-blog-filter-no-results">' +
-                            '<div class="custom-blog-filter-no-results-icon">' +
-                            '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">' +
-                            '<circle cx="11" cy="11" r="8" stroke="#0099ED" stroke-width="2" fill="none"/>' +
-                            '<path d="m21 21-4.35-4.35" stroke="#0099ED" stroke-width="2" stroke-linecap="round"/>' +
-                            '<path d="M11 8.5C10.5 8.5 10 8.7 9.6 9.1C9.2 9.5 9 10 9 10.5" stroke="#0099ED" stroke-width="2" stroke-linecap="round" fill="none"/>' +
-                            '<circle cx="11" cy="14" r="1" fill="#0099ED"/>' +
-                            '</svg>' +
+                            '<div class="custom-blog-filter-no-results-icon">' + 
+                            '<img src="' + escapeHtml(noResultImageUrl) + '" alt="No results" />' +
                             '</div>' +
                             '<h3>No results found...</h3>' +
                             '<p>Please try to use different keyword or use different filter.</p>' +
@@ -1327,6 +1337,8 @@ class Custom_Blog_Filter extends Widget_Base
                     }
                     if (loadMoreBtn) loadMoreBtn.classList.add('hidden');
                 } else {
+                    // Remove noblogdiv class when results are found
+                    postsContainer.classList.remove('noblogdiv');
                     if (noResultsEl) {
                         noResultsEl.remove();
                     }
