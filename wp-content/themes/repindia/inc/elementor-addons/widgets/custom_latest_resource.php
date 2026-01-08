@@ -106,18 +106,6 @@ class Custom_Latest_Resource extends Widget_Base
             ]
         );
 
-        // Post Type Selection
-        $this->add_control(
-            'post_type',
-            [
-                'label' => __('Post Type', 'repindia'),
-                'type' => Controls_Manager::SELECT,
-                'options' => $this->get_post_types(),
-                'default' => 'post',
-                'label_block' => true,
-            ]
-        );
-
         // Columns
         $this->add_control(
             'columns',
@@ -163,68 +151,60 @@ class Custom_Latest_Resource extends Widget_Base
 
         $this->end_controls_section();
 
-        // Dynamically add taxonomy sections
-        $all_taxonomies = $this->get_all_taxonomies();
+        // Add only newsroom_type taxonomy filter section
+        $this->start_controls_section(
+            'section_taxonomy_newsroom_type',
+            [
+                'label' => __('Filter by Newsroom Type', 'repindia'),
+                'tab' => Controls_Manager::TAB_CONTENT,
+            ]
+        );
+
+        // Add control to enable/disable newsroom_type filter
+        $this->add_control(
+            'taxonomy_newsroom_type_enable',
+            [
+                'label' => __('Filter by Newsroom Type', 'repindia'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Yes', 'repindia'),
+                'label_off' => __('No', 'repindia'),
+                'return_value' => 'yes',
+                'default' => 'no',
+            ]
+        );
+
+        // Get terms for newsroom_type taxonomy
+        $terms = $this->get_taxonomy_terms('newsroom_type');
         
-        foreach ($all_taxonomies as $taxonomy_name => $taxonomy_data) {
-            $taxonomy_label = $taxonomy_data['label'];
-            $object_types = $taxonomy_data['object_type'];
-            
-            // Create a section for each taxonomy
-            $this->start_controls_section(
-                'section_taxonomy_' . $taxonomy_name,
-                [
-                    'label' => sprintf(__('Filter by %s', 'repindia'), $taxonomy_label),
-                    'tab' => Controls_Manager::TAB_CONTENT,
-                ]
-            );
-
-            // Add control to enable/disable this taxonomy filter
+        if (!empty($terms)) {
             $this->add_control(
-                'taxonomy_' . $taxonomy_name . '_enable',
+                'taxonomy_newsroom_type_terms',
                 [
-                    'label' => sprintf(__('Filter by %s', 'repindia'), $taxonomy_label),
-                    'type' => Controls_Manager::SWITCHER,
-                    'label_on' => __('Yes', 'repindia'),
-                    'label_off' => __('No', 'repindia'),
-                    'return_value' => 'yes',
-                    'default' => 'no',
+                    'label' => __('Select Newsroom Type', 'repindia'),
+                    'type' => Controls_Manager::SELECT2,
+                    'options' => $terms,
+                    'multiple' => true,
+                    'label_block' => true,
+                    'condition' => [
+                        'taxonomy_newsroom_type_enable' => 'yes',
+                    ],
                 ]
             );
-
-            // Get terms for this taxonomy
-            $terms = $this->get_taxonomy_terms($taxonomy_name);
-            
-            if (!empty($terms)) {
-                $this->add_control(
-                    'taxonomy_' . $taxonomy_name . '_terms',
-                    [
-                        'label' => sprintf(__('Select %s', 'repindia'), $taxonomy_label),
-                        'type' => Controls_Manager::SELECT2,
-                        'options' => $terms,
-                        'multiple' => true,
-                        'label_block' => true,
-                        'condition' => [
-                            'taxonomy_' . $taxonomy_name . '_enable' => 'yes',
-                        ],
-                    ]
-                );
-            } else {
-                $this->add_control(
-                    'taxonomy_' . $taxonomy_name . '_notice',
-                    [
-                        'type' => Controls_Manager::RAW_HTML,
-                        'raw' => sprintf(__('No terms found for %s.', 'repindia'), $taxonomy_label),
-                        'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
-                        'condition' => [
-                            'taxonomy_' . $taxonomy_name . '_enable' => 'yes',
-                        ],
-                    ]
-                );
-            }
-
-            $this->end_controls_section();
+        } else {
+            $this->add_control(
+                'taxonomy_newsroom_type_notice',
+                [
+                    'type' => Controls_Manager::RAW_HTML,
+                    'raw' => __('No terms found for Newsroom Type.', 'repindia'),
+                    'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+                    'condition' => [
+                        'taxonomy_newsroom_type_enable' => 'yes',
+                    ],
+                ]
+            );
         }
+
+        $this->end_controls_section();
     }
 
     /**
@@ -232,7 +212,8 @@ class Custom_Latest_Resource extends Widget_Base
      */
     private function build_query_args($settings)
     {
-        $post_type = !empty($settings['post_type']) ? sanitize_text_field($settings['post_type']) : 'post';
+        // Hardcode post type to 'newsroom'
+        $post_type = 'newsroom';
         $posts_per_page = !empty($settings['posts_per_page']) ? intval($settings['posts_per_page']) : 12;
         $show_pagination = !empty($settings['show_pagination']) && $settings['show_pagination'] === 'yes';
         
@@ -255,37 +236,25 @@ class Custom_Latest_Resource extends Widget_Base
             'ignore_sticky_posts' => true,
         ];
         
-        // Build tax_query based on selected taxonomies
+        // Build tax_query based on newsroom_type taxonomy filter only
         $tax_query = [];
-        $all_taxonomies = $this->get_all_taxonomies();
         
-        foreach ($all_taxonomies as $taxonomy_name => $taxonomy_data) {
-            $enable_key = 'taxonomy_' . $taxonomy_name . '_enable';
-            $terms_key = 'taxonomy_' . $taxonomy_name . '_terms';
+        // Check for newsroom_type filter
+        if (!empty($settings['taxonomy_newsroom_type_enable']) && $settings['taxonomy_newsroom_type_enable'] === 'yes') {
+            $selected_terms = !empty($settings['taxonomy_newsroom_type_terms']) ? $settings['taxonomy_newsroom_type_terms'] : [];
             
-            if (!empty($settings[$enable_key]) && $settings[$enable_key] === 'yes') {
-                $selected_terms = !empty($settings[$terms_key]) ? $settings[$terms_key] : [];
-                
-                if (!empty($selected_terms) && is_array($selected_terms)) {
-                    // Check if taxonomy is registered to the selected post type
-                    $object_types = $taxonomy_data['object_type'];
-                    if (in_array($post_type, $object_types)) {
-                        $selected_terms = array_map('intval', $selected_terms);
-                        $tax_query[] = [
-                            'taxonomy' => $taxonomy_name,
-                            'field' => 'term_id',
-                            'terms' => $selected_terms,
-                        ];
-                    }
-                }
+            if (!empty($selected_terms) && is_array($selected_terms)) {
+                $selected_terms = array_map('intval', $selected_terms);
+                $tax_query[] = [
+                    'taxonomy' => 'newsroom_type',
+                    'field' => 'term_id',
+                    'terms' => $selected_terms,
+                ];
             }
         }
         
         // Add tax_query if we have taxonomy filters
         if (!empty($tax_query)) {
-            if (count($tax_query) > 1) {
-                $tax_query['relation'] = 'AND';
-            }
             $args['tax_query'] = $tax_query;
         }
         
@@ -293,26 +262,18 @@ class Custom_Latest_Resource extends Widget_Base
     }
 
     /**
-     * Get first taxonomy term for a post
+     * Get first taxonomy term for a post from newsroom_categories
      */
     private function get_post_taxonomy_term($post_id, $post_type)
     {
-        $all_taxonomies = $this->get_all_taxonomies();
+        // Get terms from newsroom_categories taxonomy only
+        $terms = get_the_terms($post_id, 'newsroom_categories');
         
-        foreach ($all_taxonomies as $taxonomy_name => $taxonomy_data) {
-            $object_types = $taxonomy_data['object_type'];
-            
-            // Check if taxonomy is registered to the selected post type
-            if (in_array($post_type, $object_types)) {
-                $terms = get_the_terms($post_id, $taxonomy_name);
-                
-                if (!empty($terms) && !is_wp_error($terms)) {
-                    return [
-                        'name' => $terms[0]->name,
-                        'taxonomy' => $taxonomy_name,
-                    ];
-                }
-            }
+        if (!empty($terms) && !is_wp_error($terms) && !empty($terms[0]->name)) {
+            return [
+                'name' => $terms[0]->name,
+                'taxonomy' => 'newsroom_categories',
+            ];
         }
         
         return null;
@@ -347,7 +308,8 @@ class Custom_Latest_Resource extends Widget_Base
     {
         $settings = $this->get_settings_for_display();
         $columns = !empty($settings['columns']) ? intval($settings['columns']) : 4;
-        $post_type = !empty($settings['post_type']) ? sanitize_text_field($settings['post_type']) : 'post';
+        // Hardcode post type to 'newsroom'
+        $post_type = 'newsroom';
         
         // Don't run query in Elementor editor preview unnecessarily
         if (\Elementor\Plugin::$instance->editor->is_edit_mode()) {
@@ -451,7 +413,6 @@ class Custom_Latest_Resource extends Widget_Base
                 width: fit-content;
                 margin-bottom: 0;
                 border: 1px solid #E6EBF2;
-                font-family: "Proxima Nova";
                 font-size: 14px;
                 font-style: normal;
                 font-weight: 500;
@@ -506,6 +467,8 @@ class Custom_Latest_Resource extends Widget_Base
                 padding: 40px;
                 color: #666;
             }
+            .js-dark .custom-latest-resource-card,.js-dark .custom-latest-resource-card a{ background: #262a30; }
+            .js-dark .custom-latest-resource-taxonomy{ background: #464A4F;border: 1px solid #464A4F; }
             @media (max-width: 1200px) {
                 .custom-latest-resource-posts {
                     grid-template-columns: repeat(3, 1fr);
@@ -514,13 +477,16 @@ class Custom_Latest_Resource extends Widget_Base
             @media (max-width: 768px) {
                 .custom-latest-resource-posts {
                     grid-template-columns: repeat(2, 1fr);
-                    gap: 20px;
+                    gap: 5px;
                 }
-            }
-            @media (max-width: 480px) {
-                .custom-latest-resource-posts {
-                    grid-template-columns: 1fr;
-                }
+                .custom-latest-resource-image-wrapper img,.custom-latest-resource-image-wrapper{ height: 170px; }
+                .custom-latest-resource-date-overlay{ padding: 3px 14px;font-size: 12px; }
+                .custom-latest-resource-taxonomy{ padding: 4px 10px;font-size: 12px; }
+                .custom-latest-resource-card-content{ padding: 8px 0;gap: 8px; }
+                .custom-latest-resource-title{ font-size: 18px !important;line-height: 22px; }
+                .custom-blog-filter-card-content{ padding: 8px 0 2px; }
+                .custom-blog-filter-load-more{ margin-top: 30px; }
+                .custom-blog-filter-load-more-btn{ padding: 6px 18px;font-size: 18px; }
             }
         </style>
         
@@ -529,7 +495,8 @@ class Custom_Latest_Resource extends Widget_Base
                 <div class="custom-latest-resource-posts">
                     <?php while ($query->have_posts()) : $query->the_post(); 
                         $post_id = get_the_ID();
-                        $taxonomy_term = $this->get_post_taxonomy_term($post_id, $post_type);
+                        // Get newsroom_categories taxonomy term for display
+                        $taxonomy_term = $this->get_post_taxonomy_term($post_id, 'newsroom');
                         
                         // Get date from ACF field if available, otherwise use default post date
                         $custom_date = get_field('custom_created_date', $post_id);
@@ -601,7 +568,7 @@ class Custom_Latest_Resource extends Widget_Base
             <?php endif; ?>
         </div>
         
-        <?php
+<?php
         wp_reset_postdata();
     }
 }
