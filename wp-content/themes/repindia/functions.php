@@ -456,13 +456,18 @@ add_action( 'wp_enqueue_scripts', 'mytheme_blog_scroll_assets' );
  * Increments search count when a search is performed
  */
 function repindia_track_search() {
-	if (!is_search() || empty(get_search_query())) {
+	if (!is_search()) {
 		return;
 	}
 	
-	$search_term = sanitize_text_field(get_search_query());
-	if (empty($search_term)) {
+	$search_query = get_search_query();
+	if (empty($search_query)) {
 		return;
+	}
+	
+	$search_term = sanitize_text_field($search_query);
+	if (empty($search_term) || strlen($search_term) < 2) {
+		return; // Skip very short search terms
 	}
 	
 	// Get current popular searches
@@ -472,7 +477,11 @@ function repindia_track_search() {
 	}
 	
 	// Increment count for this search term (case-insensitive)
-	$term_lower = strtolower($search_term);
+	$term_lower = strtolower(trim($search_term));
+	if (empty($term_lower)) {
+		return;
+	}
+	
 	if (isset($popular_searches[$term_lower])) {
 		$popular_searches[$term_lower]['count']++;
 		$popular_searches[$term_lower]['term'] = $search_term; // Keep original casing
@@ -492,7 +501,7 @@ add_action('template_redirect', 'repindia_track_search');
  * Get popular searches (sorted by count)
  * Returns top N searches
  */
-function repindia_get_popular_searches($limit = 10) {
+function repindia_get_popular_searches($limit = 5) {
 	$popular_searches = get_transient('repindia_popular_searches');
 	
 	if (!is_array($popular_searches) || empty($popular_searches)) {
@@ -504,7 +513,8 @@ function repindia_get_popular_searches($limit = 10) {
 		return $b['count'] - $a['count'];
 	});
 	
-	// Return top N
+	// Return top N (limit to 5)
+	$limit = min($limit, 5);
 	$popular_searches = array_slice($popular_searches, 0, $limit);
 	
 	// Return just the terms
@@ -523,7 +533,12 @@ function repindia_ajax_get_popular_searches() {
 		return;
 	}
 	
-	$searches = repindia_get_popular_searches(10);
+	$searches = repindia_get_popular_searches(5);
+	
+	// Ensure we return an array (even if empty)
+	if (!is_array($searches)) {
+		$searches = array();
+	}
 	
 	wp_send_json_success($searches);
 }

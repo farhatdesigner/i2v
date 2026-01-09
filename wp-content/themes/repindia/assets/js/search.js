@@ -136,6 +136,10 @@
     function openPopup() {
         popup.style.display = 'block';
         document.body.style.overflow = 'hidden';
+        
+        // Refresh popular searches when popup opens (in case new searches were made)
+        loadPopularSearches();
+        
         if (searchInput) {
             setTimeout(function() {
                 searchInput.focus();
@@ -244,28 +248,41 @@
         if (cached) {
             try {
                 const data = JSON.parse(cached);
-                renderPopularSearches(data);
-                return;
+                if (Array.isArray(data) && data.length > 0) {
+                    renderPopularSearches(data);
+                    return;
+                }
             } catch (e) {
                 // Invalid cache, continue to fetch
             }
         }
         
+        // Check if repindiaSearch is available
+        if (typeof repindiaSearch === 'undefined' || !repindiaSearch.ajaxUrl) {
+            renderPopularSearches([]);
+            return;
+        }
+        
         // Fetch from server
-        fetch(repindiaSearch.ajaxUrl + '?action=repindia_get_popular_searches&nonce=' + repindiaSearch.nonce)
+        const ajaxUrl = repindiaSearch.ajaxUrl + '?action=repindia_get_popular_searches&nonce=' + repindiaSearch.nonce;
+        
+        fetch(ajaxUrl)
             .then(function(response) {
-                if (!response.ok) throw new Error('Network response was not ok');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.status);
+                }
                 return response.json();
             })
             .then(function(data) {
-                if (data.success && data.data) {
-                    // Cache for session
+                if (data && data.success && Array.isArray(data.data)) {
+                    // Limit to 5 and cache for session
+                    const limitedData = data.data.slice(0, 5);
                     try {
-                        sessionStorage.setItem('repindia_popular_searches', JSON.stringify(data.data));
+                        sessionStorage.setItem('repindia_popular_searches', JSON.stringify(limitedData));
                     } catch (e) {
                         // Ignore cache errors
                     }
-                    renderPopularSearches(data.data);
+                    renderPopularSearches(limitedData);
                 } else {
                     renderPopularSearches([]);
                 }
@@ -282,15 +299,27 @@
     function renderPopularSearches(searches) {
         if (!popularList) return;
         
-        if (!searches || searches.length === 0) {
+        // Ensure searches is an array
+        if (!Array.isArray(searches)) {
+            searches = [];
+        }
+        
+        // Limit to max 5 items
+        searches = searches.slice(0, 5);
+        
+        if (searches.length === 0) {
             popularList.innerHTML = '<li class="search-popup-empty">No popular searches</li>';
             return;
         }
         
         popularList.innerHTML = searches.map(function(item) {
-            const term = item.term || item;
+            // Handle both string and object formats
+            const term = (typeof item === 'string') ? item : (item.term || item);
+            if (!term) return '';
             const url = getSearchUrl(term);
             return '<li><a href="' + escapeHtml(url) + '" class="search-popup-term">' + escapeHtml(term) + '</a></li>';
+        }).filter(function(html) {
+            return html !== '';
         }).join('');
         
         // Add click handlers
