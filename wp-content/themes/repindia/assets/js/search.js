@@ -371,11 +371,35 @@
 
     /**
      * Get search URL for a term
+     * Uses WordPress home URL to handle subdirectories and different domains
      */
     function getSearchUrl(term) {
-        const baseUrl = window.location.origin;
-        const searchPath = '/?s=' + encodeURIComponent(term);
-        return baseUrl + searchPath;
+        if (!term || term.trim() === '') {
+            return '';
+        }
+        
+        // Use WordPress home URL if available (handles subdirectories and different domains)
+        let baseUrl = '';
+        if (typeof repindiaSearch !== 'undefined' && repindiaSearch.homeUrl) {
+            baseUrl = repindiaSearch.homeUrl;
+        } else {
+            // Fallback: construct from current location
+            baseUrl = window.location.protocol + '//' + window.location.host;
+            const pathname = window.location.pathname;
+            // Remove trailing slashes and get base path
+            const basePath = pathname.replace(/\/[^\/]*$/, '').replace(/\/+$/, '');
+            if (basePath) {
+                baseUrl += basePath;
+            }
+            baseUrl += '/';
+        }
+        
+        // Ensure baseUrl ends with exactly one /
+        baseUrl = baseUrl.replace(/\/+$/, '') + '/';
+        
+        // Build search URL with proper encoding
+        const encodedTerm = encodeURIComponent(term.trim());
+        return baseUrl + '?s=' + encodedTerm;
     }
 
     /**

@@ -135,7 +135,8 @@ if (! function_exists('repindia_load_theme_scripts_and_styles')) {
 		wp_enqueue_script('repindia-search', get_template_directory_uri() . '/assets/js/search.js', array(), REPINDIA_THEME_VERSION, true);
 		wp_localize_script('repindia-search', 'repindiaSearch', array(
 			'ajaxUrl' => admin_url('admin-ajax.php'),
-			'nonce' => wp_create_nonce('repindia_search_nonce')
+			'nonce' => wp_create_nonce('repindia_search_nonce'),
+			'homeUrl' => esc_url(home_url('/'))
 		));
 		
 		// Save Swiper 4.5.1 reference before Elementor's Swiper 8 loads (only on homepage)
