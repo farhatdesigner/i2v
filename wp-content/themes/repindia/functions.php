@@ -113,6 +113,7 @@ if (! function_exists('repindia_load_theme_scripts_and_styles')) {
 			wp_enqueue_style('repindia-style', get_stylesheet_uri(), null, REPINDIA_THEME_VERSION, 'all');
 			wp_enqueue_style('dark-theme', get_template_directory_uri() . '/assets/css/dark_theme.css', null, REPINDIA_THEME_VERSION, 'all');
 			wp_enqueue_style('repindia-responsive', get_template_directory_uri() . '/assets/css/responsive.css', null, REPINDIA_THEME_VERSION, 'all');
+			wp_enqueue_style('repindia-search', get_template_directory_uri() . '/assets/css/search.css', null, REPINDIA_THEME_VERSION, 'all');
 
 		/* Register Scripts */
 		// Deregister WordPress default jQuery
@@ -130,6 +131,12 @@ if (! function_exists('repindia_load_theme_scripts_and_styles')) {
 		wp_enqueue_script('repindia-global', get_template_directory_uri() . '/assets/js/global.js', array('jquery', 'swiper-min', 'gsap-min', 'scrolltrigger-min', 'lenis-min'), REPINDIA_THEME_VERSION, true);
 		wp_enqueue_script('repindia-custom', get_template_directory_uri() . '/assets/js/custom.js', array('jquery', 'swiper-min', 'gsap-min', 'scrolltrigger-min', 'lenis-min'), REPINDIA_THEME_VERSION, true);
 		
+		// Enqueue search script
+		wp_enqueue_script('repindia-search', get_template_directory_uri() . '/assets/js/search.js', array(), REPINDIA_THEME_VERSION, true);
+		wp_localize_script('repindia-search', 'repindiaSearch', array(
+			'ajaxUrl' => admin_url('admin-ajax.php'),
+			'nonce' => wp_create_nonce('repindia_search_nonce')
+		));
 		
 		// Save Swiper 4.5.1 reference before Elementor's Swiper 8 loads (only on homepage)
 		if (is_front_page()) {
@@ -443,5 +450,84 @@ function mytheme_blog_scroll_assets() {
     );
 }
 add_action( 'wp_enqueue_scripts', 'mytheme_blog_scroll_assets' );
+
+/**
+ * Track popular searches
+ * Increments search count when a search is performed
+ */
+function repindia_track_search() {
+	if (!is_search() || empty(get_search_query())) {
+		return;
+	}
+	
+	$search_term = sanitize_text_field(get_search_query());
+	if (empty($search_term)) {
+		return;
+	}
+	
+	// Get current popular searches
+	$popular_searches = get_transient('repindia_popular_searches');
+	if (!is_array($popular_searches)) {
+		$popular_searches = array();
+	}
+	
+	// Increment count for this search term (case-insensitive)
+	$term_lower = strtolower($search_term);
+	if (isset($popular_searches[$term_lower])) {
+		$popular_searches[$term_lower]['count']++;
+		$popular_searches[$term_lower]['term'] = $search_term; // Keep original casing
+	} else {
+		$popular_searches[$term_lower] = array(
+			'term' => $search_term,
+			'count' => 1
+		);
+	}
+	
+	// Store for 7 days
+	set_transient('repindia_popular_searches', $popular_searches, 7 * DAY_IN_SECONDS);
+}
+add_action('template_redirect', 'repindia_track_search');
+
+/**
+ * Get popular searches (sorted by count)
+ * Returns top N searches
+ */
+function repindia_get_popular_searches($limit = 10) {
+	$popular_searches = get_transient('repindia_popular_searches');
+	
+	if (!is_array($popular_searches) || empty($popular_searches)) {
+		return array();
+	}
+	
+	// Sort by count (descending)
+	usort($popular_searches, function($a, $b) {
+		return $b['count'] - $a['count'];
+	});
+	
+	// Return top N
+	$popular_searches = array_slice($popular_searches, 0, $limit);
+	
+	// Return just the terms
+	return array_map(function($item) {
+		return $item['term'];
+	}, $popular_searches);
+}
+
+/**
+ * AJAX handler for getting popular searches
+ */
+function repindia_ajax_get_popular_searches() {
+	// Verify nonce
+	if (!isset($_GET['nonce']) || !wp_verify_nonce($_GET['nonce'], 'repindia_search_nonce')) {
+		wp_send_json_error(array('message' => 'Invalid nonce'));
+		return;
+	}
+	
+	$searches = repindia_get_popular_searches(10);
+	
+	wp_send_json_success($searches);
+}
+add_action('wp_ajax_repindia_get_popular_searches', 'repindia_ajax_get_popular_searches');
+add_action('wp_ajax_nopriv_repindia_get_popular_searches', 'repindia_ajax_get_popular_searches');
 
 

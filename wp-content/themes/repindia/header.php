@@ -248,10 +248,10 @@ global $repindia_option;
                             if( isset($repindia_option['search_btn_switch']) && $repindia_option['search_btn_switch'] == 1)
                             { ?>
                                 <li class="search_switch">
-                                    <a href="<?php echo esc_url(home_url('/')); ?>">
+                                    <a href="javascript:void(0)" class="search-popup-trigger" aria-label="Search">
                                         <span>
                                             <img class="white-theme-img" src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/search.svg" alt="Search">
-                                            <!-- <img class="black-theme-img" src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/search_black.svg" alt="Search"> -->
+                                            <img class="black-theme-img" src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/search_black.svg" alt="Search">
                                         </span>
                                     </a>
                                 </li>
@@ -279,5 +279,53 @@ global $repindia_option;
                 </nav>
             </div>
         </header>
+        
+        <!-- Search Popup -->
+        <div id="search-popup" class="search-popup-overlay" style="display: none;">
+            <div class="search-popup-container">
+                <form role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>" class="search-popup-form" autocomplete="off">
+                    <div class="search-input-wrapper">
+                        <svg class="search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21.73 20.44L18.1 16.81C21.27 12.93 20.69 7.20997 16.81 4.03997C12.93 0.879974 7.22 1.44997 4.05 5.32997C0.880004 9.20997 1.46 14.93 5.34 18.1C8.68 20.83 13.48 20.83 16.82 18.1L20.45 21.73C20.8 22.09 21.38 22.09 21.73 21.73C22.09 21.38 22.09 20.8 21.73 20.45V20.44ZM11.11 18.37C7.1 18.37 3.85 15.12 3.85 11.11C3.85 7.09997 7.1 3.84997 11.11 3.84997C15.12 3.84997 18.37 7.09997 18.37 11.11C18.37 15.12 15.12 18.37 11.11 18.37Z" fill="currentColor"/>
+                        </svg>
+                        <input type="text" name="s" class="search-popup-input" placeholder="Search" autocomplete="off" required>
+                        <button type="button" class="search-popup-close" aria-label="Close search">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </button>
+                        <button type="button" class="search-popup-theme-toggle" aria-label="Toggle theme">
+                            <svg class="icon-moon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+                <div class="search-popup-content">
+                    <div class="search-popup-columns">
+                        <div class="search-popup-column">
+                            <h4 class="search-popup-heading">Recent search</h4>
+                            <ul class="search-popup-list" id="recent-searches-list">
+                                <!-- Populated by JavaScript -->
+                            </ul>
+                        </div>
+                        <div class="search-popup-column">
+                            <h4 class="search-popup-heading">Popular search</h4>
+                            <ul class="search-popup-list" id="popular-searches-list">
+                                <!-- Populated by AJAX -->
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="search-popup-footer">
+                        <a href="<?php echo esc_url($repindia_option['demo_btn_url'] ?? '#'); ?>" class="search-popup-link">Request a demo</a>
+                        <span class="search-popup-separator">•</span>
+                        <a href="<?php echo esc_url(home_url('/i2vs-products/')); ?>" class="search-popup-link">Explore our products</a>
+                        <span class="search-popup-separator">•</span>
+                        <a href="<?php echo esc_url(home_url('/contact/')); ?>" class="search-popup-link">Contact us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <!-- <div id="viewportdiv" class="viewportdiv"> -->
         <div id="mrg-head" class="mrg-head">
