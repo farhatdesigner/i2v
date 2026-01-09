@@ -54,6 +54,7 @@ if (! function_exists('repindia_theme_setup')) {
 				'footer-company-menu'   	=> esc_html__('Footer Company Menu', 'repindia'),
 				'footer-resource-menu'   => esc_html__('Footer Resource Menu', 'repindia'),
 				'footer-legal-menu'   => esc_html__('Footer Legal Menu', 'repindia'),
+				'search-menu'   => esc_html__('Search Menu', 'repindia'),
 			)
 		);
 	}
