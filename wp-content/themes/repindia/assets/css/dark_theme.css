@@ -488,7 +488,8 @@ header li.burger-icon .icon-sun,
     background-color: transparent !important;
 }
  .js-dark .customtabsmart .smart-tabsautoscroll {
-    background-color: #464a4f !important;
+    background-color: #262A30 !important;
+    border-color: #262A30;
 }
 
  .js-dark .elementor-testimonial__text, .js-dark .customtabsmart .smart-tabsautoscroll li .smart-tab-link {
@@ -538,13 +539,13 @@ header li.burger-icon .icon-sun,
   padding: 20px;
 }
 
-.card-img_single .black_theme_img, .photo_custom .black_theme_img, .black_theme_img {
+.card-img_single .black_theme_img, .photo_custom .black_theme_img {
   display: none;
 }
-.js-dark .card-img_single .black_theme_img, .photo_custom .black_theme_img, .black_theme_img {
+.js-dark .card-img_single .black_theme_img, .photo_custom .black_theme_img{
   display: block;
 }
-.js-dark .card-img_single .white_theme_img, .photo_custom .white_theme_img, .white_theme_img {
+.js-dark .card-img_single .white_theme_img, .photo_custom .white_theme_img {
   display: none;
 }
 /* .js-dark .theme-btn  {background-color:#007ABE;} */
@@ -594,3 +595,5 @@ header li.burger-icon .icon-sun,
 .js-dark .border-dark_grey {
   border-bottom: 1px solid var(--Golbal-others-border-3, rgba(193, 196, 198, 0.20)) !important;
 }
+.js-dark #why_oil{background-color: transparent !important;}
+.js-dark .elementor-6079 .elementor-element.elementor-element-3b5e3305::before {background-color: transparent;}
