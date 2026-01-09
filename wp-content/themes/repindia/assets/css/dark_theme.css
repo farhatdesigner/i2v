@@ -335,7 +335,7 @@ header li.burger-icon .icon-sun,
   color: #d7dbe4 !important;
 }
 .js-dark span.swiper-pagination-bullet {
-  background-color: #464a4f !important;
+  background-color: #262A30  !important;
   opacity: 1;
 }
 .js-dark span.swiper-pagination-bullet.swiper-pagination-bullet-active {
@@ -463,8 +463,13 @@ header li.burger-icon .icon-sun,
 }
 .js-dark .faq_bg .e-n-accordion-item-title {
   background-color: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid var(--Golbal-others-border, rgba(193, 196, 198, 0.10)) !important;
 }
 
+.js-dark .faq_bg .faq-answer {
+  border-left: 1px solid var(--Golbal-others-border-3, rgba(193, 196, 198, 0.10)) !important;
+  border-right: 1px solid var(--Golbal-others-border-3, rgba(193, 196, 198, 0.10)) !important;
+}
 .js-dark .faq_bg .faq-answer:before {
   background: #262a30 !important;
 }
@@ -565,6 +570,20 @@ header li.burger-icon .icon-sun,
 }
 .js-dark .custom-latest-resource-title,.js-dark .custom-blog-filter-title,.js-dark .custom-blog-filter-date-overlay,.js-dark .custom-latest-resource-date-overlay,.js-dark .custom-latest-resource-taxonomy,.js-dark .custom-blog-filter-taxonomy,.js-dark .custom-blog-filter-accordion-header h3,.js-dark .custom-blog-filter-category-item label{ color: #aeb6c9 !important; }
 .js-dark .custom-blog-filter-accordion-toggle svg{ stroke: #aeb6c9 !important; }
+.js-dark .custom-blog-filter-category-count, .js-dark .custom-blog-filter-featured-count,.js-dark .custom-blog-filter-category-item input[type="checkbox"]{ background: #464A4F!important; }
+.js-dark .custom-blog-filter-toggle-slider{ background-color: #464A4F; }
+.js-dark .custom-blog-filter-toggle-slider:before{ background-color: #aeb6c9 !important; }
+
+.js-dark .elementor-6041 .elementor-element.elementor-element-4ef6b97d::before,
+.js-dark .elementor-6041 .elementor-element.elementor-element-40339019::before {
+  background-color: inherit;
+}
+
+.js-dark .deployed_slider  span.swiper-pagination-bullet{
+    background-color: #464A4F !important;
+}
+.js-dark .deployed_slider  span.swiper-pagination-bullet-active{
+    background-color: #74c2ed!important;}
 .js-dark .custom-blog-filter-category-count, .js-dark .custom-blog-filter-featured-count,.js-dark .custom-blog-filter-category-item input[type="checkbox"]{ background: #464A4F!important; }
 .js-dark .custom-blog-filter-toggle-slider{ background-color: #464A4F; }
 .js-dark .custom-blog-filter-toggle-slider:before{ background-color: #aeb6c9 !important; }
