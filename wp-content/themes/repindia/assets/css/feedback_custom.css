@@ -104,7 +104,7 @@ html.lenis body {
   font-size: 32px;
   font-style: normal;
   font-weight: 600;
-  line-height: normal;
+  line-height: 1.2;
 }
 
 .txtflex p {
@@ -177,6 +177,13 @@ html.lenis body {
   font-style: normal;
   font-weight: 600;
   line-height: 24px;
+  padding-bottom: 2px;
+  border-radius: 0;
+  border-bottom: 1px solid #e6ebf2;
+  /* 150% */
+}
+.btn-bolt a:hover {
+  border-bottom: 1px solid #a65b00;
   /* 150% */
 }
 
@@ -207,7 +214,7 @@ html.lenis body {
 
 .accordion_set::before {
   content: "";
-  width: 5px;
+  width: 4px;
   height: 100%;
   background: #3c3f45;
   position: absolute;
@@ -458,11 +465,15 @@ html.lenis body {
   line-height: 125%;
 }
 
+.card-contents ul {
+  margin-top: 12px !important;
+}
 .card-contents p {
   color: var(--Golbal-text-text-3, #aeb6c9);
   font-size: 16px;
   font-weight: 400;
   line-height: 150%;
+  margin-bottom: 0;
 }
 
 .card-contents ul li {
@@ -517,6 +528,10 @@ html.lenis body {
   color: var(--tabs-tab-btn-text-default, #4a5673);
   font-size: 14px;
   font-weight: 500;
+}
+#breadcrumbs > span > span > a:hover {
+  background: #f2f5fa;
+  border: 1px solid #d7dbe4;
 }
 
 span.breadcrumb_last {
@@ -785,7 +800,7 @@ div.pin-spacer > .hz-slider-section {
   font-style: normal;
   font-weight: 500 !important;
   line-height: 34px;
-  margin-bottom: 0;
+  margin-bottom: 4px;
 }
 .hz-slider-section .swiper-slide p {
   color: #5c5c5c;
@@ -800,7 +815,7 @@ div.pin-spacer > .hz-slider-section {
   margin-bottom: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 .hz-slider-section .swiper-slide ul li {
   color: var(--Golbal-text-text-3, #5c5c5c);
@@ -809,6 +824,9 @@ div.pin-spacer > .hz-slider-section {
   line-height: 144.444%;
 }
 
+.hz-slider-section .swiper-slide ul li>span>img {
+  width: 16px;
+}
 .img-50 {
   width: 50%;
 }
@@ -1105,15 +1123,25 @@ div.pin-spacer > .hz-slider-topcaption {
   font-size: 16px;
   font-style: normal;
 }
-.transparent_bg .vaw_accordion_wrap{background-color: transparent;}
+.transparent_bg .vaw_accordion_wrap {
+  background-color: transparent;
+}
 
-.vac_padd-accordion_video>h3, .vac_padd-accordion>h3 {
+.vac_padd-accordion_video > h3,
+.vac_padd-accordion > h3 {
   font-size: 16px;
-  color: #06283D;
+  color: #06283d;
   font-weight: 500 !important;
   margin-bottom: 12px;
 }
 
+.vidplateform .elementor-icon-box-description {
+  margin-top: 2px;
+}
+
+.width_define {
+  max-width: 588px;
+}
 
 @media (min-width: 768px) {
   .hz-slider-topcaption .swiper-slide h2 {
@@ -1361,9 +1389,8 @@ html {
   .customtabsmart .smart-content-inner-text {
     padding: 10px;
   }
-  
-.slider-content {
-  padding: 30px 0 0;
-}
 
+  .slider-content {
+    padding: 30px 0 0;
+  }
 }

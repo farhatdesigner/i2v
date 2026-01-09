@@ -98,12 +98,12 @@ class Cardslisting extends Widget_Base
 
                         <!-- Card 1 -->
                         <li>
-                            <div class="card h-100 border-0 shadow-sm">
+                            <div class="card h-100 border-0">
                                 <div class="card-image">
                                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/crads_land.png" class="card-img-top h-100" alt="Enterprise Video Management Software">
                                 </div>
                                 <div class="card-body">
-                                    <h5 class="card-title">Enterprise Video Management Software (VMS)</h5>
+                                    <h5 class="card-title position-relative">Enterprise Video Management Software (VMS)</h5>
                                     <p class="card-text text-muted">
                                         i2V’s VMS offers centralized surveillance, AI-powered search, and automated failover,
                                         delivering seamless video security for enterprises, public safety, and smart city infrastructure.
@@ -112,7 +112,7 @@ class Cardslisting extends Widget_Base
                                         <span class="badge-custom">Unified interface</span>
                                         <span class="badge-custom">Multi site management</span>
                                         <span class="badge-custom">AI driven insights</span>
-                                        
+                                        <span class="badge-cusotm bg-trans_txt">and more</span>
                                     </div>
                                 </div>
                             </div>
@@ -120,12 +120,12 @@ class Cardslisting extends Widget_Base
 
                         <!-- Card 2 -->
                         <li>
-                            <div class="card h-100 border-0 shadow-sm">
+                            <div class="card h-100 border-0">
                                 <div class="card-image">
                                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/ai-based-video-analytics-vca.webp" class="card-img-top h-100" alt="AI-Based Video Analytics">
                                 </div>
                                 <div class="card-body">
-                                    <h5 class="card-title">AI-Based Video Analytics (VA / VCA)</h5>
+                                    <h5 class="card-title position-relative">AI-Based Video Analytics (VA / VCA)</h5>
                                     <p class="card-text text-muted">
                                     Analyze real-time footage with AI to detect motion, objects, and behaviors—enabling smart monitoring, automated alerts, and better situational awareness across environments.
                                     </p>
@@ -133,7 +133,7 @@ class Cardslisting extends Widget_Base
                                         <span class="badge-custom">Unified interface</span>
                                         <span class="badge-custom">AI driven insights</span>
                                         <span class="badge-custom">Multi site management</span>
-                                        
+                                        <span class="badge-cusotm bg-trans_txt">and more</span>
                                     </div>
                                 </div>
                             </div>
@@ -141,12 +141,12 @@ class Cardslisting extends Widget_Base
 
                         <!-- Card 3 -->
                         <li>
-                            <div class="card h-100 border-0 shadow-sm">
+                            <div class="card h-100 border-0">
                                 <div class="card-image">
                                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/command-and-control-iccc.webp" class="card-img-top h-100" alt="Integrated Command Center">
                                 </div>
                                 <div class="card-body p-4">
-                                    <h5 class="card-title">Integrated/Traffic Command & Control Center (ICCC / PSIM)</h5>
+                                    <h5 class="card-title position-relative">Integrated/Traffic Command & Control Center (ICCC / PSIM)</h5>
                                     <p class="card-text text-muted">
                                     Integrates video, sensors, and alerts into a single dashboard, allowing city operators to monitor incidents, make decisions, and respond in real time.
                                     </p>
@@ -154,7 +154,7 @@ class Cardslisting extends Widget_Base
                                         <span class="badge-custom">Unified interface</span>
                                         <span class="badge-custom">AI driven insights</span>
                                         <span class="badge-custom">Multi site management</span>
-                                        
+                                        <span class="badge-cusotm bg-trans_txt">and more</span>
                                     </div>
                                 </div>
                             </div>
@@ -162,12 +162,12 @@ class Cardslisting extends Widget_Base
 
                         <!-- Card 4 -->
                         <li>
-                            <div class="card h-100 border-0 shadow-sm">
+                            <div class="card h-100 border-0">
                                 <div class="card-image">
                                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/crads_port.webp" class="card-img-top h-100" alt="Integrated Command Center">
                                 </div>
                                 <div class="card-body p-4">
-                                    <h5 class="card-title">AI Based Face Recognition Software (FRS)</h5>
+                                    <h5 class="card-title position-relative">AI Based Face Recognition Software (FRS)</h5>
                                     <p class="card-text text-muted">
                                     Identifies and verifies faces with high accuracy for secure access, attendance automation, and law enforcement applications.
                                     </p>
@@ -175,6 +175,7 @@ class Cardslisting extends Widget_Base
                                         <span class="badge-custom">Advance Reporting Tool</span>
                                         <span class="badge-custom">e-Challan</span>
                                         <span class="badge-custom">Integration Compatibility</span>                                        
+                                        <span class="badge-cusotm bg-trans_txt">and more</span>
                                     </div>
                                 </div>
                             </div>
@@ -182,18 +183,19 @@ class Cardslisting extends Widget_Base
 
                         <!-- Card 5 -->
                         <li>
-                            <div class="card h-100 border-0 shadow-sm">
+                            <div class="card h-100 border-0">
                                 <div class="card-image">
                                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/VIDS.webp" class="card-img-top h-100" alt="Integrated Command Center">
                                 </div>
                                 <div class="card-body p-4">
-                                    <h5 class="card-title">Video Incident Detection System (VIDS)</h5>
+                                    <h5 class="card-title position-relative">Video Incident Detection System (VIDS)</h5>
                                     <p class="card-text text-muted">
                                     Detects road incidents like stopped vehicles, wrong-way driving, or accidents instantly, reducing emergency response time and improving public safety.                                    </p>
                                     <div class="d-flex flex-wrap gap-2 mt-4">
                                         <span class="badge-custom">Advance Reporting Tool</span>
                                         <span class="badge-custom">e-Challan</span>
                                         <span class="badge-custom">Integration Compatibility</span>                                        
+                                        <span class="badge-cusotm bg-trans_txt">and more</span>
                                     </div>
                                 </div>
                             </div>
@@ -201,12 +203,12 @@ class Cardslisting extends Widget_Base
 
                         <!-- Card 6 -->
                         <li>
-                            <div class="card h-100 border-0 shadow-sm">
+                            <div class="card h-100 border-0">
                                 <div class="card-image">
                                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/cms.webp" class="card-img-top h-100" alt="Integrated Command Center">
                                 </div>
                                 <div class="card-body p-4">
-                                    <h5 class="card-title">Central Monitoring Software (CMS)</h5>
+                                    <h5 class="card-title position-relative">Central Monitoring Software (CMS)</h5>
                                     <p class="card-text text-muted">
                                     CMS connects multiple sites to one interface, offering live monitoring, alerts, and system health insights for efficient, centralized surveillance management.
                                     </p>
@@ -214,7 +216,7 @@ class Cardslisting extends Widget_Base
                                         <span class="badge-custom">Unified interface</span>
                                         <span class="badge-custom">AI driven insights</span>
                                         <span class="badge-custom">Multi site management</span>
-                                        
+                                        <span class="badge-cusotm bg-trans_txt">and more</span>
                                     </div>
                                 </div>
                             </div>
@@ -222,12 +224,12 @@ class Cardslisting extends Widget_Base
 
                         <!-- Card 7 -->
                         <li>
-                            <div class="card h-100 border-0 shadow-sm">
+                            <div class="card h-100 border-0">
                                 <div class="card-image">
                                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/itms-itZ.webp" class="card-img-top h-100" alt="Integrated Command Center">
                                 </div>
                                 <div class="card-body p-4">
-                                    <h5 class="card-title">Integrated/Traffic Command & Control Center (ICCC / PSIM)</h5>
+                                    <h5 class="card-title position-relative">Integrated/Traffic Command & Control Center (ICCC / PSIM)</h5>
                                     <p class="card-text text-muted">
                                     Automatically detects traffic violations, manages signals, and tracks vehicle movement to improve road safety, enforce laws, and reduce congestion.
                                     </p>
@@ -235,7 +237,7 @@ class Cardslisting extends Widget_Base
                                         <span class="badge-custom">Unified interface</span>
                                         <span class="badge-custom">AI driven insights</span>
                                         <span class="badge-custom">Multi site management</span>
-                                        
+                                        <span class="badge-cusotm bg-trans_txt">and more</span>
                                     </div>
                                 </div>
                             </div>
@@ -243,12 +245,12 @@ class Cardslisting extends Widget_Base
 
                         <!-- Card 8 -->
                         <li>
-                            <div class="card h-100 border-0 shadow-sm">
+                            <div class="card h-100 border-0">
                                 <div class="card-image">
                                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/anpr-lpr.webp" class="card-img-top h-100" alt="Integrated Command Center">
                                 </div>
                                 <div class="card-body p-4">
-                                    <h5 class="card-title">Automatic Number Plate Recognition
+                                    <h5 class="card-title position-relative">Automatic Number Plate Recognition
                                     (ANPR / LPR)</h5>
                                     <p class="card-text text-muted">
                                     Captures and processes license plates in real-time to support access control, vehicle monitoring, and traffic enforcement.
@@ -257,7 +259,7 @@ class Cardslisting extends Widget_Base
                                         <span class="badge-custom">Unified interface</span>
                                         <span class="badge-custom">AI driven insights</span>
                                         <span class="badge-custom">Multi site management</span>
-                                        
+                                        <span class="badge-cusotm bg-trans_txt">and more</span>
                                     </div>
                                 </div>
                             </div>

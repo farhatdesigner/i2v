@@ -31,6 +31,7 @@
 .js-dark .partner_sec:before {
   background-color: #262a30 !important;
 }
+.js-dark nav{border: 1px solid rgba(193, 196, 198, 0.10);}
 
 .js-dark .listing-inner {
   background-color: rgba(255, 255, 255, 0.1) !important;
@@ -800,7 +801,7 @@ h2 {
   margin: 0 0 20px;
   /* text-transform: capitalize; */
   transition: all 0.4s ease;
-  color: #fff;
+  color: rgb(255 255 255 / 90%);
 }
 
 .hero-style .slide-text p {
@@ -969,6 +970,7 @@ a:hover {
 .sub-menu li a:hover:before,
 #header-toggle-menu > li:nth-last-child(4) > a span:hover:before,
 .listing-inner > ul > li > :hover .span-text:before,
+.cards-listing-section li:hover .card-title:before,
 .footer ul li > a:hover:before {
   content: "";
   position: absolute;
@@ -1185,14 +1187,14 @@ p {
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
-  line-height: 150%;
+  line-height: 130%;
   color: #ffffff;
   /* transition: all .4s ease; */
   display: inline-block;
 }
 
 .theme-btn:hover {
-  background: #0099ED;
+  background: #008EDB;
 }
 
 .xl-btn {
@@ -1205,13 +1207,13 @@ p {
 }
 
 .bg-trans {
-  background: transparent;
+  background: transparent !important;
   padding: 0;
   color: #0099ED;
 }
 
 .bg-trans:hover {
-  background: transparent;
+  background: transparent !important;
   border-bottom: 1px solid #0099ED;
 }
 .theme-btn:focus {
@@ -1504,7 +1506,7 @@ label.form-label.required_note-demo {
   max-width: 100%;
   content: "";
   background: #4a5673;
-  height: 3px;
+  height: 2px;
   margin: 0 auto;
   bottom: 4px;
   position: absolute;
@@ -1986,6 +1988,13 @@ label.form-label.required_note-demo {
   font-weight: 500;
   color: #5f6f94;
 }
+.bg-trans_txt {
+  background-color: transparent !important;
+  border: none;
+  line-height: 2;
+  color: #5f6f94;
+  font-weight: 500;
+}
 
 .grid-listing {
   display: flex;
@@ -2203,6 +2212,9 @@ label.form-label.required_note-demo {
   color: #ffff !important;
 }
 
+.sticky-custom > ul > li.active-li:hover {
+  background: #008EDB;
+}
 .view-bg {
   border-radius: var(--M, 12px);
   background: linear-gradient(
@@ -2421,7 +2433,7 @@ label.form-label.required_note-demo {
 }
 
 .reversetestimonial .swiper-pagination-bullets {
-  left: 126px !important;
+  left: 135px !important;
   width: auto !important;
   bottom: 10px !important;
 }
@@ -3060,6 +3072,16 @@ svg.connection-line-7 {
   bottom: 140px !important;
 }
 .height_full-image{height: 100% !important;}
+.bg-trans_txt{background-color: transparent !important;border: none;}
+.enterprisebanner {
+  width: max-content !important;
+  max-width: max-content !important;
+}
+
+.iccc_actions .elementor-icon-box-content .elementor-icon-box-description {
+  margin-top: 8px !important;
+  display: block;
+}
 
 @media (min-width: 768px) {
   .footer-accordion-icon {
@@ -3113,6 +3135,7 @@ svg.connection-line-7 {
   }
   .filter-menu .tabsautoscroll {
     display: block !important;
+    bottom: 0px;
   }
 
   .dropdown-label,
@@ -3168,6 +3191,7 @@ svg.connection-line-7 {
     border-top-left-radius: 12px;
     border-top-right-radius: 0px;
     border-bottom-left-radius: 12px;
+    max-height: 100% !important;
   }
 
   .chosse_circle:before {

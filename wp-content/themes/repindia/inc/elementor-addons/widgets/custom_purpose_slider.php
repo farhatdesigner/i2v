@@ -6,7 +6,8 @@ use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Repeater;
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
 class Custom_Purpose_Slider extends Widget_Base
 {
@@ -110,7 +111,7 @@ class Custom_Purpose_Slider extends Widget_Base
             return;
         }
 
-?>
+        ?>
 
         <section class="purpose-slider-wrapper">
             <div class="custom-container">
@@ -135,8 +136,8 @@ class Custom_Purpose_Slider extends Widget_Base
                                 <figure class="caption-scroll leader-caption m-0">
 
                                     <?php if ($img_url): ?>
-                                        <img src="<?php echo esc_url($img_url); ?>"
-                                            alt="<?php echo esc_attr($img_alt); ?>" loading="lazy">
+                                        <img src="<?php echo esc_url($img_url); ?>" alt="<?php echo esc_attr($img_alt); ?>"
+                                            loading="lazy">
                                     <?php endif; ?>
 
                                     <figcaption>
@@ -167,84 +168,91 @@ class Custom_Purpose_Slider extends Widget_Base
         </section>
 
         <style>
-        .purpose-slider-wrapper {
-            position: relative;
-        }
-        .purpose-slider-wrapper .custom-container {
-            position: relative;
-            width: 100%;
-        }
-        .purpose-slider-wrapper .purpose-swiper {
-            width: 100%;
-            overflow: hidden;
-            position: relative;
-            overflow: visible;
-        }
-        /* Hide default Swiper arrow icons - using custom arrow images instead */
-        .purpose-slider-wrapper .purpose-swiper .swiper-button-prev:after,
-        .purpose-slider-wrapper .purpose-swiper .swiper-button-next:after,
-        .purpose-slider-wrapper .purpose-swiper .swiper-rtl .swiper-button-prev:after,
-        .purpose-slider-wrapper .purpose-swiper .swiper-rtl .swiper-button-next:after {
-            display: none !important;
-            content: none !important;
-        }
-        
-        /* Navigation buttons styling - matching homepage banner */
-        .purpose-slider-wrapper .purpose-swiper .swiper-horizontalmobile-next,
-        .purpose-slider-wrapper .purpose-swiper .swiper-horizontalmobile-prev {
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 10;
-            user-select: none;
-            -webkit-user-select: none;
-            border-radius: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            transition: all 0.3s ease;
-        }
-        
+            .purpose-slider-wrapper {
+                position: relative;
+            }
 
+            .purpose-slider-wrapper .custom-container {
+                position: relative;
+                width: 100%;
+            }
 
-        
-        .purpose-slider-wrapper .purpose-swiper .swiper-horizontalmobile-next {
-            right: 10px;
-        }
-        
-        .purpose-slider-wrapper .purpose-swiper .swiper-horizontalmobile-prev {
-            left: 10px;
-            transform: translateY(-20px) rotate(180deg);
-        }
-        
-        /* Mobile-specific styles for touch/swipe (below 767px) */
-        @media (max-width: 767px) {
             .purpose-slider-wrapper .purpose-swiper {
-                overflow: hidden !important;
-                touch-action: pan-x;
-                -webkit-overflow-scrolling: touch;
+                width: 100%;
+                overflow: hidden;
+                position: relative;
+                overflow: visible;
             }
-            
-            .purpose-slider-wrapper .purpose-swiper .swiper-wrapper {
-                touch-action: pan-x;
-                -webkit-transform: translate3d(0, 0, 0);
-            }
-            
-            .purpose-slider-wrapper .purpose-swiper .swiper-slide {
-                touch-action: pan-x;
-                -webkit-user-select: none;
-                user-select: none;
-                -webkit-tap-highlight-color: transparent;
-            }
-        }
 
+            /* Hide default Swiper arrow icons - using custom arrow images instead */
+            .purpose-slider-wrapper .purpose-swiper .swiper-button-prev:after,
+            .purpose-slider-wrapper .purpose-swiper .swiper-button-next:after,
+            .purpose-slider-wrapper .purpose-swiper .swiper-rtl .swiper-button-prev:after,
+            .purpose-slider-wrapper .purpose-swiper .swiper-rtl .swiper-button-next:after {
+                display: none !important;
+                content: none !important;
+            }
+
+            /* Navigation buttons styling - matching homepage banner */
+            .purpose-slider-wrapper .purpose-swiper .swiper-horizontalmobile-next,
+            .purpose-slider-wrapper .purpose-swiper .swiper-horizontalmobile-prev {
+                cursor: pointer;
+                position: absolute;
+                top: 55%;
+                transform: translateY(-50%);
+                z-index: 10;
+                user-select: none;
+                -webkit-user-select: none;
+                border-radius: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 40px;
+                height: 40px;
+                transition: all 0.3s ease;
+            }
+
+
+
+
+            .purpose-slider-wrapper .purpose-swiper .swiper-horizontalmobile-next {
+                right: 10px;
+            }
+
+            .purpose-slider-wrapper .purpose-swiper .swiper-horizontalmobile-prev {
+                left: 10px;
+                transform: translateY(-20px) rotate(180deg);
+            }
+
+            .swiper-button-next.swiper-button-disabled,
+            .swiper-button-prev.swiper-button-disabled {
+                opacity: 0;
+            }
+
+            /* Mobile-specific styles for touch/swipe (below 767px) */
+            @media (max-width: 767px) {
+                .purpose-slider-wrapper .purpose-swiper {
+                    overflow: hidden !important;
+                    touch-action: pan-x;
+                    -webkit-overflow-scrolling: touch;
+                }
+
+                .purpose-slider-wrapper .purpose-swiper .swiper-wrapper {
+                    touch-action: pan-x;
+                    -webkit-transform: translate3d(0, 0, 0);
+                }
+
+                .purpose-slider-wrapper .purpose-swiper .swiper-slide {
+                    touch-action: pan-x;
+                    -webkit-user-select: none;
+                    user-select: none;
+                    -webkit-tap-highlight-color: transparent;
+                }
+            }
         </style>
 
         <script>
-            (function() {
+            (function () {
                 function initSwiper() {
                     var widgetEl = document.querySelector('.purpose-slider-wrapper');
                     if (!widgetEl) return;
@@ -305,14 +313,14 @@ class Custom_Purpose_Slider extends Widget_Base
                 }
 
                 if (typeof elementorFrontend !== 'undefined' && elementorFrontend.hooks) {
-                    elementorFrontend.hooks.addAction('frontend/element_ready/cardscustom_purpose_slider.default', function($scope) {
+                    elementorFrontend.hooks.addAction('frontend/element_ready/cardscustom_purpose_slider.default', function ($scope) {
                         setTimeout(initSwiper, 100);
                     });
                 }
             })();
         </script>
 
-<?php
+        <?php
     }
 }
 ?>
