@@ -583,5 +583,14 @@ header li.burger-icon .icon-sun,
     background-color: #464A4F !important;
 }
 .js-dark .deployed_slider  span.swiper-pagination-bullet-active{
-    background-color: #74c2ed!important;
+    background-color: #74c2ed!important;}
+.js-dark .custom-blog-filter-category-count, .js-dark .custom-blog-filter-featured-count,.js-dark .custom-blog-filter-category-item input[type="checkbox"]{ background: #464A4F!important; }
+.js-dark .custom-blog-filter-toggle-slider{ background-color: #464A4F; }
+.js-dark .custom-blog-filter-toggle-slider:before{ background-color: #aeb6c9 !important; }
+.js-dark .ctw-has-learn-more .ctw-title .border-b {
+  border-bottom: 2px solid #464a4f !important;
+  color: #AEB6C9 !important;
+}
+.js-dark .border-dark_grey {
+  border-bottom: 1px solid var(--Golbal-others-border-3, rgba(193, 196, 198, 0.20)) !important;
 }
