@@ -26,6 +26,11 @@
     let recentList = null;
     let popularList = null;
     let searchTabs = null;
+    
+    // State
+    let isPopupOpen = false;
+    let popularSearchesLastFetch = 0;
+    const POPULAR_SEARCHES_CACHE_TIME = 30000; // 30 seconds
 
     /**
      * Initialize search system
@@ -94,26 +99,12 @@
 
         // Close on Escape key
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && popup.style.display !== 'none') {
+            if (e.key === 'Escape' && isPopupOpen) {
                 closePopup();
             }
         });
 
-        // Focus input when popup opens
-        const observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-                    if (popup.style.display !== 'none') {
-                        setTimeout(function() {
-                            if (searchInput) {
-                                searchInput.focus();
-                            }
-                        }, 100);
-                    }
-                }
-            });
-        });
-        observer.observe(popup, { attributes: true, attributeFilter: ['style'] });
+        // Remove mutation observer - we handle focus in openPopup now
 
         // Handle form submission
         const form = popup.querySelector('.search-popup-form');
@@ -134,16 +125,30 @@
      * Open search popup
      */
     function openPopup() {
-        popup.style.display = 'block';
+        if (isPopupOpen) return;
+        
+        isPopupOpen = true;
+        popup.style.display = 'flex';
         document.body.style.overflow = 'hidden';
         
-        // Refresh popular searches when popup opens (in case new searches were made)
-        loadPopularSearches();
+        // Trigger CSS transition
+        requestAnimationFrame(function() {
+            requestAnimationFrame(function() {
+                popup.classList.add('active');
+            });
+        });
         
+        // Load popular searches only if cache is stale
+        const now = Date.now();
+        if (now - popularSearchesLastFetch > POPULAR_SEARCHES_CACHE_TIME) {
+            loadPopularSearches();
+        }
+        
+        // Focus input after animation
         if (searchInput) {
             setTimeout(function() {
                 searchInput.focus();
-            }, 100);
+            }, 200);
         }
     }
 
@@ -151,11 +156,21 @@
      * Close search popup
      */
     function closePopup() {
-        popup.style.display = 'none';
-        document.body.style.overflow = '';
-        if (searchInput) {
-            searchInput.value = '';
-        }
+        if (!isPopupOpen) return;
+        
+        isPopupOpen = false;
+        popup.classList.remove('active');
+        
+        // Wait for transition before hiding
+        setTimeout(function() {
+            if (!isPopupOpen) {
+                popup.style.display = 'none';
+                document.body.style.overflow = '';
+                if (searchInput) {
+                    searchInput.value = '';
+                }
+            }
+        }, 300);
     }
 
     /**
@@ -218,21 +233,24 @@
         
         const recent = getRecentSearches();
         
-        if (recent.length === 0) {
-            recentList.innerHTML = '<li class="search-popup-empty">No recent searches</li>';
-            return;
-        }
-        
-        recentList.innerHTML = recent.map(function(term) {
-            const url = getSearchUrl(term);
-            return '<li><a href="' + escapeHtml(url) + '" class="search-popup-term">' + escapeHtml(term) + '</a></li>';
-        }).join('');
-        
-        // Add click handlers
-        recentList.querySelectorAll('.search-popup-term').forEach(function(link) {
-            link.addEventListener('click', function(e) {
-                const term = this.textContent.trim();
-                saveRecentSearch(term);
+        // Use requestAnimationFrame for smooth rendering
+        requestAnimationFrame(function() {
+            if (recent.length === 0) {
+                recentList.innerHTML = '<li class="search-popup-empty">No recent searches</li>';
+                return;
+            }
+            
+            recentList.innerHTML = recent.map(function(term) {
+                const url = getSearchUrl(term);
+                return '<li><a href="' + escapeHtml(url) + '" class="search-popup-term">' + escapeHtml(term) + '</a></li>';
+            }).join('');
+            
+            // Add click handlers
+            recentList.querySelectorAll('.search-popup-term').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    const term = this.textContent.trim();
+                    saveRecentSearch(term);
+                });
             });
         });
     }
@@ -243,14 +261,23 @@
     function loadPopularSearches() {
         if (!popularList) return;
         
-        // Check if we have cached data
-        const cached = sessionStorage.getItem('repindia_popular_searches');
-        if (cached) {
+        // Check if we have cached data with timestamp
+        const cachedData = sessionStorage.getItem('repindia_popular_searches_data');
+        const cachedTimestamp = sessionStorage.getItem('repindia_popular_searches_timestamp');
+        
+        if (cachedData && cachedTimestamp) {
             try {
-                const data = JSON.parse(cached);
-                if (Array.isArray(data) && data.length > 0) {
-                    renderPopularSearches(data);
-                    return;
+                const timestamp = parseInt(cachedTimestamp, 10);
+                const now = Date.now();
+                
+                // Use cache if less than 30 seconds old
+                if (now - timestamp < POPULAR_SEARCHES_CACHE_TIME) {
+                    const data = JSON.parse(cachedData);
+                    if (Array.isArray(data) && data.length > 0) {
+                        renderPopularSearches(data);
+                        popularSearchesLastFetch = timestamp;
+                        return;
+                    }
                 }
             } catch (e) {
                 // Invalid cache, continue to fetch
@@ -261,6 +288,11 @@
         if (typeof repindiaSearch === 'undefined' || !repindiaSearch.ajaxUrl) {
             renderPopularSearches([]);
             return;
+        }
+        
+        // Show loading state
+        if (popularList) {
+            popularList.innerHTML = '<li class="search-popup-loading">Loading...</li>';
         }
         
         // Fetch from server
@@ -277,11 +309,14 @@
                 if (data && data.success && Array.isArray(data.data)) {
                     // Limit to 5 and cache for session
                     const limitedData = data.data.slice(0, 5);
+                    const now = Date.now();
                     try {
-                        sessionStorage.setItem('repindia_popular_searches', JSON.stringify(limitedData));
+                        sessionStorage.setItem('repindia_popular_searches_data', JSON.stringify(limitedData));
+                        sessionStorage.setItem('repindia_popular_searches_timestamp', now.toString());
                     } catch (e) {
                         // Ignore cache errors
                     }
+                    popularSearchesLastFetch = now;
                     renderPopularSearches(limitedData);
                 } else {
                     renderPopularSearches([]);
@@ -307,26 +342,29 @@
         // Limit to max 5 items
         searches = searches.slice(0, 5);
         
-        if (searches.length === 0) {
-            popularList.innerHTML = '<li class="search-popup-empty">No popular searches</li>';
-            return;
-        }
-        
-        popularList.innerHTML = searches.map(function(item) {
-            // Handle both string and object formats
-            const term = (typeof item === 'string') ? item : (item.term || item);
-            if (!term) return '';
-            const url = getSearchUrl(term);
-            return '<li><a href="' + escapeHtml(url) + '" class="search-popup-term">' + escapeHtml(term) + '</a></li>';
-        }).filter(function(html) {
-            return html !== '';
-        }).join('');
-        
-        // Add click handlers
-        popularList.querySelectorAll('.search-popup-term').forEach(function(link) {
-            link.addEventListener('click', function(e) {
-                const term = this.textContent.trim();
-                saveRecentSearch(term);
+        // Use requestAnimationFrame for smooth rendering
+        requestAnimationFrame(function() {
+            if (searches.length === 0) {
+                popularList.innerHTML = '<li class="search-popup-empty">No popular searches</li>';
+                return;
+            }
+            
+            popularList.innerHTML = searches.map(function(item) {
+                // Handle both string and object formats
+                const term = (typeof item === 'string') ? item : (item.term || item);
+                if (!term) return '';
+                const url = getSearchUrl(term);
+                return '<li><a href="' + escapeHtml(url) + '" class="search-popup-term">' + escapeHtml(term) + '</a></li>';
+            }).filter(function(html) {
+                return html !== '';
+            }).join('');
+            
+            // Add click handlers
+            popularList.querySelectorAll('.search-popup-term').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    const term = this.textContent.trim();
+                    saveRecentSearch(term);
+                });
             });
         });
     }
@@ -371,6 +409,13 @@
      * Switch search tab
      */
     function switchTab(type) {
+        // Prevent double-clicks
+        if (document.body.classList.contains('switching-tab')) {
+            return;
+        }
+        
+        document.body.classList.add('switching-tab');
+        
         const url = new URL(window.location);
         
         if (type === 'all') {
@@ -383,12 +428,15 @@
         url.searchParams.delete('paged');
         
         // Update URL and reload (graceful fallback if JS fails)
-        if (window.history && window.history.pushState) {
-            window.history.pushState({}, '', url);
-            window.location.reload();
-        } else {
-            window.location.href = url.toString();
-        }
+        // Small delay to allow click animation to complete
+        setTimeout(function() {
+            if (window.history && window.history.pushState) {
+                window.history.pushState({}, '', url);
+                window.location.reload();
+            } else {
+                window.location.href = url.toString();
+            }
+        }, 50);
     }
 
     /**

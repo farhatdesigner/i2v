@@ -281,7 +281,7 @@ global $repindia_option;
         </header>
         
         <!-- Search Popup -->
-        <div id="search-popup" class="search-popup-overlay" style="display: none;">
+        <div id="search-popup" class="search-popup-overlay">
             <div class="search-popup-container">
                 <form role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>" class="search-popup-form" autocomplete="off">
                     <div class="search-input-wrapper">
