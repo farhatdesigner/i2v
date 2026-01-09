@@ -824,7 +824,7 @@ div.pin-spacer > .hz-slider-section {
   line-height: 144.444%;
 }
 
-.hz-slider-section .swiper-slide ul li>span>img {
+.hz-slider-section .swiper-slide ul li > span > img {
   width: 16px;
 }
 .img-50 {
@@ -978,6 +978,9 @@ div.pin-spacer > .hz-slider-section {
   left: -14%;
   padding: 24px;
   width: 500px;
+  border-radius: var(--M, 12px);
+  background: var(--Golbal-backgrounds-secondary-bg-4, #fff);
+  box-shadow: 0 10px 20px 0 rgba(0, 82, 128, 0.1);
 }
 .absolute_slider .elementor-testimonial__footer,
 .deployed_slider .elementor-testimonial__footer {
@@ -1016,7 +1019,7 @@ div.pin-spacer > .hz-slider-section {
 }
 
 .bredstyle > a {
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   border-radius: var(--3XL, 28px);
   border: 1px solid var(--Golbal-others-border, #e6ebf2);
   background: var(--tabs-tab-fill-bg-default, #fff);

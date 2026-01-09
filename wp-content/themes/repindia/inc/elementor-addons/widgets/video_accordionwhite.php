@@ -373,7 +373,6 @@ class Video_accordionwhite extends Widget_Base
 
             .vaw_accordion_set.active .vaw_ac_icon_border {
                 background: #FFF;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
             }
 
             .vaw_ac_icon {
