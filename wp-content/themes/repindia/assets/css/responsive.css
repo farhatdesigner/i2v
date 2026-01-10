@@ -579,6 +579,6 @@ label.form-label.label_notic a{ color: #5C5C5C;font-weight: 500; }
 }
 @media (max-width: 1500px) and (min-width: 1337px){
 }
-
-
 .sticky-wrapper-img{width: 570px !important;}
+.black-theme-img,.js-dark  .white-theme-img{ display: none;}
+.js-dark .black-theme-img{ display: block;}
