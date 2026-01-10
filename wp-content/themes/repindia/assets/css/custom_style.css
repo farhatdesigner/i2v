@@ -3170,6 +3170,7 @@ svg.connection-line-7 {
     min-height: 300px;
     max-height: 300px;
     object-fit: cover;
+    width: 100%;
   }
   .footer-accordion-title {
     cursor: default;

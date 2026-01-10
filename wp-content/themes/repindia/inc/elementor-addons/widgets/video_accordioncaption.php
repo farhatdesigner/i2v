@@ -547,6 +547,20 @@ class Video_accordioncaption extends Widget_Base
                 }
             }
 
+            /* White/Black Theme Images */
+            .vac_accordion_wrap .white-theme-img {
+                display: block;
+            }
+            .vac_accordion_wrap .black-theme-img {
+                display: none;
+            }
+            .js-dark .vac_accordion_wrap .white-theme-img {
+                display: none;
+            }
+            .js-dark .vac_accordion_wrap .black-theme-img {
+                display: block;
+            }
+
             @media (max-width: 576px) {
                 .vac_accordion_wrap {
                     padding: 40px 0;
@@ -720,7 +734,10 @@ class Video_accordioncaption extends Widget_Base
                                             <div class="card-image">
                                                 <img decoding="async"
                                                     src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/no-helmet-detection.webp"
-                                                    class="card-img-top h-100" alt="Enhanced security & safety">
+                                                    class="card-img-top h-100 white-theme-img" alt="Enhanced security & safety">
+                                                <img decoding="async"
+                                                    src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/no-helmet-detection.webp"
+                                                    class="card-img-top h-100 black-theme-img" alt="Enhanced security & safety">
                                             </div>
                                             <div class="card-body">
                                                 <h5 class="card-title">Enhanced security & safety</h5>
@@ -779,7 +796,10 @@ class Video_accordioncaption extends Widget_Base
                                             <div class="card-image">
                                                 <img decoding="async"
                                                     src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/video.webp"
-                                                    class="card-img-top h-100" alt="Optimized traffic flow">
+                                                    class="card-img-top h-100 white-theme-img" alt="Optimized traffic flow">
+                                                <img decoding="async"
+                                                    src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/video.webp"
+                                                    class="card-img-top h-100 black-theme-img" alt="Optimized traffic flow">
                                             </div>
                                             <div class="card-body">
                                                 <h5 class="card-title">Optimized traffic flow</h5>
@@ -838,7 +858,10 @@ class Video_accordioncaption extends Widget_Base
                                             <div class="card-image">
                                                 <img decoding="async"
                                                     src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/no-helmet-detection.webp"
-                                                    class="card-img-top h-100" alt="Proactive public safety">
+                                                    class="card-img-top h-100 white-theme-img" alt="Proactive public safety">
+                                                <img decoding="async"
+                                                    src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/no-helmet-detection.webp"
+                                                    class="card-img-top h-100 black-theme-img" alt="Proactive public safety">
                                             </div>
                                             <div class="card-body">
                                                 <h5 class="card-title">Proactive public safety</h5>
@@ -896,7 +919,10 @@ class Video_accordioncaption extends Widget_Base
                                             <div class="card-image">
                                                 <img decoding="async"
                                                     src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/video.webp"
-                                                    class="card-img-top h-100" alt="Secure industrial zones">
+                                                    class="card-img-top h-100 white-theme-img" alt="Secure industrial zones">
+                                                <img decoding="async"
+                                                    src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/video.webp"
+                                                    class="card-img-top h-100 black-theme-img" alt="Secure industrial zones">
                                             </div>
                                             <div class="card-body">
                                                 <h5 class="card-title">Secure industrial zones</h5>
@@ -956,7 +982,10 @@ class Video_accordioncaption extends Widget_Base
                                             <div class="card-image">
                                                 <img decoding="async"
                                                     src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/no-helmet-detection.webp"
-                                                    class="card-img-top h-100" alt="Accelerated emergency response">
+                                                    class="card-img-top h-100 white-theme-img" alt="Accelerated emergency response">
+                                                <img decoding="async"
+                                                    src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/no-helmet-detection.webp"
+                                                    class="card-img-top h-100 black-theme-img" alt="Accelerated emergency response">
                                             </div>
                                             <div class="card-body">
                                                 <h5 class="card-title">Accelerated emergency response</h5>
@@ -1015,7 +1044,10 @@ class Video_accordioncaption extends Widget_Base
                                             <div class="card-image">
                                                 <img decoding="async"
                                                     src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/video.webp"
-                                                    class="card-img-top h-100" alt="Unified city operations">
+                                                    class="card-img-top h-100 white-theme-img" alt="Unified city operations">
+                                                <img decoding="async"
+                                                    src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/video.webp"
+                                                    class="card-img-top h-100 black-theme-img" alt="Unified city operations">
                                             </div>
                                             <div class="card-body">
                                                 <h5 class="card-title">Unified city operations</h5>
@@ -1046,7 +1078,10 @@ class Video_accordioncaption extends Widget_Base
                                     <div class="card-image">
                                         <img decoding="async"
                                             src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/video.webp"
-                                            class="card-img-top h-100" alt="AI-Based Video Analytics">
+                                            class="card-img-top h-100 white-theme-img" alt="AI-Based Video Analytics">
+                                        <img decoding="async"
+                                            src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/video.webp"
+                                            class="card-img-top h-100 black-theme-img" alt="AI-Based Video Analytics">
                                     </div>
                                     <div class="card-body">
                                         <h5 class="card-title">Neural behavior recognition</h5>
@@ -1071,7 +1106,10 @@ class Video_accordioncaption extends Widget_Base
                                     <div class="card-image">
                                         <img decoding="async"
                                             src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/no-helmet-detection.webp"
-                                            class="card-img-top h-100" alt="AI-Based Video Analytics">
+                                            class="card-img-top h-100 white-theme-img" alt="AI-Based Video Analytics">
+                                        <img decoding="async"
+                                            src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/no-helmet-detection.webp"
+                                            class="card-img-top h-100 black-theme-img" alt="AI-Based Video Analytics">
                                     </div>
                                     <div class="card-body">
                                         <h5 class="card-title">Neural behavior recognition</h5>
@@ -1096,7 +1134,10 @@ class Video_accordioncaption extends Widget_Base
                                     <div class="card-image">
                                         <img decoding="async"
                                             src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/video.webp"
-                                            class="card-img-top h-100" alt="AI-Based Video Analytics">
+                                            class="card-img-top h-100 white-theme-img" alt="AI-Based Video Analytics">
+                                        <img decoding="async"
+                                            src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/video.webp"
+                                            class="card-img-top h-100 black-theme-img" alt="AI-Based Video Analytics">
                                     </div>
                                     <div class="card-body">
                                         <h5 class="card-title">Neural behavior recognition</h5>
@@ -1121,7 +1162,10 @@ class Video_accordioncaption extends Widget_Base
                                     <div class="card-image">
                                         <img decoding="async"
                                             src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/video.webp"
-                                            class="card-img-top h-100" alt="AI-Based Video Analytics">
+                                            class="card-img-top h-100 white-theme-img" alt="AI-Based Video Analytics">
+                                        <img decoding="async"
+                                            src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/video.webp"
+                                            class="card-img-top h-100 black-theme-img" alt="AI-Based Video Analytics">
                                     </div>
                                     <div class="card-body">
                                         <h5 class="card-title">Neural behavior recognition</h5>
@@ -1146,7 +1190,10 @@ class Video_accordioncaption extends Widget_Base
                                     <div class="card-image">
                                         <img decoding="async"
                                             src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/video.webp"
-                                            class="card-img-top h-100" alt="AI-Based Video Analytics">
+                                            class="card-img-top h-100 white-theme-img" alt="AI-Based Video Analytics">
+                                        <img decoding="async"
+                                            src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/video.webp"
+                                            class="card-img-top h-100 black-theme-img" alt="AI-Based Video Analytics">
                                     </div>
                                     <div class="card-body">
                                         <h5 class="card-title">Neural behavior recognition</h5>
@@ -1171,7 +1218,10 @@ class Video_accordioncaption extends Widget_Base
                                     <div class="card-image">
                                         <img decoding="async"
                                             src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/video.webp"
-                                            class="card-img-top h-100" alt="AI-Based Video Analytics">
+                                            class="card-img-top h-100 white-theme-img" alt="AI-Based Video Analytics">
+                                        <img decoding="async"
+                                            src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/video.webp"
+                                            class="card-img-top h-100 black-theme-img" alt="AI-Based Video Analytics">
                                     </div>
                                     <div class="card-body">
                                         <h5 class="card-title">Neural behavior recognition</h5>

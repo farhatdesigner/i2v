@@ -33,7 +33,6 @@ class Custom_Tab_Section extends Widget_Base
     protected function render()
     { ?>
         <style>
-     
             /* Tab Navigation */
             .sec-tabs-nav {
                 margin-bottom: 0;
@@ -404,7 +403,11 @@ class Custom_Tab_Section extends Widget_Base
                 <div class="sec-tab-panel active" id="secPanel0">
                     <div class="sec-panel-inner">
                         <div class="sec-panel-image">
-                            <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/thumbnail.webp"
+                            <img class="white_theme_img"
+                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/thumbnail.webp"
+                                alt="System hardening and network-level protection">
+                            <img class="black_theme_img"
+                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/thumbnail.webp"
                                 alt="System hardening and network-level protection">
                         </div>
                         <div class="sec-panel-text">
@@ -421,7 +424,11 @@ class Custom_Tab_Section extends Widget_Base
                 <div class="sec-tab-panel" id="secPanel1">
                     <div class="sec-panel-inner">
                         <div class="sec-panel-image">
-                            <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/thumbnail.webp"
+                            <img class="white_theme_img"
+                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/thumbnail.webp"
+                                alt="Role-based access control">
+                            <img class="black_theme_img"
+                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/thumbnail.webp"
                                 alt="Role-based access control">
                         </div>
                         <div class="sec-panel-text">
@@ -438,7 +445,11 @@ class Custom_Tab_Section extends Widget_Base
                 <div class="sec-tab-panel" id="secPanel2">
                     <div class="sec-panel-inner">
                         <div class="sec-panel-image">
-                            <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/thumbnail.webp"
+                            <img class="white_theme_img"
+                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/thumbnail.webp"
+                                alt="Tamper-proof audit logs">
+                            <img class="black_theme_img"
+                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/thumbnail.webp"
                                 alt="Tamper-proof audit logs">
                         </div>
                         <div class="sec-panel-text">
@@ -455,7 +466,11 @@ class Custom_Tab_Section extends Widget_Base
                 <div class="sec-tab-panel" id="secPanel3">
                     <div class="sec-panel-inner">
                         <div class="sec-panel-image">
-                            <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/thumbnail.webp"
+                            <img class="white_theme_img"
+                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/thumbnail.webp"
+                                alt="Offline mode support">
+                            <img class="black_theme_img"
+                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/thumbnail.webp"
                                 alt="Offline mode support">
                         </div>
                         <div class="sec-panel-text">
@@ -472,7 +487,11 @@ class Custom_Tab_Section extends Widget_Base
                 <div class="sec-tab-panel" id="secPanel4">
                     <div class="sec-panel-inner">
                         <div class="sec-panel-image">
-                            <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/thumbnail.webp"
+                            <img class="white_theme_img"
+                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/thumbnail.webp"
+                                alt="Regular updates">
+                            <img class="black_theme_img"
+                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/thumbnail.webp"
                                 alt="Regular updates">
                         </div>
                         <div class="sec-panel-text">

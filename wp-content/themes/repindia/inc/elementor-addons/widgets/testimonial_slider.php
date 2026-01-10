@@ -93,7 +93,9 @@ class Testimonial_Slider extends Widget_Base
                                         <div class="ts_testimonial_card">
                                             <div class="ts_testimonial_card_content">
                                                 <div class="ts_company_logo">
-                                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Vector.svg"
+                                                    <img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Vector.svg"
+                                                        alt="Hanwha Techwin">
+                                                    <img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Vector.svg"
                                                         alt="Hanwha Techwin">
                                                 </div>
                                                 <div class="ts_quote_icon">
@@ -127,7 +129,9 @@ class Testimonial_Slider extends Widget_Base
                                             </div>
                                         </div>
                                         <div class="ts_media_card">
-                                            <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025//11/Image-2-2.webp"
+                                            <img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025//11/Image-2-2.webp"
+                                                alt="Testimonial Video">
+                                            <img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025//11/Image-2-2.webp"
                                                 alt="Testimonial Video">
                                             <!-- Or use placeholder if no image -->
                                             <!-- <div class="ts_media_placeholder">Placeholder</div> -->
@@ -141,7 +145,9 @@ class Testimonial_Slider extends Widget_Base
                                         <div class="ts_testimonial_card">
                                             <div class="ts_testimonial_card_content">
                                                 <div class="ts_company_logo">
-                                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Vector.svg"
+                                                    <img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Vector.svg"
+                                                        alt="Hanwha Techwin">
+                                                    <img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Vector.svg"
                                                         alt="Hanwha Techwin">
                                                 </div>
                                                 <div class="ts_quote_icon">
@@ -175,7 +181,9 @@ class Testimonial_Slider extends Widget_Base
                                             </div>
                                         </div>
                                         <div class="ts_media_card">
-                                            <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025//11/Image-2-2.webp"
+                                            <img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025//11/Image-2-2.webp"
+                                                alt="Testimonial Video">
+                                            <img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025//11/Image-2-2.webp"
                                                 alt="Testimonial Video">
                                             <!-- Or use placeholder if no image -->
                                             <!-- <div class="ts_media_placeholder">Placeholder</div> -->
@@ -189,7 +197,9 @@ class Testimonial_Slider extends Widget_Base
                                         <div class="ts_testimonial_card">
                                             <div class="ts_testimonial_card_content">
                                                 <div class="ts_company_logo">
-                                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Vector.svg"
+                                                    <img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Vector.svg"
+                                                        alt="Hanwha Techwin">
+                                                    <img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Vector.svg"
                                                         alt="Hanwha Techwin">
                                                 </div>
                                                 <div class="ts_quote_icon">
@@ -223,7 +233,9 @@ class Testimonial_Slider extends Widget_Base
                                             </div>
                                         </div>
                                         <div class="ts_media_card">
-                                            <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025//11/Image-2-2.webp"
+                                            <img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025//11/Image-2-2.webp"
+                                                alt="Testimonial Video">
+                                            <img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025//11/Image-2-2.webp"
                                                 alt="Testimonial Video">
                                             <!-- Or use placeholder if no image -->
                                             <!-- <div class="ts_media_placeholder">Placeholder</div> -->
