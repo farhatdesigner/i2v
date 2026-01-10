@@ -117,7 +117,9 @@ class Horizontal_Slider_Topcaption extends Widget_Base
                                     </p>
                                 </div>
                                 <div class="slider-image">
-                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/oil-and-gas.webp"
+                                    <img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/oil-and-gas.webp"
+                                        alt="Object Tagging and Metadata based search for faster investigations">
+                                    <img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/oil-and-gas.webp"
                                         alt="Object Tagging and Metadata based search for faster investigations">
                                 </div>
                             </div>
@@ -129,7 +131,9 @@ class Horizontal_Slider_Topcaption extends Widget_Base
                                     </p>
                                 </div>
                                 <div class="slider-image">
-                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/transportation.webp"
+                                    <img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/transportation.webp"
+                                        alt="Object Tagging and Metadata based search for faster investigations">
+                                    <img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/transportation.webp"
                                         alt="Object Tagging and Metadata based search for faster investigations">
                                 </div>
                             </div>
@@ -141,7 +145,9 @@ class Horizontal_Slider_Topcaption extends Widget_Base
                                     </p>
                                 </div>
                                 <div class="slider-image">
-                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Energy.webp"
+                                    <img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Energy.webp"
+                                        alt="Object Tagging and Metadata based search for faster investigations">
+                                    <img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Energy.webp"
                                         alt="Object Tagging and Metadata based search for faster investigations">
                                 </div>
                             </div>
@@ -153,7 +159,9 @@ class Horizontal_Slider_Topcaption extends Widget_Base
                                     </p>
                                 </div>
                                 <div class="slider-image">
-                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/government.webp"
+                                    <img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/government.webp"
+                                        alt="Object Tagging and Metadata based search for faster investigations">
+                                    <img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/government.webp"
                                         alt="Object Tagging and Metadata based search for faster investigations">
                                 </div>
                             </div>
@@ -164,7 +172,9 @@ class Horizontal_Slider_Topcaption extends Widget_Base
                                         Protect your reputation, unlok growth and gain a competitive </p>
                                 </div>
                                 <div class="slider-image">
-                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/transportation.webp"
+                                    <img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/transportation.webp"
+                                        alt="Object Tagging and Metadata based search for faster investigations">
+                                    <img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/transportation.webp"
                                         alt="Object Tagging and Metadata based search for faster investigations">
                                 </div>
                             </div>

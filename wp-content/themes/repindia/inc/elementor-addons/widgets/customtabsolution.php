@@ -143,7 +143,8 @@ class Customtabsolution extends Widget_Base
 									<div class="content0 tabdiv  active-tabcontent">
 										<div class="content-inner row">
 											<div class="content-inner-image col-lg-6">
-												<img class="img-fluid rounded-4" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/thumbnail.webp" alt="i2V’s VMS">
+												<img class="img-fluid rounded-4 white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/thumbnail.webp" alt="i2V’s VMS">
+												<img class="img-fluid rounded-4 black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/thumbnail.webp" alt="i2V’s VMS">
 											</div>
 											<div class="content-inner-text col-lg-6">
 												<h4 class="sub_title">i2V’s video management system (VMS)</h4>
@@ -182,35 +183,43 @@ class Customtabsolution extends Widget_Base
 											<div class="content-inner-icons col-12">
 												<ul>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/icon-3.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/icon-3.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/icon-3.svg" alt="i2V’s VMS">
 														<span>Configuration Client</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/live-view-and-playback-client.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/live-view-and-playback-client.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/live-view-and-playback-client.svg" alt="i2V’s VMS">
 														<span>Live View and Playback Client</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/e-map-client.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/e-map-client.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/e-map-client.svg" alt="i2V’s VMS">
 														<span>eMap </br> Client</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/icon.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/icon.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/icon.svg" alt="i2V’s VMS">
 														<span>Auto PTZ </br> tracking</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/playback-client.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/playback-client.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/playback-client.svg" alt="i2V’s VMS">
 														<span>Playback </br> Client</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/icon-1.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/icon-1.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/icon-1.svg" alt="i2V’s VMS">
 														<span>Recordings and Storage</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/alarm-management.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/alarm-management.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/alarm-management.svg" alt="i2V’s VMS">
 														<span>Alarm management</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/icon-2.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/icon-2.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/icon-2.svg" alt="i2V’s VMS">
 														<span>Multi monitoring and video wall</span>
 													</li>
 													<div class="text-left pt-4">
@@ -223,7 +232,8 @@ class Customtabsolution extends Widget_Base
 									<div class="content1 tabdiv">
 										<div class="content-inner row">
 											<div class="content-inner-image col-lg-6">
-												<img class="img-fluid rounded-4" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/image-1.webp" alt="i2V’s VMS">
+												<img class="img-fluid rounded-4 white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/image-1.webp" alt="i2V’s VMS">
+												<img class="img-fluid rounded-4 black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/image-1.webp" alt="i2V’s VMS">
 											</div>
 											<div class="content-inner-text col-lg-6">
 												<h4 class="sub_title">AI-Powered video analytics for next-gen surveillance</h4>
@@ -273,35 +283,43 @@ class Customtabsolution extends Widget_Base
 											<div class="content-inner-icons col-12">
 												<ul>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/REAL-T1.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/REAL-T1.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/REAL-T1.svg" alt="i2V’s VMS">
 														<span>Real-time object detection and tracking</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/FACE-R1.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/FACE-R1.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/FACE-R1.svg" alt="i2V’s VMS">
 														<span>Face recognition with blacklist matching</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/LICENS1.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/LICENS1.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/LICENS1.svg" alt="i2V’s VMS">
 														<span>License plate recognition (ANPR)</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/INTRUS1.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/INTRUS1.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/INTRUS1.svg" alt="i2V's VMS">
 														<span>Intrusion and perimeter violation alerts</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/ABANDO1.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/ABANDO1.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/ABANDO1.svg" alt="i2V's VMS">
 														<span>Abandoned or missing object detection</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/CROWD-1.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/CROWD-1.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/CROWD-1.svg" alt="i2V's VMS">
 														<span>Crowd density and queue management</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/VEHICL1.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/VEHICL1.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/VEHICL1.svg" alt="i2V's VMS">
 														<span>Vehicle and people counting</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/TAMPER1.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/TAMPER1.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/TAMPER1.svg" alt="i2V's VMS">
 														<span>Tamper and camera sabotage detection</span>
 													</li>
 													<div class="text-left pt-4">
@@ -314,7 +332,8 @@ class Customtabsolution extends Widget_Base
 									<div class="content2 tabdiv">
 										<div class="content-inner row">
 											<div class="content-inner-image col-lg-6">
-												<img class="img-fluid rounded-4" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/image-3.webp" alt="i2V’s VMS">
+												<img class="img-fluid rounded-4 white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/image-3.webp" alt="i2V’s VMS">
+												<img class="img-fluid rounded-4 black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/image-3.webp" alt="i2V’s VMS">
 											</div>
 											<div class="content-inner-text col-lg-6">
 												<h4 class="sub_title">Empowering public safety through integrated command and control</h4>
@@ -364,35 +383,43 @@ class Customtabsolution extends Widget_Base
 											<div class="content-inner-icons col-12">
 												<ul>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/GIS-AN1.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/GIS-AN1.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/GIS-AN1.svg" alt="i2V's VMS">
 														<span>GIS and map integration</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/CUSTOM1.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/CUSTOM1.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/CUSTOM1.svg" alt="i2V's VMS">
 														<span>Custom SOP engine</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/MULTI-1.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/MULTI-1.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/MULTI-1.svg" alt="i2V's VMS">
 														<span>Multi-channel alerts</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/INCIDE1.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/INCIDE1.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/INCIDE1.svg" alt="i2V's VMS">
 														<span>Incident escalation matrix</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/ALARM-1.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/ALARM-1.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/ALARM-1.svg" alt="i2V's VMS">
 														<span>Alarm video verification</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/MASSIV1.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/MASSIV1.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/MASSIV1.svg" alt="i2V's VMS">
 														<span>Massive site support</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/OPEN-D1.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/OPEN-D1.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/OPEN-D1.svg" alt="i2V's VMS">
 														<span>Open device compatibility</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/CENTRA1.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/CENTRA1.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/CENTRA1.svg" alt="i2V's VMS">
 														<span>Central monitoring views</span>
 													</li>
 													<div class="text-left pt-4">
@@ -405,7 +432,8 @@ class Customtabsolution extends Widget_Base
 									<div class="content3 tabdiv">
 										<div class="content-inner row">
 											<div class="content-inner-image col-lg-6">
-												<img class="img-fluid rounded-4" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/image-6.webp" alt="i2V’s VMS">
+												<img class="img-fluid rounded-4 white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/image-6.webp" alt="i2V’s VMS">
+												<img class="img-fluid rounded-4 black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/image-6.webp" alt="i2V’s VMS">
 											</div>
 											<div class="content-inner-text col-lg-6">
 												<h4 class="sub_title">Centralized monitoring system for multi-site surveillance</h4>
@@ -455,35 +483,43 @@ class Customtabsolution extends Widget_Base
 											<div class="content-inner-icons col-12">
 												<ul>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/multi-site-monitoring.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/multi-site-monitoring.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/multi-site-monitoring.svg" alt="i2V’s VMS">
 														<span>Multi-site monitoring</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/smart-alert-handling.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/smart-alert-handling.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/smart-alert-handling.svg" alt="i2V’s VMS">
 														<span>Smart alert handling</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/event-based-video-popup.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/event-based-video-popup.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/event-based-video-popup.svg" alt="i2V’s VMS">
 														<span>Event-based video popup</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/health-status-monitoring.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/health-status-monitoring.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/health-status-monitoring.svg" alt="i2V’s VMS">
 														<span>Health status monitoring</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/video-evidence-retrieval.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/video-evidence-retrieval.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/video-evidence-retrieval.svg" alt="i2V’s VMS">
 														<span>Video evidence retrieval</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/escalation-workflows.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/escalation-workflows.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/escalation-workflows.svg" alt="i2V’s VMS">
 														<span>Escalation workflows</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/user-role-management.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/user-role-management.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/user-role-management.svg" alt="i2V’s VMS">
 														<span>User role management</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/unified-dashboard-view.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/unified-dashboard-view.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/unified-dashboard-view.svg" alt="i2V’s VMS">
 														<span>Unified dashboard view</span>
 													</li>
 													<div class="text-left pt-4">
@@ -496,7 +532,8 @@ class Customtabsolution extends Widget_Base
 									<div class="content4 tabdiv">
 										<div class="content-inner row">
 											<div class="content-inner-image col-lg-6">
-												<img class="img-fluid rounded-4" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/image.webp" alt="i2V’s VMS">
+												<img class="img-fluid rounded-4 white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/image.webp" alt="i2V’s VMS">
+												<img class="img-fluid rounded-4 black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/image.webp" alt="i2V’s VMS">
 											</div>
 											<div class="content-inner-text col-lg-6">
 												<h4 class="sub_title">End-to-end intelligent traffic control solution</h4>
@@ -546,35 +583,43 @@ class Customtabsolution extends Widget_Base
 											<div class="content-inner-icons col-12">
 												<ul>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/red-light-violation-detection-rlvd.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/red-light-violation-detection-rlvd.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/red-light-violation-detection-rlvd.svg" alt="i2V's VMS">
 														<span>Red light violation detection (RLVD)</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/speed-violation-detection.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/speed-violation-detection.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/speed-violation-detection.svg" alt="i2V's VMS">
 														<span>Speed violation detection</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/number-plate-recognition.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/number-plate-recognition.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/number-plate-recognition.svg" alt="i2V's VMS">
 														<span>Number plate recognition</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/lane-discipline-monitoring.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/lane-discipline-monitoring.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/lane-discipline-monitoring.svg" alt="i2V's VMS">
 														<span>Lane discipline monitoring</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/no-helmet-detection.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/no-helmet-detection.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/no-helmet-detection.svg" alt="i2V's VMS">
 														<span>No helmet detection</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/triple-riding-detection.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/triple-riding-detection.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/triple-riding-detection.svg" alt="i2V's VMS">
 														<span>Triple riding detection</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/real-time-traffic-analytics.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/real-time-traffic-analytics.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/real-time-traffic-analytics.svg" alt="i2V's VMS">
 														<span>Real-time traffic analytics</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/violation-evidence-dashboard.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/violation-evidence-dashboard.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/violation-evidence-dashboard.svg" alt="i2V's VMS">
 														<span>Violation evidence dashboard</span>
 													</li>
 													<div class="text-left pt-4">
@@ -587,7 +632,8 @@ class Customtabsolution extends Widget_Base
 									<div class="content5 tabdiv">
 										<div class="content-inner row">
 											<div class="content-inner-image col-lg-6">
-												<img class="img-fluid rounded-4" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/image-2.webp" alt="i2V’s VMS">
+												<img class="img-fluid rounded-4 white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/image-2.webp" alt="i2V’s VMS">
+												<img class="img-fluid rounded-4 black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/image-2.webp" alt="i2V’s VMS">
 											</div>
 											<div class="content-inner-text col-lg-6">
 												<h4 class="sub_title">Advanced ANPR system for real-time detection and logging</h4>
@@ -637,35 +683,43 @@ class Customtabsolution extends Widget_Base
 											<div class="content-inner-icons col-12">
 												<ul>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/real-time-plate-detection.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/real-time-plate-detection.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/real-time-plate-detection.svg" alt="i2V's VMS">
 														<span>Real-time plate detection</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/high-accuracy-recognition.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/high-accuracy-recognition.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/high-accuracy-recognition.svg" alt="i2V's VMS">
 														<span>High-accuracy recognition</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/ip-and-analog-support.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/ip-and-analog-support.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/ip-and-analog-support.svg" alt="i2V's VMS">
 														<span>IP and analog support</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/centralized-number-plate-logging.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/centralized-number-plate-logging.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/centralized-number-plate-logging.svg" alt="i2V's VMS">
 														<span>Centralized number plate logging</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/watchlist-and-whitelist-matching.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/watchlist-and-whitelist-matching.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/watchlist-and-whitelist-matching.svg" alt="i2V's VMS">
 														<span>Watchlist and whitelist matching</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/smart-search-and-filtering.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/smart-search-and-filtering.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/smart-search-and-filtering.svg" alt="i2V's VMS">
 														<span>Smart search and filtering</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/violation-based-triggers.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/violation-based-triggers.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/violation-based-triggers.svg" alt="i2V's VMS">
 														<span>Violation-based triggers</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/multi-region-plate-support.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/multi-region-plate-support.svg" alt="i2V's VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/multi-region-plate-support.svg" alt="i2V's VMS">
 														<span>Multi-region plate support</span>
 													</li>
 													<div class="text-left pt-4">
@@ -678,7 +732,8 @@ class Customtabsolution extends Widget_Base
 									<div class="content6 tabdiv">
 										<div class="content-inner row">
 											<div class="content-inner-image col-lg-6">
-												<img class="img-fluid rounded-4" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/image-4.webp" alt="i2V’s VMS">
+												<img class="img-fluid rounded-4 white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/image-4.webp" alt="i2V’s VMS">
+												<img class="img-fluid rounded-4 black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/image-4.webp" alt="i2V’s VMS">
 											</div>
 											<div class="content-inner-text col-lg-6">
 												<h4 class="sub_title">Automated video-based incident alerting and response platform</h4>
@@ -728,35 +783,43 @@ class Customtabsolution extends Widget_Base
 											<div class="content-inner-icons col-12">
 												<ul>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/stopped-vehicle-detection.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/stopped-vehicle-detection.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/stopped-vehicle-detection.svg" alt="i2V’s VMS">
 														<span>Stopped vehicle detection</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/wrong-direction-detection.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/wrong-direction-detection.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/wrong-direction-detection.svg" alt="i2V’s VMS">
 														<span>Wrong direction detection</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/smoke-and-fire-detection.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/smoke-and-fire-detection.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/smoke-and-fire-detection.svg" alt="i2V’s VMS">
 														<span>Smoke and fire detection</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/slow-traffic-alerting.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/slow-traffic-alerting.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/slow-traffic-alerting.svg" alt="i2V’s VMS">
 														<span>Slow traffic </br> alerting</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/congestion-traffic-alerting.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/congestion-traffic-alerting.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/congestion-traffic-alerting.svg" alt="i2V’s VMS">
 														<span>Congestion traffic alerting</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/speed-variation-detection.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/speed-variation-detection.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/speed-variation-detection.svg" alt="i2V’s VMS">
 														<span>Speed variation detection</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/24x7-automated-monitoring.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/24x7-automated-monitoring.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/24x7-automated-monitoring.svg" alt="i2V’s VMS">
 														<span>24x7 automated monitoring</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/visual-and-audio-alarms.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/visual-and-audio-alarms.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/visual-and-audio-alarms.svg" alt="i2V’s VMS">
 														<span>Visual and audio alarms</span>
 													</li>
 													<div class="text-left pt-4">
@@ -769,7 +832,8 @@ class Customtabsolution extends Widget_Base
 									<div class="content7 tabdiv">
 										<div class="content-inner row">
 											<div class="content-inner-image col-lg-6">
-												<img class="img-fluid rounded-4" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/image-5.webp" alt="i2V’s VMS">
+												<img class="img-fluid rounded-4 white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/image-5.webp" alt="i2V’s VMS">
+												<img class="img-fluid rounded-4 black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/image-5.webp" alt="i2V’s VMS">
 											</div>
 											<div class="content-inner-text col-lg-6">
 												<h4 class="sub_title">Real-time face recognition system for surveillance, access, identity verification and more</h4>
@@ -819,35 +883,43 @@ class Customtabsolution extends Widget_Base
 											<div class="content-inner-icons col-12">
 												<ul>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/real-time-face-detection.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/real-time-face-detection.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/real-time-face-detection.svg" alt="i2V’s VMS">
 														<span>Real-time face detection</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/watchlist-based-alerting.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/watchlist-based-alerting.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/watchlist-based-alerting.svg" alt="i2V’s VMS">
 														<span>Watchlist-based alerting</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/multiple-face-matching.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/multiple-face-matching.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/multiple-face-matching.svg" alt="i2V’s VMS">
 														<span>Multiple face matching</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/access-control-integration.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/access-control-integration.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/access-control-integration.svg" alt="i2V’s VMS">
 														<span>Access control integration</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/camera-agnostic-compatibility.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/camera-agnostic-compatibility.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/camera-agnostic-compatibility.svg" alt="i2V’s VMS">
 														<span>Camera-agnostic compatibility</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/centralized-face-database.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/centralized-face-database.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/centralized-face-database.svg" alt="i2V’s VMS">
 														<span>Centralized face database</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/real-time-face-logging.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/real-time-face-logging.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/real-time-face-logging.svg" alt="i2V’s VMS">
 														<span>Real-time face logging</span>
 													</li>
 													<li>
-														<img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/cross-location-recognition.svg" alt="i2V’s VMS">
+														<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/cross-location-recognition.svg" alt="i2V’s VMS">
+														<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/cross-location-recognition.svg" alt="i2V’s VMS">
 														<span>Cross-location recognition</span>
 													</li>
 													<div class="text-left pt-4">
