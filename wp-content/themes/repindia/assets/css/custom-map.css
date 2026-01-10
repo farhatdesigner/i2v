@@ -482,76 +482,426 @@
     gap: 8px;
     flex-wrap: wrap;
 }
+.js-dark .project-type-filter{
+    border: 1px solid rgba(193, 196, 198, 0.1) !important;
+    background: #262a30;
+    color: #ccc;
+}
+.js-dark button.location-chip,.js-dark button.detail-close{
+    border: 1px solid rgba(193, 196, 198, 0.1) !important;
+    background: #464A4F;
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.js-dark button.location-chip svg path, .js-dark button.detail-close svg path{
+    fill: rgba(255, 255, 255, 0.9) !important;
+}
+.js-dark .leaflet-bar a{
+    border: 1px solid rgba(193, 196, 198, 0.1) !important;
+    background-color: #464A4F;
+}
+.js-dark .custom-map-detail-card{
+    background: #262a30;
+}
+.js-dark .detail-info-item,.js-dark .detail-quote-section{
+    background: #464A4F;
+}
+.js-dark .detail-info-item svg path,.js-dark .detail-quote-section svg path{ fill: rgba(255, 255, 255, 0.9) !important; }
 
-/* Responsive Styles */
+/* Responsive Styles - Tablet (768px and below) */
 @media (max-width: 768px) {
-    .custom-map-filters {
-        padding: 16px;
-        gap: 12px;
+    .custom-store-locator-wrapper {
+        padding: 0;
     }
 
+    .custom-map-filters {
+        padding: 12px 16px 16px;
+        gap: 12px;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    /* Location Filter Chips - Full width on tablet */
     .location-filter-chips {
         width: 100%;
         gap: 8px;
+        flex: 1 1 100%;
+        min-width: 100%;
     }
 
     .location-chip {
-        font-size: 12px;
-        padding: 6px 12px;
+        font-size: 14px;
+        padding: 6px 14px;
+        min-height: 32px;
+        touch-action: manipulation; /* Improve touch responsiveness */
     }
 
+    .location-chip-more {
+        font-size: 14px;
+        padding: 6px 14px;
+        min-height: 32px;
+    }
+
+    .location-chip-toggle {
+        font-size: 14px;
+        padding: 6px 14px;
+        min-height: 32px;
+        margin-top: 8px;
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Scroll Container - Full width on tablet */
+    .location-chips-scroll-container {
+        flex: 1 1 100%;
+        min-width: 100%;
+        max-height: 200px;
+        width: 100%;
+    }
+
+    .location-chips-scroll-container .location-chips-scroll-content {
+        gap: 8px;
+        padding: 0;
+    }
+
+    /* Project Type Dropdown - Full width on tablet */
     .project-type-filter-wrapper {
         width: 100%;
         margin-left: 0;
+        flex: 1 1 100%;
+        min-width: 100%;
     }
 
     .project-type-filter {
         width: 100%;
         min-width: auto;
+        padding: 10px 12px;
+        font-size: 14px;
+        touch-action: manipulation;
     }
 
+    /* Map Container - Adjusted height for tablet */
     .custom-map-container {
         height: 500px;
     }
 
+    /* Detail Card - Centered on tablet for better UX */
     .custom-map-detail-card {
-        width: calc(100% - 40px);
-        max-width: calc(100% - 40px);
+        width: calc(100% - 32px);
+        max-width: 350px;
         max-height: calc(100% - 20px);
+        left: 50% !important;
+        top: 50% !important;
+        right: auto !important;
+        bottom: auto !important;
+        transform: translate(-50%, -50%) scale(0.95);
     }
 
-    .map-no-results-fallback {
-        width: calc(100% - 40px);
-        max-width: calc(100% - 40px);
-        padding: 30px 20px;
+    .custom-map-detail-card.active {
+        transform: translate(-50%, -50%) scale(1);
     }
 
     .detail-card-header {
-        padding: 16px 20px 12px;
-    }
-
-    .detail-card-body {
-        padding: 16px 20px 20px;
+        padding: 12px 16px 0;
     }
 
     .detail-title {
-        font-size: 20px;
+        font-size: 18px;
+        line-height: 24px;
     }
 
-    .show-list-button {
-        bottom: 10px;
+    .detail-card-body {
+        padding: 0 12px 12px;
+        gap: 6px;
+    }
+
+    .detail-info-item {
+        padding: 4px 10px;
+        font-size: 13px;
+    }
+
+    .detail-info-item svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .detail-itms,
+    .detail-project-date,
+    .detail-cameras-count {
+        font-size: 13px;
+    }
+
+    .detail-quote-section {
+        padding: 8px;
+        margin-top: 6px;
+    }
+
+    .detail-quote p {
+        font-size: 13px;
+        line-height: 18px;
+    }
+
+    /* No Results Fallback */
+    .map-no-results-fallback {
+        width: calc(100% - 32px);
+        max-width: calc(100% - 32px);
+        padding: 30px 20px;
+    }
+
+    .no-results-message {
+        font-size: 15px;
+    }
+
+    .no-results-reset {
         padding: 10px 20px;
-        font-size: 12px;
+        font-size: 14px;
+        touch-action: manipulation;
+    }
+
+    /* Show List Button */
+    .show-list-button {
+        bottom: 12px;
+        padding: 10px 20px;
+        font-size: 13px;
+        touch-action: manipulation;
+    }
+
+    /* Marker adjustments for touch */
+    .marker-pin {
+        width: 36px;
+        height: 36px;
+        border-width: 6px;
+    }
+
+    .marker-pin::after {
+        width: 12px;
+        height: 12px;
+    }
+
+    /* Custom scrollbar for mobile */
+    .location-chips-scroll-container::-webkit-scrollbar {
+        width: 4px;
     }
 }
 
+/* Responsive Styles - Mobile (480px and below) */
 @media (max-width: 480px) {
+    .custom-map-filters {
+        padding: 12px;
+        gap: 10px;
+    }
+
+    .location-filter-chips {
+        gap: 6px;
+    }
+
+    .location-chip {
+        font-size: 13px;
+        padding: 5px 12px;
+        min-height: 30px;
+        line-height: 20px;
+    }
+
+    .location-chip-more {
+        font-size: 13px;
+        padding: 5px 12px;
+        min-height: 30px;
+    }
+
+    .location-chip-toggle {
+        font-size: 13px;
+        padding: 5px 12px;
+        min-height: 30px;
+        margin-top: 6px;
+    }
+
+    /* Scroll Container - Smaller height on mobile */
+    .location-chips-scroll-container {
+        max-height: 180px;
+    }
+
+    .location-chips-scroll-container .location-chips-scroll-content {
+        gap: 6px;
+    }
+
+    .project-type-filter {
+        padding: 8px 10px;
+        font-size: 13px;
+        background-size: 14px;
+        background-position: right 10px center;
+    }
+
+    /* Map Container - Smaller height on mobile */
     .custom-map-container {
         height: 400px;
     }
 
-    .custom-map-filters {
-        padding: 16px;
+    /* Detail Card - Full width on mobile, centered */
+    .custom-map-detail-card {
+        width: calc(100% - 24px);
+        max-width: calc(100% - 24px);
+        max-height: calc(100% - 16px);
+        left: 50% !important;
+        top: 50% !important;
+        right: auto !important;
+        bottom: auto !important;
+        transform: translate(-50%, -50%) scale(0.95);
+    }
+
+    .custom-map-detail-card.active {
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    .detail-card-header {
+        padding: 10px 12px 0;
+        gap: 6px;
+    }
+
+    .detail-title {
+        font-size: 16px;
+        line-height: 22px;
+    }
+
+    .detail-close {
+        width: 24px;
+        height: 24px;
+    }
+
+    .detail-close svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .detail-card-body {
+        padding: 0 10px 10px;
+        gap: 6px;
+    }
+
+    .detail-info-assets {
+        gap: 6px;
+    }
+
+    .detail-info-item {
+        padding: 3px 8px;
+        font-size: 12px;
+        gap: 2px;
+    }
+
+    .detail-info-item svg {
+        width: 12px;
+        height: 12px;
+    }
+
+    .detail-itms,
+    .detail-project-date,
+    .detail-cameras-count {
+        font-size: 12px;
+        line-height: 18px;
+    }
+
+    .detail-quote-section {
+        padding: 6px;
+        margin-top: 4px;
+        gap: 6px;
+    }
+
+    .quote-icon {
+        width: 20px;
+        height: 20px;
+        margin-top: 1px;
+    }
+
+    .detail-quote p {
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    /* No Results Fallback - Better mobile sizing */
+    .map-no-results-fallback {
+        width: calc(100% - 24px);
+        max-width: calc(100% - 24px);
+        padding: 24px 16px;
+        gap: 16px;
+    }
+
+    .no-results-content {
+        gap: 12px;
+    }
+
+    .no-results-message {
+        font-size: 14px;
+    }
+
+    .no-results-reset {
+        padding: 8px 18px;
+        font-size: 13px;
+        width: 100%;
+        max-width: 200px;
+    }
+
+    /* Show List Button - Better mobile positioning */
+    .show-list-button {
+        bottom: 10px;
+        padding: 8px 16px;
+        font-size: 12px;
+        width: calc(100% - 32px);
+        max-width: 200px;
+    }
+
+    /* Marker - Smaller on mobile */
+    .marker-pin {
+        width: 32px;
+        height: 32px;
+        border-width: 5px;
+    }
+
+    .marker-pin::after {
+        width: 10px;
+        height: 10px;
+    }
+
+    .marker-active .marker-pin {
+        border-width: 2px;
+        transform: rotate(-45deg) scale(1.15);
+    }
+
+    /* Leaflet controls - Better touch targets */
+    .leaflet-control-zoom-in,
+    .leaflet-control-zoom-out {
+        font-size: 18px;
+        line-height: 28px;
+        width: 32px;
+        height: 32px;
+    }
+
+    /* Custom scrollbar - Thinner on mobile */
+    .location-chips-scroll-container::-webkit-scrollbar {
+        width: 3px;
+    }
+}
+
+/* Responsive Styles - Small Mobile (360px and below) */
+@media (max-width: 360px) {
+    .custom-map-container {
+        height: 350px;
+    }
+
+    .location-chip {
+        font-size: 12px;
+        padding: 4px 10px;
+    }
+
+    .project-type-filter {
+        font-size: 12px;
+        padding: 7px 8px;
+    }
+
+    .detail-title {
+        font-size: 15px;
+    }
+
+    .detail-info-item {
+        font-size: 11px;
+        padding: 3px 6px;
     }
 }
 

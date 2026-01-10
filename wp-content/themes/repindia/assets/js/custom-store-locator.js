@@ -175,24 +175,53 @@
             // Store project data in marker
             marker.projectData = project;
 
-            // Add hover events (mouseover to show, mouseout to hide)
-            marker.on('mouseover', function() {
-                // Clear any pending hide timeout
-                if (hoverTimeout) {
-                    clearTimeout(hoverTimeout);
-                    hoverTimeout = null;
-                }
-                
-                // Show detail card on hover next to marker
-                openDetailCard(project, wrapper, marker);
-            });
+            // Detect touch device
+            const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-            marker.on('mouseout', function() {
-                // Delay hiding to allow moving to card
-                hoverTimeout = setTimeout(function() {
-                    closeDetailCard(wrapper);
-                }, 150);
-            });
+            if (isTouchDevice) {
+                // For touch devices (mobile/tablet), use click event instead of hover
+                marker.on('click', function() {
+                    const detailCard = wrapper.querySelector('.custom-map-detail-card');
+                    const isActive = detailCard && detailCard.classList.contains('active');
+                    
+                    if (isActive && detailCard.dataset.currentProjectId === project.id.toString()) {
+                        // If same card is open, close it
+                        closeDetailCard(wrapper);
+                    } else {
+                        // Clear any pending hide timeout
+                        if (hoverTimeout) {
+                            clearTimeout(hoverTimeout);
+                            hoverTimeout = null;
+                        }
+                        
+                        // Show detail card on click
+                        openDetailCard(project, wrapper, marker);
+                        // Store project ID in card for tracking
+                        if (detailCard) {
+                            detailCard.dataset.currentProjectId = project.id.toString();
+                        }
+                    }
+                });
+            } else {
+                // For desktop, use hover events
+                marker.on('mouseover', function() {
+                    // Clear any pending hide timeout
+                    if (hoverTimeout) {
+                        clearTimeout(hoverTimeout);
+                        hoverTimeout = null;
+                    }
+                    
+                    // Show detail card on hover next to marker
+                    openDetailCard(project, wrapper, marker);
+                });
+
+                marker.on('mouseout', function() {
+                    // Delay hiding to allow moving to card
+                    hoverTimeout = setTimeout(function() {
+                        closeDetailCard(wrapper);
+                    }, 150);
+                });
+            }
 
             // Store marker by project ID
             markersByProjectId[project.id] = marker;
@@ -325,16 +354,34 @@
         }
 
         /**
-         * Position detail card next to marker
+         * Position detail card next to marker (mobile: centered, desktop: next to marker)
          */
         function positionCardNearMarker(detailCard, markerElement, wrapper) {
-            if (!markerElement || !markerElement._icon || !detailCard) return;
+            if (!detailCard) return;
 
-            const markerIcon = markerElement._icon;
-            const markerRect = markerIcon.getBoundingClientRect();
             const mapContainer = wrapper.querySelector('.custom-map-container');
             if (!mapContainer) return;
             
+            // Detect if mobile/tablet (screen width <= 768px)
+            const isMobile = window.innerWidth <= 768;
+            
+            if (isMobile) {
+                // On mobile/tablet, center the card horizontally and vertically
+                // CSS will handle centering via transform: translate(-50%, -50%)
+                detailCard.style.position = 'absolute';
+                detailCard.style.left = '50%';
+                detailCard.style.top = '50%';
+                detailCard.style.right = 'auto';
+                detailCard.style.bottom = 'auto';
+                detailCard.style.margin = '0';
+                return;
+            }
+            
+            // Desktop: Position card next to marker with edge detection
+            if (!markerElement || !markerElement._icon) return;
+
+            const markerIcon = markerElement._icon;
+            const markerRect = markerIcon.getBoundingClientRect();
             const mapRect = mapContainer.getBoundingClientRect();
             
             // Calculate marker center relative to map container
@@ -388,6 +435,7 @@
             detailCard.style.top = Math.round(cardTop) + 'px';
             detailCard.style.right = 'auto';
             detailCard.style.bottom = 'auto';
+            detailCard.style.transform = '';
             // Don't override transform - let CSS handle scale animation
             detailCard.style.margin = '0';
         }
@@ -405,11 +453,27 @@
             const detailCard = wrapper.querySelector('.custom-map-detail-card');
             if (detailCard) {
                 detailCard.classList.remove('active');
-                // Reset position styles for next open (keep transform for CSS animation)
-                detailCard.style.left = '';
-                detailCard.style.top = '';
-                detailCard.style.right = '';
-                detailCard.style.bottom = '';
+                
+                // On mobile, reset to center; on desktop, reset all position styles
+                const isMobile = window.innerWidth <= 768;
+                if (isMobile) {
+                    // On mobile, keep centering transform but reset scale
+                    detailCard.style.left = '50%';
+                    detailCard.style.top = '50%';
+                    detailCard.style.transform = 'translate(-50%, -50%) scale(0.95)';
+                } else {
+                    // On desktop, reset all position styles
+                    detailCard.style.left = '';
+                    detailCard.style.top = '';
+                    detailCard.style.right = '';
+                    detailCard.style.bottom = '';
+                    detailCard.style.transform = '';
+                }
+                detailCard.style.margin = '';
+                // Clear project ID tracking
+                if (detailCard.dataset) {
+                    detailCard.dataset.currentProjectId = '';
+                }
             }
             
             // Remove marker highlights
