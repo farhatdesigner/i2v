@@ -22,13 +22,16 @@ document.addEventListener("DOMContentLoaded", function () {
     // Apply correct image on page load
     updateThemeImages(isDarkMode);
 
-    // Watch for toggle button clicks (already exists)
-    const toggleBtn = document.querySelector('.dark-mode-toggle');
-    if (toggleBtn) {
-        toggleBtn.addEventListener('click', function () {
-            const isDark = document.body.classList.toggle('js-dark');
-            localStorage.setItem('dark-mode', isDark ? 'dark' : 'light');
-            updateThemeImages(isDark);
+    // Watch for toggle button clicks (handle all dark mode toggle buttons)
+    const toggleBtns = document.querySelectorAll('.dark-mode-toggle');
+    if (toggleBtns.length > 0) {
+        toggleBtns.forEach(function(toggleBtn) {
+            toggleBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                const isDark = document.body.classList.toggle('js-dark');
+                localStorage.setItem('dark-mode', isDark ? 'dark' : 'light');
+                updateThemeImages(isDark);
+            });
         });
     }
 });
