@@ -146,10 +146,9 @@
         const filterContainer = wrapper.querySelector('.custom-map-filters'); // Cache filter container
         let selectedLocationSlug = 'all';
         let selectedProjectTypeSlug = 'all';
-        let chipsPerPage = 5; // Show 5 chips initially
-        let currentChipPage = 1;
         let hoverTimeout = null; // Global hover timeout for card display
         let isInitialLoad = true; // Track if this is the initial load to respect initialZoom
+        let locationChipsExpanded = false; // Track if location chips are expanded to show all
 
         // Create custom marker icon
         const customIcon = L.divIcon({
@@ -619,13 +618,19 @@
 
             // Clear existing chips
             chipsContainer.innerHTML = '';
+            
+            // Remove existing scroll container if not expanded (when collapsing)
+            if (!locationChipsExpanded) {
+                const existingScrollContainer = wrapper.querySelector('.location-chips-scroll-container');
+                if (existingScrollContainer) {
+                    existingScrollContainer.remove();
+                }
+            }
 
-            // Calculate pagination
-            const totalChips = locations.length;
-            const startIndex = (currentChipPage - 1) * chipsPerPage;
-            const endIndex = Math.min(startIndex + chipsPerPage, totalChips);
-            const chipsToShow = locations.slice(startIndex, endIndex);
-            const remainingChips = totalChips - endIndex;
+            const maxInitialChips = 2;
+            const shouldShowMoreButton = locations.length > maxInitialChips && !locationChipsExpanded;
+            const chipsToShow = locations.slice(0, maxInitialChips);
+            const remainingCount = locations.length - maxInitialChips;
 
             // Create chips
             chipsToShow.forEach(function(location) {
@@ -639,9 +644,11 @@
                 chip.addEventListener('click', function() {
                     const wasActive = chip.classList.contains('active');
                     
-                    // Remove active class from all chips
-                    chipsContainer.querySelectorAll('.location-chip').forEach(function(c) {
-                        c.classList.remove('active');
+                    // Remove active class from all chips (including in scroll container)
+                    wrapper.querySelectorAll('.location-chip').forEach(function(c) {
+                        if (!c.classList.contains('location-chip-more') && !c.classList.contains('location-chip-toggle')) {
+                            c.classList.remove('active');
+                        }
                     });
                     
                     if (wasActive) {
@@ -660,20 +667,154 @@
                 chipsContainer.appendChild(chip);
             });
 
-            // Add "+X" chip if there are more locations
-            if (remainingChips > 0) {
+            // Add "+X" button if there are more than 5 locations and not expanded
+            if (shouldShowMoreButton && remainingCount > 0) {
                 const moreChip = document.createElement('button');
                 moreChip.type = 'button';
                 moreChip.className = 'location-chip location-chip-more';
-                moreChip.textContent = '+' + remainingChips;
+                moreChip.textContent = '+' + remainingCount;
                 
-                moreChip.addEventListener('click', function() {
-                    currentChipPage++;
-                    createLocationChips();
+                moreChip.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    // Expand to show all chips in scrollable container
+                    expandLocationChips(locations, chipsContainer, mapId);
                 });
 
                 chipsContainer.appendChild(moreChip);
             }
+            
+            // Ensure container is visible
+            chipsContainer.style.display = 'flex';
+        }
+
+        /**
+         * Expand location chips to show all in a scrollable container
+         */
+        function expandLocationChips(allLocations, originalContainer, mapId) {
+            // Check if scroll container already exists
+            let scrollContainer = wrapper.querySelector('.location-chips-scroll-container');
+            
+            if (!scrollContainer) {
+                // Store reference to original container's parent for restoration later
+                const filterContainer = originalContainer.parentNode;
+                
+                // Create scrollable container that will REPLACE the original container's position
+                scrollContainer = document.createElement('div');
+                scrollContainer.className = 'location-chips-scroll-container';
+                scrollContainer.setAttribute('data-original-container-id', originalContainer.id);
+                
+                // Create chips row wrapper for horizontal layout (this is the scrollable content)
+                const chipsRow = document.createElement('div');
+                chipsRow.className = 'location-chips-scroll-content';
+                
+                // Create all location chips
+                allLocations.forEach(function(location) {
+                    const chip = document.createElement('button');
+                    chip.type = 'button';
+                    chip.className = 'location-chip';
+                    chip.setAttribute('data-location-slug', location.slug);
+                    chip.textContent = location.name;
+                    
+                    // Check if this chip is currently active
+                    if (selectedLocationSlug === location.slug) {
+                        chip.classList.add('active');
+                    }
+                    
+                    // Add click event
+                    chip.addEventListener('click', function() {
+                        const wasActive = chip.classList.contains('active');
+                        
+                        // Remove active class from all chips
+                        wrapper.querySelectorAll('.location-chip').forEach(function(c) {
+                            if (!c.classList.contains('location-chip-toggle')) {
+                                c.classList.remove('active');
+                            }
+                        });
+                        
+                        if (wasActive) {
+                            selectedLocationSlug = 'all';
+                        } else {
+                            chip.classList.add('active');
+                            selectedLocationSlug = location.slug;
+                        }
+                        
+                        // Filter markers
+                        filterMarkers();
+                    });
+
+                    chipsRow.appendChild(chip);
+                });
+                
+                // Add "Show Less" button INSIDE the scrollable chips row (at the end, will scroll with chips)
+                const toggleButton = document.createElement('button');
+                toggleButton.type = 'button';
+                toggleButton.className = 'location-chip location-chip-toggle';
+                toggleButton.textContent = 'Show Less';
+                toggleButton.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    collapseLocationChips(originalContainer);
+                });
+                
+                // Add Show Less button to the chips row so it scrolls with them
+                chipsRow.appendChild(toggleButton);
+                
+                // Append the chips row (with all chips + Show Less button) to scroll container
+                scrollContainer.appendChild(chipsRow);
+                
+                // REPLACE the original container with scroll container (maintains flex layout position)
+                // This ensures dropdown alignment is preserved
+                if (filterContainer && originalContainer.parentNode === filterContainer) {
+                    filterContainer.replaceChild(scrollContainer, originalContainer);
+                }
+            }
+            
+            // Show the scroll container
+            if (scrollContainer) {
+                scrollContainer.classList.add('active');
+                scrollContainer.style.display = 'block';
+            }
+            locationChipsExpanded = true;
+        }
+
+        /**
+         * Collapse location chips back to initial view (max 5)
+         */
+        function collapseLocationChips(originalContainer) {
+            const scrollContainer = wrapper.querySelector('.location-chips-scroll-container');
+            const filterContainer = wrapper.querySelector('.custom-map-filters');
+            
+            locationChipsExpanded = false;
+            
+            // Check if original container still exists (it should be replaced, but check anyway)
+            let chipsContainer = wrapper.querySelector('#location-chips-' + mapId);
+            
+            if (!chipsContainer && scrollContainer && filterContainer) {
+                // Original container was replaced by scroll container, recreate it
+                chipsContainer = document.createElement('div');
+                chipsContainer.className = 'location-filter-chips';
+                chipsContainer.id = 'location-chips-' + mapId;
+                
+                // Replace scroll container with the recreated original container
+                filterContainer.replaceChild(chipsContainer, scrollContainer);
+            } else if (scrollContainer && scrollContainer.parentNode) {
+                // If both exist, just remove scroll container
+                scrollContainer.classList.remove('active');
+                scrollContainer.style.display = 'none';
+                scrollContainer.parentNode.removeChild(scrollContainer);
+            }
+            
+            // Ensure original container exists and is visible
+            if (!chipsContainer) {
+                chipsContainer = wrapper.querySelector('#location-chips-' + mapId);
+            }
+            
+            if (chipsContainer) {
+                chipsContainer.style.display = 'flex';
+            }
+            
+            // Recreate chips to show max 5 again with "+X" button
+            // createLocationChips() will populate the container we just restored/ensured exists
+            createLocationChips();
         }
 
         /**
@@ -799,11 +940,21 @@
                 resetBtn.parentNode.replaceChild(newResetBtn, resetBtn);
                 
                 newResetBtn.addEventListener('click', function() {
+                    // Collapse expanded location chips if open
+                    if (locationChipsExpanded) {
+                        const originalContainer = wrapper.querySelector('#location-chips-' + mapId);
+                        if (originalContainer) {
+                            collapseLocationChips(originalContainer);
+                        }
+                    }
+                    
                     // Reset location filter
                     selectedLocationSlug = 'all';
                     const locationChips = wrapper.querySelectorAll('.location-chip');
                     locationChips.forEach(function(chip) {
-                        chip.classList.remove('active');
+                        if (!chip.classList.contains('location-chip-more') && !chip.classList.contains('location-chip-toggle')) {
+                            chip.classList.remove('active');
+                        }
                     });
 
                     // Reset project type filter

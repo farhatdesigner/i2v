@@ -21,6 +21,7 @@
     border-bottom: 0;
     align-items: center;
     flex-wrap: wrap;
+    position: relative;
 }
 
 /* Location Filter Chips */
@@ -55,13 +56,88 @@
 }
 
 .location-chip-more {
-    background: #f8f9fa;
-    color: #6b7280;
+    background: #F2F5FA;
+    color: #4A5673;
     font-weight: 600;
+    border: 1px solid #E6EBF2;
 }
 
 .location-chip-more:hover {
-    background: #e5e7eb;
+    background: #0099ED;
+    color: #ffffff;
+    border-color: #0099ED;
+}
+
+.location-chip-toggle {
+    background: #F2F5FA;
+    color: #4A5673;
+    font-weight: 600;
+    border: 1px solid #E6EBF2;
+    margin-top: 8px;
+}
+
+.location-chip-toggle:hover {
+    background: #0099ED;
+    color: #ffffff;
+    border-color: #0099ED;
+}
+
+/* Scrollable container for expanded location chips */
+/* This replaces .location-filter-chips when expanded, so it needs same flex properties */
+.location-chips-scroll-container {
+    display: none; /* Hidden by default, shown when expanded */
+    flex: 1; /* Take available space, maintain flex layout with dropdown (matches .location-filter-chips) */
+    min-width: 0; /* Allow shrinking (matches .location-filter-chips) */
+    max-height: 250px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0; /* No padding, chips row handles spacing */
+    background: transparent;
+    align-self: flex-start; /* Align to start to match dropdown alignment */
+}
+
+.location-chips-scroll-container.active {
+    display: block; /* Use block so overflow works, but parent flex makes it a flex item */
+}
+
+/* Chips row wrapper inside scroll container - this is the scrollable content */
+/* This contains all chips + Show Less button, so it all scrolls together */
+.location-chips-scroll-container .location-chips-scroll-content {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+    padding: 0; /* Chips have their own padding */
+    min-height: fit-content;
+}
+
+/* Ensure chips don't shrink */
+.location-chips-scroll-container .location-chip {
+    flex-shrink: 0;
+}
+
+/* Show Less button styling - part of the scrollable content, scrolls with chips */
+.location-chips-scroll-container .location-chip-toggle {
+    flex-shrink: 0;
+}
+
+.location-chips-scroll-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.location-chips-scroll-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.location-chips-scroll-container::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+}
+
+.location-chips-scroll-container::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
 }
 
 /* Project Type Dropdown */
