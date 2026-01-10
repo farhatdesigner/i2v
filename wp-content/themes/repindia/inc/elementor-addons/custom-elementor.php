@@ -50,7 +50,7 @@ class Widget_Loader
 		require_once(__DIR__.'/widgets/custom_social_share.php');
 		require_once(__DIR__.'/widgets/custom_latest_resource.php');
 		require_once(__DIR__.'/widgets/custom_blog_filter.php');
-		
+		require_once(__DIR__.'/widgets/custom_store_locator.php');
 		
     }
     public function register_widgets()
@@ -92,6 +92,8 @@ class Widget_Loader
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Social_Share() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Latest_Resource() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Blog_Filter() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Store_Locator() );
+		
 		
 		
     }
