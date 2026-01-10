@@ -440,9 +440,19 @@ class Custom_Store_Locator extends Widget_Base
             <div class="custom-map-container">
                 <div id="<?php echo esc_attr($map_id); ?>" style="width: 100%; height: 100%;"></div>
 
-                <!-- Detail Panel - Right Side -->
-                <div class="custom-map-detail-panel">
-                    <div class="detail-header">
+                <!-- No Results Fallback -->
+                <div class="map-no-results-fallback" style="display: none;">
+                    <div class="no-results-content">
+                        <p class="no-results-message"><?php echo esc_html__('No projects found matching the selected filters.', 'repindia'); ?></p>
+                        <button class="no-results-reset" type="button">
+                            <?php echo esc_html__('Reset Filters', 'repindia'); ?>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Detail Card - Right Side (Shows on Hover) -->
+                <div class="custom-map-detail-card">
+                    <div class="detail-card-header">
                         <h3 class="detail-title"></h3>
                         <button class="detail-close" type="button" aria-label="Close">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
@@ -450,31 +460,36 @@ class Custom_Store_Locator extends Widget_Base
                             </svg>
                         </button>
                     </div>
-                    <div class="detail-content">
-                        <!-- Metrics with Icons -->
-                        <div class="detail-metrics">
-                            <div class="detail-metric-item">
-                                <svg class="metric-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 01-3-3V6a3 3 0 013-3h13.5a3 3 0 013 3v5.25a3 3 0 01-3 3m-16.5 0a3 3 0 00-3 3v6a3 3 0 003 3h13.5a3 3 0 003-3v-6a3 3 0 00-3-3m-16.5 0V9.75m16.5 0V12m0 0v2.25m0-2.25h-3m3 0h-3" />
-                                </svg>
-                                <span class="metric-value detail-itms"></span>
-                            </div>
-                            <div class="detail-metric-item">
-                                <svg class="metric-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <span class="metric-value detail-months"></span>
-                            </div>
-                            <div class="detail-metric-item">
-                                <svg class="metric-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.94" />
-                                </svg>
-                                <span class="metric-value detail-cameras-count"></span>
-                            </div>
+                    <div class="detail-card-body">
+                        <!-- Project Type / System -->
+                        <div class="detail-info-item">
+                            <svg class="info-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
+                            </svg>
+                            <span class="info-value detail-itms"></span>
+                        </div>
+
+                        <!-- Project Date -->
+                        <div class="detail-info-item">
+                            <svg class="info-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span class="info-value detail-project-date"></span>
+                        </div>
+
+                        <!-- Number of Cameras -->
+                        <div class="detail-info-item">
+                            <svg class="info-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.94" />
+                            </svg>
+                            <span class="info-value detail-cameras-count"></span>
                         </div>
                         
                         <!-- Description/Quote -->
-                        <div class="detail-description">
+                        <div class="detail-quote-section">
+                            <svg class="quote-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                            </svg>
                             <p class="detail-quote"></p>
                         </div>
                     </div>

@@ -147,6 +147,7 @@
         let selectedProjectTypeSlug = 'all';
         let chipsPerPage = 5; // Show 5 chips initially
         let currentChipPage = 1;
+        let hoverTimeout = null; // Global hover timeout for card display
 
         // Create custom marker icon
         const customIcon = L.divIcon({
@@ -173,9 +174,23 @@
             // Store project data in marker
             marker.projectData = project;
 
-            // Add click event to open detail panel (NO Leaflet popup)
-            marker.on('click', function() {
-                openDetailPanel(project, wrapper);
+            // Add hover events (mouseover to show, mouseout to hide)
+            marker.on('mouseover', function() {
+                // Clear any pending hide timeout
+                if (hoverTimeout) {
+                    clearTimeout(hoverTimeout);
+                    hoverTimeout = null;
+                }
+                
+                // Show detail card on hover
+                openDetailCard(project, wrapper);
+            });
+
+            marker.on('mouseout', function() {
+                // Delay hiding to allow moving to card
+                hoverTimeout = setTimeout(function() {
+                    closeDetailCard(wrapper);
+                }, 150);
             });
 
             // Store marker by project ID
@@ -186,70 +201,100 @@
         }
 
         /**
-         * Open custom detail panel (NOT Leaflet popup)
+         * Open custom detail card on hover (NOT Leaflet popup)
          */
-        function openDetailPanel(project, wrapper) {
-            const detailPanel = wrapper.querySelector('.custom-map-detail-panel');
-            if (!detailPanel) return;
+        function openDetailCard(project, wrapper) {
+            // Clear any pending hide timeout
+            if (hoverTimeout) {
+                clearTimeout(hoverTimeout);
+                hoverTimeout = null;
+            }
 
-            // Populate panel content with metrics and description
-            const titleEl = detailPanel.querySelector('.detail-title');
-            const itmsEl = detailPanel.querySelector('.detail-itms');
-            const monthsEl = detailPanel.querySelector('.detail-months');
-            const camerasCountEl = detailPanel.querySelector('.detail-cameras-count');
-            const quoteEl = detailPanel.querySelector('.detail-quote');
+            const detailCard = wrapper.querySelector('.custom-map-detail-card');
+            if (!detailCard) return;
+
+            // Populate card content with project details (matching screenshot 1 layout)
+            const titleEl = detailCard.querySelector('.detail-title');
+            const itmsEl = detailCard.querySelector('.detail-itms');
+            const projectDateEl = detailCard.querySelector('.detail-project-date');
+            const camerasCountEl = detailCard.querySelector('.detail-cameras-count');
+            const quoteEl = detailCard.querySelector('.detail-quote');
 
             if (titleEl) titleEl.textContent = project.title || 'N/A';
             
-            // ITMS/ITS - Use project_type_name if available, otherwise show ITMS/ITS
+            // ICCC/PSIM or Project Type - Use project_type_name if available
             if (itmsEl) {
-                itmsEl.textContent = project.project_type_name || 'ITMS/ITS';
+                itmsEl.textContent = project.project_type_name || 'ICCC/PSIM';
             }
             
-            // Months - Format project_date or use default
-            if (monthsEl) {
+            // Project Date - Format to match screenshot 1 (DD/MM/YYYY format)
+            if (projectDateEl) {
                 if (project.project_date) {
-                    // Try to parse date and calculate months, or display as is
-                    const dateStr = project.project_date;
+                    const dateStr = String(project.project_date).trim();
+                    
+                    // If it's already in DD/MM/YYYY or MM/DD/YYYY format, use as is
+                    if (dateStr.match(/^\d{1,2}[\/-]\d{1,2}[\/-]\d{2,4}$/)) {
+                        projectDateEl.textContent = dateStr.replace(/-/g, '/');
+                    } 
+                    // If it's a timestamp or ISO date, format it
+                    else if (dateStr.match(/^\d{4}-\d{2}-\d{2}/) || !isNaN(Date.parse(dateStr))) {
+                        const dateObj = new Date(dateStr);
+                        if (!isNaN(dateObj.getTime())) {
+                            const day = String(dateObj.getDate()).padStart(2, '0');
+                            const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+                            const year = dateObj.getFullYear();
+                            projectDateEl.textContent = day + '/' + month + '/' + year;
+                        } else {
+                            projectDateEl.textContent = dateStr;
+                        }
+                    }
                     // If it's a number (months), display with "Months"
-                    if (!isNaN(dateStr) && parseFloat(dateStr) > 0) {
-                        monthsEl.textContent = dateStr + ' Months';
-                    } else {
-                        // Otherwise display as is (assuming it's already formatted)
-                        monthsEl.textContent = dateStr;
+                    else if (!isNaN(dateStr) && parseFloat(dateStr) > 0) {
+                        projectDateEl.textContent = dateStr + ' Months';
+                    }
+                    // Otherwise display as is
+                    else {
+                        projectDateEl.textContent = dateStr;
                     }
                 } else {
-                    monthsEl.textContent = '2 Months'; // Default fallback
+                    projectDateEl.textContent = 'N/A';
                 }
             }
             
             // Number of cameras with formatting
             if (camerasCountEl) {
                 const cameras = project.number_of_cameras || '0';
-                // Format number with comma separators
                 camerasCountEl.textContent = parseInt(cameras).toLocaleString('en-US');
             }
             
-            // Description/Quote
+            // Description/Quote - Handle HTML content from ACF (preserve formatting like screenshot 1)
             if (quoteEl) {
-                const desc = project.project_description || '';
-                // Format as quote if it contains quotes, otherwise add quotes
-                if (desc && desc.indexOf('"') === -1) {
-                    quoteEl.textContent = '"' + desc + '"';
+                let desc = project.project_description || '';
+                
+                // If description exists, preserve HTML formatting
+                if (desc) {
+                    // Clean up but preserve HTML structure (p, br tags)
+                    desc = desc.trim();
+                    // Ensure proper formatting
+                    if (desc.indexOf('<p>') === -1 && desc.indexOf('<br') === -1) {
+                        // If no HTML, wrap in paragraph
+                        desc = '<p>' + desc + '</p>';
+                    }
+                    quoteEl.innerHTML = desc;
                 } else {
-                    quoteEl.textContent = desc;
+                    quoteEl.innerHTML = '<p>No description available.</p>';
                 }
             }
 
-            // Show panel with animation
-            detailPanel.classList.add('active');
+            // Show card with animation
+            detailCard.classList.add('active');
 
-            // Highlight selected marker
+            // Highlight hovered marker
             if (markersByProjectId[project.id]) {
                 // Remove previous highlights
-                allMarkers.forEach(function(marker) {
-                    if (marker._icon) {
-                        marker._icon.classList.remove('marker-active');
+                allMarkers.forEach(function(m) {
+                    if (m._icon) {
+                        m._icon.classList.remove('marker-active');
                     }
                 });
                 // Add highlight to current marker
@@ -258,24 +303,29 @@
                 }
             }
 
-            // Pan map to marker
-            const marker = markersByProjectId[project.id];
-            if (marker) {
-                map.setView([project.latitude, project.longitude], Math.max(map.getZoom(), 12), {
-                    animate: true,
-                    duration: 0.5
-                });
-            }
         }
 
         /**
-         * Close detail panel
+         * Close detail card
          */
-        function closeDetailPanel(wrapper) {
-            const detailPanel = wrapper.querySelector('.custom-map-detail-panel');
-            if (detailPanel) {
-                detailPanel.classList.remove('active');
+        function closeDetailCard(wrapper) {
+            // Clear any pending timeout
+            if (hoverTimeout) {
+                clearTimeout(hoverTimeout);
+                hoverTimeout = null;
             }
+
+            const detailCard = wrapper.querySelector('.custom-map-detail-card');
+            if (detailCard) {
+                detailCard.classList.remove('active');
+            }
+            
+            // Remove marker highlights
+            allMarkers.forEach(function(marker) {
+                if (marker._icon) {
+                    marker._icon.classList.remove('marker-active');
+                }
+            });
         }
 
         /**
@@ -333,13 +383,32 @@
                 map.fitBounds(group.getBounds().pad(0.1), {
                     maxZoom: (selectedLocationSlug !== 'all' || selectedProjectTypeSlug !== 'all') ? 12 : initialZoom
                 });
+                // Hide no results fallback
+                showNoResultsFallback(wrapper, false);
             } else {
                 // Reset to default view if no markers match
                 map.setView([avgLat, avgLng], initialZoom);
+                // Show no results fallback
+                showNoResultsFallback(wrapper, true);
             }
 
-            // Close detail panel when filtering
-            closeDetailPanel(wrapper);
+            // Close detail card when filtering
+            closeDetailCard(wrapper);
+        }
+
+        /**
+         * Show/hide no results fallback message
+         */
+        function showNoResultsFallback(wrapper, show) {
+            const fallback = wrapper.querySelector('.map-no-results-fallback');
+            if (fallback) {
+                if (show) {
+                    fallback.style.display = 'flex';
+                } else {
+                    fallback.style.display = 'none';
+                }
+            }
+
         }
 
         /**
@@ -370,6 +439,11 @@
                 map.fitBounds(group.getBounds().pad(0.1), {
                     maxZoom: initialZoom
                 });
+                // Hide no results fallback
+                showNoResultsFallback(wrapper, false);
+            } else {
+                // Show no results fallback if no valid projects
+                showNoResultsFallback(wrapper, true);
             }
         }
 
@@ -548,21 +622,35 @@
         }
 
         /**
-         * Initialize detail panel close button and show list button
+         * Initialize detail card close button and hover behavior
          */
-        function initDetailPanel() {
-            const closeBtn = wrapper.querySelector('.detail-close');
+        function initDetailCard() {
+            const detailCard = wrapper.querySelector('.custom-map-detail-card');
+            if (!detailCard) return;
+
+            // Close button
+            const closeBtn = detailCard.querySelector('.detail-close');
             if (closeBtn) {
                 closeBtn.addEventListener('click', function() {
-                    closeDetailPanel(wrapper);
-                    // Remove active marker highlight
-                    allMarkers.forEach(function(marker) {
-                        if (marker._icon) {
-                            marker._icon.classList.remove('marker-active');
-                        }
-                    });
+                    closeDetailCard(wrapper);
                 });
             }
+
+            // Keep card visible when hovering over it (prevents flickering)
+            detailCard.addEventListener('mouseenter', function(e) {
+                e.stopPropagation();
+                if (hoverTimeout) {
+                    clearTimeout(hoverTimeout);
+                    hoverTimeout = null;
+                }
+            });
+
+            detailCard.addEventListener('mouseleave', function(e) {
+                e.stopPropagation();
+                hoverTimeout = setTimeout(function() {
+                    closeDetailCard(wrapper);
+                }, 200);
+            });
 
             // Initialize "Show list" button
             const showListBtn = wrapper.querySelector('.show-list-button');
@@ -575,13 +663,40 @@
                     }
                 });
             }
+
+            // Initialize "Reset Filters" button (in no results fallback)
+            const resetBtn = wrapper.querySelector('.no-results-reset');
+            if (resetBtn) {
+                // Remove any existing listeners by cloning
+                const newResetBtn = resetBtn.cloneNode(true);
+                resetBtn.parentNode.replaceChild(newResetBtn, resetBtn);
+                
+                newResetBtn.addEventListener('click', function() {
+                    // Reset location filter
+                    selectedLocationSlug = 'all';
+                    const locationChips = wrapper.querySelectorAll('.location-chip');
+                    locationChips.forEach(function(chip) {
+                        chip.classList.remove('active');
+                    });
+
+                    // Reset project type filter
+                    selectedProjectTypeSlug = 'all';
+                    const typeSelect = filterContainer ? filterContainer.querySelector('#type-filter-' + mapId) : null;
+                    if (typeSelect) {
+                        typeSelect.value = 'all';
+                    }
+
+                    // Filter to show all markers
+                    filterMarkers();
+                });
+            }
         }
 
         // Initialize filters (will call filterMarkers or showAllMarkers)
         initFilters();
 
-        // Initialize detail panel
-        initDetailPanel();
+        // Initialize detail card
+        initDetailCard();
     }
 
 })();
