@@ -104,7 +104,9 @@ class home_banner extends Widget_Base
       <div class="swiper-container hero-swiper-container">
          <div class="swiper-wrapper">
             <div class="swiper-slide">
-               <div class="slide-inner hero-slide-inner slide-bg-image" data-background="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/homepage-banner2.webp">
+               <div class="slide-inner hero-slide-inner slide-bg-image">
+                  <div class="slide-bg-white white-theme-img" style="background-image: url('<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/homepage-banner2.webp');"></div>
+                  <div class="slide-bg-dark black-theme-img" style="background-image: url('<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/homepage-banner2.webp');"></div>
                   <div class="text-container">
                      <div data-swiper-parallax="300" class="slide-title">
                         <h2>i2V Systems – Driving the future of smart, secure, and scalable video surveillance</h2>
@@ -124,7 +126,9 @@ class home_banner extends Widget_Base
             <!-- end swiper-slide -->
 
             <div class="swiper-slide">
-               <div class="slide-inner hero-slide-inner slide-bg-image" data-background="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/homepage-banner3.webp">
+               <div class="slide-inner hero-slide-inner slide-bg-image">
+                  <div class="slide-bg-white white-theme-img" style="background-image: url('<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/homepage-banner3.webp');"></div>
+                  <div class="slide-bg-dark black-theme-img" style="background-image: url('<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/homepage-banner3.webp');"></div>
                   <div class="text-container">
                      <div data-swiper-parallax="300" class="slide-title">
                         <h2>End-to-end video security built for every industry</h2>
@@ -143,7 +147,9 @@ class home_banner extends Widget_Base
             </div>
             <!-- end swiper-slide -->
             <div class="swiper-slide">
-               <div class="slide-inner hero-slide-inner slide-bg-image" data-background="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/homepage-banner4.webp">
+               <div class="slide-inner hero-slide-inner slide-bg-image">
+                  <div class="slide-bg-white white-theme-img" style="background-image: url('<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/homepage-banner4.webp');"></div>
+                  <div class="slide-bg-dark black-theme-img" style="background-image: url('<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/homepage-banner4.webp');"></div>
                   <div class="text-container">
                      <div data-swiper-parallax="300" class="slide-title">
                         <h2>Trusted AI video surveillance for government & enterprise</h2>
@@ -162,7 +168,9 @@ class home_banner extends Widget_Base
             </div>
             <!-- end swiper-slide -->
             <div class="swiper-slide">
-               <div class="slide-inner hero-slide-inner slide-bg-image" data-background="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/homepage-banner5.webp">
+               <div class="slide-inner hero-slide-inner slide-bg-image">
+                  <div class="slide-bg-white white-theme-img" style="background-image: url('<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/homepage-banner5.webp');"></div>
+                  <div class="slide-bg-dark black-theme-img" style="background-image: url('<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/homepage-banner5.webp');"></div>
                   <div class="text-container">
                      <div data-swiper-parallax="300" class="slide-title">
                         <h2>Next-gen security & video management—designed for performance, built for tomorrow</h2>
@@ -181,7 +189,9 @@ class home_banner extends Widget_Base
             </div>
             <!-- end swiper-slide -->
             <div class="swiper-slide">
-               <div class="slide-inner hero-slide-inner slide-bg-image" data-background="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/homepage-banner.webp">
+               <div class="slide-inner hero-slide-inner slide-bg-image">
+                  <div class="slide-bg-white white-theme-img" style="background-image: url('<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/homepage-banner.webp');"></div>
+                  <div class="slide-bg-dark black-theme-img" style="background-image: url('<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/homepage-banner.webp');"></div>
                   <div class="text-container">
                      <div data-swiper-parallax="300" class="slide-title">
                         <h2>A smarter way to secure what matters—reliable, scalable, and ready for the future</h2>
@@ -199,6 +209,36 @@ class home_banner extends Widget_Base
                <!-- end slide-inner -->
             </div>
             <!-- end swiper-slide -->
+
+
+            <div class="swiper-slide">
+               <div class="slide-inner hero-slide-inner slide-bg-image">
+                  <!-- YouTube Video Light Theme -->
+                  <div class="slide-video-white white-theme-img">
+                     <iframe src="https://www.youtube.com/embed/jNQXAC9IVRw?autoplay=1&mute=1&loop=1&playlist=jNQXAC9IVRw&controls=0&showinfo=0&rel=0&iv_load_policy=3&start=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                  </div>
+                  <!-- YouTube Video Dark Theme -->
+                  <div class="slide-video-dark black-theme-img">
+                     <iframe src="https://www.youtube.com/embed/jNQXAC9IVRw?autoplay=1&mute=1&loop=1&playlist=jNQXAC9IVRw&controls=0&showinfo=0&rel=0&iv_load_policy=3&start=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                  </div>
+                  <div class="text-container">
+                     <div data-swiper-parallax="300" class="slide-title">
+                        <h2>A smarter way to secure what matters—reliable, scalable, and ready for the future</h2>
+                     </div>
+                     <div data-swiper-parallax="400" class="slide-text">
+                        <p>Purpose-built for high-stakes environments, our platform provides real-time insights and total operational visibility.</p>
+                     </div>
+                     <div class="clearfix"></div>
+                     <div data-swiper-parallax="500" class="slide-btns">
+                        <a href="#" class="theme-btn  xl-btn">Book a free demo</a>
+                        <a href="#" class="theme-btn xl-btn grey-btn">See it in action</a>
+                     </div>
+                  </div>
+               </div>
+               <!-- end slide-inner -->
+            </div>
+            <!-- end swiper-slide -->
+
 
          </div>
          <!-- end swiper-wrapper -->
