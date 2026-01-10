@@ -390,6 +390,39 @@ class Custom_Store_Locator extends Widget_Base
     {
         $settings = $this->get_settings_for_display();
         
+        // Check if we're in Elementor editor mode
+        $is_editor_mode = \Elementor\Plugin::$instance->editor->is_edit_mode();
+        
+        // In editor mode, show placeholder text only
+        if ($is_editor_mode) {
+            // Get sample data for preview text
+            $projects_data = $this->get_projects_data();
+            $project_count = count($projects_data);
+            ?>
+            <div class="custom-store-locator-wrapper elementor-editor-placeholder">
+                <div class="elementor-placeholder" style="padding: 40px; text-align: center; background: #f8f9fa; border: 2px dashed #dee2e6; border-radius: 8px;">
+                    <div class="elementor-placeholder-title" style="font-size: 18px; font-weight: 600; color: #495057; margin-bottom: 12px;">
+                        <?php echo esc_html__('Custom Store Locator', 'repindia'); ?>
+                    </div>
+                    <div class="elementor-placeholder-content" style="font-size: 14px; color: #6c757d; line-height: 1.6;">
+                        <?php 
+                        if ($project_count > 0) {
+                            echo sprintf(
+                                esc_html__('This widget will display an interactive map with %d project%s on the frontend.', 'repindia'),
+                                $project_count,
+                                $project_count > 1 ? 's' : ''
+                            );
+                        } else {
+                            echo esc_html__('This widget will display an interactive map with project locations on the frontend. Add projects with location data to see them on the map.', 'repindia');
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+            <?php
+            return; // Exit early - don't render map in editor
+        }
+        
         // Single query for map_projects CPT
         $projects_data = $this->get_projects_data();
         

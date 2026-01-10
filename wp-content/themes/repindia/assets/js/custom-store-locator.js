@@ -182,8 +182,8 @@
                     hoverTimeout = null;
                 }
                 
-                // Show detail card on hover
-                openDetailCard(project, wrapper);
+                // Show detail card on hover next to marker
+                openDetailCard(project, wrapper, marker);
             });
 
             marker.on('mouseout', function() {
@@ -201,9 +201,9 @@
         }
 
         /**
-         * Open custom detail card on hover (NOT Leaflet popup)
+         * Open custom detail card on hover next to marker (popup-style positioning)
          */
-        function openDetailCard(project, wrapper) {
+        function openDetailCard(project, wrapper, markerElement) {
             // Clear any pending hide timeout
             if (hoverTimeout) {
                 clearTimeout(hoverTimeout);
@@ -212,6 +212,9 @@
 
             const detailCard = wrapper.querySelector('.custom-map-detail-card');
             if (!detailCard) return;
+
+            // Position card next to marker (will be recalculated after content loads)
+            // Initial positioning happens after content is populated
 
             // Populate card content with project details (matching screenshot 1 layout)
             const titleEl = detailCard.querySelector('.detail-title');
@@ -303,6 +306,89 @@
                 }
             }
 
+            // Position card next to marker after content is populated
+            // Use requestAnimationFrame for smooth positioning
+            requestAnimationFrame(function() {
+                if (markerElement && markerElement._icon && detailCard.classList.contains('active')) {
+                    positionCardNearMarker(detailCard, markerElement, wrapper);
+                }
+            });
+            
+            // Recalculate position after a short delay to ensure content is rendered
+            setTimeout(function() {
+                if (markerElement && markerElement._icon && detailCard.classList.contains('active')) {
+                    positionCardNearMarker(detailCard, markerElement, wrapper);
+                }
+            }, 100);
+
+        }
+
+        /**
+         * Position detail card next to marker
+         */
+        function positionCardNearMarker(detailCard, markerElement, wrapper) {
+            if (!markerElement || !markerElement._icon || !detailCard) return;
+
+            const markerIcon = markerElement._icon;
+            const markerRect = markerIcon.getBoundingClientRect();
+            const mapContainer = wrapper.querySelector('.custom-map-container');
+            if (!mapContainer) return;
+            
+            const mapRect = mapContainer.getBoundingClientRect();
+            
+            // Calculate marker center relative to map container
+            const markerCenterX = markerRect.left + (markerRect.width / 2) - mapRect.left;
+            const markerCenterY = markerRect.top + (markerRect.height / 2) - mapRect.top;
+            
+            // Get actual card dimensions
+            const cardWidth = detailCard.offsetWidth || 380;
+            const cardHeight = detailCard.offsetHeight || 300;
+            const offsetX = 30; // Distance from marker center horizontally
+            const offsetY = -60; // Offset above marker center (negative = above)
+            
+            // Calculate preferred position (to the right and above marker by default)
+            let cardLeft = markerCenterX + offsetX;
+            let cardTop = markerCenterY + offsetY;
+            
+            // Edge detection and adjustment
+            const margin = 15; // Minimum margin from edges
+            
+            // Check right edge
+            if (cardLeft + cardWidth + margin > mapRect.width) {
+                // Show on left side of marker instead
+                cardLeft = markerCenterX - cardWidth - offsetX;
+            }
+            
+            // Check left edge
+            if (cardLeft < margin) {
+                cardLeft = margin;
+            }
+            
+            // Check top edge
+            if (cardTop < margin) {
+                // If too close to top, position below marker
+                cardTop = markerCenterY + Math.abs(offsetY) + 10;
+            }
+            
+            // Check bottom edge
+            if (cardTop + cardHeight + margin > mapRect.height) {
+                // Position above with margin
+                cardTop = mapRect.height - cardHeight - margin;
+                
+                // If still doesn't fit, position at top
+                if (cardTop < margin) {
+                    cardTop = margin;
+                }
+            }
+            
+            // Apply calculated position (keep scale transform for animation)
+            detailCard.style.position = 'absolute';
+            detailCard.style.left = Math.round(cardLeft) + 'px';
+            detailCard.style.top = Math.round(cardTop) + 'px';
+            detailCard.style.right = 'auto';
+            detailCard.style.bottom = 'auto';
+            // Don't override transform - let CSS handle scale animation
+            detailCard.style.margin = '0';
         }
 
         /**
@@ -318,6 +404,11 @@
             const detailCard = wrapper.querySelector('.custom-map-detail-card');
             if (detailCard) {
                 detailCard.classList.remove('active');
+                // Reset position styles for next open (keep transform for CSS animation)
+                detailCard.style.left = '';
+                detailCard.style.top = '';
+                detailCard.style.right = '';
+                detailCard.style.bottom = '';
             }
             
             // Remove marker highlights
