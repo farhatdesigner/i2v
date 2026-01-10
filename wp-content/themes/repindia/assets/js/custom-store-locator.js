@@ -129,14 +129,15 @@
         const avgLat = validProjects.reduce(function(sum, p) { return sum + p.latitude; }, 0) / validProjects.length;
         const avgLng = validProjects.reduce(function(sum, p) { return sum + p.longitude; }, 0) / validProjects.length;
 
-        // Set initial view
-        map.setView([avgLat, avgLng], initialZoom);
-
-        // Add OpenStreetMap tiles
+        // Add OpenStreetMap tiles first
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors',
             maxZoom: 19
         }).addTo(map);
+
+        // Set a temporary initial view (will be properly set with initialZoom in filterMarkers() on initial load)
+        // This ensures the map has a view while waiting for filterMarkers() to be called
+        map.setView([avgLat, avgLng], initialZoom);
 
         // Store markers for filtering
         let allMarkers = [];
@@ -148,6 +149,7 @@
         let chipsPerPage = 5; // Show 5 chips initially
         let currentChipPage = 1;
         let hoverTimeout = null; // Global hover timeout for card display
+        let isInitialLoad = true; // Track if this is the initial load to respect initialZoom
 
         // Create custom marker icon
         const customIcon = L.divIcon({
@@ -470,15 +472,38 @@
 
             // Adjust map bounds to show all visible markers
             if (currentMarkers.length > 0) {
-                const group = new L.featureGroup(currentMarkers);
-                map.fitBounds(group.getBounds().pad(0.1), {
-                    maxZoom: (selectedLocationSlug !== 'all' || selectedProjectTypeSlug !== 'all') ? 12 : initialZoom
-                });
+                const hasActiveFilters = (selectedLocationSlug !== 'all' || selectedProjectTypeSlug !== 'all');
+                
+                // On initial load with no filters, use initialZoom (respect Elementor control setting)
+                // Don't use fitBounds which would override the user's initial zoom preference
+                if (isInitialLoad && !hasActiveFilters) {
+                    // Use the exact initial zoom setting on first load (respects Elementor control)
+                    map.setView([avgLat, avgLng], initialZoom);
+                    isInitialLoad = false; // Mark that initial load is complete
+                } else {
+                    // After initial load or when filters are active, use fitBounds
+                    const group = new L.featureGroup(currentMarkers);
+                    const fitBoundsOptions = {};
+                    if (hasActiveFilters) {
+                        // When filters are active, allow zooming in up to level 12
+                        fitBoundsOptions.maxZoom = 12;
+                    } else {
+                        // After initial load, ensure we don't zoom out beyond the initial zoom level
+                        fitBoundsOptions.maxZoom = initialZoom;
+                    }
+                    map.fitBounds(group.getBounds().pad(0.1), fitBoundsOptions);
+                    if (isInitialLoad) {
+                        isInitialLoad = false; // Mark that initial load is complete
+                    }
+                }
                 // Hide no results fallback
                 showNoResultsFallback(wrapper, false);
             } else {
                 // Reset to default view if no markers match
                 map.setView([avgLat, avgLng], initialZoom);
+                if (isInitialLoad) {
+                    isInitialLoad = false; // Mark that initial load is complete
+                }
                 // Show no results fallback
                 showNoResultsFallback(wrapper, true);
             }
@@ -524,16 +549,27 @@
                 currentMarkers.push(marker);
             });
 
-            // Fit bounds to all markers
+            // Fit bounds to all markers (but respect initialZoom on first load)
             if (currentMarkers.length > 0) {
-                const group = new L.featureGroup(currentMarkers);
-                map.fitBounds(group.getBounds().pad(0.1), {
-                    maxZoom: initialZoom
-                });
+                // On initial load, use initialZoom instead of fitBounds to respect user setting
+                if (isInitialLoad) {
+                    // Use the exact initial zoom setting on first load (respects Elementor control)
+                    map.setView([avgLat, avgLng], initialZoom);
+                    isInitialLoad = false; // Mark that initial load is complete
+                } else {
+                    // After initial load, use fitBounds but don't zoom out beyond initialZoom
+                    const group = new L.featureGroup(currentMarkers);
+                    map.fitBounds(group.getBounds().pad(0.1), {
+                        maxZoom: initialZoom // Ensure we don't zoom out beyond initial zoom
+                    });
+                }
                 // Hide no results fallback
                 showNoResultsFallback(wrapper, false);
             } else {
                 // Show no results fallback if no valid projects
+                if (isInitialLoad) {
+                    isInitialLoad = false; // Mark that initial load is complete
+                }
                 showNoResultsFallback(wrapper, true);
             }
         }
