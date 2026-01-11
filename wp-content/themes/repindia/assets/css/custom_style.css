@@ -1726,10 +1726,10 @@ label.form-label.required_note-demo {
 
 .content-inner-icons ul {
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
   flex-wrap: wrap;
   padding: 0;
-  margin: 48px 0;
+  margin: 48px 0 0;
 }
 
 .content-inner-icons li:first-child {
