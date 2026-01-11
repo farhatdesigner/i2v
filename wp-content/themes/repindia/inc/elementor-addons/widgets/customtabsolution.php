@@ -360,7 +360,6 @@ class Customtabsolution extends Widget_Base
 																	<?php endif; ?>
 																<?php endforeach; ?>
 																
-																
 															</ul>
 															<?php if (!empty($secondary_cta_text)) : ?>
 																	<div class="text-left pt-4">
