@@ -68,6 +68,19 @@ class Custom_Marquee extends Widget_Base
         );
 
         $repeater->add_control(
+            'image_dark',
+            [
+                'label' => esc_html__('Dark Theme Image', 'repindia'),
+                'type' => \Elementor\Controls_Manager::MEDIA,
+                'default' => [],
+                'description' => esc_html__('Leave empty to use default image for dark theme', 'repindia'),
+                'condition' => [
+                    'item_type' => 'image',
+                ],
+            ]
+        );
+
+        $repeater->add_control(
             'image_width',
             [
                 'label' => esc_html__('Image Width', 'repindia'),
@@ -566,8 +579,12 @@ class Custom_Marquee extends Widget_Base
                                         $img_width = !empty($item['image_width']['size']) ? $item['image_width']['size'] . $item['image_width']['unit'] : '100px';
                                         $img_height = !empty($item['image_height']['size']) ? $item['image_height']['size'] . $item['image_height']['unit'] : '100px';
                                         $img_object_fit = !empty($item['image_object_fit']) ? $item['image_object_fit'] : 'contain';
+                                        // Get dark theme image, fallback to default image if empty
+                                        $dark_image_url = !empty($item['image_dark']['url']) ? $item['image_dark']['url'] : $item['image']['url'];
+                                        $dark_image_alt = !empty($item['image_dark']['alt']) ? $item['image_dark']['alt'] : ($item['image']['alt'] ?? '');
                                         ?>
-                                        <img src="<?php echo esc_url($item['image']['url']); ?>" alt="<?php echo esc_attr($item['image']['alt'] ?? ''); ?>" style="width: <?php echo esc_attr($img_width); ?>; height: <?php echo esc_attr($img_height); ?>; object-fit: <?php echo esc_attr($img_object_fit); ?>;">
+                                        <img src="<?php echo esc_url($item['image']['url']); ?>" alt="<?php echo esc_attr($item['image']['alt'] ?? ''); ?>" class="white-theme-img" style="width: <?php echo esc_attr($img_width); ?>; height: <?php echo esc_attr($img_height); ?>; object-fit: <?php echo esc_attr($img_object_fit); ?>;">
+                                        <img src="<?php echo esc_url($dark_image_url); ?>" alt="<?php echo esc_attr($dark_image_alt); ?>" class="black-theme-img" style="width: <?php echo esc_attr($img_width); ?>; height: <?php echo esc_attr($img_height); ?>; object-fit: <?php echo esc_attr($img_object_fit); ?>;">
                                     <?php elseif ($item_type === 'text' && !empty($item['text_content'])) : ?>
                                         <span class="cmarq-content"><?php echo wp_kses_post($item['text_content']); ?></span>
                                     <?php endif; ?>
@@ -578,9 +595,13 @@ class Custom_Marquee extends Widget_Base
                                     $img_width = !empty($item['image_width']['size']) ? $item['image_width']['size'] . $item['image_width']['unit'] : '100px';
                                     $img_height = !empty($item['image_height']['size']) ? $item['image_height']['size'] . $item['image_height']['unit'] : '100px';
                                     $img_object_fit = !empty($item['image_object_fit']) ? $item['image_object_fit'] : 'contain';
+                                    // Get dark theme image, fallback to default image if empty
+                                    $dark_image_url = !empty($item['image_dark']['url']) ? $item['image_dark']['url'] : $item['image']['url'];
+                                    $dark_image_alt = !empty($item['image_dark']['alt']) ? $item['image_dark']['alt'] : ($item['image']['alt'] ?? '');
                                     ?>
                                     <span class="cmarq-content">
-                                        <img src="<?php echo esc_url($item['image']['url']); ?>" alt="<?php echo esc_attr($item['image']['alt'] ?? ''); ?>" style="width: <?php echo esc_attr($img_width); ?>; height: <?php echo esc_attr($img_height); ?>; object-fit: <?php echo esc_attr($img_object_fit); ?>;">
+                                        <img src="<?php echo esc_url($item['image']['url']); ?>" alt="<?php echo esc_attr($item['image']['alt'] ?? ''); ?>" class="white-theme-img" style="width: <?php echo esc_attr($img_width); ?>; height: <?php echo esc_attr($img_height); ?>; object-fit: <?php echo esc_attr($img_object_fit); ?>;">
+                                        <img src="<?php echo esc_url($dark_image_url); ?>" alt="<?php echo esc_attr($dark_image_alt); ?>" class="black-theme-img" style="width: <?php echo esc_attr($img_width); ?>; height: <?php echo esc_attr($img_height); ?>; object-fit: <?php echo esc_attr($img_object_fit); ?>;">
                                     </span>
                                 <?php elseif ($item_type === 'text' && !empty($item['text_content'])) : ?>
                                     <span class="cmarq-content"><?php echo wp_kses_post($item['text_content']); ?></span>
