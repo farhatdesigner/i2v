@@ -57,7 +57,7 @@ class Industry_List extends Widget_Base
         $posts_per_page = !empty($settings['posts_per_page']) ? intval($settings['posts_per_page']) : -1;
         
         $args = [
-            'post_type' => 'products',
+            'post_type' => 'industries',
             'post_status' => 'publish',
             'posts_per_page' => $posts_per_page,
             'orderby' => 'date',
@@ -80,10 +80,24 @@ class Industry_List extends Widget_Base
             .card_industry {
                 display: inline-block;
             }
+            .card-body_industry .card-title{
+                font-size: 24px;
+                font-weight: 600;
+                color: #06283D;
+            }
+            .js-dark .card_industry {
+                background: #262a30;
+            }
+            @media(max-width: 768px){
+                .card_industry{ width: 100%!important; }
+                .grid-industry_list li {
+                    width: 100% !important;
+                }
+            }
         </style>
         <div class="industry-list-section">
             <section>
-                <div class="custom-container">
+                <div class="">
                     <ul class="grid-industry_list list-unstyled">
 
                     <?php if ($query->have_posts()) : ?>
@@ -103,7 +117,6 @@ class Industry_List extends Widget_Base
                             }
                             
                             // Get all terms from product_tags taxonomy
-                            $product_tags = get_the_terms($post_id, 'product_tags');
                             $product_link = get_permalink($post_id);
                             ?>
                         <li>
