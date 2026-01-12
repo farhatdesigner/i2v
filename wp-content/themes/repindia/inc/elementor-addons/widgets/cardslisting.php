@@ -34,50 +34,16 @@ class Cardslisting extends Widget_Base
                 'label' => 'Settings',
             ]
         );
-
-        $repeater = new \Elementor\Repeater();
-
-        $repeater->add_control(
-            'card_title',
-            [
-                'label' => esc_html__('Card Title', 'repindia'),
-                'type' => \Elementor\Controls_Manager::TEXT,
-                'default' => '',
-                'label_block' => true,
-            ]
-        );
-
-        $repeater->add_control(
-            'card_description',
-            [
-                'label' => esc_html__('Card Description', 'repindia'),
-                'type' => \Elementor\Controls_Manager::TEXTAREA,
-                'default' => '',
-                'label_block' => true,
-            ]
-        );
-
-        $repeater->add_control(
-            'card_image',
-            [
-                'label' => esc_html__('Card Image', 'repindia'),
-                'type' => \Elementor\Controls_Manager::MEDIA,
-                'default' => [],
-            ]
-        );
-
+        
+        // Posts Per Page
         $this->add_control(
-            'cards_list',
+            'posts_per_page',
             [
-                'label' => esc_html__('Cards List', 'repindia'),
-                'type' => \Elementor\Controls_Manager::REPEATER,
-                'fields' => $repeater->get_controls(),
-                'default' => [
-                    [
-                        'card_title' => '',
-                    ],
-                ],
-                'title_field' => '{{{ card_title }}}',
+                'label' => __('Posts Per Page', 'repindia'),
+                'type' => Controls_Manager::NUMBER,
+                'default' => -1,
+                'min' => -1,
+                'description' => __('Set -1 to show all posts', 'repindia'),
             ]
         );
 
@@ -88,198 +54,102 @@ class Cardslisting extends Widget_Base
     protected function render()
     {
         $settings = $this->get_settings_for_display();
-        $cards = $settings['cards_list'];
-?>
-
+        
+        // Don't run query in Elementor editor preview unnecessarily
+        if (\Elementor\Plugin::$instance->editor->is_edit_mode()) {
+            echo '<div class="cards-listing-section">';
+            echo '<p>' . esc_html__('Product cards will appear here on the frontend.', 'repindia') . '</p>';
+            echo '</div>';
+            return;
+        }
+        
+        // Build query arguments
+        $posts_per_page = !empty($settings['posts_per_page']) ? intval($settings['posts_per_page']) : -1;
+        
+        $args = [
+            'post_type' => 'products',
+            'post_status' => 'publish',
+            'posts_per_page' => $posts_per_page,
+            'orderby' => 'date',
+            'order' => 'DESC',
+            'ignore_sticky_posts' => true,
+        ];
+        
+        $query = new \WP_Query($args);
+        ?>
+        <style>
+            .cards-listing-section .card-body p{
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                padding-bottom: 0;
+                min-height: unset;
+            }
+        </style>
         <div class="cards-listing-section">
             <section>
                 <div class="custom-container">
                     <ul class="grid-listing list-unstyled">
-
-                        <!-- Card 1 -->
-                        <li>
-                            <div class="card h-100 border-0">
-                                <div class="card-image">
-                                    <img class="white-theme-img" src="<?php echo get_template_directory_uri(); ?>/assets/images/crads_land.png" class="card-img-top h-100" alt="Enterprise Video Management Software">
-                                    <img class="black-theme-img" src="<?php echo get_template_directory_uri(); ?>/assets/images/crads_land.png" class="card-img-top h-100" alt="Enterprise Video Management Software">
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title position-relative">Enterprise Video Management Software (VMS)</h5>
-                                    <p class="card-text text-muted">
-                                        i2V’s VMS offers centralized surveillance, AI-powered search, and automated failover,
-                                        delivering seamless video security for enterprises, public safety, and smart city infrastructure.
-                                    </p>
-                                    <div class="d-flex flex-wrap gap-2 mt-4">
-                                        <span class="badge-custom">Unified interface</span>
-                                        <span class="badge-custom">Multi site management</span>
-                                        <span class="badge-custom">AI driven insights</span>
-                                        <span class="badge-cusotm bg-trans_txt">and more</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- Card 2 -->
-                        <li>
-                            <div class="card h-100 border-0">
-                                <div class="card-image">
-                                    <img class="white-theme-img" src="<?php echo get_template_directory_uri(); ?>/assets/images/ai-based-video-analytics-vca.webp" class="card-img-top h-100" alt="AI-Based Video Analytics">
-                                    <img class="black-theme-img" src="<?php echo get_template_directory_uri(); ?>/assets/images/ai-based-video-analytics-vca.webp" class="card-img-top h-100" alt="AI-Based Video Analytics">
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title position-relative">AI-Based Video Analytics (VA / VCA)</h5>
-                                    <p class="card-text text-muted">
-                                    Analyze real-time footage with AI to detect motion, objects, and behaviors—enabling smart monitoring, automated alerts, and better situational awareness across environments.
-                                    </p>
-                                    <div class="d-flex flex-wrap gap-2 mt-4">
-                                        <span class="badge-custom">Unified interface</span>
-                                        <span class="badge-custom">AI driven insights</span>
-                                        <span class="badge-custom">Multi site management</span>
-                                        <span class="badge-cusotm bg-trans_txt">and more</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- Card 3 -->
-                        <li>
-                            <div class="card h-100 border-0">
-                                <div class="card-image">
-                                    <img class="white-theme-img" src="<?php echo get_template_directory_uri(); ?>/assets/images/command-and-control-iccc.webp" class="card-img-top h-100" alt="Integrated Command Center">
-                                    <img class="black-theme-img" src="<?php echo get_template_directory_uri(); ?>/assets/images/command-and-control-iccc.webp" class="card-img-top h-100" alt="Integrated Command Center">
-                                </div>
-                                <div class="card-body p-4">
-                                    <h5 class="card-title position-relative">Integrated/Traffic Command & Control Center (ICCC / PSIM)</h5>
-                                    <p class="card-text text-muted">
-                                    Integrates video, sensors, and alerts into a single dashboard, allowing city operators to monitor incidents, make decisions, and respond in real time.
-                                    </p>
-                                    <div class="d-flex flex-wrap gap-2 mt-4">
-                                        <span class="badge-custom">Unified interface</span>
-                                        <span class="badge-custom">AI driven insights</span>
-                                        <span class="badge-custom">Multi site management</span>
-                                        <span class="badge-cusotm bg-trans_txt">and more</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- Card 4 -->
-                        <li>
-                            <div class="card h-100 border-0">
-                                <div class="card-image">
-                                    <img class="white-theme-img" src="<?php echo get_template_directory_uri(); ?>/assets/images/crads_port.webp" class="card-img-top h-100" alt="Integrated Command Center">
-                                    <img class="black-theme-img" src="<?php echo get_template_directory_uri(); ?>/assets/images/crads_port.webp" class="card-img-top h-100" alt="Integrated Command Center">
-                                </div>
-                                <div class="card-body p-4">
-                                    <h5 class="card-title position-relative">AI Based Face Recognition Software (FRS)</h5>
-                                    <p class="card-text text-muted">
-                                    Identifies and verifies faces with high accuracy for secure access, attendance automation, and law enforcement applications.
-                                    </p>
-                                    <div class="d-flex flex-wrap gap-2 mt-4">
-                                        <span class="badge-custom">Advance Reporting Tool</span>
-                                        <span class="badge-custom">e-Challan</span>
-                                        <span class="badge-custom">Integration Compatibility</span>                                        
-                                        <span class="badge-cusotm bg-trans_txt">and more</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- Card 5 -->
-                        <li>
-                            <div class="card h-100 border-0">
-                                <div class="card-image">
-                                    <img class="white-theme-img" src="<?php echo get_template_directory_uri(); ?>/assets/images/VIDS.webp" class="card-img-top h-100" alt="Integrated Command Center">
-                                    <img class="black-theme-img" src="<?php echo get_template_directory_uri(); ?>/assets/images/VIDS.webp" class="card-img-top h-100" alt="Integrated Command Center">
-                                </div>
-                                <div class="card-body p-4">
-                                    <h5 class="card-title position-relative">Video Incident Detection System (VIDS)</h5>
-                                    <p class="card-text text-muted">
-                                    Detects road incidents like stopped vehicles, wrong-way driving, or accidents instantly, reducing emergency response time and improving public safety.                                    </p>
-                                    <div class="d-flex flex-wrap gap-2 mt-4">
-                                        <span class="badge-custom">Advance Reporting Tool</span>
-                                        <span class="badge-custom">e-Challan</span>
-                                        <span class="badge-custom">Integration Compatibility</span>                                        
-                                        <span class="badge-cusotm bg-trans_txt">and more</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- Card 6 -->
-                        <li>
-                            <div class="card h-100 border-0">
-                                <div class="card-image">
-                                    <img class="white-theme-img" src="<?php echo get_template_directory_uri(); ?>/assets/images/cms.webp" class="card-img-top h-100" alt="Integrated Command Center">
-                                    <img class="black-theme-img" src="<?php echo get_template_directory_uri(); ?>/assets/images/cms.webp" class="card-img-top h-100" alt="Integrated Command Center">
-                                </div>
-                                <div class="card-body p-4">
-                                    <h5 class="card-title position-relative">Central Monitoring Software (CMS)</h5>
-                                    <p class="card-text text-muted">
-                                    CMS connects multiple sites to one interface, offering live monitoring, alerts, and system health insights for efficient, centralized surveillance management.
-                                    </p>
-                                    <div class="d-flex flex-wrap gap-2 mt-4">
-                                        <span class="badge-custom">Unified interface</span>
-                                        <span class="badge-custom">AI driven insights</span>
-                                        <span class="badge-custom">Multi site management</span>
-                                        <span class="badge-cusotm bg-trans_txt">and more</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- Card 7 -->
-                        <li>
-                            <div class="card h-100 border-0">
-                                <div class="card-image">
-                                    <img class="white-theme-img" src="<?php echo get_template_directory_uri(); ?>/assets/images/itms-itZ.webp" class="card-img-top h-100" alt="Integrated Command Center">
-                                    <img class="black-theme-img" src="<?php echo get_template_directory_uri(); ?>/assets/images/itms-itZ.webp" class="card-img-top h-100" alt="Integrated Command Center">
-                                </div>
-                                <div class="card-body p-4">
-                                    <h5 class="card-title position-relative">Integrated/Traffic Command & Control Center (ICCC / PSIM)</h5>
-                                    <p class="card-text text-muted">
-                                    Automatically detects traffic violations, manages signals, and tracks vehicle movement to improve road safety, enforce laws, and reduce congestion.
-                                    </p>
-                                    <div class="d-flex flex-wrap gap-2 mt-4">
-                                        <span class="badge-custom">Unified interface</span>
-                                        <span class="badge-custom">AI driven insights</span>
-                                        <span class="badge-custom">Multi site management</span>
-                                        <span class="badge-cusotm bg-trans_txt">and more</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- Card 8 -->
-                        <li>
-                            <div class="card h-100 border-0">
-                                <div class="card-image">
-                                    <img class="white-theme-img" src="<?php echo get_template_directory_uri(); ?>/assets/images/anpr-lpr.webp" class="card-img-top h-100" alt="Integrated Command Center">
-                                    <img class="black-theme-img" src="<?php echo get_template_directory_uri(); ?>/assets/images/anpr-lpr.webp" class="card-img-top h-100" alt="Integrated Command Center">
-                                </div>
-                                <div class="card-body p-4">
-                                    <h5 class="card-title position-relative">Automatic Number Plate Recognition
-                                    (ANPR / LPR)</h5>
-                                    <p class="card-text text-muted">
-                                    Captures and processes license plates in real-time to support access control, vehicle monitoring, and traffic enforcement.
-                                    </p>
-                                    <div class="d-flex flex-wrap gap-2 mt-4">
-                                        <span class="badge-custom">Unified interface</span>
-                                        <span class="badge-custom">AI driven insights</span>
-                                        <span class="badge-custom">Multi site management</span>
-                                        <span class="badge-cusotm bg-trans_txt">and more</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-
-
+                        <?php if ($query->have_posts()) : ?>
+                            <?php while ($query->have_posts()) : $query->the_post(); ?>
+                                <?php
+                                $post_id = get_the_ID();
+                                $post_title = get_the_title($post_id);
+                                $post_excerpt = get_the_excerpt($post_id);
+                                $featured_image = get_the_post_thumbnail_url($post_id, 'full');
+                                $attachment_id = get_post_thumbnail_id($post_id);
+                                $featured_image_alt = '';
+                                if ($attachment_id) {
+                                    $featured_image_alt = get_post_meta($attachment_id, '_wp_attachment_image_alt', true);
+                                }
+                                if (empty($featured_image_alt)) {
+                                    $featured_image_alt = $post_title;
+                                }
+                                
+                                // Get all terms from product_tags taxonomy
+                                $product_tags = get_the_terms($post_id, 'product_tags');
+                                $product_link = get_permalink($post_id);
+                                ?>
+                                <li>
+                                    <a href="<?php echo esc_url($product_link); ?>" class="card h-100 border-0">
+                                        <!-- <div class="card h-100 border-0"> -->
+                                            <?php if (!empty($featured_image)) : ?>
+                                                <div class="card-image">
+                                                    <img class="white-theme-img card-img-top h-100" src="<?php echo esc_url($featured_image); ?>" alt="<?php echo esc_attr($featured_image_alt); ?>">
+                                                    <img class="black-theme-img card-img-top h-100" src="<?php echo esc_url($featured_image); ?>" alt="<?php echo esc_attr($featured_image_alt); ?>">
+                                                </div>
+                                            <?php endif; ?>
+                                            <div class="card-body p-4">
+                                                <?php if (!empty($post_title)) : ?>
+                                                    <h5 class="card-title position-relative"><?php echo esc_html($post_title); ?></h5>
+                                                <?php endif; ?>
+                                                <?php if (!empty($post_excerpt)) : ?>
+                                                    <p class="card-text text-muted">
+                                                        <?php echo wp_kses_post($post_excerpt); ?>
+                                                    </p>
+                                                <?php endif; ?>
+                                                <?php if (!empty($product_tags) && !is_wp_error($product_tags)) : ?>
+                                                    <div class="d-flex flex-wrap gap-2 mt-4">
+                                                        <?php foreach ($product_tags as $tag) : ?>
+                                                            <span class="badge-custom"><?php echo esc_html($tag->name); ?></span>
+                                                        <?php endforeach; ?>
+                                                        <span class="badge-cusotm bg-trans_txt">and more</span>
+                                                    </div>
+                                                <?php endif; ?>
+                                            </div>
+                                        <!-- </div> -->
+                                    </a>
+                                </li>
+                            <?php endwhile; ?>
+                        <?php endif; ?>
                     </ul>
                 </div>
             </section>
 
         </div>
 <?php
+        wp_reset_postdata();
     }
 }
