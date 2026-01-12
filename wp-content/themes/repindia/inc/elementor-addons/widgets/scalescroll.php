@@ -46,135 +46,241 @@ class Scalescroll extends Widget_Base
             ]
         );
 
+        // Section Title
         $this->add_control(
-            'content',
+            'section_title',
             [
-                'label' => esc_html__('Content', 'repindia'),
-                'type' => \Elementor\Controls_Manager::WYSIWYG,
-                'default' => '<h2>Scale on Scroll</h2><p>This content will scale as you scroll.</p>',
+                'label' => esc_html__('Section Title', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
                 'label_block' => true,
             ]
         );
 
+        // Section Description
         $this->add_control(
-            'min_scale',
+            'section_description',
             [
-                'label' => esc_html__('Minimum Scale', 'repindia'),
-                'type' => \Elementor\Controls_Manager::SLIDER,
-                'size_units' => ['px'],
-                'range' => [
-                    'px' => [
-                        'min' => 0.1,
-                        'max' => 1,
-                        'step' => 0.1,
-                    ],
-                ],
-                'default' => [
-                    'unit' => 'px',
-                    'size' => 0.8,
-                ],
-                'description' => esc_html__('Minimum scale when element is out of view', 'repindia'),
+                'label' => esc_html__('Section Description', 'repindia'),
+                'type' => Controls_Manager::TEXTAREA,
+                'default' => '',
+                'label_block' => true,
             ]
         );
 
-        $this->add_control(
-            'max_scale',
-            [
-                'label' => esc_html__('Maximum Scale', 'repindia'),
-                'type' => \Elementor\Controls_Manager::SLIDER,
-                'size_units' => ['px'],
-                'range' => [
-                    'px' => [
-                        'min' => 1,
-                        'max' => 2,
-                        'step' => 0.1,
-                    ],
-                ],
-                'default' => [
-                    'unit' => 'px',
-                    'size' => 1,
-                ],
-                'description' => esc_html__('Maximum scale when element is in view', 'repindia'),
-            ]
-        );
+        // Main repeater for items
+        $repeater = new \Elementor\Repeater();
 
-        $this->add_control(
-            'scroll_offset',
+        // Media Type Selector
+        $repeater->add_control(
+            'media_type',
             [
-                'label' => esc_html__('Scroll Offset', 'repindia'),
-                'type' => \Elementor\Controls_Manager::SLIDER,
-                'size_units' => ['px', '%'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 1000,
-                        'step' => 10,
-                    ],
-                    '%' => [
-                        'min' => 0,
-                        'max' => 100,
-                    ],
-                ],
-                'default' => [
-                    'unit' => 'px',
-                    'size' => 100,
-                ],
-                'description' => esc_html__('Offset from viewport center for scaling effect', 'repindia'),
-            ]
-        );
-
-        $this->end_controls_section();
-
-        // Style Section
-        $this->start_controls_section(
-            'section_style',
-            [
-                'label' => 'Style',
-                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_control(
-            'text_align',
-            [
-                'label' => esc_html__('Text Alignment', 'repindia'),
-                'type' => \Elementor\Controls_Manager::CHOOSE,
+                'label' => esc_html__('Media Type', 'repindia'),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'image',
                 'options' => [
-                    'left' => [
-                        'title' => esc_html__('Left', 'repindia'),
-                        'icon' => 'eicon-text-align-left',
-                    ],
-                    'center' => [
-                        'title' => esc_html__('Center', 'repindia'),
-                        'icon' => 'eicon-text-align-center',
-                    ],
-                    'right' => [
-                        'title' => esc_html__('Right', 'repindia'),
-                        'icon' => 'eicon-text-align-right',
-                    ],
+                    'image' => esc_html__('Image', 'repindia'),
+                    'youtube' => esc_html__('YouTube Video', 'repindia'),
                 ],
-                'default' => 'center',
-                'toggle' => true,
+            ]
+        );
+
+        // Default Theme Image
+        $repeater->add_control(
+            'item_image_default',
+            [
+                'label' => esc_html__('Default Theme Image', 'repindia'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [],
+                'condition' => [
+                    'media_type' => 'image',
+                ],
+            ]
+        );
+
+        // Dark Theme Image
+        $repeater->add_control(
+            'item_image_dark',
+            [
+                'label' => esc_html__('Dark Theme Image', 'repindia'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [],
+                'description' => esc_html__('Leave empty to use default image for dark theme', 'repindia'),
+                'condition' => [
+                    'media_type' => 'image',
+                ],
+            ]
+        );
+
+        // YouTube Video ID (Default)
+        $repeater->add_control(
+            'youtube_video_id_default',
+            [
+                'label' => esc_html__('Default Theme YouTube Video ID', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'description' => esc_html__('Enter YouTube video ID only (e.g., R3GfuzLMPkA)', 'repindia'),
+                'condition' => [
+                    'media_type' => 'youtube',
+                ],
+            ]
+        );
+
+        // YouTube Video ID (Dark)
+        $repeater->add_control(
+            'youtube_video_id_dark',
+            [
+                'label' => esc_html__('Dark Theme YouTube Video ID', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'description' => esc_html__('Enter YouTube video ID only. Leave empty to use default video for dark theme', 'repindia'),
+                'condition' => [
+                    'media_type' => 'youtube',
+                ],
+            ]
+        );
+
+        // YouTube Thumbnail Image (Default)
+        $repeater->add_control(
+            'youtube_thumbnail_default',
+            [
+                'label' => esc_html__('Default Theme Video Thumbnail', 'repindia'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [],
+                'condition' => [
+                    'media_type' => 'youtube',
+                ],
+            ]
+        );
+
+        // YouTube Thumbnail Image (Dark)
+        $repeater->add_control(
+            'youtube_thumbnail_dark',
+            [
+                'label' => esc_html__('Dark Theme Video Thumbnail', 'repindia'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [],
+                'description' => esc_html__('Leave empty to use default thumbnail for dark theme', 'repindia'),
+                'condition' => [
+                    'media_type' => 'youtube',
+                ],
+            ]
+        );
+
+        // Item Title
+        $repeater->add_control(
+            'item_title',
+            [
+                'label' => esc_html__('Item Title', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'label_block' => true,
+            ]
+        );
+
+        // Item Description
+        $repeater->add_control(
+            'item_description',
+            [
+                'label' => esc_html__('Item Description', 'repindia'),
+                'type' => Controls_Manager::WYSIWYG,
+                'default' => '',
+                'label_block' => true,
+            ]
+        );
+
+        // CTA Text
+        $repeater->add_control(
+            'cta_text',
+            [
+                'label' => esc_html__('CTA Text', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'label_block' => true,
+            ]
+        );
+
+        // CTA URL
+        $repeater->add_control(
+            'cta_url',
+            [
+                'label' => esc_html__('CTA URL', 'repindia'),
+                'type' => Controls_Manager::URL,
+                'default' => [
+                    'url' => '',
+                    'is_external' => false,
+                    'nofollow' => false,
+                ],
+            ]
+        );
+
+        // Bolt Box Title
+        $repeater->add_control(
+            'bolt_title',
+            [
+                'label' => esc_html__('Bolt Box Title', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'label_block' => true,
+            ]
+        );
+
+        // Bolt Box Icon/Image
+        $repeater->add_control(
+            'bolt_icon',
+            [
+                'label' => esc_html__('Bolt Box Icon/Image', 'repindia'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [],
+            ]
+        );
+
+        // Bolt CTA Text
+        $repeater->add_control(
+            'bolt_cta_text',
+            [
+                'label' => esc_html__('Bolt CTA Text', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'label_block' => true,
+            ]
+        );
+
+        // Bolt CTA URL
+        $repeater->add_control(
+            'bolt_cta_url',
+            [
+                'label' => esc_html__('Bolt CTA URL', 'repindia'),
+                'type' => Controls_Manager::URL,
+                'default' => [
+                    'url' => '',
+                    'is_external' => false,
+                    'nofollow' => false,
+                ],
+            ]
+        );
+
+        // Special class indicator (for details-3 with blue headline)
+        $repeater->add_control(
+            'has_blue_headline',
+            [
+                'label' => esc_html__('Show Blue Headline', 'repindia'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => esc_html__('Yes', 'repindia'),
+                'label_off' => esc_html__('No', 'repindia'),
+                'return_value' => 'yes',
+                'default' => 'no',
             ]
         );
 
         $this->add_control(
-            'content_color',
+            'scroll_items',
             [
-                'label' => esc_html__('Text Color', 'repindia'),
-                'type' => \Elementor\Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .scale-scroll-content' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            \Elementor\Group_Control_Typography::get_type(),
-            [
-                'name' => 'content_typography',
-                'label' => esc_html__('Typography', 'repindia'),
-                'selector' => '{{WRAPPER}} .scale-scroll-content',
+                'label' => esc_html__('Scroll Items', 'repindia'),
+                'type' => Controls_Manager::REPEATER,
+                'fields' => $repeater->get_controls(),
+                'default' => [],
+                'title_field' => '{{{ item_title }}}',
             ]
         );
 
@@ -185,359 +291,198 @@ class Scalescroll extends Widget_Base
     protected function render()
     {
         $settings = $this->get_settings_for_display();
+        $scroll_items = !empty($settings['scroll_items']) ? $settings['scroll_items'] : [];
+        $section_title = !empty($settings['section_title']) ? $settings['section_title'] : '';
+        $section_description = !empty($settings['section_description']) ? $settings['section_description'] : '';
         $this->add_inline_editing_attributes('custom_class', 'basic'); ?>
 
+        <style>
+            .youtube-wrapper .white_theme_iframe,
+            .youtube-wrapper .white_theme_thumb { display: block; }
+            .youtube-wrapper .black_theme_iframe,
+            .youtube-wrapper .black_theme_thumb { display: none; }
+            .js-dark .youtube-wrapper .white_theme_iframe,
+            .js-dark .youtube-wrapper .white_theme_thumb { display: none; }
+            .js-dark .youtube-wrapper .black_theme_iframe,
+            .js-dark .youtube-wrapper .black_theme_thumb { display: block; }
+            @media(max-width: 768px){
+                .photo_custom .details * { text-align: center; }
+            }
+            
+        </style>
 
         <div class="makdmks">
             <div class="custom-container">
-                <div class="title-box">
-                    <div class="col-lg-6 col-12">
-                        <div class="width_define">
-                            <h3 class="main_title quote mb-12">
-                                Real-world impact of i2V in oil & gas operations
-                            </h3>
-                            <div class="text-left">
-                                <p>i2V VA integrates smoothly into your existing infrastructure — no rip-and-replace needed.
-                                    From
-                                    ONVIF cameras to control room software, it just works.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- <div class="sections_box">
-                    <div class="panels flex-center">
-                        <section class="panel ">
-                            <div class="logo_box">
-                                <ul>
-                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
-                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
-                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
-                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
-                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
-                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
-                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
-                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
-                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
-                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
-                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
-                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
-                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
-                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
-                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
-                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
-                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
-                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
-                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
-                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
-                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
-                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg"></li>
-                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
-                                    <li><img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg"></li>
-                                   
-
-                                </ul>
-                            </div>
-                        </section>
-                        <section class="panel animate-right ">
-                            <img class="radius-12" decoding="async" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/video.webp">
-                        </section>
-                        <section class="panel animate-right ">
-                            <img class="radius-12" decoding="async" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/no-helmet-detection.webp">
-                        </section>
-                        <section class="panel animate-right ">
-                            <img class="radius-12" decoding="async" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/video.webp">
-                        </section>
-                        <section class="panel animate-right ">
-                            <img class="radius-12" decoding="async" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/no-helmet-detection.webp">
-                        </section>
-                    </div>
-                    <div class="container-page flex-center">
-                        <div class="contento  ">
-                            <div class="txtflex">
-                                <h2>100+ IP camera brands supported</h2>
-                                <p class="para-text">Seamlessly integrates with major camera vendors — no hardware replacement needed.</p>
-                            </div>
-                        </div>
-                        <div class="contento  animate-left">
-                            <div class="txtflex">
-                                <h2>ONVIF-compliant for plug-and-play compatibility</h2>
-                                <p class="para-text">Works out-of-the-box with ONVIF-compliant devices for simplified system integration.</p>
-                            </div>
-                        </div>
-                        <div class="contento  animate-left">
-                            <div class="txtflex">
-                                <h2>Works across LAN deployments — no internet needed</h2>
-                                <p class="para-text">Secure, reliable performance in offline environments with zero cloud dependency.</p>
-                            </div>
-                        </div>
-                        <div class="contento  animate-left">
-                            <div class="txtflex">
-                                <h2>Supports both Windows and Linux systems</h2>
-                                <p class="para-text">Flexible installation across your existing OS infrastructure — no vendor lock-in.</p>
-                                <div class="bolt">
-                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-1.svg">
-                                    <p>Deployed across 11+ smart cities without replacing existing hardware.</p>
-                                    <div class="btn-bolt">
-                                        <a href="#">Request a demo to learn  more</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="contento  animate-left">
-                            <div class="txtflex">
-                                <h2>Available in web, desktop and mobile based client versions</h2>
-                                <p class="para-text">Access analytics through browser or installed software, depending on operational preference.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-
-
-
-                <div class="gallery">
-                    <div class="left">
-                        <div class="detailsWrapper">
-                            <div class="details details-1">
-                                <div class="txtflex">
-                                    <h2>100+ IP camera brands supported</h2>
-                                    <p class="para-text">Seamlessly integrates with major camera vendors — no hardware
-                                        replacement needed.</p>
+                <?php if (!empty($section_title) || !empty($section_description)) : ?>
+                    <div class="title-box">
+                        <div class="col-lg-6 col-12">
+                            <div class="width_define">
+                                <?php if (!empty($section_title)) : ?>
+                                    <h3 class="main_title quote mb-12">
+                                        <?php echo esc_html($section_title); ?>
+                                    </h3>
+                                <?php endif; ?>
+                                <?php if (!empty($section_description)) : ?>
                                     <div class="text-left">
-                                        <a class="theme-btn bg-trans border_btnlight" href="#">View all supported devices</a>
+                                        <p><?php echo wp_kses_post($section_description); ?></p>
                                     </div>
-                                </div>
+                                <?php endif; ?>
                             </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
 
-                            <div class="details details-2">
-                                <div class="txtflex">
-                                    <h2>ONVIF-compliant for plug-and-play compatibility</h2>
-                                    <p class="para-text">Works out-of-the-box with ONVIF-compliant devices for simplified system
-                                        integration.</p>
-                                </div>
-                            </div>
-
-                            <div class="details details-3">
-                                <div class="headline blue"></div>
-                                <div class="txtflex">
-                                    <h2>Works across LAN deployments — no internet needed</h2>
-                                    <p class="para-text">Secure, reliable performance in offline environments with zero cloud
-                                        dependency.</p>
-                                </div>
-                            </div>
-
-                            <div class="details details-4">
-                                <div class="txtflex">
-                                    <h2>Supports both Windows and Linux systems</h2>
-                                    <p class="para-text">Flexible installation across your existing OS infrastructure — no
-                                        vendor lock-in.</p>
-                                    <div class="bolt">
-                                        <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-1.svg">
-                                        <p>Deployed across 11+ smart cities without replacing existing hardware.</p>
-                                        <div class="btn-bolt">
-                                            <a href="#">Request a demo to learn more</a>
+                <?php if (!empty($scroll_items)) : ?>
+                    <div class="gallery">
+                        <div class="left">
+                            <div class="detailsWrapper">
+                                <?php foreach ($scroll_items as $index => $item) : ?>
+                                    <?php
+                                    $item_num = $index + 1;
+                                    $item_title = !empty($item['item_title']) ? $item['item_title'] : '';
+                                    $item_desc = !empty($item['item_description']) ? $item['item_description'] : '';
+                                    $cta_text = !empty($item['cta_text']) ? $item['cta_text'] : '';
+                                    $cta_url = !empty($item['cta_url']['url']) ? $item['cta_url']['url'] : '';
+                                    $cta_target = !empty($item['cta_url']['is_external']) ? 'target="_blank"' : '';
+                                    $cta_nofollow = !empty($item['cta_url']['nofollow']) ? 'rel="nofollow"' : '';
+                                    $bolt_title = !empty($item['bolt_title']) ? $item['bolt_title'] : '';
+                                    $bolt_icon = !empty($item['bolt_icon']['url']) ? $item['bolt_icon']['url'] : '';
+                                    $bolt_cta_text = !empty($item['bolt_cta_text']) ? $item['bolt_cta_text'] : '';
+                                    $bolt_cta_url = !empty($item['bolt_cta_url']['url']) ? $item['bolt_cta_url']['url'] : '';
+                                    $bolt_cta_target = !empty($item['bolt_cta_url']['is_external']) ? 'target="_blank"' : '';
+                                    $bolt_cta_nofollow = !empty($item['bolt_cta_url']['nofollow']) ? 'rel="nofollow"' : '';
+                                    $has_blue_headline = !empty($item['has_blue_headline']) && $item['has_blue_headline'] === 'yes';
+                                    ?>
+                                    <div class="details details-<?php echo esc_attr($item_num); ?>">
+                                        <?php if ($has_blue_headline) : ?>
+                                            <div class="headline blue"></div>
+                                        <?php endif; ?>
+                                        <div class="txtflex">
+                                            <?php if (!empty($item_title)) : ?>
+                                                <h2><?php echo esc_html($item_title); ?></h2>
+                                            <?php endif; ?>
+                                            <?php if (!empty($item_desc)) : ?>
+                                                <p class="para-text"><?php echo wp_kses_post($item_desc); ?></p>
+                                            <?php endif; ?>
+                                            <?php if (!empty($cta_text) && !empty($cta_url)) : ?>
+                                                <div class="text-left">
+                                                    <a class="theme-btn bg-trans border_btnlight" href="<?php echo esc_url($cta_url); ?>" <?php echo $cta_target; ?> <?php echo $cta_nofollow; ?>><?php echo esc_html($cta_text); ?></a>
+                                                </div>
+                                            <?php endif; ?>
+                                            <?php if (!empty($bolt_title) || !empty($bolt_icon) || (!empty($bolt_cta_text) && !empty($bolt_cta_url))) : ?>
+                                                <div class="bolt">
+                                                    <?php if (!empty($bolt_icon)) : ?>
+                                                        <img src="<?php echo esc_url($bolt_icon); ?>" alt="<?php echo esc_attr($bolt_title); ?>">
+                                                    <?php endif; ?>
+                                                    <?php if (!empty($bolt_title)) : ?>
+                                                        <p><?php echo esc_html($bolt_title); ?></p>
+                                                    <?php endif; ?>
+                                                    <?php if (!empty($bolt_cta_text) && !empty($bolt_cta_url)) : ?>
+                                                        <div class="btn-bolt">
+                                                            <a href="<?php echo esc_url($bolt_cta_url); ?>" <?php echo $bolt_cta_target; ?> <?php echo $bolt_cta_nofollow; ?>><?php echo esc_html($bolt_cta_text); ?></a>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                </div>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
-                                </div>
+                                <?php endforeach; ?>
                             </div>
-
-                            <div class="details details-5">
-                                <div class="txtflex">
-                                    <h2>Available in web, desktop and mobile based client versions</h2>
-                                    <p class="para-text">Access analytics through browser or installed software, depending on
-                                        operational preference.</p>
-                                </div>
-                            </div>
-
                         </div>
-                    </div>
 
-                    <div class="right">
-                        <div class="photos">
-                            <div class="photo photo_custom">
-                                <!-- <div class="logo_box">
-                                    <ul>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-17.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg">
-                                        </li>
-                                        <li><img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-13.svg">
-                                        </li>
+                        <div class="right">
+                            <div class="photos">
+                                <?php foreach ($scroll_items as $index => $item) : ?>
+                                    <?php
+                                    $item_num = $index + 1;
+                                    $media_type = !empty($item['media_type']) ? $item['media_type'] : 'image';
+                                    $item_title = !empty($item['item_title']) ? $item['item_title'] : '';
+                                    $item_desc = !empty($item['item_description']) ? $item['item_description'] : '';
+                                    $cta_text = !empty($item['cta_text']) ? $item['cta_text'] : '';
+                                    $cta_url = !empty($item['cta_url']['url']) ? $item['cta_url']['url'] : '';
+                                    $cta_target = !empty($item['cta_url']['is_external']) ? 'target="_blank"' : '';
+                                    $cta_nofollow = !empty($item['cta_url']['nofollow']) ? 'rel="nofollow"' : '';
+                                    $bolt_title = !empty($item['bolt_title']) ? $item['bolt_title'] : '';
+                                    $bolt_icon = !empty($item['bolt_icon']['url']) ? $item['bolt_icon']['url'] : '';
+                                    $bolt_cta_text = !empty($item['bolt_cta_text']) ? $item['bolt_cta_text'] : '';
+                                    $bolt_cta_url = !empty($item['bolt_cta_url']['url']) ? $item['bolt_cta_url']['url'] : '';
+                                    $bolt_cta_target = !empty($item['bolt_cta_url']['is_external']) ? 'target="_blank"' : '';
+                                    $bolt_cta_nofollow = !empty($item['bolt_cta_url']['nofollow']) ? 'rel="nofollow"' : '';
+                                    $has_blue_headline = !empty($item['has_blue_headline']) && $item['has_blue_headline'] === 'yes';
+                                    
+                                    // Image handling
+                                    $image_default = !empty($item['item_image_default']['url']) ? $item['item_image_default']['url'] : '';
+                                    $image_default_alt = !empty($item['item_image_default']['alt']) ? $item['item_image_default']['alt'] : $item_title;
+                                    $image_dark = !empty($item['item_image_dark']['url']) ? $item['item_image_dark']['url'] : $image_default;
+                                    $image_dark_alt = !empty($item['item_image_dark']['alt']) ? $item['item_image_dark']['alt'] : $image_default_alt;
+                                    
+                                    // YouTube handling
+                                    $youtube_id_default = !empty($item['youtube_video_id_default']) ? $item['youtube_video_id_default'] : '';
+                                    $youtube_id_dark = !empty($item['youtube_video_id_dark']) ? $item['youtube_video_id_dark'] : $youtube_id_default;
+                                    $youtube_thumb_default = !empty($item['youtube_thumbnail_default']['url']) ? $item['youtube_thumbnail_default']['url'] : '';
+                                    $youtube_thumb_dark = !empty($item['youtube_thumbnail_dark']['url']) ? $item['youtube_thumbnail_dark']['url'] : $youtube_thumb_default;
+                                    ?>
+                                    <div class="photo photo_custom">
+                                        <?php if ($media_type === 'image' && !empty($image_default)) : ?>
+                                            <img class="white_theme_img radius-12" decoding="async" src="<?php echo esc_url($image_default); ?>" alt="<?php echo esc_attr($image_default_alt); ?>">
+                                            <img class="black_theme_img radius-12" decoding="async" src="<?php echo esc_url($image_dark); ?>" alt="<?php echo esc_attr($image_dark_alt); ?>">
+                                        <?php elseif ($media_type === 'youtube' && !empty($youtube_id_default)) : ?>
+                                            <div class="youtube-wrapper radius-12" style="position: relative; width: 100%; height: 60vh; overflow: hidden; cursor: pointer;">
+                                                <iframe class="radius-12 youtube-iframe white_theme_iframe" data-video-id="<?php echo esc_attr($youtube_id_default); ?>" src="" width="100%" height="60vh" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="width: 100%; height: 60vh; position: absolute; top: 0; left: 0; z-index: 1;"></iframe>
+                                                <iframe class="radius-12 youtube-iframe black_theme_iframe" data-video-id="<?php echo esc_attr($youtube_id_dark); ?>" src="" width="100%" height="60vh" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="width: 100%; height: 60vh; position: absolute; top: 0; left: 0; z-index: 1; display: none;"></iframe>
+                                                <?php if (!empty($youtube_thumb_default)) : ?>
+                                                    <img src="<?php echo esc_url($youtube_thumb_default); ?>" alt="Video thumbnail" class="youtube-thumb white_theme_thumb" style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; top: 0; left: 0; z-index: 2; cursor: pointer;" />
+                                                <?php endif; ?>
+                                                <?php if (!empty($youtube_thumb_dark)) : ?>
+                                                    <img src="<?php echo esc_url($youtube_thumb_dark); ?>" alt="Video thumbnail" class="youtube-thumb black_theme_thumb" style="width: 100%; height: 100%; object-fit: cover; display: none; position: absolute; top: 0; left: 0; z-index: 2; cursor: pointer;" />
+                                                <?php endif; ?>
+                                                <button class="play-btn" aria-label="Play video">
+                                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="white" style="margin-left: 4px;">
+                                                        <path d="M8 5v14l11-7z" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        <?php endif; ?>
 
-
-                                    </ul>
-                                </div> -->
-                                <img class="white_theme_img radius-12"
-                                    src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2026/01/logo_image.svg">
-                                <img class="black_theme_img radius-12"
-                                    src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2026/01/logo_image.svg">
-
-                                <div class="details details-1">
-                                    <div class="txtflex">
-                                        <h2>100+ IP camera brands supported</h2>
-                                        <p class="para-text">Seamlessly integrates with major camera vendors — no hardware
-                                            replacement needed.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="photo photo_custom">
-                                <div class="youtube-wrapper radius-12"
-                                    style="position: relative; width: 100%; height: 60vh; overflow: hidden; cursor: pointer;">
-                                    <iframe class="radius-12 youtube-iframe" data-video-id="R3GfuzLMPkA" src="" width="100%"
-                                        height="60vh" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture"
-                                        allowfullscreen
-                                        style="width: 100%; height: 60vh; position: absolute; top: 0; left: 0; z-index: 1;">
-                                    </iframe>
-                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-271.webp"
-                                        alt="Video thumbnail" class="youtube-thumb"
-                                        style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; top: 0; left: 0; z-index: 2; cursor: pointer;" />
-                                    <button class="play-btn" aria-label="Play video">
-                                        <svg width="32" height="32" viewBox="0 0 24 24" fill="white" style="margin-left: 4px;">
-                                            <path d="M8 5v14l11-7z" />
-                                        </svg>
-                                    </button>
-                                </div>
-
-                                <div class="details details-2">
-                                    <div class="txtflex">
-                                        <h2>ONVIF-compliant for plug-and-play compatibility</h2>
-                                        <p class="para-text">Works out-of-the-box with ONVIF-compliant devices for simplified
-                                            system integration.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="photo photo_custom">
-                                <img class="white_theme_img radius-12" decoding="async"
-                                    src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-270.webp">
-                                <img class="black_theme_img radius-12" decoding="async"
-                                    src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-270.webp">
-                                <div class="details details-3">
-                                    <div class="headline blue"></div>
-                                    <div class="txtflex">
-                                        <h2>Works across LAN deployments — no internet needed</h2>
-                                        <p class="para-text">Secure, reliable performance in offline environments with zero
-                                            cloud dependency.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="photo photo_custom">
-                                <img class="white_theme_img radius-12" decoding="async"
-                                    src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-273.webp">
-                                <img class="black_theme_img radius-12" decoding="async"
-                                    src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-273.webp">
-                                <div class="details details-4">
-                                    <div class="txtflex">
-                                        <h2>Supports both Windows and Linux systems</h2>
-                                        <p class="para-text">Flexible installation across your existing OS infrastructure — no
-                                            vendor lock-in.</p>
-                                        <div class="bolt">
-                                            <img
-                                                src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/item-1.svg">
-                                            <p>Deployed across 11+ smart cities without replacing existing hardware.</p>
-                                            <div class="btn-bolt">
-                                                <a href="#">Request a demo to learn more</a>
+                                        <div class="details details-<?php echo esc_attr($item_num); ?>">
+                                            <?php if ($has_blue_headline) : ?>
+                                                <div class="headline blue"></div>
+                                            <?php endif; ?>
+                                            <div class="txtflex">
+                                                <?php if (!empty($item_title)) : ?>
+                                                    <h2><?php echo esc_html($item_title); ?></h2>
+                                                <?php endif; ?>
+                                                <?php if (!empty($item_desc)) : ?>
+                                                    <p class="para-text"><?php echo wp_kses_post($item_desc); ?></p>
+                                                <?php endif; ?>
+                                                <?php if (!empty($cta_text) && !empty($cta_url)) : ?>
+                                                    <div class="text-left">
+                                                        <a class="theme-btn bg-trans border_btnlight" href="<?php echo esc_url($cta_url); ?>" <?php echo $cta_target; ?> <?php echo $cta_nofollow; ?>><?php echo esc_html($cta_text); ?></a>
+                                                    </div>
+                                                <?php endif; ?>
+                                                <?php if (!empty($bolt_title) || !empty($bolt_icon) || (!empty($bolt_cta_text) && !empty($bolt_cta_url))) : ?>
+                                                    <div class="bolt">
+                                                        <?php if (!empty($bolt_icon)) : ?>
+                                                            <img src="<?php echo esc_url($bolt_icon); ?>" alt="<?php echo esc_attr($bolt_title); ?>">
+                                                        <?php endif; ?>
+                                                        <?php if (!empty($bolt_title)) : ?>
+                                                            <p><?php echo esc_html($bolt_title); ?></p>
+                                                        <?php endif; ?>
+                                                        <?php if (!empty($bolt_cta_text) && !empty($bolt_cta_url)) : ?>
+                                                            <div class="btn-bolt">
+                                                                <a href="<?php echo esc_url($bolt_cta_url); ?>" <?php echo $bolt_cta_target; ?> <?php echo $bolt_cta_nofollow; ?>><?php echo esc_html($bolt_cta_text); ?></a>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                <?php endif; ?>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                <?php endforeach; ?>
                             </div>
-
-
-                            <div class="photo photo_custom">
-                                <img class="white_theme_img radius-12" decoding="async"
-                                    src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-272.webp">
-                                <img class="black_theme_img radius-12" decoding="async"
-                                    src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Frame-272.webp">
-                                <div class="details details-5">
-                                    <div class="txtflex">
-                                        <h2>Available in web, desktop and mobile based client versions</h2>
-                                        <p class="para-text">Access analytics through browser or installed software, depending
-                                            on operational preference.</p>
-                                    </div>
-                                </div>
-
-                            </div>
-
                         </div>
                     </div>
-                </div>
-                <!-- 
-                <div class="spacer"></div>
-                <div class="spacer"></div>
-                <div class="spacer"></div> -->
-
-
+                <?php endif; ?>
 
             </div>
         </div>
@@ -547,22 +492,49 @@ class Scalescroll extends Widget_Base
                 document.addEventListener('DOMContentLoaded', function () {
                     const youtubeWrappers = document.querySelectorAll('.youtube-wrapper');
                     youtubeWrappers.forEach(function (wrapper) {
-                        const thumb = wrapper.querySelector('.youtube-thumb');
-                        const iframe = wrapper.querySelector('.youtube-iframe');
+                        const thumbs = wrapper.querySelectorAll('.youtube-thumb');
+                        const iframes = wrapper.querySelectorAll('.youtube-iframe');
                         const playBtn = wrapper.querySelector('.play-btn');
 
-                        if (thumb && iframe) {
-                            const videoId = iframe.getAttribute('data-video-id');
+                        if (thumbs.length > 0 && iframes.length > 0) {
+                            // Determine which iframe and thumb to use based on theme
+                            function getActiveElements() {
+                                const isDark = document.body.classList.contains('js-dark') || document.documentElement.classList.contains('js-dark');
+                                const activeIframe = isDark 
+                                    ? wrapper.querySelector('.black_theme_iframe') || wrapper.querySelector('.youtube-iframe')
+                                    : wrapper.querySelector('.white_theme_iframe') || wrapper.querySelector('.youtube-iframe');
+                                const activeThumb = isDark
+                                    ? wrapper.querySelector('.black_theme_thumb') || wrapper.querySelector('.youtube-thumb')
+                                    : wrapper.querySelector('.white_theme_thumb') || wrapper.querySelector('.youtube-thumb');
+                                return { iframe: activeIframe, thumb: activeThumb };
+                            }
 
                             function playVideo() {
-                                thumb.style.display = 'none';
+                                const { iframe, thumb } = getActiveElements();
+                                if (thumb) {
+                                    thumb.style.display = 'none';
+                                }
+                                // Hide all thumbs
+                                thumbs.forEach(function(t) { t.style.display = 'none'; });
+                                // Hide all iframes first
+                                iframes.forEach(function(i) { i.style.display = 'none'; });
+                                
                                 if (playBtn) {
                                     playBtn.style.display = 'none';
                                 }
-                                iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
+                                
+                                if (iframe) {
+                                    const videoId = iframe.getAttribute('data-video-id');
+                                    iframe.style.display = 'block';
+                                    iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
+                                }
                             }
 
-                            thumb.addEventListener('click', playVideo);
+                            // Add click listeners to all thumbs
+                            thumbs.forEach(function(thumb) {
+                                thumb.addEventListener('click', playVideo);
+                            });
+
                             if (playBtn) {
                                 playBtn.addEventListener('click', function (e) {
                                     e.stopPropagation();
@@ -570,7 +542,7 @@ class Scalescroll extends Widget_Base
                                 });
                             }
                             wrapper.addEventListener('click', function (e) {
-                                if (e.target === wrapper || e.target === thumb) {
+                                if (e.target === wrapper) {
                                     playVideo();
                                 }
                             });
