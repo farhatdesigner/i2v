@@ -362,17 +362,19 @@ class Insightsupdates extends Widget_Base
         $remaining_posts = !empty($posts) && count($posts) > 1 ? array_slice($posts, 1) : [];
         
         ?>
-        
-        
-        
-        
+        <style>
+            .insights-updates-item-text_left-list li > span {
+                font-size: 14px;
+                color: #4a5673;
+                padding: 4px 12px;
+                display: inline-block;
+                border-radius: 28px;
+                border: 1px solid #e6ebf2;
+            }
+        </style>
         <div class="sectionsinsightsupdates grey-light">
-
-
-
          <section class="microspace-custom_outside custom-container">
             <div class="mx-auto">
-
 
                <div class="col-lg-12 text-center">
                   <?php if (!empty($settings['section_title'])) : ?>
@@ -415,7 +417,7 @@ class Insightsupdates extends Widget_Base
                                        <ul class="p-0 insights-updates-item-text_left-list">
                                           <li>
                                              <?php foreach ($first_post_categories as $cat) : ?>
-                                                <a href="#" onclick="event.stopPropagation();"><?php echo esc_html($cat->name); ?></a>
+                                                <span href="#" onclick="event.stopPropagation();"><?php echo esc_html($cat->name); ?></span>
                                              <?php endforeach; ?>
                                           </li>
                                        </ul>
@@ -438,7 +440,7 @@ class Insightsupdates extends Widget_Base
                      </div>
                      <div class="col-xl-5">
                         <?php if (!empty($remaining_posts)) : ?>
-                           <a href="<?php echo esc_url($post_link); ?>" class="lisitng-inner">
+                           <div class="lisitng-inner">
                               <?php foreach ($remaining_posts as $post) : ?>
                                  <?php
                                  setup_postdata($post);
@@ -449,23 +451,25 @@ class Insightsupdates extends Widget_Base
                                  $post_author = get_the_author_meta('display_name', $post->post_author);
                                  $post_link = get_permalink($post_id);
                                  ?>
-                                    <div class="d-flex align-items-end gap-4">
-                                       <?php if (!empty($post_image)) : ?>
-                                          <div class="insights-updates-item-small-icon">
-                                             <img src="<?php echo esc_url($post_image); ?>" alt="<?php echo esc_attr($post_title); ?>">
+                                    <a href="<?php echo esc_url($post_link); ?>" class="d-flex align-items-end gap-4">
+                                       <!-- <div class="d-flex align-items-end gap-4"> -->
+                                          <?php if (!empty($post_image)) : ?>
+                                             <div class="insights-updates-item-small-icon">
+                                                <img src="<?php echo esc_url($post_image); ?>" alt="<?php echo esc_attr($post_title); ?>">
+                                             </div>
+                                          <?php endif; ?>
+                                          <div class="insights-updates-item-text">
+                                             <h5>
+                                                <?php echo esc_html($post_title); ?>
+                                             </h5>
+                                             <div class="date-author-txt">
+                                                <p><span><?php echo esc_html($post_date); ?></span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> <?php echo esc_html($post_author); ?></span></p>
+                                             </div>
                                           </div>
-                                       <?php endif; ?>
-                                       <div class="insights-updates-item-text">
-                                          <h5>
-                                             <?php echo esc_html($post_title); ?>
-                                          </h5>
-                                          <div class="date-author-txt">
-                                             <p><span><?php echo esc_html($post_date); ?></span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> <?php echo esc_html($post_author); ?></span></p>
-                                          </div>
-                                       </div>
-                                    </div>
+                                       <!-- </div> -->
+                                    </a>
                               <?php endforeach; ?>
-                           </a>
+                           </div>
                         <?php endif; ?>
                      </div>
                   </div>
