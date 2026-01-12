@@ -1314,7 +1314,7 @@ p {
 }
 
 .bg-tran_lightcolor {
-  color: #0099ED;
+  color: #74C2ED;
   background: transparent;
   border-radius: 0;
   padding: 0;
@@ -1322,9 +1322,12 @@ p {
 }
 
 .bg-tran_lightcolor:hover {
-  color: #0099ED;
+  color: #74C2ED;
   background: transparent;
-  border-bottom: 1px solid #0099ED;
+  border-bottom: 1px solid #74C2ED;
+}
+a.theme-btn.bg-tran_lightcolor {
+  color: #74C2ED;
 }
 .smarter_seamless .bg-tran_lightcolor:hover {
   color: #d7dbe4;
@@ -3154,6 +3157,57 @@ svg.connection-line-7 {
 .iccc_actions .elementor-icon-box-content .elementor-icon-box-description {
   margin-top: 8px !important;
   display: block;
+}
+
+.ctw-title h3 {
+  margin: 0;
+  cursor: auto;
+}
+.border_project:before {
+  position: absolute;
+  right: -32px;
+  background: #D7DBE4;
+  height: 100%;
+  width: 1px;
+  content: '';
+}
+
+
+ul.privacy-policy {
+    padding: 0px 0px 40px 0px;
+    margin: 0;
+}
+ul.privacy-policy:last-child {
+  padding: 0;
+  margin: 0;
+}
+
+.privacy-policy-title {
+color: #06283D;
+font-size: 32px;
+line-height: normal;
+margin: 0 0px 12px 0px;
+counter-reset: item;
+}
+.privacy-policy-section {
+  counter-reset: section;
+  padding: 40px;
+  padding-left: 80px;
+}
+
+.privacy-policy-section h3::before {
+  counter-increment: section;
+  content: counter(section) ". ";
+  font-weight: 600;
+  position: absolute;
+  left: 40px;
+}
+
+a.btn-simple {
+  color: #5F6F94;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 26px;
 }
 
 @media (min-width: 768px) {

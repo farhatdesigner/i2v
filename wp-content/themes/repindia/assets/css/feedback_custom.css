@@ -517,7 +517,7 @@ html.lenis body {
 }
 
 #breadcrumbs {
-  margin-bottom: 36px;
+  margin-bottom: 48px;
 }
 
 #breadcrumbs > span > span > a {
@@ -1008,6 +1008,10 @@ div.pin-spacer > .hz-slider-section {
   margin-top: 8px;
 }
 
+.transport_box .choose_i2v p.elementor-icon-box-description {
+  margin-top: 0;
+}
+
 .elementor-shortcode > span a {
   border-radius: var(--3XL, 28px);
   border: 1px solid var(--Golbal-others-border, #e6ebf2);
@@ -1119,7 +1123,7 @@ div.pin-spacer > .hz-slider-topcaption {
   font-style: normal;
   font-weight: 600 !important;
   line-height: 34px;
-  margin-bottom: 0;
+  margin-bottom: 4px;
 }
 .hz-slider-topcaption .swiper-slide p {
   color: #5c5c5c;

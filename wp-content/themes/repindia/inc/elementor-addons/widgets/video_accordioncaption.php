@@ -312,7 +312,7 @@ class Video_accordioncaption extends Widget_Base
                 font-size: 40px;
                 color: #06283D;
                 line-height: 1.3;
-                margin: 0;
+                margin-bottom: 8px;
             }
 
             .vac_accordion_sets {

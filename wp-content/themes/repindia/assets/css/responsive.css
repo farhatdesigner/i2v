@@ -198,7 +198,7 @@ label.form-label.required_note {
 .js-dark .wpcf7 input::placeholder,
 .js-dark .wpcf7 textarea::placeholder { color: rgba(255, 255, 255, 0.60)!important; }
 label.form-label.label_notic a{ color: #5C5C5C;font-weight: 500; }
-.btn-sec_gap.titlegrep.with_whitebg .grey-btn{ border-color: #E6EBF2;background: #fff; }
+.btn-sec_gap.titlegrep.with_whitebg .grey-btn{ border-color: #E6EBF2;background: #fff; cursor:auto}
 .career_whywork .purpose-swiper .swiper-slide {
     width: 550px;
 }
