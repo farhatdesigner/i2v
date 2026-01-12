@@ -19,6 +19,7 @@ class Widget_Loader
 		require_once(__DIR__.'/widgets/customtabsmart.php');
 		require_once(__DIR__.'/widgets/insightsupdates.php');
 		require_once(__DIR__.'/widgets/cardslisting.php');
+		require_once(__DIR__.'/widgets/industry_list.php');
 		require_once(__DIR__.'/widgets/carosoulslider.php');
 		require_once(__DIR__.'/widgets/platformtab.php');
 		require_once(__DIR__.'/widgets/vertcialaccordion.php');
@@ -61,6 +62,7 @@ class Widget_Loader
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Customtabsmart() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Insightsupdates() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Cardslisting() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Industry_List() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Carosoulslider() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Platformtab() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Vertcialaccordion() );

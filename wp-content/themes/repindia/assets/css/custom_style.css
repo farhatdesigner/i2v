@@ -3209,7 +3209,9 @@ a.btn-simple {
   font-weight: 600;
   line-height: 26px;
 }
-
+span.star {
+  color: #C92629;
+}
 @media (min-width: 768px) {
   .footer-accordion-icon {
     display: none;

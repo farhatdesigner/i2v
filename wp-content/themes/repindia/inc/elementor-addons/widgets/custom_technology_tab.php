@@ -129,6 +129,7 @@ class Custom_Technology_Tab extends Widget_Base
             }
             .js-dark .<?php echo esc_attr($widget_id); ?> .tech-tabs-nav {
                 background: #262A30;
+                border-color: rgba(193, 196, 198, 0.1);
             }
             .<?php echo esc_attr($widget_id); ?> .tech-tabs-nav ul {
                 list-style: none;
@@ -227,6 +228,7 @@ class Custom_Technology_Tab extends Widget_Base
                 position: absolute;
                 left: 8px;
                 top: 10px;
+                opacity: 0.5;
             }
             .<?php echo esc_attr($widget_id); ?> .tech-tabs-dropdown {
                 display: none;

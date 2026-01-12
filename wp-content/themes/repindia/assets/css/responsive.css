@@ -18,10 +18,14 @@
     align-items: start;
     gap: 20px;
 }
+
+.iconarea {
+    padding: 12px;
+}
 .elementor img.toolmainimg {
-    width: 64px;
-    height: 64px;
-    max-width: 64px;
+    width: 48px;
+    height: 48px;
+    max-width: 48px;
 }
 h4.contenttitle {
     color: rgba(255, 255, 255, 0.90);
@@ -36,7 +40,13 @@ h4.contenttitle {
     line-height: 24px;
     margin-bottom: 12px;
 }
-.contentdesc p.paracontsub{ font-size: 14px; font-weight: 600; }
+
+.contentdesc p.paracontsub {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px !important;
+    letter-spacing: 1.4px;
+}
 .contentdesc li{ color: #AEB6C9;font-size: 16px;font-weight: 500; line-height: 24px;margin-bottom: 8px;  display: flex;align-items: self-end;align-items: center;gap: 8px; }
 .elementor img.tool_list_icon {
     width: 16px;
@@ -48,6 +58,10 @@ a.blank_anchor {
     font-weight: 500;
     line-height: 26px;
     border-bottom: 1px solid #E6E6E6;
+}
+
+a.blank_anchor:hover {
+    border-bottom: 1px solid #5F6F94;
 }
 .js-dark .elementor-element.partner_choose_desc .elementor-widget-icon-box,.js-dark .elementor-element.partner_choose_desc .e-n-accordion-item .e-flex.e-con.e-child,.js-dark .elementor-element.partner_choose_desc  .elementor-widget-n-accordion .e-n-accordion-item-title,
 .js-dark .elementor-element.partner_tech_desc .elementor-widget-icon-box,.js-dark .elementor-element.partner_tech_desc .e-n-accordion-item .e-flex.e-con.e-child,.js-dark .elementor-element.partner_tech_desc  .elementor-widget-n-accordion .e-n-accordion-item-title {
@@ -170,6 +184,10 @@ input.wpcf7-submit.form-control.submitbtn {
     right: 0;
     top: 0;
     z-index: 1;
+}
+
+label.form-label.required_note svg {
+    vertical-align: sub;
 }
 .btn-sections {
     width: auto;
