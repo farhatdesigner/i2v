@@ -3212,6 +3212,9 @@ a.btn-simple {
 span.star {
   color: #C92629;
 }
+.btn-large {
+  font-size: 18px;
+}
 @media (min-width: 768px) {
   .footer-accordion-icon {
     display: none;

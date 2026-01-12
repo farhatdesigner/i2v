@@ -16,27 +16,27 @@
 .icon_custom_text {
     display: flex;
     align-items: start;
-    gap: 20px;
+    gap: 24px;
 }
 
 .iconarea {
     padding: 12px;
 }
 .elementor img.toolmainimg {
-    width: 48px;
-    height: 48px;
-    max-width: 48px;
+    width: 100px;
+    height: 100px;
+    max-width: 100px;
 }
 h4.contenttitle {
     color: rgba(255, 255, 255, 0.90);
-    font-size: 20px;
+    font-size: 24px;
     line-height: 26px;
     font-weight: 500;
 }
 .contentdesc p {
     color: #AEB6C9;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 24px;
     margin-bottom: 12px;
 }
@@ -53,11 +53,11 @@ h4.contenttitle {
     height: 16px;
 }
 a.blank_anchor {
-    color: #5F6F94;
+    color: #74C2ED;
     font-size: 16px;
     font-weight: 500;
     line-height: 26px;
-    border-bottom: 1px solid #E6E6E6;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.20);
 }
 
 a.blank_anchor:hover {

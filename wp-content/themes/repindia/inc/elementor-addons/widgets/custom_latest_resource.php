@@ -383,8 +383,8 @@ class Custom_Latest_Resource extends Widget_Base
             }
             .custom-latest-resource-date-overlay {
                 position: absolute;
-                top: 12px;
-                right: 12px;
+                top: 8px !important;
+                right: 8px !important;
                 background: #464A4F;
                 color: #D7DBE4;
                 padding: 4px 16px;
@@ -397,13 +397,7 @@ class Custom_Latest_Resource extends Widget_Base
                 font-weight: 500;
                 line-height: 20px;
             }
-            .custom-latest-resource-card-content {
-                padding: 8px;
-                display: flex;
-                flex-direction: column;
-                gap: 12px;
-                flex: 1;
-            }
+
             .custom-latest-resource-taxonomy {
                 display: inline-block;
                 padding: 4px 16px;
