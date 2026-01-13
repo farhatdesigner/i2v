@@ -1203,6 +1203,10 @@ div.pin-spacer > .hz-slider-topcaption {
   max-width: 588px;
 }
 
+.elementor-element.elementor-element-a7263d7.onvif_txt.elementor-widget.elementor-widget-heading {
+  margin-top: 6px;
+}
+
 @media (min-width: 768px) {
   .hz-slider-topcaption .swiper-slide h2 {
     font-size: 32px;
@@ -1358,7 +1362,7 @@ html {
   }
 
   h3 {
-    font-size: 24px !important;
+    font-size: 28px !important;
   }
 
   .btn-colum {
@@ -1449,8 +1453,28 @@ html {
   .customtabsmart .smart-content-inner-text {
     padding: 10px;
   }
-
   .slider-content {
     padding: 30px 0 0;
   }
+.main_title {
+    font-size: 28px !important;
+}
+.content-inner-text .sub_title {
+  font-size: 24px !important;
+}
+.chosse_circle .elementor-icon-box-title {
+  font-size: 18px;
+}
+.insights-updates-item h4 {
+  font-size: 18px;
+}
+
+.hero-slider .swiper-pagination.swiper-pagination-bullets {
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+
 }

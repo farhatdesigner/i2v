@@ -348,7 +348,7 @@ header li.burger-icon .icon-sun,
   color: #d7dbe4 !important;
 }
 .js-dark span.swiper-pagination-bullet {
-  background-color: #262A30!important;
+  background-color:rgb(255 255 255 / 10%) !important;
   opacity: 1;
 }
 .js-dark span.swiper-pagination-bullet.swiper-pagination-bullet-active {
@@ -689,4 +689,22 @@ header li.burger-icon .icon-sun,
 
 .js-dark .elementor-7 .partner_sec .elementor-element.elementor-element-6df4b3c img {
   border-color: rgba(13, 17, 23, 1);
+}
+
+.js-dark .tabsautoscroll li.active {
+  color: #74c2ed !important;
+}
+.js-dark .tabsautoscroll li.active:before {
+  background: #74c2ed !important;
+}
+.js-dark .border_btnlight {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.20);
+}
+.js-dark .bg-trans {
+  color: #74c2ed !important;
+}
+.js-dark .insights-updates-item-text_left-list li > span {
+    color: #D7DBE4;
+    border: 1px solid #C1C4C61A;
+    background: #262A30;
 }

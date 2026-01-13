@@ -243,7 +243,7 @@ header li {
 
 header li.burger-icon,
 header .cross_icon {
-  border: 1px solid #e5e9ec;
+  border: 1px solid rgba(193, 196, 198, 0.2);
   border-radius: 100%;
   box-sizing: border-box;
   width: 42px;
@@ -1655,7 +1655,7 @@ label.form-label.required_note-demo {
   color: inherit;
   text-decoration: none;
   background: none;
-  font-weight: inherit;
+  font-weight:500;
   font-size: inherit;
   line-height: inherit;
   cursor: inherit;
@@ -3283,7 +3283,7 @@ span.star {
   }
   .tabsautoscroll {
     bottom: -20px;
-    padding: 0 16px;
+    padding: 0;
   }
 }
 
@@ -3775,6 +3775,7 @@ span.star {
     font-family: Geometria-Medium, sans-serif;
     padding-right: 15px;
     color: #000000;
+    display: none ;
   }
 
   .select-brand {
@@ -3782,16 +3783,19 @@ span.star {
     color: #06283d;
     width: auto;
     font-size: 18px;
-    text-decoration: underline;
-    font-family: Geometria-Medium, sans-serif;
     cursor: pointer;
     position: relative;
+    border: 1px solid #E5E9EC;
+    padding: 8px 12px;
+    width: 100%;
+    border-radius: 8px;
+    background: #ffffff;
   }
 
   .select-brand:after {
     content: "";
     position: absolute;
-    right: auto;
+    right: 8px;
     margin-left: 15px;
     width: 20px;
     height: 20px;
@@ -3824,7 +3828,7 @@ span.star {
     -webkit-box-shadow: 0 1px 2px -2px #000000a1;
     -moz-box-shadow: 0 1px 2px -2px #000000a1;
     box-shadow: 0 1px 2px -2px #000000ed;
-    margin-top: 10px;
+    /* margin-top: 10px; */
     border: 1px solid #e6ebf2;
     padding: 0;
     white-space: normal;
@@ -3950,6 +3954,7 @@ span.star {
   }
   .main_header .logo-wdth {
     justify-content: end;
+    display: none;
   }
 
   .hero-style .slide-title h2 {
@@ -3959,6 +3964,7 @@ span.star {
   .btn-sec_gap {
     gap: 12px;
     flex-direction: column;
+    align-items: flex-start;
   }
 
   .theme-btn.xl-btn {
@@ -4307,4 +4313,19 @@ span.star {
   .hero-slider {
     height: 90vh;
   }
+
+  .elementor-7 .elementor-element.elementor-element-2b65960 .cmarq-item img {
+    width: 108px!important;
+}
+.full_mobile .grey-btn, .full_mobile .border-btn-grey, .full_mobile .theme-btn {
+  width: 100%;
+  text-align: center;
+}
+
+
+#custom-testimonial-81325d4 .custom-testimonial-author-photo img {
+  width: 80px;
+  height: 63.5px;
+}
+
 }
