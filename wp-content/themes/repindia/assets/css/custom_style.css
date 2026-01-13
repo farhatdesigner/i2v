@@ -1279,12 +1279,12 @@ p {
 .bg-trans {
   background: transparent !important;
   padding: 0;
-  color: #0099ed;
+  color: #74c2ed !important;
 }
 
 .bg-trans:hover {
   background: transparent !important;
-  border-bottom: 1px solid #0099ed;
+  border-bottom: 1px solid #74c2ed;
 }
 .theme-btn:focus {
   background: #0074b2;
@@ -1320,7 +1320,7 @@ p {
 
 .light-white:hover {
   color: #d7dbe4;
-  border-color: #d7dbe4;
+  border-color: rgb(255 255 255 / 50%);
 }
 
 .bg-tran_lightcolor {
@@ -1338,6 +1338,7 @@ p {
 }
 a.theme-btn.bg-tran_lightcolor {
   color: #74c2ed;
+  background: transparent;
 }
 .smarter_seamless .bg-tran_lightcolor:hover {
   color: #d7dbe4;
