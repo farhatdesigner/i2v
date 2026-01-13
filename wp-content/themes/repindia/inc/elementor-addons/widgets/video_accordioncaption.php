@@ -386,9 +386,9 @@ class Video_accordioncaption extends Widget_Base
                 transition: filter 0.3s ease;
             }
 
-            .vac_accordion_set.active .vac_ac_icon {
+            /* .vac_accordion_set.active .vac_ac_icon {
                 filter: brightness(0) invert(1);
-            }
+            } */
 
             .vac_ac_header {
                 flex: 1;
@@ -533,6 +533,13 @@ class Video_accordioncaption extends Widget_Base
 
             .vac_padd-accordion_video .vac_accordion_video.vac_active {
                 display: block;
+            }
+            .video_topcaption_white .shadow-sm {
+                box-shadow: none !important;
+            }
+            .video_topcaption_white .card-body,.video_topcaption_white .card-image {
+                box-shadow: none !important;
+                padding: 0;
             }
 
             @media (max-width: 991px) {
