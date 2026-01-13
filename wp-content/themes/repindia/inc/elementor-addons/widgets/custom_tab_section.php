@@ -177,7 +177,7 @@ class Custom_Tab_Section extends Widget_Base
             .sec-tab-item {
                 display: flex;
                 flex-direction: column;
-                gap: 10px;
+                gap: 12px;
                 padding: 20px;
                 cursor: pointer;
                 transition: all 0.3s ease;
@@ -255,7 +255,7 @@ class Custom_Tab_Section extends Widget_Base
                 gap: 20px;
                 border-radius: 0 var(--M, 12px) var(--M, 12px) var(--M, 12px);
                 background: #FFF;
-                padding: 20px;
+                padding: 80px;
                 align-items: center;
                 flex-direction: row-reverse;
             }

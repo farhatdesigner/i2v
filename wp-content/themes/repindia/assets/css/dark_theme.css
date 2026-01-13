@@ -352,7 +352,7 @@ header li.burger-icon .icon-sun,
   opacity: 1;
 }
 .js-dark span.swiper-pagination-bullet.swiper-pagination-bullet-active {
-  background-color: transparent !important;
+  background-color: #74C2ED !important;
 }
 .js-dark #tab_table .e-n-tabs-heading {
   background: #262a30;
@@ -463,7 +463,7 @@ header li.burger-icon .icon-sun,
   background-color: #464a4f !important;
 }
 
-.js-dark .sec-tab-item {
+.js-dark .sec-tab-item, .sec-tab-item:hover {
   background: #0d1117;
   border: 1px solid rgba(193, 196, 198, 0.2);
 }

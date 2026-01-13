@@ -1505,8 +1505,9 @@ h3 {
   fill: rgb(255 255 255 / 90%);
 }
 
-.js-dark .modal-demo-form .modal-header,.js-dark label.form-label.required_note-demo {
-  border-bottom: 1px solid #464A4F;
+.js-dark .modal-demo-form .modal-header,
+.js-dark label.form-label.required_note-demo {
+  border-bottom: 1px solid #464a4f;
 }
 
 label.form-label.required_note-demo {
@@ -1655,7 +1656,7 @@ label.form-label.required_note-demo {
   color: inherit;
   text-decoration: none;
   background: none;
-  font-weight:500;
+  font-weight: 500;
   font-size: inherit;
   line-height: inherit;
   cursor: inherit;
@@ -3775,7 +3776,7 @@ span.star {
     font-family: Geometria-Medium, sans-serif;
     padding-right: 15px;
     color: #000000;
-    display: none ;
+    display: none;
   }
 
   .select-brand {
@@ -3785,7 +3786,7 @@ span.star {
     font-size: 18px;
     cursor: pointer;
     position: relative;
-    border: 1px solid #E5E9EC;
+    border: 1px solid #e5e9ec;
     padding: 8px 12px;
     width: 100%;
     border-radius: 8px;
@@ -3949,12 +3950,14 @@ span.star {
   .dark-mode-toggle .icon-moon {
     margin: 3.3px;
   }
+.header-right-box .theme-btn {display: none;}
+  
   .main_nav_menu {
     width: 85%;
   }
   .main_header .logo-wdth {
     justify-content: end;
-    display: none;
+    /* display: none; */
   }
 
   .hero-style .slide-title h2 {
@@ -4280,6 +4283,33 @@ span.star {
   .modal-content {
     overflow-y: auto;
   }
+
+  .elementor-7 .elementor-element.elementor-element-2b65960 .cmarq-item img, .elementor-7 .elementor-element.elementor-element-b806bba .cmarq-item img, .elementor-1242 .elementor-element.elementor-element-d52caa7 .cmarq-item .cmarq-content * {
+    width: 108px !important;
+  }
+  .full_mobile .grey-btn,
+  .full_mobile .border-btn-grey,
+  .full_mobile .theme-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .full_mobile .theme-btn.bg-tran_lightcolor {
+    width: auto;
+    margin: 0 auto;
+    display: block;
+}
+
+  #custom-testimonial-81325d4 .custom-testimonial-author-photo img {
+    width: 80px;
+    height: 63.5px;
+  }
+ 
+.works-box span.elementor-icon-box-title span {
+  min-height: 80px;
+  display: block;
+}
+
 }
 
 @media (max-width: 380px) {
@@ -4313,19 +4343,4 @@ span.star {
   .hero-slider {
     height: 90vh;
   }
-
-  .elementor-7 .elementor-element.elementor-element-2b65960 .cmarq-item img {
-    width: 108px!important;
-}
-.full_mobile .grey-btn, .full_mobile .border-btn-grey, .full_mobile .theme-btn {
-  width: 100%;
-  text-align: center;
-}
-
-
-#custom-testimonial-81325d4 .custom-testimonial-author-photo img {
-  width: 80px;
-  height: 63.5px;
-}
-
 }
