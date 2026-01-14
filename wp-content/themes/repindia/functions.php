@@ -133,6 +133,9 @@ if (! function_exists('repindia_load_theme_scripts_and_styles')) {
 		wp_enqueue_script('repindia-global', get_template_directory_uri() . '/assets/js/global.js', array('jquery', 'swiper-min', 'gsap-min', 'scrolltrigger-min', 'lenis-min'), REPINDIA_THEME_VERSION, true);
 		wp_enqueue_script('repindia-custom', get_template_directory_uri() . '/assets/js/custom.js', array('jquery', 'swiper-min', 'gsap-min', 'scrolltrigger-min', 'lenis-min'), REPINDIA_THEME_VERSION, true);
 		
+		// Enqueue form validation script
+		wp_enqueue_script('repindia-form-validation', get_template_directory_uri() . '/assets/js/formvalidation.js', array('jquery'), REPINDIA_THEME_VERSION, true);
+		
 		// Enqueue search script
 		wp_enqueue_script('repindia-search', get_template_directory_uri() . '/assets/js/search.js', array(), REPINDIA_THEME_VERSION, true);
 		wp_localize_script('repindia-search', 'repindiaSearch', array(

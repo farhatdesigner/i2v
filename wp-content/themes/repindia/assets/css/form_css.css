@@ -28,3 +28,13 @@ textarea.form-control{ max-height: 100px; }
 .wpcf7-not-valid-tip{ font-size: 14px;line-height: normal;margin-top: 3px; }
 .form-control{ margin-bottom: 0px!important; }
 .formpopup_modal .wpcf7-form-control-wrap{ margin-bottom: 12px; }
+
+/* Disabled submit button styles */
+.wpcf7 input[type="submit"]:disabled,
+.wpcf7 button[type="submit"]:disabled,
+.wpcf7 .wpcf7-submit:disabled,
+.wpcf7 .wpcf7-disabled {
+  opacity: 0.6;
+  cursor: not-allowed !important;
+  pointer-events: none;
+}
