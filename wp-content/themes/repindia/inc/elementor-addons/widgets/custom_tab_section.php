@@ -328,6 +328,7 @@ class Custom_Tab_Section extends Widget_Base
                     font-family: Geometria-Medium, sans-serif;
                     padding-right: 15px;
                     color: #000000;
+                    display: none;
                 }
 
                 .sec-select-brand {
