@@ -331,52 +331,116 @@ if (!empty($repindia_option['demo_popup_form']))
 	</div>
 <?php } ?>
 
+<!-- Contact Modal -->
+<?php
+if (!empty($repindia_option['contact_popup_form'])) 
+{ ?>
+	<div class="modal fade" id="contactBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="contactBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-demo-form">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="modal-header">
+						<h5 class="modal-title" id="contactBackdropLabel">Contact Us</h5>
+						<span class="btn-closecustom" data-bs-dismiss="modal" aria-label="Close">
+							<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#000'>
+								<path
+									d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414' />
+							</svg>
+						</span>
+					</div>
+					<div class="modal-body-content">
+						<h3>Get in Touch</h3>
+						<p>We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+					</div>
+					<?php echo do_shortcode(wp_kses_post($repindia_option['contact_popup_form'])); ?>
+				</div>
+			</div>
+		</div>
+	</div>
+<?php } ?>
 
-
-
-
-
-<!-- JavaScript to open demo modal for CTAs with class 'open-demo-modal' -->
+<!-- JavaScript to open modals for CTAs with data-modal-target attribute or class -->
 <script>
 (function() {
 	document.addEventListener('DOMContentLoaded', function() {
-		// Get all elements with the class 'open-demo-modal'
-		var demoModalTriggers = document.querySelectorAll('.open-demo-modal');
-		
-		// Check if modal exists
-		var demoModal = document.getElementById('staticBackdrop');
-		if (!demoModal) {
-			return; // Modal doesn't exist, exit
+		// Function to open modal by ID
+		function openModal(modalId) {
+			var modal = document.getElementById(modalId);
+			if (!modal) {
+				return false; // Modal doesn't exist
+			}
+			
+			// Check if Bootstrap modal is available
+			if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+				// Bootstrap 5
+				var modalInstance = bootstrap.Modal.getOrCreateInstance(modal);
+				modalInstance.show();
+				return true;
+			} else if (typeof jQuery !== 'undefined' && jQuery.fn.modal) {
+				// Bootstrap 4 (jQuery)
+				jQuery(modal).modal('show');
+				return true;
+			}
+			return false;
 		}
 		
-		// Add click event listener to each trigger
-		demoModalTriggers.forEach(function(trigger) {
-			trigger.addEventListener('click', function(e) {
-				// Prevent default link behavior if it's a link
-				if (trigger.tagName === 'A' && trigger.getAttribute('href') && trigger.getAttribute('href') !== '#') {
-					// Only prevent if href is not just '#'
-					var href = trigger.getAttribute('href');
-					if (href !== '#' && !href.startsWith('#')) {
-						// If it's an external link, don't prevent default
-						return;
-					}
+		// Function to handle click event
+		function handleModalClick(e, modalId) {
+			var trigger = e.currentTarget;
+			
+			// Check if it's a link with external URL
+			if (trigger.tagName === 'A' && trigger.getAttribute('href')) {
+				var href = trigger.getAttribute('href');
+				// If it's an external link (not # or starting with #), don't prevent default
+				if (href !== '#' && !href.startsWith('#')) {
+					return; // Allow normal link behavior
 				}
-				
-				// Prevent default to avoid navigation
-				e.preventDefault();
-				
-				// Check if Bootstrap modal is available
-				if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
-					// Create or get Bootstrap modal instance
-					var modalInstance = bootstrap.Modal.getOrCreateInstance(demoModal);
-					// Show the modal
-					modalInstance.show();
-				} else if (typeof jQuery !== 'undefined' && jQuery.fn.modal) {
-					// Fallback for jQuery Bootstrap (Bootstrap 4)
-					jQuery(demoModal).modal('show');
+			}
+			
+			// Prevent default to avoid navigation
+			e.preventDefault();
+			
+			// Open the modal
+			openModal(modalId);
+		}
+		
+		// Handle elements with data-modal-target attribute (most flexible)
+		var dataModalTriggers = document.querySelectorAll('[data-modal-target]');
+		dataModalTriggers.forEach(function(trigger) {
+			var modalId = trigger.getAttribute('data-modal-target');
+			if (modalId) {
+				trigger.addEventListener('click', function(e) {
+					handleModalClick(e, modalId);
+				});
+			}
+		});
+		
+		// Handle elements with class 'open-demo-modal' (backward compatibility)
+		var demoModalTriggers = document.querySelectorAll('.open-demo-modal');
+		if (demoModalTriggers.length > 0 && document.getElementById('staticBackdrop')) {
+			demoModalTriggers.forEach(function(trigger) {
+				// Skip if already has data-modal-target
+				if (!trigger.hasAttribute('data-modal-target')) {
+					trigger.addEventListener('click', function(e) {
+						handleModalClick(e, 'staticBackdrop');
+					});
 				}
 			});
-		});
+		}
+		
+		// Handle elements with class 'open-contact-modal'
+		var contactModalTriggers = document.querySelectorAll('.open-contact-modal');
+		if (contactModalTriggers.length > 0 && document.getElementById('contactBackdrop')) {
+			contactModalTriggers.forEach(function(trigger) {
+				// Skip if already has data-modal-target
+				if (!trigger.hasAttribute('data-modal-target')) {
+					trigger.addEventListener('click', function(e) {
+						handleModalClick(e, 'contactBackdrop');
+					});
+				}
+			});
+		}
 	});
 })();
 </script>

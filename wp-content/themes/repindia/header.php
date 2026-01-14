@@ -65,8 +65,7 @@ global $repindia_option;
                                         <?php
                                         if (isset($repindia_option['hamburger_demo_btn']) && $repindia_option['hamburger_demo_btn'] == 1) { ?>
                                             <div class="expert_btn">
-                                                <a href="<?php echo esc_attr($repindia_option['hamburger_btn_url']); ?>"
-                                                    class="theme-btn-white border-btn-grey"><?php echo esc_html__('Talk to our expert', 'repindia'); ?></a>
+                                                <a href="<?php echo esc_attr($repindia_option['hamburger_btn_url']); ?>" class="theme-btn-white border-btn-grey" data-modal-target="contactBackdrop" ><?php echo esc_html__('Talk to our expert', 'repindia'); ?></a>
                                             </div>
                                             <?php
                                         }
