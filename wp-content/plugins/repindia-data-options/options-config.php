@@ -427,6 +427,12 @@
 									'subtitle' => __('Enable / Disable Social Media at Footer', 'repindia'),
 									'default'  => true,
 							    ),
+								array(
+									'id'       => 'demo_popup_form',
+									'type'     => 'text',
+									'title'    => esc_attr__('Demo Popup Form Shortcode', 'repindia'),
+									'default'  => '',
+								),
 								
 					)
 			) 
