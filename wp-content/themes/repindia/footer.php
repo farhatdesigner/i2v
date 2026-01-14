@@ -303,72 +303,147 @@ global $repindia_option;
 
 
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-	aria-labelledby="staticBackdropLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered 	modal-demo-form">
-		<div class="modal-content">
-			<div class="modal-body">
-				<div class="modal-header">
-					<h5 class="modal-title" id="staticBackdropLabel">Request a demo</h5>
-					<span class="btn-closecustom" data-bs-dismiss="modal" aria-label="Close">
-						<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#000'>
-							<path
-								d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414' />
-						</svg>
-					</span>
-				</div>
-				<div class="modal-body-content">
-					<h3>Let's help you get started</h3>
-					<p>Connect with an i2V product expert to explore how our solution can fit your specific needs.</p>
-				</div>
-				<?php echo do_shortcode('[contact-form-7 id="6cb5dc6" title="Resource form"]'); ?>
-			</div>
-		</div>
-	</div>
-</div>
-
-<!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-	aria-labelledby="staticBackdropLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered 	modal-demo-form">
-		<div class="modal-content">
-			<div class="modal-body">
-				<div class="modal-header">
-					<h5 class="modal-title" id="staticBackdropLabel">Request a demo</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body-content demo-success-content">
-					<h3 class="size-custom">You're all set!</h3>
-					<p>Thank you for your interest in i2V. Our team has received your request and a product expert will get in touch with you ASAP to discuss your needs.</p>
-					<div class="btn-sec_gap justify-content-center"><a class="theme-btn-white border-btn-grey" href="#">Explore our solutions</a><a class="theme-btn bg-trans border_btnlight" href="#">See customer success stories</a></div>
+<?php
+if (!empty($repindia_option['demo_popup_form'])) 
+{ ?>
+	<div class="formpopup_modal modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered 	modal-demo-form">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="modal-header">
+						<h5 class="modal-title" id="staticBackdropLabel">Request a demo</h5>
+						<span class="btn-closecustom" data-bs-dismiss="modal" aria-label="Close">
+							<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#000'>
+								<path
+									d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414' />
+							</svg>
+						</span>
+					</div>
+					<!-- <div class="modal-body-content">
+						<h3>Let's help you get started</h3>
+						<p>Connect with an i2V product expert to explore how our solution can fit your specific needs.</p>
+					</div> -->
+					<?php echo do_shortcode(wp_kses_post($repindia_option['demo_popup_form'])); ?>
 				</div>
 			</div>
 		</div>
 	</div>
-</div> -->
+<?php } ?>
 
-<!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-	aria-labelledby="staticBackdropLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered 	modal-demo-form">
-		<div class="modal-content">
-			<div class="modal-body">
-				<div class="modal-header">
-					<h5 class="modal-title" id="staticBackdropLabel">Request a demo</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body-content demo-success-content">
-					<h3 class="size-custom">Something went wrong</h3>
-					<p>We couldn’t send your message due to a network issue or an unexpected error. Please check your internet connection and try again.</p>
-					<div class="btn-sec_gap justify-content-center">
-						<a class="theme-btn-white border-btn-grey" href="#">+91 981-005-6691</a>
-						<a class="theme-btn-white border-btn-grey" href="#">i2v@i2vsys.com</a>
-				</div>
+<!-- Contact Modal -->
+<?php
+if (!empty($repindia_option['contact_popup_form'])) 
+{ ?>
+	<div class="formpopup_modal modal fade" id="contactBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="contactBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-demo-form">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="modal-header">
+						<h5 class="modal-title" id="contactBackdropLabel">Talk to our partner team</h5>
+						<span class="btn-closecustom" data-bs-dismiss="modal" aria-label="Close">
+							<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#000'>
+								<path
+									d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414' />
+							</svg>
+						</span>
+					</div>
+					<!-- <div class="modal-body-content">
+						<h3>Get in Touch</h3>
+						<p>We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+					</div> -->
+					<?php echo do_shortcode(wp_kses_post($repindia_option['contact_popup_form'])); ?>
 				</div>
 			</div>
 		</div>
 	</div>
-</div> -->
+<?php } ?>
 
-
+<!-- JavaScript to open modals for CTAs with data-modal-target attribute or class -->
+<script>
+(function() {
+	document.addEventListener('DOMContentLoaded', function() {
+		// Function to open modal by ID
+		function openModal(modalId) {
+			var modal = document.getElementById(modalId);
+			if (!modal) {
+				return false; // Modal doesn't exist
+			}
+			
+			// Check if Bootstrap modal is available
+			if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+				// Bootstrap 5
+				var modalInstance = bootstrap.Modal.getOrCreateInstance(modal);
+				modalInstance.show();
+				return true;
+			} else if (typeof jQuery !== 'undefined' && jQuery.fn.modal) {
+				// Bootstrap 4 (jQuery)
+				jQuery(modal).modal('show');
+				return true;
+			}
+			return false;
+		}
+		
+		// Function to handle click event
+		function handleModalClick(e, modalId) {
+			var trigger = e.currentTarget;
+			
+			// Check if it's a link with external URL
+			if (trigger.tagName === 'A' && trigger.getAttribute('href')) {
+				var href = trigger.getAttribute('href');
+				// If it's an external link (not # or starting with #), don't prevent default
+				if (href !== '#' && !href.startsWith('#')) {
+					return; // Allow normal link behavior
+				}
+			}
+			
+			// Prevent default to avoid navigation
+			e.preventDefault();
+			
+			// Open the modal
+			openModal(modalId);
+		}
+		
+		// Handle elements with data-modal-target attribute (most flexible)
+		var dataModalTriggers = document.querySelectorAll('[data-modal-target]');
+		dataModalTriggers.forEach(function(trigger) {
+			var modalId = trigger.getAttribute('data-modal-target');
+			if (modalId) {
+				trigger.addEventListener('click', function(e) {
+					handleModalClick(e, modalId);
+				});
+			}
+		});
+		
+		// Handle elements with class 'open-demo-modal' (backward compatibility)
+		var demoModalTriggers = document.querySelectorAll('.open-demo-modal');
+		if (demoModalTriggers.length > 0 && document.getElementById('staticBackdrop')) {
+			demoModalTriggers.forEach(function(trigger) {
+				// Skip if already has data-modal-target
+				if (!trigger.hasAttribute('data-modal-target')) {
+					trigger.addEventListener('click', function(e) {
+						handleModalClick(e, 'staticBackdrop');
+					});
+				}
+			});
+		}
+		
+		// Handle elements with class 'open-contact-modal'
+		var contactModalTriggers = document.querySelectorAll('.open-contact-modal');
+		if (contactModalTriggers.length > 0 && document.getElementById('contactBackdrop')) {
+			contactModalTriggers.forEach(function(trigger) {
+				// Skip if already has data-modal-target
+				if (!trigger.hasAttribute('data-modal-target')) {
+					trigger.addEventListener('click', function(e) {
+						handleModalClick(e, 'contactBackdrop');
+					});
+				}
+			});
+		}
+	});
+})();
+</script>
 
 <?php
 wp_footer();
