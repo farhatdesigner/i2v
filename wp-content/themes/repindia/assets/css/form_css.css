@@ -14,13 +14,17 @@ a.explr_btn.xl-btn:hover,a.home_btn.xl-btn:hover,
 .js-dark a.explr_btn.xl-btn:hover,.js-dark a.home_btn.xl-btn:hover{ border-color: #0099ED; }
 .btn-sec_gap.thankyou_btn{ align-items: center; }
 
+.wpcf7-form-control-wrap{ margin-bottom: 16px; }
 .formpopup_modal .modal-demo-form .modal-header{ padding: 15px 15px; }
 .formpopup_modal .modal-demo-form .modal-title { font-size: 18px;font-weight: 600; }
 .formpopup_modal .career-apply-form.styled-career-form { padding: 20px 30px; }
 .formpopup_modal form.wpcf7-form p { margin: 0; }
 .formpopup_modal input.form-control, select.form-control{ max-height: 40px; }
-.formpopup_modal .form-control{ border-radius: 8px;margin-bottom: 12px; }
+.formpopup_modal .form-control{ border-radius: 8px; }
 .formpopup_modal .modal-content{ z-index: 99999;overflow-y: scroll;max-height: 95vh; }
 .formpopup_modal .formnotic { margin: 8px 0px; }
 .formpopup_modal .career-apply-form.styled-career-form.popupform { padding: 20px 30px; }
 textarea.form-control{ max-height: 100px; }
+.wpcf7-not-valid-tip{ font-size: 14px;line-height: normal;margin-top: 3px; }
+.form-control{ margin-bottom: 0px!important; }
+.formpopup_modal .wpcf7-form-control-wrap{ margin-bottom: 12px; }
