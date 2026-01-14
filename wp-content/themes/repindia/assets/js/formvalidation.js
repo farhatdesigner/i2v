@@ -67,7 +67,7 @@
           // Phone validation
           if (fieldName === 'phone' || fieldType === 'tel') {
             var phoneDigits = value.replace(PHONE_REGEX, '');
-            return phoneDigits.length >= 10 && phoneDigits.length <= 12;
+            return phoneDigits.length >= 10 && phoneDigits.length <= 15;
           }
           // Message textarea validation - check minimum length if required
           if (isTextarea && (fieldName === 'message' || fieldName.indexOf('message') !== -1)) {
@@ -104,8 +104,46 @@
           // Check specific custom fields if they exist
           var fieldChecks = [
             { selector: 'input[name="phone"]', validate: function($f) {
-              var val = $f.val().replace(PHONE_REGEX, '');
-              return !val || (val.length >= 10 && val.length <= 12);
+              var $wrap = $f.closest('.wpcf7-form-control-wrap');
+              var isIntlTelInput = $f.closest('.intl-tel-input').length > 0 || 
+                                   $wrap.find('.intl-tel-input').length > 0 ||
+                                   $f.hasClass('intl-tel-input') ||
+                                   typeof window.intlTelInput !== 'undefined';
+              
+              if (isIntlTelInput) {
+                // For intl-tel-input, get national number
+                var iti = $f.data('intlTelInput') || (window.intlTelInputGlobals && window.intlTelInputGlobals.getInstance($f[0]));
+                var phoneNumber = '';
+                
+                if (iti && typeof iti.getNumber === 'function') {
+                  try {
+                    phoneNumber = iti.getNumber(window.intlTelInputUtils.numberFormat.NATIONAL) || '';
+                    phoneNumber = phoneNumber.replace(/[^0-9]/g, '');
+                  } catch(e) {
+                    var fullNumber = $f.val().replace(/[^0-9]/g, '');
+                    // Remove country code if present
+                    if (fullNumber.indexOf('91') === 0 && fullNumber.length > 2) {
+                      phoneNumber = fullNumber.substring(2);
+                    } else {
+                      phoneNumber = fullNumber;
+                    }
+                  }
+                } else {
+                  var fullNumber = $f.val().replace(/[^0-9]/g, '');
+                  // Remove country code if present
+                  if (fullNumber.indexOf('91') === 0 && fullNumber.length > 2) {
+                    phoneNumber = fullNumber.substring(2);
+                  } else {
+                    phoneNumber = fullNumber;
+                  }
+                }
+                
+                return !phoneNumber || (phoneNumber.length >= 10 && phoneNumber.length <= 15);
+              } else {
+                // Standard phone field validation
+                var val = $f.val().replace(PHONE_REGEX, '');
+                return !val || (val.length >= 10 && val.length <= 15);
+              }
             }},
             { selector: 'input[name="fname"], input[name="lname"], input[name="first_name"], input[name="last_name"]', 
               validate: function($f) { return !isFieldRequired($f) || $f.val().trim().length > 0; }},
@@ -202,12 +240,12 @@
             if (isBlur || value.length > 0) {
               $errorEl.text('Mobile number must be at least 10 digits.').show();
             }
-          } else if (value.length > 12) {
+          } else if (value.length > 15) {
             if (!$errorEl.length) {
-              $errorEl = $('<span id="mobile-error" style="color: red; display: block; margin-top: 5px;">Mobile number cannot exceed 12 digits.</span>');
+              $errorEl = $('<span id="mobile-error" style="color: red; display: block; margin-top: 5px;">Mobile number cannot exceed 15 digits.</span>');
               $field.closest('.wpcf7-form-control-wrap').append($errorEl);
             }
-            $errorEl.text('Mobile number cannot exceed 12 digits.').show();
+            $errorEl.text('Mobile number cannot exceed 15 digits.').show();
           } else {
             $errorEl.hide();
           }
@@ -237,7 +275,54 @@
             selector: '.wpcf7 input[name="phone"]',
             sanitize: function(field, event) {
               var $field = $(field);
+              var $wrap = $field.closest('.wpcf7-form-control-wrap');
               
+              // Check if using intl-tel-input plugin
+              var isIntlTelInput = $field.closest('.intl-tel-input').length > 0 || 
+                                   $wrap.find('.intl-tel-input').length > 0 ||
+                                   $field.hasClass('intl-tel-input') ||
+                                   typeof window.intlTelInput !== 'undefined';
+              
+              // If using intl-tel-input, work with the plugin instead of against it
+              if (isIntlTelInput) {
+                // Get the intl-tel-input instance
+                var iti = $field.data('intlTelInput') || window.intlTelInputGlobals?.getInstance($field[0]);
+                
+                if (event && (event.type === 'input' || event.type === 'blur' || event.type === 'paste')) {
+                  setTimeout(function() {
+                    var phoneNumber = '';
+                    
+                    // Try to get the national number (without country code)
+                    if (iti && typeof iti.getNumber === 'function') {
+                      try {
+                        var numberType = iti.getNumberType();
+                        phoneNumber = iti.getNumber(window.intlTelInputUtils.numberFormat.NATIONAL) || '';
+                        // Remove all non-numeric characters for validation
+                        phoneNumber = phoneNumber.replace(/[^0-9]/g, '');
+                      } catch(e) {
+                        // Fallback to field value
+                        phoneNumber = $field.val().replace(/[^0-9]/g, '');
+                      }
+                    } else {
+                      // Fallback: get value and try to extract national number
+                      var fullNumber = $field.val().replace(/[^0-9]/g, '');
+                      // If starts with country code (91 for India), remove it
+                      if (fullNumber.indexOf('91') === 0 && fullNumber.length > 2) {
+                        phoneNumber = fullNumber.substring(2);
+                      } else {
+                        phoneNumber = fullNumber;
+                      }
+                    }
+                    
+                    // Validate national number (10-12 digits)
+                    handlePhoneError($field, $field.closest('.wpcf7'), phoneNumber, event.type === 'blur');
+                    validateAndUpdateSubmit($field.closest('.wpcf7'));
+                  }, 100);
+                }
+                return; // Don't interfere with intl-tel-input's own handling
+              }
+              
+              // Standard phone field (not using intl-tel-input) - apply strict validation
               // Prevent non-numeric keys on keydown
               if (event && event.type === 'keydown') {
                 var key = event.keyCode || event.which;
@@ -257,27 +342,15 @@
                 }
               }
               
-              // For input and paste events, clean the value
+              // For input and paste events, clean the value (only for non-intl-tel-input fields)
               if (event && (event.type === 'input' || event.type === 'paste')) {
                 setTimeout(function() {
                   var currentValue = $field.val();
                   var numericOnly = currentValue.replace(/[^0-9]/g, '');
                   
-                  // Remove +91 or 91 if it appears at the start (likely auto-added)
-                  if (numericOnly.indexOf('91') === 0 && numericOnly.length > 2) {
-                    // Check if this was just added (compare with previous value stored in data)
-                    var prevValue = $field.data('prev-phone-value') || '';
-                    var prevNumeric = prevValue.replace(/[^0-9]/g, '');
-                    
-                    // If previous didn't start with 91 and now it does, it was likely auto-added
-                    if (prevNumeric.indexOf('91') !== 0 && numericOnly.length === prevNumeric.length + 2) {
-                      numericOnly = numericOnly.substring(2);
-                    }
-                  }
-                  
                   // Limit to 12 digits max
-                  if (numericOnly.length > 12) {
-                    numericOnly = numericOnly.substring(0, 12);
+                  if (numericOnly.length > 15) {
+                    numericOnly = numericOnly.substring(0, 15);
                   }
                   
                   // Update field with clean value
@@ -328,27 +401,53 @@
           });
         });
         
-        // Special handler for phone field to prevent +91 auto-addition on focus
+        // Special handler for phone field - only for non-intl-tel-input fields
         $doc.off('focus', '.wpcf7 input[name="phone"]');
         $doc.on('focus', '.wpcf7 input[name="phone"]', function() {
           var $field = $(this);
-          // Store initial value to detect auto-additions
-          var initialValue = this.value.replace(/[^0-9]/g, '');
-          $field.data('prev-phone-value', initialValue);
+          var $wrap = $field.closest('.wpcf7-form-control-wrap');
           
-          // Remove +91 if present at start
-          if (initialValue.indexOf('91') === 0 && initialValue.length > 2) {
-            var cleanedValue = initialValue.substring(2);
-            $field.val(cleanedValue);
-            $field.data('prev-phone-value', cleanedValue);
-            validateAndUpdateSubmit($field.closest('.wpcf7'));
+          // Check if using intl-tel-input plugin
+          var isIntlTelInput = $field.closest('.intl-tel-input').length > 0 || 
+                               $wrap.find('.intl-tel-input').length > 0 ||
+                               $field.hasClass('intl-tel-input') ||
+                               typeof window.intlTelInput !== 'undefined';
+          
+          // Only apply our logic if NOT using intl-tel-input
+          if (!isIntlTelInput) {
+            // Store initial value
+            var initialValue = this.value.replace(/[^0-9]/g, '');
+            $field.data('prev-phone-value', initialValue);
+            
+            // Limit to 12 digits if exceeds
+            if (initialValue.length > 15) {
+              var cleanedValue = initialValue.substring(0, 15);
+              $field.val(cleanedValue);
+              $field.data('prev-phone-value', cleanedValue);
+              validateAndUpdateSubmit($field.closest('.wpcf7'));
+            }
           }
         });
         
         // Generic validation triggers for all fields including textarea
         $doc.off('input blur change', '.wpcf7 input, .wpcf7 select, .wpcf7 textarea');
         $doc.on('input blur change', '.wpcf7 input, .wpcf7 select, .wpcf7 textarea', function() {
-          if (this.type !== 'submit' && this.type !== 'hidden' && this.name !== 'phone') {
+          if (this.type !== 'submit' && this.type !== 'hidden') {
+            // For phone fields using intl-tel-input, validate but don't modify
+            if (this.name === 'phone') {
+              var $field = $(this);
+              var $wrap = $field.closest('.wpcf7-form-control-wrap');
+              var isIntlTelInput = $field.closest('.intl-tel-input').length > 0 || 
+                                   $wrap.find('.intl-tel-input').length > 0 ||
+                                   $field.hasClass('intl-tel-input') ||
+                                   typeof window.intlTelInput !== 'undefined';
+              
+              if (isIntlTelInput) {
+                // Just validate, don't modify the field
+                validateAndUpdateSubmit($field.closest('.wpcf7'));
+                return;
+              }
+            }
             validateAndUpdateSubmit($(this).closest('.wpcf7'));
           }
         });
@@ -375,19 +474,27 @@
           var hasFields = $form.find('input, select, textarea').not('input[type="submit"], input[type="hidden"]').length > 0;
           toggleSubmitButton($form, hasFields ? checkFormValidation($form) : true);
           
-          // Initialize phone fields - remove any existing +91
+          // Initialize phone fields - only for non-intl-tel-input fields
           $form.find('input[name="phone"]').each(function() {
             var $phoneField = $(this);
-            var cleanValue = this.value.replace(/[^0-9]/g, '');
-            // Remove +91 if present at start
-            if (cleanValue.indexOf('91') === 0 && cleanValue.length > 2) {
-              cleanValue = cleanValue.substring(2);
-              $phoneField.val(cleanValue);
-            } else if (cleanValue.length > 12) {
-              cleanValue = cleanValue.substring(0, 12);
-              $phoneField.val(cleanValue);
+            var $wrap = $phoneField.closest('.wpcf7-form-control-wrap');
+            
+            // Check if using intl-tel-input plugin
+            var isIntlTelInput = $phoneField.closest('.intl-tel-input').length > 0 || 
+                                 $wrap.find('.intl-tel-input').length > 0 ||
+                                 $phoneField.hasClass('intl-tel-input') ||
+                                 typeof window.intlTelInput !== 'undefined';
+            
+            // Only apply our logic if NOT using intl-tel-input
+            if (!isIntlTelInput) {
+              var cleanValue = this.value.replace(/[^0-9]/g, '');
+              // Limit to 12 digits if exceeds
+              if (cleanValue.length > 15) {
+                cleanValue = cleanValue.substring(0, 15);
+                $phoneField.val(cleanValue);
+              }
+              $phoneField.data('prev-phone-value', cleanValue);
             }
-            $phoneField.data('prev-phone-value', cleanValue);
           });
         });
         setupEventHandlers();
