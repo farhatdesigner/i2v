@@ -463,8 +463,8 @@ header li.burger-icon .icon-sun,
   background-color: #464a4f !important;
 }
 
-.js-dark .sec-tab-item, .sec-tab-item:hover {
-  background: #0d1117;
+.js-dark .sec-tab-item:hover {
+  background: #0d1117 !important;
   border: 1px solid rgba(193, 196, 198, 0.2);
 }
 .js-dark .sec-tab-item.active {
@@ -708,3 +708,7 @@ header li.burger-icon .icon-sun,
     border: 1px solid #C1C4C61A;
     background: #262A30;
 }
+
+
+
+

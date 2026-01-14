@@ -2102,12 +2102,13 @@ label.form-label.required_note-demo {
 .grid-listing {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
   gap: 40px;
   margin-bottom: 80px;
 }
 
 .grid-listing li {
-  width: calc(33.33% - 40px);
+  width: calc(33.33% - 20px);
   border-radius: 12px;
 }
 
@@ -2373,7 +2374,7 @@ label.form-label.required_note-demo {
 }
 
 .card-image {
-  padding: 4px 4px 0 4px;
+  padding: 4px 4px 4px 4px;
 }
 
 .enterprisebanner li.elementor-icon-list-item {
@@ -3247,6 +3248,9 @@ span.star {
 .btn-large {
   font-size: 18px;
 }
+.card-image > img {
+  border-radius: 12px !important;
+}
 @media (min-width: 768px) {
   .footer-accordion-icon {
     display: none;
@@ -3348,7 +3352,7 @@ span.star {
 
   .cards-listing-section .grid-listing li:nth-child(4),
   .cards-listing-section .grid-listing li:nth-child(5) {
-    width: calc(50% - 40px);
+    width:calc(50% - 13px);
   }
 
   .cards-listing-section .grid-listing li:nth-child(4) img,
@@ -3369,7 +3373,7 @@ span.star {
   }
 
   .chosse_circle
-    .elementor-view-default:nth-child(1)
+    .elementor-view-default:nth-child(1)  
     .elementor-icon-box-wrapper::before,
   .chosse_circle
     .elementor-view-default:nth-child(3)
@@ -3883,6 +3887,19 @@ span.star {
   .tabsWrapper:before {
     display: none;
   }
+
+  .js-dark .filter-menu .tabsautoscroll {
+    background: #262a30;
+    border: 1px solid rgba(193, 196, 198, 0.1);
+  }
+  .js-dark .filter-menu .tabsautoscroll li {
+    border-bottom: 1px solid rgba(193, 196, 198, 0.1);
+  }
+  .js-dark .select-brand {
+    border: 1px solid rgba(193, 196, 198, 0.1);
+    background: #262a30;
+  }
+
 }
 
 @media screen and (max-width: 768px) {
@@ -4284,7 +4301,7 @@ span.star {
     overflow-y: auto;
   }
 
-  .elementor-7 .elementor-element.elementor-element-2b65960 .cmarq-item img, .elementor-7 .elementor-element.elementor-element-b806bba .cmarq-item img, .elementor-1242 .elementor-element.elementor-element-d52caa7 .cmarq-item .cmarq-content * {
+ .cmarq-item img,  .cmarq-item img, .cmarq-item .cmarq-content * {
     width: 108px !important;
   }
   .full_mobile .grey-btn,
