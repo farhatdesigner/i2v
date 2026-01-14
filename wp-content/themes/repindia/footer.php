@@ -336,6 +336,51 @@ if (!empty($repindia_option['demo_popup_form']))
 
 
 
+<!-- JavaScript to open demo modal for CTAs with class 'open-demo-modal' -->
+<script>
+(function() {
+	document.addEventListener('DOMContentLoaded', function() {
+		// Get all elements with the class 'open-demo-modal'
+		var demoModalTriggers = document.querySelectorAll('.open-demo-modal');
+		
+		// Check if modal exists
+		var demoModal = document.getElementById('staticBackdrop');
+		if (!demoModal) {
+			return; // Modal doesn't exist, exit
+		}
+		
+		// Add click event listener to each trigger
+		demoModalTriggers.forEach(function(trigger) {
+			trigger.addEventListener('click', function(e) {
+				// Prevent default link behavior if it's a link
+				if (trigger.tagName === 'A' && trigger.getAttribute('href') && trigger.getAttribute('href') !== '#') {
+					// Only prevent if href is not just '#'
+					var href = trigger.getAttribute('href');
+					if (href !== '#' && !href.startsWith('#')) {
+						// If it's an external link, don't prevent default
+						return;
+					}
+				}
+				
+				// Prevent default to avoid navigation
+				e.preventDefault();
+				
+				// Check if Bootstrap modal is available
+				if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+					// Create or get Bootstrap modal instance
+					var modalInstance = bootstrap.Modal.getOrCreateInstance(demoModal);
+					// Show the modal
+					modalInstance.show();
+				} else if (typeof jQuery !== 'undefined' && jQuery.fn.modal) {
+					// Fallback for jQuery Bootstrap (Bootstrap 4)
+					jQuery(demoModal).modal('show');
+				}
+			});
+		});
+	});
+})();
+</script>
+
 <?php
 wp_footer();
 ?>
