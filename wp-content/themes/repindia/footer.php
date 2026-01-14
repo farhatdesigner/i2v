@@ -306,7 +306,7 @@ global $repindia_option;
 <?php
 if (!empty($repindia_option['demo_popup_form'])) 
 { ?>
-	<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+	<div class="formpopup_modal modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
 		aria-labelledby="staticBackdropLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered 	modal-demo-form">
 			<div class="modal-content">
@@ -320,10 +320,10 @@ if (!empty($repindia_option['demo_popup_form']))
 							</svg>
 						</span>
 					</div>
-					<div class="modal-body-content">
+					<!-- <div class="modal-body-content">
 						<h3>Let's help you get started</h3>
 						<p>Connect with an i2V product expert to explore how our solution can fit your specific needs.</p>
-					</div>
+					</div> -->
 					<?php echo do_shortcode(wp_kses_post($repindia_option['demo_popup_form'])); ?>
 				</div>
 			</div>
@@ -335,13 +335,13 @@ if (!empty($repindia_option['demo_popup_form']))
 <?php
 if (!empty($repindia_option['contact_popup_form'])) 
 { ?>
-	<div class="modal fade" id="contactBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+	<div class="formpopup_modal modal fade" id="contactBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
 		aria-labelledby="contactBackdropLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-demo-form">
 			<div class="modal-content">
 				<div class="modal-body">
 					<div class="modal-header">
-						<h5 class="modal-title" id="contactBackdropLabel">Contact Us</h5>
+						<h5 class="modal-title" id="contactBackdropLabel">Talk to our partner team</h5>
 						<span class="btn-closecustom" data-bs-dismiss="modal" aria-label="Close">
 							<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#000'>
 								<path
@@ -349,10 +349,10 @@ if (!empty($repindia_option['contact_popup_form']))
 							</svg>
 						</span>
 					</div>
-					<div class="modal-body-content">
+					<!-- <div class="modal-body-content">
 						<h3>Get in Touch</h3>
 						<p>We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
-					</div>
+					</div> -->
 					<?php echo do_shortcode(wp_kses_post($repindia_option['contact_popup_form'])); ?>
 				</div>
 			</div>
