@@ -1766,7 +1766,7 @@ label.form-label.required_note-demo {
   border-radius: 12px 0 0 12px;
 }
 
-.content-inner-icons li:nth-last-child(2) {
+.content-inner-icons li:last-child {
   border-radius: 0 12px 12px 0;
 }
 
@@ -4331,6 +4331,10 @@ span.star {
   width: auto;
   text-align: center;
   margin: 0 auto;
+}
+
+.group_tooltip {
+  white-space: normal;
 }
 
 }
