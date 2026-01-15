@@ -243,7 +243,7 @@ header li {
 
 header li.burger-icon,
 header .cross_icon {
-  border: 1px solid rgba(193, 196, 198, 0.2);
+  border: 1px solid  #E5E9EC;
   border-radius: 100%;
   box-sizing: border-box;
   width: 42px;
@@ -255,8 +255,7 @@ header li.burger-icon:hover,
 header .cross_icon:hover {
   border: 1px solid #4a5673;
 }
-header .toggle-menu-container.open-menu li.burger-icon,
-header .toggle-menu-container.open-menu .cross_icon {
+header .toggle-menu-container.open-menu li.burger-icon{
   border: 1px solid #384157;
 }
 
@@ -269,6 +268,13 @@ header .cross_icon svg {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.js-dark header li.burger-icon, .js-dark header .cross_icon {
+  border: 1px solid #5F6267;
+}
+.js-dark header li.burger-icon:hover, .js-dark header .cross_icon:hover {
+  border: 1px solid #ffffff80;
 }
 
 nav {
@@ -675,10 +681,10 @@ h2 {
   line-height: 12px;
   font-size: 14px;
   color: #262a30;
-  background: #fff;
+  background: #262A30 !important;
   transition: all 0.2s ease;
   border-radius: 50%;
-  opacity: 0.3;
+  opacity: 1;
   margin: 0 !important;
   /* Ensure all bullets maintain consistent vertical alignment */
   display: inline-flex;
@@ -686,12 +692,16 @@ h2 {
   justify-content: center;
   vertical-align: middle;
 }
+js-dark .hero-slider .swiper-pagination-bullet {
+ background: #262A30 !important;
+ opacity: 1 !important;
+}
 
 .hero-slider .swiper-pagination-bullet-active {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: transparent;
+  background: transparent !important;
   opacity: 1;
   position: relative;
   display: flex;
@@ -2895,6 +2905,7 @@ svg[class^="connection-line-"] {
   width: 331px;
   overflow: visible;
   left: 0 !important;
+  fill: transparent !important;
 }
 
 svg.connection-line-1 {
@@ -3899,6 +3910,10 @@ span.star {
     border: 1px solid rgba(193, 196, 198, 0.1);
     background: #262a30;
   }
+  
+.absolute_slider.e-flex.e-con.e-child {
+  left: 0;
+}
 
 }
 
@@ -3988,7 +4003,7 @@ span.star {
   }
 
   .theme-btn.xl-btn {
-    padding: 8px 8px !important;
+    padding: 10px 10px !important;
     font-size: 13px !important;
   }
 
@@ -4333,10 +4348,6 @@ span.star {
   margin: 0 auto;
 }
 
-.group_tooltip {
-  white-space: normal;
-}
-
 }
 
 @media (max-width: 380px) {
@@ -4350,7 +4361,7 @@ span.star {
 
   .theme-btn.xl-btn {
     padding: 8px 9px !important;
-    font-size: 13px !important;
+    font-size: 14px !important;
   }
 
   .text-container {

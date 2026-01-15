@@ -17,9 +17,7 @@ ul#footermenu {
   margin-bottom: 16px;
   font-weight: 400;
 }
-.js-dark .content-inner-icons li:last-child {
-  border-radius: 12px !important;
-}
+
 #tab_table .e-n-tabs-heading {
   margin-left: 203px;
 }
@@ -169,6 +167,17 @@ header li.burger-icon .icon-sun,
   background: #464a4f;
   border-color: rgba(193, 196, 198, 0.2);
 }
+.js-dark .border-btn-line {
+  background: #464a4f;
+  border-color: rgba(193, 196, 198, 0.2);
+}
+.js-dark .trusted_cards .swiper-slide {
+  background: #262a30 !important;
+}
+.js-dark .border-btn-line:hover {
+  background: #464a4f;
+  border-color: rgba(193, 196, 198, 0.2);
+}
 .js-dark a.theme-btn-white.border-btn-grey.color-btn-grey {
   color: #d7dbe4;
 }
@@ -183,6 +192,9 @@ header li.burger-icon .icon-sun,
   color: #d7dbe4;
   border: 1px solid rgba(193, 196, 198, 0.1);
   background: #262a30;
+}
+.js-dark .transport_box .choose_i2v {
+  background: #262a30 !important;
 }
 .js-dark .ctw-icon svg path {
   fill: #d7dbe4;
@@ -348,7 +360,7 @@ header li.burger-icon .icon-sun,
   color: #d7dbe4 !important;
 }
 .js-dark span.swiper-pagination-bullet {
-  background-color:rgb(255 255 255 / 10%) !important;
+  background-color:#262A30 !important;
   opacity: 1;
 }
 .js-dark span.swiper-pagination-bullet.swiper-pagination-bullet-active {
@@ -481,17 +493,24 @@ header li.burger-icon .icon-sun,
   background-color: rgba(255, 255, 255, 0.1) !important;
   border: 1px solid var(--Golbal-others-border, rgba(193, 196, 198, 0.1)) !important;
 }
+.js-dark  .faq_bg .e-n-accordion-item-title[aria-expanded="true"] {
+  border-radius: 8px 8px 0px 0px;
+  border-bottom: 0 !important;
+}
 
-.js-dark .faq_bg .faq-answer {
-  border-left: 1px solid var(--Golbal-others-border-3, rgba(193, 196, 198, 0.1)) !important;
-  border-right: 1px solid
-    var(--Golbal-others-border-3, rgba(193, 196, 198, 0.1)) !important;
+.js-dark .elementor-element.faq_bg .faq-answer.e-flex {
+  border-color: #000 !important;
+  border-color: rgba(193, 196, 198, 0.1) !important;
 }
 .js-dark .faq_bg .faq-answer:before {
   background: #262a30 !important;
 }
 .js-dark .faq_bg .faq-answer p {
   color: #aeb6c9 !important;
+}
+.js-dark .faq_bg .faq-answer:before {
+  background: #262a30 !important;
+  border: none;
 }
 .js-dark .absolute_slider.e-flex.e-con.e-child,
 .js-dark .deployed_slider,
@@ -711,7 +730,8 @@ header li.burger-icon .icon-sun,
     border: 1px solid #C1C4C61A;
     background: #262A30;
 }
-
-
-
+.js-dark .explore_dark{border-bottom: 1px solid rgba(193, 196, 198, 0.1) !important;}
+.js-dark .absolute_slider:before {
+  background: #464a4f !important;
+}
 

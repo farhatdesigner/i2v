@@ -35,9 +35,14 @@ global $repindia_option;
                         <div class="toggle-menu-container">
                             <div class="inside-menu-container-inner">
                                 <div class="cross_icon">
-                                    <a href="javascript:void(0)"><img class=""
-                                            src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/x.svg"
-                                            alt="X Menu"></a>
+                                    <a href="javascript:void(0)">
+                                        <img class="icon-moon"
+                                            src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/closemenu-light.svg"
+                                            alt="X Menu">
+                                        <img class="icon-sun"
+                                            src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/icons/darkclose-menu.svg"
+                                            alt="X Menu">
+                                    </a>
                                 </div>
                                 <?php
                                 if (has_nav_menu('header-toggle-menu')) {
@@ -65,7 +70,9 @@ global $repindia_option;
                                         <?php
                                         if (isset($repindia_option['hamburger_demo_btn']) && $repindia_option['hamburger_demo_btn'] == 1) { ?>
                                             <div class="expert_btn">
-                                                <a href="<?php echo esc_attr($repindia_option['hamburger_btn_url']); ?>" class="theme-btn-white border-btn-grey" data-modal-target="contactBackdrop" ><?php echo esc_html__('Talk to our expert', 'repindia'); ?></a>
+                                                <a href="<?php echo esc_attr($repindia_option['hamburger_btn_url']); ?>"
+                                                    class="theme-btn-white border-btn-grey"
+                                                    data-modal-target="contactBackdrop"><?php echo esc_html__('Talk to our expert', 'repindia'); ?></a>
                                             </div>
                                             <?php
                                         }
@@ -239,7 +246,9 @@ global $repindia_option;
                             <?php
                             if (isset($repindia_option['header_demo_btn']) && $repindia_option['header_demo_btn'] == 1) { ?>
                                 <li>
-                                    <a class="theme-btn " href="<?php echo esc_attr($repindia_option['demo_btn_url']); ?>" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><?php echo esc_html__('Request a demo', 'repindia'); ?></a>
+                                    <a class="theme-btn " href="<?php echo esc_attr($repindia_option['demo_btn_url']); ?>"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#staticBackdrop"><?php echo esc_html__('Request a demo', 'repindia'); ?></a>
                                 </li>
                                 <?php
                             } ?>
@@ -300,7 +309,7 @@ global $repindia_option;
                                                 fill="#D7DBE4" />
                                         </svg>
 
-                                        
+
 
                                         <svg class="icon-moon" width="22" height="22" viewBox="0 0 22 22" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -393,7 +402,7 @@ global $repindia_option;
                                     </a>
                                     <?php
                                 } ?>
-                                
+
                                 <?php
                                 if (has_nav_menu('search-menu')) {
                                     wp_nav_menu(

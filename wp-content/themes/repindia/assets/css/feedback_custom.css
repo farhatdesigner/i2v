@@ -967,8 +967,8 @@ div.pin-spacer > .hz-slider-section {
   margin: 0 !important;
 }
 
-.e-n-accordion-item-title[aria-expanded="true"] {
-  /* border-radius: 12px 12px 0 0 !important; */
+ .faq_bg .e-n-accordion-item-title[aria-expanded="true"] {
+  border-radius: 8px 8px 0px 0px;
 }
 
 .absolute_slider.e-flex.e-con.e-child {
