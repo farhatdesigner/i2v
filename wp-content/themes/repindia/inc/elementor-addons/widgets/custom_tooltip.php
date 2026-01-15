@@ -912,6 +912,11 @@ class Custom_Tooltip extends Widget_Base
     .ctw-tooltip-inner{ text-align: left; }
     .ctw-tooltip-inner p{ font-size: 14px;font-weight: 400;line-height: 20px; }
     button.ctw-learn-more-btn{ box-shadow: none!important;border: none;border-bottom: 1px solid rgba(255, 255, 255, 0.20); }
+    .ctw-title .ctw-text p{ font-size: 14px;font-weight: 400;line-height: 26px;color: #5C5C5C; }
+    .para_tooltip .ctw-title .ctw-text p{ font-size: 16px; }
+    .ctw-has-learn-more .ctw-title:hover .border-b{ border-bottom: 2px solid #9ea1a8!important; }
+    .js-dark .ctw-has-learn-more .ctw-title:hover .border-b { border-bottom: 2px solid #7d8895 !important; }
+    
     @media(max-width: 768px){
         .elementor-element.tooltip_container {
             position: relative;

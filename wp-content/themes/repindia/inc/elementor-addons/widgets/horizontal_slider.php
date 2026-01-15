@@ -216,7 +216,7 @@ class Horizontal_Slider extends Widget_Base
                         });
                     }
                 });
-            })(jQuery);
+            });
         </script>
 
         <?php

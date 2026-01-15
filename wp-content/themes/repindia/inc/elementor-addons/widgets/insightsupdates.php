@@ -216,8 +216,7 @@ class Insightsupdates extends Widget_Base
             'post_status' => 'publish',
             'posts_per_page' => $posts_per_page,
             'paged' => 1,
-            'orderby' => 'date',
-            'order' => 'DESC',
+            'order' => 'ASC',
             'ignore_sticky_posts' => true,
         ];
         

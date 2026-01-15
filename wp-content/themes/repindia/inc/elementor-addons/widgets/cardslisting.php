@@ -70,9 +70,9 @@ class Cardslisting extends Widget_Base
             'post_type' => 'products',
             'post_status' => 'publish',
             'posts_per_page' => $posts_per_page,
-            'orderby' => 'date',
-            'order' => 'DESC',
+            'order' => 'ASC',
             'ignore_sticky_posts' => true,
+            'post_parent' => 0, // Exclude child products, only show parent products
         ];
         
         $query = new \WP_Query($args);

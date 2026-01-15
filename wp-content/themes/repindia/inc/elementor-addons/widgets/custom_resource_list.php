@@ -144,7 +144,6 @@ class Custom_Resource_List extends Widget_Base {
             'post_type' => 'resources',
             'post_status' => 'publish',
             'posts_per_page' => $posts_to_show,
-            'orderby' => 'date',
             'order' => ($url_sort === 'oldest') ? 'ASC' : 'DESC',
         ];
         
