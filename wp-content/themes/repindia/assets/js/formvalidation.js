@@ -26,9 +26,41 @@
       
       // Helper: Check if field is required
       function isFieldRequired($field) {
-        return $field.hasClass('wpcf7-validates-as-required') || 
-               $field.closest('.wpcf7-form-control-wrap').find('span.wpcf7-validates-as-required').length > 0 ||
-               !$field.closest('.wpcf7-form-control-wrap').hasClass('optional');
+        // Check multiple ways Contact Form 7 marks required fields
+        // 1. Direct class on field
+        if ($field.hasClass('wpcf7-validates-as-required')) return true;
+        
+        // 2. HTML5 required attribute
+        if ($field.attr('aria-required') === 'true') return true;
+        if ($field.attr('required') === 'required' || $field.prop('required')) return true;
+        
+        // 3. Required indicator in parent wrap
+        var $wrap = $field.closest('.wpcf7-form-control-wrap');
+        if ($wrap.find('span.wpcf7-validates-as-required').length > 0) return true;
+        if ($wrap.find('.wpcf7-validates-as-required').length > 0) return true;
+        
+        // 4. Check if wrap has 'optional' class - if it does, field is NOT required
+        if ($wrap.hasClass('optional')) return false;
+        
+        // 5. Check for required indicators in label (asterisk, required class)
+        var $label = $wrap.find('label');
+        if ($label.length) {
+          var labelText = $label.text();
+          var labelHtml = $label.html() || '';
+          // Check for asterisk or required class in label
+          if (labelText.indexOf('*') !== -1 || $label.find('.required, .wpcf7-validates-as-required').length > 0) {
+            return true;
+          }
+          // Check if label contains required indicator
+          if (labelHtml.indexOf('wpcf7-validates-as-required') !== -1) {
+            return true;
+          }
+        }
+        
+        // 6. For Contact Form 7, fields without 'optional' class on wrap are typically required
+        // But only if there's no explicit optional indicator
+        // This is a fallback - be conservative
+        return false;
       }
       
       // Helper: Get field value based on type
@@ -85,23 +117,39 @@
       function checkFormValidation($form) {
         try {
           // Early return if form has no fields
-          var $allFields = $form.find('input, select, textarea').not('input[type="submit"], input[type="hidden"]');
+          var $allFields = $form.find('input, select, textarea').not('input[type="submit"], input[type="hidden"], input[type="button"]');
           if ($allFields.length === 0) return true;
           
-          // Check all required fields (covers most cases)
-          var $requiredFields = $form.find('.wpcf7-validates-as-required');
-          if ($requiredFields.length > 0) {
-            var allRequiredValid = true;
-            $requiredFields.each(function() {
-              if (!validateField($(this), $form)) {
-                allRequiredValid = false;
+          // Check all fields - find required fields using isFieldRequired helper
+          var allFieldsValid = true;
+          $allFields.each(function() {
+            var $field = $(this);
+            
+            // Skip if field is not visible
+            if (!$field.is(':visible')) return true;
+            
+            // Check if field is required
+            if (isFieldRequired($field)) {
+              // Validate required field
+              if (!validateField($field, $form)) {
+                allFieldsValid = false;
                 return false; // break
               }
-            });
-            if (!allRequiredValid) return false;
-          }
+            } else {
+              // For optional fields, still validate format if they have a value
+              var value = getFieldValue($field, $form);
+              if (value && value !== '') {
+                if (!validateField($field, $form)) {
+                  allFieldsValid = false;
+                  return false; // break
+                }
+              }
+            }
+          });
           
-          // Check specific custom fields if they exist
+          if (!allFieldsValid) return false;
+          
+          // Additional validation for specific field types with custom logic
           var fieldChecks = [
             { selector: 'input[name="phone"]', validate: function($f) {
               var $wrap = $f.closest('.wpcf7-form-control-wrap');
@@ -138,22 +186,31 @@
                   }
                 }
                 
-                return !phoneNumber || (phoneNumber.length >= 10 && phoneNumber.length <= 15);
+                // If required, must be valid; if optional and has value, must be valid
+                if (isFieldRequired($f)) {
+                  return phoneNumber.length >= 10 && phoneNumber.length <= 15;
+                } else {
+                  return !phoneNumber || (phoneNumber.length >= 10 && phoneNumber.length <= 15);
+                }
               } else {
                 // Standard phone field validation
                 var val = $f.val().replace(PHONE_REGEX, '');
-                return !val || (val.length >= 10 && val.length <= 15);
+                if (isFieldRequired($f)) {
+                  return val.length >= 10 && val.length <= 15;
+                } else {
+                  return !val || (val.length >= 10 && val.length <= 15);
+                }
               }
             }},
-            { selector: 'input[name="fname"], input[name="lname"], input[name="first_name"], input[name="last_name"]', 
-              validate: function($f) { return !isFieldRequired($f) || $f.val().trim().length > 0; }},
             { selector: 'input[type="email"], input[name="email"], input[name="your-email"]',
               validate: function($f) {
                 var val = $f.val().trim();
-                return !val || EMAIL_REGEX.test(val);
+                if (isFieldRequired($f)) {
+                  return val.length > 0 && EMAIL_REGEX.test(val);
+                } else {
+                  return !val || EMAIL_REGEX.test(val);
+                }
               }},
-            { selector: 'input[name="company"], input[name="job"]',
-              validate: function($f) { return !isFieldRequired($f) || $f.val().trim().length > 0; }},
             { selector: 'textarea[name="message"]',
               validate: function($f) {
                 var val = $f.val().trim();
@@ -170,7 +227,9 @@
             if ($fields.length > 0) {
               var valid = true;
               $fields.each(function() {
-                if (!fieldChecks[i].validate($(this))) {
+                var $f = $(this);
+                if (!$f.is(':visible')) return true;
+                if (!fieldChecks[i].validate($f)) {
                   valid = false;
                   return false; // break
                 }
@@ -471,7 +530,7 @@
       function initFormValidation() {
         $('.wpcf7').each(function() {
           var $form = $(this);
-          var hasFields = $form.find('input, select, textarea').not('input[type="submit"], input[type="hidden"]').length > 0;
+          var hasFields = $form.find('input, select, textarea').not('input[type="submit"], input[type="hidden"], input[type="button"]').length > 0;
           toggleSubmitButton($form, hasFields ? checkFormValidation($form) : true);
           
           // Initialize phone fields - only for non-intl-tel-input fields
@@ -496,8 +555,20 @@
               $phoneField.data('prev-phone-value', cleanValue);
             }
           });
+          
+          // Re-validate after a short delay to catch autofilled fields or pre-filled values
+          setTimeout(function() {
+            validateAndUpdateSubmit($form);
+          }, 500);
         });
         setupEventHandlers();
+        
+        // Additional delayed validation for autofill scenarios
+        setTimeout(function() {
+          $('.wpcf7').each(function() {
+            validateAndUpdateSubmit($(this));
+          });
+        }, 1000);
       }
 
       // Initialize
