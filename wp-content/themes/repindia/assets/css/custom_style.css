@@ -2102,8 +2102,8 @@ label.form-label.required_note-demo {
 .grid-listing {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 40px;
+  /* justify-content: space-between; */
+  gap: 20px;
   margin-bottom: 80px;
 }
 
@@ -4325,6 +4325,12 @@ span.star {
 .works-box span.elementor-icon-box-title span {
   min-height: 80px;
   display: block;
+}
+
+.bolt img {
+  width: auto;
+  text-align: center;
+  margin: 0 auto;
 }
 
 }

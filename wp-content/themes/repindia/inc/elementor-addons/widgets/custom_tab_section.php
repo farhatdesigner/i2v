@@ -157,7 +157,7 @@ class Custom_Tab_Section extends Widget_Base
     {
         $settings = $this->get_settings_for_display();
         $tab_items = !empty($settings['tab_items']) ? $settings['tab_items'] : [];
-        
+
         // Get first tab name for dropdown label
         $first_tab_name = !empty($tab_items[0]['tab_name']) ? $tab_items[0]['tab_name'] : 'Security Features'; ?>
         <style>
@@ -334,12 +334,14 @@ class Custom_Tab_Section extends Widget_Base
                 .sec-select-brand {
                     display: inline-block;
                     color: #06283d;
-                    width: auto;
                     font-size: 18px;
-                    text-decoration: underline;
-                    font-family: Geometria-Medium, sans-serif;
                     cursor: pointer;
                     position: relative;
+                    border: 1px solid #e5e9ec;
+                    padding: 8px 12px;
+                    width: 100%;
+                    border-radius: 8px;
+                    background: #ffffff;
                 }
 
                 .sec-select-brand:after {
@@ -391,6 +393,7 @@ class Custom_Tab_Section extends Widget_Base
 
                 .sec-tabs-list.show-dropdown {
                     display: flex;
+                    border: rgba(193, 196, 198, 0.1) !important;
                 }
 
                 .sec-tab-item {
@@ -426,6 +429,17 @@ class Custom_Tab_Section extends Widget_Base
                     flex: 0 0 100%;
                     max-width: 100%;
                 }
+
+                .js-dark .sec-select-brand {
+                    border: 1px solid rgba(193, 196, 198, 0.1);
+                    background: #262a30;
+                }
+
+                .js-dark .sec-tabs-list {
+                    background: #262a30;
+                    border: 1px solid rgba(193, 196, 198, 0.1);
+                }
+
             }
 
             /* Desktop styles - show tabs, hide dropdown */
@@ -445,14 +459,17 @@ class Custom_Tab_Section extends Widget_Base
             .sec-tabs-wrapper .white-theme-img {
                 display: block;
             }
+
             .sec-tabs-wrapper .black_theme_img,
             .sec-tabs-wrapper .black-theme-img {
                 display: none;
             }
+
             .js-dark .sec-tabs-wrapper .white_theme_img,
             .js-dark .sec-tabs-wrapper .white-theme-img {
                 display: none;
             }
+
             .js-dark .sec-tabs-wrapper .black_theme_img,
             .js-dark .sec-tabs-wrapper .black-theme-img {
                 display: block;
@@ -472,13 +489,13 @@ class Custom_Tab_Section extends Widget_Base
                 <label class="sec-dropdown-label">Security Features</label>
                 <span class="sec-select-brand"><?php echo esc_html($first_tab_name); ?></span>
                 <ul class="sec-tabs-list">
-                    <?php if (!empty($tab_items)) : ?>
-                        <?php foreach ($tab_items as $index => $item) : ?>
+                    <?php if (!empty($tab_items)): ?>
+                        <?php foreach ($tab_items as $index => $item): ?>
                             <?php
                             $panel_id = 'secPanel' . $index;
                             $is_first = $index === 0;
                             $tab_class = $is_first ? 'sec-tab-item active' : 'sec-tab-item';
-                            
+
                             $tab_icon_default = !empty($item['tab_icon_default']['url']) ? $item['tab_icon_default']['url'] : '';
                             $tab_icon_dark = !empty($item['tab_icon_dark']['url']) ? $item['tab_icon_dark']['url'] : $tab_icon_default;
                             $tab_icon_alt = !empty($item['tab_icon_default']['alt']) ? $item['tab_icon_default']['alt'] : '';
@@ -486,9 +503,11 @@ class Custom_Tab_Section extends Widget_Base
                             ?>
                             <li class="<?php echo esc_attr($tab_class); ?>" data-target="<?php echo esc_attr($panel_id); ?>">
                                 <span class="sec-tab-icon">
-                                    <?php if (!empty($tab_icon_default)) : ?>
-                                        <img class="white_theme_img" src="<?php echo esc_url($tab_icon_default); ?>" alt="<?php echo esc_attr($tab_icon_alt); ?>">
-                                        <img class="black_theme_img" src="<?php echo esc_url($tab_icon_dark); ?>" alt="<?php echo esc_attr($tab_icon_alt); ?>">
+                                    <?php if (!empty($tab_icon_default)): ?>
+                                        <img class="white_theme_img" src="<?php echo esc_url($tab_icon_default); ?>"
+                                            alt="<?php echo esc_attr($tab_icon_alt); ?>">
+                                        <img class="black_theme_img" src="<?php echo esc_url($tab_icon_dark); ?>"
+                                            alt="<?php echo esc_attr($tab_icon_alt); ?>">
                                     <?php endif; ?>
                                 </span>
                                 <span class="sec-tab-text"><?php echo esc_html($tab_name); ?></span>
@@ -500,20 +519,20 @@ class Custom_Tab_Section extends Widget_Base
 
             <!-- Tab Content Panels -->
             <div class="sec-tabs-content">
-                <?php if (!empty($tab_items)) : ?>
-                    <?php foreach ($tab_items as $index => $item) : ?>
+                <?php if (!empty($tab_items)): ?>
+                    <?php foreach ($tab_items as $index => $item): ?>
                         <?php
                         $panel_id = 'secPanel' . $index;
                         $is_first = $index === 0;
                         $panel_class = $is_first ? 'sec-tab-panel active' : 'sec-tab-panel';
-                        
+
                         $content_image_default = !empty($item['content_image_default']['url']) ? $item['content_image_default']['url'] : '';
                         $content_image_dark = !empty($item['content_image_dark']['url']) ? $item['content_image_dark']['url'] : $content_image_default;
                         $content_image_alt = !empty($item['content_image_default']['alt']) ? $item['content_image_default']['alt'] : '';
-                        
+
                         $content_title = !empty($item['content_title']) ? $item['content_title'] : '';
                         $content_description = !empty($item['content_description']) ? $item['content_description'] : '';
-                        
+
                         $content_cta_text = !empty($item['content_cta_text']) ? $item['content_cta_text'] : '';
                         $content_cta_url = !empty($item['content_cta_url']['url']) ? $item['content_cta_url']['url'] : '#';
                         $content_cta_target = !empty($item['content_cta_url']['is_external']) ? 'target="_blank"' : '';
@@ -521,22 +540,25 @@ class Custom_Tab_Section extends Widget_Base
                         ?>
                         <div class="<?php echo esc_attr($panel_class); ?>" id="<?php echo esc_attr($panel_id); ?>">
                             <div class="sec-panel-inner">
-                                <?php if (!empty($content_image_default)) : ?>
+                                <?php if (!empty($content_image_default)): ?>
                                     <div class="sec-panel-image">
-                                        <img class="white_theme_img" src="<?php echo esc_url($content_image_default); ?>" alt="<?php echo esc_attr($content_image_alt); ?>">
-                                        <img class="black_theme_img" src="<?php echo esc_url($content_image_dark); ?>" alt="<?php echo esc_attr($content_image_alt); ?>">
+                                        <img class="white_theme_img" src="<?php echo esc_url($content_image_default); ?>"
+                                            alt="<?php echo esc_attr($content_image_alt); ?>">
+                                        <img class="black_theme_img" src="<?php echo esc_url($content_image_dark); ?>"
+                                            alt="<?php echo esc_attr($content_image_alt); ?>">
                                     </div>
                                 <?php endif; ?>
                                 <div class="sec-panel-text">
-                                    <?php if (!empty($content_title)) : ?>
+                                    <?php if (!empty($content_title)): ?>
                                         <h4><?php echo wp_kses_post($content_title); ?></h4>
                                     <?php endif; ?>
-                                    <?php if (!empty($content_description)) : ?>
-                                       <p> <?php echo wp_kses_post($content_description); ?></p>
+                                    <?php if (!empty($content_description)): ?>
+                                        <p> <?php echo wp_kses_post($content_description); ?></p>
                                     <?php endif; ?>
-                                    <?php if (!empty($content_cta_text)) : ?>
+                                    <?php if (!empty($content_cta_text)): ?>
                                         <div class="text-left">
-                                            <a href="<?php echo esc_url($content_cta_url); ?>" class="theme-btn bg-trans border_btnlight" <?php echo esc_attr($content_cta_target); ?> <?php echo esc_attr($content_cta_nofollow); ?>><?php echo esc_html($content_cta_text); ?></a>
+                                            <a href="<?php echo esc_url($content_cta_url); ?>" class="theme-btn bg-trans border_btnlight"
+                                                <?php echo esc_attr($content_cta_target); ?>                     <?php echo esc_attr($content_cta_nofollow); ?>><?php echo esc_html($content_cta_text); ?></a>
                                         </div>
                                     <?php endif; ?>
                                 </div>
