@@ -60,8 +60,7 @@ class Industry_List extends Widget_Base
             'post_type' => 'industries',
             'post_status' => 'publish',
             'posts_per_page' => $posts_per_page,
-            'orderby' => 'date',
-            'order' => 'DESC',
+            'order' => 'ASC',
             'ignore_sticky_posts' => true,
         ];
         

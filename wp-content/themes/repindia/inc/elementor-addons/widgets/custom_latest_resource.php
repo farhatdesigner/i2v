@@ -231,8 +231,7 @@ class Custom_Latest_Resource extends Widget_Base
             'post_status' => 'publish',
             'posts_per_page' => $posts_per_page,
             'paged' => $paged,
-            'orderby' => 'date',
-            'order' => 'DESC',
+            'order' => 'ASC',
             'ignore_sticky_posts' => true,
         ];
         
