@@ -99,6 +99,17 @@ class Video_accordion extends Widget_Base
             ]
         );
 
+        $this->add_control(
+            'section_bottom_cta_classes',
+            [
+                'label' => esc_html__('Section Bottom CTA Classes', 'repindia'),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'default' => '',
+                'description' => esc_html__('Add custom CSS classes for the Section Bottom CTA link (separate multiple classes with spaces)', 'repindia'),
+                'label_block' => true,
+            ]
+        );
+
         $repeater = new \Elementor\Repeater();
 
         $repeater->add_control(
@@ -141,6 +152,17 @@ class Video_accordion extends Widget_Base
                     'is_external' => false,
                     'nofollow' => false,
                 ],
+            ]
+        );
+
+        $repeater->add_control(
+            'item_cta_classes',
+            [
+                'label' => esc_html__('Item CTA Classes', 'repindia'),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'default' => '',
+                'description' => esc_html__('Add custom CSS classes for the Item CTA link (separate multiple classes with spaces)', 'repindia'),
+                'label_block' => true,
             ]
         );
 
@@ -292,6 +314,7 @@ class Video_accordion extends Widget_Base
         $section_bottom_cta_url = !empty($settings['section_bottom_cta_url']['url']) ? $settings['section_bottom_cta_url']['url'] : '';
         $section_bottom_cta_target = !empty($settings['section_bottom_cta_url']['is_external']) ? 'target="_blank"' : '';
         $section_bottom_cta_nofollow = !empty($settings['section_bottom_cta_url']['nofollow']) ? 'rel="nofollow"' : '';
+        $section_bottom_cta_classes = !empty($settings['section_bottom_cta_classes']) ? ' ' . esc_attr($settings['section_bottom_cta_classes']) : '';
         $this->add_inline_editing_attributes('custom_class', 'basic'); ?>
 
 
@@ -327,6 +350,7 @@ class Video_accordion extends Widget_Base
                                     $item_cta_url = !empty($item['item_cta_url']['url']) ? $item['item_cta_url']['url'] : '';
                                     $item_cta_target = !empty($item['item_cta_url']['is_external']) ? 'target="_blank"' : '';
                                     $item_cta_nofollow = !empty($item['item_cta_url']['nofollow']) ? 'rel="nofollow"' : '';
+                                    $item_cta_classes = !empty($item['item_cta_classes']) ? ' ' . esc_attr($item['item_cta_classes']) : '';
                                     $item_video_thumbnail = !empty($item['item_video_thumbnail']['url']) ? $item['item_video_thumbnail']['url'] : '';
                                     $item_video_thumbnail_alt = !empty($item['item_video_thumbnail']['alt']) ? $item['item_video_thumbnail']['alt'] : $item_title;
                                     $item_youtube_video_id = !empty($item['item_youtube_video_id']) ? $item['item_youtube_video_id'] : '';
@@ -361,7 +385,7 @@ class Video_accordion extends Widget_Base
                                             <?php endif; ?>
                                             <?php if (!empty($item_cta_text) && !empty($item_cta_url)) : ?>
                                                 <div class="btn-sec_gap">
-                                                    <a class="theme-btn bg-tran_lightcolor" href="<?php echo esc_url($item_cta_url); ?>" <?php echo $item_cta_target; ?> <?php echo $item_cta_nofollow; ?>><?php echo esc_html($item_cta_text); ?></a>
+                                                    <a class="theme-btn bg-tran_lightcolor<?php echo $item_cta_classes; ?>" href="<?php echo esc_url($item_cta_url); ?>" <?php echo $item_cta_target; ?> <?php echo $item_cta_nofollow; ?>><?php echo esc_html($item_cta_text); ?></a>
                                                 </div>
                                             <?php endif; ?>
                                         </div>
@@ -377,7 +401,7 @@ class Video_accordion extends Widget_Base
                                 <?php endif; ?>
                                 <?php if (!empty($section_bottom_cta_text) && !empty($section_bottom_cta_url)) : ?>
                                     <div class="btn_demo mt-2">
-                                        <a class="theme-btn bg-tran_lightcolor" href="<?php echo esc_url($section_bottom_cta_url); ?>" <?php echo $section_bottom_cta_target; ?> <?php echo $section_bottom_cta_nofollow; ?>><?php echo esc_html($section_bottom_cta_text); ?></a>
+                                        <a class="theme-btn bg-tran_lightcolor<?php echo $section_bottom_cta_classes; ?>" href="<?php echo esc_url($section_bottom_cta_url); ?>" <?php echo $section_bottom_cta_target; ?> <?php echo $section_bottom_cta_nofollow; ?>><?php echo esc_html($section_bottom_cta_text); ?></a>
                                     </div>
                                 <?php endif; ?>
                             </div>
