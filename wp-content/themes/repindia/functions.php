@@ -112,6 +112,7 @@ if (! function_exists('repindia_load_theme_scripts_and_styles')) {
 			wp_enqueue_style('custom-style', get_template_directory_uri() . '/assets/css/custom_style.css', null, REPINDIA_THEME_VERSION, 'all');
 			wp_enqueue_style('feedback-custom', get_template_directory_uri() . '/assets/css/feedback_custom.css', null, REPINDIA_THEME_VERSION, 'all');
 			wp_enqueue_style('repindia-style', get_stylesheet_uri(), null, REPINDIA_THEME_VERSION, 'all');
+			wp_enqueue_style('form-css', get_template_directory_uri() . '/assets/css/form_css.css', null, REPINDIA_THEME_VERSION, 'all');
 			wp_enqueue_style('dark-theme', get_template_directory_uri() . '/assets/css/dark_theme.css', null, REPINDIA_THEME_VERSION, 'all');
 			wp_enqueue_style('repindia-responsive', get_template_directory_uri() . '/assets/css/responsive.css', null, REPINDIA_THEME_VERSION, 'all');
 			wp_enqueue_style('repindia-search', get_template_directory_uri() . '/assets/css/search.css', null, REPINDIA_THEME_VERSION, 'all');
@@ -131,6 +132,9 @@ if (! function_exists('repindia_load_theme_scripts_and_styles')) {
 		wp_enqueue_script('lenis-min', get_template_directory_uri() . '/assets/js/lenis.min.js', array(), REPINDIA_THEME_VERSION, true);
 		wp_enqueue_script('repindia-global', get_template_directory_uri() . '/assets/js/global.js', array('jquery', 'swiper-min', 'gsap-min', 'scrolltrigger-min', 'lenis-min'), REPINDIA_THEME_VERSION, true);
 		wp_enqueue_script('repindia-custom', get_template_directory_uri() . '/assets/js/custom.js', array('jquery', 'swiper-min', 'gsap-min', 'scrolltrigger-min', 'lenis-min'), REPINDIA_THEME_VERSION, true);
+		
+		// Enqueue form validation script
+		wp_enqueue_script('repindia-form-validation', get_template_directory_uri() . '/assets/js/formvalidation.js', array('jquery'), REPINDIA_THEME_VERSION, true);
 		
 		// Enqueue search script
 		wp_enqueue_script('repindia-search', get_template_directory_uri() . '/assets/js/search.js', array(), REPINDIA_THEME_VERSION, true);

@@ -39,12 +39,83 @@ class Singlescrollcards extends Widget_Base
             ]
         );
 
-        $this->add_control(
-            'content',
+        // Main repeater for slider items
+        $repeater = new \Elementor\Repeater();
+
+        // Title
+        $repeater->add_control(
+            'slider_title',
             [
-                'label' => 'Content',
+                'label' => esc_html__('Title', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'label_block' => true,
+            ]
+        );
+
+        // Default Theme Image
+        $repeater->add_control(
+            'slider_image_default',
+            [
+                'label' => esc_html__('Default Theme Image', 'repindia'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [],
+            ]
+        );
+
+        // Dark Theme Image
+        $repeater->add_control(
+            'slider_image_dark',
+            [
+                'label' => esc_html__('Dark Theme Image', 'repindia'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [],
+                'description' => esc_html__('Leave empty to use default image for dark theme', 'repindia'),
+            ]
+        );
+
+        // Description
+        $repeater->add_control(
+            'slider_description',
+            [
+                'label' => esc_html__('Description', 'repindia'),
                 'type' => Controls_Manager::WYSIWYG,
                 'default' => '',
+                'label_block' => true,
+            ]
+        );
+
+        // Nested Repeater for List Items
+        $list_repeater = new \Elementor\Repeater();
+        $list_repeater->add_control(
+            'list_item_text',
+            [
+                'label' => esc_html__('List Item Text', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'label_block' => true,
+            ]
+        );
+
+        $repeater->add_control(
+            'list_items',
+            [
+                'label' => esc_html__('List Items', 'repindia'),
+                'type' => Controls_Manager::REPEATER,
+                'fields' => $list_repeater->get_controls(),
+                'default' => [],
+                'title_field' => '{{{ list_item_text }}}',
+            ]
+        );
+
+        $this->add_control(
+            'slider_items',
+            [
+                'label' => esc_html__('Slider Items', 'repindia'),
+                'type' => Controls_Manager::REPEATER,
+                'fields' => $repeater->get_controls(),
+                'default' => [],
+                'title_field' => '{{{ slider_title }}}',
             ]
         );
 
@@ -54,428 +125,70 @@ class Singlescrollcards extends Widget_Base
     protected function render()
     {
         $settings = $this->get_settings_for_display();
-?>
+        $slider_items = !empty($settings['slider_items']) ? $settings['slider_items'] : [];
+        // Static SVG checkmark icon for list items
+        $checkmark_svg_default = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" /></svg>';
+        
+        ?>
 
 
         <div class="custom-container_small">
-            <!-- <div class="sectionsscroll">
-                <div class="sections_cards_relative system_setup">
-                    <div class="panels flex-center flex-cards">
-
-                        <section class="panel">
-                            <div class="card-wrapper_single">
-                                <div class="row">
-                                    <div class="col-lg-6 col-12">
-                                        <div class="card-contents">
-                                            <h3>Configuration client</h3>
-                                            <p>i2V Configuration Client offers a unified interface to manage devices, servers, storage, and alerts—both locally and remotely. It supports real-time testing, system health checks, structured device grouping, and reporting—making setup, maintenance, and troubleshooting efficient and user-friendly.</p>
-                                            <ul class="p-0 m-0">
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Centralized configuration
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Remote & local setup
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Device management
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Search & documentation
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>System health monitoring
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Live testing & diagnostics and more
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-12">
-                                        <div class="card-img_single">
-                                            <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/camera-management.webp">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-
-                        <section class="panel animate-right">
-                            <div class="card-wrapper_single">
-                                <div class="row">
-                                    <div class="col-lg-6 col-12">
-                                        <div class="card-contents">
-                                            <h3>User management</h3>
-                                            <p>i2V’s User Management provides secure, role-based access control with support for camera assignments, dual authentication, bulk permissions, and user activity tracking. With both web and desktop access, managing users is streamlined, scalable, and secure for any deployment size.</p>
-                                            <ul class="p-0 m-0">
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Web & desktop access
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Role-based permissions
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Camera-level control
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Advanced authentication
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Simplified management
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Bulk actions & reporting
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-12">
-                                        <div class="card-img_single">
-                                            <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/camera-management.webp">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                        <section class="panel animate-right">
-                            <div class="card-wrapper_single">
-                                <div class="row">
-                                    <div class="col-lg-6 col-12">
-                                        <div class="card-contents">
-                                            <h3>Camera management</h3>
-                                            <p>i2V’s Camera Management streamlines device setup with auto-discovery, protocol support, bulk editing, and import tools. Whether you're managing 10 or 10,000 cameras, it ensures quick configuration, role-based control, and scalable operation with minimal effort</p>
-                                            <ul class="p-0 m-0">
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Auto & manual device discovery
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Wide protocol support
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Bulk camera management
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>One-click settings sync
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Camera grouping & roles
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Easy import & sequencing
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-12">
-                                        <div class="card-img_single">
-                                            <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/camera-management.webp">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                        <section class="panel animate-right">
-                            <div class="card-wrapper_single">
-                                <div class="row">
-                                    <div class="col-lg-6 col-12">
-                                        <div class="card-contents">
-                                            <h3>Failover/Redundancy</h3>
-                                            <p>i2V’s Fail-over Server minimizes system downtime by automatically taking over failed recording servers within seconds. With health checks, instant notifications, live sync, and support for multiple failover setups, it ensures high availability and uninterrupted surveillance operations.</p>
-                                            <ul class="p-0 m-0">
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Uninterrupted video access
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Fast failure detection
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Scalable failover support
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Automated switch & sync
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Health checks & alerts
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Manual takeover option
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-12">
-                                        <div class="card-img_single">
-                                            <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/camera-management.webp">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-
-                    </div>
-
-                </div>
-            </div> -->
-
-
+          
             <div class="wrapper">
                 <div class="cards-custom-body">
-                    <div class="card-wrapper">
-                        <div class="card_display red">
-                            <div class="card-wrapper_single">
-                                <div class="row">
-                                    <div class="col-lg-6 col-12">
-                                        <div class="card-contents">
-                                            <h3>Configuration client</h3>
-                                            <p>i2V Configuration Client offers a unified interface to manage devices, servers, storage, and alerts—both locally and remotely. It supports real-time testing, system health checks, structured device grouping, and reporting—making setup, maintenance, and troubleshooting efficient and user-friendly.</p>
-                                            <ul class="p-0 m-0">
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Centralized configuration
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Remote & local setup
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Device management
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Search & documentation
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>System health monitoring
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Live testing & diagnostics and more
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-12">
-                                        <div class="card-img_single">
-                                            <img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/camera-management.webp">
-                                            <img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/camera-management.webp">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-wrapper">
-                        <div class="card_display blue">
-                            <div class="card-wrapper_single">
-                                <div class="row">
-                                    <div class="col-lg-6 col-12">
-                                        <div class="card-contents">
-                                            <h3>User management</h3>
-                                            <p>i2V’s User Management provides secure, role-based access control with support for camera assignments, dual authentication, bulk permissions, and user activity tracking. With both web and desktop access, managing users is streamlined, scalable, and secure for any deployment size.</p>
-                                            <ul class="p-0 m-0">
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Web & desktop access
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Role-based permissions
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Camera-level control
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Advanced authentication
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Simplified management
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Bulk actions & reporting
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-12">
-                                        <div class="card-img_single">
-                                            <img  class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/camera-management.webp">
-                                            <img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/camera-management.webp">
+                    <?php if (!empty($slider_items)) : ?>
+                        <?php foreach ($slider_items as $item) : ?>
+                            <?php
+                            $title = !empty($item['slider_title']) ? $item['slider_title'] : '';
+                            $image_default = !empty($item['slider_image_default']['url']) ? $item['slider_image_default']['url'] : '';
+                            $image_default_alt = !empty($item['slider_image_default']['alt']) ? $item['slider_image_default']['alt'] : $title;
+                            $image_dark = !empty($item['slider_image_dark']['url']) ? $item['slider_image_dark']['url'] : $image_default;
+                            $image_dark_alt = !empty($item['slider_image_dark']['alt']) ? $item['slider_image_dark']['alt'] : $image_default_alt;
+                            $description = !empty($item['slider_description']) ? $item['slider_description'] : '';
+                            $list_items = !empty($item['list_items']) ? $item['list_items'] : [];
+                            ?>
+                            <div class="card-wrapper">
+                                <div class="card_display red">
+                                    <div class="card-wrapper_single">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-12">
+                                                <div class="card-contents">
+                                                    <?php if (!empty($title)) : ?>
+                                                        <h3><?php echo esc_html($title); ?></h3>
+                                                    <?php endif; ?>
+                                                    <?php if (!empty($description)) : ?>
+                                                        <p><?php echo wp_kses_post($description); ?></p>
+                                                    <?php endif; ?>
+                                                    <?php if (!empty($list_items)) : ?>
+                                                        <ul class="p-0 m-0">
+                                                            <?php foreach ($list_items as $list_item) : ?>
+                                                                <?php $list_text = !empty($list_item['list_item_text']) ? $list_item['list_item_text'] : ''; ?>
+                                                                <?php if (!empty($list_text)) : ?>
+                                                                    <li>
+                                                                        <span><?php echo $checkmark_svg_default; ?></span>
+                                                                        <?php echo esc_html($list_text); ?>
+                                                                    </li>
+                                                                <?php endif; ?>
+                                                            <?php endforeach; ?>
+                                                        </ul>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-12">
+                                                <?php if (!empty($image_default)) : ?>
+                                                    <div class="card-img_single">
+                                                        <img class="white_theme_img" src="<?php echo esc_url($image_default); ?>" alt="<?php echo esc_attr($image_default_alt); ?>">
+                                                        <img class="black_theme_img" src="<?php echo esc_url($image_dark); ?>" alt="<?php echo esc_attr($image_dark_alt); ?>">
+                                                    </div>
+                                                <?php endif; ?>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="card-wrapper">
-                        <div class="card_display orange">
-                            <div class="card-wrapper_single">
-                                <div class="row">
-                                    <div class="col-lg-6 col-12">
-                                        <div class="card-contents">
-                                            <h3>Camera management</h3>
-                                            <p>i2V’s Camera Management streamlines device setup with auto-discovery, protocol support, bulk editing, and import tools. Whether you're managing 10 or 10,000 cameras, it ensures quick configuration, role-based control, and scalable operation with minimal effort</p>
-                                            <ul class="p-0 m-0">
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Auto & manual device discovery
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Wide protocol support
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Bulk camera management
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>One-click settings sync
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Camera grouping & roles
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Easy import & sequencing
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-12">
-                                        <div class="card-img_single">
-                                            <img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/camera-management.webp">
-                                            <img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/camera-management.webp">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-wrapper">
-                        <div class="card_display purple">
-                            <div class="card-wrapper_single">
-                                <div class="row">
-                                    <div class="col-lg-6 col-12">
-                                        <div class="card-contents">
-                                            <h3>Failover/Redundancy</h3>
-                                            <p>i2V’s Fail-over Server minimizes system downtime by automatically taking over failed recording servers within seconds. With health checks, instant notifications, live sync, and support for multiple failover setups, it ensures high availability and uninterrupted surveillance operations.</p>
-                                            <ul class="p-0 m-0">
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Uninterrupted video access
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Fast failure detection
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Scalable failover support
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Automated switch & sync
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Health checks & alerts
-                                                </li>
-                                                <li> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
-                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" />
-                                                        </svg></span>
-                                                    <p>Manual takeover option
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-12">
-                                        <div class="card-img_single">
-                                            <img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/camera-management.webp">
-                                            <img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/camera-management.webp">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                    
                 </div>
             </div>
             <div class="distancer500"></div>
@@ -483,8 +196,8 @@ class Singlescrollcards extends Widget_Base
 
 
         </div>
-
-
 <?php
     }
+    
 }
+?>

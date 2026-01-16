@@ -1,0 +1,40 @@
+a.explr_btn.xl-btn { border: 1px solid #E5E9EC;border-radius: 8px;background: #fff;color: #0099ED;font-size: 16px;font-style: normal;font-weight: 600;line-height: 24px;padding: 8px 16px !important; }
+a.home_btn.xl-btn {
+  color: #0099ED;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+  padding: 0 0 2px 0 !important;
+  border-bottom: 1px solid #E6EBF2;
+}
+.js-dark a.explr_btn.xl-btn{ border-color: rgba(193, 196, 198, 0.20);background: #464A4F;color: #74C2ED; }
+.js-dark a.home_btn.xl-btn{ border-color: rgba(255, 255, 255, 0.20);color: #74C2ED; }
+a.explr_btn.xl-btn:hover,a.home_btn.xl-btn:hover,
+.js-dark a.explr_btn.xl-btn:hover,.js-dark a.home_btn.xl-btn:hover{ border-color: #0099ED; }
+.btn-sec_gap.thankyou_btn{ align-items: center; }
+
+.wpcf7-form-control-wrap{ margin-bottom: 16px; }
+.formpopup_modal .modal-demo-form .modal-header{ padding: 15px 15px; }
+.formpopup_modal .modal-demo-form .modal-title { font-size: 18px;font-weight: 600; }
+.formpopup_modal .career-apply-form.styled-career-form { padding: 20px 30px; }
+.formpopup_modal form.wpcf7-form p { margin: 0; }
+.formpopup_modal input.form-control, select.form-control{ max-height: 40px; }
+.formpopup_modal .form-control{ border-radius: 8px; }
+.formpopup_modal .modal-content{ z-index: 99999;overflow-y: scroll;max-height: 95vh; }
+.formpopup_modal .formnotic { margin: 8px 0px; }
+.formpopup_modal .career-apply-form.styled-career-form.popupform { padding: 20px 30px; }
+textarea.form-control{ max-height: 100px; }
+.wpcf7-not-valid-tip{ font-size: 14px;line-height: normal;margin-top: 3px; }
+.form-control{ margin-bottom: 0px!important; }
+.formpopup_modal .wpcf7-form-control-wrap{ margin-bottom: 12px; }
+
+/* Disabled submit button styles */
+.wpcf7 input[type="submit"]:disabled,
+.wpcf7 button[type="submit"]:disabled,
+.wpcf7 .wpcf7-submit:disabled,
+.wpcf7 .wpcf7-disabled {
+  opacity: 0.6;
+  cursor: not-allowed !important;
+  pointer-events: none;
+}

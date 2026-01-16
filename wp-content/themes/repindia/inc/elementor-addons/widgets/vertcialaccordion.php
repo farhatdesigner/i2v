@@ -44,9 +44,17 @@ class Vertcialaccordion extends Widget_Base
         $repeater = new \Elementor\Repeater();
 
         $repeater->add_control(
-            'mission_title_img',
+            'mission_title_img_white',
             [
-                'label' => esc_html__('Mission Title Icon Image', 'repindia'),
+                'label' => esc_html__('Icon Image (White)', 'repindia'),
+                'type' => \Elementor\Controls_Manager::MEDIA,
+                'default' => [],
+            ]
+        );
+        $repeater->add_control(
+            'mission_title_img_black',
+            [
+                'label' => esc_html__('Icon Image (Black)', 'repindia'),
                 'type' => \Elementor\Controls_Manager::MEDIA,
                 'default' => [],
             ]
@@ -121,7 +129,8 @@ class Vertcialaccordion extends Widget_Base
                                     <div class="accordion_set">
                                         <div class="ac_icon_wrap lightback">
                                             <div class="ac_icon_border">
-                                                <img class="ac_icon" alt="null" src="https://pivotcreat4stg.wpenginepowered.com/wp-content/uploads/2025/06/accordion_icon_one.webp">
+                                                <img class="ac_icon white-theme-img" alt="null" src="https://pivotcreat4stg.wpenginepowered.com/wp-content/uploads/2025/06/accordion_icon_one.webp">
+                                                <img class="ac_icon black-theme-img" alt="null" src="https://pivotcreat4stg.wpenginepowered.com/wp-content/uploads/2025/06/accordion_icon_one.webp">
                                             </div>
                                         </div>
                                         <button class="select_div" aria-label="expand accordion section for section" aria-expanded="false">
@@ -143,7 +152,8 @@ class Vertcialaccordion extends Widget_Base
                                     <div class="accordion_set">
                                         <div class="ac_icon_wrap lightback">
                                             <div class="ac_icon_border">
-                                                <img class="ac_icon" alt="null" src="https://pivotcreat4stg.wpenginepowered.com/wp-content/uploads/2025/06/accordion_icon_one.webp">
+                                                <img class="ac_icon white-theme-img" alt="null" src="https://pivotcreat4stg.wpenginepowered.com/wp-content/uploads/2025/06/accordion_icon_one.webp">
+                                                <img class="ac_icon black-theme-img" alt="null" src="https://pivotcreat4stg.wpenginepowered.com/wp-content/uploads/2025/06/accordion_icon_one.webp">
                                             </div>
                                         </div>
                                         <button class="select_div" aria-label="expand accordion section for section" aria-expanded="false">
@@ -165,10 +175,11 @@ class Vertcialaccordion extends Widget_Base
                                     <div class="accordion_set">
                                         <div class="ac_icon_wrap lightback">
                                             <div class="ac_icon_border">
-                                                <img class="ac_icon" alt="null" src="https://pivotcreat4stg.wpenginepowered.com/wp-content/uploads/2025/06/accordion_icon_one.webp">
+                                                <img class="ac_icon white-theme-img" alt="null" src="https://pivotcreat4stg.wpenginepowered.com/wp-content/uploads/2025/06/accordion_icon_one.webp">
+                                                <img class="ac_icon black-theme-img" alt="null" src="https://pivotcreat4stg.wpenginepowered.com/wp-content/uploads/2025/06/accordion_icon_one.webp">
                                             </div>
                                         </div>
-                                        <button class="select_div" aria-label="expand accordion section for '<?php echo $label; ?>'" aria-expanded="false">
+                                        <button class="select_div" aria-label="expand accordion section for section" aria-expanded="false">
                                             <h2 class="ac_header">
                                                 Label
                                             </h2>

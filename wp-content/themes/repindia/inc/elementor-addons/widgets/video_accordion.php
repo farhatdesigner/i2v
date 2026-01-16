@@ -51,7 +51,7 @@ class Video_accordion extends Widget_Base
             [
                 'label' => esc_html__('Section Title', 'repindia'),
                 'type' => \Elementor\Controls_Manager::TEXT,
-                'default' => 'Video Accordion',
+                'default' => '',
                 'label_block' => true,
             ]
         );
@@ -61,98 +61,106 @@ class Video_accordion extends Widget_Base
             [
                 'label' => esc_html__('Section Description', 'repindia'),
                 'type' => \Elementor\Controls_Manager::TEXTAREA,
-                'default' => 'Click on each accordion item to view the video content.',
+                'default' => '',
                 'label_block' => true,
+            ]
+        );
+
+        $this->add_control(
+            'section_bottom_description',
+            [
+                'label' => esc_html__('Section Bottom Description', 'repindia'),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'default' => '',
+                'label_block' => true,
+            ]
+        );
+
+        $this->add_control(
+            'section_bottom_cta_text',
+            [
+                'label' => esc_html__('Section Bottom CTA Text', 'repindia'),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'default' => '',
+                'label_block' => true,
+            ]
+        );
+
+        $this->add_control(
+            'section_bottom_cta_url',
+            [
+                'label' => esc_html__('Section Bottom CTA URL', 'repindia'),
+                'type' => \Elementor\Controls_Manager::URL,
+                'default' => [
+                    'url' => '',
+                    'is_external' => false,
+                    'nofollow' => false,
+                ],
             ]
         );
 
         $repeater = new \Elementor\Repeater();
 
         $repeater->add_control(
-            'accordion_title',
+            'item_title',
             [
-                'label' => esc_html__('Accordion Title', 'repindia'),
+                'label' => esc_html__('Item Title', 'repindia'),
                 'type' => \Elementor\Controls_Manager::TEXT,
-                'default' => 'Video Title',
+                'default' => '',
                 'label_block' => true,
             ]
         );
 
         $repeater->add_control(
-            'accordion_description',
+            'item_description',
             [
-                'label' => esc_html__('Accordion Description', 'repindia'),
+                'label' => esc_html__('Item Description', 'repindia'),
                 'type' => \Elementor\Controls_Manager::TEXTAREA,
-                'default' => 'Video description text here.',
+                'default' => '',
                 'label_block' => true,
             ]
         );
 
         $repeater->add_control(
-            'video_type',
+            'item_cta_text',
             [
-                'label' => esc_html__('Video Type', 'repindia'),
-                'type' => \Elementor\Controls_Manager::SELECT,
-                'default' => 'youtube',
-                'options' => [
-                    'youtube' => esc_html__('YouTube', 'repindia'),
-                    'vimeo' => esc_html__('Vimeo', 'repindia'),
-                    'self_hosted' => esc_html__('Self Hosted', 'repindia'),
-                ],
+                'label' => esc_html__('Item CTA Text', 'repindia'),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'default' => '',
+                'label_block' => true,
             ]
         );
 
         $repeater->add_control(
-            'youtube_url',
+            'item_cta_url',
             [
-                'label' => esc_html__('YouTube URL', 'repindia'),
+                'label' => esc_html__('Item CTA URL', 'repindia'),
                 'type' => \Elementor\Controls_Manager::URL,
-                'placeholder' => esc_html__('https://www.youtube.com/watch?v=xxxxx', 'repindia'),
                 'default' => [
                     'url' => '',
-                ],
-                'condition' => [
-                    'video_type' => 'youtube',
-                ],
-            ]
-        );
-
-        $repeater->add_control(
-            'vimeo_url',
-            [
-                'label' => esc_html__('Vimeo URL', 'repindia'),
-                'type' => \Elementor\Controls_Manager::URL,
-                'placeholder' => esc_html__('https://vimeo.com/xxxxx', 'repindia'),
-                'default' => [
-                    'url' => '',
-                ],
-                'condition' => [
-                    'video_type' => 'vimeo',
+                    'is_external' => false,
+                    'nofollow' => false,
                 ],
             ]
         );
 
         $repeater->add_control(
-            'self_hosted_video',
+            'item_video_thumbnail',
             [
-                'label' => esc_html__('Video File', 'repindia'),
-                'type' => \Elementor\Controls_Manager::MEDIA,
-                'media_types' => ['video'],
-                'condition' => [
-                    'video_type' => 'self_hosted',
-                ],
-            ]
-        );
-
-        $repeater->add_control(
-            'video_poster',
-            [
-                'label' => esc_html__('Video Poster Image', 'repindia'),
+                'label' => esc_html__('Video Thumbnail Image', 'repindia'),
                 'type' => \Elementor\Controls_Manager::MEDIA,
                 'default' => [],
-                'condition' => [
-                    'video_type' => 'self_hosted',
-                ],
+            ]
+        );
+
+        $repeater->add_control(
+            'item_youtube_video_id',
+            [
+                'label' => esc_html__('YouTube Video ID', 'repindia'),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'default' => '',
+                'description' => esc_html__('Enter YouTube video ID only (e.g., 9xwazD5SyVg)', 'repindia'),
+                'label_block' => true,
             ]
         );
 
@@ -171,17 +179,8 @@ class Video_accordion extends Widget_Base
                 'label' => esc_html__('Accordion Items', 'repindia'),
                 'type' => \Elementor\Controls_Manager::REPEATER,
                 'fields' => $repeater->get_controls(),
-                'default' => [
-                    [
-                        'accordion_title' => 'Video Item 1',
-                        'accordion_description' => 'Description for video item 1',
-                    ],
-                    [
-                        'accordion_title' => 'Video Item 2',
-                        'accordion_description' => 'Description for video item 2',
-                    ],
-                ],
-                'title_field' => '{{{ accordion_title }}}',
+                'default' => [],
+                'title_field' => '{{{ item_title }}}',
             ]
         );
 
@@ -285,6 +284,14 @@ class Video_accordion extends Widget_Base
     protected function render()
     {
         $settings = $this->get_settings_for_display();
+        $accordion_list = !empty($settings['accordion_list']) ? $settings['accordion_list'] : [];
+        $section_title = !empty($settings['section_title']) ? $settings['section_title'] : '';
+        $section_description = !empty($settings['section_description']) ? $settings['section_description'] : '';
+        $section_bottom_description = !empty($settings['section_bottom_description']) ? $settings['section_bottom_description'] : '';
+        $section_bottom_cta_text = !empty($settings['section_bottom_cta_text']) ? $settings['section_bottom_cta_text'] : '';
+        $section_bottom_cta_url = !empty($settings['section_bottom_cta_url']['url']) ? $settings['section_bottom_cta_url']['url'] : '';
+        $section_bottom_cta_target = !empty($settings['section_bottom_cta_url']['is_external']) ? 'target="_blank"' : '';
+        $section_bottom_cta_nofollow = !empty($settings['section_bottom_cta_url']['nofollow']) ? 'rel="nofollow"' : '';
         $this->add_inline_editing_attributes('custom_class', 'basic'); ?>
 
 
@@ -295,176 +302,167 @@ class Video_accordion extends Widget_Base
                 <div class="row g-0 align-items-center thene-bg vertical_scroller">
                     <div class="col-md-6 col-12 padd-accordion ">
 
-
-                        <div class="main_title_box">
-                            <h3 class="main_title quote text-white">
-                                See how i2V Video Analytics makes surveillance smarter.
-                            </h3>
-                            <div class="text-left">
-                                <p>A quick walkthrough of how our AI-powered system detects threats, triggers alerts, and enhances response — all without cloud dependency.</p>
-                            </div>
-                        </div>
-
-
-                        <div class="accordion_sets">
-                            <div class="accordion_set">
-                                <div class="ac_icon_wrap lightback">
-                                    <div class="ac_icon_border">
-                                        <span><img class="ac_icon" alt="null" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/icon1.svg"></span>
+                        <?php if (!empty($section_title) || !empty($section_description)) : ?>
+                            <div class="main_title_box">
+                                <?php if (!empty($section_title)) : ?>
+                                    <h3 class="main_title quote text-white">
+                                        <?php echo esc_html($section_title); ?>
+                                    </h3>
+                                <?php endif; ?>
+                                <?php if (!empty($section_description)) : ?>
+                                    <div class="text-left">
+                                        <p><?php echo wp_kses_post($section_description); ?></p>
                                     </div>
-                                </div>
-                                <button class="select_div" aria-label="expand accordion section for section" aria-expanded="false">
-                                    <h2 class="ac_header ">
-                                        Configure analytics per camera
-                                    </h2>
-                                </button>
-                                <div class="accontent">
-                                    <p class="">
-                                        Set up detection zones (line, rectangle, polygon), object size filters, direction rules — all through the VMS-integrated interface.</p>
+                                <?php endif; ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if (!empty($accordion_list)) : ?>
+                            <div class="accordion_sets">
+                                <?php foreach ($accordion_list as $index => $item) : ?>
+                                    <?php
+                                    $item_title = !empty($item['item_title']) ? $item['item_title'] : '';
+                                    $item_description = !empty($item['item_description']) ? $item['item_description'] : '';
+                                    $item_cta_text = !empty($item['item_cta_text']) ? $item['item_cta_text'] : '';
+                                    $item_cta_url = !empty($item['item_cta_url']['url']) ? $item['item_cta_url']['url'] : '';
+                                    $item_cta_target = !empty($item['item_cta_url']['is_external']) ? 'target="_blank"' : '';
+                                    $item_cta_nofollow = !empty($item['item_cta_url']['nofollow']) ? 'rel="nofollow"' : '';
+                                    $item_video_thumbnail = !empty($item['item_video_thumbnail']['url']) ? $item['item_video_thumbnail']['url'] : '';
+                                    $item_video_thumbnail_alt = !empty($item['item_video_thumbnail']['alt']) ? $item['item_video_thumbnail']['alt'] : $item_title;
+                                    $item_youtube_video_id = !empty($item['item_youtube_video_id']) ? $item['item_youtube_video_id'] : '';
+                                    $accordion_icon = !empty($item['accordion_icon']['url']) ? $item['accordion_icon']['url'] : '';
+                                    $modal_id = 'staticBackdrop' . ($index + 1);
+                                    ?>
+                                    <div class="accordion_set">
+                                        <?php if (!empty($accordion_icon)) : ?>
+                                            <div class="ac_icon_wrap lightback">
+                                                <div class="ac_icon_border">
+                                                    <span><img class="ac_icon" alt="null" src="<?php echo esc_url($accordion_icon); ?>"></span>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+                                        <button class="select_div" aria-label="expand accordion section for section" aria-expanded="false">
+                                            <?php if (!empty($item_title)) : ?>
+                                                <h2 class="ac_header ">
+                                                    <?php echo esc_html($item_title); ?>
+                                                </h2>
+                                            <?php endif; ?>
+                                        </button>
+                                        <div class="accontent">
+                                            <?php if (!empty($item_description)) : ?>
+                                                <p class="">
+                                                    <?php echo wp_kses_post($item_description); ?>
+                                                </p>
+                                            <?php endif; ?>
+                                            <?php if (!empty($item_video_thumbnail)) : ?>
+                                                <div class="accordion_video">
+                                                    <img data-bs-toggle="modal" data-bs-target="#<?php echo esc_attr($modal_id); ?>" src="<?php echo esc_url($item_video_thumbnail); ?>" alt="<?php echo esc_attr($item_video_thumbnail_alt); ?>" width="100%" height="100%">
+                                                </div>
+                                            <?php endif; ?>
+                                            <?php if (!empty($item_cta_text) && !empty($item_cta_url)) : ?>
+                                                <div class="btn-sec_gap">
+                                                    <a class="theme-btn bg-tran_lightcolor" href="<?php echo esc_url($item_cta_url); ?>" <?php echo $item_cta_target; ?> <?php echo $item_cta_nofollow; ?>><?php echo esc_html($item_cta_text); ?></a>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if (!empty($section_bottom_description) || (!empty($section_bottom_cta_text) && !empty($section_bottom_cta_url))) : ?>
+                            <div class="btn_demo_box">
+                                <?php if (!empty($section_bottom_description)) : ?>
+                                    <h3><?php echo esc_html($section_bottom_description); ?></h3>
+                                <?php endif; ?>
+                                <?php if (!empty($section_bottom_cta_text) && !empty($section_bottom_cta_url)) : ?>
+                                    <div class="btn_demo mt-2">
+                                        <a class="theme-btn bg-tran_lightcolor" href="<?php echo esc_url($section_bottom_cta_url); ?>" <?php echo $section_bottom_cta_target; ?> <?php echo $section_bottom_cta_nofollow; ?>><?php echo esc_html($section_bottom_cta_text); ?></a>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        <?php endif; ?>
+
+                    </div>
+                    <?php if (!empty($accordion_list)) : ?>
+                        <div class="col-md-6 col-12 padd-accordion_video bg-blacktheme">
+                            <?php foreach ($accordion_list as $index => $item) : ?>
+                                <?php
+                                $item_video_thumbnail = !empty($item['item_video_thumbnail']['url']) ? $item['item_video_thumbnail']['url'] : '';
+                                $item_video_thumbnail_alt = !empty($item['item_video_thumbnail']['alt']) ? $item['item_video_thumbnail']['alt'] : (!empty($item['item_title']) ? $item['item_title'] : '');
+                                $modal_id = 'staticBackdrop' . ($index + 1);
+                                ?>
+                                <?php if (!empty($item_video_thumbnail)) : ?>
                                     <div class="accordion_video">
-                                        <img data-bs-toggle="modal" data-bs-target="#staticBackdrop" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/no-helmet-detection.webp" alt="null" width="100%" height="100%">
+                                        <img data-bs-toggle="modal" data-bs-target="#<?php echo esc_attr($modal_id); ?>" src="<?php echo esc_url($item_video_thumbnail); ?>" alt="<?php echo esc_attr($item_video_thumbnail_alt); ?>" width="100%" height="100%">
                                     </div>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
 
-                                    <div class="btn-sec_gap whitebg">
-                                        <a class="theme-btn bg-tran_lightcolor" href="#">Learn more</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion_set">
-                                <div class="ac_icon_wrap lightback">
-                                    <div class="ac_icon_border">
-                                        <span><img class="ac_icon" alt="null" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/icon2.svg"></span>
-                                    </div>
-                                </div>
-                                <button class="select_div" aria-label="expand accordion section for section" aria-expanded="false">
-                                    <h2 class="ac_header ">
-                                        Real-time detection with FAST
-                                    </h2>
-                                </button>
-                                <div class="accontent">
-                                    <p class="">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Et eveniet aliquam, molestias tempora modi recusandae non natus alias minus quibusdam ipsa tenetur vitae nostrum culpa voluptatum at minima. Quae, voluptas.
-                                    </p>
-                                    <div class="accordion_video">
-                                        <img data-bs-toggle="modal" data-bs-target="#staticBackdroptwo" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/video.webp" alt="null" width="100%" height="100%">
-                                    </div>
-                                    <div class="btn-sec_gap whitebg">
-                                        <a class="theme-btn bg-tran_lightcolor" href="#">Learn more</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion_set">
-                                <div class="ac_icon_wrap lightback">
-                                    <div class="ac_icon_border">
-                                        <span><img class="ac_icon" alt="null" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/icon3.svg"></span>
-                                    </div>
-                                </div>
-                                <button class="select_div" aria-label="expand accordion section for' aria-expanded=" false">
-                                    <h2 class="ac_header ">
-                                        Instant alerts & playback
-                                    </h2>
-                                </button>
-                                <div class="accontent">
-                                    <p class="">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Et eveniet aliquam, molestias tempora modi recusandae non natus alias minus quibusdam ipsa tenetur vitae nostrum culpa voluptatum at minima. Quae, volupta.
-                                    </p>
-                                    <div class="accordion_video">
-                                        <img data-bs-toggle="modal" data-bs-target="#staticBackdropthree" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/no-helmet-detection.webp" alt="null" width="100%" height="100%">
-                                    </div>
-                                    <div class="btn-sec_gap whitebg">
-                                        <a class="theme-btn bg-tran_lightcolor" href="#">Learn more</a>
+                    <?php if (!empty($accordion_list)) : ?>
+                        <?php foreach ($accordion_list as $index => $item) : ?>
+                            <?php
+                            $item_title = !empty($item['item_title']) ? $item['item_title'] : '';
+                            $item_youtube_video_id = !empty($item['item_youtube_video_id']) ? $item['item_youtube_video_id'] : '';
+                            $modal_id = 'staticBackdrop' . ($index + 1);
+                            $modal_label_id = 'staticBackdropLabel' . ($index + 1);
+                            ?>
+                            <!-- Vertically centered modal -->
+                            <div class="modal fade" id="<?php echo esc_attr($modal_id); ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="<?php echo esc_attr($modal_label_id); ?>" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <?php if (!empty($item_title)) : ?>
+                                                <h1 class="modal-title fs-5" id="<?php echo esc_attr($modal_label_id); ?>"><?php echo esc_html($item_title); ?></h1>
+                                            <?php endif; ?>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body p-4">
+                                            <?php if (!empty($item_youtube_video_id)) : ?>
+                                                <iframe width="100%" height="450"
+                                                    data-src="https://www.youtube.com/embed/<?php echo esc_attr($item_youtube_video_id); ?>"
+                                                    frameborder="0"
+                                                    allow="autoplay; encrypted-media"
+                                                    allowfullscreen>
+                                                </iframe>
+                                            <?php endif; ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="btn_demo_box">
-                            <h3>Want to see it live?</h3>
-                            <div class="btn_demo mt-2">
-                                <a class="theme-btn bg-tran_lightcolor" href="#">Request a demo</a>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div class="col-md-6 col-12 padd-accordion_video bg-blacktheme">
-                        <div class="accordion_video">
-                            <img data-bs-toggle="modal" data-bs-target="#staticBackdrop" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/no-helmet-detection.webp" alt="null" width="100%" height="100%">
-                        </div>
-                        <div class="accordion_video">
-                            <img data-bs-toggle="modal" data-bs-target="#staticBackdroptwo" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/video.webp" alt="null" width="100%" height="100%">
-                        </div>
-                        <div class="accordion_video">
-                            <img data-bs-toggle="modal" data-bs-target="#staticBackdropthree" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/no-helmet-detection.webp" alt="null" width="100%" height="100%">
-                        </div>
-                    </div>
-
-                    <!-- Vertically centered modal -->
-                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Configure analytics per camera</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body p-4">
-                                    <iframe width="100%" height="450"
-                                        data-src="https://www.youtube.com/embed/9xwazD5SyVg"
-                                        frameborder="0"
-                                        allow="autoplay; encrypted-media"
-                                        allowfullscreen>
-                                    </iframe>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Vertically centered modal -->
-                    <div class="modal fade" id="staticBackdroptwo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Configure analytics per camera</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body p-4">
-                                    <iframe width="100%" height="450"
-                                        data-src="https://www.youtube.com/embed/9xwazD5SyVg"
-                                        frameborder="0"
-                                        allow="autoplay; encrypted-media"
-                                        allowfullscreen>
-                                    </iframe>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <!-- Vertically centered modal -->
-                    <div class="modal fade" id="staticBackdropthree" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Configure analytics per camera</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body p-4">
-                                    <iframe width="100%" height="450"
-                                        data-src="https://www.youtube.com/embed/9xwazD5SyVg"
-                                        frameborder="0"
-                                        allow="autoplay; encrypted-media"
-                                        allowfullscreen>
-                                    </iframe>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                        <?php endforeach; ?>
+                    <?php endif; ?>
 
                 </div>
 
             </div>
         </section>
+
+        <script>
+            (function() {
+                // Lazy load YouTube iframes when modals are opened
+                document.addEventListener('DOMContentLoaded', function() {
+                    const modals = document.querySelectorAll('.modal');
+                    modals.forEach(function(modal) {
+                        modal.addEventListener('shown.bs.modal', function() {
+                            const iframe = this.querySelector('iframe[data-src]');
+                            if (iframe && !iframe.src) {
+                                iframe.src = iframe.getAttribute('data-src') + '?autoplay=1';
+                            }
+                        });
+                        // Pause video when modal is closed
+                        modal.addEventListener('hidden.bs.modal', function() {
+                            const iframe = this.querySelector('iframe');
+                            if (iframe) {
+                                iframe.src = '';
+                            }
+                        });
+                    });
+                });
+            })();
+        </script>
 <?php
     }
 }

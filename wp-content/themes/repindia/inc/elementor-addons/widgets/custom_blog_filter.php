@@ -248,8 +248,7 @@ class Custom_Blog_Filter extends Widget_Base
             'post_type' => $post_type,
             'post_status' => 'publish',
             'posts_per_page' => $posts_per_page,
-            'orderby' => 'date',
-            'order' => 'DESC',
+            'order' => 'ASC',
             'ignore_sticky_posts' => true,
         ];
         

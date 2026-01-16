@@ -1,0 +1,950 @@
+/**
+ * Custom Store Locator Map Styles
+ * Standalone styles - no conflicts with other components
+ */
+
+/* Map Container */
+.custom-store-locator-wrapper {
+    width: 100%;
+    margin: 0 auto;
+    background: transparent;
+    border-radius: 0;
+    overflow: hidden;
+}
+
+/* Filter Section - Chip Style */
+.custom-map-filters {
+    display: flex;
+    gap: 16px;
+    padding: 0 0 20px;
+    background: transparent;
+    border-bottom: 0;
+    align-items: center;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+/* Location Filter Chips */
+.location-filter-chips {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+}
+
+.location-chip {
+    padding: 4px 16px;
+    border-radius: 40px;
+    color: #4A5673;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    border: 1px solid #E6EBF2;
+    background: #fff;
+}
+
+.location-chip:hover,.location-chip.active {
+    background: #0099ED;
+    color: #fff;
+    border-color: #0099ED;
+}
+
+.location-chip-more {
+    background: #F2F5FA;
+    color: #4A5673;
+    font-weight: 600;
+    border: 1px solid #E6EBF2;
+}
+
+.location-chip-more:hover {
+    background: #0099ED;
+    color: #ffffff;
+    border-color: #0099ED;
+}
+
+.location-chip-toggle {
+    background: #F2F5FA;
+    color: #4A5673;
+    font-weight: 600;
+    border: 1px solid #E6EBF2;
+    margin-top: 8px;
+}
+
+.location-chip-toggle:hover {
+    background: #0099ED;
+    color: #ffffff;
+    border-color: #0099ED;
+}
+
+/* Scrollable container for expanded location chips */
+/* This replaces .location-filter-chips when expanded, so it needs same flex properties */
+.location-chips-scroll-container {
+    display: none; /* Hidden by default, shown when expanded */
+    flex: 1; /* Take available space, maintain flex layout with dropdown (matches .location-filter-chips) */
+    min-width: 0; /* Allow shrinking (matches .location-filter-chips) */
+    max-height: 250px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0; /* No padding, chips row handles spacing */
+    background: transparent;
+    align-self: flex-start; /* Align to start to match dropdown alignment */
+}
+
+.location-chips-scroll-container.active {
+    display: block; /* Use block so overflow works, but parent flex makes it a flex item */
+}
+
+/* Chips row wrapper inside scroll container - this is the scrollable content */
+/* This contains all chips + Show Less button, so it all scrolls together */
+.location-chips-scroll-container .location-chips-scroll-content {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+    padding: 0; /* Chips have their own padding */
+    min-height: fit-content;
+}
+
+/* Ensure chips don't shrink */
+.location-chips-scroll-container .location-chip {
+    flex-shrink: 0;
+}
+
+/* Show Less button styling - part of the scrollable content, scrolls with chips */
+.location-chips-scroll-container .location-chip-toggle {
+    flex-shrink: 0;
+}
+
+.location-chips-scroll-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.location-chips-scroll-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.location-chips-scroll-container::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+}
+
+.location-chips-scroll-container::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+}
+
+/* Project Type Dropdown */
+.project-type-filter-wrapper {
+    margin-left: auto;
+}
+
+.project-type-filter {
+    padding: 8px 12px;
+    border: 1px solid #E5E9EC;
+    border-radius: 8px;
+    background: #ffffff;
+    overflow: hidden;
+    color: #757575;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23374151'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    min-width: 342px;
+}
+
+.project-type-filter:hover {
+    border-color: #E5E9EC;
+}
+
+.project-type-filter:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Map Container */
+.custom-map-container {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    background: #e5e7eb;
+    overflow: hidden;
+}
+
+.custom-map-container .leaflet-container {
+    height: 100%;
+    width: 100%;
+    font-family: inherit;
+}
+
+/* Custom Marker Styles - Teardrop Shape */
+.custom-marker {
+    background: transparent;
+    border: none;
+}
+
+.marker-pin {
+    width: 40px;
+    height: 40px;
+    background: #EF4444;
+    border: 8px solid #ffffff;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.marker-pin::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    width: 14px;
+    height: 14px;
+    background: #ffffff;
+    border-radius: 50%;
+}
+
+.custom-marker:hover .marker-pin {
+    transform: rotate(-45deg) scale(1);
+    background: #DC2626;
+    z-index: 1000;
+}
+
+.marker-active .marker-pin {
+    background: #DC2626;
+    border: 3px solid #ffffff;
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.3), 0 2px 12px rgba(0, 0, 0, 0.4);
+    transform: rotate(-45deg) scale(1.2);
+    z-index: 1001;
+}
+
+/* Detail Card - Positioned Next to Marker (Shows on Hover) */
+.custom-map-detail-card {
+    position: absolute;
+    width: 300px;
+    max-width: calc(100% - 40px);
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 10px 20px 0 rgba(0, 82, 128, 0.10);
+    padding: 0;
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
+    z-index: 1000;
+    pointer-events: none;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100% - 40px);
+    overflow-y: auto;
+    transform: scale(0.95);
+    visibility: hidden;
+    gap: 8px;
+}
+
+.custom-map-detail-card.active {
+    opacity: 1;
+    pointer-events: all;
+    transform: scale(1);
+    visibility: visible;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s;
+}
+
+/* Ensure card stays visible when hovered */
+.custom-map-detail-card:hover.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.detail-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 8px 16px 0;
+    gap: 8px;
+    border-bottom: 0;
+}
+
+.detail-title {
+    color: #06283D;
+    margin: 0;
+    flex: 1;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 26px;
+}
+
+.detail-close {
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: #f3f4f6;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.detail-close:hover {
+    background: #e5e7eb;
+}
+
+.detail-close svg {
+    width: 16px;
+    height: 16px;
+    stroke: #374151;
+}
+
+.detail-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0 8px 8px;
+}
+
+/* Info Items - Horizontal layout matching screenshot 1 */
+.detail-info-item {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 4px 12px;
+    margin: 0;
+    background: #F2F5FA;
+    border-radius: 40px;
+}
+.detail-info-item svg{
+    width: 16px;
+    height: 16px;
+}
+.detail-info-item svg path{ fill: #5F6F94; }
+
+.info-icon {
+    width: 18px;
+    height: 18px;
+    color: #6b7280;
+    flex-shrink: 0;
+    stroke-width: 1.5;
+}
+
+.info-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    line-height: 1.6;
+}
+
+.detail-itms,
+.detail-project-date,
+.detail-cameras-count {
+    color: #5F6F94;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+}
+
+/* Quote Section with Icon */
+.detail-quote-section {
+    margin-top: 8px;
+    padding: 8px;
+    border-top: 0;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    background: #F2F5FA;
+    border-radius: 8px;
+}
+
+.quote-icon {
+    width: 24px;
+    height: 24px;
+    color: #9ca3af;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.detail-quote {
+    margin: 0;
+}
+
+.detail-quote p {
+    margin: 0;
+    color: #5C5C5C;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+/* No Results Fallback */
+.map-no-results-fallback {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    z-index: 800;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 500px;
+    text-align: center;
+}
+
+.no-results-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+}
+
+.no-results-message {
+    font-size: 16px;
+    color: #6b7280;
+    margin: 0;
+    font-weight: 500;
+}
+
+.no-results-reset {
+    padding: 10px 24px;
+    background: #3b82f6;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.no-results-reset:hover {
+    background: #2563eb;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+/* Show List Button */
+.show-list-button {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 24px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 500;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.show-list-button:hover {
+    background: #ffffff;
+    border-color: #9ca3af;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.detail-info-assets{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.js-dark .project-type-filter{
+    border: 1px solid rgba(193, 196, 198, 0.1) !important;
+    background: #262a30;
+    color: #ccc;
+}
+.js-dark button.location-chip,.js-dark button.detail-close{
+    border: 1px solid rgba(193, 196, 198, 0.1) !important;
+    background: #464A4F;
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.js-dark button.location-chip svg path, .js-dark button.detail-close svg path{
+    fill: rgba(255, 255, 255, 0.9) !important;
+}
+.js-dark .leaflet-bar a{
+    border: 1px solid rgba(193, 196, 198, 0.1) !important;
+    background-color: #464A4F;
+}
+.js-dark .custom-map-detail-card{
+    background: #262a30;
+}
+.js-dark .detail-info-item,.js-dark .detail-quote-section{
+    background: #464A4F;
+}
+.js-dark .detail-info-item svg path,.js-dark .detail-quote-section svg path{ fill: rgba(255, 255, 255, 0.9) !important; }
+
+/* Responsive Styles - Tablet (768px and below) */
+@media (max-width: 768px) {
+    .custom-store-locator-wrapper {
+        padding: 0;
+    }
+
+    .custom-map-filters {
+        padding: 12px 16px 16px;
+        gap: 12px;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    /* Location Filter Chips - Full width on tablet */
+    .location-filter-chips {
+        width: 100%;
+        gap: 8px;
+        flex: 1 1 100%;
+        min-width: 100%;
+    }
+
+    .location-chip {
+        font-size: 14px;
+        padding: 6px 14px;
+        min-height: 32px;
+        touch-action: manipulation; /* Improve touch responsiveness */
+    }
+
+    .location-chip-more {
+        font-size: 14px;
+        padding: 6px 14px;
+        min-height: 32px;
+    }
+
+    .location-chip-toggle {
+        font-size: 14px;
+        padding: 6px 14px;
+        min-height: 32px;
+        margin-top: 8px;
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Scroll Container - Full width on tablet */
+    .location-chips-scroll-container {
+        flex: 1 1 100%;
+        min-width: 100%;
+        max-height: 200px;
+        width: 100%;
+    }
+
+    .location-chips-scroll-container .location-chips-scroll-content {
+        gap: 8px;
+        padding: 0;
+    }
+
+    /* Project Type Dropdown - Full width on tablet */
+    .project-type-filter-wrapper {
+        width: 100%;
+        margin-left: 0;
+        flex: 1 1 100%;
+        min-width: 100%;
+    }
+
+    .project-type-filter {
+        width: 100%;
+        min-width: auto;
+        padding: 10px 12px;
+        font-size: 14px;
+        touch-action: manipulation;
+    }
+
+    /* Map Container - Adjusted height for tablet */
+    .custom-map-container {
+        height: 500px;
+    }
+
+    /* Detail Card - Centered on tablet for better UX */
+    .custom-map-detail-card {
+        width: calc(100% - 32px);
+        max-width: 350px;
+        max-height: calc(100% - 20px);
+        left: 50% !important;
+        top: 50% !important;
+        right: auto !important;
+        bottom: auto !important;
+        transform: translate(-50%, -50%) scale(0.95);
+    }
+
+    .custom-map-detail-card.active {
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    .detail-card-header {
+        padding: 12px 16px 0;
+    }
+
+    .detail-title {
+        font-size: 18px;
+        line-height: 24px;
+    }
+
+    .detail-card-body {
+        padding: 0 12px 12px;
+        gap: 6px;
+    }
+
+    .detail-info-item {
+        padding: 4px 10px;
+        font-size: 13px;
+    }
+
+    .detail-info-item svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .detail-itms,
+    .detail-project-date,
+    .detail-cameras-count {
+        font-size: 13px;
+    }
+
+    .detail-quote-section {
+        padding: 8px;
+        margin-top: 6px;
+    }
+
+    .detail-quote p {
+        font-size: 13px;
+        line-height: 18px;
+    }
+
+    /* No Results Fallback */
+    .map-no-results-fallback {
+        width: calc(100% - 32px);
+        max-width: calc(100% - 32px);
+        padding: 30px 20px;
+    }
+
+    .no-results-message {
+        font-size: 15px;
+    }
+
+    .no-results-reset {
+        padding: 10px 20px;
+        font-size: 14px;
+        touch-action: manipulation;
+    }
+
+    /* Show List Button */
+    .show-list-button {
+        bottom: 12px;
+        padding: 10px 20px;
+        font-size: 13px;
+        touch-action: manipulation;
+    }
+
+    /* Marker adjustments for touch */
+    .marker-pin {
+        width: 36px;
+        height: 36px;
+        border-width: 6px;
+    }
+
+    .marker-pin::after {
+        width: 12px;
+        height: 12px;
+    }
+
+    /* Custom scrollbar for mobile */
+    .location-chips-scroll-container::-webkit-scrollbar {
+        width: 4px;
+    }
+}
+
+/* Responsive Styles - Mobile (480px and below) */
+@media (max-width: 480px) {
+    .custom-map-filters {
+        padding: 12px;
+        gap: 10px;
+    }
+
+    .location-filter-chips {
+        gap: 6px;
+    }
+
+    .location-chip {
+        font-size: 13px;
+        padding: 5px 12px;
+        min-height: 30px;
+        line-height: 20px;
+    }
+
+    .location-chip-more {
+        font-size: 13px;
+        padding: 5px 12px;
+        min-height: 30px;
+    }
+
+    .location-chip-toggle {
+        font-size: 13px;
+        padding: 5px 12px;
+        min-height: 30px;
+        margin-top: 6px;
+    }
+
+    /* Scroll Container - Smaller height on mobile */
+    .location-chips-scroll-container {
+        max-height: 180px;
+    }
+
+    .location-chips-scroll-container .location-chips-scroll-content {
+        gap: 6px;
+    }
+
+    .project-type-filter {
+        padding: 8px 10px;
+        font-size: 13px;
+        background-size: 14px;
+        background-position: right 10px center;
+    }
+
+    /* Map Container - Smaller height on mobile */
+    .custom-map-container {
+        height: 400px;
+    }
+
+    /* Detail Card - Full width on mobile, centered */
+    .custom-map-detail-card {
+        width: calc(100% - 24px);
+        max-width: calc(100% - 24px);
+        max-height: calc(100% - 16px);
+        left: 50% !important;
+        top: 50% !important;
+        right: auto !important;
+        bottom: auto !important;
+        transform: translate(-50%, -50%) scale(0.95);
+    }
+
+    .custom-map-detail-card.active {
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    .detail-card-header {
+        padding: 10px 12px 0;
+        gap: 6px;
+    }
+
+    .detail-title {
+        font-size: 16px;
+        line-height: 22px;
+    }
+
+    .detail-close {
+        width: 24px;
+        height: 24px;
+    }
+
+    .detail-close svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .detail-card-body {
+        padding: 0 10px 10px;
+        gap: 6px;
+    }
+
+    .detail-info-assets {
+        gap: 6px;
+    }
+
+    .detail-info-item {
+        padding: 3px 8px;
+        font-size: 12px;
+        gap: 2px;
+    }
+
+    .detail-info-item svg {
+        width: 12px;
+        height: 12px;
+    }
+
+    .detail-itms,
+    .detail-project-date,
+    .detail-cameras-count {
+        font-size: 12px;
+        line-height: 18px;
+    }
+
+    .detail-quote-section {
+        padding: 6px;
+        margin-top: 4px;
+        gap: 6px;
+    }
+
+    .quote-icon {
+        width: 20px;
+        height: 20px;
+        margin-top: 1px;
+    }
+
+    .detail-quote p {
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    /* No Results Fallback - Better mobile sizing */
+    .map-no-results-fallback {
+        width: calc(100% - 24px);
+        max-width: calc(100% - 24px);
+        padding: 24px 16px;
+        gap: 16px;
+    }
+
+    .no-results-content {
+        gap: 12px;
+    }
+
+    .no-results-message {
+        font-size: 14px;
+    }
+
+    .no-results-reset {
+        padding: 8px 18px;
+        font-size: 13px;
+        width: 100%;
+        max-width: 200px;
+    }
+
+    /* Show List Button - Better mobile positioning */
+    .show-list-button {
+        bottom: 10px;
+        padding: 8px 16px;
+        font-size: 12px;
+        width: calc(100% - 32px);
+        max-width: 200px;
+    }
+
+    /* Marker - Smaller on mobile */
+    .marker-pin {
+        width: 32px;
+        height: 32px;
+        border-width: 5px;
+    }
+
+    .marker-pin::after {
+        width: 10px;
+        height: 10px;
+    }
+
+    .marker-active .marker-pin {
+        border-width: 2px;
+        transform: rotate(-45deg) scale(1.15);
+    }
+
+    /* Leaflet controls - Better touch targets */
+    .leaflet-control-zoom-in,
+    .leaflet-control-zoom-out {
+        font-size: 18px;
+        line-height: 28px;
+        width: 32px;
+        height: 32px;
+    }
+
+    /* Custom scrollbar - Thinner on mobile */
+    .location-chips-scroll-container::-webkit-scrollbar {
+        width: 3px;
+    }
+}
+
+/* Responsive Styles - Small Mobile (360px and below) */
+@media (max-width: 360px) {
+    .custom-map-container {
+        height: 350px;
+    }
+
+    .location-chip {
+        font-size: 12px;
+        padding: 4px 10px;
+    }
+
+    .project-type-filter {
+        font-size: 12px;
+        padding: 7px 8px;
+    }
+
+    .detail-title {
+        font-size: 15px;
+    }
+
+    .detail-info-item {
+        font-size: 11px;
+        padding: 3px 6px;
+    }
+}
+
+/* Leaflet Override Styles */
+.leaflet-popup-content-wrapper {
+    border-radius: 8px;
+}
+
+.leaflet-control-zoom a {
+    border-radius: 6px;
+}
+
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+    font-size: 20px;
+    line-height: 30px;
+}
+
+/* Loading State (if needed) */
+.custom-map-container.loading {
+    position: relative;
+}
+
+.custom-map-container.loading::before {
+    content: 'Loading map...';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+/* Elementor Editor Placeholder */
+.custom-store-locator-wrapper.elementor-editor-placeholder {
+    min-height: 200px;
+}
+
+.elementor-editor-placeholder .elementor-placeholder {
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
