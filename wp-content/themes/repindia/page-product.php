@@ -14,4 +14,9 @@
 
 <?php the_content(); ?>
 
+<?php 
+// Include brochure popup component
+get_template_part('template-parts/brochure-popup');
+?>
+
 <?php get_footer(); ?>
