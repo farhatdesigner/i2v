@@ -628,6 +628,7 @@ header li.burger-icon .icon-sun,
 }
 .js-dark .box-custom figcaption.widget-image-caption.wp-caption-text {
   background: #262a2f;
+  border: 1px solid rgba(193, 196, 198, 0.1);
 }
 .js-dark .custom-latest-resource-title,
 .js-dark .custom-blog-filter-title,
@@ -734,4 +735,24 @@ header li.burger-icon .icon-sun,
 .js-dark .absolute_slider:before {
   background: #464a4f !important;
 }
+.js-dark .btn_smart .elementor-heading-title {
+  color: #4A5673 !important;
+}
 
+.js-dark .ai_smart_dark .border_black {
+  border-color: rgba(193, 196, 198, 0.1) !important;
+}
+.js-dark .border-second {
+  border: var(--XSM, 4px) solid #262A30;
+}
+
+/* Dark theme chevron icon colors */
+.js-dark .customtabsmart .smart-select-brand:after {
+  border-right-color: #d7dbe4;
+  border-bottom-color: #d7dbe4;
+}
+
+.js-dark .select-brand:after {
+  border-right-color: #d7dbe4;
+  border-bottom-color: #d7dbe4;
+}

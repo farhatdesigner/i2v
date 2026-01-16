@@ -347,15 +347,14 @@ class Custom_Tab_Section extends Widget_Base
                 .sec-select-brand:after {
                     content: "";
                     position: absolute;
-                    right: auto;
-                    margin-left: 15px;
-                    width: 20px;
-                    height: 20px;
+                    right: 20px;
+                    top: 15px;
+                    width: 8px;
+                    height: 8px;
                     display: inline-block;
-                    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5L6 7.5L9 4.5' stroke='%2306283D' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-                    background-repeat: no-repeat;
-                    background-position: center;
-                    background-size: contain;
+                    border-right: 1.5px solid #06283D;
+                    border-bottom: 1.5px solid #06283D;
+                    transform: rotate(45deg);
                     -webkit-transition: transform 0.4s ease-in-out;
                     -moz-transition: transform 0.4s ease-in-out;
                     -ms-transition: transform 0.4s ease-in-out;
@@ -364,7 +363,7 @@ class Custom_Tab_Section extends Widget_Base
                 }
 
                 .sec-select-brand.angle-icon:after {
-                    transform: rotate(180deg);
+                    transform: rotate(225deg);
                 }
 
                 .sec-tabs-list {
@@ -433,6 +432,11 @@ class Custom_Tab_Section extends Widget_Base
                 .js-dark .sec-select-brand {
                     border: 1px solid rgba(193, 196, 198, 0.1);
                     background: #262a30;
+                }
+
+                .js-dark .sec-select-brand:after {
+                    border-right-color: #d7dbe4;
+                    border-bottom-color: #d7dbe4;
                 }
 
                 .js-dark .sec-tabs-list {

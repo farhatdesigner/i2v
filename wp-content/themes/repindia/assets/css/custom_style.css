@@ -3696,16 +3696,16 @@ span.star {
     right: 15px;
     top: 50%;
     transform: translateY(-50%);
-    width: 10px;
-    height: 6px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23333' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center;
+    width: 8px;
+    height: 8px;
+    border-right: 1.5px solid #333;
+    border-bottom: 1.5px solid #333;
+    transform: translateY(-50%) rotate(45deg);
     transition: transform 0.3s ease;
   }
 
   .customtabsmart .smart-select-brand.angle-icon:after {
-    transform: translateY(-50%) rotate(180deg);
+    transform: translateY(-50%) rotate(225deg);
   }
 
   .customtabsmart .smart-filter-menu .smart-tabsautoscroll {
@@ -3811,15 +3811,14 @@ span.star {
   .select-brand:after {
     content: "";
     position: absolute;
-    right: 8px;
-    margin-left: 15px;
-    width: 20px;
-    height: 20px;
+    right: 20px;
+    top: 15px;
+    width: 8px;
+    height: 8px;
     display: inline-block;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5L6 7.5L9 4.5' stroke='%2306283D' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
+    border-right: 1.5px solid #06283D;
+    border-bottom: 1.5px solid #06283D;
+    transform: rotate(45deg);
     -webkit-transition: transform 0.4s ease-in-out;
     -moz-transition: transform 0.4s ease-in-out;
     -ms-transition: transform 0.4s ease-in-out;
@@ -3828,7 +3827,7 @@ span.star {
   }
 
   .select-brand.angle-icon:after {
-    transform: rotate(180deg);
+    transform: rotate(225deg);
   }
 
   .filter-menu .tabsautoscroll {
