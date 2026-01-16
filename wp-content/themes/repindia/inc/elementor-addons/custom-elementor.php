@@ -19,6 +19,7 @@ class Widget_Loader
 		require_once(__DIR__.'/widgets/customtabsmart.php');
 		require_once(__DIR__.'/widgets/insightsupdates.php');
 		require_once(__DIR__.'/widgets/cardslisting.php');
+		require_once(__DIR__.'/widgets/industry_list.php');
 		require_once(__DIR__.'/widgets/carosoulslider.php');
 		require_once(__DIR__.'/widgets/platformtab.php');
 		require_once(__DIR__.'/widgets/vertcialaccordion.php');
@@ -50,7 +51,7 @@ class Widget_Loader
 		require_once(__DIR__.'/widgets/custom_social_share.php');
 		require_once(__DIR__.'/widgets/custom_latest_resource.php');
 		require_once(__DIR__.'/widgets/custom_blog_filter.php');
-		
+		require_once(__DIR__.'/widgets/custom_store_locator.php');
 		
     }
     public function register_widgets()
@@ -61,6 +62,7 @@ class Widget_Loader
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Customtabsmart() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Insightsupdates() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Cardslisting() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Industry_List() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Carosoulslider() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Platformtab() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Vertcialaccordion() );
@@ -92,6 +94,8 @@ class Widget_Loader
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Social_Share() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Latest_Resource() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Blog_Filter() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Store_Locator() );
+		
 		
 		
     }

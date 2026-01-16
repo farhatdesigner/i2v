@@ -357,7 +357,7 @@ class Custom_Career_Slider extends Widget_Base {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 16px;
+            margin-bottom: 0;
         }
         #<?php echo esc_attr($uid); ?> .career-card-taxonomy {
             font-size: 18px;

@@ -51,50 +51,60 @@ class Horizontal_Slider_Topcaption extends Widget_Base
             ['label' => __('Settings', 'repindia')]
         );
 
-        $repeater = new Repeater();
+        // Main repeater for slider items
+        $repeater = new \Elementor\Repeater();
 
+        // Title
         $repeater->add_control(
-            'card_image',
+            'slider_title',
             [
-                'label' => __('Upload Image', 'repindia'),
+                'label' => esc_html__('Title', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'label_block' => true,
+            ]
+        );
+
+        // Default Theme Image
+        $repeater->add_control(
+            'slider_image_default',
+            [
+                'label' => esc_html__('Default Theme Image', 'repindia'),
                 'type' => Controls_Manager::MEDIA,
+                'default' => [],
             ]
         );
 
+        // Dark Theme Image
         $repeater->add_control(
-            'card_image_alt',
+            'slider_image_dark',
             [
-                'label' => __('Image Alt Text', 'repindia'),
-                'type' => Controls_Manager::TEXT,
-                'label_block' => true,
+                'label' => esc_html__('Dark Theme Image', 'repindia'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [],
+                'description' => esc_html__('Leave empty to use default image for dark theme', 'repindia'),
             ]
         );
 
+        // Description
         $repeater->add_control(
-            'card_title',
+            'slider_description',
             [
-                'label' => __('Card Title', 'repindia'),
-                'type' => Controls_Manager::TEXT,
-                'label_block' => true,
-            ]
-        );
-
-        $repeater->add_control(
-            'card_description',
-            [
-                'label' => __('Card Description', 'repindia'),
-                'type' => Controls_Manager::TEXTAREA,
+                'label' => esc_html__('Description', 'repindia'),
+                'type' => Controls_Manager::WYSIWYG,
+                'default' => '',
                 'label_block' => true,
             ]
         );
 
         $this->add_control(
-            'cards_list',
+            'slider_items',
             [
-                'label' => __('Cards List', 'repindia'),
+                'label' => esc_html__('Slider Items', 'repindia'),
                 'type' => Controls_Manager::REPEATER,
                 'fields' => $repeater->get_controls(),
-                'title_field' => '{{{ card_title }}}'
+                'default' => [],
+                'title_field' => '{{{ slider_title }}}',
             ]
         );
 
@@ -102,72 +112,45 @@ class Horizontal_Slider_Topcaption extends Widget_Base
     }
 
     protected function render()
-    {
+    {   
+        $settings = $this->get_settings_for_display();
+        $slider_items = !empty($settings['slider_items']) ? $settings['slider_items'] : [];
+        
         ?>
+        
 
         <div class="hz-slider-topcaption">
             <section class="slider">
                 <div class="swiper">
                     <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <div class="slider-content">
-                                    <h3>Highways & expressways</h3>
-                                    <p>
-                                        Enforce rules, detect accidents, and monitor traffic flow with precision ANPR.
-                                    </p>
+                        <?php if (!empty($slider_items)) : ?>
+                        <?php foreach ($slider_items as $item) : ?>
+                                <?php
+                                $title = !empty($item['slider_title']) ? $item['slider_title'] : '';
+                                $image_default = !empty($item['slider_image_default']['url']) ? $item['slider_image_default']['url'] : '';
+                                $image_default_alt = !empty($item['slider_image_default']['alt']) ? $item['slider_image_default']['alt'] : $title;
+                                $image_dark = !empty($item['slider_image_dark']['url']) ? $item['slider_image_dark']['url'] : $image_default;
+                                $image_dark_alt = !empty($item['slider_image_dark']['alt']) ? $item['slider_image_dark']['alt'] : $image_default_alt;
+                                $description = !empty($item['slider_description']) ? $item['slider_description'] : '';
+                                ?>
+                                <div class="swiper-slide">
+                                    <div class="slider-content">
+                                        <?php if (!empty($title)) : ?>
+                                            <h3><?php echo esc_html($title); ?></h3>
+                                        <?php endif; ?>
+                                        <?php if (!empty($description)) : ?>
+                                            <p><?php echo wp_kses_post($description); ?></p>
+                                        <?php endif; ?>
+                                    </div>
+                                    <?php if (!empty($image_default)) : ?>
+                                        <div class="slider-image">
+                                            <img class="white_theme_img" src="<?php echo esc_url($image_default); ?>" alt="<?php echo esc_attr($image_default_alt); ?>">
+                                            <img class="black_theme_img" src="<?php echo esc_url($image_dark); ?>" alt="<?php echo esc_attr($image_dark_alt); ?>">
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
-                                <div class="slider-image">
-                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/oil-and-gas.webp"
-                                        alt="Object Tagging and Metadata based search for faster investigations">
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="slider-content">
-                                    <h3>Tunnels & bridges</h3>
-                                    <p>
-                                        Spot incidents fast, monitor smoke/fire, and ensure safe emergency access.
-                                    </p>
-                                </div>
-                                <div class="slider-image">
-                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/transportation.webp"
-                                        alt="Object Tagging and Metadata based search for faster investigations">
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="slider-content">
-                                    <h3>Ports & shipping yards</h3>
-                                    <p>
-                                        Secure perimeters, protect cargo, and safeguard workforce operations.
-                                    </p>
-                                </div>
-                                <div class="slider-image">
-                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Energy.webp"
-                                        alt="Object Tagging and Metadata based search for faster investigations">
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="slider-content">
-                                    <h3>Bus fleets & depots</h3>
-                                    <p>
-                                        Ensure passenger safety, monitor occupancy, and capture critical incidents.
-                                    </p>
-                                </div>
-                                <div class="slider-image">
-                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/government.webp"
-                                        alt="Object Tagging and Metadata based search for faster investigations">
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="slider-content">
-                                    <h3>Brand, Strategy & Reputation</h3>
-                                    <p>
-                                        Protect your reputation, unlok growth and gain a competitive </p>
-                                </div>
-                                <div class="slider-image">
-                                    <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/transportation.webp"
-                                        alt="Object Tagging and Metadata based search for faster investigations">
-                                </div>
-                            </div>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                     </div>
                 </div>
             </section>

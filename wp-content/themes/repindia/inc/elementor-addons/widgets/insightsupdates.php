@@ -4,215 +4,472 @@ namespace WPC\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
-use Elementor\Group_Control_Css_Filter;
-use Elementor\Repeater;
-use Elementor\Group_Control_Box_Shadow;
-use Elementor\Group_Control_Typography;
-use Elementor\Scheme_Typography;
-use Elementor\Group_Control_Image_Size;
-use Elementor\Utils;
 
 if (!defined('ABSPATH'))
-   exit;
+    exit;
 
 class Insightsupdates extends Widget_Base
 {
-   public function get_name()
-   {
-      return 'insightsupdates';
-   }
-   public function get_title()
-   {
-      return 'Blog Insight Updates';
-   }
-   public function get_icon()
-   {
-      return 'fa fa-newspaper-o';
-   }
-   public function get_category()
-   {
-      return ['general'];
-   }
-   protected function register_controls()
-   {
-      $this->start_controls_section(
-         'section_content',
-         [
-            'label' => 'Settings',
-         ]
-      );
-      $repeater = new \Elementor\Repeater();
+    public function get_name()
+    {
+        return 'insightsupdates';
+    }
+    
+    public function get_title()
+    {
+        return 'Blog Insight Updates';
+    }
+    
+    public function get_icon()
+    {
+        return 'fa fa-th';
+    }
+    
+    public function get_category()
+    {
+        return ['general'];
+    }
+    
+    /**
+     * Get all registered post types
+     */
+    private function get_post_types()
+    {
+        $post_types = get_post_types(['public' => true], 'objects');
+        $options = ['post' => __('Post', 'repindia')];
+        
+        foreach ($post_types as $post_type) {
+            if ($post_type->name !== 'post' && $post_type->name !== 'page' && $post_type->name !== 'attachment') {
+                $options[$post_type->name] = $post_type->label;
+            }
+        }
+        
+        return $options;
+    }
+    
+    /**
+     * Get all registered taxonomies
+     */
+    private function get_all_taxonomies()
+    {
+        $taxonomies = get_taxonomies(['public' => true], 'objects');
+        $result = [];
+        
+        foreach ($taxonomies as $taxonomy) {
+            // Skip built-in taxonomies that are not commonly used
+            if (in_array($taxonomy->name, ['post_format', 'nav_menu', 'link_category'])) {
+                continue;
+            }
+            
+            $result[$taxonomy->name] = [
+                'label' => $taxonomy->label,
+                'object_type' => $taxonomy->object_type,
+            ];
+        }
+        
+        return $result;
+    }
+    
+    /**
+     * Get terms for a taxonomy
+     */
+    private function get_taxonomy_terms($taxonomy)
+    {
+        if (!taxonomy_exists($taxonomy)) {
+            return [];
+        }
+        
+        $terms = get_terms([
+            'taxonomy' => $taxonomy,
+            'hide_empty' => false,
+        ]);
+        
+        if (is_wp_error($terms) || empty($terms)) {
+            return [];
+        }
+        
+        $options = [];
+        foreach ($terms as $term) {
+            $options[$term->term_id] = $term->name;
+        }
+        
+        return $options;
+    }
+    
+    protected function register_controls()
+    {
+        // Main Settings Section
+        $this->start_controls_section(
+            'section_content',
+            [
+                'label' => __('Content Settings', 'repindia'),
+            ]
+        );
+        
+        // Section Title
+        $this->add_control(
+            'section_title',
+            [
+                'label' => __('Section Title', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => __('Insights & Updates', 'repindia'),
+                'label_block' => true,
+            ]
+        );
+        
+        // Section Description
+        $this->add_control(
+            'section_description',
+            [
+                'label' => __('Section Description', 'repindia'),
+                'type' => Controls_Manager::TEXTAREA,
+                'default' => __('Explore the latest from i2V — blogs, press releases, webinars, events, and industry insights.', 'repindia'),
+                'rows' => 3,
+                'label_block' => true,
+            ]
+        );
+        
+        // Posts Per Page
+        $this->add_control(
+            'posts_per_page',
+            [
+                'label' => __('Posts Per Page', 'repindia'),
+                'type' => Controls_Manager::NUMBER,
+                'default' => 7,
+                'min' => 1,
+                'max' => 100,
+            ]
+        );
 
-      $repeater->add_control(
-         'mission_title_img',
-         [
-            'label' => esc_html__('Mission Title Icon Image', 'repindia'),
-            'type' => \Elementor\Controls_Manager::MEDIA,
-            'default' => [],
-         ]
-      );
-      $repeater->add_control(
-         'main_title',
-         [
-            'label' => esc_html__('Box Title', 'repindia'),
-            'type' => \Elementor\Controls_Manager::TEXT,
-            'default' => '',
-            'label_block' => true,
-         ]
-      );
-      $repeater->add_control(
-         'mission_para',
-         [
-            'label' => esc_html__('Box Description', 'repindia'),
-            'type' => \Elementor\Controls_Manager::WYSIWYG,
-            'default' => '',
-            'label_block' => true,
-         ]
-      );
-      $repeater->add_control(
-         'mission_img',
-         [
-            'label' => esc_html__('Mission Box Image', 'repindia'),
-            'type' => \Elementor\Controls_Manager::MEDIA,
-            'default' => [],
-         ]
-      );
-      $this->add_control(
-         'box_list',
-         [
-            'label' => esc_html__('Box List', 'repindia'),
-            'type' => \Elementor\Controls_Manager::REPEATER,
-            'fields' => $repeater->get_controls(),
-            'default' => [
-               [
-                  'main_title' => '',
-               ],
-            ],
-            'title_field' => '{{{ main_title }}}',
-         ]
-      );
-      $this->end_controls_section();
-   }
+        $this->end_controls_section();
 
-   // Php Render
-   protected function render()
-   {
-      $settings = $this->get_settings_for_display();
-      $this->add_inline_editing_attributes('custom_class', 'basic'); ?>
+        // Add only newsroom_type taxonomy filter section
+        $this->start_controls_section(
+            'section_taxonomy_newsroom_type',
+            [
+                'label' => __('Filter by Newsroom Type', 'repindia'),
+                'tab' => Controls_Manager::TAB_CONTENT,
+            ]
+        );
 
-      <div class="sectionsinsightsupdates grey-light">
+        // Add control to enable/disable newsroom_type filter
+        $this->add_control(
+            'taxonomy_newsroom_type_enable',
+            [
+                'label' => __('Filter by Newsroom Type', 'repindia'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Yes', 'repindia'),
+                'label_off' => __('No', 'repindia'),
+                'return_value' => 'yes',
+                'default' => 'no',
+            ]
+        );
 
+        // Get terms for newsroom_type taxonomy
+        $terms = $this->get_taxonomy_terms('newsroom_type');
+        
+        if (!empty($terms)) {
+            $this->add_control(
+                'taxonomy_newsroom_type_terms',
+                [
+                    'label' => __('Select Newsroom Type', 'repindia'),
+                    'type' => Controls_Manager::SELECT2,
+                    'options' => $terms,
+                    'multiple' => true,
+                    'label_block' => true,
+                    'condition' => [
+                        'taxonomy_newsroom_type_enable' => 'yes',
+                    ],
+                ]
+            );
+        } else {
+            $this->add_control(
+                'taxonomy_newsroom_type_notice',
+                [
+                    'type' => Controls_Manager::RAW_HTML,
+                    'raw' => __('No terms found for Newsroom Type.', 'repindia'),
+                    'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+                    'condition' => [
+                        'taxonomy_newsroom_type_enable' => 'yes',
+                    ],
+                ]
+            );
+        }
 
+        $this->end_controls_section();
+    }
 
+    /**
+     * Build query arguments based on settings
+     */
+    private function build_query_args($settings)
+    {
+        // Hardcode post type to 'newsroom'
+        $post_type = 'newsroom';
+        $posts_per_page = !empty($settings['posts_per_page']) ? intval($settings['posts_per_page']) : 7;
+        
+        // Get current page for pagination
+        $paged = 1;
+        
+        $args = [
+            'post_type' => $post_type,
+            'post_status' => 'publish',
+            'posts_per_page' => $posts_per_page,
+            'paged' => 1,
+            'order' => 'ASC',
+            'ignore_sticky_posts' => true,
+        ];
+        
+        // Build tax_query based on newsroom_type taxonomy filter only
+        $tax_query = [];
+        
+        // Check for newsroom_type filter
+        if (!empty($settings['taxonomy_newsroom_type_enable']) && $settings['taxonomy_newsroom_type_enable'] === 'yes') {
+            $selected_terms = !empty($settings['taxonomy_newsroom_type_terms']) ? $settings['taxonomy_newsroom_type_terms'] : [];
+            
+            if (!empty($selected_terms) && is_array($selected_terms)) {
+                $selected_terms = array_map('intval', $selected_terms);
+                $tax_query[] = [
+                    'taxonomy' => 'newsroom_type',
+                    'field' => 'term_id',
+                    'terms' => $selected_terms,
+                ];
+            }
+        }
+        
+        // Add tax_query if we have taxonomy filters
+        if (!empty($tax_query)) {
+            $args['tax_query'] = $tax_query;
+        }
+        
+        return $args;
+    }
 
+    /**
+     * Get first taxonomy term for a post from newsroom_categories
+     */
+    private function get_post_taxonomy_term($post_id, $post_type)
+    {
+        // Get terms from newsroom_categories taxonomy only
+        $terms = get_the_terms($post_id, 'newsroom_categories');
+        
+        if (!empty($terms) && !is_wp_error($terms) && !empty($terms[0]->name)) {
+            return [
+                'name' => $terms[0]->name,
+                'taxonomy' => 'newsroom_categories',
+            ];
+        }
+        
+        return null;
+    }
+
+    /**
+     * Get all taxonomy terms for a post from newsroom_categories
+     */
+    private function get_post_taxonomy_terms($post_id)
+    {
+        $terms = get_the_terms($post_id, 'newsroom_categories');
+        
+        if (!empty($terms) && !is_wp_error($terms)) {
+            return $terms;
+        }
+        
+        return [];
+    }
+
+    /**
+     * Format post date from ACF field or default post date
+     * Format: Jan 31, 2026
+     */
+    private function format_post_date($post_id)
+    {
+        // Try to get ACF field first
+        if (function_exists('get_field')) {
+            $custom_date = get_field('custom_created_date', $post_id);
+            if (!empty($custom_date)) {
+                if (is_numeric($custom_date)) {
+                    // Unix timestamp
+                    return date('M d, Y', $custom_date);
+                } else {
+                    // Try different date formats
+                    $date_obj = \DateTime::createFromFormat('Ymd', $custom_date);
+                    if ($date_obj === false) {
+                        $date_obj = \DateTime::createFromFormat('Y-m-d', $custom_date);
+                    }
+                    if ($date_obj !== false) {
+                        return $date_obj->format('M d, Y');
+                    }
+                    // Try to parse as string
+                    $timestamp = strtotime($custom_date);
+                    if ($timestamp !== false) {
+                        return date('M d, Y', $timestamp);
+                    }
+                }
+            }
+        }
+        
+        // Fallback to default post date
+        return get_the_date('M d, Y', $post_id);
+    }
+
+    /**
+     * Render pagination
+     */
+    private function render_pagination($query)
+    {
+        if (!$query->max_num_pages || $query->max_num_pages <= 1) {
+            return;
+        }
+        
+        $pagination_args = [
+            'total' => $query->max_num_pages,
+            'current' => max(1, get_query_var('paged')),
+            'prev_text' => __('&laquo; Previous', 'repindia'),
+            'next_text' => __('Next &raquo;', 'repindia'),
+        ];
+        
+        if (is_front_page()) {
+            $pagination_args['current'] = max(1, get_query_var('page'));
+        }
+        
+        echo '<div class="custom-latest-resource-pagination">';
+        echo paginate_links($pagination_args);
+        echo '</div>';
+    }
+
+    protected function render()
+    {
+        $settings = $this->get_settings_for_display();
+        // Hardcode post type to 'newsroom'
+        $post_type = 'newsroom';
+        
+        // Don't run query in Elementor editor preview unnecessarily
+        if (\Elementor\Plugin::$instance->editor->is_edit_mode()) {
+            echo '<div class="resource_card_section custom-latest-resource-wrapper">';
+            echo '<p>' . esc_html__('Post list will appear here on the frontend.', 'repindia') . '</p>';
+            echo '</div>';
+            return;
+        }
+        
+        // Build and execute query
+        $query_args = $this->build_query_args($settings);
+        $query = new \WP_Query($query_args);
+        
+        // Get posts
+        $posts = $query->posts;
+        $first_post = !empty($posts) ? $posts[0] : null;
+        $remaining_posts = !empty($posts) && count($posts) > 1 ? array_slice($posts, 1) : [];
+        
+        ?>
+        <style>
+            .insights-updates-item-text_left-list li > span {
+                font-size: 14px;
+                color: #4a5673;
+                padding: 4px 12px;
+                display: inline-block;
+                border-radius: 28px;
+                border: 1px solid #e6ebf2;
+            }
+        </style>
+        <div class="sectionsinsightsupdates grey-light">
          <section class="microspace-custom_outside custom-container">
             <div class="mx-auto">
 
-
                <div class="col-lg-12 text-center">
-                  <h3 class="main_title quote">
-                     Insights & Updates
-                  </h3>
-                  <div class="text-left">
-                     <p>Explore the latest from i2V — blogs, press releases, webinars, events, and industry insights.</p>
-                  </div>
+                  <?php if (!empty($settings['section_title'])) : ?>
+                     <h3 class="main_title quote">
+                        <?php echo esc_html($settings['section_title']); ?>
+                     </h3>
+                  <?php endif; ?>
+                  <?php if (!empty($settings['section_description'])) : ?>
+                     <div class="text-left">
+                        <p><?php echo wp_kses_post($settings['section_description']); ?></p>
+                     </div>
+                  <?php endif; ?>
                </div>
 
 
                <div class="insights-updates">
                   <div class="row">
                      <div class="col-xl-7">
-                        <div class="insights-updates-item">
-                           <div class="insights-updates-item-image">
-                              <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/i2v-enhances-security-center-saa-s-with-the-addition-of-intrusion-security-and-loitering-management.webp" alt="insights-updates-item" class="activeblogimg">
-                           </div>
-                           <div class="insights-updates-item-text_left">
-                              <ul class="p-0 insights-updates-item-text_left-list">
-                                 <li>
-                                    <a href="#">Intrusion Detection</a>
-                                    <a href="#">Security Management</a>
-                                    <a href="#">Loitering Analytics</a>
-                                 </li>
-                              </ul>
-                              <h4 class="brand_heading_color">i2V enhances security center SaaS with the addition of intrusion, security and loitering management</h4>
-                              <div class="text-features">
-                                 <p>These features enhance real-time monitoring, enabling businesses to detect and respond to threats proactively. Intrusion detection ensures unauthorized access is flagged instantly, while security management centralizes control over multiple security layers. Loitering analytics use AI to identify suspicious behavior, helping prevent potential security risks. With seamless integration and automation, i2V’s latest enhancements empower organizations to maintain a safer environment with improved efficiency. This upgrade reinforces i2V’s commitment to delivering cutting-edge, AI-powered security solutions for smarter, proactive surveillance management.</p>
+                        <?php if ($first_post) : ?>
+                           <?php
+                           setup_postdata($first_post);
+                           $first_post_id = $first_post->ID;
+                           $first_post_image = get_the_post_thumbnail_url($first_post_id, 'full');
+                           $first_post_categories = $this->get_post_taxonomy_terms($first_post_id);
+                           $first_post_title = get_the_title($first_post_id);
+                           $first_post_excerpt = get_the_excerpt($first_post_id);
+                           $first_post_date = $this->format_post_date($first_post_id);
+                           $first_post_author = get_the_author_meta('display_name', $first_post->post_author);
+                           $first_post_link = get_permalink($first_post_id);
+                           ?>
+                           <a href="<?php echo esc_url($first_post_link); ?>" >
+                              <div class="insights-updates-item">
+                                 <?php if (!empty($first_post_image)) : ?>
+                                    <div class="insights-updates-item-image">
+                                       <img src="<?php echo esc_url($first_post_image); ?>" alt="<?php echo esc_attr($first_post_title); ?>" class="activeblogimg">
+                                    </div>
+                                 <?php endif; ?>
+                                 <div class="insights-updates-item-text_left">
+                                    <?php if (!empty($first_post_categories)) : ?>
+                                       <ul class="p-0 insights-updates-item-text_left-list">
+                                          <li>
+                                             <?php foreach ($first_post_categories as $cat) : ?>
+                                                <span href="#" onclick="event.stopPropagation();"><?php echo esc_html($cat->name); ?></span>
+                                             <?php endforeach; ?>
+                                          </li>
+                                       </ul>
+                                    <?php endif; ?>
+                                    <h4 class="brand_heading_color">
+                                       <?php echo esc_html($first_post_title); ?>
+                                    </h4>
+                                    <?php if (!empty($first_post_excerpt)) : ?>
+                                       <div class="text-features">
+                                          <p><?php echo wp_kses_post($first_post_excerpt); ?></p>
+                                       </div>
+                                    <?php endif; ?>
+                                    <div class="date-author-txt">
+                                       <p><span><?php echo esc_html($first_post_date); ?></span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> <?php echo esc_html($first_post_author); ?></span></p>
+                                    </div>
+                                 </div>
                               </div>
-                              <div class="date-author-txt">
-                                 <p><span>Jan 30, 2022</span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> Admin</span></p>
-                              </div>
-                           </div>
-                        </div>
+                           </a>
+                        <?php endif; ?>
                      </div>
                      <div class="col-xl-5">
-                        <div class="lisitng-inner">
-                           <div class="d-flex align-items-end gap-4">
-                              <div class="insights-updates-item-small-icon">
-                                 <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Physical-Security-Trends-for-2025.webp" alt="blog">
-                              </div>
-                              <div class="insights-updates-item-text">
-                                 <h5>Physical security trends for 2025</h5>
-                                 <div class="date-author-txt">
-                                    <p><span>Jan 30, 2022</span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> Amod Kudesia</span></p>
-                                 </div>
-                              </div>
+                        <?php if (!empty($remaining_posts)) : ?>
+                           <div class="lisitng-inner">
+                              <?php foreach ($remaining_posts as $post) : ?>
+                                 <?php
+                                 setup_postdata($post);
+                                 $post_id = $post->ID;
+                                 $post_image = get_the_post_thumbnail_url($post_id, 'full');
+                                 $post_title = get_the_title($post_id);
+                                 $post_date = $this->format_post_date($post_id);
+                                 $post_author = get_the_author_meta('display_name', $post->post_author);
+                                 $post_link = get_permalink($post_id);
+                                 ?>
+                                    <a href="<?php echo esc_url($post_link); ?>" class="d-flex align-items-end gap-4">
+                                       <!-- <div class="d-flex align-items-end gap-4"> -->
+                                          <?php if (!empty($post_image)) : ?>
+                                             <div class="insights-updates-item-small-icon">
+                                                <img src="<?php echo esc_url($post_image); ?>" alt="<?php echo esc_attr($post_title); ?>">
+                                             </div>
+                                          <?php endif; ?>
+                                          <div class="insights-updates-item-text">
+                                             <h5>
+                                                <?php echo esc_html($post_title); ?>
+                                             </h5>
+                                             <div class="date-author-txt">
+                                                <p><span><?php echo esc_html($post_date); ?></span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> <?php echo esc_html($post_author); ?></span></p>
+                                             </div>
+                                          </div>
+                                       <!-- </div> -->
+                                    </a>
+                              <?php endforeach; ?>
                            </div>
-                           <div class="d-flex align-items-end gap-4">
-                              <div class="insights-updates-item-small-icon">
-                                 <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/4-tips-for-managing-access-rights-in-a-hybrid-work-environment.webp" alt="blog">
-                              </div>
-                              <div class="insights-updates-item-text">
-                                 <h5>4 tips for managing access rights in a hybrid work environment</h5>
-                                 <div class="date-author-txt">
-                                    <p><span>Jan 30, 2022</span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> Chintamani Pavithran</span></p>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="d-flex align-items-end gap-4">
-                              <div class="insights-updates-item-small-icon">
-                                 <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/A-Closer-Look-at-Physical-Security-System-Vulnerabilities.webp" alt="blog">
-                              </div>
-                              <div class="insights-updates-item-text">
-                                 <h5>A closer look at physical security system vulnerabilities</h5>
-                                 <div class="date-author-txt">
-                                    <p><span>Jan 30, 2022</span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> Admin</span></p>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="d-flex align-items-end gap-4">
-                              <div class="insights-updates-item-small-icon">
-                                 <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/what-you-need-to-know-about-data-privacy.webp" alt="blog">
-                              </div>
-                              <div class="insights-updates-item-text">
-                                 <h5>What you need to know about data privacy</h5>
-                                 <div class="date-author-txt">
-                                    <p><span>Jan 30, 2022</span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> Dattatreya Saidullah</span></p>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="d-flex align-items-end gap-4">
-                              <div class="insights-updates-item-small-icon">
-                                 <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/the-importance-of-encryption-in-security-systems.webp" alt="blog">
-                              </div>
-                              <div class="insights-updates-item-text">
-                                 <h5>The importance of encryption in security systems</h5>
-                                 <div class="date-author-txt">
-                                    <p><span>Jan 30, 2022</span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> Atharvan Maruti</span></p>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="d-flex align-items-end gap-4">
-                              <div class="insights-updates-item-small-icon">
-                                 <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/a-journey-to-hybrid-cloud.webp" alt="blog">
-                              </div>
-                              <div class="insights-updates-item-text">
-                                 <h5>A Journey to hybrid-cloud</h5>
-                                 <div class="date-author-txt">
-                                    <p><span>Jan 30, 2022</span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> Atharvan Maruti</span></p>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
+                        <?php endif; ?>
                      </div>
                   </div>
                </div>
@@ -221,6 +478,8 @@ class Insightsupdates extends Widget_Base
             </div>
          </section>
       </div>
+        
 <?php
-   }
-} ?>
+        wp_reset_postdata();
+    }
+}

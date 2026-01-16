@@ -273,25 +273,29 @@ class Custom_Image_Circle extends Widget_Base {
             }
 
             @media (max-width: 768px) {
-                {{WRAPPER}} .orbit-system-wrapper {
-                    min-height: 482px;
+                .orbit-system-wrapper {
+                    min-height: 482px !important;
                 }
                 
-                {{WRAPPER}} .orbit-content {
-                    max-width: 141px;
-                    width: auto;
+                .orbit-content {
+                    max-width: 141px !important;
+                    width: auto !important;
                 }
                 
-                {{WRAPPER}} .orbit-icon img,
-                {{WRAPPER}} .orbit-icon svg {
-                    width: 40px;
-                    height: 40px;
+                .orbit-icon img,
+                .orbit-icon svg {
+                    width: 60px !important;
+                    height: 60px !important;
                 }
                 
-                {{WRAPPER}} .elementor-element .orbit-text {
-                    font-size: 14px !important;
-                    line-height: 21px !important;
+                .elementor-element .orbit-text {
+                    font-size: 12px !important;
+                    line-height: 14px !important;
                 }
+                .orbit-ring {
+    left: 80% !important;
+}
+                
             }
     
         <?php 

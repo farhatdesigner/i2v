@@ -97,6 +97,12 @@
 								'subtitle' => __('Enable / Disable Button', 'repindia'),
 								'default'  => true,
 							),
+							array(
+								'id'       => 'demo_popup_form',
+								'type'     => 'text',
+								'title'    => esc_attr__('Demo Popup Form Shortcode', 'repindia'),
+								'default'  => '',
+							),
 			)
 		)
 	);
@@ -231,6 +237,13 @@
 					'title'    => esc_attr__('Hamburger Social Media', 'repindia'),
 					'subtitle' => __('Enable / Disable Social Media at haeder', 'repindia'),
 					'default'  => true,
+				),
+				array(
+					'id'       => 'contact_popup_form',
+					'type'     => 'text',
+					'title'    => esc_attr__('Expert Popup Form Shortcode', 'repindia'),
+					'subtitle' => __('Add Contact Form 7 shortcode for second modal popup', 'repindia'),
+					'default'  => '',
 				),
 			)
 		)
@@ -427,6 +440,7 @@
 									'subtitle' => __('Enable / Disable Social Media at Footer', 'repindia'),
 									'default'  => true,
 							    ),
+
 								
 					)
 			) 

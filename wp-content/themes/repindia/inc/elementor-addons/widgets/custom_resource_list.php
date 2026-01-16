@@ -144,7 +144,6 @@ class Custom_Resource_List extends Widget_Base {
             'post_type' => 'resources',
             'post_status' => 'publish',
             'posts_per_page' => $posts_to_show,
-            'orderby' => 'date',
             'order' => ($url_sort === 'oldest') ? 'ASC' : 'DESC',
         ];
         
@@ -169,10 +168,10 @@ class Custom_Resource_List extends Widget_Base {
                 .resource-filter-section { display: flex; gap: 40px; max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
                 .resource-filter-sidebar { width: 385px;flex-shrink: 0;background: #fff;border-radius: 12px;padding: 8px; }
                 .resource-filter-sidebar h2 { margin: 0 0 2px 0;color: #06283D;font-size: 18px;font-style: normal;font-weight: 500;line-height: 26px; }
-                .resource-filter-sidebar p { color: #5C5C5C;font-size: 14px;font-style: normal;font-weight: 400;line-height: 20px; }
-                .resource-filter-group h3 { color: #5C5C5C;font-size: 16px;font-style: normal;font-weight: 500;line-height: 24px; }
+                .resource-filter-sidebar p { color: #5C5C5C;font-size: 14px;font-style: normal;font-weight: 400;line-height: 20px;margin: 0; }
+                .resource-filter-group h3 { color: #5C5C5C;font-size: 16px;font-style: normal;font-weight: 500 !important;line-height: 24px; }
                 .resource-filter-group h3:first-letter { text-transform: uppercase; }
-                .resource-filter-item { display: flex; align-items: center; gap: 4px; padding: 11.5px; border-radius: 4px; cursor: pointer; margin-bottom: 2px; transition: background 0.2s; }
+                .resource-filter-item { display: flex; align-items: center; gap: 4px; padding: 8px; border-radius: 4px; cursor: pointer; margin-bottom: 2px; transition: background 0.2s; }
                 .resource-filter-item:hover { background: #F2F5FA; }
                 .resource-filter-item.active { background: #F2F5FA; }
                 .resource-filter-item img { width: 24px; height: 24px; object-fit: contain; flex-shrink: 0;padding: 3px; }
@@ -192,7 +191,7 @@ class Custom_Resource_List extends Widget_Base {
                 .resource-sort select:focus { outline:none; border-color:#E5E9EC; }
                 .resource-sort select option { border:1px solid #E5E9EC; padding:8px; background:#FFFFFF; color:#4A5673; }
                 .resource-sort select option:checked, .resource-sort select option:hover { background:#06283D; color:#FFFFFF; }
-                .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(24%, 3fr)); gap: 28px; margin-bottom: 0; }
+                .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(24%, 3fr)); gap: 20px; margin-bottom: 0; }
                 .resource-card { border: 0;border-radius: 12px;display: flex;flex-direction: column;background: #fff;transition: box-shadow 0.2s;height: 100%;gap: 12px;padding: 8px; }
                 .resource-image { width: 100%; height: 200px; overflow: hidden; background: #f5f5f5; flex-shrink: 0;border-radius: 12px; }
                 .resource-image img { width: 100%; height: 100%; object-fit: cover;border-radius: 12px; }
@@ -207,7 +206,7 @@ class Custom_Resource_List extends Widget_Base {
                 .resource-no-results { text-align: center; padding: 40px; color: #666; }
                 .resource_filter_cont { padding: 8px; }
                 .resource-filter-group { padding: 8px 0px; }
-                .resource-filter-group h3{ padding: 0 8px; }
+                .resource-filter-group h3{ padding: 0 8px; margin: 0; }
                 .resource-card:hover .resource-type-badge{ border-color: #D7DBE4; }
                 .js-dark .resource-filter-sidebar,.js-dark .resource-sort select,.js-dark .resource-card{ background: #262A30; }
                 .js-dark .resource-sort select{ border-color: #464a4f;;color: rgba(255, 255, 255, 0.9);background: #262A30;appearance:none; background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%234A5673' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center;text-overflow: ellipsis;white-space: nowrap; }
