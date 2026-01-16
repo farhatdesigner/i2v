@@ -103,6 +103,18 @@
 								'title'    => esc_attr__('Demo Popup Form Shortcode', 'repindia'),
 								'default'  => '',
 							),
+							array(
+								'id'       => 'channel_partner_form',
+								'type'     => 'text',
+								'title'    => esc_attr__('Channel Partner Form Shortcode', 'repindia'),
+								'default'  => '',
+							),
+							array(
+								'id'       => 'technology_partner_form',
+								'type'     => 'text',
+								'title'    => esc_attr__('Technology Partner Form Shortcode', 'repindia'),
+								'default'  => '',
+							),
 			)
 		)
 	);
