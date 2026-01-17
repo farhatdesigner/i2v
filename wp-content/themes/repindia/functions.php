@@ -11,12 +11,6 @@ if (! function_exists('repindia_theme_setup')) {
 		if (! get_post_meta(get_the_ID(), 'disable_tags', true)) {
 			the_tags('<div class="tags media-body">', ' ', '</div>');
 		}
-		// add_image_size('repindia-team-269X361',269, 361, array( 'left', 'top', 'right', 'bottom' ) );
-		// add_filter( 'woocommerce_get_image_size_thumbnail', function( $size ) {
-		// 	return array(
-		// 		'width'  => 539,'height' => 450,'crop'   => 1,
-		// 	);
-		// } );
 		add_theme_support('post-thumbnails');
 		add_theme_support('title-tag');
 		add_theme_support('automatic-feed-links');
@@ -551,4 +545,53 @@ function repindia_ajax_get_popular_searches() {
 add_action('wp_ajax_repindia_get_popular_searches', 'repindia_ajax_get_popular_searches');
 add_action('wp_ajax_nopriv_repindia_get_popular_searches', 'repindia_ajax_get_popular_searches');
 
+// Separate Slugs per CPT
+add_filter('wp_unique_post_slug', function ($slug, $post_ID, $post_status, $post_type, $post_parent, $original_slug) {
+    global $wpdb;
+    $exists = $wpdb->get_var($wpdb->prepare(
+        "SELECT ID 
+         FROM {$wpdb->posts} 
+         WHERE post_name = %s 
+         AND post_type = %s 
+         AND ID != %d 
+         LIMIT 1",
+        $slug,
+        $post_type,
+        $post_ID
+    ));
+
+    // If no conflict inside SAME CPT, allow original slug
+    if (!$exists) {
+        return $original_slug;
+    }
+    return $slug; // fallback to WordPress default behavior
+
+}, 10, 6);
+
+
+// Separate Slugs per Taxonomies
+add_filter('wp_unique_term_slug', function ($slug, $term) {
+    global $wpdb;
+    $taxonomy = $term->taxonomy;
+    $exists = $wpdb->get_var($wpdb->prepare(
+        "SELECT t.term_id 
+         FROM {$wpdb->terms} t
+         JOIN {$wpdb->term_taxonomy} tt 
+            ON t.term_id = tt.term_id
+         WHERE t.slug = %s
+         AND tt.taxonomy = %s
+         AND t.term_id != %d
+         LIMIT 1",
+        $slug,
+        $taxonomy,
+        $term->term_id
+    ));
+
+    if (!$exists) {
+        return $term->slug;
+    }
+
+    return $slug;
+
+}, 10, 2);
 
