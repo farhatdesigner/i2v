@@ -349,12 +349,10 @@ ul.header-right-box {
 }
 #header-main-menu {
   gap: 32px;
-  width: 70%;
   display: flex;
   flex-wrap: wrap;
   padding: 0;
   margin: 0;
-  line-height: normal; 
 }
 ul#header-main-menu li a {
   color: #0099ED;
@@ -3237,6 +3235,7 @@ svg.connection-line-7 {
 .bg-trans_txt {
   background-color: transparent !important;
   border: none;
+  font-size: 14px;
 }
 .enterprisebanner {
   width: max-content !important;
