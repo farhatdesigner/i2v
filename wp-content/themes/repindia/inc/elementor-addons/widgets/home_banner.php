@@ -230,6 +230,18 @@ class home_banner extends Widget_Base
 			]
 		);
 
+		// CTA One Classes
+		$repeater->add_control(
+			'cta_one_classes',
+			[
+				'label' => esc_html__('CTA One Classes', 'repindia'),
+				'type' => Controls_Manager::TEXT,
+				'default' => '',
+				'description' => esc_html__('Add custom CSS classes for the CTA One link (separate multiple classes with spaces)', 'repindia'),
+				'label_block' => true,
+			]
+		);
+
 		// CTA Two Text
 		$repeater->add_control(
 			'cta_two_text',
@@ -252,6 +264,18 @@ class home_banner extends Widget_Base
 					'is_external' => false,
 					'nofollow' => false,
 				],
+				'label_block' => true,
+			]
+		);
+
+		// CTA Two Classes
+		$repeater->add_control(
+			'cta_two_classes',
+			[
+				'label' => esc_html__('CTA Two Classes', 'repindia'),
+				'type' => Controls_Manager::TEXT,
+				'default' => '',
+				'description' => esc_html__('Add custom CSS classes for the CTA Two link (separate multiple classes with spaces)', 'repindia'),
 				'label_block' => true,
 			]
 		);
@@ -345,10 +369,14 @@ class home_banner extends Widget_Base
                   $cta_one_url = !empty($slide['cta_one_url']['url']) ? $slide['cta_one_url']['url'] : '#';
                   $cta_one_target = !empty($slide['cta_one_url']['is_external']) ? 'target="_blank"' : '';
                   $cta_one_nofollow = !empty($slide['cta_one_url']['nofollow']) ? 'rel="nofollow"' : '';
+                  $cta_one_classes = !empty($slide['cta_one_classes']) ? esc_attr($slide['cta_one_classes']) : '';
+                  $cta_one_class_attr = !empty($cta_one_classes) ? ' ' . $cta_one_classes : '';
                   $cta_two_text = !empty($slide['cta_two_text']) ? $slide['cta_two_text'] : '';
                   $cta_two_url = !empty($slide['cta_two_url']['url']) ? $slide['cta_two_url']['url'] : '#';
                   $cta_two_target = !empty($slide['cta_two_url']['is_external']) ? 'target="_blank"' : '';
                   $cta_two_nofollow = !empty($slide['cta_two_url']['nofollow']) ? 'rel="nofollow"' : '';
+                  $cta_two_classes = !empty($slide['cta_two_classes']) ? esc_attr($slide['cta_two_classes']) : '';
+                  $cta_two_class_attr = !empty($cta_two_classes) ? ' ' . $cta_two_classes : '';
                   ?>
                   
                   <div class="swiper-slide">
@@ -434,10 +462,10 @@ class home_banner extends Widget_Base
                               <div class="clearfix"></div>
                               <div data-swiper-parallax="500" class="slide-btns">
                                  <?php if (!empty($cta_one_text)) : ?>
-                                    <a href="<?php echo esc_url($cta_one_url); ?>" class="theme-btn xl-btn" <?php echo esc_attr($cta_one_target); ?> <?php echo esc_attr($cta_one_nofollow); ?>><?php echo esc_html($cta_one_text); ?></a>
+                                    <a href="<?php echo esc_url($cta_one_url); ?>" class="theme-btn xl-btn<?php echo $cta_one_class_attr; ?>" <?php echo esc_attr($cta_one_target); ?> <?php echo esc_attr($cta_one_nofollow); ?>><?php echo esc_html($cta_one_text); ?></a>
                                  <?php endif; ?>
                                  <?php if (!empty($cta_two_text)) : ?>
-                                    <a href="<?php echo esc_url($cta_two_url); ?>" class="theme-btn xl-btn grey-btn" <?php echo esc_attr($cta_two_target); ?> <?php echo esc_attr($cta_two_nofollow); ?>><?php echo esc_html($cta_two_text); ?></a>
+                                    <a href="<?php echo esc_url($cta_two_url); ?>" class="theme-btn xl-btn grey-btn<?php echo $cta_two_class_attr; ?>" <?php echo esc_attr($cta_two_target); ?> <?php echo esc_attr($cta_two_nofollow); ?>><?php echo esc_html($cta_two_text); ?></a>
                                  <?php endif; ?>
                               </div>
                            <?php endif; ?>

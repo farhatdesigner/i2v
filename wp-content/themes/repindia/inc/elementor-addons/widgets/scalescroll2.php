@@ -224,6 +224,18 @@ class Scalescroll2 extends Widget_Base
             ]
         );
 
+        // CTA Classes
+        $repeater->add_control(
+            'cta_classes',
+            [
+                'label' => esc_html__('CTA Classes', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'description' => esc_html__('Add custom CSS classes for the CTA link (separate multiple classes with spaces)', 'repindia'),
+                'label_block' => true,
+            ]
+        );
+
         // Bolt Box Title
         $repeater->add_control(
             'bolt_title',
@@ -267,6 +279,18 @@ class Scalescroll2 extends Widget_Base
                     'is_external' => false,
                     'nofollow' => false,
                 ],
+            ]
+        );
+
+        // Bolt CTA Classes
+        $repeater->add_control(
+            'bolt_cta_classes',
+            [
+                'label' => esc_html__('Bolt CTA Classes', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'description' => esc_html__('Add custom CSS classes for the Bolt CTA link (separate multiple classes with spaces)', 'repindia'),
+                'label_block' => true,
             ]
         );
 
@@ -355,12 +379,14 @@ class Scalescroll2 extends Widget_Base
                                 $cta_url = !empty($item['cta_url']['url']) ? $item['cta_url']['url'] : '';
                                 $cta_target = !empty($item['cta_url']['is_external']) ? 'target="_blank"' : '';
                                 $cta_nofollow = !empty($item['cta_url']['nofollow']) ? 'rel="nofollow"' : '';
+                                $cta_classes = !empty($item['cta_classes']) ? ' ' . esc_attr($item['cta_classes']) : '';
                                 $bolt_title = !empty($item['bolt_title']) ? $item['bolt_title'] : '';
                                 $bolt_icon = !empty($item['bolt_icon']['url']) ? $item['bolt_icon']['url'] : '';
                                 $bolt_cta_text = !empty($item['bolt_cta_text']) ? $item['bolt_cta_text'] : '';
                                 $bolt_cta_url = !empty($item['bolt_cta_url']['url']) ? $item['bolt_cta_url']['url'] : '';
                                 $bolt_cta_target = !empty($item['bolt_cta_url']['is_external']) ? 'target="_blank"' : '';
                                 $bolt_cta_nofollow = !empty($item['bolt_cta_url']['nofollow']) ? 'rel="nofollow"' : '';
+                                $bolt_cta_classes = !empty($item['bolt_cta_classes']) ? ' ' . esc_attr($item['bolt_cta_classes']) : '';
                                 $has_blue_headline = !empty($item['has_blue_headline']) && $item['has_blue_headline'] === 'yes';
                                 ?>
                                 <div class="details details-<?php echo esc_attr($item_num); ?>">
@@ -392,7 +418,7 @@ class Scalescroll2 extends Widget_Base
                                                 <?php endif; ?>
                                                 <?php if (!empty($bolt_cta_text) && !empty($bolt_cta_url)) : ?>
                                                     <div class="btn-bolt">
-                                                        <a href="<?php echo esc_url($bolt_cta_url); ?>" <?php echo $bolt_cta_target; ?> <?php echo $bolt_cta_nofollow; ?>><?php echo esc_html($bolt_cta_text); ?></a>
+                                                        <a href="<?php echo esc_url($bolt_cta_url); ?>" class="<?php echo $bolt_cta_classes; ?>" <?php echo $bolt_cta_target; ?> <?php echo $bolt_cta_nofollow; ?>><?php echo esc_html($bolt_cta_text); ?></a>
                                                     </div>
                                                 <?php endif; ?>
                                             </div>
@@ -416,12 +442,14 @@ class Scalescroll2 extends Widget_Base
                             $cta_url = !empty($item['cta_url']['url']) ? $item['cta_url']['url'] : '';
                             $cta_target = !empty($item['cta_url']['is_external']) ? 'target="_blank"' : '';
                             $cta_nofollow = !empty($item['cta_url']['nofollow']) ? 'rel="nofollow"' : '';
+                            $cta_classes = !empty($item['cta_classes']) ? ' ' . esc_attr($item['cta_classes']) : '';
                             $bolt_title = !empty($item['bolt_title']) ? $item['bolt_title'] : '';
                             $bolt_icon = !empty($item['bolt_icon']['url']) ? $item['bolt_icon']['url'] : '';
                             $bolt_cta_text = !empty($item['bolt_cta_text']) ? $item['bolt_cta_text'] : '';
                             $bolt_cta_url = !empty($item['bolt_cta_url']['url']) ? $item['bolt_cta_url']['url'] : '';
                             $bolt_cta_target = !empty($item['bolt_cta_url']['is_external']) ? 'target="_blank"' : '';
                             $bolt_cta_nofollow = !empty($item['bolt_cta_url']['nofollow']) ? 'rel="nofollow"' : '';
+                            $bolt_cta_classes = !empty($item['bolt_cta_classes']) ? ' ' . esc_attr($item['bolt_cta_classes']) : '';
                             $has_blue_headline = !empty($item['has_blue_headline']) && $item['has_blue_headline'] === 'yes';
                             
                             // Image handling
@@ -456,7 +484,7 @@ class Scalescroll2 extends Widget_Base
                                         <?php endif; ?>
                                         <?php if (!empty($cta_text) && !empty($cta_url)) : ?>
                                             <div class="text-left">
-                                                <a class="theme-btn bg-trans border_btnlight" href="<?php echo esc_url($cta_url); ?>" <?php echo $cta_target; ?> <?php echo $cta_nofollow; ?>><?php echo esc_html($cta_text); ?></a>
+                                                <a class="theme-btn bg-trans border_btnlight<?php echo $cta_classes; ?>" href="<?php echo esc_url($cta_url); ?>" <?php echo $cta_target; ?> <?php echo $cta_nofollow; ?>><?php echo esc_html($cta_text); ?></a>
                                             </div>
                                         <?php endif; ?>
                                         <?php if (!empty($bolt_title) || !empty($bolt_icon) || (!empty($bolt_cta_text) && !empty($bolt_cta_url))) : ?>
@@ -469,7 +497,7 @@ class Scalescroll2 extends Widget_Base
                                                 <?php endif; ?>
                                                 <?php if (!empty($bolt_cta_text) && !empty($bolt_cta_url)) : ?>
                                                     <div class="btn-bolt">
-                                                        <a href="<?php echo esc_url($bolt_cta_url); ?>" <?php echo $bolt_cta_target; ?> <?php echo $bolt_cta_nofollow; ?>><?php echo esc_html($bolt_cta_text); ?></a>
+                                                        <a href="<?php echo esc_url($bolt_cta_url); ?>" class="<?php echo $bolt_cta_classes; ?>" <?php echo $bolt_cta_target; ?> <?php echo $bolt_cta_nofollow; ?>><?php echo esc_html($bolt_cta_text); ?></a>
                                                     </div>
                                                 <?php endif; ?>
                                             </div>

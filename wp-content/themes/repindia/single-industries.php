@@ -14,6 +14,11 @@ $newscategories = get_the_category();
             ?>
         </div>
     <?php the_content();  ?>
+    
+    <?php 
+    // Include brochure popup component
+    get_template_part('template-parts/brochure-popup');
+    ?>
 	<?php 
 	}
 	?>

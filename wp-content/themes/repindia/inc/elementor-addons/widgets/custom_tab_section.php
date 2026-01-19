@@ -118,6 +118,18 @@ class Custom_Tab_Section extends Widget_Base
             ]
         );
 
+        // Content CTA Classes
+        $repeater->add_control(
+            'content_cta_classes',
+            [
+                'label' => esc_html__('Content CTA Classes', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'description' => esc_html__('Add custom CSS classes for the Content CTA link (separate multiple classes with spaces)', 'repindia'),
+                'label_block' => true,
+            ]
+        );
+
         // Content Image (Default Theme)
         $repeater->add_control(
             'content_image_default',
@@ -541,6 +553,7 @@ class Custom_Tab_Section extends Widget_Base
                         $content_cta_url = !empty($item['content_cta_url']['url']) ? $item['content_cta_url']['url'] : '#';
                         $content_cta_target = !empty($item['content_cta_url']['is_external']) ? 'target="_blank"' : '';
                         $content_cta_nofollow = !empty($item['content_cta_url']['nofollow']) ? 'rel="nofollow"' : '';
+                        $content_cta_classes = !empty($item['content_cta_classes']) ? ' ' . esc_attr($item['content_cta_classes']) : '';
                         ?>
                         <div class="<?php echo esc_attr($panel_class); ?>" id="<?php echo esc_attr($panel_id); ?>">
                             <div class="sec-panel-inner">
@@ -561,7 +574,7 @@ class Custom_Tab_Section extends Widget_Base
                                     <?php endif; ?>
                                     <?php if (!empty($content_cta_text)): ?>
                                         <div class="text-left">
-                                            <a href="<?php echo esc_url($content_cta_url); ?>" class="theme-btn bg-trans border_btnlight"
+                                            <a href="<?php echo esc_url($content_cta_url); ?>" class="theme-btn bg-trans border_btnlight<?php echo $content_cta_classes; ?>"
                                                 <?php echo esc_attr($content_cta_target); ?>                     <?php echo esc_attr($content_cta_nofollow); ?>><?php echo esc_html($content_cta_text); ?></a>
                                         </div>
                                     <?php endif; ?>

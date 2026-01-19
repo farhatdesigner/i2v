@@ -145,6 +145,17 @@ class Customtabsolution extends Widget_Base
 			]
 		);
 
+		$repeater->add_control(
+			'primary_cta_classes',
+			[
+				'label' => esc_html__('Primary CTA Classes', 'repindia'),
+				'type' => \Elementor\Controls_Manager::TEXT,
+				'default' => '',
+				'description' => esc_html__('Add custom CSS classes for the Primary CTA link (separate multiple classes with spaces)', 'repindia'),
+				'label_block' => true,
+			]
+		);
+
 		// Nested Repeater for Properties
 		$properties_repeater = new \Elementor\Repeater();
 		$properties_repeater->add_control(
@@ -208,6 +219,17 @@ class Customtabsolution extends Widget_Base
 					'is_external' => false,
 					'nofollow' => false,
 				],
+				'label_block' => true,
+			]
+		);
+
+		$repeater->add_control(
+			'secondary_cta_classes',
+			[
+				'label' => esc_html__('Secondary CTA Classes', 'repindia'),
+				'type' => \Elementor\Controls_Manager::TEXT,
+				'default' => '',
+				'description' => esc_html__('Add custom CSS classes for the Secondary CTA link (separate multiple classes with spaces)', 'repindia'),
 				'label_block' => true,
 			]
 		);
@@ -289,11 +311,13 @@ class Customtabsolution extends Widget_Base
 											$primary_cta_url = !empty($tab['primary_cta_url']['url']) ? $tab['primary_cta_url']['url'] : '#';
 											$primary_cta_target = !empty($tab['primary_cta_url']['is_external']) ? 'target="_blank"' : '';
 											$primary_cta_nofollow = !empty($tab['primary_cta_url']['nofollow']) ? 'rel="nofollow"' : '';
+											$primary_cta_classes = !empty($tab['primary_cta_classes']) ? ' ' . esc_attr($tab['primary_cta_classes']) : '';
 											
 											$secondary_cta_text = !empty($tab['secondary_cta_text']) ? $tab['secondary_cta_text'] : '';
 											$secondary_cta_url = !empty($tab['secondary_cta_url']['url']) ? $tab['secondary_cta_url']['url'] : '#';
 											$secondary_cta_target = !empty($tab['secondary_cta_url']['is_external']) ? 'target="_blank"' : '';
 											$secondary_cta_nofollow = !empty($tab['secondary_cta_url']['nofollow']) ? 'rel="nofollow"' : '';
+											$secondary_cta_classes = !empty($tab['secondary_cta_classes']) ? ' ' . esc_attr($tab['secondary_cta_classes']) : '';
 											
 											// SVG checkmark icon
 											$checkmark_svg = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L5.70711 9.70711C5.31658 10.0976 4.68342 10.0976 4.29289 9.70711L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289C0.683417 3.90237 1.31658 3.90237 1.70711 4.29289L5 7.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893Z" fill="#8793AF" /></svg>';
@@ -332,7 +356,7 @@ class Customtabsolution extends Widget_Base
 														
 														<?php if (!empty($primary_cta_text)) : ?>
 															<div class="text-left">
-																<a href="<?php echo esc_url($primary_cta_url); ?>" class="theme-btn bg-trans border_btnlight" <?php echo esc_attr($primary_cta_target); ?> <?php echo esc_attr($primary_cta_nofollow); ?>><?php echo esc_html($primary_cta_text); ?></a>
+																<a href="<?php echo esc_url($primary_cta_url); ?>" class="theme-btn bg-trans border_btnlight<?php echo $primary_cta_classes; ?>" <?php echo esc_attr($primary_cta_target); ?> <?php echo esc_attr($primary_cta_nofollow); ?>><?php echo esc_html($primary_cta_text); ?></a>
 															</div>
 														<?php endif; ?>
 													</div>
@@ -363,7 +387,7 @@ class Customtabsolution extends Widget_Base
 															</ul>
 															<?php if (!empty($secondary_cta_text)) : ?>
 																	<div class="text-left pt-4">
-																		<a href="<?php echo esc_url($secondary_cta_url); ?>" class="theme-btn bg-trans border_btnlight" <?php echo esc_attr($secondary_cta_target); ?> <?php echo esc_attr($secondary_cta_nofollow); ?>><?php echo esc_html($secondary_cta_text); ?></a>
+																		<a href="<?php echo esc_url($secondary_cta_url); ?>" class="theme-btn bg-trans border_btnlight<?php echo $secondary_cta_classes; ?>" <?php echo esc_attr($secondary_cta_target); ?> <?php echo esc_attr($secondary_cta_nofollow); ?>><?php echo esc_html($secondary_cta_text); ?></a>
 																	</div>
 																<?php endif; ?>
 														</div>

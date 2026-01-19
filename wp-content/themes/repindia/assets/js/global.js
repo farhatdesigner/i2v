@@ -1572,7 +1572,7 @@ if (document.querySelector(".hz-slider-section .swiper")) {
     // },
     speed: 1200,
     loop: false,
-    slidesPerView: 2.3,
+    slidesPerView: 1.1,
     spaceBetween: 30,
     loopAddBlankSlides: false,
     slideToClickedSlide: true,
@@ -1584,22 +1584,54 @@ if (document.querySelector(".hz-slider-section .swiper")) {
     resistance: true,
     resistanceRatio: 0.85,
     breakpoints: {
-      480: {
-        slidesPerView: 1,
+      580: {
+        slidesPerView: 1.1,
         spaceBetween: 30
       },
       768: {
-        slidesPerView: 2,
+        slidesPerView: 1.2,
         spaceBetween: 30
       },
-      1400: {
-        slidesPerView: 3.6,
+      1024: {
+        slidesPerView: 1.5,
+        spaceBetween: 30
+      },
+      1280: {
+        slidesPerView: 2.3,
         spaceBetween: 30
       }
     }
   });
   
   hzSwiper.slideTo(0);
+  
+  // Function to apply correct slidesPerView based on window width
+  function applyCorrectSlidesPerView() {
+    const width = window.innerWidth;
+    let slidesPerView = 1.1;
+    
+    if (width >= 1280) {
+      slidesPerView = 2.3;
+    } else if (width >= 1024) {
+      slidesPerView = 1.5;
+    } else if (width >= 768) {
+      slidesPerView = 1.2;
+    } else {
+      slidesPerView = 1.1;
+    }
+    
+    // Only update if the value has changed
+    if (hzSwiper.params.slidesPerView !== slidesPerView) {
+      hzSwiper.params.slidesPerView = slidesPerView;
+      hzSwiper.update();
+    }
+  }
+  
+  // Apply correct slidesPerView immediately and after a short delay
+  applyCorrectSlidesPerView();
+  setTimeout(function() {
+    applyCorrectSlidesPerView();
+  }, 100);
   
   // Function to initialize GSAP pin animation (desktop only)
   function initHzSliderGSAP() {
@@ -1619,7 +1651,8 @@ if (document.querySelector(".hz-slider-section .swiper")) {
     
     // Disable Swiper touch on desktop (controlled by scroll)
     hzSwiper.allowTouchMove = false;
-    hzSwiper.update();
+    // Apply correct slidesPerView based on screen size
+    applyCorrectSlidesPerView();
     
     hzTimeline = gsap.timeline({
       scrollTrigger: {
@@ -1627,7 +1660,7 @@ if (document.querySelector(".hz-slider-section .swiper")) {
         pin: ".hz-slider-section",
         pinSpacing: true,
         pinReparent: false, // Changed to false to prevent DOM reparenting issues
-        start: "top 10%",
+        start: "top 15%",
         end: "+=" + scrollDistance + "vh", // Dynamic based on slides
         scrub: 2, // Increased from true to 2 for smoother, slower scroll response
         markers: false,
@@ -1676,6 +1709,9 @@ if (document.querySelector(".hz-slider-section .swiper")) {
   window.addEventListener("resize", function() {
     clearTimeout(hzResizeTimer);
     hzResizeTimer = setTimeout(function() {
+      // Update Swiper to apply breakpoint changes
+      applyCorrectSlidesPerView();
+      
       const isDesktop = window.innerWidth >= 1024;
       const hasGSAP = hzScrollTrigger !== null;
       
