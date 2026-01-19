@@ -177,6 +177,15 @@ class Scalescroll extends Widget_Base
                 'label_block' => true,
             ]
         );
+        $repeater->add_control(
+            'item_sub_title',
+            [
+                'label' => esc_html__('Item SubTitle', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'label_block' => true,
+            ]
+        );
 
         // Item Description
         $repeater->add_control(
@@ -329,6 +338,19 @@ class Scalescroll extends Widget_Base
             .js-dark .youtube-wrapper .white_theme_thumb { display: none; }
             .js-dark .youtube-wrapper .black_theme_iframe,
             .js-dark .youtube-wrapper .black_theme_thumb { display: block; }
+            h4.subtitlebox {
+                background: #E6EBF2;
+                border-radius: 28px;
+                padding: 4px 12px;
+                color: #4A5673;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 20px;
+                width: auto;
+                display: inline-block;
+                text-align: left;
+            }
             @media(max-width: 768px){
                 .photo_custom .details * { text-align: center; align-items: center;}
             }
@@ -364,6 +386,7 @@ class Scalescroll extends Widget_Base
                                     <?php
                                     $item_num = $index + 1;
                                     $item_title = !empty($item['item_title']) ? $item['item_title'] : '';
+                                    $item_sub_title = !empty($item['item_sub_title']) ? $item['item_sub_title'] : '';
                                     $item_desc = !empty($item['item_description']) ? $item['item_description'] : '';
                                     $cta_text = !empty($item['cta_text']) ? $item['cta_text'] : '';
                                     $cta_url = !empty($item['cta_url']['url']) ? $item['cta_url']['url'] : '';
@@ -384,6 +407,9 @@ class Scalescroll extends Widget_Base
                                             <div class="headline blue"></div>
                                         <?php endif; ?>
                                         <div class="txtflex">
+                                            <?php if (!empty($item_sub_title)) : ?>
+                                                <h4 class="subtitlebox"><?php echo esc_html($item_sub_title); ?></h4>
+                                            <?php endif; ?>
                                             <?php if (!empty($item_title)) : ?>
                                                 <h2><?php echo esc_html($item_title); ?></h2>
                                             <?php endif; ?>
@@ -423,6 +449,7 @@ class Scalescroll extends Widget_Base
                                     $item_num = $index + 1;
                                     $media_type = !empty($item['media_type']) ? $item['media_type'] : 'image';
                                     $item_title = !empty($item['item_title']) ? $item['item_title'] : '';
+                                    $item_sub_title = !empty($item['item_sub_title']) ? $item['item_sub_title'] : '';
                                     $item_desc = !empty($item['item_description']) ? $item['item_description'] : '';
                                     $cta_text = !empty($item['cta_text']) ? $item['cta_text'] : '';
                                     $cta_url = !empty($item['cta_url']['url']) ? $item['cta_url']['url'] : '';
@@ -477,6 +504,9 @@ class Scalescroll extends Widget_Base
                                                 <div class="headline blue"></div>
                                             <?php endif; ?>
                                             <div class="txtflex">
+                                                <?php if (!empty($item_sub_title)) : ?>
+                                                    <h4 class="subtitlebox"><?php echo esc_html($item_sub_title); ?></h4>
+                                                <?php endif; ?>
                                                 <?php if (!empty($item_title)) : ?>
                                                     <h2><?php echo esc_html($item_title); ?></h2>
                                                 <?php endif; ?>
