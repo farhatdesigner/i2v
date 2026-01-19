@@ -69,7 +69,7 @@ if ($filter_type === 'all') {
 }
 ?>
 <div class="search_result_header" style="background-image: url('<?php echo esc_url( home_url( '/' ) ); ?>wp-content/uploads/2024/03/home_banner.webp');" >
-	<div class="container">
+	<div class="custom-container">
 		<div class="inner_page_banner_content">
 			<h1><?php echo esc_html__( 'Search result', 'repindia' ) ?></h1>
 			<p><?php echo esc_html__( 'Browse through resources matching your search. Quickly find software downloads, manuals, brochures, or tutorials to get the information you need.', 'repindia' ); ?></p>
@@ -77,7 +77,7 @@ if ($filter_type === 'all') {
 	</div>
 </div>
 <div class="global_search search_layout">
-	<div class="container">
+	<div class="custom-container">
 		<div class="search-results-wrapper">
 			<!-- Search Tabs -->
 			<div class="search-tabs-container">
@@ -202,10 +202,10 @@ if ($filter_type === 'all') {
 						</div>
 						
 						<div class="search-no-results-actions">
-							<a href="<?php echo esc_url(home_url('/resources/')); ?>" class="search-btn-primary">
+							<a href="<?php echo esc_url(home_url('/resources/')); ?>" class="theme-btn xl-btn">
 								<?php echo esc_html__('Browse all resources', 'repindia'); ?>
 							</a>
-							<a href="<?php echo esc_url(home_url('/i2vs-products/')); ?>" class="search-btn-secondary">
+							<a href="<?php echo esc_url(home_url('/i2vs-products/')); ?>" class="theme-btn-white xl-btn border-btn-grey">
 								<?php echo esc_html__('Explore our solutions', 'repindia'); ?>
 							</a>
 						</div>

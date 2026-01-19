@@ -347,11 +347,53 @@ ul.header-right-box {
   width: 100%;
   position: relative;
 }
-
 #header-main-menu {
   gap: 32px;
+  width: 70%;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+  line-height: normal; 
 }
-
+ul#header-main-menu li a {
+  color: #0099ED;
+  font-size: 18px;
+  font-weight: 600;
+  position: relative;
+  padding: 8px 16px 0 36px;
+}
+ul#header-main-menu li>a:before {
+  background: #8793AF;
+  position: absolute;
+  content: '';
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  top: 18px;
+}
+.btn-demo {
+  color: #0099ED;
+  font-size: 18px;
+  font-weight: 600;
+  position: relative;
+  padding: 8px 16px;
+  width: 30%;
+}
+ul#header-main-menu li>a:before {
+  background: #8793AF;
+  position: absolute;
+  content: '';
+  left: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: 100%;
+  top: 18px;
+}
+ul#header-main-menu li:last-child a {
+  color: #5F6F94;
+}
 header #header-main-menu li {
   position: relative;
 }
