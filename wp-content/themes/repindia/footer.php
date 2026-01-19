@@ -360,6 +360,56 @@ if (!empty($repindia_option['contact_popup_form']))
 	</div>
 <?php } ?>
 
+<!-- Channel Partner Modal -->
+<?php
+if (!empty($repindia_option['channel_partner_form'])) 
+{ ?>
+	<div class="formpopup_modal modal fade" id="channelPartnerBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="channelPartnerBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-demo-form">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="modal-header">
+						<h5 class="modal-title" id="channelPartnerBackdropLabel">Channel Partner</h5>
+						<span class="btn-closecustom" data-bs-dismiss="modal" aria-label="Close">
+							<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#000'>
+								<path
+									d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414' />
+							</svg>
+						</span>
+					</div>
+					<?php echo do_shortcode(wp_kses_post($repindia_option['channel_partner_form'])); ?>
+				</div>
+			</div>
+		</div>
+	</div>
+<?php } ?>
+
+<!-- Technology Partner Modal -->
+<?php
+if (!empty($repindia_option['technology_partner_form'])) 
+{ ?>
+	<div class="formpopup_modal modal fade" id="technologyPartnerBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="technologyPartnerBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-demo-form">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="modal-header">
+						<h5 class="modal-title" id="technologyPartnerBackdropLabel">Technology Partner</h5>
+						<span class="btn-closecustom" data-bs-dismiss="modal" aria-label="Close">
+							<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#000'>
+								<path
+									d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414' />
+							</svg>
+						</span>
+					</div>
+					<?php echo do_shortcode(wp_kses_post($repindia_option['technology_partner_form'])); ?>
+				</div>
+			</div>
+		</div>
+	</div>
+<?php } ?>
+
 <!-- JavaScript to open modals for CTAs with data-modal-target attribute or class -->
 <script>
 (function() {
@@ -389,7 +439,23 @@ if (!empty($repindia_option['contact_popup_form']))
 		function handleModalClick(e, modalId) {
 			var trigger = e.currentTarget;
 			
-			// Check if it's a link with external URL
+			// If element has modal trigger class or data attribute, always open modal
+			// This ensures links with modal classes work properly
+			var hasModalTrigger = trigger.hasAttribute('data-modal-target') ||
+				trigger.classList.contains('open-demo-modal') ||
+				trigger.classList.contains('open-contact-modal') ||
+				trigger.classList.contains('open-channel-partner-modal') ||
+				trigger.classList.contains('open-technology-partner-modal');
+			
+			if (hasModalTrigger) {
+				// Prevent default to avoid navigation when modal trigger is present
+				e.preventDefault();
+				// Open the modal
+				openModal(modalId);
+				return;
+			}
+			
+			// Fallback: Check if it's a link with external URL (for backward compatibility)
 			if (trigger.tagName === 'A' && trigger.getAttribute('href')) {
 				var href = trigger.getAttribute('href');
 				// If it's an external link (not # or starting with #), don't prevent default
@@ -437,6 +503,32 @@ if (!empty($repindia_option['contact_popup_form']))
 				if (!trigger.hasAttribute('data-modal-target')) {
 					trigger.addEventListener('click', function(e) {
 						handleModalClick(e, 'contactBackdrop');
+					});
+				}
+			});
+		}
+		
+		// Handle elements with class 'open-channel-partner-modal'
+		var channelPartnerModalTriggers = document.querySelectorAll('.open-channel-partner-modal');
+		if (channelPartnerModalTriggers.length > 0 && document.getElementById('channelPartnerBackdrop')) {
+			channelPartnerModalTriggers.forEach(function(trigger) {
+				// Skip if already has data-modal-target
+				if (!trigger.hasAttribute('data-modal-target')) {
+					trigger.addEventListener('click', function(e) {
+						handleModalClick(e, 'channelPartnerBackdrop');
+					});
+				}
+			});
+		}
+		
+		// Handle elements with class 'open-technology-partner-modal'
+		var technologyPartnerModalTriggers = document.querySelectorAll('.open-technology-partner-modal');
+		if (technologyPartnerModalTriggers.length > 0 && document.getElementById('technologyPartnerBackdrop')) {
+			technologyPartnerModalTriggers.forEach(function(trigger) {
+				// Skip if already has data-modal-target
+				if (!trigger.hasAttribute('data-modal-target')) {
+					trigger.addEventListener('click', function(e) {
+						handleModalClick(e, 'technologyPartnerBackdrop');
 					});
 				}
 			});

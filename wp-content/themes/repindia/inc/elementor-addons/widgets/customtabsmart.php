@@ -118,6 +118,17 @@ class Customtabsmart extends Widget_Base
 		);
 
 		$repeater->add_control(
+			'cta_one_classes',
+			[
+				'label' => esc_html__('CTA 1 Classes', 'repindia'),
+				'type' => Controls_Manager::TEXT,
+				'default' => '',
+				'description' => esc_html__('Add custom CSS classes for the CTA 1 link (separate multiple classes with spaces)', 'repindia'),
+				'label_block' => true,
+			]
+		);
+
+		$repeater->add_control(
 			'cta_two_text',
 			[
 				'label' => esc_html__('CTA 2 Text', 'repindia'),
@@ -136,6 +147,17 @@ class Customtabsmart extends Widget_Base
 				'default' => [
 					'url' => '#',
 				],
+			]
+		);
+
+		$repeater->add_control(
+			'cta_two_classes',
+			[
+				'label' => esc_html__('CTA 2 Classes', 'repindia'),
+				'type' => Controls_Manager::TEXT,
+				'default' => '',
+				'description' => esc_html__('Add custom CSS classes for the CTA 2 link (separate multiple classes with spaces)', 'repindia'),
+				'label_block' => true,
 			]
 		);
 
@@ -268,10 +290,12 @@ class Customtabsmart extends Widget_Base
 											$cta_one_url = isset($tab['cta_one_url']['url']) ? esc_url($tab['cta_one_url']['url']) : '#';
 											$cta_one_target = isset($tab['cta_one_url']['is_external']) && $tab['cta_one_url']['is_external'] ? ' target="_blank"' : '';
 											$cta_one_nofollow = isset($tab['cta_one_url']['nofollow']) && $tab['cta_one_url']['nofollow'] ? ' rel="nofollow"' : '';
+											$cta_one_classes = isset($tab['cta_one_classes']) && !empty($tab['cta_one_classes']) ? ' ' . esc_attr($tab['cta_one_classes']) : '';
 											
 											$cta_two_url = isset($tab['cta_two_url']['url']) ? esc_url($tab['cta_two_url']['url']) : '#';
 											$cta_two_target = isset($tab['cta_two_url']['is_external']) && $tab['cta_two_url']['is_external'] ? ' target="_blank"' : '';
 											$cta_two_nofollow = isset($tab['cta_two_url']['nofollow']) && $tab['cta_two_url']['nofollow'] ? ' rel="nofollow"' : '';
+											$cta_two_classes = isset($tab['cta_two_classes']) && !empty($tab['cta_two_classes']) ? ' ' . esc_attr($tab['cta_two_classes']) : '';
 											
 											$item_title = isset($tab['item_title']) ? $tab['item_title'] : '';
 											$item_description = isset($tab['item_description']) ? $tab['item_description'] : '';
@@ -310,10 +334,10 @@ class Customtabsmart extends Widget_Base
 														<?php if (!empty($cta_one_text) || !empty($cta_two_text)): ?>
 															<div class="btn-sec_gap">
 																<?php if (!empty($cta_one_text)): ?>
-																	<a class="theme-btn-white border-btn-grey" href="<?php echo $cta_one_url; ?>"<?php echo $cta_one_target . $cta_one_nofollow; ?>><?php echo esc_html($cta_one_text); ?></a>
+																	<a class="theme-btn-white border-btn-grey<?php echo $cta_one_classes; ?>" href="<?php echo $cta_one_url; ?>"<?php echo $cta_one_target . $cta_one_nofollow; ?>><?php echo esc_html($cta_one_text); ?></a>
 																<?php endif; ?>
 																<?php if (!empty($cta_two_text)): ?>
-																	<a href="<?php echo $cta_two_url; ?>" class="theme-btn bg-trans border_btnlight"<?php echo $cta_two_target . $cta_two_nofollow; ?>><?php echo esc_html($cta_two_text); ?></a>
+																	<a href="<?php echo $cta_two_url; ?>" class="theme-btn bg-trans border_btnlight<?php echo $cta_two_classes; ?>"<?php echo $cta_two_target . $cta_two_nofollow; ?>><?php echo esc_html($cta_two_text); ?></a>
 																<?php endif; ?>
 															</div>
 														<?php endif; ?>

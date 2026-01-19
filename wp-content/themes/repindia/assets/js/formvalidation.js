@@ -603,6 +603,141 @@
         });
         observer.observe(document.body, { childList: true, subtree: true });
       }
+      
+      // Handle Bootstrap modal forms - re-initialize validation when modal opens
+      // Bootstrap 5
+      $(document).on('shown.bs.modal', '.modal', function() {
+        var $modal = $(this);
+        var $forms = $modal.find('.wpcf7');
+        if ($forms.length > 0) {
+          // Small delay to ensure form is fully rendered
+          setTimeout(function() {
+            $forms.each(function() {
+              var $form = $(this);
+              // Re-initialize validation for this form
+              var hasFields = $form.find('input, select, textarea').not('input[type="submit"], input[type="hidden"], input[type="button"]').length > 0;
+              toggleSubmitButton($form, hasFields ? checkFormValidation($form) : true);
+              
+              // Initialize phone fields in modal
+              $form.find('input[name="phone"]').each(function() {
+                var $phoneField = $(this);
+                var $wrap = $phoneField.closest('.wpcf7-form-control-wrap');
+                var isIntlTelInput = $phoneField.closest('.intl-tel-input').length > 0 || 
+                                     $wrap.find('.intl-tel-input').length > 0 ||
+                                     $phoneField.hasClass('intl-tel-input') ||
+                                     typeof window.intlTelInput !== 'undefined';
+                
+                if (!isIntlTelInput) {
+                  var cleanValue = this.value.replace(/[^0-9]/g, '');
+                  if (cleanValue.length > 15) {
+                    cleanValue = cleanValue.substring(0, 15);
+                    $phoneField.val(cleanValue);
+                  }
+                  $phoneField.data('prev-phone-value', cleanValue);
+                }
+              });
+              
+              // Validate after initialization
+              validateAndUpdateSubmit($form);
+            });
+          }, 200);
+        }
+      });
+      
+      // Bootstrap 4 (jQuery) - for backward compatibility
+      $(document).on('shown', '.modal', function() {
+        var $modal = $(this);
+        var $forms = $modal.find('.wpcf7');
+        if ($forms.length > 0) {
+          setTimeout(function() {
+            $forms.each(function() {
+              var $form = $(this);
+              var hasFields = $form.find('input, select, textarea').not('input[type="submit"], input[type="hidden"], input[type="button"]').length > 0;
+              toggleSubmitButton($form, hasFields ? checkFormValidation($form) : true);
+              validateAndUpdateSubmit($form);
+            });
+          }, 200);
+        }
+      });
+      
+      // Handle custom popup modals - watch for .active class addition
+      var customModalObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+            var $target = $(mutation.target);
+            // Check if modal became active (has .active class)
+            if ($target.hasClass('active')) {
+              // Check if this is a modal container (brochure-modal-overlay, resource-modal-overlay, etc.)
+              var isModalOverlay = $target.hasClass('brochure-modal-overlay') || 
+                                   $target.hasClass('resource-modal-overlay') ||
+                                   $target.closest('.modal-dialog, .modal-content').length > 0 ||
+                                   $target.is('.formpopup_modal, .modal');
+              
+              if (isModalOverlay) {
+                // Find all forms within this modal
+                var $forms = $target.find('.wpcf7');
+                if ($forms.length > 0) {
+                  setTimeout(function() {
+                    $forms.each(function() {
+                      var $form = $(this);
+                      var hasFields = $form.find('input, select, textarea').not('input[type="submit"], input[type="hidden"], input[type="button"]').length > 0;
+                      toggleSubmitButton($form, hasFields ? checkFormValidation($form) : true);
+                      
+                      // Initialize phone fields in custom modal
+                      $form.find('input[name="phone"]').each(function() {
+                        var $phoneField = $(this);
+                        var $wrap = $phoneField.closest('.wpcf7-form-control-wrap');
+                        var isIntlTelInput = $phoneField.closest('.intl-tel-input').length > 0 || 
+                                             $wrap.find('.intl-tel-input').length > 0 ||
+                                             $phoneField.hasClass('intl-tel-input') ||
+                                             typeof window.intlTelInput !== 'undefined';
+                        
+                        if (!isIntlTelInput) {
+                          var cleanValue = this.value.replace(/[^0-9]/g, '');
+                          if (cleanValue.length > 15) {
+                            cleanValue = cleanValue.substring(0, 15);
+                            $phoneField.val(cleanValue);
+                          }
+                          $phoneField.data('prev-phone-value', cleanValue);
+                        }
+                      });
+                      
+                      validateAndUpdateSubmit($form);
+                    });
+                  }, 200);
+                }
+              }
+            }
+          }
+        });
+      });
+      
+      // Observe all potential modal containers for class changes
+      if (typeof MutationObserver !== 'undefined') {
+        // Observe existing modals
+        $('.brochure-modal-overlay, .resource-modal-overlay, .formpopup_modal, .modal').each(function() {
+          customModalObserver.observe(this, { attributes: true, attributeFilter: ['class'] });
+        });
+        
+        // Also watch for new modals being added
+        var modalContainerObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            $(mutation.addedNodes).each(function() {
+              var $node = $(this);
+              // Check if added node is a modal or contains modals
+              var $modals = $node.is('.brochure-modal-overlay, .resource-modal-overlay, .formpopup_modal, .modal') 
+                            ? $node 
+                            : $node.find('.brochure-modal-overlay, .resource-modal-overlay, .formpopup_modal, .modal');
+              
+              $modals.each(function() {
+                customModalObserver.observe(this, { attributes: true, attributeFilter: ['class'] });
+              });
+            });
+          });
+        });
+        
+        modalContainerObserver.observe(document.body, { childList: true, subtree: true });
+      }
     });
   }
 
