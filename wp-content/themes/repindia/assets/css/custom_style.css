@@ -2294,6 +2294,11 @@ label.form-label.required_note-demo {
   width: 100%;
   transition: all 0.3s ease;
 }
+#partner_menu .fixed-header {
+    left: auto;
+    right: auto;
+    margin: 0 auto !important;
+}
 
 .sticky-custom > ul > li,
 .sticky-tab > ul > li {
@@ -3264,6 +3269,13 @@ span.star {
 .card-image > img {
   border-radius: 12px !important;
 }
+
+.full_mobile .border_btnlight {
+  width: auto;
+  margin: 0 auto;
+}
+
+
 @media (min-width: 768px) {
   .footer-accordion-icon {
     display: none;
