@@ -293,6 +293,109 @@ class Scalescroll extends Widget_Base
             ]
         );
 
+        // First Nested Repeater
+        $nested_repeater_1 = new \Elementor\Repeater();
+        
+        // Image upload (default theme)
+        $nested_repeater_1->add_control(
+            'nested_image_default',
+            [
+                'label' => esc_html__('Default Theme Image', 'repindia'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [],
+            ]
+        );
+
+        // Image upload (dark theme)
+        $nested_repeater_1->add_control(
+            'nested_image_dark',
+            [
+                'label' => esc_html__('Dark Theme Image', 'repindia'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [],
+                'description' => esc_html__('Leave empty to use default image for dark theme', 'repindia'),
+            ]
+        );
+
+        // Title
+        $nested_repeater_1->add_control(
+            'nested_title',
+            [
+                'label' => esc_html__('Title', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'label_block' => true,
+            ]
+        );
+
+        // Description (text editor)
+        $nested_repeater_1->add_control(
+            'nested_description',
+            [
+                'label' => esc_html__('Description', 'repindia'),
+                'type' => Controls_Manager::WYSIWYG,
+                'default' => '',
+                'label_block' => true,
+            ]
+        );
+
+        $repeater->add_control(
+            'nested_items_1',
+            [
+                'label' => esc_html__('Featured Items', 'repindia'),
+                'type' => Controls_Manager::REPEATER,
+                'fields' => $nested_repeater_1->get_controls(),
+                'default' => [],
+                'title_field' => '{{{ nested_title }}}',
+            ]
+        );
+
+        // Second Nested Repeater
+        $nested_repeater_2 = new \Elementor\Repeater();
+        
+        // Image upload (default theme)
+        $nested_repeater_2->add_control(
+            'nested_image_default_2',
+            [
+                'label' => esc_html__('Default Theme Image', 'repindia'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [],
+            ]
+        );
+
+        // Image upload (dark theme)
+        $nested_repeater_2->add_control(
+            'nested_image_dark_2',
+            [
+                'label' => esc_html__('Dark Theme Image', 'repindia'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [],
+                'description' => esc_html__('Leave empty to use default image for dark theme', 'repindia'),
+            ]
+        );
+
+        // Title text
+        $nested_repeater_2->add_control(
+            'nested_title_2',
+            [
+                'label' => esc_html__('Title', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'label_block' => true,
+            ]
+        );
+
+        $repeater->add_control(
+            'nested_items_2',
+            [
+                'label' => esc_html__('List Items', 'repindia'),
+                'type' => Controls_Manager::REPEATER,
+                'fields' => $nested_repeater_2->get_controls(),
+                'default' => [],
+                'title_field' => '{{{ nested_title_2 }}}',
+            ]
+        );
+
         // Special class indicator (for details-3 with blue headline)
         $repeater->add_control(
             'has_blue_headline',
@@ -354,7 +457,11 @@ class Scalescroll extends Widget_Base
             @media(max-width: 768px){
                 .photo_custom .details * { text-align: center; align-items: center;}
             }
-            
+            /* Nested repeater image theme switching */
+            .nested-image-wrapper .white_theme_img { display: block; }
+            .nested-image-wrapper .black_theme_img { display: none; }
+            .js-dark .nested-image-wrapper .white_theme_img { display: none; }
+            .js-dark .nested-image-wrapper .black_theme_img { display: block; }
         </style>
 
         <div class="makdmks">
@@ -434,6 +541,62 @@ class Scalescroll extends Widget_Base
                                                             <a href="<?php echo esc_url($bolt_cta_url); ?>" class="<?php echo $bolt_cta_classes; ?>" <?php echo $bolt_cta_target; ?> <?php echo $bolt_cta_nofollow; ?>><?php echo esc_html($bolt_cta_text); ?></a>
                                                         </div>
                                                     <?php endif; ?>
+                                                </div>
+                                            <?php endif; ?>
+                                            
+                                            <?php
+                                            // First Nested Repeater
+                                            $nested_items_1 = !empty($item['nested_items_1']) ? $item['nested_items_1'] : [];
+                                            if (!empty($nested_items_1)) : ?>
+                                                <div class="nested-repeater-1">
+                                                    <?php foreach ($nested_items_1 as $nested_item_1) : ?>
+                                                        <?php
+                                                        $nested_image_default_1 = !empty($nested_item_1['nested_image_default']['url']) ? $nested_item_1['nested_image_default']['url'] : '';
+                                                        $nested_image_dark_1 = !empty($nested_item_1['nested_image_dark']['url']) ? $nested_item_1['nested_image_dark']['url'] : $nested_image_default_1;
+                                                        $nested_title_1 = !empty($nested_item_1['nested_title']) ? $nested_item_1['nested_title'] : '';
+                                                        $nested_description_1 = !empty($nested_item_1['nested_description']) ? $nested_item_1['nested_description'] : '';
+                                                        ?>
+                                                        <div class="nested-item-1">
+                                                            <?php if (!empty($nested_image_default_1)) : ?>
+                                                                <div class="nested-image-wrapper">
+                                                                    <img class="white_theme_img" src="<?php echo esc_url($nested_image_default_1); ?>" alt="<?php echo esc_attr($nested_title_1); ?>">
+                                                                    <img class="black_theme_img" src="<?php echo esc_url($nested_image_dark_1); ?>" alt="<?php echo esc_attr($nested_title_1); ?>">
+                                                                </div>
+                                                            <?php endif; ?>
+                                                            <?php if (!empty($nested_title_1)) : ?>
+                                                                <h3 class="nested-title-1"><?php echo esc_html($nested_title_1); ?></h3>
+                                                            <?php endif; ?>
+                                                            <?php if (!empty($nested_description_1)) : ?>
+                                                                <div class="nested-description-1"><?php echo wp_kses_post($nested_description_1); ?></div>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            <?php endif; ?>
+                                            
+                                            <?php
+                                            // Second Nested Repeater
+                                            $nested_items_2 = !empty($item['nested_items_2']) ? $item['nested_items_2'] : [];
+                                            if (!empty($nested_items_2)) : ?>
+                                                <div class="nested-repeater-2">
+                                                    <?php foreach ($nested_items_2 as $nested_item_2) : ?>
+                                                        <?php
+                                                        $nested_image_default_2 = !empty($nested_item_2['nested_image_default_2']['url']) ? $nested_item_2['nested_image_default_2']['url'] : '';
+                                                        $nested_image_dark_2 = !empty($nested_item_2['nested_image_dark_2']['url']) ? $nested_item_2['nested_image_dark_2']['url'] : $nested_image_default_2;
+                                                        $nested_title_2 = !empty($nested_item_2['nested_title_2']) ? $nested_item_2['nested_title_2'] : '';
+                                                        ?>
+                                                        <div class="nested-item-2">
+                                                            <?php if (!empty($nested_image_default_2)) : ?>
+                                                                <div class="nested-image-wrapper">
+                                                                    <img class="white_theme_img" src="<?php echo esc_url($nested_image_default_2); ?>" alt="<?php echo esc_attr($nested_title_2); ?>">
+                                                                    <img class="black_theme_img" src="<?php echo esc_url($nested_image_dark_2); ?>" alt="<?php echo esc_attr($nested_title_2); ?>">
+                                                                </div>
+                                                            <?php endif; ?>
+                                                            <?php if (!empty($nested_title_2)) : ?>
+                                                                <h3 class="nested-title-2"><?php echo esc_html($nested_title_2); ?></h3>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                    <?php endforeach; ?>
                                                 </div>
                                             <?php endif; ?>
                                         </div>
@@ -531,6 +694,62 @@ class Scalescroll extends Widget_Base
                                                                 <a href="<?php echo esc_url($bolt_cta_url); ?>" class="<?php echo $bolt_cta_classes; ?>" <?php echo $bolt_cta_target; ?> <?php echo $bolt_cta_nofollow; ?>><?php echo esc_html($bolt_cta_text); ?></a>
                                                             </div>
                                                         <?php endif; ?>
+                                                    </div>
+                                                <?php endif; ?>
+                                                
+                                                <?php
+                                                // First Nested Repeater
+                                                $nested_items_1 = !empty($item['nested_items_1']) ? $item['nested_items_1'] : [];
+                                                if (!empty($nested_items_1)) : ?>
+                                                    <div class="nested-repeater-1">
+                                                        <?php foreach ($nested_items_1 as $nested_item_1) : ?>
+                                                            <?php
+                                                            $nested_image_default_1 = !empty($nested_item_1['nested_image_default']['url']) ? $nested_item_1['nested_image_default']['url'] : '';
+                                                            $nested_image_dark_1 = !empty($nested_item_1['nested_image_dark']['url']) ? $nested_item_1['nested_image_dark']['url'] : $nested_image_default_1;
+                                                            $nested_title_1 = !empty($nested_item_1['nested_title']) ? $nested_item_1['nested_title'] : '';
+                                                            $nested_description_1 = !empty($nested_item_1['nested_description']) ? $nested_item_1['nested_description'] : '';
+                                                            ?>
+                                                            <div class="nested-item-1">
+                                                                <?php if (!empty($nested_image_default_1)) : ?>
+                                                                    <div class="nested-image-wrapper">
+                                                                        <img class="white_theme_img" src="<?php echo esc_url($nested_image_default_1); ?>" alt="<?php echo esc_attr($nested_title_1); ?>">
+                                                                        <img class="black_theme_img" src="<?php echo esc_url($nested_image_dark_1); ?>" alt="<?php echo esc_attr($nested_title_1); ?>">
+                                                                    </div>
+                                                                <?php endif; ?>
+                                                                <?php if (!empty($nested_title_1)) : ?>
+                                                                    <h3 class="nested-title-1"><?php echo esc_html($nested_title_1); ?></h3>
+                                                                <?php endif; ?>
+                                                                <?php if (!empty($nested_description_1)) : ?>
+                                                                    <div class="nested-description-1"><?php echo wp_kses_post($nested_description_1); ?></div>
+                                                                <?php endif; ?>
+                                                            </div>
+                                                        <?php endforeach; ?>
+                                                    </div>
+                                                <?php endif; ?>
+                                                
+                                                <?php
+                                                // Second Nested Repeater
+                                                $nested_items_2 = !empty($item['nested_items_2']) ? $item['nested_items_2'] : [];
+                                                if (!empty($nested_items_2)) : ?>
+                                                    <div class="nested-repeater-2">
+                                                        <?php foreach ($nested_items_2 as $nested_item_2) : ?>
+                                                            <?php
+                                                            $nested_image_default_2 = !empty($nested_item_2['nested_image_default_2']['url']) ? $nested_item_2['nested_image_default_2']['url'] : '';
+                                                            $nested_image_dark_2 = !empty($nested_item_2['nested_image_dark_2']['url']) ? $nested_item_2['nested_image_dark_2']['url'] : $nested_image_default_2;
+                                                            $nested_title_2 = !empty($nested_item_2['nested_title_2']) ? $nested_item_2['nested_title_2'] : '';
+                                                            ?>
+                                                            <div class="nested-item-2">
+                                                                <?php if (!empty($nested_image_default_2)) : ?>
+                                                                    <div class="nested-image-wrapper">
+                                                                        <img class="white_theme_img" src="<?php echo esc_url($nested_image_default_2); ?>" alt="<?php echo esc_attr($nested_title_2); ?>">
+                                                                        <img class="black_theme_img" src="<?php echo esc_url($nested_image_dark_2); ?>" alt="<?php echo esc_attr($nested_title_2); ?>">
+                                                                    </div>
+                                                                <?php endif; ?>
+                                                                <?php if (!empty($nested_title_2)) : ?>
+                                                                    <h3 class="nested-title-2"><?php echo esc_html($nested_title_2); ?></h3>
+                                                                <?php endif; ?>
+                                                            </div>
+                                                        <?php endforeach; ?>
                                                     </div>
                                                 <?php endif; ?>
                                             </div>
