@@ -14,22 +14,22 @@ class Custom_Latest_Resource extends Widget_Base
     {
         return 'custom_latest_resource';
     }
-
+    
     public function get_title()
     {
         return 'Custom Latest Resource';
     }
-
+    
     public function get_icon()
     {
         return 'fa fa-th';
     }
-
+    
     public function get_category()
     {
         return ['general'];
     }
-
+    
     /**
      * Get all registered post types
      */
@@ -37,16 +37,16 @@ class Custom_Latest_Resource extends Widget_Base
     {
         $post_types = get_post_types(['public' => true], 'objects');
         $options = ['post' => __('Post', 'repindia')];
-
+        
         foreach ($post_types as $post_type) {
             if ($post_type->name !== 'post' && $post_type->name !== 'page' && $post_type->name !== 'attachment') {
                 $options[$post_type->name] = $post_type->label;
             }
         }
-
+        
         return $options;
     }
-
+    
     /**
      * Get all registered taxonomies
      */
@@ -54,22 +54,22 @@ class Custom_Latest_Resource extends Widget_Base
     {
         $taxonomies = get_taxonomies(['public' => true], 'objects');
         $result = [];
-
+        
         foreach ($taxonomies as $taxonomy) {
             // Skip built-in taxonomies that are not commonly used
             if (in_array($taxonomy->name, ['post_format', 'nav_menu', 'link_category'])) {
                 continue;
             }
-
+            
             $result[$taxonomy->name] = [
                 'label' => $taxonomy->label,
                 'object_type' => $taxonomy->object_type,
             ];
         }
-
+        
         return $result;
     }
-
+    
     /**
      * Get terms for a taxonomy
      */
@@ -78,24 +78,24 @@ class Custom_Latest_Resource extends Widget_Base
         if (!taxonomy_exists($taxonomy)) {
             return [];
         }
-
+        
         $terms = get_terms([
             'taxonomy' => $taxonomy,
             'hide_empty' => false,
         ]);
-
+        
         if (is_wp_error($terms) || empty($terms)) {
             return [];
         }
-
+        
         $options = [];
         foreach ($terms as $term) {
             $options[$term->term_id] = $term->name;
         }
-
+        
         return $options;
     }
-
+    
     protected function register_controls()
     {
         // Main Settings Section
@@ -175,7 +175,7 @@ class Custom_Latest_Resource extends Widget_Base
 
         // Get terms for newsroom_type taxonomy
         $terms = $this->get_taxonomy_terms('newsroom_type');
-
+        
         if (!empty($terms)) {
             $this->add_control(
                 'taxonomy_newsroom_type_terms',
@@ -216,7 +216,7 @@ class Custom_Latest_Resource extends Widget_Base
         $post_type = 'newsroom';
         $posts_per_page = !empty($settings['posts_per_page']) ? intval($settings['posts_per_page']) : 12;
         $show_pagination = !empty($settings['show_pagination']) && $settings['show_pagination'] === 'yes';
-
+        
         // Get current page for pagination
         $paged = 1;
         if ($show_pagination) {
@@ -225,7 +225,7 @@ class Custom_Latest_Resource extends Widget_Base
                 $paged = get_query_var('page') ? get_query_var('page') : 1;
             }
         }
-
+        
         $args = [
             'post_type' => $post_type,
             'post_status' => 'publish',
@@ -234,14 +234,14 @@ class Custom_Latest_Resource extends Widget_Base
             'order' => 'ASC',
             'ignore_sticky_posts' => true,
         ];
-
+        
         // Build tax_query based on newsroom_type taxonomy filter only
         $tax_query = [];
-
+        
         // Check for newsroom_type filter
         if (!empty($settings['taxonomy_newsroom_type_enable']) && $settings['taxonomy_newsroom_type_enable'] === 'yes') {
             $selected_terms = !empty($settings['taxonomy_newsroom_type_terms']) ? $settings['taxonomy_newsroom_type_terms'] : [];
-
+            
             if (!empty($selected_terms) && is_array($selected_terms)) {
                 $selected_terms = array_map('intval', $selected_terms);
                 $tax_query[] = [
@@ -251,12 +251,12 @@ class Custom_Latest_Resource extends Widget_Base
                 ];
             }
         }
-
+        
         // Add tax_query if we have taxonomy filters
         if (!empty($tax_query)) {
             $args['tax_query'] = $tax_query;
         }
-
+        
         return $args;
     }
 
@@ -267,14 +267,14 @@ class Custom_Latest_Resource extends Widget_Base
     {
         // Get terms from newsroom_categories taxonomy only
         $terms = get_the_terms($post_id, 'newsroom_categories');
-
+        
         if (!empty($terms) && !is_wp_error($terms) && !empty($terms[0]->name)) {
             return [
                 'name' => $terms[0]->name,
                 'taxonomy' => 'newsroom_categories',
             ];
         }
-
+        
         return null;
     }
 
@@ -286,18 +286,18 @@ class Custom_Latest_Resource extends Widget_Base
         if (!$query->max_num_pages || $query->max_num_pages <= 1) {
             return;
         }
-
+        
         $pagination_args = [
             'total' => $query->max_num_pages,
             'current' => max(1, get_query_var('paged')),
             'prev_text' => __('&laquo; Previous', 'repindia'),
             'next_text' => __('Next &raquo;', 'repindia'),
         ];
-
+        
         if (is_front_page()) {
             $pagination_args['current'] = max(1, get_query_var('page'));
         }
-
+        
         echo '<div class="custom-latest-resource-pagination">';
         echo paginate_links($pagination_args);
         echo '</div>';
@@ -309,7 +309,7 @@ class Custom_Latest_Resource extends Widget_Base
         $columns = !empty($settings['columns']) ? intval($settings['columns']) : 4;
         // Hardcode post type to 'newsroom'
         $post_type = 'newsroom';
-
+        
         // Don't run query in Elementor editor preview unnecessarily
         if (\Elementor\Plugin::$instance->editor->is_edit_mode()) {
             echo '<div class="resource_card_section custom-latest-resource-wrapper">';
@@ -317,28 +317,26 @@ class Custom_Latest_Resource extends Widget_Base
             echo '</div>';
             return;
         }
-
+        
         // Build and execute query
         $query_args = $this->build_query_args($settings);
         $query = new \WP_Query($query_args);
-
+        
         $show_pagination = !empty($settings['show_pagination']) && $settings['show_pagination'] === 'yes';
-
+        
         // Calculate column width percentage
         $column_width = 100 / $columns;
         ?>
-
+        
         <style>
             .custom-latest-resource-wrapper {
                 width: 100%;
             }
-
             .custom-latest-resource-posts {
                 display: grid;
                 grid-template-columns: repeat(<?php echo esc_attr($columns); ?>, 1fr);
                 gap: 28px;
             }
-
             .custom-latest-resource-card {
                 display: flex;
                 flex-direction: column;
@@ -349,18 +347,16 @@ class Custom_Latest_Resource extends Widget_Base
                 background: #FFF;
                 box-shadow: 0 0 10px 0 rgba(0, 82, 128, 0.10);
             }
-
-            .custom-latest-resource-card a {
+            .custom-latest-resource-card a{
                 border-radius: 12px;
                 background: #FFF;
                 box-shadow: 0 0 10px 0 rgba(0, 82, 128, 0.10);
                 padding: 8px;
             }
-
             /* .custom-latest-resource-card:hover {
-                                transform: translateY(-4px);
-                                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-                            } */
+                transform: translateY(-4px);
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            } */
             .custom-latest-resource-card-link {
                 display: flex;
                 flex-direction: column;
@@ -369,15 +365,12 @@ class Custom_Latest_Resource extends Widget_Base
                 height: 100%;
                 width: 100%;
             }
-
             .custom-latest-resource-image-wrapper {
                 position: relative;
                 width: 100%;
                 height: 225px;
                 border-radius: 12px;
-                margin-bottom: 8px;
             }
-
             .custom-latest-resource-image-wrapper img {
                 position: absolute;
                 top: 0;
@@ -387,7 +380,6 @@ class Custom_Latest_Resource extends Widget_Base
                 object-fit: cover;
                 border-radius: 12px;
             }
-
             .custom-latest-resource-date-overlay {
                 position: absolute;
                 top: 8px !important;
@@ -419,9 +411,8 @@ class Custom_Latest_Resource extends Widget_Base
                 font-weight: 500;
                 line-height: 20px;
             }
-
             .custom-latest-resource-title {
-                margin: 8px 0 8px !important;
+                margin: 0;
                 font-size: 20px;
                 font-style: normal;
                 font-weight: 600;
@@ -433,14 +424,11 @@ class Custom_Latest_Resource extends Widget_Base
                 -webkit-box-orient: vertical;
                 padding-bottom: 0;
                 min-height: unset;
-                color: #06283D;
             }
-
             .custom-latest-resource-pagination {
                 margin-top: 40px;
                 text-align: center;
             }
-
             .custom-latest-resource-pagination .page-numbers {
                 display: inline-flex;
                 gap: 8px;
@@ -448,11 +436,9 @@ class Custom_Latest_Resource extends Widget_Base
                 padding: 0;
                 margin: 0;
             }
-
             .custom-latest-resource-pagination .page-numbers li {
                 display: inline-block;
             }
-
             .custom-latest-resource-pagination .page-numbers a,
             .custom-latest-resource-pagination .page-numbers span {
                 display: inline-block;
@@ -463,99 +449,48 @@ class Custom_Latest_Resource extends Widget_Base
                 color: #06283D;
                 transition: all 0.3s ease;
             }
-
             .custom-latest-resource-pagination .page-numbers a:hover,
             .custom-latest-resource-pagination .page-numbers .current {
                 background: #0099ED;
                 color: #fff;
                 border-color: #0099ED;
             }
-
             .custom-latest-resource-no-results {
                 text-align: center;
                 padding: 40px;
                 color: #666;
             }
-
-            .defaultallnews .custom-container {
-                gap: 80px;
-            }
-
-            .custom-latest-resource-card-content {
-                padding: 0 8px;
-            }
-
-            .js-dark .custom-latest-resource-card,
-            .js-dark .custom-latest-resource-card a {
-                background: #262a30;
-            }
-
-            .js-dark .custom-latest-resource-taxonomy {
-                background: #464A4F;
-                border: 1px solid #464A4F;
-            }
-
+            .js-dark .custom-latest-resource-card,.js-dark .custom-latest-resource-card a{ background: #262a30; }
+            .js-dark .custom-latest-resource-taxonomy{ background: #464A4F;border: 1px solid #464A4F; }
             @media (max-width: 1200px) {
                 .custom-latest-resource-posts {
                     grid-template-columns: repeat(3, 1fr);
                 }
             }
-
             @media (max-width: 768px) {
                 .custom-latest-resource-posts {
                     grid-template-columns: repeat(2, 1fr);
                     gap: 5px;
                 }
-
-                .custom-latest-resource-image-wrapper img,
-                .custom-latest-resource-image-wrapper {
-                    height: 170px;
-                }
-
-                .custom-latest-resource-date-overlay {
-                    padding: 3px 14px;
-                    font-size: 12px;
-                }
-
-                .custom-latest-resource-taxonomy {
-                    padding: 4px 10px;
-                    font-size: 12px;
-                }
-
-                .custom-latest-resource-card-content {
-                    padding: 8px 0;
-                    gap: 8px;
-                }
-
-                .custom-latest-resource-title {
-                    font-size: 18px !important;
-                    line-height: 22px;
-                }
-
-                .custom-blog-filter-card-content {
-                    padding: 8px 0 2px;
-                }
-
-                .custom-blog-filter-load-more {
-                    margin-top: 30px;
-                }
-
-                .custom-blog-filter-load-more-btn {
-                    padding: 6px 18px;
-                    font-size: 18px;
-                }
+                .custom-latest-resource-image-wrapper img,.custom-latest-resource-image-wrapper{ height: 170px; }
+                .custom-latest-resource-date-overlay{ padding: 3px 14px;font-size: 12px; }
+                .custom-latest-resource-taxonomy{ padding: 4px 10px;font-size: 12px; }
+                .custom-latest-resource-card-content{ padding: 8px 0;gap: 8px; }
+                .custom-latest-resource-title{ font-size: 18px !important;line-height: 22px; }
+                .custom-blog-filter-card-content{ padding: 8px 0 2px; }
+                .custom-blog-filter-load-more{ margin-top: 30px; }
+                .custom-blog-filter-load-more-btn{ padding: 6px 18px;font-size: 18px; }
             }
         </style>
-
+        
         <div class="resource_card_section custom-latest-resource-wrapper">
-            <?php if ($query->have_posts()): ?>
+            <?php if ($query->have_posts()) : ?>
                 <div class="custom-latest-resource-posts">
-                    <?php while ($query->have_posts()):
-                        $query->the_post();
+                    <?php while ($query->have_posts()) : $query->the_post(); 
                         $post_id = get_the_ID();
                         // Get newsroom_categories taxonomy term for display
                         $taxonomy_term = $this->get_post_taxonomy_term($post_id, 'newsroom');
-
+                        
                         // Get date from ACF field if available, otherwise use default post date
                         $custom_date = get_field('custom_created_date', $post_id);
                         if (!empty($custom_date)) {
@@ -585,27 +520,27 @@ class Custom_Latest_Resource extends Widget_Base
                         } else {
                             $post_date = get_the_date('d M, Y', $post_id);
                         }
-                        ?>
+                    ?>
                         <article class="custom-latest-resource-card">
                             <a href="<?php the_permalink(); ?>" class="custom-latest-resource-card-link">
                                 <div class="custom-latest-resource-image-wrapper">
-                                    <?php if (has_post_thumbnail($post_id)): ?>
+                                    <?php if (has_post_thumbnail($post_id)) : ?>
                                         <?php echo get_the_post_thumbnail($post_id, 'large', ['class' => 'custom-latest-resource-image']); ?>
-                                    <?php else: ?>
+                                    <?php else : ?>
                                         <div style="background: #f0f0f0; width: 100%; height: 100%;"></div>
                                     <?php endif; ?>
                                     <div class="custom-latest-resource-date-overlay">
                                         <?php echo esc_html($post_date); ?>
                                     </div>
                                 </div>
-
+                                
                                 <div class="custom-latest-resource-card-content">
-                                    <?php if ($taxonomy_term): ?>
+                                    <?php if ($taxonomy_term) : ?>
                                         <span class="custom-latest-resource-taxonomy">
                                             <?php echo esc_html($taxonomy_term['name']); ?>
                                         </span>
                                     <?php endif; ?>
-
+                                    
                                     <h3 class="custom-latest-resource-title">
                                         <?php the_title(); ?>
                                     </h3>
@@ -614,19 +549,19 @@ class Custom_Latest_Resource extends Widget_Base
                         </article>
                     <?php endwhile; ?>
                 </div>
-
-                <?php if ($show_pagination): ?>
+                
+                <?php if ($show_pagination) : ?>
                     <?php $this->render_pagination($query); ?>
                 <?php endif; ?>
-
-            <?php else: ?>
+                
+            <?php else : ?>
                 <div class="custom-latest-resource-no-results">
                     <p><?php esc_html_e('No posts found.', 'repindia'); ?></p>
                 </div>
             <?php endif; ?>
         </div>
-
-        <?php
+        
+<?php
         wp_reset_postdata();
     }
 }

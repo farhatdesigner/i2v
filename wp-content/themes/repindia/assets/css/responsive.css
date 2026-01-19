@@ -563,54 +563,92 @@ label.form-label.label_notic a {
     -webkit-transform: translateZ(0);
   }
 }
-
-/* Fixed-left behavior: When fixed-header is active AND first section is active */
-@media (min-width: 1025px) {
-  /* Fixed-left overrides sticky when both conditions are met */
-  .elementor-element.channel_partner .partner_choose_title.fixed-left,
-  .elementor-element.channel_partner .partner_choose_img.fixed-left {
-    position: fixed !important;
-    /* Maintain the same positioning as sticky but ensure it stays fixed */
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    will-change: transform;
-  }
-  
-  .elementor-element.channel_partner .partner_choose_title.fixed-left {
-    top: 140px !important;
-    z-index: 10 !important;
-    max-width: 540px;
-  }
-  
-  .elementor-element.channel_partner .partner_choose_img.fixed-left {
-    top: 336px !important;
-    z-index: 10 !important;
-    max-width: 770px;
-  }
-}
-
-/* Responsive positioning for fixed-left */
-@media (min-width: 1601px) {
-  .elementor-element.channel_partner .partner_choose_title.fixed-left,
-  .elementor-element.channel_partner .partner_choose_img.fixed-left {
-    left: 9% !important;
-  }
-}
-
-@media (max-width: 1601px) and (min-width: 1201px) {
-  .elementor-element.channel_partner .partner_choose_title.fixed-left,
-  .elementor-element.channel_partner .partner_choose_img.fixed-left {
-    left: 1% !important;
-  }
-}
 @media (min-width: 1400px) {
 }
 @media (min-width: 1201px) {
 }
 @media (min-width: 1025px) {
+  /* -----------------------------------------------------------
+    CHANNEL PARTNER (affects only inside .channel_partner)
+    ------------------------------------------------------------*/
+  .elementor-element.channel_partner .partner_choose_title,
+  .elementor-element.channel_partner .partner_choose_img,
+  .elementor-element.technology_partner .partner_tech_title,
+  .elementor-element.technology_partner .partner_tech_img,
+  .elementor-element.fixarea {
+    position: relative !important;
+    /* Optimize for smooth sticky behavior */
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    /* Prevent sub-pixel rendering issues */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Prevent layout shifts */
+    min-height: 0;
+    transition: none;
+  }
 
+  /* Wrapper styles to maintain layout */
+  .sticky-wrapper-title,
+  .sticky-wrapper-img {
+    position: relative;
+    width: 100%;
+    /* Smooth transition for min-height changes */
+    transition: min-height 0.2s ease-out;
+  }
+  .elementor-element.channel_partner .partner_choose_title.sticky,
+  .elementor-element.technology_partner .partner_tech_title.sticky {
+    position: fixed !important;
+    top: 140px !important;
+    z-index: 10 !important;
+    max-width: 540px;
+    /* Smooth sticky transition */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    /* Prevent repaints during transition */
+    will-change: transform;
+    /* Prevent layout shift glitch */
+    left: auto !important;
+    right: auto !important;
+  }
+  .elementor-element.channel_partner,
+  .elementor-element.channel_partner .elementor-container,
+  .elementor-element.channel_partner .elementor-column,
+  .elementor-element.channel_partner .elementor-widget-wrap,
+  .elementor-element.technology_partner,
+  .elementor-element.technology_partner .elementor-container,
+  .elementor-element.technology_partner .elementor-column,
+  .elementor-element.technology_partner .elementor-widget-wrap {
+    /* overflow: visible !important; */
+    position: relative !important;
+    /* Prevent layout shifts when child elements become sticky */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  .elementor-element.technology_partner .partner_tech_img.sticky,
+  .elementor-element.channel_partner .partner_choose_img.sticky {
+    position: fixed !important;
+    top: 336px !important;
+    z-index: 10 !important;
+    max-width: 770px;
+    /* Smooth sticky transition */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    /* Prevent repaints during transition */
+    will-change: transform;
+    /* Prevent layout shift glitch */
+    left: auto !important;
+    right: auto !important;
+  }
 }
 @media (min-width: 991px) {
 }

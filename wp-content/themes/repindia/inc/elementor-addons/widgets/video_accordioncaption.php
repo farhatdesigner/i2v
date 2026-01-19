@@ -286,13 +286,7 @@ class Video_accordioncaption extends Widget_Base
             .vac_vertical_scroller {
                 align-items: flex-start;
                 gap: 80px;
-                margin-top: 48px;
-            }
-
-            /* Fix: Adjust column widths to account for the gap */
-            .vac_vertical_scroller > .col-md-6 {
-                flex: 0 0 calc(50% - 40px);
-                max-width: calc(50% - 40px);
+                flex-wrap: nowrap;
             }
 
 
@@ -562,17 +556,6 @@ class Video_accordioncaption extends Widget_Base
 
                 .vac_main_title {
                     font-size: 28px;
-                }
-
-                /* Reset column widths on mobile - let Bootstrap handle stacking */
-                .vac_vertical_scroller > .col-md-6 {
-                    flex: 0 0 100%;
-                    max-width: 100%;
-                }
-
-                .vac_vertical_scroller {
-                    gap: 30px;
-                    flex-wrap: wrap;
                 }
             }
 

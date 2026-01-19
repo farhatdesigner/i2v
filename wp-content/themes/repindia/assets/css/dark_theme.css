@@ -759,31 +759,3 @@ header li.burger-icon .icon-sun,
   border-right-color: #d7dbe4;
   border-bottom-color: #d7dbe4;
 }
-.js-dark .privacy-policy-section {
-  background: #262a30;
-}
-.js-dark .border_project:before {
-  background: rgba(193, 196, 198, 0.1);
-}
-.js-dark .border_cards {
-  border-color: rgba(193, 196, 198, 0.1) !important;
-}
-
-.js-dark .video_topcaption_white {
-  background: #262a30 !important;
-}
-
-.js-dark .video_topcaption_white button {
-    background: transparent;
-}
-.js-dark .vac_accordion_set {
-  background: transparent !important;
-}
-
-.js-dark .vac_accordion_set.active {
-  background: #3b3f44 !important;
-}
-
-.js-dark .vac_accordion_set {
-  border-bottom: 1px solid  rgba(193, 196, 198, 0.1) !important;;
-}

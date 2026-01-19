@@ -347,11 +347,53 @@ ul.header-right-box {
   width: 100%;
   position: relative;
 }
-
 #header-main-menu {
   gap: 32px;
+  width: 70%;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+  line-height: normal; 
 }
-
+ul#header-main-menu li a {
+  color: #0099ED;
+  font-size: 18px;
+  font-weight: 600;
+  position: relative;
+  padding: 8px 16px 0 36px;
+}
+ul#header-main-menu li>a:before {
+  background: #8793AF;
+  position: absolute;
+  content: '';
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  top: 18px;
+}
+.btn-demo {
+  color: #0099ED;
+  font-size: 18px;
+  font-weight: 600;
+  position: relative;
+  padding: 8px 16px;
+  width: 30%;
+}
+ul#header-main-menu li>a:before {
+  background: #8793AF;
+  position: absolute;
+  content: '';
+  left: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: 100%;
+  top: 18px;
+}
+ul#header-main-menu li:last-child a {
+  color: #5F6F94;
+}
 header #header-main-menu li {
   position: relative;
 }
@@ -2294,11 +2336,6 @@ label.form-label.required_note-demo {
   width: 100%;
   transition: all 0.3s ease;
 }
-#partner_menu .fixed-header {
-    left: auto;
-    right: auto;
-    margin: 0 auto !important;
-}
 
 .sticky-custom > ul > li,
 .sticky-tab > ul > li {
@@ -3269,13 +3306,6 @@ span.star {
 .card-image > img {
   border-radius: 12px !important;
 }
-
-.full_mobile .border_btnlight {
-  width: auto;
-  margin: 0 auto;
-}
-
-
 @media (min-width: 768px) {
   .footer-accordion-icon {
     display: none;
