@@ -1319,15 +1319,27 @@ p {
   color: #0099ed;
 }
 
-.bg-trans {
+.bg-trans,.bg-tran_lightcolor {
   background: transparent !important;
   padding: 0;
-  color: #74c2ed !important;
+  color: #74C2ED !important;
+
+}
+.bg-tran_lightcolor{ 
+  padding-bottom: 2px;
+  border-radius: 0;
+  border-bottom: 1px solid #008ad633; 
 }
 
-.bg-trans:hover {
+.bg-trans:hover,.bg-tran_lightcolor:hover {
   background: transparent !important;
-  border-bottom: 1px solid #74c2ed;
+  border-bottom: 1px solid #74C2ED;
+  color: #0099ED!important
+}
+.bg-trans:focus,.bg-tran_lightcolor:focus {
+  background: transparent !important;
+  border-bottom: 1px solid #008AD6;
+  color: #008AD6!important
 }
 .theme-btn:focus {
   background: #0074B2;
@@ -1373,13 +1385,21 @@ p {
 .light-white {
   color: #fff;
 }
+.border_btnlight{ 
+  padding-bottom: 2px;
+  border-radius: 0;
+  border-bottom: 1px solid #E6EBF2; 
+}
+.border_btnlight{ color: #0099ED!important;border-color: #E6EBF2; }
+.border_btnlight:hover{ color: #0099ED!important;border-color: #0099ED; }
+.border_btnlight:focus{ color: #0074B2!important;border-color: #0074B2; }
 
 /* .light-white:hover {
   color: #fff;
   border: 0;
 } */
 
-.bg-tran_lightcolor {
+/* .bg-tran_lightcolor {
   color: #74c2ed;
   background: transparent;
   border-radius: 0;
@@ -1395,7 +1415,7 @@ p {
 a.theme-btn.bg-tran_lightcolor {
   color: #74c2ed;
   background: transparent;
-}
+} */
 .smarter_seamless .bg-tran_lightcolor:hover {
   color: #d7dbe4;
   border-bottom: 1px solid #d7dbe4;
@@ -1425,11 +1445,10 @@ a.theme-btn.bg-tran_lightcolor {
 .border_btn {
   padding-bottom: 2px;
   border-radius: 0;
-  border-bottom: 1px solid
-    var(--Buttons-btn-link-primary-border-default, rgba(255, 255, 255, 0.2));
+  border-bottom: 1px solid #008ad633;
 }
 
-.border_btnlight {
+/* .border_btnlight {
   padding-bottom: 2px;
   border-radius: 0;
   border-bottom: 1px solid #e6ebf2;
@@ -1437,7 +1456,7 @@ a.theme-btn.bg-tran_lightcolor {
 
 .btn-borderlight .border_btn {
   border-bottom: 1px solid #e6ebf2;
-}
+} */
 
 .border-btn-grey {
   border-radius: var(--button-radius, 8px);
