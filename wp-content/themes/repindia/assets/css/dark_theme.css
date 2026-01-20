@@ -697,9 +697,10 @@ header li.burger-icon .icon-sun,
   background-color:#262a30 !important;
 }
 .js-dark .theme-btn {
-  /* background: rgba(0, 122, 190, 1);
-  color: rgb(255 255 255 / 90%); */
+  background: #007ABE;
 }
+.js-dark .theme-btn:hover{ background: #006BA6; }
+.js-dark .theme-btn:focus{ background: #004C76; }
 
 .js-dark .darksection span.elementor-button-text {
   color: #669477 !important;
