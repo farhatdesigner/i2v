@@ -282,11 +282,51 @@ class Video_accordioncaption extends Widget_Base
             .vac_accordion_wrap {
                 border-radius: 12px;
             }
+            
+            .vac_accordion_wrap .custom-container {
+                overflow-x: hidden;
+                box-sizing: border-box;
+            }
 
             .vac_vertical_scroller {
                 align-items: flex-start;
                 gap: 80px;
                 flex-wrap: nowrap;
+                margin-top: 48px;
+                width: 100%;
+                box-sizing: border-box;
+                min-width: 0;
+            }
+            
+            .vac_vertical_scroller.g-0 {
+                margin-left: 0;
+                margin-right: 0;
+            }
+            
+            .vac_vertical_scroller .col-md-6 {
+                box-sizing: border-box;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+                flex: 0 0 calc(50% - 40px);
+                max-width: calc(50% - 40px);
+                min-width: 0;
+                width: calc(50% - 40px);
+            }
+            
+            .vac_vertical_scroller .vac_padd-accordion_video {
+                flex-shrink: 0;
+            }
+            
+            @media (max-width: 991px) {
+                .vac_vertical_scroller {
+                    flex-wrap: wrap;
+                }
+                
+                .vac_vertical_scroller .col-md-6 {
+                    flex: 0 0 100%;
+                    max-width: 100%;
+                    width: 100%;
+                }
             }
 
 
@@ -375,20 +415,23 @@ class Video_accordioncaption extends Widget_Base
             .vac_ac_icon_border .white-theme-img {
                 display: block;
             }
+
             .vac_ac_icon_border .black-theme-img {
                 display: none;
             }
+
             .js-dark .vac_ac_icon_border .white-theme-img {
                 display: none;
             }
+
             .js-dark .vac_ac_icon_border .black-theme-img {
                 display: block;
                 transition: filter 0.3s ease;
             }
 
             /* .vac_accordion_set.active .vac_ac_icon {
-                filter: brightness(0) invert(1);
-            } */
+                        filter: brightness(0) invert(1);
+                    } */
 
             .vac_ac_header {
                 flex: 1;
@@ -403,22 +446,24 @@ class Video_accordioncaption extends Widget_Base
                 width: 24px;
                 height: 24px;
                 display: flex;
-                align-items: center;
-                justify-content: center;
                 transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
                 margin-left: auto;
                 will-change: transform;
+                position: absolute;
+                top: 35%;
+                right: 12px;
             }
 
             .vac_chevron svg {
                 width: 20px;
                 height: 20px;
-                stroke: #6b7280;
+                stroke: #5F6F94;
                 transition: stroke 0.3s ease;
             }
 
             .vac_accordion_set.active .vac_chevron {
                 transform: rotate(180deg);
+                right: 15px;
             }
 
             .vac_accordion_set.active .vac_chevron svg {
@@ -479,6 +524,8 @@ class Video_accordioncaption extends Widget_Base
                 height: auto;
                 cursor: pointer;
                 transition: transform 0.3s ease;
+                max-height: max-content !important;
+                min-height: auto !important;
             }
 
             .vac_accontent .vac_accordion_video img:hover {
@@ -501,7 +548,7 @@ class Video_accordioncaption extends Widget_Base
                 left: 0;
                 height: 100%;
                 width: var(--vac-progress, 0%);
-                background: linear-gradient(90deg, #74C2ED, #74C2ED);
+                background: linear-gradient(90deg, #0099ED, #0099ED);
                 transition: width 0.05s linear;
             }
 
@@ -525,6 +572,8 @@ class Video_accordioncaption extends Widget_Base
                 height: auto;
                 cursor: pointer;
                 transition: transform 0.3s ease;
+                max-height: max-content !important;
+                min-height: auto !important;
             }
 
             .vac_padd-accordion_video .vac_accordion_video img:hover {
@@ -534,10 +583,13 @@ class Video_accordioncaption extends Widget_Base
             .vac_padd-accordion_video .vac_accordion_video.vac_active {
                 display: block;
             }
+
             .video_topcaption_white .shadow-sm {
                 box-shadow: none !important;
             }
-            .video_topcaption_white .card-body,.video_topcaption_white .card-image {
+
+            .video_topcaption_white .card-body,
+            .video_topcaption_white .card-image {
                 box-shadow: none !important;
                 padding: 0;
             }
@@ -563,12 +615,15 @@ class Video_accordioncaption extends Widget_Base
             .vac_accordion_wrap .white-theme-img {
                 display: block;
             }
+
             .vac_accordion_wrap .black-theme-img {
                 display: none;
             }
+
             .js-dark .vac_accordion_wrap .white-theme-img {
                 display: none;
             }
+
             .js-dark .vac_accordion_wrap .black-theme-img {
                 display: block;
             }
@@ -614,7 +669,7 @@ class Video_accordioncaption extends Widget_Base
                 }
 
                 .vac_accontent p {
-                    margin: 8px 15px 0px 75px;
+                    margin: 8px 15px 8px 75px;
                 }
 
                 .vac_accontent .vac_accordion_video {
@@ -690,15 +745,15 @@ class Video_accordioncaption extends Widget_Base
         <section class="vac_accordion_wrap">
             <div class="custom-container radius-8">
 
-                <?php if (!empty($section_title) || !empty($section_description)) : ?>
+                <?php if (!empty($section_title) || !empty($section_description)): ?>
                     <div class="col-md-6 col-12">
                         <div class="vac_main_title_box">
-                            <?php if (!empty($section_title)) : ?>
+                            <?php if (!empty($section_title)): ?>
                                 <h3 class="vac_main_title vac-title">
                                     <?php echo esc_html($section_title); ?>
                                 </h3>
                             <?php endif; ?>
-                            <?php if (!empty($section_description)) : ?>
+                            <?php if (!empty($section_description)): ?>
                                 <p><?php echo wp_kses_post($section_description); ?></p>
                             <?php endif; ?>
                         </div>
@@ -707,12 +762,12 @@ class Video_accordioncaption extends Widget_Base
 
                 <div class="row g-0 align-items-center vac_vertical_scroller">
                     <div class="col-md-6 col-12 vac_padd-accordion">
-                        <?php if (!empty($left_block_title)) : ?>
+                        <?php if (!empty($left_block_title)): ?>
                             <h3 style="margin-top: 40px;"><?php echo esc_html($left_block_title); ?></h3>
                         <?php endif; ?>
-                        <?php if (!empty($accordion_items)) : ?>
+                        <?php if (!empty($accordion_items)): ?>
                             <div class="vac_accordion_sets">
-                                <?php foreach ($accordion_items as $index => $item) : ?>
+                                <?php foreach ($accordion_items as $index => $item): ?>
                                     <?php
                                     $item_title = !empty($item['item_title']) ? $item['item_title'] : '';
                                     $item_short_desc = !empty($item['item_short_description']) ? $item['item_short_description'] : '';
@@ -730,57 +785,70 @@ class Video_accordioncaption extends Widget_Base
                                     $is_first = $index === 0;
                                     ?>
                                     <div class="vac_accordion_set <?php echo $is_first ? 'active' : ''; ?>">
-                                        <?php if (!empty($item_short_desc_icon_default)) : ?>
+                                        <?php if (!empty($item_short_desc_icon_default)): ?>
                                             <div class="vac_ac_icon_wrap">
                                                 <div class="vac_ac_icon_border">
                                                     <span>
-                                                        <img class="vac_ac_icon white-theme-img" src="<?php echo esc_url($item_short_desc_icon_default); ?>" alt="<?php echo esc_attr($item_short_desc_icon_default_alt); ?>" width="40" height="40">
-                                                        <img class="vac_ac_icon black-theme-img" src="<?php echo esc_url($item_short_desc_icon_dark); ?>" alt="<?php echo esc_attr($item_short_desc_icon_dark_alt); ?>" width="40" height="40">
+                                                        <img class="vac_ac_icon white-theme-img"
+                                                            src="<?php echo esc_url($item_short_desc_icon_default); ?>"
+                                                            alt="<?php echo esc_attr($item_short_desc_icon_default_alt); ?>" width="40"
+                                                            height="40">
+                                                        <img class="vac_ac_icon black-theme-img"
+                                                            src="<?php echo esc_url($item_short_desc_icon_dark); ?>"
+                                                            alt="<?php echo esc_attr($item_short_desc_icon_dark_alt); ?>" width="40"
+                                                            height="40">
                                                     </span>
                                                 </div>
                                             </div>
                                         <?php endif; ?>
-                                        <button class="vac_select_div" aria-label="expand accordion section for <?php echo esc_attr($item_title); ?>" aria-expanded="<?php echo $is_first ? 'true' : 'false'; ?>">
-                                            <?php if (!empty($item_title)) : ?>
+                                        <button class="vac_select_div"
+                                            aria-label="expand accordion section for <?php echo esc_attr($item_title); ?>"
+                                            aria-expanded="<?php echo $is_first ? 'true' : 'false'; ?>">
+                                            <?php if (!empty($item_title)): ?>
                                                 <h2 class="vac_ac_header">
                                                     <?php echo esc_html($item_title); ?>
                                                 </h2>
                                             <?php endif; ?>
                                             <span class="vac_chevron">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                                    stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                                                 </svg>
                                             </span>
                                         </button>
                                         <div class="vac_accontent">
-                                            <?php if (!empty($item_short_desc)) : ?>
+                                            <?php if (!empty($item_short_desc)): ?>
                                                 <p class="vac-description">
                                                     <?php echo wp_kses_post($item_short_desc); ?>
                                                 </p>
                                             <?php endif; ?>
-                                            <?php if (!empty($item_details_image_default) || !empty($item_detail_title) || !empty($item_detail_description) || !empty($item_tags)) : ?>
+                                            <?php if (!empty($item_details_image_default) || !empty($item_detail_title) || !empty($item_detail_description) || !empty($item_tags)): ?>
                                                 <div class="vac_accordion_video">
                                                     <div class="card h-100 border-0 shadow-sm">
-                                                        <?php if (!empty($item_details_image_default)) : ?>
+                                                        <?php if (!empty($item_details_image_default)): ?>
                                                             <div class="card-image">
-                                                                <img decoding="async" src="<?php echo esc_url($item_details_image_default); ?>" class="card-img-top h-100 white-theme-img" alt="<?php echo esc_attr($item_details_image_default_alt); ?>">
-                                                                <img decoding="async" src="<?php echo esc_url($item_details_image_dark); ?>" class="card-img-top h-100 black-theme-img" alt="<?php echo esc_attr($item_details_image_dark_alt); ?>">
+                                                                <img decoding="async" src="<?php echo esc_url($item_details_image_default); ?>"
+                                                                    class="card-img-top h-100 white-theme-img"
+                                                                    alt="<?php echo esc_attr($item_details_image_default_alt); ?>">
+                                                                <img decoding="async" src="<?php echo esc_url($item_details_image_dark); ?>"
+                                                                    class="card-img-top h-100 black-theme-img"
+                                                                    alt="<?php echo esc_attr($item_details_image_dark_alt); ?>">
                                                             </div>
                                                         <?php endif; ?>
                                                         <div class="card-body">
-                                                            <?php if (!empty($item_detail_title)) : ?>
+                                                            <?php if (!empty($item_detail_title)): ?>
                                                                 <h5 class="card-title"><?php echo esc_html($item_detail_title); ?></h5>
                                                             <?php endif; ?>
-                                                            <?php if (!empty($item_detail_description)) : ?>
+                                                            <?php if (!empty($item_detail_description)): ?>
                                                                 <p class="card-text text-muted">
                                                                     <?php echo wp_kses_post($item_detail_description); ?>
                                                                 </p>
                                                             <?php endif; ?>
-                                                            <?php if (!empty($item_tags)) : ?>
+                                                            <?php if (!empty($item_tags)): ?>
                                                                 <div class="d-flex flex-wrap gap-2 mt-4">
-                                                                    <?php foreach ($item_tags as $tag) : ?>
+                                                                    <?php foreach ($item_tags as $tag): ?>
                                                                         <?php $tag_text = !empty($tag['tag_text']) ? $tag['tag_text'] : ''; ?>
-                                                                        <?php if (!empty($tag_text)) : ?>
+                                                                        <?php if (!empty($tag_text)): ?>
                                                                             <span class="badge-custom"><?php echo esc_html($tag_text); ?></span>
                                                                         <?php endif; ?>
                                                                     <?php endforeach; ?>
@@ -798,12 +866,12 @@ class Video_accordioncaption extends Widget_Base
                         <?php endif; ?>
 
                     </div>
-                    <?php if (!empty($accordion_items)) : ?>
+                    <?php if (!empty($accordion_items)): ?>
                         <div class="col-md-6 col-12 vac_padd-accordion_video">
-                            <?php if (!empty($right_block_title)) : ?>
+                            <?php if (!empty($right_block_title)): ?>
                                 <h3><?php echo esc_html($right_block_title); ?></h3>
                             <?php endif; ?>
-                            <?php foreach ($accordion_items as $index => $item) : ?>
+                            <?php foreach ($accordion_items as $index => $item): ?>
                                 <?php
                                 $item_details_image_default = !empty($item['item_details_image_default']['url']) ? $item['item_details_image_default']['url'] : '';
                                 $item_details_image_default_alt = !empty($item['item_details_image_default']['alt']) ? $item['item_details_image_default']['alt'] : (!empty($item['item_title']) ? $item['item_title'] : '');
@@ -814,30 +882,34 @@ class Video_accordioncaption extends Widget_Base
                                 $item_tags = !empty($item['item_tags']) ? $item['item_tags'] : [];
                                 $is_first = $index === 0;
                                 ?>
-                                <?php if (!empty($item_details_image_default) || !empty($item_detail_title) || !empty($item_detail_description) || !empty($item_tags)) : ?>
+                                <?php if (!empty($item_details_image_default) || !empty($item_detail_title) || !empty($item_detail_description) || !empty($item_tags)): ?>
                                     <div class="vac_accordion_video <?php echo $is_first ? 'vac_active' : ''; ?>">
                                         <li>
                                             <div class="card h-100 border-0 shadow-sm">
-                                                <?php if (!empty($item_details_image_default)) : ?>
+                                                <?php if (!empty($item_details_image_default)): ?>
                                                     <div class="card-image">
-                                                        <img decoding="async" src="<?php echo esc_url($item_details_image_default); ?>" class="card-img-top h-100 white-theme-img" alt="<?php echo esc_attr($item_details_image_default_alt); ?>">
-                                                        <img decoding="async" src="<?php echo esc_url($item_details_image_dark); ?>" class="card-img-top h-100 black-theme-img" alt="<?php echo esc_attr($item_details_image_dark_alt); ?>">
+                                                        <img decoding="async" src="<?php echo esc_url($item_details_image_default); ?>"
+                                                            class="card-img-top h-100 white-theme-img"
+                                                            alt="<?php echo esc_attr($item_details_image_default_alt); ?>">
+                                                        <img decoding="async" src="<?php echo esc_url($item_details_image_dark); ?>"
+                                                            class="card-img-top h-100 black-theme-img"
+                                                            alt="<?php echo esc_attr($item_details_image_dark_alt); ?>">
                                                     </div>
                                                 <?php endif; ?>
                                                 <div class="card-body">
-                                                    <?php if (!empty($item_detail_title)) : ?>
+                                                    <?php if (!empty($item_detail_title)): ?>
                                                         <h5 class="card-title"><?php echo esc_html($item_detail_title); ?></h5>
                                                     <?php endif; ?>
-                                                    <?php if (!empty($item_detail_description)) : ?>
+                                                    <?php if (!empty($item_detail_description)): ?>
                                                         <p class="card-text text-muted">
                                                             <?php echo wp_kses_post($item_detail_description); ?>
                                                         </p>
                                                     <?php endif; ?>
-                                                    <?php if (!empty($item_tags)) : ?>
+                                                    <?php if (!empty($item_tags)): ?>
                                                         <div class="d-flex flex-wrap gap-2 mt-4">
-                                                            <?php foreach ($item_tags as $tag) : ?>
+                                                            <?php foreach ($item_tags as $tag): ?>
                                                                 <?php $tag_text = !empty($tag['tag_text']) ? $tag['tag_text'] : ''; ?>
-                                                                <?php if (!empty($tag_text)) : ?>
+                                                                <?php if (!empty($tag_text)): ?>
                                                                     <span class="badge-custom"><?php echo esc_html($tag_text); ?></span>
                                                                 <?php endif; ?>
                                                             <?php endforeach; ?>
