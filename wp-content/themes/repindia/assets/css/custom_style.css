@@ -2620,11 +2620,15 @@ label.form-label.required_note-demo {
 }
 
 .elementor-element.leadersslider .swiper .elementor-swiper-button-prev {
-  left: 36px;
+  left: 0;
 }
 
 .elementor-element.leadersslider .swiper ~ .elementor-swiper-button-prev {
-  right: 36px;
+  right: 0;
+}
+.explore_dark span.e-opened svg {
+  width: 42px;
+  height: 32px;
 }
 
 .reversetestimonial

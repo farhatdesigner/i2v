@@ -329,18 +329,10 @@ header li.burger-icon .icon-sun,
   border-color: #262a30;
 }
 .js-dark .blurtab_slider .elementor-main-swiper.swiper:before {
-  background: linear-gradient(
-    to right,
-    #0b0b0c 60%,
-    rgba(242, 245, 250, 0) 100%
-  );
+  background: linear-gradient(to right, #0d1117 60%, rgba(242, 245, 250, 0) 100%);
 }
 .js-dark .blurtab_slider .elementor-main-swiper.swiper:after {
-  background: linear-gradient(
-    to left,
-    #0b0b0c 60%,
-    rgba(242, 245, 250, 0) 100%
-  );
+  background: linear-gradient(to left, #0d1117 60%, rgba(242, 245, 250, 0) 100%);
 }
 .js-dark .blurtab_slider .swiper-slide {
   background: #262a30 !important;
@@ -758,4 +750,19 @@ header li.burger-icon .icon-sun,
 .js-dark .select-brand:after {
   border-right-color: #d7dbe4;
   border-bottom-color: #d7dbe4;
+}
+.js-dark .video_topcaption_white {
+  background: #262a30 !important;
+}
+.js-dark .video_topcaption_white button {
+  background: transparent;
+}
+ .js-dark .vac_accordion_set {border-bottom: 1px solid rgba(193, 196, 198, 0.1) !important;}
+ .js-dark .vac_accordion_set.active {
+  border-bottom: 1px solid rgba(193, 196, 198, 0.1) !important;
+  background: #464a4f !important;
+}
+.js-dark .vac_chevron svg {
+    fill: transparent!important;
+    stroke: #ffffff!important;
 }
