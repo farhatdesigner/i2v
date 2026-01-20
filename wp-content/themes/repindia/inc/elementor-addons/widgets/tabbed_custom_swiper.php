@@ -283,6 +283,7 @@ class Tabbed_Custom_Swiper extends Widget_Base
                 width: 100%;
                 height: 300px;
                 object-fit: cover;
+                border-radius: 12px;
             }
 
             /* Dark theme image switching */

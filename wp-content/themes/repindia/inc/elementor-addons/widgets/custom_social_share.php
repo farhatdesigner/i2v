@@ -154,6 +154,7 @@ class Custom_Social_Share extends Widget_Base {
                     target="_blank" rel="noopener noreferrer">
                         <?php if (!empty($settings['facebook_icon']['url'])): ?>
                             <img src="<?php echo esc_url($settings['facebook_icon']['url']); ?>" alt="Facebook Share" />
+                            <img src="<?php echo esc_url($settings['facebook_icon']['url']); ?>" alt="Facebook Share" />
                         <?php else: ?>
                             facebook
                         <?php endif; ?>

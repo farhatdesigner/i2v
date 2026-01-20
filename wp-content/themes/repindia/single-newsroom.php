@@ -38,7 +38,7 @@ $newscategories = get_the_category();
             .reading-progress .bg { fill: none;stroke: #e6e6e6;stroke-width: 3; }
             .reading-progress .progress {
                 fill: none;
-                stroke: #007bff;
+                stroke: #0099ED;
                 stroke-width: 3;
                 stroke-linecap: round;
                 transition: stroke-dasharray 0.2s ease;
@@ -62,11 +62,12 @@ $newscategories = get_the_category();
                 border: 1px solid #E6EBF2;
                 background: #E5F6FF;
                 display: inline-block;
-                padding: 4px 16px;
+                padding: 6px 16px;
             }
             .elementor-element.newsroom_detail_content {
                 position: relative;
             }
+            #blog-detail-content{margin-top: 176px;}
             .js-dark .news_detail_taxonomy h4{
                 border: 1px solid rgba(193, 196, 198, 0.1);
                 background: #262a30;

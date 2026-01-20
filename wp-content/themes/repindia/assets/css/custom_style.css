@@ -361,16 +361,7 @@ ul#header-main-menu li a {
   position: relative;
   padding: 8px 16px 0 36px;
 }
-ul#header-main-menu li>a:before {
-  background: #8793AF;
-  position: absolute;
-  content: '';
-  left: 0;
-  width: 8px;
-  height: 8px;
-  border-radius: 100%;
-  top: 18px;
-}
+
 .btn-demo {
   color: #0099ED;
   font-size: 18px;
@@ -379,7 +370,7 @@ ul#header-main-menu li>a:before {
   padding: 8px 16px;
   width: 30%;
 }
-ul#header-main-menu li>a:before {
+.search-popup-footer ul#header-main-menu li>a:before {
   background: #8793AF;
   position: absolute;
   content: '';
