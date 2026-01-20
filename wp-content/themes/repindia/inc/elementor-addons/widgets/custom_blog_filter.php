@@ -884,21 +884,21 @@ class Custom_Blog_Filter extends Widget_Base
             }
 
             /* .custom-blog-filter-load-more-btn {
-                                                padding: 12px 24px;
-                                                border: 1px solid #E5E9EC;
-                                                background: #fff;
-                                                color: #0099ED;
-                                                border-radius: 8px;
-                                                font-size: 20px;
-                                                font-weight: 600;
-                                                cursor: pointer;
-                                                transition: all 0.3s ease;
-                                            }
-                                            .custom-blog-filter-load-more-btn:hover {
-                                                background: #0099ED;
-                                                color: #fff;
-                                                border-color: #0099ED;
-                                            } */
+                                                                padding: 12px 24px;
+                                                                border: 1px solid #E5E9EC;
+                                                                background: #fff;
+                                                                color: #0099ED;
+                                                                border-radius: 8px;
+                                                                font-size: 20px;
+                                                                font-weight: 600;
+                                                                cursor: pointer;
+                                                                transition: all 0.3s ease;
+                                                            }
+                                                            .custom-blog-filter-load-more-btn:hover {
+                                                                background: #0099ED;
+                                                                color: #fff;
+                                                                border-color: #0099ED;
+                                                            } */
             .custom-blog-filter-load-more-btn:disabled {
                 opacity: 0.5;
                 cursor: not-allowed;
@@ -950,13 +950,30 @@ class Custom_Blog_Filter extends Widget_Base
                 color: rgba(255, 255, 255, 0.9);
             }
 
-            .js-dark .custom-blog-filter-category-count,
+            .js-dark .custom-blog-filter-category-count, .js-dark .custom-blog-filter-featured-count,
             .custom-blog-filter-featured-count {
                 color: rgb(255 255 255 / 90%);
+                background: transparent !important;
             }
 
             .js-dark .totalcount {
                 color: rgb(255 255 255);
+
+            }
+
+            .js-dark .custom-latest-resource-card-content .custom-latest-resource-title,
+            .js-dark .custom-blog-filter-title {
+                color: rgb(255 255 255 / 90%) !important;
+            }
+
+            .js-dark .custom-blog-filter-taxonomy {
+                background: #464A4F;
+                border: 1px solid #464A4F;
+                color: #74C2ED !important;
+            }
+
+            .js-dark .custom-blog-filter-category-item label {
+                color: #D7DBE4 !important;
 
             }
 
@@ -1107,10 +1124,10 @@ class Custom_Blog_Filter extends Widget_Base
             }
 
             /* @media (max-width: 480px) {
-                                                .custom-blog-filter-posts {
-                                                    grid-template-columns: 1fr;
-                                                }
-                                            } */
+                                                                .custom-blog-filter-posts {
+                                                                    grid-template-columns: 1fr;
+                                                                }
+                                                            } */
         </style>
 
         <div class="custom-blog-filter-wrapper" id="custom-blog-filter-<?php echo esc_attr($this->get_id()); ?>">
@@ -1316,62 +1333,62 @@ class Custom_Blog_Filter extends Widget_Base
 
         <!-- Store all posts data for JavaScript -->
         <script type="application/json" id="all-posts-data-<?php echo esc_attr($this->get_id()); ?>">
-                                        <?php
-                                        // Get all posts data for JavaScript
-                                        $all_query->rewind_posts();
-                                        $all_posts_json = [];
-                                        if ($all_query->have_posts()) {
-                                            while ($all_query->have_posts()) {
-                                                $all_query->the_post();
-                                                $post_id = get_the_ID();
-                                                $taxonomy_term = $this->get_post_taxonomy_term($post_id, 'newsroom');
-                                                $post_categories = get_the_terms($post_id, 'newsroom_categories');
-                                                $category_ids = $post_categories && !is_wp_error($post_categories) ? array_map(function ($t) {
-                                                    return $t->term_id;
-                                                }, $post_categories) : [];
-                                                $featured = get_field('featured_news', $post_id);
+                                                        <?php
+                                                        // Get all posts data for JavaScript
+                                                        $all_query->rewind_posts();
+                                                        $all_posts_json = [];
+                                                        if ($all_query->have_posts()) {
+                                                            while ($all_query->have_posts()) {
+                                                                $all_query->the_post();
+                                                                $post_id = get_the_ID();
+                                                                $taxonomy_term = $this->get_post_taxonomy_term($post_id, 'newsroom');
+                                                                $post_categories = get_the_terms($post_id, 'newsroom_categories');
+                                                                $category_ids = $post_categories && !is_wp_error($post_categories) ? array_map(function ($t) {
+                                                                    return $t->term_id;
+                                                                }, $post_categories) : [];
+                                                                $featured = get_field('featured_news', $post_id);
 
-                                                // Get date
-                                                $custom_date = get_field('custom_created_date', $post_id);
-                                                if (!empty($custom_date)) {
-                                                    if (is_numeric($custom_date)) {
-                                                        $post_date = date('d M, Y', $custom_date);
-                                                    } else {
-                                                        $date_obj = \DateTime::createFromFormat('Ymd', $custom_date);
-                                                        if ($date_obj === false) {
-                                                            $date_obj = \DateTime::createFromFormat('Y-m-d', $custom_date);
-                                                        }
-                                                        if ($date_obj !== false) {
-                                                            $post_date = $date_obj->format('d M, Y');
-                                                        } else {
-                                                            $timestamp = strtotime($custom_date);
-                                                            if ($timestamp !== false) {
-                                                                $post_date = date('d M, Y', $timestamp);
-                                                            } else {
-                                                                $post_date = get_the_date('d M, Y', $post_id);
+                                                                // Get date
+                                                                $custom_date = get_field('custom_created_date', $post_id);
+                                                                if (!empty($custom_date)) {
+                                                                    if (is_numeric($custom_date)) {
+                                                                        $post_date = date('d M, Y', $custom_date);
+                                                                    } else {
+                                                                        $date_obj = \DateTime::createFromFormat('Ymd', $custom_date);
+                                                                        if ($date_obj === false) {
+                                                                            $date_obj = \DateTime::createFromFormat('Y-m-d', $custom_date);
+                                                                        }
+                                                                        if ($date_obj !== false) {
+                                                                            $post_date = $date_obj->format('d M, Y');
+                                                                        } else {
+                                                                            $timestamp = strtotime($custom_date);
+                                                                            if ($timestamp !== false) {
+                                                                                $post_date = date('d M, Y', $timestamp);
+                                                                            } else {
+                                                                                $post_date = get_the_date('d M, Y', $post_id);
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                } else {
+                                                                    $post_date = get_the_date('d M, Y', $post_id);
+                                                                }
+
+                                                                $all_posts_json[] = [
+                                                                    'id' => $post_id,
+                                                                    'title' => get_the_title(),
+                                                                    'permalink' => get_permalink(),
+                                                                    'categories' => $category_ids,
+                                                                    'featured' => !empty($featured) ? 1 : 0,
+                                                                    'date' => $post_date,
+                                                                    'taxonomy' => $taxonomy_term ? $taxonomy_term['name'] : '',
+                                                                    'thumbnail' => has_post_thumbnail($post_id) ? get_the_post_thumbnail_url($post_id, 'large') : '',
+                                                                ];
                                                             }
+                                                            wp_reset_postdata();
                                                         }
-                                                    }
-                                                } else {
-                                                    $post_date = get_the_date('d M, Y', $post_id);
-                                                }
-
-                                                $all_posts_json[] = [
-                                                    'id' => $post_id,
-                                                    'title' => get_the_title(),
-                                                    'permalink' => get_permalink(),
-                                                    'categories' => $category_ids,
-                                                    'featured' => !empty($featured) ? 1 : 0,
-                                                    'date' => $post_date,
-                                                    'taxonomy' => $taxonomy_term ? $taxonomy_term['name'] : '',
-                                                    'thumbnail' => has_post_thumbnail($post_id) ? get_the_post_thumbnail_url($post_id, 'large') : '',
-                                                ];
-                                            }
-                                            wp_reset_postdata();
-                                        }
-                                        echo json_encode($all_posts_json);
-                                        ?>
-                                        </script>
+                                                        echo json_encode($all_posts_json);
+                                                        ?>
+                                                        </script>
 
         <script>
             (function () {

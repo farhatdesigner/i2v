@@ -5,27 +5,34 @@ namespace WPC\Widgets;
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
-class Custom_Social_Share extends Widget_Base {
+class Custom_Social_Share extends Widget_Base
+{
 
-    public function get_name() {
+    public function get_name()
+    {
         return 'custom_social_share';
     }
 
-    public function get_title() {
+    public function get_title()
+    {
         return 'Custom Social Share';
     }
 
-    public function get_icon() {
+    public function get_icon()
+    {
         return 'fa fa-list';
     }
 
-    public function get_categories() {
+    public function get_categories()
+    {
         return ['general'];
     }
 
-    protected function register_controls() {
+    protected function register_controls()
+    {
         $this->start_controls_section('section_content', ['label' => __('Dyanmic Social Share', 'repindia')]);
 
         $this->add_control(
@@ -75,14 +82,15 @@ class Custom_Social_Share extends Widget_Base {
         $this->end_controls_section();
     }
 
-    protected function render() {
+    protected function render()
+    {
         $settings = $this->get_settings_for_display();
-        $url   = urlencode( get_permalink() );
-        $title = urlencode( get_the_title() );
+        $url = urlencode(get_permalink());
+        $title = urlencode(get_the_title());
         ?>
         <div class="socialshare_section">
             <style>
-                .socialshare_section ul.shocial_media{
+                .socialshare_section ul.shocial_media {
                     max-width: 62px;
                     width: 62px;
                     background: #fff;
@@ -91,20 +99,77 @@ class Custom_Social_Share extends Widget_Base {
                     padding: 20px;
                     border-radius: 100px;
                     margin: 0;
-                    gap: 20px;
+                    gap: 8px;
+                    text-align: center;
+                    align-items: center;
                 }
+
+                .socialshare_section ul.shocial_media li {
+                    width: 36px;
+                    max-width: 36px;
+                    height: 36px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    overflow: visible;
+                    position: relative;
+                }
+
                 .socialshare_section .shocial_media li a img,
                 .socialshare_section .shocial_media li button img {
-                    max-width: 22px;
-                    width: 22px;
-                    height: 22px;
-                    display: inline-block;
+                    max-width: 20px;
+                    width: 20px;
+                    height: 20px;
+                    display: block;
                     vertical-align: middle;
+                    object-fit: contain;
+                    position: relative;
+                    z-index: 2;
                 }
+
+                .shocial_media li a {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 100%;
+                    height: 100%;
+                    padding: 0;
+                    border-radius: 50%;
+                    transition: background-color 0.3s ease;
+                    box-sizing: border-box;
+                    overflow: visible;
+                    position: relative;
+                }
+
+                .shocial_media li a::before {
+                    content: '';
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    width: 28px;
+                    height: 28px;
+                    transform: translate(-50%, -50%);
+                    border-radius: 50%;
+                    background-color: transparent;
+                    transition: background-color 0.3s ease;
+                    z-index: 1;
+                }
+
+                .shocial_media li a:hover::before {
+                    background-color: #e6ebf2;
+                }
+
+                .shocial_media li a:hover img {
+                    background: transparent;
+                    border-radius: 0;
+                }
+
                 .socialshare_section li.tooltip.dropdown-item {
                     display: inline-block;
                     width: auto;
+                    line-height: 3;
                 }
+
                 .socialshare_section button#copyButton {
                     display: inline-block;
                     width: auto;
@@ -113,18 +178,93 @@ class Custom_Social_Share extends Widget_Base {
                     padding: 0;
                     max-width: 22px;
                 }
-                .socialshare_section ul.shocial_media li {
-                    width: 23px;
-                    max-width: 23px;
-                    height: 22px;
+
+                .socialshare_section .tooltip {
+                    position: relative;
+                    display: inline-block;
+                    opacity: 1;
+                    z-index: 2;
                 }
-                .socialshare_section .tooltip { position: relative;display: inline-block;opacity: 1;z-index: 2; }
-                .socialshare_section .tooltip .tooltiptext { visibility: hidden;width: 140px;background-color: #555;color: #fff;text-align: center;border-radius: 6px;padding: 5px;position: absolute;z-index: 1;bottom: 80%;left: 50%;margin-left: -75px;opacity: 0;transition: opacity 0.3s; }
-                .socialshare_section .tooltip .tooltiptext::after { content: "";position: absolute;top: 100%;left: 50%;margin-left: -5px;border-width: 5px;border-style: solid;border-color: #555 transparent transparent transparent; }
-                .socialshare_section .tooltip:hover .tooltiptext { visibility: visible;opacity: 1; }
-                .socialshare_section .share .dropdown-menu button { padding: 0;background: transparent;border: 0; }
-                @media(max-width: 768px){
-                    .socialshare_section{
+
+                .socialshare_section .tooltip .tooltiptext {
+                    visibility: hidden;
+                    width: 140px;
+                    background-color: #555;
+                    color: #fff;
+                    text-align: center;
+                    border-radius: 6px;
+                    padding: 5px;
+                    position: absolute;
+                    z-index: 1;
+                    bottom: 80%;
+                    left: 50%;
+                    margin-left: -75px;
+                    opacity: 0;
+                    transition: opacity 0.3s;
+                }
+
+                .socialshare_section .tooltip .tooltiptext::after {
+                    content: "";
+                    position: absolute;
+                    top: 100%;
+                    left: 50%;
+                    margin-left: -5px;
+                    border-width: 5px;
+                    border-style: solid;
+                    border-color: #555 transparent transparent transparent;
+                }
+
+                .socialshare_section .tooltip:hover .tooltiptext {
+                    visibility: visible;
+                    opacity: 1;
+                }
+
+                .socialshare_section .share .dropdown-menu button {
+                    padding: 0;
+                    background: transparent;
+                    border: 0;
+                }
+
+                .js-dark .socialshare_section ul.shocial_media {
+                    background: #262a30;
+                }
+
+                .black_theme_img {
+                    display: none !important;
+                }
+
+                .js-dark .white_theme_img {
+                    display: none !important;
+                }
+
+                .js-dark .black_theme_img {
+                    display: block !important;
+                }
+
+
+                .js-dark .reading-progress svg {
+                    background: #0d1117;
+                }
+
+                .js-dark .reading-progress .bg {
+                    stroke: #262a30;
+                }
+
+                .js-dark .reading-progress .progress {
+                    stroke: #74C2ED;
+                }
+
+                .js-dark .reading-progress .percentage {
+                    fill: rgb(255, 255, 255, 0.9);
+                }
+
+                .js-dark .custom-blog-filter-category-item input[type="checkbox"] {
+                    background: transparent !important;
+                }
+
+     
+                @media(max-width: 768px) {
+                    .socialshare_section {
                         flex-direction: row;
                         right: unset;
                         top: unset;
@@ -134,14 +274,19 @@ class Custom_Social_Share extends Widget_Base {
                         width: 100%;
                         max-width: 100%;
                     }
+
                     .socialshare_section ul.shocial_media {
                         max-width: max-content;
                         width: auto;
                         flex-direction: row;
                         padding: 10px 20px;
                     }
-                    .socialshare_section ul.shocial_media li{ height: auto; }
-                    .reading-progress{
+
+                    .socialshare_section ul.shocial_media li {
+                        height: auto;
+                    }
+
+                    .reading-progress {
                         width: 46px;
                         height: 46px;
                         min-width: 46px;
@@ -150,11 +295,13 @@ class Custom_Social_Share extends Widget_Base {
             </style>
             <ul class="shocial_media" aria-labelledby="dropdownMenuLink">
                 <li>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $url; ?>"
-                    target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $url; ?>" target="_blank"
+                        rel="noopener noreferrer">
                         <?php if (!empty($settings['facebook_icon']['url'])): ?>
-                            <img class="white_theme_img" src="<?php echo esc_url($settings['facebook_icon']['url']); ?>" alt="Facebook Share" />
-                            <img class="black_theme_img" src="<?php echo esc_url($settings['facebook_icon']['url']); ?>" alt="Facebook Share" />
+                            <img class="white_theme_img" src="<?php echo esc_url($settings['facebook_icon']['url']); ?>"
+                                alt="Facebook Share" />
+                            <img class="black_theme_img" src="<?php echo esc_url($settings['facebook_icon']['url']); ?>"
+                                alt="Facebook Share" />
                         <?php else: ?>
                             facebook
                         <?php endif; ?>
@@ -163,10 +310,12 @@ class Custom_Social_Share extends Widget_Base {
 
                 <li>
                     <a href="https://twitter.com/intent/tweet?url=<?php echo $url; ?>&text=<?php echo $title; ?>"
-                    target="_blank" rel="noopener noreferrer">
+                        target="_blank" rel="noopener noreferrer">
                         <?php if (!empty($settings['twitter_icon']['url'])): ?>
-                            <img class="white_theme_img" src="<?php echo esc_url($settings['twitter_icon']['url']); ?>" alt="Twitter Share" />
-                            <img class="black_theme_img" src="<?php echo esc_url($settings['twitter_icon']['url']); ?>" alt="Twitter Share" />
+                            <img class="white_theme_img" src="<?php echo esc_url($settings['twitter_icon']['url']); ?>"
+                                alt="Twitter Share" />
+                            <img class="black_theme_img" src="<?php echo esc_url($settings['twitter_icon']['url']); ?>"
+                                alt="Twitter Share" />
                         <?php else: ?>
                             Twitter
                         <?php endif; ?>
@@ -174,11 +323,13 @@ class Custom_Social_Share extends Widget_Base {
                 </li>
 
                 <li>
-                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $url; ?>"
-                    target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $url; ?>" target="_blank"
+                        rel="noopener noreferrer">
                         <?php if (!empty($settings['linkedin_icon']['url'])): ?>
-                            <img class="white_theme_img" src="<?php echo esc_url($settings['linkedin_icon']['url']); ?>" alt="LinkedIn Share" />
-                            <img class="black_theme_img" src="<?php echo esc_url($settings['linkedin_icon']['url']); ?>" alt="LinkedIn Share" />
+                            <img class="white_theme_img" src="<?php echo esc_url($settings['linkedin_icon']['url']); ?>"
+                                alt="LinkedIn Share" />
+                            <img class="black_theme_img" src="<?php echo esc_url($settings['linkedin_icon']['url']); ?>"
+                                alt="LinkedIn Share" />
                         <?php else: ?>
                             Linkedin
                         <?php endif; ?>
@@ -186,8 +337,8 @@ class Custom_Social_Share extends Widget_Base {
                 </li>
                 <li class="tooltip dropdown-item"><input style="display: none;" type="text"
                         value="{{ urlencode(url()->current()) }}" id="clipinput">
-                    <button id="copyButton" onmouseout="outFunc()"><span class="tooltiptext"
-                            id="producttooltip">Click to copy</span>
+                    <button id="copyButton" onmouseout="outFunc()"><span class="tooltiptext" id="producttooltip">Click to
+                            copy</span>
                         <?php if (!empty($settings['copy_icon']['url'])): ?>
                             <img src="<?php echo esc_url($settings['copy_icon']['url']); ?>" alt="Copy Link" />
                         <?php else: ?>
@@ -199,25 +350,20 @@ class Custom_Social_Share extends Widget_Base {
 
             <div class="reading-progress">
                 <svg viewBox="0 0 36 36">
-                    <path class="bg"
-                        d="M18 2.0845
+                    <path class="bg" d="M18 2.0845
                         a 15.9155 15.9155 0 0 1 0 31.831
                         a 15.9155 15.9155 0 0 1 0 -31.831" />
-                    <path class="progress"
-                        stroke-dasharray="0,100"
-                        d="M18 2.0845
+                    <path class="progress" stroke-dasharray="0,100" d="M18 2.0845
                         a 15.9155 15.9155 0 0 1 0 31.831
                         a 15.9155 15.9155 0 0 1 0 -31.831" />
-                    <text x="18" y="20"
-                        text-anchor="middle"
-                        class="percentage">0%</text>
+                    <text x="18" y="20" text-anchor="middle" class="percentage">0%</text>
                 </svg>
             </div>
 
-            
+
         </div>
         <script>
-            document.getElementById("copyButton").addEventListener("click", function() {
+            document.getElementById("copyButton").addEventListener("click", function () {
                 // Get the current URL
                 var url = window.location.href;
                 // Create a temporary input element
@@ -241,7 +387,7 @@ class Custom_Social_Share extends Widget_Base {
                 tooltip.innerHTML = 'Click to copy';
             }
         </script>
-        
-    <?php 
+
+        <?php
     }
 }

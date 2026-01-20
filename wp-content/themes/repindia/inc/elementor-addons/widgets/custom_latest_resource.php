@@ -358,9 +358,9 @@ class Custom_Latest_Resource extends Widget_Base
             }
 
             /* .custom-latest-resource-card:hover {
-                                transform: translateY(-4px);
-                                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-                            } */
+                                                transform: translateY(-4px);
+                                                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+                                            } */
             .custom-latest-resource-card-link {
                 display: flex;
                 flex-direction: column;
@@ -492,6 +492,15 @@ class Custom_Latest_Resource extends Widget_Base
             .js-dark .custom-latest-resource-taxonomy {
                 background: #464A4F;
                 border: 1px solid #464A4F;
+                color: #74C2ED !important;
+            }
+
+            .js-dark .custom-latest-resource-title {
+                color: rgb(255 255 255 / 90%) !important;
+            }
+
+            .js-dark .news_detail_taxonomy h4 span {
+                color: #74C2ED !important;
             }
 
             @media (max-width: 1200px) {
