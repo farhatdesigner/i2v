@@ -153,8 +153,8 @@ class Custom_Social_Share extends Widget_Base {
                     <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $url; ?>"
                     target="_blank" rel="noopener noreferrer">
                         <?php if (!empty($settings['facebook_icon']['url'])): ?>
-                            <img src="<?php echo esc_url($settings['facebook_icon']['url']); ?>" alt="Facebook Share" />
-                            <img src="<?php echo esc_url($settings['facebook_icon']['url']); ?>" alt="Facebook Share" />
+                            <img class="white_theme_img" src="<?php echo esc_url($settings['facebook_icon']['url']); ?>" alt="Facebook Share" />
+                            <img class="black_theme_img" src="<?php echo esc_url($settings['facebook_icon']['url']); ?>" alt="Facebook Share" />
                         <?php else: ?>
                             facebook
                         <?php endif; ?>
@@ -165,7 +165,8 @@ class Custom_Social_Share extends Widget_Base {
                     <a href="https://twitter.com/intent/tweet?url=<?php echo $url; ?>&text=<?php echo $title; ?>"
                     target="_blank" rel="noopener noreferrer">
                         <?php if (!empty($settings['twitter_icon']['url'])): ?>
-                            <img src="<?php echo esc_url($settings['twitter_icon']['url']); ?>" alt="Twitter Share" />
+                            <img class="white_theme_img" src="<?php echo esc_url($settings['twitter_icon']['url']); ?>" alt="Twitter Share" />
+                            <img class="black_theme_img" src="<?php echo esc_url($settings['twitter_icon']['url']); ?>" alt="Twitter Share" />
                         <?php else: ?>
                             Twitter
                         <?php endif; ?>
@@ -176,7 +177,8 @@ class Custom_Social_Share extends Widget_Base {
                     <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $url; ?>"
                     target="_blank" rel="noopener noreferrer">
                         <?php if (!empty($settings['linkedin_icon']['url'])): ?>
-                            <img src="<?php echo esc_url($settings['linkedin_icon']['url']); ?>" alt="LinkedIn Share" />
+                            <img class="white_theme_img" src="<?php echo esc_url($settings['linkedin_icon']['url']); ?>" alt="LinkedIn Share" />
+                            <img class="black_theme_img" src="<?php echo esc_url($settings['linkedin_icon']['url']); ?>" alt="LinkedIn Share" />
                         <?php else: ?>
                             Linkedin
                         <?php endif; ?>
