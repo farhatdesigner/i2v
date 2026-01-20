@@ -1233,7 +1233,7 @@ class Custom_Testimonial extends Widget_Base
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item { display:flex; align-items:center; justify-content:center; padding:0px; border-radius:10px; background:#fff0; transition: all .25s ease; border:2px solid transparent; }
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item img { transition: all .25s ease; display:block; }
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-placeholder { font-size: 12px; color: rgba(255,255,255,0.7); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px; }
-            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item.active { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item.active { background: rgba(255,255,255,0.05); border-color: #74c2edcc; }
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item.active img { opacity: 1; }
 
             /* arrows (scoped) - positioned relative to wrapper */
