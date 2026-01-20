@@ -697,8 +697,8 @@ header li.burger-icon .icon-sun,
   background-color:#262a30 !important;
 }
 .js-dark .theme-btn {
-  background: rgba(0, 122, 190, 1);
-  color: rgb(255 255 255 / 90%);
+  /* background: rgba(0, 122, 190, 1);
+  color: rgb(255 255 255 / 90%); */
 }
 
 .js-dark .darksection span.elementor-button-text {
