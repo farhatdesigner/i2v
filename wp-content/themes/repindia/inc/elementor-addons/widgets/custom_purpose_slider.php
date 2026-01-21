@@ -158,16 +158,26 @@ class Custom_Purpose_Slider extends Widget_Base
 
                     <!-- Navigation -->
                     <div class="swiper-button-next swiper-horizontalmobile-next">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-white.svg" alt="Next">
+                        <img class="default_liicon" src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-white.svg" alt="Next">
+                        <img class="dark_liicon" src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/dark_right_arrow.svg" alt="Next">
                     </div>
                     <div class="swiper-button-prev swiper-horizontalmobile-prev">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-white.svg" alt="Prev">
+                        <img class="default_liicon" src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-white.svg" alt="Prev">
+                        <img class="dark_liicon" src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/dark_right_arrow.svg" alt="Prev">
                     </div>
                 </div>
             </div>
         </section>
 
         <style>
+            .js-dark .default_liicon,
+            .dark_liicon {
+                display: none;
+            }
+
+            .js-dark .dark_liicon {
+                display: block;
+            }
             .purpose-slider-wrapper {
                 position: relative;
             }

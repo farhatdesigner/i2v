@@ -54,6 +54,7 @@
     color: #fff;
     border-color: #0099ED;
 }
+.location-chip:focus{ background: #0074B2;border-color: #0074B2; }
 
 .location-chip-more {
     background: #F2F5FA;

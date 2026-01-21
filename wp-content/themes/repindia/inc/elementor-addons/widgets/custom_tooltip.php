@@ -786,7 +786,7 @@ class Custom_Tooltip extends Widget_Base
             echo '.ctw-wrapper { position: relative; display: inline-block;width: 100%;text-align: left;}';
             echo '.ctw-trigger { cursor: pointer; display: inline-flex; align-items: center; }';
             echo '.ctw-title { display: inline-flex; align-items: center;}';
-            echo '.ctw-has-learn-more .ctw-title .border-b {border-bottom: 2px solid #D7DBE4; }';
+            echo '.ctw-title .border-b {border-bottom: 2px solid #D7DBE4; }';
             echo '.ctw-icon { display: inline-flex; align-items: center; justify-content: center; }';
             echo '.ctw-text { display: inline-block; }';
             echo '.ctw-tooltip { position: absolute; opacity: 0; visibility: hidden; transition: opacity 0.25s; z-index: 9999; pointer-events: none;min-width: 250px;width: 100%; }';
@@ -914,8 +914,8 @@ class Custom_Tooltip extends Widget_Base
     button.ctw-learn-more-btn{ box-shadow: none!important;border: none;border-bottom: 1px solid rgba(255, 255, 255, 0.20); }
     .ctw-title .ctw-text p{ font-size: 14px;font-weight: 400;line-height: 26px;color: #5C5C5C; }
     .para_tooltip .ctw-title .ctw-text p{ font-size: 16px; }
-    .ctw-has-learn-more .ctw-title:hover .border-b{ border-bottom: 2px solid #9ea1a8!important; }
-    .js-dark .ctw-has-learn-more .ctw-title:hover .border-b { border-bottom: 2px solid #7d8895 !important; }
+    .ctw-title:hover .border-b{ border-bottom: 2px solid #9ea1a8!important; }
+    .js-dark .ctw-title:hover .border-b { border-bottom: 2px solid #7d8895 !important; }
     
     @media(max-width: 768px){
         .elementor-element.tooltip_container {
