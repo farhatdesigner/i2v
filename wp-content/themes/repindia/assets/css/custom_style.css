@@ -2463,6 +2463,7 @@ label.form-label.required_note-demo {
   display: inline-table;
   margin: 0 auto;
 }
+#choose_video .withgreencap .widget-image-caption{ background: #22452F; }
 
 .cards-listing-section .card-body {
   padding: 20px;
