@@ -360,7 +360,7 @@ class Horizontal_Slider extends Widget_Base
                                 $special_cta_nofollow = !empty($settings['special_slide_cta_url']['nofollow']) ? 'rel="nofollow"' : '';
                                 $special_cta_classes = !empty($settings['special_slide_cta_classes']) ? ' ' . esc_attr($settings['special_slide_cta_classes']) : '';
                             ?>
-                            <div class="swiper-slide">
+                            <div class="swiper-slide static_slide staticslide_item">
                                 <div class="slider-image_content">
                                     <div class="slider-image">
                                         <img decoding="async" class="radius-12 white_theme_img"
