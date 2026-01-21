@@ -686,6 +686,10 @@ h2 {
   transform: none;
   opacity: 1;
 }
+#tabbedSliderWrapper .swiper-button-next.swiper-button-disabled,
+#tabbedSliderWrapper .swiper-button-prev.swiper-button-disabled {
+  opacity: 0.8;
+}
 
 #tabbedSliderWrapper .swiper-button-prev {
   right: 50px;
@@ -2817,7 +2821,7 @@ label.form-label.required_note-demo {
   margin-bottom: 40px;
 }
 
-.ts_company_logo img {
+.ts_company_logo img,.elementor .ts_company_logo img {
   height: 32px;
   width: auto;
   filter: brightness(0) invert(1);
@@ -2845,12 +2849,12 @@ label.form-label.required_note-demo {
 }
 
 .ts_testimonial_card_content {
-  padding: 30px;
+  padding: 48px;
 }
 
 .ts_stats_row {
   display: flex;
-  padding: 30px;
+  padding: 48px;
   gap: 20px;
   align-self: stretch;
   border-top: 1px solid var(--Golbal-others-border, rgba(193, 196, 198, 0.1));
@@ -2927,7 +2931,7 @@ label.form-label.required_note-demo {
   transform: translateY(-50%);
   width: 50px;
   height: 50px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(193, 196, 198, 0.20);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -2935,6 +2939,7 @@ label.form-label.required_note-demo {
   cursor: pointer;
   z-index: 10;
   transition: all 0.3s ease;
+  background: #464A4F;
 }
 
 .ts_nav_arrow:hover {
@@ -3375,6 +3380,21 @@ span.star {
   fill: rgb(255 255 255 / 90%);
   background: #262A30;
   border-radius: 100%;
+}
+.bredstyle p,.txtflex .bredstyle p {
+  background: #E6EBF2;
+  display: inline-block;
+  width: auto;
+  padding: 4px 12px;
+  border-radius: 28px;
+  color: #4A5673;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+}
+.detailsWrapper .txtflex p {
+  color: #5C5C5C;
 }
 @media (min-width: 768px) {
   .footer-accordion-icon {
