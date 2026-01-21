@@ -378,7 +378,9 @@ header li.burger-icon .icon-sun,
   background: #464a4f;
   border-color: rgba(193, 196, 198, 0.2);
   color: #d7dbe4 !important;
+  fill: #D7DBE4;
 }
+.js-dark .leadersslider.elementor-element .swiper .elementor-swiper-button svg{ fill: #D7DBE4; }
 .js-dark span.swiper-pagination-bullet {
   opacity: 1;
 }
@@ -824,4 +826,25 @@ header li.burger-icon .icon-sun,
 .js-dark .vac_chevron svg {
     fill: transparent!important;
     stroke: #ffffff!important;
+}
+
+.js-dark .bg-trans.redcolor_btn {
+  color: #E6BA85 !important;
+  border-bottom: 1px solid #FFFFFF33;
+}
+.js-dark .theme-btn.bg-trans.redcolor_btn:hover {
+  border-color: #E6BA85;
+}
+.js-dark .theme-btn.bg-trans.redcolor_btn:focus {
+  color: #F2AE5A !important;
+  border-color: #F2AE5A;
+}
+.js-dark .elementor-element.darkmode_custom.e-flex {
+  background-color: #262a30 !important;
+}
+.js-dark .purpose-slider-wrapper .purpose-swiper:before{ 
+  background: linear-gradient(270deg, rgba(13, 17, 23, 0.00) 0%, #0D1117 83.82%); }
+
+.js-dark .elementor-element.withbg_imgbox.elementor-widget-image {
+    background-color: #262A30;
 }
