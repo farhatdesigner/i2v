@@ -2361,7 +2361,7 @@ label.form-label.required_note-demo {
   border-radius: 12px 12px 12px 12px;
 }
 
-.purpose-slider-wrapper .purpose-swiper:before {
+.purpose-slider-wrapper:before {
   content: "";
   position: absolute;
   right: 0;
@@ -4360,7 +4360,7 @@ span.star {
     width: 150px;
   }
 
-  .purpose-slider-wrapper .purpose-swiper:before {
+  .purpose-slider-wrapper:before {
     background: none;
   }
   .accontent .accordion_video {
