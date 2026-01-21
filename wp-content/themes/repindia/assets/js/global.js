@@ -646,6 +646,8 @@ function initStickyMenu(config) {
     var previousFixedHeaderState = false; // Track previous fixed-header state
     var previousMenuHiddenState = false; // Track previous menu-hidden state
     var refreshTimeout = null; // Debounce ScrollTrigger refresh calls
+    var menuSpacer = null; // Spacer element to maintain layout when menu becomes fixed
+    var menuOriginalHeight = null; // Store original menu height
     
     // --------------------------------------------
     // FUNCTION: Scroll active item to left (mobile only)
@@ -739,20 +741,49 @@ function initStickyMenu(config) {
                     scrollActiveItemToLeft();
                 }, 50);
 
-                // Calculate exact scroll position
-                var exactPosition = $target.offset().top - (triggerOffset - 1);
+                // Calculate exact scroll position based on actual sticky menu height
+                // instead of using the generic triggerOffset. This avoids visual gaps
+                // when the menu switches between normal and fixed states during scroll.
+                var menuHeight = 0;
+                if ($menu.length) {
+                    menuHeight = $menu.outerHeight(true) || 0; // include margins
+                }
+
+                // Small extra padding so section title is not glued to the menu
+                var extraPadding = 20;
+
+                var exactPosition = $target.offset().top - menuHeight - extraPadding;
+                if (exactPosition < 0) {
+                    exactPosition = 0;
+                }
 
                 // Smooth scroll to target section
-                $("html, body").animate({
-                    scrollTop: exactPosition
-                }, 300, function() {
-                    // Update positions after scroll completes
-                    updatePositions();
-                    // Reset flag after scroll animation completes
+                // Prefer Lenis smooth scroll if available to avoid conflicts
+                // with GSAP / ScrollTrigger and native/jQuery scrolling.
+                if (typeof lenis !== "undefined" && lenis && typeof lenis.scrollTo === "function") {
+                    // Duration in seconds (Lenis expects seconds)
+                    var duration = 0.6;
+                    lenis.scrollTo(exactPosition, {
+                        duration: duration,
+                    });
+
+                    // Approximate callback after scroll finishes
                     setTimeout(function() {
+                        updatePositions();
                         isManualClick = false;
-                    }, 100);
-                });
+                    }, duration * 1000 + 150);
+                } else {
+                    $("html, body").animate({
+                        scrollTop: exactPosition
+                    }, 300, function() {
+                        // Update positions after scroll completes
+                        updatePositions();
+                        // Reset flag after scroll animation completes
+                        setTimeout(function() {
+                            isManualClick = false;
+                        }, 100);
+                    });
+                }
             }
         });
     });
@@ -855,6 +886,22 @@ function initStickyMenu(config) {
         });
     }
 
+    // Create spacer element to maintain layout when menu becomes fixed
+    function createMenuSpacer() {
+        if (!menuSpacer) {
+            menuSpacer = $('<div class="sticky-menu-spacer"></div>');
+            menuSpacer.css({
+                'display': 'none',
+                'width': '100%',
+                'height': '0px',
+                'margin': '0',
+                'padding': '0',
+                'visibility': 'hidden'
+            });
+            $menu.after(menuSpacer);
+        }
+    }
+
     // Handle fixed-header class when sticky element reaches top of viewport
     function handleFixedHeader() {
         // Store initial position on first call (before element becomes fixed)
@@ -862,6 +909,8 @@ function initStickyMenu(config) {
             var elementOffset = $menu.offset();
             if (elementOffset) {
                 stickyElementInitialTop = elementOffset.top;
+                // Store original menu height before it becomes fixed
+                menuOriginalHeight = $menu.outerHeight(true); // Include margins
             } else {
                 return; // Element not found or not visible
             }
@@ -874,11 +923,51 @@ function initStickyMenu(config) {
         var shouldBeFixed = scrollTop >= activationThreshold;
         var currentFixedHeaderState = $menu.hasClass('fixed-header');
         
+        // Only proceed if state is actually changing
+        if (shouldBeFixed === currentFixedHeaderState) {
+            return; // No state change needed
+        }
+        
+        // Create spacer if it doesn't exist
+        createMenuSpacer();
+        
         // Add or remove fixed-header class based on scroll position
         if (shouldBeFixed && !currentFixedHeaderState) {
+            // Menu is about to become fixed - get current height BEFORE it becomes fixed
+            var currentHeight = $menu.outerHeight(true); // Include margins
+            
+            // Set spacer height FIRST to prevent layout shift
+            menuSpacer.css({
+                'display': 'block',
+                'height': currentHeight + 'px'
+            });
+            
+            // Now add fixed-header class
             $menu.addClass('fixed-header');
+            
+            // Recalculate positions after menu becomes fixed (small delay for browser to apply styles)
+            setTimeout(function() {
+                updatePositions();
+            }, 50);
+            
         } else if (!shouldBeFixed && currentFixedHeaderState) {
+            // Menu is about to become unfixed - remove fixed-header first
             $menu.removeClass('fixed-header');
+            
+            // Hide spacer after a small delay to allow menu to return to normal flow
+            setTimeout(function() {
+                menuSpacer.css({
+                    'display': 'none',
+                    'height': '0px'
+                });
+                
+                // Recalculate initial position after menu becomes unfixed
+                var elementOffset = $menu.offset();
+                if (elementOffset) {
+                    stickyElementInitialTop = elementOffset.top;
+                }
+                updatePositions();
+            }, 50);
         }
         
         // Refresh ScrollTrigger when fixed-header state changes (affects layout)
@@ -913,10 +1002,17 @@ function initStickyMenu(config) {
         var wasFixed = $menu.hasClass('fixed-header');
         if (wasFixed) {
             $menu.removeClass('fixed-header');
+            // Hide spacer during recalculation
+            if (menuSpacer) {
+                menuSpacer.css('display', 'none');
+            }
         }
         
-        // Reset initial position on resize so it recalculates
+        // Reset initial position and height on resize so it recalculates
         stickyElementInitialTop = null;
+        menuOriginalHeight = null;
+        
+        // Recalculate everything
         updatePositions();
         detectActiveSection();
         handleFixedHeader(); // Check on resize (will recalculate and re-apply if needed)
@@ -940,7 +1036,8 @@ var stickyMenuConfigs = {
         sections: [
             ".live_monitoring",
             ".system_setup",
-            ".intelligenc_alerts",
+            // Support both legacy misspelled class and correct spelling
+            ".intelligenc_alerts, .intelligence_alerts",
             ".recording_storage",
             ".security_integration"
         ],
@@ -1000,7 +1097,7 @@ jQuery(document).ready(function ($) {
         }
         
         // Check for default page sections
-        var hasDefaultSections = $(".live_monitoring, .system_setup, .intelligenc_alerts, .recording_storage, .security_integration").length >= 3;
+        var hasDefaultSections = $(".live_monitoring, .system_setup, .intelligenc_alerts, .intelligence_alerts, .recording_storage, .security_integration").length >= 3;
         
         if (hasDefaultSections) {
             return stickyMenuConfigs.default;
