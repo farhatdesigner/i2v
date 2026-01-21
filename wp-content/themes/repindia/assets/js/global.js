@@ -1836,8 +1836,8 @@ if (document.querySelector(".hz-slider-topcaption .swiper")) {
   const hzTopcaptionSwiper = new Swiper(".hz-slider-topcaption .swiper", {
     speed: 1200,
     loop: false,
-    slidesPerView: 1,
-    spaceBetween: 20,
+    slidesPerView: 1.1,
+    spaceBetween: 30,
     loopAddBlankSlides: false,
     slideToClickedSlide: true,
     centeredSlides: false,
@@ -1848,26 +1848,54 @@ if (document.querySelector(".hz-slider-topcaption .swiper")) {
     resistance: true,
     resistanceRatio: 0.85,
     breakpoints: {
-      480: {
-        slidesPerView: 1,
-        spaceBetween: 20
+      580: {
+        slidesPerView: 1.1,
+        spaceBetween: 30
       },
       768: {
-        slidesPerView: 2,
-        spaceBetween: 20
+        slidesPerView: 1.2,
+        spaceBetween: 30
       },
       1024: {
-        slidesPerView: 3,
-        spaceBetween: 20
+        slidesPerView: 1.5,
+        spaceBetween: 30
       },
-      1230: {
-        slidesPerView: 4,
-        spaceBetween: 20
+      1280: {
+        slidesPerView: 4.1,
+        spaceBetween: 30
       }
     }
   });
   
   hzTopcaptionSwiper.slideTo(0);
+  
+  // Function to apply correct slidesPerView based on window width
+  function applyCorrectTopcaptionSlidesPerView() {
+    const width = window.innerWidth;
+    let slidesPerView = 1.1;
+    
+    if (width >= 1280) {
+      slidesPerView = 4.1;
+    } else if (width >= 1024) {
+      slidesPerView = 1.5;
+    } else if (width >= 768) {
+      slidesPerView = 1.2;
+    } else {
+      slidesPerView = 1.1;
+    }
+    
+    // Only update if the value has changed
+    if (hzTopcaptionSwiper.params.slidesPerView !== slidesPerView) {
+      hzTopcaptionSwiper.params.slidesPerView = slidesPerView;
+      hzTopcaptionSwiper.update();
+    }
+  }
+  
+  // Apply correct slidesPerView immediately and after a short delay
+  applyCorrectTopcaptionSlidesPerView();
+  setTimeout(function() {
+    applyCorrectTopcaptionSlidesPerView();
+  }, 100);
   
   // Function to initialize GSAP pin animation (desktop only)
   function initHzTopcaptionGSAP() {
@@ -1887,14 +1915,15 @@ if (document.querySelector(".hz-slider-topcaption .swiper")) {
     
     // Disable Swiper touch on desktop (controlled by scroll)
     hzTopcaptionSwiper.allowTouchMove = false;
-    hzTopcaptionSwiper.update();
+    // Apply correct slidesPerView based on screen size
+    applyCorrectTopcaptionSlidesPerView();
     
     hzTopcaptionTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: ".hz-slider-topcaption .slider",
         pin: ".hz-slider-topcaption",
         pinSpacing: true,
-        pinReparent: false,
+        pinReparent: false, // Changed to false to prevent DOM reparenting issues
         start: "top 20%",
         end: "+=" + scrollDistance + "vh",
         scrub: 2, // Increased from true to 2 for smoother, slower scroll response
@@ -1944,6 +1973,9 @@ if (document.querySelector(".hz-slider-topcaption .swiper")) {
   window.addEventListener("resize", function() {
     clearTimeout(hzTopcaptionResizeTimer);
     hzTopcaptionResizeTimer = setTimeout(function() {
+      // Update Swiper to apply breakpoint changes
+      applyCorrectTopcaptionSlidesPerView();
+      
       const isDesktop = window.innerWidth >= 1024;
       const hasGSAP = hzTopcaptionScrollTrigger !== null;
       
