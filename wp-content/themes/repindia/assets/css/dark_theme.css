@@ -835,6 +835,16 @@ header li.burger-icon .icon-sun,
     fill: transparent!important;
     stroke: #ffffff!important;
 }
+.js-dark .bg-trans:hover,.js-dark .bg-tran_lightcolor:hover {
+  background: transparent !important;
+  border-bottom: 1px solid #74C2ED;
+  color: #74C2ED !important
+}
+.js-dark .bg-trans:focus,.js-dark .bg-tran_lightcolor:focus {
+  background: transparent !important;
+  border-bottom: 1px solid #008AD6;
+  color: #008AD6!important;
+}
 
 .js-dark .bg-trans.redcolor_btn {
   color: #E6BA85 !important;

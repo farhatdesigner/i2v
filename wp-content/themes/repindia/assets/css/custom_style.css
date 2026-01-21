@@ -1334,11 +1334,10 @@ p {
   color: #A65B00 !important;
   border-bottom: 1px solid #E6EBF2;
 }
-
 .bg-trans:hover,.bg-tran_lightcolor:hover {
   background: transparent !important;
   border-bottom: 1px solid #74C2ED;
-  color: #0099ED!important
+  color: #74C2ED !important
 }
 .bg-trans:focus,.bg-tran_lightcolor:focus {
   background: transparent !important;
@@ -2440,7 +2439,7 @@ label.form-label.required_note-demo {
   box-shadow: 0 0 10px 0 rgba(0, 82, 128, 0.1);
 }
 .view-bg img {
-  margin-bottom: -9px;
+  margin-bottom: 0;
 }
 
 .hide-section {
