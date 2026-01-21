@@ -457,7 +457,7 @@ class Video_accordioncaption extends Widget_Base
             .vac_chevron svg {
                 width: 20px;
                 height: 20px;
-                stroke: #5F6F94;
+                stroke: rgb(95 111 148 / 50%);
                 transition: stroke 0.3s ease;
             }
 
@@ -467,7 +467,7 @@ class Video_accordioncaption extends Widget_Base
             }
 
             .vac_accordion_set.active .vac_chevron svg {
-                stroke: #0066cc;
+                stroke: #5F6F94;
             }
 
             .vac_accontent {

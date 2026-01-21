@@ -2361,7 +2361,7 @@ label.form-label.required_note-demo {
   border-radius: 12px 12px 12px 12px;
 }
 
-.purpose-slider-wrapper .purpose-swiper:before {
+.purpose-slider-wrapper:before {
   content: "";
   position: absolute;
   right: 0;
@@ -3368,6 +3368,14 @@ span.star {
 .card-image > img {
   border-radius: 12px !important;
 }
+.js-dark .redtooltip .ctw-icon svg path {
+  fill: #E6BA85;
+}
+.js-dark .redtooltip svg {
+  fill: rgb(255 255 255 / 90%);
+  background: #262A30;
+  border-radius: 100%;
+}
 @media (min-width: 768px) {
   .footer-accordion-icon {
     display: none;
@@ -4352,7 +4360,7 @@ span.star {
     width: 150px;
   }
 
-  .purpose-slider-wrapper .purpose-swiper:before {
+  .purpose-slider-wrapper:before {
     background: none;
   }
   .accontent .accordion_video {
