@@ -93,6 +93,8 @@ header li.burger-icon .icon-sun,
 .js-dark header li.burger-icon .icon-sun {
   display: block;
 }
+.js-dark .lightfile,.darkfile,.js-dark .elementor-element.lightfile,.elementor-element.darkfile{ display: none; }
+.js-dark .darkfile,.js-dark .darkfile.elementor-element{ display: block;}
 .js-dark .lang_switch svg {
   outline: 1px solid rgba(193, 196, 198, 0.10);
 }
