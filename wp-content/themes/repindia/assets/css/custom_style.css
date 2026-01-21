@@ -1350,6 +1350,7 @@ p {
 }
 .theme-btn.bg-trans.redcolor_btn:hover {
   border-color: #A65B00;
+  color: #A65B00 !important;
 }
 .theme-btn.bg-trans.redcolor_btn:focus {
   color: #7F5B2F !important;

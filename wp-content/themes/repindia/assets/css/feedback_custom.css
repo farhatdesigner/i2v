@@ -963,12 +963,18 @@ div.pin-spacer > .hz-slider-section {
   font-size: 16px;
   font-weight: 600;
   line-height: 24px;
-  color: #0099ed;
   padding: 8px 16px;
   width: 80%;
   border-radius: 8px;
-  border: 1px solid #e5e9ec;
+  color: #0099ED;
   background: #fff;
+  border: 1px solid #E5E9EC;
+}
+.box-custom figcaption.widget-image-caption.wp-caption-text:hover {
+  border: 1px solid #008EDB;color: #008EDB;
+}
+.box-custom figcaption.widget-image-caption.wp-caption-text:focus {
+  border: 1px solid #0074B2;color: #0074B2;
 }
 
 /* Button hover effect */

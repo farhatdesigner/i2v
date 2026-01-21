@@ -691,7 +691,7 @@
                 }
             }
 
-            const maxInitialChips = 2;
+            const maxInitialChips = 5;
             const shouldShowMoreButton = locations.length > maxInitialChips && !locationChipsExpanded;
             const chipsToShow = locations.slice(0, maxInitialChips);
             const remainingCount = locations.length - maxInitialChips;
