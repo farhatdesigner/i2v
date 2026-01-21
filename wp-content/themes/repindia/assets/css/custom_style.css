@@ -3368,6 +3368,14 @@ span.star {
 .card-image > img {
   border-radius: 12px !important;
 }
+.js-dark .redtooltip .ctw-icon svg path {
+  fill: #E6BA85;
+}
+.js-dark .redtooltip svg {
+  fill: rgb(255 255 255 / 90%);
+  background: #262A30;
+  border-radius: 100%;
+}
 @media (min-width: 768px) {
   .footer-accordion-icon {
     display: none;
