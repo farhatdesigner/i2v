@@ -91,23 +91,23 @@ class Custom_Social_Share extends Widget_Base
         <div class="socialshare_section">
             <style>
                 .socialshare_section ul.shocial_media {
-                    max-width: 62px;
-                    width: 62px;
+                    max-width: 80px;
+                    width: 80px;
                     background: #fff;
                     display: flex;
                     flex-direction: column;
                     padding: 20px;
                     border-radius: 100px;
                     margin: 0;
-                    gap: 8px;
+                    gap: 4px;
                     text-align: center;
                     align-items: center;
                 }
 
                 .socialshare_section ul.shocial_media li {
-                    width: 36px;
-                    max-width: 36px;
-                    height: 36px;
+                    width: 40px;
+                    max-width: 40px;
+                    height: 40px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -117,9 +117,9 @@ class Custom_Social_Share extends Widget_Base
 
                 .socialshare_section .shocial_media li a img,
                 .socialshare_section .shocial_media li button img {
-                    max-width: 20px;
-                    width: 20px;
-                    height: 20px;
+                    max-width: 22px;
+                    width: 22px;
+                    height: 22px;
                     display: block;
                     vertical-align: middle;
                     object-fit: contain;
@@ -155,7 +155,7 @@ class Custom_Social_Share extends Widget_Base
                     z-index: 1;
                 }
 
-                .shocial_media li a:hover::before {
+                .shocial_media li:hover a {
                     background-color: #e6ebf2;
                 }
 
@@ -262,7 +262,10 @@ class Custom_Social_Share extends Widget_Base
                     background: transparent !important;
                 }
 
-     
+                .js-dark .shocial_media li:hover a {
+                    background-color: #ffffff1a;
+                }
+
                 @media(max-width: 768px) {
                     .socialshare_section {
                         flex-direction: row;
@@ -300,7 +303,8 @@ class Custom_Social_Share extends Widget_Base
                         <?php if (!empty($settings['facebook_icon']['url'])): ?>
                             <img class="white_theme_img" src="<?php echo esc_url($settings['facebook_icon']['url']); ?>"
                                 alt="Facebook Share" />
-                            <img class="black_theme_img" src="<?php echo esc_url($settings['facebook_icon']['url']); ?>"
+                            <img class="black_theme_img"
+                                src="<?php echo get_template_directory_uri(); ?>/assets/images/black_facebook.svg"
                                 alt="Facebook Share" />
                         <?php else: ?>
                             facebook
@@ -314,7 +318,8 @@ class Custom_Social_Share extends Widget_Base
                         <?php if (!empty($settings['twitter_icon']['url'])): ?>
                             <img class="white_theme_img" src="<?php echo esc_url($settings['twitter_icon']['url']); ?>"
                                 alt="Twitter Share" />
-                            <img class="black_theme_img" src="<?php echo esc_url($settings['twitter_icon']['url']); ?>"
+                            <img class="black_theme_img"
+                                src="<?php echo get_template_directory_uri(); ?>/assets/images/black_twitter.svg"
                                 alt="Twitter Share" />
                         <?php else: ?>
                             Twitter
@@ -328,7 +333,8 @@ class Custom_Social_Share extends Widget_Base
                         <?php if (!empty($settings['linkedin_icon']['url'])): ?>
                             <img class="white_theme_img" src="<?php echo esc_url($settings['linkedin_icon']['url']); ?>"
                                 alt="LinkedIn Share" />
-                            <img class="black_theme_img" src="<?php echo esc_url($settings['linkedin_icon']['url']); ?>"
+                            <img class="black_theme_img"
+                                src="<?php echo get_template_directory_uri(); ?>/assets/images/black_linkedin.svg"
                                 alt="LinkedIn Share" />
                         <?php else: ?>
                             Linkedin
@@ -340,7 +346,10 @@ class Custom_Social_Share extends Widget_Base
                     <button id="copyButton" onmouseout="outFunc()"><span class="tooltiptext" id="producttooltip">Click to
                             copy</span>
                         <?php if (!empty($settings['copy_icon']['url'])): ?>
-                            <img src="<?php echo esc_url($settings['copy_icon']['url']); ?>" alt="Copy Link" />
+                            <img class="white_theme_img" src="<?php echo esc_url($settings['copy_icon']['url']); ?>"
+                                alt="Copy Link" />
+                            <img class="black_theme_img"
+                                src="<?php echo get_template_directory_uri(); ?>/assets/images/black_link.svg" alt="Copy Link" />
                         <?php else: ?>
                             file
                         <?php endif; ?>

@@ -401,7 +401,7 @@ class Custom_Latest_Resource extends Widget_Base
                 right: 8px !important;
                 background: #464A4F;
                 color: #D7DBE4;
-                padding: 4px 16px;
+                padding: 6px 16px;
                 border-radius: 100px;
                 z-index: 3;
                 pointer-events: none;
