@@ -3103,8 +3103,8 @@ svg.connection-line-7 {
 }
 .customtabsmart .smart-tabsautoscroll li.active .smart-tab-link {
   border-radius: 40px;
-  border: 1px solid var(--tabs-tab-btn-active-bg, #0099ed);
-  background: var(--tabs-tab-btn-active-bg, #0099ed);
+  border: 1px solid #0099ed;
+  background: #0099ed;
   color: #ffffff;
   padding: 4px 16px;
 }
@@ -3129,6 +3129,16 @@ svg.connection-line-7 {
   background: transparent;
   font-weight: 500;
   padding: 4px 16px;
+}
+.customtabsmart .smart-tabsautoscroll li .smart-tab-link:hover{
+  background: #008EDB;
+  color: #fff;
+  border-radius: 40px;
+}
+.customtabsmart .smart-tabsautoscroll li .smart-tab-link:focus{
+  background: #0074B2;
+  color: #fff;
+  border-radius: 40px;
 }
 
 .customtabsmart .smart-tabdiv .smart-content-inner-image {

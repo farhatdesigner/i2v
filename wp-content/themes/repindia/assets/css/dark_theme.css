@@ -897,3 +897,11 @@ header li.burger-icon .icon-sun,
   fill: #262A30;
 }
 .js-dark .tabbed-slider-wrapper .swiper-button-next.swiper-button-disabled svg .stroke_enabled,.js-dark .tabbed-slider-wrapper .swiper-button-prev.swiper-button-disabled svg .stroke_enabled{ stroke: rgba(193, 196, 198, 0.20); }
+.js-dark .customtabsmart .smart-tabsautoscroll li.active .smart-tab-link {
+  border-color: #007ABE;
+  background: #007ABE;
+}
+.js-dark .customtabsmart .smart-tabsautoscroll li .smart-tab-link:hover,.js-dark .customtabsmart .smart-tabsautoscroll li .smart-tab-link:focus{
+  background: #006BA6;
+  border-color: #007ABE;
+}
