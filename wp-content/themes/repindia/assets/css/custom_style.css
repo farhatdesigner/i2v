@@ -3469,6 +3469,14 @@ span.star {
   width: 28px !important;
   height: 28px !important;
 }
+.elementor .customimg_box img.toolmainimg {
+  width: 40px;
+  height: 40px;
+  max-width: 100px;
+}
+.customimg_box .iconarea {
+  padding: 0;
+}
 
 @media (min-width: 768px) {
   .footer-accordion-icon {
