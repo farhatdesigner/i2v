@@ -496,6 +496,8 @@
 .js-dark button.location-chip svg path, .js-dark button.detail-close svg path{
     fill: rgba(255, 255, 255, 0.9) !important;
 }
+.js-dark button.location-chip:hover{ background: #006BA6;border-color: #006BA6!important;color: #fff!important; }
+.js-dark button.location-chip:focus{ background: #004C76;border-color: #004C76!important;color: #fff!important; }
 .js-dark .leaflet-bar a{
     border: 1px solid rgba(193, 196, 198, 0.1) !important;
     background-color: #464A4F;

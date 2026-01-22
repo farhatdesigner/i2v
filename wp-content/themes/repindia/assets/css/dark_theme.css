@@ -878,3 +878,22 @@ header li.burger-icon .icon-sun,
 .js-dark .box-custom figcaption.widget-image-caption.wp-caption-text:focus {
   border: 1px solid #74C2ED;color: #74C2ED;background: #FFFFFF1A;
 }
+.js-dark .bredstyle p,.js-dark .txtflex .bredstyle p{ background: #262A30; }
+.js-dark #tabbedSliderWrapper .tab-btn{
+  color: #D7DBE4;
+  border: 1px solid rgba(193, 196, 198, 0.10);
+  background: #262A30;
+}
+.js-dark .tabbed-slider-wrapper .tab-btn.active {
+  border: 1px solid #007ABE;
+  background: #007ABE;
+  color: #ffffff;
+}
+.js-dark .tabbed-slider-wrapper .swiper-button-next svg,.js-dark .tabbed-slider-wrapper .swiper-button-prev svg {
+  fill: #464A4F;
+}
+.js-dark .tabbed-slider-wrapper .swiper-button-next svg .stroke_enabled,.js-dark .tabbed-slider-wrapper .swiper-button-prev svg .stroke_enabled{ stroke: rgba(193, 196, 198, 0.20); }
+.js-dark .tabbed-slider-wrapper .swiper-button-next.swiper-button-disabled svg,.js-dark .tabbed-slider-wrapper .swiper-button-prev.swiper-button-disabled svg {
+  fill: #262A30;
+}
+.js-dark .tabbed-slider-wrapper .swiper-button-next.swiper-button-disabled svg .stroke_enabled,.js-dark .tabbed-slider-wrapper .swiper-button-prev.swiper-button-disabled svg .stroke_enabled{ stroke: rgba(193, 196, 198, 0.20); }
