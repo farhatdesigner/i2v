@@ -3439,6 +3439,12 @@ span.star {
   color: #fff !important;
   fill: #fff !important;
 }
+.card_title_tooltip .ctw-title .ctw-text p {
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 30px;
+  color: #06283D;
+}
 
 
 .js-dark .e-n-accordion-item[open]>.e-n-accordion-item-title {
