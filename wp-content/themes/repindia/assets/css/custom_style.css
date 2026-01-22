@@ -3396,6 +3396,26 @@ span.star {
 .detailsWrapper .txtflex p {
   color: #5C5C5C;
 }
+.e-n-accordion-item .e-n-accordion-item-title:hover {
+  background: #CCEDFF !important;
+  color: #5C5C5C !important;
+}
+.e-n-accordion-item .e-n-accordion-item-title:hover .explore_dark span.e-opened svg path {
+  color: #5F6F94 !important;
+  fill: #5F6F94 !important;
+}
+
+
+.e-n-accordion-item[open]>.e-n-accordion-item-title {
+  background: #0074B2 !important;
+  color: #ffffff !important;
+}
+.explore_dark span.e-opened svg path {
+  width: 42px;
+  height: 32px;
+  color: #fff !important;
+  fill: #fff !important;
+}
 @media (min-width: 768px) {
   .footer-accordion-icon {
     display: none;

@@ -309,6 +309,7 @@ class Tabbed_Custom_Swiper extends Widget_Base
                 margin-bottom: 10px;
                 border-radius: 0 0 12px 12px;
             }
+            #tabbedSliderWrapper .slide-content{ min-height: 185px; }
 
             #tabbedSliderWrapper .slide-content h3 {
                 font-size: 24px;
