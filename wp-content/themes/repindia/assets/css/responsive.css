@@ -175,14 +175,14 @@ a.blank_anchor:hover {
   .e-n-accordion-item
   .e-n-accordion-item-title-icon
   span
-  > svg,
+  > svg path,
 .js-dark
   .elementor-element.partner_tech_desc
   .elementor-widget-n-accordion
   .e-n-accordion-item
   .e-n-accordion-item-title-icon
   span
-  > svg {
+  > svg path{
   fill: #fff;
 }
 .btn-sec_gap.titlegrep .grey-btn {
