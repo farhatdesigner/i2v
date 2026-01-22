@@ -606,6 +606,7 @@ p#breadcrumbs svg {
   height: 100%;
   object-fit: cover;
   max-height: 455px;
+
 }
 
 .proven_banner {
@@ -1265,11 +1266,28 @@ div.pin-spacer > .hz-slider-topcaption {
   opacity: 1;
 }
 
-@media screen and (min-width: 768px) and (max-width: 1179px) {
+@media screen and (min-width: 768px) and (max-width: 1400px) {
   .panels.flex-center {
     display: flex !important;
     gap: 1rem;
   }
+  .hz-slider-topcaption .slider-image img {
+    height: 300px;
+    max-height: 300px;
+  }
+  
+  .hz-slider-topcaption .swiper-slide h3 {
+    font-size: 26px;
+    line-height: 32px;
+  }
+  .hz-slider-topcaption .slider-content {
+    min-height: 176px;
+  }
+  
+.static_slide .slider-image_content {
+  min-height: 475px !important;
+}
+
 }
 
 @media (min-width: 576px) {
@@ -1514,11 +1532,29 @@ html {
   .insights-updates-item h4 {
     font-size: 18px;
   }
-
   .hero-slider .swiper-pagination.swiper-pagination-bullets {
     left: 0;
     right: 0;
     margin: 0 auto;
     justify-content: center;
   }
+  .hz-slider-topcaption .slider-content {
+    padding: 30px 0 0;
+    min-height: 170px;
+  }
+  
+  .hz-slider-topcaption .slider-image img {
+    height: 250px;
+    max-height: 250px;
+  }
+  
+  .hz-slider-topcaption .swiper-slide h3 {
+    font-size: 24px;
+    line-height: 30px;
+  }
+  
+  .hz-slider-topcaption .swiper-slide p {
+    font-size: 16px;
+  }
+  
 }
