@@ -2419,10 +2419,12 @@ label.form-label.required_note-demo {
 .js-dark  .sticky-custom > ul > li:hover span,  .js-dark  .sticky-tab > ul > li:hover span {
   color: #D7DBE4 !important;
 }
+.js-dark .elementor-element.elementor-element-4cde0ab.elementor-widget-n-tabs > .e-n-tabs > .e-n-tabs-heading > .e-n-tab-title[aria-selected="false"]:not( :hover ){ border: 0!important; }
 
-.js-dark .sticky-custom > ul > li:hover, .js-dark  .sticky-tab > ul > li:hover {
-  background: rgb(215 219 228 / 25%);
-  border: 1px solid rgb(215 219 228 / 25%);
+.js-dark .sticky-custom > ul > li:hover, .js-dark  .sticky-tab > ul > li:hover,
+.js-dark .elementor-element.elementor-widget-n-tabs > .e-n-tabs[data-touch-mode='false'] > .e-n-tabs-heading > .e-n-tab-title[aria-selected="false"]:hover {
+  background: rgb(215 219 228 / 25%)!important;
+  border: 1px solid rgb(215 219 228 / 25%)!important;
 }
 
 .sticky-custom > ul > li.active-li,
