@@ -3691,7 +3691,7 @@ span.star {
     min-height: 600px;
   }
   .photo_custom img {
-    max-height: 400px;
+    max-height: 400px !important;
   }
 }
 

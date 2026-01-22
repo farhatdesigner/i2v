@@ -251,7 +251,7 @@ class Horizontal_Slider_Topcaption extends Widget_Base
         .hz-slider-topcaption .static_slide .slider-image.slider_static_img img{ width: auto;height: auto; }
         .static_slide .slider-image_content{ min-height: 466px; }
         @media(max-width: 768px){
-            .static_slide .slider-image_content { min-height: 400px; }
+            .static_slide .slider-image_content { min-height: 400px;padding:38px }
         }
        </style>
         <div class="hz-slider-topcaption">
