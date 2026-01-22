@@ -905,3 +905,18 @@ header li.burger-icon .icon-sun,
   background: #006BA6;
   border-color: #007ABE;
 }
+.js-dark .elementor-element.btn_smart.elementor-widget.elementor-widget-heading {
+  background-color: #262a30;
+  border-color: #262a30;
+  color: #fff;
+}
+.js-dark .elementor-element.btn_smart.elementor-widget.elementor-widget-heading .elementor-heading-title {
+  color: #fff!important;
+}
+.js-dark .online_image-graph .elementor-element.elementor-widget.elementor-widget-heading {
+  background-color: #262a30;
+  border-color: #262a30!important;
+}
+.js-dark .video-analytics-widget .subtitle {
+  color: #fff;
+}
