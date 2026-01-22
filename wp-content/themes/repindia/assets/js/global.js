@@ -224,6 +224,24 @@ $(document).ready(function () {
     var scrollPosition = 0;
     var isMenuOpen = false;
 
+    // Helper function to get scrollbar width
+    function getScrollbarWidth() {
+        // Create a temporary div to measure scrollbar width
+        var outer = document.createElement('div');
+        outer.style.visibility = 'hidden';
+        outer.style.overflow = 'scroll';
+        outer.style.msOverflowStyle = 'scrollbar'; // needed for IE
+        document.body.appendChild(outer);
+        
+        var inner = document.createElement('div');
+        outer.appendChild(inner);
+        
+        var scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
+        
+        outer.parentNode.removeChild(outer);
+        return scrollbarWidth;
+    }
+
     // Prevent body scroll when menu is open
     function preventBodyScroll(e) {
         // Allow scrolling inside the menu container
@@ -303,36 +321,85 @@ $(document).ready(function () {
         $("body, .overlay").off("touchmove", preventBodyScroll);
         $(".toggle-menu-container, .inside-menu-container-inner").off("wheel");
         
-        // Restore body styles
+        // Store the exact scroll position we want to restore
+        var restorePosition = scrollPosition;
+        
+        // First, restore overflow and padding (but keep position fixed temporarily)
         $("body").css({
             "overflow": "",
-            "position": "",
-            "top": "",
-            "width": ""
+            "padding-right": ""
         });
         
-        // Restore scroll position
-        $(window).scrollTop(scrollPosition);
+        // Use requestAnimationFrame to ensure smooth restoration
+        requestAnimationFrame(function() {
+            // Remove position fixed and restore scroll in the same frame
+            $("body").css({
+                "position": "",
+                "top": "",
+                "left": "",
+                "right": "",
+                "width": ""
+            });
+            
+            // Immediately restore scroll position - do this synchronously
+            // Set all possible scroll properties to ensure it works
+            if (window.scrollTo) {
+                window.scrollTo(0, restorePosition);
+            }
+            document.documentElement.scrollTop = restorePosition;
+            document.body.scrollTop = restorePosition;
+            $(window).scrollTop(restorePosition);
+            
+            // Double-check after a micro-delay to ensure position is maintained
+            requestAnimationFrame(function() {
+                var currentScroll = window.pageYOffset || document.documentElement.scrollTop || $(window).scrollTop() || 0;
+                if (Math.abs(currentScroll - restorePosition) > 1) {
+                    // If position drifted, restore it again
+                    if (window.scrollTo) {
+                        window.scrollTo(0, restorePosition);
+                    }
+                    document.documentElement.scrollTop = restorePosition;
+                    document.body.scrollTop = restorePosition;
+                    $(window).scrollTop(restorePosition);
+                }
+            });
+        });
         
         isMenuOpen = false;
     }
 
     // Open menu when burger icon is clicked
     $(".burger-icon").click(function () {
-        // Save current scroll position
-        scrollPosition = $(window).scrollTop();
+        // Save current scroll position using multiple methods for reliability
+        // Get the most accurate scroll position
+        scrollPosition = window.pageYOffset || 
+                        document.documentElement.scrollTop || 
+                        document.body.scrollTop || 
+                        $(window).scrollTop() || 
+                        0;
+        
+        // Ensure we have a valid number
+        scrollPosition = Math.max(0, Math.round(scrollPosition));
         
         $(this).addClass("active-burger");
         $(".toggle-menu-container").addClass("open-menu");
         $("nav").addClass("overlaynav-active");
         $(".overlay").addClass("overlay-active");
         
+        // Calculate scrollbar width to prevent layout shift
+        var scrollbarWidth = getScrollbarWidth();
+        
         // Lock body scroll using position fixed
+        // Add padding-right equal to scrollbar width to prevent horizontal shift
+        // Use the exact scroll position to maintain visual position
         $("body").css({
             "overflow": "hidden",
             "position": "fixed",
             "top": "-" + scrollPosition + "px",
-            "width": "100%"
+            "left": "0",
+            "right": "0",
+            "width": "100%",
+            "padding-right": scrollbarWidth + "px"
         });
         
         // Prevent scroll events on body/overlay (but allow on menu)
@@ -2003,4 +2070,211 @@ if (typeof ScrollTrigger !== 'undefined' && window.innerWidth >= 1024) {
         }, 500);
     });
 }
+
+// Prevent body scroll when formpopup_modal is open (similar to side menu)
+jQuery(document).ready(function ($) {
+    var modalScrollPosition = 0;
+    var isModalOpen = false;
+
+    // Helper function to get scrollbar width
+    function getModalScrollbarWidth() {
+        // Create a temporary div to measure scrollbar width
+        var outer = document.createElement('div');
+        outer.style.visibility = 'hidden';
+        outer.style.overflow = 'scroll';
+        outer.style.msOverflowStyle = 'scrollbar'; // needed for IE
+        document.body.appendChild(outer);
+        
+        var inner = document.createElement('div');
+        outer.appendChild(inner);
+        
+        var scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
+        
+        outer.parentNode.removeChild(outer);
+        return scrollbarWidth;
+    }
+
+    // Prevent body scroll when modal is open
+    function preventModalBodyScroll(e) {
+        // Allow scrolling inside the modal content
+        var $target = $(e.target);
+        if ($target.closest(".formpopup_modal .modal-content, .formpopup_modal .modal-body").length) {
+            return true;
+        }
+        // Prevent scrolling on body/overlay
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }
+
+    // Prevent wheel events on body when modal is open
+    function preventModalBodyWheel(e) {
+        // Get mouse position
+        var mouseX = e.clientX || (e.originalEvent && e.originalEvent.clientX) || 0;
+        var mouseY = e.clientY || (e.originalEvent && e.originalEvent.clientY) || 0;
+        
+        // Get the element at mouse position
+        var elementAtPoint = null;
+        if (document.elementFromPoint && mouseX > 0 && mouseY > 0) {
+            try {
+                elementAtPoint = document.elementFromPoint(mouseX, mouseY);
+            } catch (err) {
+                // Fallback if elementFromPoint fails
+            }
+        }
+        
+        // Check if element at mouse position is inside modal content
+        if (elementAtPoint) {
+            var $elementAtPoint = $(elementAtPoint);
+            if ($elementAtPoint.closest(".formpopup_modal .modal-content, .formpopup_modal .modal-body").length) {
+                return; // Allow scrolling - don't prevent
+            }
+        }
+        
+        // Also check event target
+        var $target = $(e.target);
+        if ($target.closest(".formpopup_modal .modal-content, .formpopup_modal .modal-body").length) {
+            return; // Allow scrolling - don't prevent
+        }
+        
+        // Check mouse position relative to modal content (fallback)
+        var $modalContent = $(".formpopup_modal .modal-content");
+        if ($modalContent.length && $(".formpopup_modal").hasClass("show") && mouseX > 0 && mouseY > 0) {
+            var contentOffset = $modalContent.offset();
+            if (contentOffset) {
+                var contentWidth = $modalContent.outerWidth();
+                var contentHeight = $modalContent.outerHeight();
+                
+                if (mouseX >= contentOffset.left && 
+                    mouseX <= contentOffset.left + contentWidth &&
+                    mouseY >= contentOffset.top && 
+                    mouseY <= contentOffset.top + contentHeight) {
+                    return; // Allow scrolling - don't prevent
+                }
+            }
+        }
+        
+        // Prevent wheel on body/overlay (outside modal content)
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }
+
+    // Function to lock body scroll
+    function lockBodyScroll() {
+        if (isModalOpen) {
+            return; // Already locked
+        }
+        
+        // Save current scroll position using multiple methods for reliability
+        // Get the most accurate scroll position
+        modalScrollPosition = window.pageYOffset || 
+                             document.documentElement.scrollTop || 
+                             document.body.scrollTop || 
+                             $(window).scrollTop() || 
+                             0;
+        
+        // Ensure we have a valid number
+        modalScrollPosition = Math.max(0, Math.round(modalScrollPosition));
+        
+        // Calculate scrollbar width to prevent layout shift
+        var scrollbarWidth = getModalScrollbarWidth();
+        
+        // Lock body scroll using position fixed
+        // Add padding-right equal to scrollbar width to prevent horizontal shift
+        // Use the exact scroll position to maintain visual position
+        $("body").css({
+            "overflow": "hidden",
+            "position": "fixed",
+            "top": "-" + modalScrollPosition + "px",
+            "left": "0",
+            "right": "0",
+            "width": "100%",
+            "padding-right": scrollbarWidth + "px"
+        });
+        
+        // Prevent scroll events on body/overlay (but allow on modal content)
+        $(window).on("scroll", preventModalBodyScroll);
+        // Prevent wheel events - check if in modal content, if not prevent
+        document.addEventListener("wheel", preventModalBodyWheel, { passive: false, capture: false });
+        $("body, .modal-backdrop").on("touchmove", preventModalBodyScroll);
+        
+        // Ensure modal content can scroll by allowing wheel events on modal content
+        $(".formpopup_modal .modal-content, .formpopup_modal .modal-body").on("wheel", function(e) {
+            // Allow natural scrolling - don't prevent
+            e.stopPropagation(); // Stop from bubbling to document handler
+        });
+        
+        isModalOpen = true;
+    }
+
+    // Function to unlock body scroll
+    function unlockBodyScroll() {
+        if (!isModalOpen) {
+            return; // Already unlocked
+        }
+        
+        // Remove event listeners
+        $(window).off("scroll", preventModalBodyScroll);
+        document.removeEventListener("wheel", preventModalBodyWheel, false);
+        $("body, .modal-backdrop").off("touchmove", preventModalBodyScroll);
+        $(".formpopup_modal .modal-content, .formpopup_modal .modal-body").off("wheel");
+        
+        // Store the exact scroll position we want to restore
+        var restorePosition = modalScrollPosition;
+        
+        // First, restore overflow and padding (but keep position fixed temporarily)
+        $("body").css({
+            "overflow": "",
+            "padding-right": ""
+        });
+        
+        // Use requestAnimationFrame to ensure smooth restoration
+        requestAnimationFrame(function() {
+            // Remove position fixed and restore scroll in the same frame
+            $("body").css({
+                "position": "",
+                "top": "",
+                "left": "",
+                "right": "",
+                "width": ""
+            });
+            
+            // Immediately restore scroll position - do this synchronously
+            // Set all possible scroll properties to ensure it works
+            if (window.scrollTo) {
+                window.scrollTo(0, restorePosition);
+            }
+            document.documentElement.scrollTop = restorePosition;
+            document.body.scrollTop = restorePosition;
+            $(window).scrollTop(restorePosition);
+            
+            // Double-check after a micro-delay to ensure position is maintained
+            requestAnimationFrame(function() {
+                var currentScroll = window.pageYOffset || document.documentElement.scrollTop || $(window).scrollTop() || 0;
+                if (Math.abs(currentScroll - restorePosition) > 1) {
+                    // If position drifted, restore it again
+                    if (window.scrollTo) {
+                        window.scrollTo(0, restorePosition);
+                    }
+                    document.documentElement.scrollTop = restorePosition;
+                    document.body.scrollTop = restorePosition;
+                    $(window).scrollTop(restorePosition);
+                }
+            });
+        });
+        
+        isModalOpen = false;
+    }
+
+    // Lock body scroll when formpopup_modal opens
+    $(document).on('show.bs.modal', '.formpopup_modal', function () {
+        lockBodyScroll();
+    });
+
+    // Unlock body scroll when formpopup_modal closes
+    $(document).on('hidden.bs.modal', '.formpopup_modal', function () {
+        unlockBodyScroll();
+    });
+});
   
