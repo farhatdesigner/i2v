@@ -3426,6 +3426,20 @@ span.star {
   color: #fff !important;
   fill: #fff !important;
 }
+.card_title_tooltip .ctw-title .ctw-text p {
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 30px;
+  color: #06283D;
+}
+.elementor-element.btn_smart.elementor-widget.elementor-widget-heading {
+  background-color: #262a30;
+  border-color: #262a30;
+  color: #fff;
+}
+.elementor-element.btn_smart.elementor-widget.elementor-widget-heading .elementor-heading-title {
+  color: #fff;
+}
 @media (min-width: 768px) {
   .footer-accordion-icon {
     display: none;
