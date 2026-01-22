@@ -282,7 +282,7 @@ class Video_accordioncaption extends Widget_Base
             .vac_accordion_wrap {
                 border-radius: 12px;
             }
-            
+
             .vac_accordion_wrap .custom-container {
                 overflow-x: hidden;
                 box-sizing: border-box;
@@ -296,13 +296,14 @@ class Video_accordioncaption extends Widget_Base
                 width: 100%;
                 box-sizing: border-box;
                 min-width: 0;
+                position: relative;
             }
-            
+
             .vac_vertical_scroller.g-0 {
                 margin-left: 0;
                 margin-right: 0;
             }
-            
+
             .vac_vertical_scroller .col-md-6 {
                 box-sizing: border-box;
                 padding-left: 0 !important;
@@ -312,16 +313,16 @@ class Video_accordioncaption extends Widget_Base
                 min-width: 0;
                 width: calc(50% - 40px);
             }
-            
+
             .vac_vertical_scroller .vac_padd-accordion_video {
                 flex-shrink: 0;
             }
-            
+
             @media (max-width: 991px) {
                 .vac_vertical_scroller {
                     flex-wrap: wrap;
                 }
-                
+
                 .vac_vertical_scroller .col-md-6 {
                     flex: 0 0 100%;
                     max-width: 100%;
@@ -353,7 +354,7 @@ class Video_accordioncaption extends Widget_Base
 
             .vac_accordion_set {
                 position: relative;
-                border-bottom: 1px solid #E6EBF2;
+                border-top: 1px solid #E6EBF2;
                 padding: 30px 20px;
                 background: transparent;
                 transition: background 0.4s cubic-bezier(0.4, 0, 0.2, 1),
@@ -362,11 +363,20 @@ class Video_accordioncaption extends Widget_Base
                 will-change: background, padding;
             }
 
+            .js-dark .vac_accordion_set {
+                border-top: 1px solid #c1c4c626 !important;
+            }
+
+            .js-dark .vac_padd-accordion_video .card {
+                background: #25292e;
+            }
+
             .vac_accordion_set.active {
                 position: relative;
-                border-bottom: 1px solid #e5e7eb;
+                border-top: 0px solid #E6EBF2;
                 padding: 12px;
-                background: #F2F5FA;
+                border-radius: 12px;
+                background: #fff !important;
             }
 
 
@@ -374,7 +384,7 @@ class Video_accordioncaption extends Widget_Base
                 display: flex;
                 align-items: center;
                 width: 100%;
-                background: transparent;
+                background: transparent !important;
                 border: none;
                 cursor: pointer;
                 text-align: left;
@@ -392,7 +402,7 @@ class Video_accordioncaption extends Widget_Base
                 width: 64px;
                 height: 64px;
                 border-radius: 50%;
-                background: #F2F5FA;
+                background-color: rgb(255 255 255 / 15%) !important;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -405,9 +415,13 @@ class Video_accordioncaption extends Widget_Base
                 box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
             }
 
+            .js-dark .vac_accordion_set.active {
+                background: #262A30 !important;
+            }
+
             .vac_ac_icon {
-                width: 24px;
-                height: 24px;
+                width: 64px;
+                height: 64px;
                 object-fit: contain;
             }
 
@@ -430,8 +444,8 @@ class Video_accordioncaption extends Widget_Base
             }
 
             /* .vac_accordion_set.active .vac_ac_icon {
-                        filter: brightness(0) invert(1);
-                    } */
+                                        filter: brightness(0) invert(1);
+                                    } */
 
             .vac_ac_header {
                 flex: 1;
@@ -463,7 +477,7 @@ class Video_accordioncaption extends Widget_Base
 
             .vac_accordion_set.active .vac_chevron {
                 transform: rotate(180deg);
-                right: 15px;
+                right: 16px;
             }
 
             .vac_accordion_set.active .vac_chevron svg {
@@ -485,6 +499,10 @@ class Video_accordioncaption extends Widget_Base
                 transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
             }
 
+            .vac_accordion_sets .vac_accordion_set:first-child {
+                border-top: none;
+            }
+
             .vac_accordion_set.active .vac_accontent {
                 max-height: 200px;
                 padding: 0 0 0px 63px;
@@ -499,7 +517,7 @@ class Video_accordioncaption extends Widget_Base
                 font-size: 16px;
                 color: #5C5C5C;
                 line-height: 1.6;
-                margin: 8px 40px 0px 20px;
+                margin: 8px 40px 8px 20px;
                 min-height: 50px;
             }
 
@@ -552,6 +570,10 @@ class Video_accordioncaption extends Widget_Base
                 transition: width 0.05s linear;
             }
 
+            .js-dark .vac_progress_bar::after {
+                background: linear-gradient(90deg, #74C2ED, #74C2ED);
+            }
+
             .vac_accordion_set:not(.active) .vac_progress_bar::after {
                 width: 0%;
             }
@@ -560,7 +582,6 @@ class Video_accordioncaption extends Widget_Base
                 display: none;
                 border-radius: 12px;
                 overflow: hidden;
-                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
             }
 
             .vac_padd-accordion_video .vac_accordion_video:first-child {
@@ -572,12 +593,7 @@ class Video_accordioncaption extends Widget_Base
                 height: auto;
                 cursor: pointer;
                 transition: transform 0.3s ease;
-                max-height: max-content !important;
                 min-height: auto !important;
-            }
-
-            .vac_padd-accordion_video .vac_accordion_video img:hover {
-                transform: scale(1.02);
             }
 
             .vac_padd-accordion_video .vac_accordion_video.vac_active {
@@ -593,6 +609,11 @@ class Video_accordioncaption extends Widget_Base
                 box-shadow: none !important;
                 padding: 0;
             }
+
+            .vac_ac_icon_border>span {
+                padding: 10px;
+            }
+
 
             @media (max-width: 991px) {
 
@@ -614,6 +635,7 @@ class Video_accordioncaption extends Widget_Base
             /* White/Black Theme Images */
             .vac_accordion_wrap .white-theme-img {
                 display: block;
+                /* width: 44px; */
             }
 
             .vac_accordion_wrap .black-theme-img {
@@ -763,7 +785,7 @@ class Video_accordioncaption extends Widget_Base
                 <div class="row g-0 align-items-center vac_vertical_scroller">
                     <div class="col-md-6 col-12 vac_padd-accordion">
                         <?php if (!empty($left_block_title)): ?>
-                            <h3 style="margin-top: 40px;"><?php echo esc_html($left_block_title); ?></h3>
+                            <h3><?php echo esc_html($left_block_title); ?></h3>
                         <?php endif; ?>
                         <?php if (!empty($accordion_items)): ?>
                             <div class="vac_accordion_sets">
