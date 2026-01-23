@@ -75,6 +75,10 @@
 .iconarea {
   padding: 12px;
 }
+.icon_custom_text .iconarea {
+  padding: 0;
+  max-width: 100px;
+}
 .elementor img.toolmainimg {
   width: 100px;
   height: 100px;

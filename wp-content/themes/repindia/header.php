@@ -396,7 +396,7 @@ global $repindia_option;
                             <div class="search-popup-footer">
                                 <?php
                                 if (isset($repindia_option['header_demo_btn']) && $repindia_option['header_demo_btn'] == 1) { ?>
-                                    <a class="btn-demo" href="<?php echo esc_attr($repindia_option['demo_btn_url']); ?>"
+                                    <a class="btn-demo open-demo-modal" href="<?php echo esc_attr($repindia_option['demo_btn_url']); ?>"
                                         data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                         <?php echo esc_html__('Request a demo', 'repindia'); ?>
                                     </a>

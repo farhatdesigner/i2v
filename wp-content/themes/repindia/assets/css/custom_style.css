@@ -3502,6 +3502,14 @@ span.star {
 .career_faq .elementor-widget-n-accordion .e-n-accordion-item[open]>.e-n-accordion-item-title .e-n-accordion-item-title-icon span>svg path {
   fill: #D7DBE4;
 }
+.form-control:focus {
+  border-color: #0099ED;
+  box-shadow: 0 0 0 .15rem rgba(13, 110, 253, .25);
+}
+.wpcf7 select option {
+  color: #333;
+  background-color: #fff;
+}
 
 @media (min-width: 768px) {
   .footer-accordion-icon {
