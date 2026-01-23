@@ -244,7 +244,7 @@ html.lenis body {
   position: absolute;
   left: 0;
   border-radius: 100%;
-  z-index: 99;
+  z-index: 2;
   top: 15px;
   left: 18px;
   transition: all 0.2s ease-in-out;
@@ -557,7 +557,7 @@ p#breadcrumbs svg {
 .gallery {
   display: flex;
   flex-direction: row-reverse;
-  gap: 142px;
+  gap: 80px;
   /* outline:1px solid red; */
 }
 
@@ -927,6 +927,19 @@ div.pin-spacer > .hz-slider-section {
   display: inline-block;
   width: auto;
   height: auto;
+}
+
+.js-dark .one_arrow:before {
+  content: url("https://reputationindia.in/i2v/wp-content/uploads/2026/01/darkVecto-8.svg");
+}
+.js-dark .two_arrow:before {
+  content: url("https://reputationindia.in/i2v/wp-content/uploads/2026/01/darkVector-9.svg");
+}
+.js-dark .three_arrow:before {
+  content: url("https://reputationindia.in/i2v/wp-content/uploads/2026/01/darkVector-10.svg");
+}
+.js-dark .four_arrow:before {
+  content: url("https://reputationindia.in/i2v/wp-content/uploads/2026/01/darkVector-11.svg");
 }
 
 .box-custom figure.wp-caption {

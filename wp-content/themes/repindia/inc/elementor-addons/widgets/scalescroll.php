@@ -465,21 +465,25 @@ class Scalescroll extends Widget_Base
             .js-dark .youtube-wrapper .white_theme_thumb { display: none; }
             .js-dark .youtube-wrapper .black_theme_iframe,
             .js-dark .youtube-wrapper .black_theme_thumb { display: block; }
-            h4.subtitlebox {
-                background: #E6EBF2;
-                border-radius: 28px;
-                padding: 4px 12px;
-                color: #4A5673;
-                font-size: 14px;
-                font-style: normal;
-                font-weight: 500;
-                line-height: 20px;
-                width: auto;
-                display: inline-block;
-                text-align: left;
-            }
+         
+h4.subtitlebox {
+    background: #FFFFFF;
+    border-radius: 28px;
+    padding: 4px 12px;
+    color: #4A5673;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    width: auto;
+    display: inline-block;
+    text-align: left;
+    border: 1px solid #E6EBF2;
+}
+
             @media(max-width: 768px){
                 .photo_custom .details * { text-align: center; align-items: center;}
+            
             }
             /* Nested repeater image theme switching */
             .nested-image-wrapper .white_theme_img { display: block; }

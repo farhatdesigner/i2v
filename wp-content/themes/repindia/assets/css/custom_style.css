@@ -1527,7 +1527,19 @@ a.theme-btn.bg-tran_lightcolor {
 .txt-greybtn {
   color: #aeb6c9;
 }
-
+.bg-transgrey {
+  background: transparent;
+  border-bottom: 1px solid #AEB6C9;
+  border-radius: 0;
+  padding: 0;
+}
+.js-dark .bg-transgrey:hover {
+  border-bottom: 1px solid #D7DBE4;
+  background-color: transparent;
+}
+.js-dark .elementor-5191 .elementor-element.elementor-element-3a7f6e4 .elementor-heading-title {
+  color: #E6BA85 !important;
+}
 #mrg-head {
   margin-top: 114px;
 }
@@ -3158,18 +3170,16 @@ svg.connection-line-7 {
   text-decoration: none;
   background: transparent;
   font-weight: 500;
+  border: 1px solid transparent;
   padding: 4px 16px;
 }
 .customtabsmart .smart-tabsautoscroll li .smart-tab-link:hover{
-  background: #008EDB;
-  color: #fff;
+  background: #F2F5FA;
+  color: #06283D;
   border-radius: 40px;
+  border: 1px solid #D7DBE4;
 }
-.customtabsmart .smart-tabsautoscroll li .smart-tab-link:focus{
-  background: #0074B2;
-  color: #fff;
-  border-radius: 40px;
-}
+
 
 .customtabsmart .smart-tabdiv .smart-content-inner-image {
   border-radius: 1rem;
@@ -3437,6 +3447,22 @@ span.star {
 .detailsWrapper .txtflex p {
   color: #5C5C5C;
 }
+
+.detailsWrapper .txtflex .bredstyle p {
+  color: #5C5C5C;
+  background: #FFFFFF;
+  border: 1px solid #E6EBF2;
+}
+
+.js-dark .border_dark {
+  border-color: rgb(193 196 198 / 20%) !important;
+}
+
+
+.details.details-2 .txtflex p {
+    color: #5C5C5C;
+}
+
 .e-n-accordion-item .e-n-accordion-item-title:hover {
   background: #CCEDFF !important;
   color: #5C5C5C !important;

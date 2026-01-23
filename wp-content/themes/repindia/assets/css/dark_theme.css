@@ -924,3 +924,9 @@ header li.burger-icon .icon-sun,
   border-color: rgba(193, 196, 198, 0.20);
 }
 .js-dark .elementor-element.elementor-widget-n-accordion > .e-n-accordion > .e-n-accordion-item > .e-n-accordion-item-title:hover{ border-color: transparent!important;background-color: rgba(255, 255, 255, 0.15)!important; }
+
+
+
+ .js-dark .elementor-testimonial__text, .js-dark .elementor-testimonial__title {
+    color: #AEB6C9!important;
+}

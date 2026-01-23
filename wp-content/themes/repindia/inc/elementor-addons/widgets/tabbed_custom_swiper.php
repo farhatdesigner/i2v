@@ -348,6 +348,11 @@ class Tabbed_Custom_Swiper extends Widget_Base
             [aria-disabled="false"]:hover .stroke_enabled {
                 stroke: #5F6F94;
             }
+
+            
+.js-dark #tabbedSliderWrapper [aria-disabled="false"] .fill_disabled {
+    fill: #fff;
+}
         </style>
 
         <div class="tabbed-slider-wrapper" id="tabbedSliderWrapper">
