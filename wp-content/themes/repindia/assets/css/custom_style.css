@@ -1531,6 +1531,9 @@ a.theme-btn.bg-tran_lightcolor {
 #mrg-head {
   margin-top: 114px;
 }
+.single-newsroom #mrg-head {
+  margin-top: 92px;
+}
 
 .brand_heading_color {
   color: #06283d;
@@ -3509,6 +3512,14 @@ span.star {
 .wpcf7 select option {
   color: #333;
   background-color: #fff;
+}
+.single-newsroom .elementor-widget-icon-box .elementor-icon-box-icon {
+  max-width: 16px;
+}
+.elementor-element.blog_date_container.e-flex.e-con.e-child {
+  width: auto;
+  align-items: start;
+  min-width: 131px;
 }
 
 @media (min-width: 768px) {

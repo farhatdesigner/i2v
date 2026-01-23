@@ -62,7 +62,7 @@ $newscategories = get_the_category();
                 border: 1px solid #E6EBF2;
                 background: #E5F6FF;
                 display: inline-block;
-                padding: 4px 16px;
+                padding: 6px 16px;
             }
             .elementor-element.newsroom_detail_content {
                 position: relative;
