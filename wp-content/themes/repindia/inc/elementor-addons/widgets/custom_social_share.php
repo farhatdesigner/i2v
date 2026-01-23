@@ -90,6 +90,7 @@ class Custom_Social_Share extends Widget_Base
         ?>
         <div class="socialshare_section">
             <style>
+                .socialshare_section{ align-items: center; }
                 .socialshare_section ul.shocial_media {
                     max-width: 80px;
                     width: 80px;
@@ -141,7 +142,7 @@ class Custom_Social_Share extends Widget_Base
                     position: relative;
                 }
 
-                .shocial_media li a::before {
+                /* .shocial_media li a::before {
                     content: '';
                     position: absolute;
                     top: 50%;
@@ -153,7 +154,7 @@ class Custom_Social_Share extends Widget_Base
                     background-color: transparent;
                     transition: background-color 0.3s ease;
                     z-index: 1;
-                }
+                } */
 
                 .shocial_media li:hover a {
                     background-color: #e6ebf2;
@@ -247,7 +248,7 @@ class Custom_Social_Share extends Widget_Base
                 }
 
                 .js-dark .reading-progress .bg {
-                    stroke: #262a30;
+                    stroke: #D7DBE4;
                 }
 
                 .js-dark .reading-progress .progress {
