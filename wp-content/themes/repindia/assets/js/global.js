@@ -1,40 +1,42 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    // Function to update image sources based on theme
     function updateThemeImages(isDark) {
-        const themeImageDivs = document.querySelectorAll('.theme-img');
-        themeImageDivs.forEach(div => {
-            const img = div.querySelector('img');
-            const lightSrc = div.getAttribute('data-light');
-            const darkSrc = div.getAttribute('data-dark');
+        document.querySelectorAll('.theme-img').forEach(wrapper => {
+            const lightSrc = wrapper.getAttribute('data-light');
+            const darkSrc  = wrapper.getAttribute('data-dark');
 
-            if (img && lightSrc && darkSrc) {
+            if (!lightSrc || !darkSrc) return;
+
+            // Update ALL images inside the widget
+            wrapper.querySelectorAll('img').forEach(img => {
+                if (!img.dataset.originalSrc) {
+                    img.dataset.originalSrc = img.src;
+                }
                 img.src = isDark ? darkSrc : lightSrc;
-            }
-        });
-    }
-
-    // Check saved preference or system preference
-    const storedPref = localStorage.getItem('dark-mode');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const isDarkMode = storedPref === 'dark' || (!storedPref && prefersDark);
-
-    // Apply correct image on page load
-    updateThemeImages(isDarkMode);
-
-    // Watch for toggle button clicks (handle all dark mode toggle buttons)
-    const toggleBtns = document.querySelectorAll('.dark-mode-toggle');
-    if (toggleBtns.length > 0) {
-        toggleBtns.forEach(function(toggleBtn) {
-            toggleBtn.addEventListener('click', function (e) {
-                e.preventDefault();
-                const isDark = document.body.classList.toggle('js-dark');
-                localStorage.setItem('dark-mode', isDark ? 'dark' : 'light');
-                updateThemeImages(isDark);
             });
         });
     }
+
+    // Detect theme
+    const storedPref = localStorage.getItem('dark-mode');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDarkMode = document.body.classList.contains('js-dark') ||
+                       storedPref === 'dark' ||
+                       (!storedPref && prefersDark);
+
+    updateThemeImages(isDarkMode);
+
+    // Toggle support
+    document.querySelectorAll('.dark-mode-toggle').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const isDark = document.body.classList.toggle('js-dark');
+            localStorage.setItem('dark-mode', isDark ? 'dark' : 'light');
+            updateThemeImages(isDark);
+        });
+    });
+
 });
+
 
 
 // HERO SLIDER
