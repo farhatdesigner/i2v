@@ -858,8 +858,32 @@ header li.burger-icon .icon-sun,
   color: #F2AE5A !important;
   border-color: #F2AE5A;
 }
-.js-dark .elementor-element.darkmode_custom.e-flex {
+.js-dark .elementor-element.darkmode_custom.e-flex,.js-dark .elementor-element.darkmode_custom {
   background-color: #262a30 !important;
+  background: #262a30 !important;
+}
+.js-dark .elementor-element.e-con-full.video_analytic_sidebar,.elementor-element.e-con-full.video_analytic_sidebar .analytic-sidebar {
+  background: #262A30 !important;
+  background-color: #262A30 !important;
+}
+.js-dark .analytic-sidebar .analytic-search {
+  border: 1px solid #464A4F;
+  background: #464A4F;
+  color: #fff;
+}
+.js-dark .analytic-nav li.active {
+  background: #464A4F !important;
+}
+.js-dark .analytic-nav li .check-icon svg path {
+  stroke: #fff;
+}
+.js-dark .elementor-element.analytical_video_main {
+  border-color: rgb(215 219 228 / 20%) !important;
+}
+.js-dark .bredstyle > a {
+  border: 1px solid transparent;
+  background: rgba(255, 206, 147, 0.1);
+  color: #fff;
 }
 .js-dark .purpose-slider-wrapper .purpose-swiper:before{ 
   background: linear-gradient(270deg, rgba(13, 17, 23, 0.00) 0%, #0D1117 83.82%); }
