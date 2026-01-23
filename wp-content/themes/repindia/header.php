@@ -60,7 +60,7 @@ global $repindia_option;
                                 ?>
 
                                 <ul class="rightmenu_statictxt">
-                                    <li>
+                                    <li class="hamburger_right_desc_box">
 
                                         <?php
                                         // Display hamburger editor content

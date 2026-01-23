@@ -1247,6 +1247,15 @@ ul.social_media_links > li > a:hover small:before {
 .rightmenu_statictxt li {
   width: 100%;
 }
+li.hamburger_right_desc_box {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+li.hamburger_right_desc_box h4 {
+  line-height: 20px;
+  margin: 0;
+}
 
 p {
   color: #5c5c5c;
@@ -3476,6 +3485,22 @@ span.star {
 }
 .customimg_box .iconarea {
   padding: 0;
+}
+
+.elementor-element.purpose-slider .career_faq .elementor-widget-n-accordion .e-n-accordion-item .e-n-accordion-item-title-icon span>svg{
+  width: 26px !important;
+  height: 26px !important;
+}
+.js-dark .elementor-element.purpose-slider .career_faq .elementor-widget-n-accordion .e-n-accordion-item .e-n-accordion-item-title-icon span>svg path{
+  fill: #D7DBE4;
+}
+.career_faq .elementor-widget-n-accordion .e-n-accordion-item[open]>.e-n-accordion-item-title .e-n-accordion-item-title-icon span>svg {
+  fill: #D7DBE4;
+  width: 34px!important;
+  height: 34px!important;
+}
+.career_faq .elementor-widget-n-accordion .e-n-accordion-item[open]>.e-n-accordion-item-title .e-n-accordion-item-title-icon span>svg path {
+  fill: #D7DBE4;
 }
 
 @media (min-width: 768px) {
