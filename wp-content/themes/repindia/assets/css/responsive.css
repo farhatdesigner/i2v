@@ -147,7 +147,8 @@ a.blank_anchor:hover {
 .js-dark
   .elementor-element.partner_tech_desc
   .elementor-widget-n-accordion
-  .e-n-accordion-item-title {
+  .e-n-accordion-item-title,
+  .js-dark .elementor-element.partner_choose_desc .elementor-widget-image-box,.js-dark .elementor-element.partner_tech_desc .elementor-widget-image-box {
   background-color: #262a30 !important;
 }
 .js-dark

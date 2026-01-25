@@ -467,6 +467,7 @@
     transition: all 0.2s ease;
     z-index: 500;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: none;
 }
 
 .show-list-button:hover {
@@ -665,6 +666,7 @@
 
     /* Show List Button */
     .show-list-button {
+        display: none;
         bottom: 12px;
         padding: 10px 20px;
         font-size: 13px;

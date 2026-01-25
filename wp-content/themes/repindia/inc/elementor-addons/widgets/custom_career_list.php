@@ -218,7 +218,8 @@ class Custom_Career_List extends Widget_Base {
             justify-content: space-between;
         }
         .rolehead { padding: 0 20px; }
-        .js-dark .elementor-element.career_life .elementor-widget.elementor-widget-icon-box,.js-dark .elementor-element.career_purpose.e-con,.js-dark .elementor-element.career_filter_list.e-con{ background-color: #262A30; }
+        .js-dark .elementor-element.career_life .elementor-widget.elementor-widget-icon-box,.js-dark .elementor-element.career_purpose.e-con,.js-dark .elementor-element.career_filter_list.e-con,
+        .js-dark .elementor-element.partner_choose_desc.elementor-position-top.elementor-widget.elementor-widget-image-box{ background-color: #262A30; }
         .js-dark .btn-sec_gap.titlegrep.with_whitebg .grey-btn { border-color: #262A30;background: #262A30;color: rgba(255, 255, 255, 0.9); }
         .js-dark .career_whywork .purpose-swiper .swiper-slide figure.caption-scroll figcaption{ background: transparent; border-bottom-left-radius: 12px;border-bottom-right-radius: 12px; }
         .js-dark .elementor-element.career_faq .e-n-accordion-item .e-flex.e-con.e-child,.js-dark .elementor-element.career_faq  .elementor-widget-n-accordion .e-n-accordion-item-title{

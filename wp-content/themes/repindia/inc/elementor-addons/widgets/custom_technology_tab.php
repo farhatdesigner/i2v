@@ -168,7 +168,7 @@ class Custom_Technology_Tab extends Widget_Base
                 font-weight: 500;
                 color: #06283D;
             }
-            .js-dark .<?php echo esc_attr($widget_id); ?> .tech-tabs-nav button:hover,.js-dark .<?php echo esc_attr($widget_id); ?> .tech-tabs-nav button.active{ background: #000;color: #fff; }
+            .js-dark .<?php echo esc_attr($widget_id); ?> .tech-tabs-nav button:hover,.js-dark .<?php echo esc_attr($widget_id); ?> .tech-tabs-nav button.active{ background: rgba(255, 255, 255, 0.15);color: #fff; }
             .<?php echo esc_attr($widget_id); ?> .tech-tabs-nav button .checkmark-svg {
                 display: inline-block;
                 width: 24px;
