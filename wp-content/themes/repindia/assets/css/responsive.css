@@ -232,6 +232,29 @@ select.form-control {
   height: 48px;
   width: 100%;
 }
+
+
+.form-control:hover {
+  border-color: #0099ED; 
+}
+.form-control:focus {
+  border-color: #008EDB;
+  outline: 0;
+  box-shadow: none;
+}
+.wpcf7-not-valid-tip, #mobile-error {
+  color: #C92629 !important;
+  font-size: 12px;
+}
+.js-dark .form-control:hover {
+  border-color: #008AD6; 
+}
+.js-dark .form-control:focus {
+  border-color: #007ABE;
+}
+.js-dark .wpcf7-not-valid-tip, .js-dark #mobile-error {
+  color: #D58F8F !important;
+}
 .country-select.inside input[type="text"].form-control {
   margin-bottom: 16px !important;
 }
@@ -539,7 +562,7 @@ label.form-label.label_notic a {
   color: rgba(255, 255, 255, 0.6);
 }
 
-@media (min-width: 1601px) {
+/* @media (min-width: 1601px) {
   .elementor-element.channel_partner .partner_choose_title.sticky,
   .elementor-element.technology_partner .partner_tech_title.sticky {
     left: 9%;
@@ -566,7 +589,7 @@ label.form-label.label_notic a {
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
   }
-}
+} */
 @media (min-width: 1400px) {
 }
 @media (min-width: 1201px) {

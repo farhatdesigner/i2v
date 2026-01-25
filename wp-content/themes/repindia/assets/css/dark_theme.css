@@ -907,15 +907,23 @@ header li.burger-icon .icon-sun,
 }
 .js-dark .elementor-element.btn_smart.elementor-widget.elementor-widget-heading {
   background-color: #262a30;
-  border-color: #262a30;
+  border-color: rgb(193 196 198 / 10%);
+  color: #fff;
+}
+.js-dark .elementor-element.btn_smart.elementor-widget.elementor-widget-heading  .elementor-heading-title{
+  background-color: #262a30;
+  border-color: rgb(193 196 198 / 10%);
   color: #fff;
 }
 .js-dark .elementor-element.btn_smart.elementor-widget.elementor-widget-heading .elementor-heading-title {
-  color: #fff!important;
+  color: #D7DBE4 !important;
 }
 .js-dark .online_image-graph .elementor-element.elementor-widget.elementor-widget-heading {
   background-color: #262a30;
-  border-color: #262a30!important;
+  border-color: rgb(193 196 198 / 10%) !important;
+}
+.js-dark .online_image-graph .elementor-widget-heading .elementor-heading-title {
+  color: #D7DBE4 !important;
 }
 .js-dark .video-analytics-widget .subtitle {
   color: #fff;
@@ -925,8 +933,13 @@ header li.burger-icon .icon-sun,
 }
 .js-dark .elementor-element.elementor-widget-n-accordion > .e-n-accordion > .e-n-accordion-item > .e-n-accordion-item-title:hover{ border-color: transparent!important;background-color: rgba(255, 255, 255, 0.15)!important; }
 
+ .js-dark .elementor-testimonial__text, .js-dark .elementor-testimonial__title {color: #AEB6C9!important;}
+.js-dark .connection-lines svg path {color: #D7DBE4!important;}
+.js-dark .connection-lines svg path, .js-dark .right-connection_lines svg path {stroke: rgb(193 196 198 / 20%) !important;}
+.js-dark .connection-lines svg circle, .js-dark .right-connection_lines svg circle {stroke:none !important;}
+.js-dark .connection-lines svg circle, .js-dark .right-connection_lines svg circle {fill:#74C2ED !important;}
 
 
- .js-dark .elementor-testimonial__text, .js-dark .elementor-testimonial__title {
-    color: #AEB6C9!important;
-}
+.js-dark .border_project:before {background: rgb(193 196 198 / 20%) !important;}
+.js-dark .noticdark .elementor-element {background: transparent !important;}
+.js-dark .noticdark .demo_para {color: #ffffff !important;}

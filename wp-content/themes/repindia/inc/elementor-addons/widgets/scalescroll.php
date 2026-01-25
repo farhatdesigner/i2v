@@ -496,20 +496,21 @@ h4.subtitlebox {
             .hz-slider-section .swiper-slide ul li>span>svg { width: 14px;height: 14px; }
             .featuregroup_repeator .nested-image-wrapper img,.featuregroup_repeator .nested-image-wrapper { width: 26px;height: 26px; }
             .featuregroup_repeator .nested-item-1 {
-                padding: 12px;
-                border-radius: 8px;
-                background: #fff;
-                width: 100%;
-                max-width: 48%;
+                padding: 4px 16px;
+    border-radius: 100px;
+    background: #fff;
+    width: 100%;
+    max-width: max-content;
+    border: 1px solid #E6EBF2;
             }
             .featuregroup_repeator h3.nested-title-1 {
-                color: #06283D;
-                font-size: 16px!important;
-                font-style: normal;
-                font-weight: 600;
-                line-height: 24px;
-                margin: 0;
-                text-align: left;
+                color: #4A5673;
+    font-size: 16px !important;
+    font-style: normal;
+    font-weight: 500 !important;
+    line-height: 24px;
+    margin: 0;
+    text-align: left;
             }
             .featuregroup_repeator .nested-description-1, .featuregroup_repeator .nested-description-1 p {
                 color: #5C5C5C;
@@ -522,22 +523,36 @@ h4.subtitlebox {
             }
             .nested-repeater-1.featuregroup_repeator {
                 display: flex;
-                align-items: center;
-                gap: 10px;
-                flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
             }
             .bolt{ max-width: 300px;margin-bottom: 0;margin-top: 20px; }
             .listedgroup_repeator ul { padding: 0; }
             .listedgroup_repeator li span { display: inline-block;width: auto; }
             h4.boxtitle {
                 color: #5C5C5C;
-                font-size: 14px;
-                font-style: normal;
-                font-weight: 600;
-                line-height: 20px;
-                margin: 10px 0;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    margin: 0px 0 8px;
             }
-            .js-dark .featuregroup_repeator .nested-item-1{ background: rgba(255, 206, 147, 0.1); }
+          
+            .js-dark .featuregroup_repeator .nested-item-1 {
+    background: #262A30;
+    border: 1px solid rgb(193 196 198 / 10%) !important;
+}
+
+.js-dark .featuregroup_repeator h3.nested-title-1 {
+    color: #D7DBE4 !important;
+}
+
+ .js-dark h4.boxtitle {
+    color: #AEB6C9 !important;
+}
+
             .js-dark h4.subtitlebox{ background: rgba(255, 206, 147, 0.1); }
             .bolt img { width: 26px; }
         </style>

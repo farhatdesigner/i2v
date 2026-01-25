@@ -1524,14 +1524,22 @@ a.theme-btn.bg-tran_lightcolor {
   gap: 20px;
   width: 25%;
 }
-.txt-greybtn {
-  color: #aeb6c9;
-}
+
 .bg-transgrey {
-  background: transparent;
-  border-bottom: 1px solid #AEB6C9;
+  background: transparent !important;
+  border-bottom: 1px solid #FFFFFF33;
   border-radius: 0;
   padding: 0;
+  color: #AEB6C9;
+}
+.bg-transgrey:hover {
+  border-bottom: 1px solid #D7DBE4;
+  color: #D7DBE4;
+}
+
+.bg-transgrey:focus {
+  border-bottom: 1px solid #8793AF,;
+  color: #8793AF;
 }
 .js-dark .bg-transgrey:hover {
   border-bottom: 1px solid #D7DBE4;
@@ -1540,6 +1548,40 @@ a.theme-btn.bg-tran_lightcolor {
 .js-dark .elementor-5191 .elementor-element.elementor-element-3a7f6e4 .elementor-heading-title {
   color: #E6BA85 !important;
 }
+
+.btn_transgreylight {
+  background: transparent;
+  color: #5F6F94;
+  border-bottom: 1px solid #E6E6E6;
+  border-radius: 0;
+  padding: 0;
+}
+.btn_transgreylight:hover {
+  background: transparent;
+  border-bottom: 1px solid #5F6F94;
+}
+.btn_transgreylight:focus {
+  background: transparent;
+  color: #384157;
+  border-bottom: 1px solid #384157;
+}
+
+.js-dark .btn_transgreylight {
+  background: transparent !important;
+  border-bottom: 1px solid #FFFFFF33;
+  border-radius: 0;
+  padding: 0;
+  color: #AEB6C9;
+}
+.js-dark .btn_transgreylight:hover {
+  border-bottom: 1px solid #D7DBE4;
+  color: #D7DBE4;
+}
+.js-dark .btn_transgreylight:focus {
+  border-bottom: 1px solid #8793AF,;
+  color: #8793AF;
+}
+
 #mrg-head {
   margin-top: 114px;
 }
@@ -3449,6 +3491,7 @@ span.star {
 }
 .detailsWrapper .txtflex p {
   color: #5C5C5C;
+  margin-bottom: 20px;
 }
 
 .detailsWrapper .txtflex .bredstyle p {

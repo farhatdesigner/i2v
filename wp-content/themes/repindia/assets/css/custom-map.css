@@ -10,6 +10,8 @@
     background: transparent;
     border-radius: 0;
     overflow: hidden;
+    z-index: 2;
+    position: relative;
 }
 
 /* Filter Section - Chip Style */
@@ -181,6 +183,7 @@
     height: 600px;
     background: #e5e7eb;
     overflow: hidden;
+    border-radius: 12px;
 }
 
 .custom-map-container .leaflet-container {

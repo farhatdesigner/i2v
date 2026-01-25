@@ -79,7 +79,7 @@ html.lenis body {
 }
 
 .txtflex {
-  max-width: 345px;
+  max-width: 407px;
 }
 
 .container-page {
@@ -574,8 +574,8 @@ p#breadcrumbs svg {
   /* outline:1px solid green; */
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 80px 0;
+  justify-content: start;
+  /* padding: 80px 0; */
   height: 60vh;
 }
 
@@ -842,6 +842,7 @@ div.pin-spacer > .hz-slider-section {
   border-radius: 12px;
   background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='12' ry='12' stroke='%23D7DBE4FF' stroke-width='4' stroke-dasharray='24%2c 24' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
   border-radius: 12px;
+  flex: 1;
 }
 .hz-slider-section .slider-image_content .slider-image img {
   max-height: max-content;
@@ -902,7 +903,7 @@ div.pin-spacer > .hz-slider-section {
   position: absolute;
   content: url("/i2v/wp-content/uploads/2025/12/Vector-9.svg");
   position: absolute;
-  right: -50%;
+  right: -40%;
   top: 35%;
   display: inline-block;
   width: auto;
@@ -912,7 +913,7 @@ div.pin-spacer > .hz-slider-section {
   position: absolute;
   content: url("/i2v/wp-content/uploads/2025/12/Vector-10.svg");
   position: absolute;
-  left: -40%;
+  left: -35%;
   top: 10%;
   display: inline-block;
   width: auto;
@@ -928,8 +929,9 @@ div.pin-spacer > .hz-slider-section {
   width: auto;
   height: auto;
 }
+.js-dark .one_arrow:before, .js-dark .two_arrow:before, .js-dark .three_arrow:before, .js-dark .four_arrow:before {opacity: 0.3;}
 
-.js-dark .one_arrow:before {
+/* .js-dark .one_arrow:before {
   content: url("https://reputationindia.in/i2v/wp-content/uploads/2026/01/darkVecto-8.svg");
 }
 .js-dark .two_arrow:before {
@@ -940,7 +942,7 @@ div.pin-spacer > .hz-slider-section {
 }
 .js-dark .four_arrow:before {
   content: url("https://reputationindia.in/i2v/wp-content/uploads/2026/01/darkVector-11.svg");
-}
+} */
 
 .box-custom figure.wp-caption {
   position: relative;
@@ -1216,7 +1218,7 @@ div.pin-spacer > .hz-slider-topcaption {
   font-weight: 600 !important;
   line-height: 34px;
   margin-bottom: 0;
-  align-items: flex-start;
+  align-items: stretch;
 }
 
 .hz-slider-topcaption .swiper-slide {
@@ -1224,10 +1226,16 @@ div.pin-spacer > .hz-slider-topcaption {
   border-radius: var(--M, 12px);
   background: var(--Golbal-backgrounds-global-bg-1, #fff);
   padding: 8px;
+  display: flex;
+  flex-direction: column;
+  height: auto;
 }
 
-.hz-slider-topcaption .slider-content {
+.hz-slider-topcaption .swiper-slide .slider-content {
   padding: 8px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .hz-slider-topcaption .swiper-slide h3 {
@@ -1302,7 +1310,10 @@ div.pin-spacer > .hz-slider-topcaption {
   }
   
 .static_slide .slider-image_content {
-  min-height: 475px !important;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
 
 }
