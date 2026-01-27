@@ -966,6 +966,11 @@ class Custom_Tooltip extends Widget_Base
             top: 25vh;
             transform: translateX(-50%) !important;
         }
+        
+.ctw-trigger {
+    display: flex;
+    justify-content: center;
+}
     }
 </style>
         

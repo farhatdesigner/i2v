@@ -859,8 +859,7 @@ header li.burger-icon .icon-sun,
   border-color: #F2AE5A;
 }
 .js-dark .elementor-element.darkmode_custom.e-flex,.js-dark .elementor-element.darkmode_custom {
-  background-color: #262a30 !important;
-  background: #262a30 !important;
+  background-color: #AEB6C9 !important;
 }
 .js-dark .elementor-element.e-con-full.video_analytic_sidebar,.elementor-element.e-con-full.video_analytic_sidebar .analytic-sidebar {
   background: #262A30 !important;
@@ -902,7 +901,7 @@ header li.burger-icon .icon-sun,
 .js-dark .box-custom figcaption.widget-image-caption.wp-caption-text:focus {
   border: 1px solid #74C2ED;color: #74C2ED;background: #FFFFFF1A;
 }
-.js-dark .bredstyle p,.js-dark .txtflex .bredstyle p{ background: #262A30; }
+.js-dark .bredstyle p,.js-dark .txtflex .bredstyle p{ background: #262A30;border: 1px solid #c1c4c61a !important }
 .js-dark #tabbedSliderWrapper .tab-btn{
   color: #D7DBE4;
   border: 1px solid rgba(193, 196, 198, 0.10);

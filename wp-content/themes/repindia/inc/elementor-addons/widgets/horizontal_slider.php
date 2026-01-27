@@ -328,7 +328,6 @@ class Horizontal_Slider extends Widget_Base
                                                             <li>
                                                                 <span>
                                                                     <?php echo $checkmark_svg_default; ?>
-                                                                    <?php echo $checkmark_svg_dark; ?>
                                                                 </span>
                                                                 <?php echo esc_html($list_text); ?>
                                                             </li>

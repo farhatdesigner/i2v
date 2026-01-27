@@ -3881,7 +3881,7 @@ span.star {
   }
 
   .industry_box {
-    height: 140px;
+    /* height: 140px; */
     line-height: 1.2;
   }
 
@@ -4703,9 +4703,17 @@ span.star {
   }
   
 .elementor-icon-box-title span, .elementor-image-box-title {
-  font-size: 18px;
+  font-size: 18px !important;
   line-height: 24px;
 }
+
+.bolt {
+  max-width: 100%;
+}
+.photos .photo_custom:last-child .details {
+  margin-bottom: 0;
+}
+
 
 }
 

@@ -108,7 +108,7 @@ html.lenis body {
 }
 
 .txtflex p {
-  color: #aeb6c9;
+  color: #5C5C5C;
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
@@ -829,6 +829,23 @@ div.pin-spacer > .hz-slider-section {
   font-size: 18px;
   font-weight: 400;
   line-height: 144.444%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hz-slider-section .swiper-slide ul li > span {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  margin-top: 2px;
+}
+
+.hz-slider-section .swiper-slide ul li > span > svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+  flex-shrink: 0;
 }
 .slider-image_content {
   padding: 48px;
@@ -1584,6 +1601,27 @@ html {
   
   .hz-slider-topcaption .swiper-slide p {
     font-size: 16px;
+  }
+  
+  /* Mobile alignment for hz-slider-section list items */
+  .hz-slider-section .swiper-slide ul li {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex-wrap: nowrap;
+  }
+  
+  .hz-slider-section .swiper-slide ul li > span {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    margin-top: 2px;
+  }
+  
+  .hz-slider-section .swiper-slide ul li > span > svg {
+    width: 16px;
+    height: 16px;
+    display: block;
   }
   
 }
