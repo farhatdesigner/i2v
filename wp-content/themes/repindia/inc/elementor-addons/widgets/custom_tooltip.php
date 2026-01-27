@@ -805,7 +805,8 @@ class Custom_Tooltip extends Widget_Base
             echo '.ctw-popup-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.55); z-index: 99997; }';
             echo '.ctw-popup-box { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); background: #ffffff; padding: 20px; max-width: 600px; width: 90%; border-radius: 12px; z-index: 99998;box-shadow: 0 0 15px 0 rgba(138, 149, 158, 0.40);white-space: normal; }';
             echo '.ctw-popup-close { position: absolute; top: 12px; right: 12px; cursor: pointer; font-size: 22px; }';
-            echo '.ctw-learn-more-btn { margin-top: 12px; cursor: pointer; display: inline-flex; padding: 6px 14px; border-radius: 6px; }';
+            echo '.ctw-learn-more-btn { border: 0;border-bottom: 1px solid #008ad633;    padding: 0 !important;border-radius: 0 !important; }';
+            echo '.ctw-learn-more-btn:hover{ border-bottom: 1px solid #74C2ED;color: #74C2ED !important; }';
             echo '.ctw-popup-content-wrapper { display: flex; align-items: flex-start; gap: 20px; }';
             echo '.ctw-popup-icon-wrapper { flex-shrink: 0; display: flex; align-items: center; justify-content: center; }';
             echo '.ctw-popup-icon-wrapper .ctw-popup-icon { font-size: 24px; color: #0073aa;max-width: 40px;max-height: 40px; }';
@@ -911,7 +912,7 @@ class Custom_Tooltip extends Widget_Base
     span.ctw-text p{ margin: 0;}
     .ctw-tooltip-inner{ text-align: left; }
     .ctw-tooltip-inner p{ font-size: 14px;font-weight: 400;line-height: 20px; }
-    button.ctw-learn-more-btn{ box-shadow: none!important;border: none;border-bottom: 1px solid rgba(255, 255, 255, 0.20); }
+    /* button.ctw-learn-more-btn{ box-shadow: none!important;border: none;border-bottom: 1px solid rgba(255, 255, 255, 0.20); } */
     .ctw-title .ctw-text p{ font-size: 14px;font-weight: 400;line-height: 26px;color: #5C5C5C; }
     .para_tooltip .ctw-title .ctw-text p{ font-size: 16px; }
     .ctw-title:hover .border-b{ border-bottom: 2px solid #9ea1a8!important; }
@@ -928,10 +929,16 @@ class Custom_Tooltip extends Widget_Base
             --align-self: start!important;
         }
         .ctw-tooltip-bottom {
-            left: 0;
+            left: unset;
             transform: translateX(0%);
         }
         .ctw-tooltip{ min-width: 328px; }
+    }
+    @media(max-width: 600px){
+        .ctw-tooltip-bottom {
+            left: -81px !important;
+            transform: translateX(-0%);
+        }
     }
 </style>
         <div class="ctw-wrapper <?php echo $show_learn_more ? 'ctw-has-learn-more' : ''; ?>" data-trigger="<?php echo $trigger_type; ?>" data-position="<?php echo $position; ?>" style="--ctw-arrow-color: <?php echo $show_learn_more ? $tooltip_bg_color : '#ffffff'; ?>;">
@@ -983,7 +990,7 @@ class Custom_Tooltip extends Widget_Base
                 <div class="ctw-tooltip-inner">
                     <?php echo $this->sanitize_wysiwyg_content($tooltip_description); ?>
                     <?php if ($show_learn_more) : ?>
-                        <button class="ctw-learn-more-btn"><?php echo $learn_more_text; ?></button>
+                        <button class="ctw-learn-more-btn theme-btn bg-trans border_btn darkcolor"><?php echo $learn_more_text; ?></button>
                     <?php endif; ?>
                 </div>
             </div>
