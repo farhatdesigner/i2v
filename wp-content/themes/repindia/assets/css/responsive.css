@@ -1,3 +1,9 @@
+.vmsfaq .e-n-accordion-item[open]>.e-n-accordion-item-title {
+  background: transparent !important;
+  color: #06283D !important;
+}
+.js-dark .faqlight,.faqdark{ display: none; }
+.js-dark .faqdark{ display: inline-block; }
 .elementor-element.partner_faq.elementor-widget-n-accordion .e-n-accordion-item-title-icon span.e-opened, .partner_faq.elementor-widget-n-accordion .e-n-accordion-item-title-icon span.e-opened>svg, .elementor-element.partner_faq.elementor-widget-n-accordion .e-n-accordion-item-title-icon, .partner_faq.elementor-widget-n-accordion .e-n-accordion-item .e-n-accordion-item-title-icon span>svg,.elementor-element.partner_faq.elementor-widget-n-accordion .e-n-accordion-item-title-icon span.e-opened, .partner_faq.elementor-widget-n-accordion .e-n-accordion-item-title-icon span.e-opened>svg, .elementor-element.partner_faq.elementor-widget-n-accordion .e-n-accordion-item-title-icon, .partner_faq.elementor-widget-n-accordion .e-n-accordion-item .e-n-accordion-item-title-icon span>svg {
   width: 15px !important;
   height: 15px !important;
