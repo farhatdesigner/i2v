@@ -504,7 +504,6 @@ h4.subtitlebox {
     width: calc(50% - 2px);
     display: flex;
     flex-direction: column;
-    height: 100%;
     align-items: stretch;
             }
             .featuregroup_repeator h3.nested-title-1 {
@@ -527,7 +526,7 @@ h4.subtitlebox {
             }
             .nested-repeater-1.featuregroup_repeator {
                 display: flex;
-    align-items: center;
+    align-items: stretch;
     gap: 4px;
     flex-wrap: wrap;
     margin-bottom: 20px;
