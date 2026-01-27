@@ -936,16 +936,35 @@ class Custom_Tooltip extends Widget_Base
             left: unset;
         } 
         .ctw-tooltip{ min-width: 328px; }
+        .intelligent_video .swiper-slide-image, .purpose-swiper .swiper-slide figure > img{
+            min-height: 350px;
+            max-height: 350px;
+        }
     }
     @media(max-width: 600px){
-        .ctw-tooltip-bottom {
-            left: -20px !important;
+        /* Mobile: show tooltip as a fixed box, centered in viewport */
+        .ctw-wrapper {
+            position: static;
         }
-        .tool_mbl_center .ctw-tooltip-bottom {
-            left: -130px !important;
+        .ctw-tooltip {
+            position: fixed;
+            left: 50% !important;
+            top: 25vh;
+            transform: translateX(-50%) !important;
+            max-width: 320px;
+            width: calc(100vw - 40px);
+            min-width: 0;
         }
+        /* Orientation classes should not change horizontal centering */
+        .ctw-tooltip-top,
+        .ctw-tooltip-bottom,
+        .ctw-tooltip-left,
+        .ctw-tooltip-right,
         .ctw-tooltip-bottom.moretooldiv {
-            left: -81px !important;
+            left: 50% !important;
+            right: auto !important;
+            top: 25vh;
+            transform: translateX(-50%) !important;
         }
     }
 </style>

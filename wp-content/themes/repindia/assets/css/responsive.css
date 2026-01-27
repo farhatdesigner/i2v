@@ -1,3 +1,12 @@
+.elementor-element.partner_faq.elementor-widget-n-accordion .e-n-accordion-item-title-icon span.e-opened, .partner_faq.elementor-widget-n-accordion .e-n-accordion-item-title-icon span.e-opened>svg, .elementor-element.partner_faq.elementor-widget-n-accordion .e-n-accordion-item-title-icon, .partner_faq.elementor-widget-n-accordion .e-n-accordion-item .e-n-accordion-item-title-icon span>svg,.elementor-element.partner_faq.elementor-widget-n-accordion .e-n-accordion-item-title-icon span.e-opened, .partner_faq.elementor-widget-n-accordion .e-n-accordion-item-title-icon span.e-opened>svg, .elementor-element.partner_faq.elementor-widget-n-accordion .e-n-accordion-item-title-icon, .partner_faq.elementor-widget-n-accordion .e-n-accordion-item .e-n-accordion-item-title-icon span>svg {
+  width: 15px !important;
+  height: 15px !important;
+  min-width: 15px !important;
+  max-width: 15px !important;
+}
+
+
+
 .elementor-element.newsroomtab .elementor-icon-list-item.active {
   font-weight: 600;
 }
