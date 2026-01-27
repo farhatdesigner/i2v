@@ -795,7 +795,7 @@ class Custom_Tooltip extends Widget_Base
             echo '.ctw-tooltip-top { bottom: 100%; left: 50%; transform: translateX(-50%); margin-bottom: 8px; }';
             echo '.ctw-tooltip-top .ctw-tooltip-inner::after { content: ""; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--ctw-arrow-color, #333333); }';
             echo '.ctw-tooltip-bottom { top: 100%; left: 50%; transform: translateX(-50%); margin-top: 0px; }';
-            echo '.ctw-tooltip-bottom .ctw-tooltip-inner::after { content: ""; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-bottom-color: var(--ctw-arrow-color, #333333); }';
+            // echo '.ctw-tooltip-bottom .ctw-tooltip-inner::after { content: ""; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-bottom-color: var(--ctw-arrow-color, #333333); }';
             echo '.ctw-tooltip-left { right: 100%; top: 50%; transform: translateY(-50%); margin-right: 8px; }';
             echo '.ctw-tooltip-left .ctw-tooltip-inner::after { content: ""; position: absolute; left: 100%; top: 50%; transform: translateY(-50%); border: 6px solid transparent; border-left-color: var(--ctw-arrow-color, #333333); }';
             echo '.ctw-tooltip-right { left: 100%; top: 50%; transform: translateY(-50%); margin-left: 8px; }';
@@ -816,7 +816,7 @@ class Custom_Tooltip extends Widget_Base
             echo '.ctw-wrapper:not(.ctw-has-learn-more) .ctw-tooltip-inner p { color: #333333 !important; }';
             echo '.ctw-wrapper:not(.ctw-has-learn-more) .ctw-tooltip-inner * { color: #333333 !important; }';
             echo '.ctw-wrapper:not(.ctw-has-learn-more) .ctw-tooltip-top .ctw-tooltip-inner::after { border-top-color: #ffffff !important; }';
-            echo '.ctw-wrapper:not(.ctw-has-learn-more) .ctw-tooltip-bottom .ctw-tooltip-inner::after { border-bottom-color: #ffffff !important; }';
+            // echo '.ctw-wrapper:not(.ctw-has-learn-more) .ctw-tooltip-bottom .ctw-tooltip-inner::after { border-bottom-color: #ffffff !important; }';
             echo '.ctw-wrapper:not(.ctw-has-learn-more) .ctw-tooltip-left .ctw-tooltip-inner::after { border-left-color: #ffffff !important; }';
             echo '.ctw-wrapper:not(.ctw-has-learn-more) .ctw-tooltip-right .ctw-tooltip-inner::after { border-right-color: #ffffff !important; }';
             echo '.ctw-icon-dark { display: none; }';
@@ -922,25 +922,34 @@ class Custom_Tooltip extends Widget_Base
         .elementor-element.tooltip_container {
             position: relative;
             display: flex;
-            flex-direction: column-reverse;
+            flex-direction: row;
             gap: 10px;
         }
         .elementor-element.tooltip_container .elementor-widget-custom_tooltip {
             --align-self: start!important;
         }
         .ctw-tooltip-bottom {
-            left: unset;
+            left: 0;
             transform: translateX(0%);
         }
+        .ctw-tooltip-bottom.moretooldiv {
+            left: unset;
+        } 
         .ctw-tooltip{ min-width: 328px; }
     }
     @media(max-width: 600px){
         .ctw-tooltip-bottom {
+            left: -20px !important;
+        }
+        .tool_mbl_center .ctw-tooltip-bottom {
+            left: -130px !important;
+        }
+        .ctw-tooltip-bottom.moretooldiv {
             left: -81px !important;
-            transform: translateX(-0%);
         }
     }
 </style>
+        
         <div class="ctw-wrapper <?php echo $show_learn_more ? 'ctw-has-learn-more' : ''; ?>" data-trigger="<?php echo $trigger_type; ?>" data-position="<?php echo $position; ?>" style="--ctw-arrow-color: <?php echo $show_learn_more ? $tooltip_bg_color : '#ffffff'; ?>;">
             <div class="ctw-trigger">
                 <span class="ctw-title ctw-icon-<?php echo $icon_position; ?>" style="text-align: <?php echo $title_align; ?>;">
@@ -986,15 +995,18 @@ class Custom_Tooltip extends Widget_Base
                         <?php endif; ?>
                     <?php endif; ?>
                 </span>
-                <div class="ctw-tooltip ctw-tooltip-<?php echo $position; ?>">
-                <div class="ctw-tooltip-inner">
-                    <?php echo $this->sanitize_wysiwyg_content($tooltip_description); ?>
-                    <?php if ($show_learn_more) : ?>
-                        <button class="ctw-learn-more-btn theme-btn bg-trans border_btn darkcolor"><?php echo $learn_more_text; ?></button>
-                    <?php endif; ?>
+                
+            </div>
+            <div class="ctw-tooltip ctw-tooltip-<?php echo $position; ?> <?php if($show_learn_more == 'yes'){ echo $showclass= 'moretooldiv'; }else{ echo $showclass= ''; } ?>">
+                    <div class="ctw-tooltip-inner">
+                        <?php echo $this->sanitize_wysiwyg_content($tooltip_description); ?>
+                        <?php if ($show_learn_more) : ?>
+                            <?php if (!empty($learn_more_text)){ ?>
+                            <button class="ctw-learn-more-btn theme-btn bg-trans border_btn darkcolor"><?php echo $learn_more_text; ?></button>
+                            <?php } ?>
+                        <?php endif; ?>
+                    </div>
                 </div>
-            </div>
-            </div>
             
         </div>
         <?php if ($show_learn_more) : ?>
