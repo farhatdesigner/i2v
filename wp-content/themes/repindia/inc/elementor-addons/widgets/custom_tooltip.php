@@ -888,6 +888,7 @@ class Custom_Tooltip extends Widget_Base
             echo 'if ($overlay.length && $popup.length) {';
             echo '$overlay.fadeIn(200);';
             echo '$popup.fadeIn(200);';
+            echo '$wrapper.find(".ctw-tooltip").removeClass("show");';
             echo '}';
             echo '});';
             echo '$(".ctw-popup-overlay, .ctw-popup-close").off("click.ctw-popup").on("click.ctw-popup", function() {';
@@ -942,20 +943,17 @@ class Custom_Tooltip extends Widget_Base
         }
     }
     @media(max-width: 600px){
-        /* Mobile: show tooltip as a fixed box, centered in viewport */
-        .ctw-wrapper {
-            position: static;
-        }
+        /* Mobile: treat tooltip like a centered popup box */
         .ctw-tooltip {
             position: fixed;
             left: 50% !important;
-            top: 25vh;
-            transform: translateX(-50%) !important;
+            top: 50%;
+            transform: translate(-50%, -50%) !important;
             max-width: 320px;
             width: calc(100vw - 40px);
             min-width: 0;
+            z-index: 99997;
         }
-        /* Orientation classes should not change horizontal centering */
         .ctw-tooltip-top,
         .ctw-tooltip-bottom,
         .ctw-tooltip-left,
@@ -963,8 +961,8 @@ class Custom_Tooltip extends Widget_Base
         .ctw-tooltip-bottom.moretooldiv {
             left: 50% !important;
             right: auto !important;
-            top: 25vh;
-            transform: translateX(-50%) !important;
+            top: 50%;
+            transform: translate(-50%, -50%) !important;
         }
     }
 </style>
