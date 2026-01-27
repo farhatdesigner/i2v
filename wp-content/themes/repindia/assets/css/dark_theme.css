@@ -737,7 +737,7 @@ header li.burger-icon .icon-sun,
 }
 .js-dark .ctw-has-learn-more .ctw-title .border-b {
   border-bottom: 2px solid #464a4f !important;
-  color: #aeb6c9 !important;
+  color: rgba(255, 255, 255, 0.9) !important;
 }
 .js-dark .border-dark_grey {
   border-bottom: 1px solid
