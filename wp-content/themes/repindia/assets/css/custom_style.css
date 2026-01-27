@@ -3495,9 +3495,10 @@ span.star {
 }
 
 .detailsWrapper .txtflex .bredstyle p {
-  color: #5C5C5C;
+  color: #4A5673;
   background: #FFFFFF;
   border: 1px solid #E6EBF2;
+  margin-bottom: 8px;
 }
 
 .js-dark .border_dark {
@@ -3726,6 +3727,25 @@ span.star {
     background: rgb(193 196 198 / 20%) !important;
   }
 
+  .chosse_circle.dark-circle-txt:before {
+    background: #D7DBE4 !important;
+  }
+
+  .chosse_circle.dark-circle-txt
+    .elementor-view-default:nth-child(1)
+    .elementor-icon-box-wrapper::before,
+  .chosse_circle.dark-circle-txt
+    .elementor-view-default:nth-child(3)
+    .elementor-icon-box-wrapper::before {
+    background: #D7DBE4 !important;
+  }
+
+  
+  .js-dark .chosse_circle.dark-circle-txt .elementor-view-default:nth-child(1) .elementor-icon-box-wrapper::before, .js-dark .chosse_circle.dark-circle-txt .elementor-view-default:nth-child(3) .elementor-icon-box-wrapper::before,
+  .js-dark .chosse_circle.dark-circle-txt:before {
+        background: #c1c4c633 !important;
+    }
+
   .banner-captiontxt {
     bottom: 15%;
     left: 60px;
@@ -3814,9 +3834,9 @@ span.star {
 }
 
 @media (max-width: 1366px) {
-  .theme-btn.xl-btn {
+  /* .theme-btn.xl-btn {
     padding: 12px 18px;
-  }
+  } */
 
   .animation_cards-text {
     width: 300px !important;
@@ -3851,10 +3871,10 @@ span.star {
     font-size: 14px;
   }
 
-  .theme-btn.xl-btn {
+  /* .theme-btn.xl-btn {
     padding: 10px 16px;
     font-size: 14px;
-  }
+  } */
 
   .industry_icons .industry_box {
     padding: 10px 10px 10px 10px !important;
@@ -4334,10 +4354,10 @@ span.star {
     align-items: flex-start;
   }
 
-  .theme-btn.xl-btn {
+  /* .theme-btn.xl-btn {
     padding: 10px 10px !important;
     font-size: 13px !important;
-  }
+  } */
 
   .hero-style .slide-btns > a:first-child {
     margin-right: 0px;
@@ -4681,6 +4701,12 @@ span.star {
     text-align: center;
     margin: 0 auto;
   }
+  
+.elementor-icon-box-title span, .elementor-image-box-title {
+  font-size: 18px;
+  line-height: 24px;
+}
+
 }
 
 @media (max-width: 380px) {
@@ -4692,10 +4718,10 @@ span.star {
     padding: 2px 13px;
   }
 
-  .theme-btn.xl-btn {
+  /* .theme-btn.xl-btn {
     padding: 8px 9px !important;
     font-size: 14px !important;
-  }
+  } */
 
   .text-container {
     padding: 0 10px;
@@ -4705,10 +4731,10 @@ span.star {
     margin-right: 0px;
   }
 
-  .theme-btn.xl-btn {
+  /* .theme-btn.xl-btn {
     padding: 8px 8px !important;
     font-size: 13px !important;
-  }
+  } */
 
   .hero-slider .hero-slide-inner,
   .hero-slider {
