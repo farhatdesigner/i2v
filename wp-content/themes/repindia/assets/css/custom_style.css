@@ -3727,6 +3727,25 @@ span.star {
     background: rgb(193 196 198 / 20%) !important;
   }
 
+  .chosse_circle.dark-circle-txt:before {
+    background: #D7DBE4 !important;
+  }
+
+  .chosse_circle.dark-circle-txt
+    .elementor-view-default:nth-child(1)
+    .elementor-icon-box-wrapper::before,
+  .chosse_circle.dark-circle-txt
+    .elementor-view-default:nth-child(3)
+    .elementor-icon-box-wrapper::before {
+    background: #D7DBE4 !important;
+  }
+
+  
+  .js-dark .chosse_circle.dark-circle-txt .elementor-view-default:nth-child(1) .elementor-icon-box-wrapper::before, .js-dark .chosse_circle.dark-circle-txt .elementor-view-default:nth-child(3) .elementor-icon-box-wrapper::before,
+  .js-dark .chosse_circle.dark-circle-txt:before {
+        background: #c1c4c633 !important;
+    }
+
   .banner-captiontxt {
     bottom: 15%;
     left: 60px;
