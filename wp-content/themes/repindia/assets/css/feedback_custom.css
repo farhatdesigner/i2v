@@ -571,12 +571,13 @@ p#breadcrumbs svg {
 }
 
 .details {
-  /* outline:1px solid green; */
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  /* padding: 80px 0; */
-  height: 60vh;
+    /* outline: 1px solid green; */
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    /* padding: 80px 0; */
+    height: max-content;
+    margin-bottom: 2rem;
 }
 
 .right {
