@@ -922,7 +922,7 @@ class Custom_Tooltip extends Widget_Base
         .elementor-element.tooltip_container {
             position: relative;
             display: flex;
-            flex-direction: column-reverse;
+            flex-direction: row;
             gap: 10px;
         }
         .elementor-element.tooltip_container .elementor-widget-custom_tooltip {
