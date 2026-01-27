@@ -497,11 +497,14 @@ h4.subtitlebox {
             .featuregroup_repeator .nested-image-wrapper img,.featuregroup_repeator .nested-image-wrapper { width: 26px;height: 26px; }
             .featuregroup_repeator .nested-item-1 {
                 padding: 4px 16px;
-    border-radius: 100px;
+    border-radius: 8px;
     background: #fff;
-    width: 100%;
     max-width: max-content;
     border: 1px solid #E6EBF2;
+    width: calc(50% - 2px);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
             }
             .featuregroup_repeator h3.nested-title-1 {
                 color: #4A5673;
@@ -523,7 +526,7 @@ h4.subtitlebox {
             }
             .nested-repeater-1.featuregroup_repeator {
                 display: flex;
-    align-items: center;
+    align-items: stretch;
     gap: 4px;
     flex-wrap: wrap;
     margin-bottom: 20px;
