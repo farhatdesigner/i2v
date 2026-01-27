@@ -848,9 +848,11 @@ class Custom_Tooltip extends Widget_Base
             echo '$tooltip.on("mouseleave", function() { $(this).removeClass("show"); });';
             echo '} else if (triggerType === "click") {';
             echo '$trigger.on("click", function(e) { e.stopPropagation(); $tooltip.toggleClass("show"); });';
-            echo '$(document).on("click.ctw-" + $wrapper.index(), function(e) {';
-            echo 'if (!$wrapper.is(e.target) && $wrapper.has(e.target).length === 0) {';
+            echo '$(document).on("click.ctw-outside-" + $wrapper.index(), function(e) {';
+            echo 'if ($tooltip.hasClass("show")) {';
+            echo 'if (!$wrapper.is(e.target) && !$wrapper.has(e.target).length) {';
             echo '$tooltip.removeClass("show");';
+            echo '}';
             echo '}';
             echo '});';
             echo '}';
@@ -914,10 +916,17 @@ class Custom_Tooltip extends Widget_Base
     .ctw-tooltip-inner{ text-align: left; }
     .ctw-tooltip-inner p{ font-size: 14px;font-weight: 400;line-height: 20px; }
     /* button.ctw-learn-more-btn{ box-shadow: none!important;border: none;border-bottom: 1px solid rgba(255, 255, 255, 0.20); } */
-    .ctw-title .ctw-text p{ font-size: 14px;font-weight: 500!important;line-height: 26px;color: #262A30; }
+    .ctw-title .ctw-text p{ font-size: 14px;font-weight: 500!important;line-height: 26px;color: #5C5C5C; }
+    .tooltiptitlebox .ctw-title .ctw-text p{ color: #262A30;font-size: 20px; }
+    .tooltiptitlebox.toptooltitle .ctw-title .ctw-text p{ font-size: 14px; }
     .para_tooltip .ctw-title .ctw-text p{ font-size: 16px; }
     .ctw-title:hover .border-b{ border-bottom: 2px solid #9ea1a8!important; }
     .js-dark .ctw-title:hover .border-b { border-bottom: 2px solid #7d8895 !important; }
+    .js-dark .ctw-has-learn-more .ctw-title .border-b, .js-dark .ctw-title span.ctw-text,.js-dark .tooltiptitlebox .ctw-has-learn-more .ctw-title .border-b, .js-dark .tooltiptitlebox .ctw-title span.ctw-text {
+        border-bottom: 2px solid #464a4f !important;
+        color: #aeb6c9!important;
+    }
+    
     
     @media(max-width: 768px){
         .elementor-element.tooltip_container {
