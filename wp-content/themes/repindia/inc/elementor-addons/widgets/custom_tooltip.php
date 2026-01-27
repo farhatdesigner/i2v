@@ -938,6 +938,12 @@ class Custom_Tooltip extends Widget_Base
         .ctw-tooltip{ min-width: 328px; }
     }
     @media(max-width: 600px){
+        .ctw-tooltip-bottom {
+            left: -20px !important;
+        }
+        .tool_mbl_center .ctw-tooltip-bottom {
+            left: -130px !important;
+        }
         .ctw-tooltip-bottom.moretooldiv {
             left: -81px !important;
         }
@@ -989,7 +995,9 @@ class Custom_Tooltip extends Widget_Base
                         <?php endif; ?>
                     <?php endif; ?>
                 </span>
-                <div class="ctw-tooltip ctw-tooltip-<?php echo $position; ?> <?php if($show_learn_more == 'yes'){ echo $showclass= 'moretooldiv'; }else{ echo $showclass= ''; } ?>">
+                
+            </div>
+            <div class="ctw-tooltip ctw-tooltip-<?php echo $position; ?> <?php if($show_learn_more == 'yes'){ echo $showclass= 'moretooldiv'; }else{ echo $showclass= ''; } ?>">
                     <div class="ctw-tooltip-inner">
                         <?php echo $this->sanitize_wysiwyg_content($tooltip_description); ?>
                         <?php if ($show_learn_more) : ?>
@@ -999,7 +1007,6 @@ class Custom_Tooltip extends Widget_Base
                         <?php endif; ?>
                     </div>
                 </div>
-            </div>
             
         </div>
         <?php if ($show_learn_more) : ?>
