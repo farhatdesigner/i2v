@@ -576,7 +576,7 @@ p#breadcrumbs svg {
     flex-direction: column;
     justify-content: start;
     /* padding: 80px 0; */
-    height: max-content;
+    height: 60vh;
     margin-bottom: 2rem;
 }
 
@@ -1458,9 +1458,9 @@ html {
     font-size: 28px !important;
   }
 
-  .btn-colum {
+  /* .btn-colum {
     flex-direction: row;
-  }
+  } */
 
   .padd-accordion_video {
     display: none;

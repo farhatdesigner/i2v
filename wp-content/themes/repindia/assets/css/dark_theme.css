@@ -562,7 +562,7 @@ header li.burger-icon .icon-sun,
 
 .js-dark .elementor-testimonial__text,
 .js-dark .customtabsmart .smart-tabsautoscroll li .smart-tab-link {
-  color: #ffffff !important;
+  color:#D7DBE4!important;
 }
 
 .js-dark .vaw_accordion_set button {
@@ -921,13 +921,17 @@ header li.burger-icon .icon-sun,
   fill: #262A30;
 }
 .js-dark .tabbed-slider-wrapper .swiper-button-next.swiper-button-disabled svg .stroke_enabled,.js-dark .tabbed-slider-wrapper .swiper-button-prev.swiper-button-disabled svg .stroke_enabled{ stroke: rgba(193, 196, 198, 0.20); }
+
 .js-dark .customtabsmart .smart-tabsautoscroll li.active .smart-tab-link {
   border-color: #007ABE;
   background: #007ABE;
+  color: #FFFFFF !important;
 }
-.js-dark .customtabsmart .smart-tabsautoscroll li .smart-tab-link:hover,.js-dark .customtabsmart .smart-tabsautoscroll li .smart-tab-link:focus{
-  background: #006BA6;
-  border-color: #007ABE;
+
+.js-dark .customtabsmart .smart-tabsautoscroll li .smart-tab-link:hover {
+  background: rgb(255 255 255 / 15%);
+  border-color: rgb(193 196 198 / 20%);
+  color: #D7DBE4 !important;
 }
 .js-dark .elementor-element.btn_smart.elementor-widget.elementor-widget-heading {
   background-color: #262a30;
@@ -967,3 +971,7 @@ header li.burger-icon .icon-sun,
 .js-dark .border_project:before {background: rgb(193 196 198 / 20%) !important;}
 .js-dark .noticdark .elementor-element {background: transparent !important;}
 .js-dark .noticdark .demo_para {color: #ffffff !important;}
+
+
+.js-dark .tool_start .elementor-heading-title {color: #E6BA85 !important;}
+.js-dark .card_title_tooltip .ctw-title .ctw-text p {color: rgb(255 255 255 / 90%) !important;}

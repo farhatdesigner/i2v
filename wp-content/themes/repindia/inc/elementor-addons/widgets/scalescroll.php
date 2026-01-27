@@ -495,6 +495,12 @@ h4.subtitlebox {
             .js-dark .dark_liicon { display: block; }
             .hz-slider-section .swiper-slide ul li>span>svg { width: 14px;height: 14px; }
             .featuregroup_repeator .nested-image-wrapper img,.featuregroup_repeator .nested-image-wrapper { width: 26px;height: 26px; }
+
+
+            .featuregroup_repeator .nested-image-wrapper img {
+    margin-bottom: 4px;
+}
+
             .featuregroup_repeator .nested-item-1 {
                 padding: 4px 16px;
     border-radius: 8px;
@@ -555,9 +561,13 @@ h4.subtitlebox {
  .js-dark h4.boxtitle {
     color: #AEB6C9 !important;
 }
+.js-dark h4.subtitlebox {
+    background: #262A30;
+    color: #D7DBE4 !important;
+    border: 1px solid rgb(193 196 198 / 10%);
+}
 
-            .js-dark h4.subtitlebox{ background: rgba(255, 206, 147, 0.1); }
-            .bolt img { width: 26px; }
+.bolt img { width: 26px; }
         </style>
 
         <div class="makdmks">
