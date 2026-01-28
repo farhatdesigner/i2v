@@ -444,8 +444,8 @@ class Video_accordioncaption extends Widget_Base
             }
 
             /* .vac_accordion_set.active .vac_ac_icon {
-                                                                                                                filter: brightness(0) invert(1);
-                                                                                                            } */
+                                                                                                                        filter: brightness(0) invert(1);
+                                                                                                                    } */
 
             .vac_ac_header {
                 flex: 1;
@@ -662,7 +662,11 @@ class Video_accordioncaption extends Widget_Base
 
                 .vac_main_title {
                     font-size: 24px;
-                    margin-bottom: 30px;
+                    margin-bottom: 0;
+                }
+
+                .vac_vertical_scroller {
+                    margin: 0;
                 }
 
                 .vac_ac_icon_border {
@@ -676,7 +680,7 @@ class Video_accordioncaption extends Widget_Base
                 }
 
                 .vac_ac_header {
-                    font-size: 16px;
+                    font-size: 14px;
                     margin-left: 55px;
                 }
 
@@ -693,6 +697,7 @@ class Video_accordioncaption extends Widget_Base
 
                 .vac_accontent p {
                     margin: 8px 15px 8px 75px;
+                    font-size: 12px;
                 }
 
                 .vac_accontent .vac_accordion_video p {
@@ -751,7 +756,7 @@ class Video_accordioncaption extends Widget_Base
                 }
 
                 .vac_accontent .vac_accordion_video .card-body {
-                    padding: 15px;
+                    padding: 0;
                 }
 
                 .vac_accontent .vac_accordion_video .card-title {

@@ -1426,6 +1426,7 @@ div.pin-spacer > .hz-slider-topcaption {
   .details {
     padding: 30px 0;
     height: auto;
+    margin: 0;
   }
 }
 
@@ -1620,12 +1621,15 @@ html {
     height: 16px;
     display: block;
   }
-  .xl-btn {
-    font-size: 18px !important;
-}
+
+  .theme-btn, .theme-btn.dark_btn {font-size: 12px;}
+  .xl-btn { font-size: 18px !important;}
+  
 .cards-listing-section .custom-container{margin: 0 !important;width: 100% !important;}
 .card-text {font-size: 12px;}
-.card-body h5{font-size: 18px;}
+.card-body h5, .card-body_industry .card-title{font-size: 18px;}
 .expert_sec h3 { font-size: 28px;}
+
+.chosse_circle .elementor-icon-box-description {font-size: 14px;}
   
 }

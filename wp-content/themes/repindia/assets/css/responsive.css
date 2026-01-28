@@ -739,8 +739,8 @@ label.form-label.label_notic a {
     .elementor-element.heading_tablemenu.elementor-widget-icon-list
     ul
     li {
-    min-width: 200px;
-    width: 200px;
+    min-width: 240px;
+    width: 240px;
     display: inline-block;
     text-align: left;
   }
@@ -841,7 +841,7 @@ label.form-label.label_notic a {
     text-align: center;
   }
   .txtflex p {
-    font-size: 16px;
+    font-size: 14px;
     text-align: center;
   }
   input.form-control,

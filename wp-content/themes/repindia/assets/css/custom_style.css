@@ -4618,11 +4618,15 @@ span.star {
   }
 
   .ts_main_title {
-    font-size: 26px;
+    font-size: 28px;
+    line-height: 100%;
   }
 
+  .ts_header_description, .ts_author {
+    font-size: 14px;
+}
   .ts_testimonial_text {
-    font-size: 16px;
+    font-size: 14px;
   }
 
   .ts_stats_row {
