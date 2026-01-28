@@ -859,7 +859,7 @@ header li.burger-icon .icon-sun,
   border-color: #F2AE5A;
 }
 .js-dark .elementor-element.darkmode_custom.e-flex,.js-dark .elementor-element.darkmode_custom {
-  background-color: #AEB6C9 !important;
+  background-color: #262A30 !important;
 }
 .js-dark .elementor-element.e-con-full.video_analytic_sidebar,.elementor-element.e-con-full.video_analytic_sidebar .analytic-sidebar {
   background: #262A30 !important;
@@ -988,4 +988,7 @@ header li.burger-icon .icon-sun,
 }
 .js-dark .sticky-custom > ul > li:hover span {
   color:#D7DBE4 !important;
+}
+.js-dark .noticdark p,.js-dark .bolt p, .js-dark .dark-para {
+  color: #FFFFFF !important;
 }

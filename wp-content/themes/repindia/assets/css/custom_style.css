@@ -4698,10 +4698,7 @@ span.star {
     margin: 0 auto;
   }
   
-.elementor-icon-box-title span, .elementor-image-box-title {
-  font-size: 18px !important;
-  line-height: 24px;
-}
+
 
 .bolt {
   max-width: 100% !important;

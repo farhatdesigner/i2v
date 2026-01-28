@@ -1623,5 +1623,9 @@ html {
   .xl-btn {
     font-size: 18px !important;
 }
+.cards-listing-section .custom-container{margin: 0 !important;width: 100% !important;}
+.card-text {font-size: 12px;}
+.card-body h5{font-size: 18px;}
+.expert_sec h3 { font-size: 28px;}
   
 }
