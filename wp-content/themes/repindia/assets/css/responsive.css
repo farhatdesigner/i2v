@@ -755,6 +755,10 @@ label.form-label.label_notic a {
   .comparison-wrapper li {
     width: 100%;
   }
+  .enterprisebanner {
+    width: auto !important;
+    max-width: inherit !important;
+}
   .enterprisebanner ul.elementor-icon-list-items.elementor-inline-items {
     flex-wrap: unset;
     max-width: 400px;
@@ -772,9 +776,25 @@ label.form-label.label_notic a {
     font-size: 14px;
     line-height: 16px;
   }
+  
   .fixed-header {
     top: 103px !important;
+    left: 20px;
+    right: 20px;
+    width: auto !important;
   }
+
+  .enterprisebanner  {
+    overflow: auto;
+    scrollbar-width: none;
+  }
+  
+  /* Chrome, Safari */
+  .enterprisebanner ::-webkit-scrollbar {
+    display: none;
+  }
+
+  
   p#breadcrumbs {
     overflow: hidden;
     text-overflow: ellipsis;

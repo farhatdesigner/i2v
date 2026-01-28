@@ -1471,9 +1471,6 @@ html {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  h3 {
-    font-size: 28px !important;
-  }
 
   /* .btn-colum {
     flex-direction: row;
@@ -1623,5 +1620,8 @@ html {
     height: 16px;
     display: block;
   }
+  .xl-btn {
+    font-size: 18px !important;
+}
   
 }
