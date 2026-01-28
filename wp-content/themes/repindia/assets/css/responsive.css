@@ -1,3 +1,18 @@
+.vmsfaq .e-n-accordion-item[open]>.e-n-accordion-item-title {
+  background: transparent !important;
+  color: #06283D !important;
+}
+.js-dark .faqlight,.faqdark{ display: none; }
+.js-dark .faqdark{ display: inline-block; }
+.elementor-element.partner_faq.elementor-widget-n-accordion .e-n-accordion-item-title-icon span.e-opened, .partner_faq.elementor-widget-n-accordion .e-n-accordion-item-title-icon span.e-opened>svg, .elementor-element.partner_faq.elementor-widget-n-accordion .e-n-accordion-item-title-icon, .partner_faq.elementor-widget-n-accordion .e-n-accordion-item .e-n-accordion-item-title-icon span>svg,.elementor-element.partner_faq.elementor-widget-n-accordion .e-n-accordion-item-title-icon span.e-opened, .partner_faq.elementor-widget-n-accordion .e-n-accordion-item-title-icon span.e-opened>svg, .elementor-element.partner_faq.elementor-widget-n-accordion .e-n-accordion-item-title-icon, .partner_faq.elementor-widget-n-accordion .e-n-accordion-item .e-n-accordion-item-title-icon span>svg {
+  width: 15px !important;
+  height: 15px !important;
+  min-width: 15px !important;
+  max-width: 15px !important;
+}
+
+
+
 .elementor-element.newsroomtab .elementor-icon-list-item.active {
   font-weight: 600;
 }
@@ -75,6 +90,10 @@
 .iconarea {
   padding: 12px;
 }
+.icon_custom_text .iconarea {
+  padding: 0;
+  max-width: 100px;
+}
 .elementor img.toolmainimg {
   width: 100px;
   height: 100px;
@@ -143,7 +162,8 @@ a.blank_anchor:hover {
 .js-dark
   .elementor-element.partner_tech_desc
   .elementor-widget-n-accordion
-  .e-n-accordion-item-title {
+  .e-n-accordion-item-title,
+  .js-dark .elementor-element.partner_choose_desc .elementor-widget-image-box,.js-dark .elementor-element.partner_tech_desc .elementor-widget-image-box {
   background-color: #262a30 !important;
 }
 .js-dark
@@ -175,14 +195,14 @@ a.blank_anchor:hover {
   .e-n-accordion-item
   .e-n-accordion-item-title-icon
   span
-  > svg,
+  > svg path,
 .js-dark
   .elementor-element.partner_tech_desc
   .elementor-widget-n-accordion
   .e-n-accordion-item
   .e-n-accordion-item-title-icon
   span
-  > svg {
+  > svg path{
   fill: #fff;
 }
 .btn-sec_gap.titlegrep .grey-btn {
@@ -227,6 +247,29 @@ input.form-control,
 select.form-control {
   height: 48px;
   width: 100%;
+}
+
+
+.form-control:hover {
+  border-color: #0099ED; 
+}
+.form-control:focus {
+  border-color: #008EDB;
+  outline: 0;
+  box-shadow: none;
+}
+.wpcf7-not-valid-tip, #mobile-error {
+  color: #C92629 !important;
+  font-size: 12px;
+}
+.js-dark .form-control:hover {
+  border-color: #008AD6; 
+}
+.js-dark .form-control:focus {
+  border-color: #007ABE;
+}
+.js-dark .wpcf7-not-valid-tip, .js-dark #mobile-error {
+  color: #D58F8F !important;
 }
 .country-select.inside input[type="text"].form-control {
   margin-bottom: 16px !important;
@@ -535,7 +578,7 @@ label.form-label.label_notic a {
   color: rgba(255, 255, 255, 0.6);
 }
 
-@media (min-width: 1601px) {
+/* @media (min-width: 1601px) {
   .elementor-element.channel_partner .partner_choose_title.sticky,
   .elementor-element.technology_partner .partner_tech_title.sticky {
     left: 9%;
@@ -562,11 +605,8 @@ label.form-label.label_notic a {
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
   }
-}
-@media (min-width: 1400px) {
-}
-@media (min-width: 1201px) {
-}
+} */
+
 @media (min-width: 1025px) {
   /* -----------------------------------------------------------
     CHANNEL PARTNER (affects only inside .channel_partner)
@@ -650,32 +690,6 @@ label.form-label.label_notic a {
     right: auto !important;
   }
 }
-@media (min-width: 991px) {
-}
-@media (min-width: 768px) {
-}
-@media (max-width: 1601px) {
-}
-
-@media (max-width: 1450px) {
-}
-@media (max-width: 1441px) {
-}
-@media (max-width: 1441px) and (min-width: 1400px) {
-}
-@media (max-width: 1400px) and (min-width: 1200px) {
-}
-@media (max-width: 1400px) and (min-width: 992px) {
-}
-@media (max-width: 1370px) and (min-width: 1361px) {
-}
-
-@media (max-width: 1201px) and (min-width: 1024px) {
-}
-@media (max-width: 1201px) {
-}
-@media (max-width: 1201px) and (min-width: 768px) {
-}
 @media (max-width: 1025px) {
   .date-author-txt p span:first-child {
     padding-right: 7px;
@@ -686,8 +700,6 @@ label.form-label.label_notic a {
   .insights-updates-item-text p {
     margin: 0;
   }
-}
-@media (max-width: 1025px) and (min-width: 992px) {
 }
 @media (max-width: 992px) {
   .insights-updates-item-small-icon > img {
@@ -743,6 +755,10 @@ label.form-label.label_notic a {
   .comparison-wrapper li {
     width: 100%;
   }
+  .enterprisebanner {
+    width: auto !important;
+    max-width: inherit !important;
+}
   .enterprisebanner ul.elementor-icon-list-items.elementor-inline-items {
     flex-wrap: unset;
     max-width: 400px;
@@ -760,9 +776,25 @@ label.form-label.label_notic a {
     font-size: 14px;
     line-height: 16px;
   }
+  
   .fixed-header {
     top: 103px !important;
+    left: 20px;
+    right: 20px;
+    width: auto !important;
   }
+
+  .enterprisebanner  {
+    overflow: auto;
+    scrollbar-width: none;
+  }
+  
+  /* Chrome, Safari */
+  .enterprisebanner ::-webkit-scrollbar {
+    display: none;
+  }
+
+  
   p#breadcrumbs {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -842,17 +874,18 @@ label.form-label.label_notic a {
   .book-apply-form .allow-dropdown .form-control {
     margin-bottom: 16px !important;
   }
-}
-
-@media (max-width: 992px) and (min-width: 601px) {
-}
-@media (max-width: 768px) {
-}
-@media (max-width: 768px) and (min-width: 600px) {
-}
-@media (max-width: 600px) {
-}
-@media (max-width: 1500px) and (min-width: 1337px) {
+  .elementor img.toolmainimg {
+      width: 80px;
+      height: 80px;
+      max-width: 80px;
+  }
+  .icon_custom_text .iconarea {
+      max-width: 70px;
+  }
+  .icon_custom_text {
+      gap: 15px;
+      flex-direction: column;
+  }
 }
 .sticky-wrapper-img {
   width: 570px !important;

@@ -1233,7 +1233,7 @@ class Custom_Testimonial extends Widget_Base
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item { display:flex; align-items:center; justify-content:center; padding:0px; border-radius:10px; background:#fff0; transition: all .25s ease; border:2px solid transparent; }
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item img { transition: all .25s ease; display:block; }
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-placeholder { font-size: 12px; color: rgba(255,255,255,0.7); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px; }
-            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item.active { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item.active { background: rgba(255,255,255,0.05); border-color: #74c2edcc; }
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item.active img { opacity: 1; }
 
             /* arrows (scoped) - positioned relative to wrapper */
@@ -1295,8 +1295,10 @@ class Custom_Testimonial extends Widget_Base
                 #<?php echo esc_attr($widget_id); ?> .custom-testimonial-content-wrapper { flex-direction: column-reverse; gap: 20px;padding: 40px 0px 15px 0px; margin-bottom: 0;}
                 #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-swiper .swiper-slide img { max-height:75px; }
                 #<?php echo esc_attr($widget_id); ?> .custom-testimonial-left,    #<?php echo esc_attr($widget_id); ?> .custom-testimonial-right{width: 100%;}
-                #<?php echo esc_attr($widget_id); ?> .custom-testimonial-quote {font-size: 18px;margin-bottom: 12px;margin-bottom: 20px;}
+                #<?php echo esc_attr($widget_id); ?> .custom-testimonial-quote {font-size: 20px;margin-bottom: 12px;margin-bottom: 20px;}
                 #<?php echo esc_attr($widget_id); ?> .custom-testimonial-play-button {width:20%}
+                #<?php echo esc_attr($widget_id); ?> .custom-testimonial-author-name {font-size: 14px;}
+                #<?php echo esc_attr($widget_id); ?> .custom-testimonial-author-role {font-size: 11px;}
                 .custom-testimonial-author-photo { max-width: 78px;max-height: 78px; }
                 /* .custom-testimonial-author-photo svg,.custom-testimonial-author-photo img{ max-width: 78px;max-height: 78px; } */
                 #<?php echo esc_attr($widget_id); ?> .swiper-slide {

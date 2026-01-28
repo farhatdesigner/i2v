@@ -177,6 +177,15 @@ class Scalescroll extends Widget_Base
                 'label_block' => true,
             ]
         );
+        $repeater->add_control(
+            'item_sub_title',
+            [
+                'label' => esc_html__('Item SubTitle', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'label_block' => true,
+            ]
+        );
 
         // Item Description
         $repeater->add_control(
@@ -284,6 +293,128 @@ class Scalescroll extends Widget_Base
             ]
         );
 
+        // First Nested Repeater
+        $repeater->add_control(
+            'feature_box_title',
+            [
+                'label' => esc_html__('Feature Box Title', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'label_block' => true,
+            ]
+        );
+        $repeater->add_control(
+            'list_box_title',
+            [
+                'label' => esc_html__('List Box Title', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'label_block' => true,
+            ]
+        );
+        $nested_repeater_1 = new \Elementor\Repeater();
+        
+        // Image upload (default theme)
+        $nested_repeater_1->add_control(
+            'nested_image_default',
+            [
+                'label' => esc_html__('Default Theme Image', 'repindia'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [],
+            ]
+        );
+
+        // Image upload (dark theme)
+        $nested_repeater_1->add_control(
+            'nested_image_dark',
+            [
+                'label' => esc_html__('Dark Theme Image', 'repindia'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [],
+                'description' => esc_html__('Leave empty to use default image for dark theme', 'repindia'),
+            ]
+        );
+
+        // Title
+        $nested_repeater_1->add_control(
+            'nested_title',
+            [
+                'label' => esc_html__('Title', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'label_block' => true,
+            ]
+        );
+
+        // Description (text editor)
+        $nested_repeater_1->add_control(
+            'nested_description',
+            [
+                'label' => esc_html__('Description', 'repindia'),
+                'type' => Controls_Manager::WYSIWYG,
+                'default' => '',
+                'label_block' => true,
+            ]
+        );
+
+        $repeater->add_control(
+            'nested_items_1',
+            [
+                'label' => esc_html__('Featured Items', 'repindia'),
+                'type' => Controls_Manager::REPEATER,
+                'fields' => $nested_repeater_1->get_controls(),
+                'default' => [],
+                'title_field' => '{{{ nested_title }}}',
+            ]
+        );
+
+        // Second Nested Repeater
+        
+        $nested_repeater_2 = new \Elementor\Repeater();
+        
+        // Image upload (default theme)
+        $nested_repeater_2->add_control(
+            'nested_image_default_2',
+            [
+                'label' => esc_html__('Default Theme Image', 'repindia'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [],
+            ]
+        );
+
+        // Image upload (dark theme)
+        $nested_repeater_2->add_control(
+            'nested_image_dark_2',
+            [
+                'label' => esc_html__('Dark Theme Image', 'repindia'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [],
+                'description' => esc_html__('Leave empty to use default image for dark theme', 'repindia'),
+            ]
+        );
+
+        // Title text
+        $nested_repeater_2->add_control(
+            'nested_title_2',
+            [
+                'label' => esc_html__('Title', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'label_block' => true,
+            ]
+        );
+
+        $repeater->add_control(
+            'nested_items_2',
+            [
+                'label' => esc_html__('List Items', 'repindia'),
+                'type' => Controls_Manager::REPEATER,
+                'fields' => $nested_repeater_2->get_controls(),
+                'default' => [],
+                'title_field' => '{{{ nested_title_2 }}}',
+            ]
+        );
+
         // Special class indicator (for details-3 with blue headline)
         $repeater->add_control(
             'has_blue_headline',
@@ -318,7 +449,12 @@ class Scalescroll extends Widget_Base
         $scroll_items = !empty($settings['scroll_items']) ? $settings['scroll_items'] : [];
         $section_title = !empty($settings['section_title']) ? $settings['section_title'] : '';
         $section_description = !empty($settings['section_description']) ? $settings['section_description'] : '';
-        $this->add_inline_editing_attributes('custom_class', 'basic'); ?>
+        $this->add_inline_editing_attributes('custom_class', 'basic'); 
+
+        // Static SVG checkmark icon for list items
+        $checkmark_svg_default = '<svg class="default_liicon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.26701 1.45496C4.91008 1.40364 5.52057 1.15077 6.01158 0.732335C7.15738 -0.244112 8.84262 -0.244112 9.98842 0.732335C10.4794 1.15077 11.0899 1.40364 11.733 1.45496C13.2336 1.57471 14.4253 2.76636 14.545 4.26701C14.5964 4.91008 14.8492 5.52057 15.2677 6.01158C16.2441 7.15738 16.2441 8.84262 15.2677 9.98842C14.8492 10.4794 14.5964 11.0899 14.545 11.733C14.4253 13.2336 13.2336 14.4253 11.733 14.545C11.0899 14.5964 10.4794 14.8492 9.98842 15.2677C8.84262 16.2441 7.15738 16.2441 6.01158 15.2677C5.52057 14.8492 4.91008 14.5964 4.26701 14.545C2.76636 14.4253 1.57471 13.2336 1.45496 11.733C1.40364 11.0899 1.15077 10.4794 0.732335 9.98842C-0.244112 8.84262 -0.244112 7.15738 0.732335 6.01158C1.15077 5.52057 1.40364 4.91008 1.45496 4.26701C1.57471 2.76636 2.76636 1.57471 4.26701 1.45496ZM11.7071 6.70711C12.0976 6.31658 12.0976 5.68342 11.7071 5.29289C11.3166 4.90237 10.6834 4.90237 10.2929 5.29289L7 8.58579L5.70711 7.29289C5.31658 6.90237 4.68342 6.90237 4.29289 7.29289C3.90237 7.68342 3.90237 8.31658 4.29289 8.70711L6.29289 10.7071C6.68342 11.0976 7.31658 11.0976 7.70711 10.7071L11.7071 6.70711Z" fill="#5F6F94"/></svg>';
+        $checkmark_svg_dark = '<svg class="dark_liicon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.26701 1.45496C4.91008 1.40364 5.52057 1.15077 6.01158 0.732335C7.15738 -0.244112 8.84262 -0.244112 9.98842 0.732335C10.4794 1.15077 11.0899 1.40364 11.733 1.45496C13.2336 1.57471 14.4253 2.76636 14.545 4.26701C14.5964 4.91008 14.8492 5.52057 15.2677 6.01158C16.2441 7.15738 16.2441 8.84262 15.2677 9.98842C14.8492 10.4794 14.5964 11.0899 14.545 11.733C14.4253 13.2336 13.2336 14.4253 11.733 14.545C11.0899 14.5964 10.4794 14.8492 9.98842 15.2677C8.84262 16.2441 7.15738 16.2441 6.01158 15.2677C5.52057 14.8492 4.91008 14.5964 4.26701 14.545C2.76636 14.4253 1.57471 13.2336 1.45496 11.733C1.40364 11.0899 1.15077 10.4794 0.732335 9.98842C-0.244112 8.84262 -0.244112 7.15738 0.732335 6.01158C1.15077 5.52057 1.40364 4.91008 1.45496 4.26701C1.57471 2.76636 2.76636 1.57471 4.26701 1.45496ZM11.7071 6.70711C12.0976 6.31658 12.0976 5.68342 11.7071 5.29289C11.3166 4.90237 10.6834 4.90237 10.2929 5.29289L7 8.58579L5.70711 7.29289C5.31658 6.90237 4.68342 6.90237 4.29289 7.29289C3.90237 7.68342 3.90237 8.31658 4.29289 8.70711L6.29289 10.7071C6.68342 11.0976 7.31658 11.0976 7.70711 10.7071L11.7071 6.70711Z" fill="#D7DBE4"/></svg>';
+        ?>
 
         <style>
             .youtube-wrapper .white_theme_iframe,
@@ -329,10 +465,109 @@ class Scalescroll extends Widget_Base
             .js-dark .youtube-wrapper .white_theme_thumb { display: none; }
             .js-dark .youtube-wrapper .black_theme_iframe,
             .js-dark .youtube-wrapper .black_theme_thumb { display: block; }
+         
+h4.subtitlebox {
+    background: #FFFFFF;
+    border-radius: 28px;
+    padding: 4px 12px;
+    color: #4A5673;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    width: auto;
+    display: inline-block;
+    text-align: left;
+    border: 1px solid #E6EBF2;
+}
+
             @media(max-width: 768px){
                 .photo_custom .details * { text-align: center; align-items: center;}
-            }
             
+            }
+            /* Nested repeater image theme switching */
+            .nested-image-wrapper .white_theme_img { display: block; }
+            .nested-image-wrapper .black_theme_img { display: none; }
+            .js-dark .nested-image-wrapper .white_theme_img { display: none; }
+            .js-dark .nested-image-wrapper .black_theme_img { display: block; }
+            .js-dark .default_liicon,
+            .dark_liicon { display: none; }
+            .js-dark .dark_liicon { display: block; }
+            .hz-slider-section .swiper-slide ul li>span>svg { width: 14px;height: 14px; }
+            .featuregroup_repeator .nested-image-wrapper img,.featuregroup_repeator .nested-image-wrapper { width: 26px;height: 26px; }
+
+
+            .featuregroup_repeator .nested-image-wrapper img {
+    margin-bottom: 4px;
+}
+
+            .featuregroup_repeator .nested-item-1 {
+                padding: 4px 16px;
+    border-radius: 8px;
+    background: #fff;
+    max-width: max-content;
+    border: 1px solid #E6EBF2;
+    width: calc(50% - 2px);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+            }
+            .featuregroup_repeator h3.nested-title-1 {
+                color: #4A5673;
+    font-size: 16px !important;
+    font-style: normal;
+    font-weight: 500 !important;
+    line-height: 24px;
+    margin: 0;
+    text-align: left;
+            }
+            .featuregroup_repeator .nested-description-1, .featuregroup_repeator .nested-description-1 p {
+                color: #5C5C5C;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 24px;
+                margin: 0;
+                text-align: left;
+            }
+            .nested-repeater-1.featuregroup_repeator {
+                display: flex;
+    align-items: stretch;
+    gap: 4px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+            }
+            .bolt{ max-width: 300px;margin-bottom: 0;margin-top: 20px; }
+            .listedgroup_repeator ul { padding: 0; }
+            .listedgroup_repeator li span { display: inline-block;width: auto; }
+            h4.boxtitle {
+                color: #5C5C5C;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    margin: 0px 0 8px;
+            }
+          
+            .js-dark .featuregroup_repeator .nested-item-1 {
+    background: #262A30;
+    border: 1px solid rgb(193 196 198 / 10%) !important;
+}
+
+.js-dark .featuregroup_repeator h3.nested-title-1 {
+    color: #D7DBE4 !important;
+}
+
+ .js-dark h4.boxtitle {
+    color: #AEB6C9 !important;
+}
+.js-dark h4.subtitlebox {
+    background: #262A30;
+    color: #D7DBE4 !important;
+    border: 1px solid rgb(193 196 198 / 10%);
+}
+
+.bolt img { width: 26px; }
         </style>
 
         <div class="makdmks">
@@ -364,6 +599,7 @@ class Scalescroll extends Widget_Base
                                     <?php
                                     $item_num = $index + 1;
                                     $item_title = !empty($item['item_title']) ? $item['item_title'] : '';
+                                    $item_sub_title = !empty($item['item_sub_title']) ? $item['item_sub_title'] : '';
                                     $item_desc = !empty($item['item_description']) ? $item['item_description'] : '';
                                     $cta_text = !empty($item['cta_text']) ? $item['cta_text'] : '';
                                     $cta_url = !empty($item['cta_url']['url']) ? $item['cta_url']['url'] : '';
@@ -378,12 +614,17 @@ class Scalescroll extends Widget_Base
                                     $bolt_cta_nofollow = !empty($item['bolt_cta_url']['nofollow']) ? 'rel="nofollow"' : '';
                                     $bolt_cta_classes = !empty($item['bolt_cta_classes']) ? ' ' . esc_attr($item['bolt_cta_classes']) : '';
                                     $has_blue_headline = !empty($item['has_blue_headline']) && $item['has_blue_headline'] === 'yes';
+                                    $feature_box_title = !empty($item['feature_box_title']) ? $item['feature_box_title'] : '';
+                                    $list_box_title = !empty($item['list_box_title']) ? $item['list_box_title'] : '';
                                     ?>
                                     <div class="details details-<?php echo esc_attr($item_num); ?>">
                                         <?php if ($has_blue_headline) : ?>
                                             <div class="headline blue"></div>
                                         <?php endif; ?>
                                         <div class="txtflex">
+                                            <?php if (!empty($item_sub_title)) : ?>
+                                                <h4 class="subtitlebox"><?php echo esc_html($item_sub_title); ?></h4>
+                                            <?php endif; ?>
                                             <?php if (!empty($item_title)) : ?>
                                                 <h2><?php echo esc_html($item_title); ?></h2>
                                             <?php endif; ?>
@@ -410,6 +651,68 @@ class Scalescroll extends Widget_Base
                                                     <?php endif; ?>
                                                 </div>
                                             <?php endif; ?>
+                                            
+                                            <?php
+                                            // First Nested Repeater
+                                            $nested_items_1 = !empty($item['nested_items_1']) ? $item['nested_items_1'] : [];
+                                            if (!empty($nested_items_1)) : ?>
+                                                <?php if (!empty($feature_box_title)) : ?>
+                                                    <h4 class="boxtitle"><?php echo esc_html($feature_box_title); ?></h4>
+                                                <?php endif; ?>
+                                                <div class="nested-repeater-1 featuregroup_repeator">
+                                                    <?php foreach ($nested_items_1 as $nested_item_1) : ?>
+                                                        <?php
+                                                        $nested_image_default_1 = !empty($nested_item_1['nested_image_default']['url']) ? $nested_item_1['nested_image_default']['url'] : '';
+                                                        $nested_image_dark_1 = !empty($nested_item_1['nested_image_dark']['url']) ? $nested_item_1['nested_image_dark']['url'] : $nested_image_default_1;
+                                                        $nested_title_1 = !empty($nested_item_1['nested_title']) ? $nested_item_1['nested_title'] : '';
+                                                        $nested_description_1 = !empty($nested_item_1['nested_description']) ? $nested_item_1['nested_description'] : '';
+                                                        ?>
+                                                        <div class="nested-item-1">
+                                                            <?php if (!empty($nested_image_default_1)) : ?>
+                                                                <div class="nested-image-wrapper">
+                                                                    <img class="white_theme_img" src="<?php echo esc_url($nested_image_default_1); ?>" alt="<?php echo esc_attr($nested_title_1); ?>">
+                                                                    <img class="black_theme_img" src="<?php echo esc_url($nested_image_dark_1); ?>" alt="<?php echo esc_attr($nested_title_1); ?>">
+                                                                </div>
+                                                            <?php endif; ?>
+                                                            <?php if (!empty($nested_title_1)) : ?>
+                                                                <h3 class="nested-title-1"><?php echo esc_html($nested_title_1); ?></h3>
+                                                            <?php endif; ?>
+                                                            <?php if (!empty($nested_description_1)) : ?>
+                                                                <div class="nested-description-1"><?php echo wp_kses_post($nested_description_1); ?></div>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            <?php endif; ?>
+                                            
+                                            <?php
+                                            // Second Nested Repeater
+                                            $nested_items_2 = !empty($item['nested_items_2']) ? $item['nested_items_2'] : [];
+                                            if (!empty($nested_items_2)) : ?>
+                                                <?php if (!empty($list_box_title)) : ?>
+                                                    <h4  class="boxtitle"><?php echo esc_html($list_box_title); ?></h4>
+                                                <?php endif; ?>
+                                                <div class="nested-repeater-2 listedgroup_repeator">
+                                                    <ul>
+                                                        <?php foreach ($nested_items_2 as $nested_item_2): ?>
+                                                            <?php
+                                                            $nested_title_2 = !empty($nested_item_2['nested_title_2']) ? $nested_item_2['nested_title_2'] : '';
+                                                            ?>
+                                                            <?php if (!empty($nested_title_2)): ?>
+                                                                <li>
+                                                                    <span>
+                                                                        <?php echo $checkmark_svg_default; ?>
+                                                                        <?php echo $checkmark_svg_dark; ?>
+                                                                    </span>
+                                                                    <?php echo esc_html($nested_title_2); ?>
+                                                                </li>
+
+
+                                                            <?php endif; ?>
+                                                        <?php endforeach; ?>
+                                                    </ul>
+                                                </div>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 <?php endforeach; ?>
@@ -423,6 +726,7 @@ class Scalescroll extends Widget_Base
                                     $item_num = $index + 1;
                                     $media_type = !empty($item['media_type']) ? $item['media_type'] : 'image';
                                     $item_title = !empty($item['item_title']) ? $item['item_title'] : '';
+                                    $item_sub_title = !empty($item['item_sub_title']) ? $item['item_sub_title'] : '';
                                     $item_desc = !empty($item['item_description']) ? $item['item_description'] : '';
                                     $cta_text = !empty($item['cta_text']) ? $item['cta_text'] : '';
                                     $cta_url = !empty($item['cta_url']['url']) ? $item['cta_url']['url'] : '';
@@ -437,6 +741,8 @@ class Scalescroll extends Widget_Base
                                     $bolt_cta_nofollow = !empty($item['bolt_cta_url']['nofollow']) ? 'rel="nofollow"' : '';
                                     $bolt_cta_classes = !empty($item['bolt_cta_classes']) ? ' ' . esc_attr($item['bolt_cta_classes']) : '';
                                     $has_blue_headline = !empty($item['has_blue_headline']) && $item['has_blue_headline'] === 'yes';
+                                    $feature_box_title = !empty($item['feature_box_title']) ? $item['feature_box_title'] : '';
+                                    $list_box_title = !empty($item['list_box_title']) ? $item['list_box_title'] : '';
                                     
                                     // Image handling
                                     $image_default = !empty($item['item_image_default']['url']) ? $item['item_image_default']['url'] : '';
@@ -477,6 +783,9 @@ class Scalescroll extends Widget_Base
                                                 <div class="headline blue"></div>
                                             <?php endif; ?>
                                             <div class="txtflex">
+                                                <?php if (!empty($item_sub_title)) : ?>
+                                                    <h4 class="subtitlebox"><?php echo esc_html($item_sub_title); ?></h4>
+                                                <?php endif; ?>
                                                 <?php if (!empty($item_title)) : ?>
                                                     <h2><?php echo esc_html($item_title); ?></h2>
                                                 <?php endif; ?>
@@ -501,6 +810,68 @@ class Scalescroll extends Widget_Base
                                                                 <a href="<?php echo esc_url($bolt_cta_url); ?>" class="<?php echo $bolt_cta_classes; ?>" <?php echo $bolt_cta_target; ?> <?php echo $bolt_cta_nofollow; ?>><?php echo esc_html($bolt_cta_text); ?></a>
                                                             </div>
                                                         <?php endif; ?>
+                                                    </div>
+                                                <?php endif; ?>
+                                                
+                                                <?php
+                                                // First Nested Repeater
+                                                $nested_items_1 = !empty($item['nested_items_1']) ? $item['nested_items_1'] : [];
+                                                if (!empty($nested_items_1)) : ?>
+                                                    <?php if (!empty($feature_box_title)) : ?>
+                                                        <h4 class="boxtitle"><?php echo esc_html($feature_box_title); ?></h4>
+                                                    <?php endif; ?>
+                                                    <div class="nested-repeater-1 featuregroup_repeator">
+                                                        <?php foreach ($nested_items_1 as $nested_item_1) : ?>
+                                                            <?php
+                                                            $nested_image_default_1 = !empty($nested_item_1['nested_image_default']['url']) ? $nested_item_1['nested_image_default']['url'] : '';
+                                                            $nested_image_dark_1 = !empty($nested_item_1['nested_image_dark']['url']) ? $nested_item_1['nested_image_dark']['url'] : $nested_image_default_1;
+                                                            $nested_title_1 = !empty($nested_item_1['nested_title']) ? $nested_item_1['nested_title'] : '';
+                                                            $nested_description_1 = !empty($nested_item_1['nested_description']) ? $nested_item_1['nested_description'] : '';
+                                                            ?>
+                                                            <div class="nested-item-1">
+                                                                <?php if (!empty($nested_image_default_1)) : ?>
+                                                                    <div class="nested-image-wrapper">
+                                                                        <img class="white_theme_img" src="<?php echo esc_url($nested_image_default_1); ?>" alt="<?php echo esc_attr($nested_title_1); ?>">
+                                                                        <img class="black_theme_img" src="<?php echo esc_url($nested_image_dark_1); ?>" alt="<?php echo esc_attr($nested_title_1); ?>">
+                                                                    </div>
+                                                                <?php endif; ?>
+                                                                <?php if (!empty($nested_title_1)) : ?>
+                                                                    <h3 class="nested-title-1"><?php echo esc_html($nested_title_1); ?></h3>
+                                                                <?php endif; ?>
+                                                                <?php if (!empty($nested_description_1)) : ?>
+                                                                    <div class="nested-description-1"><?php echo wp_kses_post($nested_description_1); ?></div>
+                                                                <?php endif; ?>
+                                                            </div>
+                                                        <?php endforeach; ?>
+                                                    </div>
+                                                <?php endif; ?>
+                                                
+                                                <?php
+                                                // Second Nested Repeater
+                                                $nested_items_2 = !empty($item['nested_items_2']) ? $item['nested_items_2'] : [];
+                                                if (!empty($nested_items_2)) : ?>
+                                                    <?php if (!empty($list_box_title)) : ?>
+                                                        <h4 class="boxtitle"><?php echo esc_html($list_box_title); ?></h4>
+                                                    <?php endif; ?>
+                                                    <div class="nested-repeater-2 listedgroup_repeator"> 
+                                                        <ul>
+                                                            <?php foreach ($nested_items_2 as $nested_item_2): ?>
+                                                                <?php
+                                                                $nested_title_2 = !empty($nested_item_2['nested_title_2']) ? $nested_item_2['nested_title_2'] : '';
+                                                                ?>
+                                                                <?php if (!empty($nested_title_2)): ?>
+                                                                    <li>
+                                                                        <span>
+                                                                            <?php echo $checkmark_svg_default; ?>
+                                                                            <?php echo $checkmark_svg_dark; ?>
+                                                                        </span>
+                                                                        <?php echo esc_html($nested_title_2); ?>
+                                                                    </li>
+
+
+                                                                <?php endif; ?>
+                                                            <?php endforeach; ?>
+                                                        </ul>
                                                     </div>
                                                 <?php endif; ?>
                                             </div>

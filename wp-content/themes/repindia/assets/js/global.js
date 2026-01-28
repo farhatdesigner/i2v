@@ -1,40 +1,42 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    // Function to update image sources based on theme
     function updateThemeImages(isDark) {
-        const themeImageDivs = document.querySelectorAll('.theme-img');
-        themeImageDivs.forEach(div => {
-            const img = div.querySelector('img');
-            const lightSrc = div.getAttribute('data-light');
-            const darkSrc = div.getAttribute('data-dark');
+        document.querySelectorAll('.theme-img').forEach(wrapper => {
+            const lightSrc = wrapper.getAttribute('data-light');
+            const darkSrc  = wrapper.getAttribute('data-dark');
 
-            if (img && lightSrc && darkSrc) {
+            if (!lightSrc || !darkSrc) return;
+
+            // Update ALL images inside the widget
+            wrapper.querySelectorAll('img').forEach(img => {
+                if (!img.dataset.originalSrc) {
+                    img.dataset.originalSrc = img.src;
+                }
                 img.src = isDark ? darkSrc : lightSrc;
-            }
-        });
-    }
-
-    // Check saved preference or system preference
-    const storedPref = localStorage.getItem('dark-mode');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const isDarkMode = storedPref === 'dark' || (!storedPref && prefersDark);
-
-    // Apply correct image on page load
-    updateThemeImages(isDarkMode);
-
-    // Watch for toggle button clicks (handle all dark mode toggle buttons)
-    const toggleBtns = document.querySelectorAll('.dark-mode-toggle');
-    if (toggleBtns.length > 0) {
-        toggleBtns.forEach(function(toggleBtn) {
-            toggleBtn.addEventListener('click', function (e) {
-                e.preventDefault();
-                const isDark = document.body.classList.toggle('js-dark');
-                localStorage.setItem('dark-mode', isDark ? 'dark' : 'light');
-                updateThemeImages(isDark);
             });
         });
     }
+
+    // Detect theme
+    const storedPref = localStorage.getItem('dark-mode');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDarkMode = document.body.classList.contains('js-dark') ||
+                       storedPref === 'dark' ||
+                       (!storedPref && prefersDark);
+
+    updateThemeImages(isDarkMode);
+
+    // Toggle support
+    document.querySelectorAll('.dark-mode-toggle').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const isDark = document.body.classList.toggle('js-dark');
+            localStorage.setItem('dark-mode', isDark ? 'dark' : 'light');
+            updateThemeImages(isDark);
+        });
+    });
+
 });
+
 
 
 // HERO SLIDER
@@ -224,6 +226,24 @@ $(document).ready(function () {
     var scrollPosition = 0;
     var isMenuOpen = false;
 
+    // Helper function to get scrollbar width
+    function getScrollbarWidth() {
+        // Create a temporary div to measure scrollbar width
+        var outer = document.createElement('div');
+        outer.style.visibility = 'hidden';
+        outer.style.overflow = 'scroll';
+        outer.style.msOverflowStyle = 'scrollbar'; // needed for IE
+        document.body.appendChild(outer);
+        
+        var inner = document.createElement('div');
+        outer.appendChild(inner);
+        
+        var scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
+        
+        outer.parentNode.removeChild(outer);
+        return scrollbarWidth;
+    }
+
     // Prevent body scroll when menu is open
     function preventBodyScroll(e) {
         // Allow scrolling inside the menu container
@@ -303,36 +323,85 @@ $(document).ready(function () {
         $("body, .overlay").off("touchmove", preventBodyScroll);
         $(".toggle-menu-container, .inside-menu-container-inner").off("wheel");
         
-        // Restore body styles
+        // Store the exact scroll position we want to restore
+        var restorePosition = scrollPosition;
+        
+        // First, restore overflow and padding (but keep position fixed temporarily)
         $("body").css({
             "overflow": "",
-            "position": "",
-            "top": "",
-            "width": ""
+            "padding-right": ""
         });
         
-        // Restore scroll position
-        $(window).scrollTop(scrollPosition);
+        // Use requestAnimationFrame to ensure smooth restoration
+        requestAnimationFrame(function() {
+            // Remove position fixed and restore scroll in the same frame
+            $("body").css({
+                "position": "",
+                "top": "",
+                "left": "",
+                "right": "",
+                "width": ""
+            });
+            
+            // Immediately restore scroll position - do this synchronously
+            // Set all possible scroll properties to ensure it works
+            if (window.scrollTo) {
+                window.scrollTo(0, restorePosition);
+            }
+            document.documentElement.scrollTop = restorePosition;
+            document.body.scrollTop = restorePosition;
+            $(window).scrollTop(restorePosition);
+            
+            // Double-check after a micro-delay to ensure position is maintained
+            requestAnimationFrame(function() {
+                var currentScroll = window.pageYOffset || document.documentElement.scrollTop || $(window).scrollTop() || 0;
+                if (Math.abs(currentScroll - restorePosition) > 1) {
+                    // If position drifted, restore it again
+                    if (window.scrollTo) {
+                        window.scrollTo(0, restorePosition);
+                    }
+                    document.documentElement.scrollTop = restorePosition;
+                    document.body.scrollTop = restorePosition;
+                    $(window).scrollTop(restorePosition);
+                }
+            });
+        });
         
         isMenuOpen = false;
     }
 
     // Open menu when burger icon is clicked
     $(".burger-icon").click(function () {
-        // Save current scroll position
-        scrollPosition = $(window).scrollTop();
+        // Save current scroll position using multiple methods for reliability
+        // Get the most accurate scroll position
+        scrollPosition = window.pageYOffset || 
+                        document.documentElement.scrollTop || 
+                        document.body.scrollTop || 
+                        $(window).scrollTop() || 
+                        0;
+        
+        // Ensure we have a valid number
+        scrollPosition = Math.max(0, Math.round(scrollPosition));
         
         $(this).addClass("active-burger");
         $(".toggle-menu-container").addClass("open-menu");
         $("nav").addClass("overlaynav-active");
         $(".overlay").addClass("overlay-active");
         
+        // Calculate scrollbar width to prevent layout shift
+        var scrollbarWidth = getScrollbarWidth();
+        
         // Lock body scroll using position fixed
+        // Add padding-right equal to scrollbar width to prevent horizontal shift
+        // Use the exact scroll position to maintain visual position
         $("body").css({
             "overflow": "hidden",
             "position": "fixed",
             "top": "-" + scrollPosition + "px",
-            "width": "100%"
+            "left": "0",
+            "right": "0",
+            "width": "100%",
+            "padding-right": scrollbarWidth + "px"
         });
         
         // Prevent scroll events on body/overlay (but allow on menu)
@@ -646,6 +715,8 @@ function initStickyMenu(config) {
     var previousFixedHeaderState = false; // Track previous fixed-header state
     var previousMenuHiddenState = false; // Track previous menu-hidden state
     var refreshTimeout = null; // Debounce ScrollTrigger refresh calls
+    var menuSpacer = null; // Spacer element to maintain layout when menu becomes fixed
+    var menuOriginalHeight = null; // Store original menu height
     
     // --------------------------------------------
     // FUNCTION: Scroll active item to left (mobile only)
@@ -739,20 +810,49 @@ function initStickyMenu(config) {
                     scrollActiveItemToLeft();
                 }, 50);
 
-                // Calculate exact scroll position
-                var exactPosition = $target.offset().top - (triggerOffset - 1);
+                // Calculate exact scroll position based on actual sticky menu height
+                // instead of using the generic triggerOffset. This avoids visual gaps
+                // when the menu switches between normal and fixed states during scroll.
+                var menuHeight = 0;
+                if ($menu.length) {
+                    menuHeight = $menu.outerHeight(true) || 0; // include margins
+                }
+
+                // Small extra padding so section title is not glued to the menu
+                var extraPadding = 20;
+
+                var exactPosition = $target.offset().top - menuHeight - extraPadding;
+                if (exactPosition < 0) {
+                    exactPosition = 0;
+                }
 
                 // Smooth scroll to target section
-                $("html, body").animate({
-                    scrollTop: exactPosition
-                }, 300, function() {
-                    // Update positions after scroll completes
-                    updatePositions();
-                    // Reset flag after scroll animation completes
+                // Prefer Lenis smooth scroll if available to avoid conflicts
+                // with GSAP / ScrollTrigger and native/jQuery scrolling.
+                if (typeof lenis !== "undefined" && lenis && typeof lenis.scrollTo === "function") {
+                    // Duration in seconds (Lenis expects seconds)
+                    var duration = 0.6;
+                    lenis.scrollTo(exactPosition, {
+                        duration: duration,
+                    });
+
+                    // Approximate callback after scroll finishes
                     setTimeout(function() {
+                        updatePositions();
                         isManualClick = false;
-                    }, 100);
-                });
+                    }, duration * 1000 + 150);
+                } else {
+                    $("html, body").animate({
+                        scrollTop: exactPosition
+                    }, 300, function() {
+                        // Update positions after scroll completes
+                        updatePositions();
+                        // Reset flag after scroll animation completes
+                        setTimeout(function() {
+                            isManualClick = false;
+                        }, 100);
+                    });
+                }
             }
         });
     });
@@ -855,6 +955,22 @@ function initStickyMenu(config) {
         });
     }
 
+    // Create spacer element to maintain layout when menu becomes fixed
+    function createMenuSpacer() {
+        if (!menuSpacer) {
+            menuSpacer = $('<div class="sticky-menu-spacer"></div>');
+            menuSpacer.css({
+                'display': 'none',
+                'width': '100%',
+                'height': '0px',
+                'margin': '0',
+                'padding': '0',
+                'visibility': 'hidden'
+            });
+            $menu.after(menuSpacer);
+        }
+    }
+
     // Handle fixed-header class when sticky element reaches top of viewport
     function handleFixedHeader() {
         // Store initial position on first call (before element becomes fixed)
@@ -862,6 +978,8 @@ function initStickyMenu(config) {
             var elementOffset = $menu.offset();
             if (elementOffset) {
                 stickyElementInitialTop = elementOffset.top;
+                // Store original menu height before it becomes fixed
+                menuOriginalHeight = $menu.outerHeight(true); // Include margins
             } else {
                 return; // Element not found or not visible
             }
@@ -874,11 +992,51 @@ function initStickyMenu(config) {
         var shouldBeFixed = scrollTop >= activationThreshold;
         var currentFixedHeaderState = $menu.hasClass('fixed-header');
         
+        // Only proceed if state is actually changing
+        if (shouldBeFixed === currentFixedHeaderState) {
+            return; // No state change needed
+        }
+        
+        // Create spacer if it doesn't exist
+        createMenuSpacer();
+        
         // Add or remove fixed-header class based on scroll position
         if (shouldBeFixed && !currentFixedHeaderState) {
+            // Menu is about to become fixed - get current height BEFORE it becomes fixed
+            var currentHeight = $menu.outerHeight(true); // Include margins
+            
+            // Set spacer height FIRST to prevent layout shift
+            menuSpacer.css({
+                'display': 'block',
+                'height': currentHeight + 'px'
+            });
+            
+            // Now add fixed-header class
             $menu.addClass('fixed-header');
+            
+            // Recalculate positions after menu becomes fixed (small delay for browser to apply styles)
+            setTimeout(function() {
+                updatePositions();
+            }, 50);
+            
         } else if (!shouldBeFixed && currentFixedHeaderState) {
+            // Menu is about to become unfixed - remove fixed-header first
             $menu.removeClass('fixed-header');
+            
+            // Hide spacer after a small delay to allow menu to return to normal flow
+            setTimeout(function() {
+                menuSpacer.css({
+                    'display': 'none',
+                    'height': '0px'
+                });
+                
+                // Recalculate initial position after menu becomes unfixed
+                var elementOffset = $menu.offset();
+                if (elementOffset) {
+                    stickyElementInitialTop = elementOffset.top;
+                }
+                updatePositions();
+            }, 50);
         }
         
         // Refresh ScrollTrigger when fixed-header state changes (affects layout)
@@ -913,10 +1071,17 @@ function initStickyMenu(config) {
         var wasFixed = $menu.hasClass('fixed-header');
         if (wasFixed) {
             $menu.removeClass('fixed-header');
+            // Hide spacer during recalculation
+            if (menuSpacer) {
+                menuSpacer.css('display', 'none');
+            }
         }
         
-        // Reset initial position on resize so it recalculates
+        // Reset initial position and height on resize so it recalculates
         stickyElementInitialTop = null;
+        menuOriginalHeight = null;
+        
+        // Recalculate everything
         updatePositions();
         detectActiveSection();
         handleFixedHeader(); // Check on resize (will recalculate and re-apply if needed)
@@ -940,7 +1105,8 @@ var stickyMenuConfigs = {
         sections: [
             ".live_monitoring",
             ".system_setup",
-            ".intelligenc_alerts",
+            // Support both legacy misspelled class and correct spelling
+            ".intelligenc_alerts, .intelligence_alerts",
             ".recording_storage",
             ".security_integration"
         ],
@@ -1000,7 +1166,7 @@ jQuery(document).ready(function ($) {
         }
         
         // Check for default page sections
-        var hasDefaultSections = $(".live_monitoring, .system_setup, .intelligenc_alerts, .recording_storage, .security_integration").length >= 3;
+        var hasDefaultSections = $(".live_monitoring, .system_setup, .intelligenc_alerts, .intelligence_alerts, .recording_storage, .security_integration").length >= 3;
         
         if (hasDefaultSections) {
             return stickyMenuConfigs.default;
@@ -1739,8 +1905,8 @@ if (document.querySelector(".hz-slider-topcaption .swiper")) {
   const hzTopcaptionSwiper = new Swiper(".hz-slider-topcaption .swiper", {
     speed: 1200,
     loop: false,
-    slidesPerView: 1,
-    spaceBetween: 20,
+    slidesPerView: 1.1,
+    spaceBetween: 30,
     loopAddBlankSlides: false,
     slideToClickedSlide: true,
     centeredSlides: false,
@@ -1751,26 +1917,54 @@ if (document.querySelector(".hz-slider-topcaption .swiper")) {
     resistance: true,
     resistanceRatio: 0.85,
     breakpoints: {
-      480: {
-        slidesPerView: 1,
-        spaceBetween: 20
+      580: {
+        slidesPerView: 1.1,
+        spaceBetween: 30
       },
       768: {
-        slidesPerView: 2,
-        spaceBetween: 20
+        slidesPerView: 1.2,
+        spaceBetween: 30
       },
       1024: {
-        slidesPerView: 3,
-        spaceBetween: 20
+        slidesPerView: 1.5,
+        spaceBetween: 30
       },
-      1230: {
-        slidesPerView: 4,
-        spaceBetween: 20
+      1280: {
+        slidesPerView: 4.1,
+        spaceBetween: 30
       }
     }
   });
   
   hzTopcaptionSwiper.slideTo(0);
+  
+  // Function to apply correct slidesPerView based on window width
+  function applyCorrectTopcaptionSlidesPerView() {
+    const width = window.innerWidth;
+    let slidesPerView = 1.1;
+    
+    if (width >= 1280) {
+      slidesPerView = 4.1;
+    } else if (width >= 1024) {
+      slidesPerView = 1.5;
+    } else if (width >= 768) {
+      slidesPerView = 1.2;
+    } else {
+      slidesPerView = 1.1;
+    }
+    
+    // Only update if the value has changed
+    if (hzTopcaptionSwiper.params.slidesPerView !== slidesPerView) {
+      hzTopcaptionSwiper.params.slidesPerView = slidesPerView;
+      hzTopcaptionSwiper.update();
+    }
+  }
+  
+  // Apply correct slidesPerView immediately and after a short delay
+  applyCorrectTopcaptionSlidesPerView();
+  setTimeout(function() {
+    applyCorrectTopcaptionSlidesPerView();
+  }, 100);
   
   // Function to initialize GSAP pin animation (desktop only)
   function initHzTopcaptionGSAP() {
@@ -1790,14 +1984,15 @@ if (document.querySelector(".hz-slider-topcaption .swiper")) {
     
     // Disable Swiper touch on desktop (controlled by scroll)
     hzTopcaptionSwiper.allowTouchMove = false;
-    hzTopcaptionSwiper.update();
+    // Apply correct slidesPerView based on screen size
+    applyCorrectTopcaptionSlidesPerView();
     
     hzTopcaptionTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: ".hz-slider-topcaption .slider",
         pin: ".hz-slider-topcaption",
         pinSpacing: true,
-        pinReparent: false,
+        pinReparent: false, // Changed to false to prevent DOM reparenting issues
         start: "top 20%",
         end: "+=" + scrollDistance + "vh",
         scrub: 2, // Increased from true to 2 for smoother, slower scroll response
@@ -1847,6 +2042,9 @@ if (document.querySelector(".hz-slider-topcaption .swiper")) {
   window.addEventListener("resize", function() {
     clearTimeout(hzTopcaptionResizeTimer);
     hzTopcaptionResizeTimer = setTimeout(function() {
+      // Update Swiper to apply breakpoint changes
+      applyCorrectTopcaptionSlidesPerView();
+      
       const isDesktop = window.innerWidth >= 1024;
       const hasGSAP = hzTopcaptionScrollTrigger !== null;
       
@@ -1874,4 +2072,211 @@ if (typeof ScrollTrigger !== 'undefined' && window.innerWidth >= 1024) {
         }, 500);
     });
 }
+
+// Prevent body scroll when formpopup_modal is open (similar to side menu)
+jQuery(document).ready(function ($) {
+    var modalScrollPosition = 0;
+    var isModalOpen = false;
+
+    // Helper function to get scrollbar width
+    function getModalScrollbarWidth() {
+        // Create a temporary div to measure scrollbar width
+        var outer = document.createElement('div');
+        outer.style.visibility = 'hidden';
+        outer.style.overflow = 'scroll';
+        outer.style.msOverflowStyle = 'scrollbar'; // needed for IE
+        document.body.appendChild(outer);
+        
+        var inner = document.createElement('div');
+        outer.appendChild(inner);
+        
+        var scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
+        
+        outer.parentNode.removeChild(outer);
+        return scrollbarWidth;
+    }
+
+    // Prevent body scroll when modal is open
+    function preventModalBodyScroll(e) {
+        // Allow scrolling inside the modal content
+        var $target = $(e.target);
+        if ($target.closest(".formpopup_modal .modal-content, .formpopup_modal .modal-body").length) {
+            return true;
+        }
+        // Prevent scrolling on body/overlay
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }
+
+    // Prevent wheel events on body when modal is open
+    function preventModalBodyWheel(e) {
+        // Get mouse position
+        var mouseX = e.clientX || (e.originalEvent && e.originalEvent.clientX) || 0;
+        var mouseY = e.clientY || (e.originalEvent && e.originalEvent.clientY) || 0;
+        
+        // Get the element at mouse position
+        var elementAtPoint = null;
+        if (document.elementFromPoint && mouseX > 0 && mouseY > 0) {
+            try {
+                elementAtPoint = document.elementFromPoint(mouseX, mouseY);
+            } catch (err) {
+                // Fallback if elementFromPoint fails
+            }
+        }
+        
+        // Check if element at mouse position is inside modal content
+        if (elementAtPoint) {
+            var $elementAtPoint = $(elementAtPoint);
+            if ($elementAtPoint.closest(".formpopup_modal .modal-content, .formpopup_modal .modal-body").length) {
+                return; // Allow scrolling - don't prevent
+            }
+        }
+        
+        // Also check event target
+        var $target = $(e.target);
+        if ($target.closest(".formpopup_modal .modal-content, .formpopup_modal .modal-body").length) {
+            return; // Allow scrolling - don't prevent
+        }
+        
+        // Check mouse position relative to modal content (fallback)
+        var $modalContent = $(".formpopup_modal .modal-content");
+        if ($modalContent.length && $(".formpopup_modal").hasClass("show") && mouseX > 0 && mouseY > 0) {
+            var contentOffset = $modalContent.offset();
+            if (contentOffset) {
+                var contentWidth = $modalContent.outerWidth();
+                var contentHeight = $modalContent.outerHeight();
+                
+                if (mouseX >= contentOffset.left && 
+                    mouseX <= contentOffset.left + contentWidth &&
+                    mouseY >= contentOffset.top && 
+                    mouseY <= contentOffset.top + contentHeight) {
+                    return; // Allow scrolling - don't prevent
+                }
+            }
+        }
+        
+        // Prevent wheel on body/overlay (outside modal content)
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }
+
+    // Function to lock body scroll
+    function lockBodyScroll() {
+        if (isModalOpen) {
+            return; // Already locked
+        }
+        
+        // Save current scroll position using multiple methods for reliability
+        // Get the most accurate scroll position
+        modalScrollPosition = window.pageYOffset || 
+                             document.documentElement.scrollTop || 
+                             document.body.scrollTop || 
+                             $(window).scrollTop() || 
+                             0;
+        
+        // Ensure we have a valid number
+        modalScrollPosition = Math.max(0, Math.round(modalScrollPosition));
+        
+        // Calculate scrollbar width to prevent layout shift
+        var scrollbarWidth = getModalScrollbarWidth();
+        
+        // Lock body scroll using position fixed
+        // Add padding-right equal to scrollbar width to prevent horizontal shift
+        // Use the exact scroll position to maintain visual position
+        $("body").css({
+            "overflow": "hidden",
+            "position": "fixed",
+            "top": "-" + modalScrollPosition + "px",
+            "left": "0",
+            "right": "0",
+            "width": "100%",
+            "padding-right": scrollbarWidth + "px"
+        });
+        
+        // Prevent scroll events on body/overlay (but allow on modal content)
+        $(window).on("scroll", preventModalBodyScroll);
+        // Prevent wheel events - check if in modal content, if not prevent
+        document.addEventListener("wheel", preventModalBodyWheel, { passive: false, capture: false });
+        $("body, .modal-backdrop").on("touchmove", preventModalBodyScroll);
+        
+        // Ensure modal content can scroll by allowing wheel events on modal content
+        $(".formpopup_modal .modal-content, .formpopup_modal .modal-body").on("wheel", function(e) {
+            // Allow natural scrolling - don't prevent
+            e.stopPropagation(); // Stop from bubbling to document handler
+        });
+        
+        isModalOpen = true;
+    }
+
+    // Function to unlock body scroll
+    function unlockBodyScroll() {
+        if (!isModalOpen) {
+            return; // Already unlocked
+        }
+        
+        // Remove event listeners
+        $(window).off("scroll", preventModalBodyScroll);
+        document.removeEventListener("wheel", preventModalBodyWheel, false);
+        $("body, .modal-backdrop").off("touchmove", preventModalBodyScroll);
+        $(".formpopup_modal .modal-content, .formpopup_modal .modal-body").off("wheel");
+        
+        // Store the exact scroll position we want to restore
+        var restorePosition = modalScrollPosition;
+        
+        // First, restore overflow and padding (but keep position fixed temporarily)
+        $("body").css({
+            "overflow": "",
+            "padding-right": ""
+        });
+        
+        // Use requestAnimationFrame to ensure smooth restoration
+        requestAnimationFrame(function() {
+            // Remove position fixed and restore scroll in the same frame
+            $("body").css({
+                "position": "",
+                "top": "",
+                "left": "",
+                "right": "",
+                "width": ""
+            });
+            
+            // Immediately restore scroll position - do this synchronously
+            // Set all possible scroll properties to ensure it works
+            if (window.scrollTo) {
+                window.scrollTo(0, restorePosition);
+            }
+            document.documentElement.scrollTop = restorePosition;
+            document.body.scrollTop = restorePosition;
+            $(window).scrollTop(restorePosition);
+            
+            // Double-check after a micro-delay to ensure position is maintained
+            requestAnimationFrame(function() {
+                var currentScroll = window.pageYOffset || document.documentElement.scrollTop || $(window).scrollTop() || 0;
+                if (Math.abs(currentScroll - restorePosition) > 1) {
+                    // If position drifted, restore it again
+                    if (window.scrollTo) {
+                        window.scrollTo(0, restorePosition);
+                    }
+                    document.documentElement.scrollTop = restorePosition;
+                    document.body.scrollTop = restorePosition;
+                    $(window).scrollTop(restorePosition);
+                }
+            });
+        });
+        
+        isModalOpen = false;
+    }
+
+    // Lock body scroll when formpopup_modal opens
+    $(document).on('show.bs.modal', '.formpopup_modal', function () {
+        lockBodyScroll();
+    });
+
+    // Unlock body scroll when formpopup_modal closes
+    $(document).on('hidden.bs.modal', '.formpopup_modal', function () {
+        unlockBodyScroll();
+    });
+});
   

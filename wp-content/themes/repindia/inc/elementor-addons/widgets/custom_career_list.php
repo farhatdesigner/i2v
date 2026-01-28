@@ -192,7 +192,8 @@ class Custom_Career_List extends Widget_Base {
         #<?php echo $uid; ?> .career-main-title { font-size:48px;font-weight: 600;color:#06283D; margin:0 0 12px;line-height: normal;  }
         #<?php echo $uid; ?> .career-subtitle { color:#5C5C5C;font-size: 18px;font-weight:400;line-height: 26px; margin:0; }
         #<?php echo $uid; ?> .career-filter-section { min-width:345px; }
-        #<?php echo $uid; ?> .career-team-filter { width:100%; padding:10px 40px 10px 16px; border-radius:12px; border:1px solid #E5E9EC; background:#F2F5FA; height:48px; color:#4A5673; font-size:16px; font-weight:400; cursor:pointer; appearance:none; background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%234A5673' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 16px center; }
+        #<?php echo $uid; ?> .career-team-filter { width:100%; padding:10px 40px 10px 16px; border-radius:12px; border:1px solid #E5E9EC; background:#F2F5FA; height:48px; color:#4A5673; font-size:16px; font-weight:400; cursor:pointer; appearance:none; background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%235F6F94' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 16px center; }
+        
         #<?php echo $uid; ?> .career-team-filter:focus { outline:none; border-color:#E5E9EC; }
         #<?php echo $uid; ?> .career-team-filter option { border:1px solid #E5E9EC; padding:8px; background:#FFFFFF; color:#4A5673; }
         #<?php echo $uid; ?> .career-team-filter option:checked, #<?php echo $uid; ?> .career-team-filter option:hover { background:#06283D; color:#FFFFFF; }
@@ -217,9 +218,10 @@ class Custom_Career_List extends Widget_Base {
             justify-content: space-between;
         }
         .rolehead { padding: 0 20px; }
-        .js-dark .elementor-element.career_life .elementor-widget.elementor-widget-icon-box,.js-dark .elementor-element.career_purpose.e-con,.js-dark .elementor-element.career_filter_list.e-con{ background-color: #262A30; }
+        .js-dark .elementor-element.career_life .elementor-widget.elementor-widget-icon-box,.js-dark .elementor-element.career_purpose.e-con,.js-dark .elementor-element.career_filter_list.e-con,
+        .js-dark .elementor-element.partner_choose_desc.elementor-position-top.elementor-widget.elementor-widget-image-box{ background-color: #262A30; }
         .js-dark .btn-sec_gap.titlegrep.with_whitebg .grey-btn { border-color: #262A30;background: #262A30;color: rgba(255, 255, 255, 0.9); }
-        .js-dark .career_whywork .purpose-swiper .swiper-slide figure.caption-scroll figcaption{ background: #262A30; border-bottom-left-radius: 12px;border-bottom-right-radius: 12px; }
+        .js-dark .career_whywork .purpose-swiper .swiper-slide figure.caption-scroll figcaption{ background: transparent; border-bottom-left-radius: 12px;border-bottom-right-radius: 12px; }
         .js-dark .elementor-element.career_faq .e-n-accordion-item .e-flex.e-con.e-child,.js-dark .elementor-element.career_faq  .elementor-widget-n-accordion .e-n-accordion-item-title{
             background-color: #262A30 !important;
         }
@@ -237,6 +239,12 @@ class Custom_Career_List extends Widget_Base {
         .js-dark #<?php echo $uid; ?> .career-table-header,.js-dark #<?php echo $uid; ?> .career-team-col-in{ border-bottom: 1px solid #3e4144; }
         .js-dark #<?php echo $uid; ?> .career-row:hover .career-role, .js-dark #<?php echo $uid; ?> .career-row:hover .career-location{ color: rgba(255, 255, 255, 0.9) }
         .js-dark #<?php echo $uid; ?> .career-team-filter{ border-color: #464a4f;background: #464a4f;color: rgba(255, 255, 255, 0.9); }
+        .js-dark #<?php echo $uid; ?> .career-team-filter{
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23fff'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+        }
         .js-dark #<?php echo $uid; ?> .career-table-header{ color: rgba(255, 255, 255, 0.9); }
 
 

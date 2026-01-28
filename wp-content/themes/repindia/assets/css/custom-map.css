@@ -10,6 +10,8 @@
     background: transparent;
     border-radius: 0;
     overflow: hidden;
+    z-index: 2;
+    position: relative;
 }
 
 /* Filter Section - Chip Style */
@@ -54,6 +56,7 @@
     color: #fff;
     border-color: #0099ED;
 }
+.location-chip:focus{ background: #0074B2;border-color: #0074B2; }
 
 .location-chip-more {
     background: #F2F5FA;
@@ -168,14 +171,9 @@
     min-width: 342px;
 }
 
-.project-type-filter:hover {
-    border-color: #E5E9EC;
-}
-
-.project-type-filter:focus {
+.project-type-filter:hover,.project-type-filter:focus,.project-type-filter:focus-visible {
+    border: 1px solid #E5E9EC;
     outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 /* Map Container */
@@ -185,6 +183,7 @@
     height: 600px;
     background: #e5e7eb;
     overflow: hidden;
+    border-radius: 12px;
 }
 
 .custom-map-container .leaflet-container {
@@ -468,6 +467,7 @@
     transition: all 0.2s ease;
     z-index: 500;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: none;
 }
 
 .show-list-button:hover {
@@ -486,6 +486,10 @@
     border: 1px solid rgba(193, 196, 198, 0.1) !important;
     background: #262a30;
     color: #ccc;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23fff'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
 }
 .js-dark button.location-chip,.js-dark button.detail-close{
     border: 1px solid rgba(193, 196, 198, 0.1) !important;
@@ -495,6 +499,8 @@
 .js-dark button.location-chip svg path, .js-dark button.detail-close svg path{
     fill: rgba(255, 255, 255, 0.9) !important;
 }
+.js-dark button.location-chip:hover{ background: #006BA6;border-color: #006BA6!important;color: #fff!important; }
+.js-dark button.location-chip:focus{ background: #004C76;border-color: #004C76!important;color: #fff!important; }
 .js-dark .leaflet-bar a{
     border: 1px solid rgba(193, 196, 198, 0.1) !important;
     background-color: #464A4F;
@@ -577,6 +583,7 @@
         padding: 10px 12px;
         font-size: 14px;
         touch-action: manipulation;
+        outline: none;
     }
 
     /* Map Container - Adjusted height for tablet */
@@ -659,6 +666,7 @@
 
     /* Show List Button */
     .show-list-button {
+        display: none;
         bottom: 12px;
         padding: 10px 20px;
         font-size: 13px;

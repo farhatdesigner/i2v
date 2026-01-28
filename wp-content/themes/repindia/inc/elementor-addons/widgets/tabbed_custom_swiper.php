@@ -283,6 +283,7 @@ class Tabbed_Custom_Swiper extends Widget_Base
                 width: 100%;
                 height: 300px;
                 object-fit: cover;
+                border-radius: 12px;
             }
 
             /* Dark theme image switching */
@@ -308,6 +309,7 @@ class Tabbed_Custom_Swiper extends Widget_Base
                 margin-bottom: 10px;
                 border-radius: 0 0 12px 12px;
             }
+            #tabbedSliderWrapper .slide-content{ min-height: 185px; }
 
             #tabbedSliderWrapper .slide-content h3 {
                 font-size: 24px;
@@ -346,6 +348,11 @@ class Tabbed_Custom_Swiper extends Widget_Base
             [aria-disabled="false"]:hover .stroke_enabled {
                 stroke: #5F6F94;
             }
+
+            
+.js-dark #tabbedSliderWrapper [aria-disabled="false"] .fill_disabled {
+    fill: #fff;
+}
         </style>
 
         <div class="tabbed-slider-wrapper" id="tabbedSliderWrapper">
@@ -433,9 +440,9 @@ class Tabbed_Custom_Swiper extends Widget_Base
                             <?php endforeach; ?>
                         </div>
                         <div class="swiper-button-next">
-                            <?php if ($tab_index == 1): ?>
-                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/themes/repindia/assets/images/icons/arrow-white.svg" alt="Next">
-                            <?php else: ?>
+                            <?php //if ($tab_index == 1): ?>
+                                <!-- <img src="<?php //echo esc_url(home_url('/')); ?>wp-content/themes/repindia/assets/images/icons/arrow-white.svg" alt="Next"> -->
+                            <?php //else: ?>
                                 <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M20 0.5C30.7696 0.5 39.5 9.23045 39.5 20C39.5 30.7696 30.7696 39.5 20 39.5C9.23045 39.5 0.5 30.7696 0.5 20C0.5 9.23045 9.23045 0.5 20 0.5Z"
@@ -447,12 +454,12 @@ class Tabbed_Custom_Swiper extends Widget_Base
                                         d="M20.3259 13.6589C20.7598 13.225 21.4633 13.225 21.8972 13.6589L27.4528 19.2145C27.6611 19.4229 27.7782 19.7055 27.7782 20.0002C27.7782 20.2948 27.6611 20.5775 27.4528 20.7858L21.8972 26.3414C21.4633 26.7753 20.7598 26.7753 20.3259 26.3414C19.892 25.9075 19.892 25.204 20.3259 24.77L23.9846 21.1113L13.3338 21.1113C12.7201 21.1113 12.2227 20.6138 12.2227 20.0002C12.2227 19.3865 12.7201 18.8891 13.3338 18.8891L23.9846 18.8891L20.3259 15.2303C19.892 14.7964 19.892 14.0928 20.3259 13.6589Z"
                                         fill="#949494" />
                                 </svg>
-                            <?php endif; ?>
+                            <?php //endif; ?>
                         </div>
                         <div class="swiper-button-prev">
-                            <?php if ($tab_index == 1): ?>
-                                <img src="<?php echo esc_url(home_url('/')); ?>wp-content/themes/repindia/assets/images/icons/arrow-white.svg" alt="Prev">
-                            <?php else: ?>
+                            <?php //if ($tab_index == 1): ?>
+                                <!-- <img src="<?php //echo esc_url(home_url('/')); ?>wp-content/themes/repindia/assets/images/icons/arrow-white.svg" alt="Prev"> -->
+                            <?php// else: ?>
                                 <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M20 0.5C30.7696 0.5 39.5 9.23045 39.5 20C39.5 30.7696 30.7696 39.5 20 39.5C9.23045 39.5 0.5 30.7696 0.5 20C0.5 9.23045 9.23045 0.5 20 0.5Z"
@@ -464,7 +471,7 @@ class Tabbed_Custom_Swiper extends Widget_Base
                                         d="M19.675 13.6589C20.1089 14.0928 20.1089 14.7964 19.675 15.2303L16.0162 18.8891L26.6671 18.8891C27.2808 18.8891 27.7782 19.3865 27.7782 20.0002C27.7782 20.6138 27.2807 21.1113 26.6671 21.1113L16.0162 21.1113L19.675 24.77C20.1089 25.204 20.1089 25.9075 19.675 26.3414C19.2411 26.7753 18.5376 26.7753 18.1036 26.3414L12.5481 20.7858C12.3397 20.5775 12.2227 20.2948 12.2227 20.0002C12.2227 19.7055 12.3397 19.4229 12.5481 19.2145L18.1036 13.6589C18.5376 13.225 19.2411 13.225 19.675 13.6589Z"
                                         fill="#949494" />
                                 </svg>
-                            <?php endif; ?>
+                            <?php //endif; ?>
                         </div>
                     </div>
                 </div>

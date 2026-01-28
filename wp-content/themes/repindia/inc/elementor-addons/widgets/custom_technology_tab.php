@@ -168,7 +168,7 @@ class Custom_Technology_Tab extends Widget_Base
                 font-weight: 500;
                 color: #06283D;
             }
-            .js-dark .<?php echo esc_attr($widget_id); ?> .tech-tabs-nav button:hover,.js-dark .<?php echo esc_attr($widget_id); ?> .tech-tabs-nav button.active{ background: #000;color: #fff; }
+            .js-dark .<?php echo esc_attr($widget_id); ?> .tech-tabs-nav button:hover,.js-dark .<?php echo esc_attr($widget_id); ?> .tech-tabs-nav button.active{ background: rgba(255, 255, 255, 0.15);color: #fff; }
             .<?php echo esc_attr($widget_id); ?> .tech-tabs-nav button .checkmark-svg {
                 display: inline-block;
                 width: 24px;
@@ -250,6 +250,15 @@ class Custom_Technology_Tab extends Widget_Base
                 background-repeat: no-repeat;
                 background-position: right 16px center;
                 padding-right: 40px;
+            }
+            .js-dark .<?php echo esc_attr($widget_id); ?> .tech-tabs-dropdown{
+                border: 1px solid rgba(193, 196, 198, 0.1) !important;
+                background: #262a30;
+                color: #ccc;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23fff'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: right 12px center;
+                background-size: 16px;
             }
             .<?php echo esc_attr($widget_id); ?> .tech-tabs-dropdown:focus {
                 outline: none;
