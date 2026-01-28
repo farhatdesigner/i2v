@@ -732,8 +732,8 @@ label.form-label.label_notic a {
     flex-wrap: unset;
     height: 50px;
     padding: 10px 10px 10px 45px;
-    max-width: 400px;
-    overflow: scroll;
+    /* max-width: 400px;
+    overflow: scroll; */
   }
   .detailtbas
     .elementor-element.heading_tablemenu.elementor-widget-icon-list
@@ -744,13 +744,13 @@ label.form-label.label_notic a {
     display: inline-block;
     text-align: left;
   }
-  .comparison-wrapper {
+  .detailtbas {
     max-width: 400px;
-    overflow: scroll;
+    overflow: scroll !important;
   }
   .comparison-wrapper ul {
     max-width: 100%;
-    min-width: 200px;
+    min-width: 250px;
   }
   .comparison-wrapper li {
     width: 100%;
