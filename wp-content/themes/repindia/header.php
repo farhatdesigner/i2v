@@ -255,7 +255,7 @@ global $repindia_option;
                             <?php
                             if (isset($repindia_option['langauge_btn_switch']) && $repindia_option['langauge_btn_switch'] == 1) { ?>
                                 <li class="lang_switch">
-                                    <a href="javascript:void(0);">
+                                    <!-- <a href="javascript:void(0);">
                                         <span>
                                             <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -276,7 +276,11 @@ global $repindia_option;
 
 
                                         </span>
-                                    </a>
+                                    </a> -->
+                                    <?php //echo do_shortcode('[wpml_language_selector_widget]'); ?>
+                                    <?php do_action('wpml_add_language_selector'); ?>
+
+
                                 </li>
                                 <?php
                             } ?>
