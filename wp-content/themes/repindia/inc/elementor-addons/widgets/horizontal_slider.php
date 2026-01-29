@@ -274,12 +274,11 @@ class Horizontal_Slider extends Widget_Base
 
         ?>
         <style>
-            .js-dark .default_liicon,
-            .dark_liicon {
+            .js-dark .hz-slider-section .swiper-slide ul li>span>svg.default_liicon,
+            .hz-slider-section .swiper-slide ul li>span>svg.dark_liicon {
                 display: none;
             }
-
-            .js-dark .dark_liicon {
+            .js-dark .hz-slider-section .swiper-slide ul li>span>svg.dark_liicon {
                 display: block;
             }
 
@@ -327,7 +326,8 @@ class Horizontal_Slider extends Widget_Base
                                                         <?php if (!empty($list_text)): ?>
                                                             <li>
                                                                 <span>
-                                                                    <?php echo $checkmark_svg_default; ?>
+                                                                <?php echo $checkmark_svg_default; ?>
+                                                                <?php echo $checkmark_svg_dark; ?>
                                                                 </span>
                                                                 <?php echo esc_html($list_text); ?>
                                                             </li>
