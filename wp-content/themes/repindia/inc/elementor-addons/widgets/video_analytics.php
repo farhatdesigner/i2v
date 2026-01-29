@@ -133,7 +133,9 @@ class Video_Analytics extends Widget_Base
                 <!-- Center Oval -->
                 <div class="center-oval">
                     <div class="center-content">
-                        <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Icon-Container-3.svg"
+                        <img class="white-theme-img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Icon-Container-3.svg"
+                            alt="i2V" class="logo-i-image">
+                        <img class="black-theme-img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/12/Icon-Container-3.svg"
                             alt="i2V" class="logo-i-image">
                         <div class="subtitle">i2V's Video Analytics</div>
                     </div>
