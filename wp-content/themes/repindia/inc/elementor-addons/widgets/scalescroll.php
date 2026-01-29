@@ -482,7 +482,7 @@ h4.subtitlebox {
 }
 
             @media(max-width: 768px){
-                .photo_custom .details * { text-align: center; align-items: center;}
+                .photo_custom .details * { text-align: left; align-items: center; vertical-align: middle;}
             
             }
             /* Nested repeater image theme switching */

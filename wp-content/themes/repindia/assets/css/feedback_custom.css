@@ -488,6 +488,24 @@ html.lenis body {
 
 .card-contents ul li > span {
   padding-right: 12px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  margin-top: 2px;
+}
+
+.card-contents ul li > span > svg {
+  width: 14px;
+  height: 14px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.card-contents ul li > span > img {
+  width: 16px;
+  height: 16px;
+  display: block;
+  flex-shrink: 0;
 }
 
 .menu-hidden {
@@ -1544,8 +1562,6 @@ html {
   }
 
   #tabbedSliderWrapper .tabbed-slider-tabs {
-    flex-direction: column;
-    margin-bottom: 20px;
     margin-top: 30px;
   }
 
@@ -1556,7 +1572,7 @@ html {
   #tabbedSliderWrapper .swiper-button-next,
   #tabbedSliderWrapper .swiper-button-prev {
     top: auto !important;
-    bottom: -40px !important;
+    bottom: -55px !important;
   }
   .customtabsmart .smart-content-inner-text {
     padding: 10px;
@@ -1621,8 +1637,14 @@ html {
     height: 16px;
     display: block;
   }
-
-  .theme-btn, .theme-btn.dark_btn {font-size: 12px;}
+  .hz-slider-section .slider-image img{
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: 174px;
+}
   .xl-btn { font-size: 18px !important;}
   
 .cards-listing-section .custom-container{margin: 0 !important;width: 100% !important;}
@@ -1630,6 +1652,14 @@ html {
 .card-body h5, .card-body_industry .card-title{font-size: 18px;}
 .expert_sec h3 { font-size: 28px;}
 
-.chosse_circle .elementor-icon-box-description {font-size: 14px;}
+.chosse_circle .elementor-icon-box-description, .customtabsmart .smart-content-inner-text p {font-size: 14px;}
+
+.customtabsmart .smart-main_title {font-size: 28px;;}
+.ctw-trigger .ctw-title h3 {font-size: 28px;}
+.customtabsmart .smart-content-inner-text .smart-sub_title{font-size: 24px;}
+.customtabsmart .smart-microspace-inside {padding: 40px 0;}
+
+.js-dark .center-content .black-theme-img {margin: 0 auto;}
+
   
 }

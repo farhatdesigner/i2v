@@ -844,6 +844,11 @@ label.form-label.label_notic a {
     font-size: 14px;
     text-align: center;
   }
+  
+.featuregroup_repeator .nested-item-1 {
+  max-width: none;
+  justify-content: center;
+}
   input.form-control,
   select.form-control {
     margin-bottom: 10px;

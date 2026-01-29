@@ -273,17 +273,21 @@ class Tabbed_Custom_Swiper extends Widget_Base
             }
 
             #tabbedSliderWrapper .swiper-slide {
-                background: #fff;
                 overflow: hidden;
                 border-radius: 12px;
                 width: 350px;
+                display: flex;
+                flex-direction: column;
+                height: auto;
+                                /* box-shadow: 0 10px 20px 0 rgba(0, 82, 128, 0.10); */
             }
 
             #tabbedSliderWrapper .swiper-slide img {
                 width: 100%;
                 height: 300px;
                 object-fit: cover;
-                border-radius: 12px;
+                border-radius: 12px 12px 0 0;
+                flex-shrink: 0;
             }
 
             /* Dark theme image switching */
@@ -305,9 +309,13 @@ class Tabbed_Custom_Swiper extends Widget_Base
 
             #tabbedSliderWrapper  .slide-content {
                 padding: 24px;
-                box-shadow: 0 10px 20px 0 rgba(0, 82, 128, 0.10);
+                /* box-shadow: 0 10px 20px 0 rgba(0, 82, 128, 0.10); */
+                background: #ffffff;
                 margin-bottom: 10px;
                 border-radius: 0 0 12px 12px;
+                flex: 1;
+                display: flex;
+                flex-direction: column;
             }
             #tabbedSliderWrapper .slide-content{ min-height: 185px; }
 
@@ -316,6 +324,7 @@ class Tabbed_Custom_Swiper extends Widget_Base
                 margin: 0 0 8px 0;
                 color: #06283D;
                 line-height: 125%;
+
             }
 
             #tabbedSliderWrapper  .slide-content p {
@@ -352,6 +361,38 @@ class Tabbed_Custom_Swiper extends Widget_Base
             
 .js-dark #tabbedSliderWrapper [aria-disabled="false"] .fill_disabled {
     fill: #fff;
+}
+
+
+@media (max-width: 767px) {
+
+#tabbedSliderWrapper .tab-btn {font-size: 12px;line-height: 1.2;}    
+#tabbedSliderWrapper .slide-content h3 {font-size: 18px;}
+#tabbedSliderWrapper .slide-content p {font-size: 11px;}
+#tabbedSliderWrapper .slide-content, #tabbedSliderWrapper .slide-content p{min-height: auto;}
+
+/* Equal height cards on mobile - all cards match tallest card */
+#tabbedSliderWrapper .swiper-wrapper {
+    display: flex;
+    align-items: stretch;
+}
+#tabbedSliderWrapper .swiper-slide {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+#tabbedSliderWrapper .swiper-slide img {
+    height: 200px;
+    flex-shrink: 0;
+}
+#tabbedSliderWrapper .slide-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
 }
         </style>
 
