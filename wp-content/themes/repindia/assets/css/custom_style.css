@@ -4745,3 +4745,31 @@ span.star {
     height: 90vh;
   }
 }
+
+/* Elementor Icon List - Equal Icon Sizing and Alignment */
+.elementor-icon-list--layout-traditional .elementor-icon-list-items .elementor-icon-list-item {
+  align-items: flex-start !important;
+}
+
+
+.elementor-icon-list--layout-traditional  .elementor-icon-list-items .elementor-icon-list-icon {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-shrink: 0;
+  width: auto;
+  min-width: 16px;
+  height: auto;
+  min-height: 16px;
+  padding-top: 5px;
+}
+.elementor-icon-list--layout-traditional  .elementor-icon-list-items .elementor-icon-list-icon svg {
+  width: 16px !important;
+  height: 16px !important;
+  display: block;
+  flex-shrink: 0;
+}
+.elementor-icon-list--layout-traditional  .elementor-icon-list-items .elementor-icon-list-text {
+  line-height: 1.5;
+}
+
