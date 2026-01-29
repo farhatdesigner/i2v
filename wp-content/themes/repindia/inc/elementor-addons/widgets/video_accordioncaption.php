@@ -444,8 +444,8 @@ class Video_accordioncaption extends Widget_Base
             }
 
             /* .vac_accordion_set.active .vac_ac_icon {
-                                                                                                                        filter: brightness(0) invert(1);
-                                                                                                                    } */
+                                                                                                                                filter: brightness(0) invert(1);
+                                                                                                                            } */
 
             .vac_ac_header {
                 flex: 1;
@@ -706,7 +706,11 @@ class Video_accordioncaption extends Widget_Base
 
                 .vac_accordion_set {
                     ;
-                    padding: 10px 20px;
+                    padding: 20px 20px;
+                }
+
+                .vac_ac_icon_wrap {
+                    top: 10px;
                 }
 
                 .vac_accontent .vac_accordion_video {

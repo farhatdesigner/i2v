@@ -1544,8 +1544,6 @@ html {
   }
 
   #tabbedSliderWrapper .tabbed-slider-tabs {
-    flex-direction: column;
-    margin-bottom: 20px;
     margin-top: 30px;
   }
 
@@ -1556,7 +1554,7 @@ html {
   #tabbedSliderWrapper .swiper-button-next,
   #tabbedSliderWrapper .swiper-button-prev {
     top: auto !important;
-    bottom: -40px !important;
+    bottom: -55px !important;
   }
   .customtabsmart .smart-content-inner-text {
     padding: 10px;
@@ -1631,5 +1629,6 @@ html {
 .expert_sec h3 { font-size: 28px;}
 
 .chosse_circle .elementor-icon-box-description {font-size: 14px;}
+
   
 }
