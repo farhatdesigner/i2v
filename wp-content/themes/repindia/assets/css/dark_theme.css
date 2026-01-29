@@ -421,7 +421,15 @@ header li.burger-icon .icon-sun,
   background-color: #262a30;
   border-color: rgba(193, 196, 198, 0.2);
 }
-.js-dark
+ .js-dark .detailtbas {
+  background-color: #262a30 !important;
+  border-color: rgba(193, 196, 198, 0.2);
+ }
+ .js-dark .detailtbas .elementor-widget-n-accordion .e-n-accordion-item .e-n-accordion-item-title-icon span>svg path {fill: #ffffff !important;}
+
+ .detailtbas .heading_tablemenu, .detailtbas .elementor-widget.elementor-widget-n-accordion { min-width: fit-content !important;}
+
+ .js-dark
   .elementor-element.accor_dark
   .e-n-accordion
   > .e-n-accordion-item
