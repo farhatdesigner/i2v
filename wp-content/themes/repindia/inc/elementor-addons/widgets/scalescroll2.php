@@ -339,7 +339,7 @@ class Scalescroll2 extends Widget_Base
             .js-dark .youtube-wrapper .black_theme_iframe,
             .js-dark .youtube-wrapper .black_theme_thumb { display: block; }
             @media(max-width: 768px){
-                .photo_custom .details * { text-align: center; align-items: center;}
+                .photo_custom .details * { text-align: left;               }
             }
             
         </style>

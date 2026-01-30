@@ -444,8 +444,8 @@ class Video_accordioncaption extends Widget_Base
             }
 
             /* .vac_accordion_set.active .vac_ac_icon {
-                                                                                                                filter: brightness(0) invert(1);
-                                                                                                            } */
+                                                                                                                                filter: brightness(0) invert(1);
+                                                                                                                            } */
 
             .vac_ac_header {
                 flex: 1;
@@ -662,7 +662,11 @@ class Video_accordioncaption extends Widget_Base
 
                 .vac_main_title {
                     font-size: 24px;
-                    margin-bottom: 30px;
+                    margin-bottom: 0;
+                }
+
+                .vac_vertical_scroller {
+                    margin: 0;
                 }
 
                 .vac_ac_icon_border {
@@ -676,7 +680,7 @@ class Video_accordioncaption extends Widget_Base
                 }
 
                 .vac_ac_header {
-                    font-size: 16px;
+                    font-size: 14px;
                     margin-left: 55px;
                 }
 
@@ -693,6 +697,7 @@ class Video_accordioncaption extends Widget_Base
 
                 .vac_accontent p {
                     margin: 8px 15px 8px 75px;
+                    font-size: 12px;
                 }
 
                 .vac_accontent .vac_accordion_video p {
@@ -701,7 +706,11 @@ class Video_accordioncaption extends Widget_Base
 
                 .vac_accordion_set {
                     ;
-                    padding: 10px 20px;
+                    padding: 20px 20px;
+                }
+
+                .vac_ac_icon_wrap {
+                    top: 10px;
                 }
 
                 .vac_accontent .vac_accordion_video {
@@ -751,7 +760,7 @@ class Video_accordioncaption extends Widget_Base
                 }
 
                 .vac_accontent .vac_accordion_video .card-body {
-                    padding: 15px;
+                    padding: 10px;
                 }
 
                 .vac_accontent .vac_accordion_video .card-title {
@@ -891,6 +900,7 @@ class Video_accordioncaption extends Widget_Base
                                                                     alt="<?php echo esc_attr($item_details_image_dark_alt); ?>">
                                                             </div>
                                                         <?php endif; ?>
+                                                        <?php if (!empty($item_detail_title) || !empty($item_detail_description) || !empty($item_tags)): ?>
                                                         <div class="card-body">
                                                             <?php if (!empty($item_detail_title)): ?>
                                                                 <h5 class="card-title"><?php echo esc_html($item_detail_title); ?></h5>
@@ -911,6 +921,7 @@ class Video_accordioncaption extends Widget_Base
                                                                 </div>
                                                             <?php endif; ?>
                                                         </div>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div>
                                             <?php endif; ?>
@@ -952,6 +963,7 @@ class Video_accordioncaption extends Widget_Base
                                                             alt="<?php echo esc_attr($item_details_image_dark_alt); ?>">
                                                     </div>
                                                 <?php endif; ?>
+                                                <?php if (!empty($item_detail_title) || !empty($item_detail_description) || !empty($item_tags)): ?>
                                                 <div class="card-body">
                                                     <?php if (!empty($item_detail_title)): ?>
                                                         <h5 class="card-title"><?php echo esc_html($item_detail_title); ?></h5>
@@ -972,6 +984,7 @@ class Video_accordioncaption extends Widget_Base
                                                         </div>
                                                     <?php endif; ?>
                                                 </div>
+                                                <?php endif; ?>
                                             </div>
                                         </li>
                                     </div>

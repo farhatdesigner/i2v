@@ -421,7 +421,15 @@ header li.burger-icon .icon-sun,
   background-color: #262a30;
   border-color: rgba(193, 196, 198, 0.2);
 }
-.js-dark
+ .js-dark .detailtbas {
+  background-color: #262a30 !important;
+  border-color: rgba(193, 196, 198, 0.2);
+ }
+ .js-dark .detailtbas .elementor-widget-n-accordion .e-n-accordion-item .e-n-accordion-item-title-icon span>svg path {fill: #ffffff !important;}
+
+ .detailtbas .heading_tablemenu, .detailtbas .elementor-widget.elementor-widget-n-accordion { min-width: fit-content !important;}
+
+ .js-dark
   .elementor-element.accor_dark
   .e-n-accordion
   > .e-n-accordion-item
@@ -859,7 +867,7 @@ header li.burger-icon .icon-sun,
   border-color: #F2AE5A;
 }
 .js-dark .elementor-element.darkmode_custom.e-flex,.js-dark .elementor-element.darkmode_custom {
-  background-color: #262A30 !important;
+  background-color: #ffffff1a !important;
 }
 .js-dark .elementor-element.e-con-full.video_analytic_sidebar,.elementor-element.e-con-full.video_analytic_sidebar .analytic-sidebar {
   background: #262A30 !important;
@@ -960,11 +968,25 @@ header li.burger-icon .icon-sun,
 }
 .js-dark .elementor-element.elementor-widget-n-accordion > .e-n-accordion > .e-n-accordion-item > .e-n-accordion-item-title:hover{ border-color: transparent!important;background-color: rgba(255, 255, 255, 0.15)!important; }
 
+.js-dark .e-n-accordion-item .e-n-accordion-item-title:hover {
+  background: #d7dbe459 !important;
+  color: #D7DBE4 !important;
+}
+.js-dark .faq_bg .elementor-element.elementor-widget-n-accordion > .e-n-accordion > .e-n-accordion-item[open] > .e-n-accordion-item-title {
+  background: #003D5F !important;
+  color: #ffffff !important;
+}
+
  .js-dark .elementor-testimonial__text, .js-dark .elementor-testimonial__title {color: #AEB6C9!important;}
 .js-dark .connection-lines svg path {color: #D7DBE4!important;}
 .js-dark .connection-lines svg path, .js-dark .right-connection_lines svg path {stroke: rgb(193 196 198 / 20%) !important;}
 .js-dark .connection-lines svg circle, .js-dark .right-connection_lines svg circle {stroke:none !important;}
 .js-dark .connection-lines svg circle, .js-dark .right-connection_lines svg circle {fill:#74C2ED !important;}
+
+
+.js-dark .faq_bg .elementor-element.elementor-widget-n-accordion > .e-n-accordion > .e-n-accordion-item > .e-n-accordion-item-title svg path {
+  fill: #D7DBE4 !important;
+}
 
 
 .js-dark .border_project:before {background: rgb(193 196 198 / 20%) !important;}
@@ -975,20 +997,31 @@ header li.burger-icon .icon-sun,
 .js-dark .tool_start .elementor-heading-title {color: #E6BA85 !important;}
 .js-dark .card_title_tooltip .ctw-title .ctw-text p {color: rgb(255 255 255 / 90%) !important;}
 
-
-
-.js-dark .sticky-custom > ul > li.active-li, .js-dark .sticky-tab > ul > li:first-child {
-  background: #007ABE;
-  border: 1px solid #007ABE;
-}
+.bg-txt_icon img {background: #fff;border-radius: 100% !important;}
+.js-dark .bg-txt_icon img {background: #262A30;}
 
 .js-dark .sticky-custom > ul > li:hover {
   background: rgb(193 196 198 / 20%) !important;
   border: 1px solid rgb(193 196 198 / 20%) !important;
 }
+
+.js-dark .sticky-custom > ul > li.active-li, .js-dark .sticky-tab > ul > li:first-child {
+  background: #007ABE !important;
+  border: 1px solid #007ABE !important;
+}
+
+
 .js-dark .sticky-custom > ul > li:hover span {
   color:#D7DBE4 !important;
 }
 .js-dark .noticdark p,.js-dark .bolt p, .js-dark .dark-para {
   color: #FFFFFF !important;
+}
+
+.js-dark .hz-slider-section .swiper-slide ul li>span>svg path {
+  fill: #D7DBE4;
+}
+
+.js-dark .black_bgimg {
+  background: #262A30 !important;
 }

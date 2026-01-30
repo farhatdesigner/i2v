@@ -732,25 +732,25 @@ label.form-label.label_notic a {
     flex-wrap: unset;
     height: 50px;
     padding: 10px 10px 10px 45px;
-    max-width: 400px;
-    overflow: scroll;
+    /* max-width: 400px;
+    overflow: scroll; */
   }
   .detailtbas
     .elementor-element.heading_tablemenu.elementor-widget-icon-list
     ul
     li {
-    min-width: 200px;
-    width: 200px;
+    min-width: 240px;
+    width: 240px;
     display: inline-block;
     text-align: left;
   }
-  .comparison-wrapper {
+  .detailtbas {
     max-width: 400px;
-    overflow: scroll;
+    overflow: scroll !important;
   }
   .comparison-wrapper ul {
     max-width: 100%;
-    min-width: 200px;
+    min-width: 250px;
   }
   .comparison-wrapper li {
     width: 100%;
@@ -803,6 +803,7 @@ label.form-label.label_notic a {
     -webkit-box-orient: vertical;
     padding-bottom: 0;
     min-height: unset;
+    margin-bottom: 20px;
   }
   .accordion_set {
     padding: 16px 10px;
@@ -841,9 +842,14 @@ label.form-label.label_notic a {
     text-align: center;
   }
   .txtflex p {
-    font-size: 16px;
+    font-size: 14px;
     text-align: center;
   }
+  
+.featuregroup_repeator .nested-item-1 {
+  max-width: none;
+  justify-content: center;
+}
   input.form-control,
   select.form-control {
     margin-bottom: 10px;
