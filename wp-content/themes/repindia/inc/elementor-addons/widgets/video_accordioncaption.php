@@ -760,7 +760,7 @@ class Video_accordioncaption extends Widget_Base
                 }
 
                 .vac_accontent .vac_accordion_video .card-body {
-                    padding: 0;
+                    padding: 10px;
                 }
 
                 .vac_accontent .vac_accordion_video .card-title {
@@ -900,6 +900,7 @@ class Video_accordioncaption extends Widget_Base
                                                                     alt="<?php echo esc_attr($item_details_image_dark_alt); ?>">
                                                             </div>
                                                         <?php endif; ?>
+                                                        <?php if (!empty($item_detail_title) || !empty($item_detail_description) || !empty($item_tags)): ?>
                                                         <div class="card-body">
                                                             <?php if (!empty($item_detail_title)): ?>
                                                                 <h5 class="card-title"><?php echo esc_html($item_detail_title); ?></h5>
@@ -920,6 +921,7 @@ class Video_accordioncaption extends Widget_Base
                                                                 </div>
                                                             <?php endif; ?>
                                                         </div>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div>
                                             <?php endif; ?>
@@ -961,6 +963,7 @@ class Video_accordioncaption extends Widget_Base
                                                             alt="<?php echo esc_attr($item_details_image_dark_alt); ?>">
                                                     </div>
                                                 <?php endif; ?>
+                                                <?php if (!empty($item_detail_title) || !empty($item_detail_description) || !empty($item_tags)): ?>
                                                 <div class="card-body">
                                                     <?php if (!empty($item_detail_title)): ?>
                                                         <h5 class="card-title"><?php echo esc_html($item_detail_title); ?></h5>
@@ -981,6 +984,7 @@ class Video_accordioncaption extends Widget_Base
                                                         </div>
                                                     <?php endif; ?>
                                                 </div>
+                                                <?php endif; ?>
                                             </div>
                                         </li>
                                     </div>
