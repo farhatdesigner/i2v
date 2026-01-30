@@ -595,3 +595,23 @@ add_filter('wp_unique_term_slug', function ($slug, $term) {
 
 }, 10, 2);
 
+//Global translator helper function
+if ( ! function_exists( 'wpml_t' ) ) {
+    function wpml_t( $text, $context = 'Theme', $name = '' ) {
+        if ( empty( $name ) ) {
+            $name = md5( $text );
+        }
+        do_action(
+            'wpml_register_single_string',
+            $context,
+            $name,
+            $text
+        );
+        return apply_filters(
+            'wpml_translate_single_string',
+            $text,
+            $context,
+            $name
+        );
+    }
+}

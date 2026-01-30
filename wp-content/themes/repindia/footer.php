@@ -10,19 +10,10 @@ global $repindia_option;
 					<ul class="p-0 m-0 footer-accordion-menu">
 						<li class="footer-accordion-item">
 							<h3 class="footer-accordion-title">
-								<?php echo esc_attr($repindia_option['footer_product_title']); ?> <span
-									class="footer-accordion-icon">+</span>
+								<?php echo esc_attr($repindia_option['footer_product_title']); ?> <span class="footer-accordion-icon">+</span>
 							</h3>
 						</li>
 						<div class="footer-accordion-content">
-							<!-- <li><a href="#">i2V's VMS</a></li>
-								<li><a href="#">AI based video analytics / VCA</a></li>
-								<li><a href="#">Command and control (ICCC / PSIM)</a></li>
-								<li><a href="#">Central monitoring software (CMS)</a></li>
-								<li><a href="#">FRS</a></li>
-								<li><a href="#">ITMS / ITS</a></li>
-								<li><a href="#">VIDS</a></li>
-								<li><a href="#">ANPR / LPR</a></li> -->
 							<?php
 							if (has_nav_menu('footer-product-menu')) {
 								wp_nav_menu(
@@ -43,21 +34,6 @@ global $repindia_option;
 				<div class="col-md-9">
 					<div class="d-flex justify-content-between right-footer-menu">
 						<div class="column-4">
-							<!-- 		<//?php
-										if (has_nav_menu('footer-product-menu')) {
-											wp_nav_menu(
-												array(
-													'menu_id' => '',
-													'theme_location' => 'footer-product-menu',
-													'container'      => false,
-													'depth'          => 2,
-													'link_after'          => '<span class="caret"><i class="fa fa-arrow-down"></i></span>',
-													'menu_class'     => ''
-												)
-											);
-										}
-										?> -->
-
 							<ul class="p-0 m-0 footer-accordion-menu">
 								<li class="footer-accordion-item">
 									<h3 class="footer-accordion-title">
@@ -65,16 +41,6 @@ global $repindia_option;
 											class="footer-accordion-icon">+</span></h3>
 								</li>
 								<div class="footer-accordion-content">
-									<!-- <li><a href="#">Oil and Gas</a></li>
-										<li><a href="#">Energy</a> </li>
-										<li><a href="#">Smart cities</a></li>
-										<li><a href="#">Transportation</a></li>
-										<li><a href="#">Government</a></li>
-										<li><a href="#">Retail</a></li>
-										<li><a href="#">Education</a></li>
-										<li><a href="#">Healthcare</a></li>
-										<li><a href="#">Hospitality</a></li>
-										<li><a href="#">Financial institutions</a></li> -->
 									<?php
 									if (has_nav_menu('footer-industry-menu')) {
 										wp_nav_menu(
@@ -123,12 +89,6 @@ global $repindia_option;
 											class="footer-accordion-icon">+</span></h3>
 								</li>
 								<div class="footer-accordion-content">
-									<!-- <li><a href="#">Blogs</a></li>
-										<li><a href="#">Data sheets</a></li>
-										<li><a href="#">Download our free trail software</a></li>
-										<li><a href="#">Calculate hardware sizing</a></li>
-										<li><a href="#">Help</a></li>
-										<li><a href="#">Sitemap</a></li> -->
 									<?php
 									if (has_nav_menu('footer-resource-menu')) {
 										wp_nav_menu(
@@ -153,9 +113,6 @@ global $repindia_option;
 											class="footer-accordion-icon">+</span></h3>
 								</li>
 								<div class="footer-accordion-content">
-									<!-- <li><a href="#">Terms of Service</a></li>
-										<li><a href="#">Privacy Policy</a></li>
-										<li><a href="#">Cookie Policy</a></li> -->
 									<?php
 									if (has_nav_menu('footer-legal-menu')) {
 										wp_nav_menu(
@@ -213,22 +170,21 @@ global $repindia_option;
 				<?php
 				} ?>
 				<!-- Desktop only: center text -->
-				<div class="col-12 order-3 order-md-2 col-md-4 text-center mt-4 mt-md-0">
-					<p class="mb-0">
-						<?php
-						if (!empty($repindia_option['footer_copyright'])) {
-							echo wp_kses_post($repindia_option['footer_copyright']);
-						}
-						?>
-					</p>
-				</div>
+				<?php
+				if (!empty($repindia_option['footer_copyright'])) { ?>
+					<div class="col-12 order-3 order-md-2 col-md-4 text-center mt-4 mt-md-0">
+					    <p class="mb-0"><?php echo wp_kses_post($repindia_option['footer_copyright']); ?></p>
+					</div>
+				<?php
+				}
+				?>
+					
 
 				<!-- Mobile: right icons | Desktop: right aligned -->
 				<?php
 				// Check if social media is enabled
 				$enable_social = isset($repindia_option['enable_social']) && $repindia_option['enable_social'] == 1;
 				$footer_social = isset($repindia_option['footer_social']) && $repindia_option['footer_social'] == 1;
-
 
 				// Get LinkedIn data
 				$linkedin_footer_icon = isset($repindia_option['linkedin_footer_icon']) ? $repindia_option['linkedin_footer_icon'] : '';
@@ -312,7 +268,7 @@ if (!empty($repindia_option['demo_popup_form']))
 			<div class="modal-content">
 				<div class="modal-body">
 					<div class="modal-header">
-						<h5 class="modal-title" id="staticBackdropLabel">Request a demo</h5>
+						<h5 class="modal-title" id="staticBackdropLabel"><?php echo esc_html( wpml_t( 'Request a demo', 'Repindia-Template', 'Header Demo Popup Text' ) ); ?></h5>
 						<span class="btn-closecustom" data-bs-dismiss="modal" aria-label="Close">
 							<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#000'>
 								<path
@@ -335,24 +291,16 @@ if (!empty($repindia_option['demo_popup_form']))
 <?php
 if (!empty($repindia_option['contact_popup_form'])) 
 { ?>
-	<div class="formpopup_modal modal fade" id="contactBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-		aria-labelledby="contactBackdropLabel" aria-hidden="true">
+	<div class="formpopup_modal modal fade" id="contactBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="contactBackdropLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-demo-form">
 			<div class="modal-content">
 				<div class="modal-body">
 					<div class="modal-header">
-						<h5 class="modal-title" id="contactBackdropLabel">Talk to our partner team</h5>
+						<h5 class="modal-title" id="contactBackdropLabel"><?php echo esc_html( wpml_t( 'Talk to our partner team', 'Repindia-Template', 'Header partner popup text' ) ); ?></h5>
 						<span class="btn-closecustom" data-bs-dismiss="modal" aria-label="Close">
-							<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#000'>
-								<path
-									d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414' />
-							</svg>
+							<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#000'><path d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414' /></svg>
 						</span>
 					</div>
-					<!-- <div class="modal-body-content">
-						<h3>Get in Touch</h3>
-						<p>We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
-					</div> -->
 					<?php echo do_shortcode(wp_kses_post($repindia_option['contact_popup_form'])); ?>
 				</div>
 			</div>
@@ -370,12 +318,9 @@ if (!empty($repindia_option['channel_partner_form']))
 			<div class="modal-content">
 				<div class="modal-body">
 					<div class="modal-header">
-						<h5 class="modal-title" id="channelPartnerBackdropLabel">Channel Partner</h5>
+						<h5 class="modal-title" id="channelPartnerBackdropLabel"><?php echo esc_html( wpml_t( 'Channel Partner', 'Repindia-Template', 'Channel Partner popup text' ) ); ?></h5>
 						<span class="btn-closecustom" data-bs-dismiss="modal" aria-label="Close">
-							<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#000'>
-								<path
-									d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414' />
-							</svg>
+							<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#000'><path d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414' /></svg>
 						</span>
 					</div>
 					<?php echo do_shortcode(wp_kses_post($repindia_option['channel_partner_form'])); ?>
@@ -395,7 +340,7 @@ if (!empty($repindia_option['technology_partner_form']))
 			<div class="modal-content">
 				<div class="modal-body">
 					<div class="modal-header">
-						<h5 class="modal-title" id="technologyPartnerBackdropLabel">Technology Partner</h5>
+						<h5 class="modal-title" id="technologyPartnerBackdropLabel"><?php echo esc_html( wpml_t( 'Technology Partner', 'Repindia-Template', 'Technolgy Popup Header' ) ); ?></h5>
 						<span class="btn-closecustom" data-bs-dismiss="modal" aria-label="Close">
 							<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#000'>
 								<path
