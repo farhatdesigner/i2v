@@ -1661,5 +1661,8 @@ html {
 
 .js-dark .center-content .black-theme-img {margin: 0 auto;}
 
+
+.card-contents ul li > span {align-items: self-start;}
+
   
 }

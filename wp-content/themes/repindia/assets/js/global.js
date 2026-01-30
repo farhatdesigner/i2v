@@ -1,42 +1,82 @@
-document.addEventListener("DOMContentLoaded", function () {
+// document.addEventListener("DOMContentLoaded", function () {
 
-    function updateThemeImages(isDark) {
+//     function updateThemeImages(isDark) {
+//         document.querySelectorAll('.theme-img').forEach(wrapper => {
+//             const lightSrc = wrapper.getAttribute('data-light');
+//             const darkSrc  = wrapper.getAttribute('data-dark');
+
+//             if (!lightSrc || !darkSrc) return;
+
+//             // Update ALL images inside the widget
+//             wrapper.querySelectorAll('img').forEach(img => {
+//                 if (!img.dataset.originalSrc) {
+//                     img.dataset.originalSrc = img.src;
+//                 }
+//                 img.src = isDark ? darkSrc : lightSrc;
+//             });
+//         });
+//     }
+
+//     // Detect theme
+//     const storedPref = localStorage.getItem('dark-mode');
+//     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+//     const isDarkMode = document.body.classList.contains('js-dark') ||
+//                        storedPref === 'dark' ||
+//                        (!storedPref && prefersDark);
+
+//     updateThemeImages(isDarkMode);
+
+//     // Toggle support
+//     document.querySelectorAll('.dark-mode-toggle').forEach(btn => {
+//         btn.addEventListener('click', function () {
+//             const isDark = document.body.classList.toggle('js-dark');
+//             localStorage.setItem('dark-mode', isDark ? 'dark' : 'light');
+//             updateThemeImages(isDark);
+//         });
+//     });
+
+// });
+(function () {
+
+    function updateThemeImages() {
+        const isDark = document.body.classList.contains('js-dark');
+
         document.querySelectorAll('.theme-img').forEach(wrapper => {
             const lightSrc = wrapper.getAttribute('data-light');
             const darkSrc  = wrapper.getAttribute('data-dark');
 
             if (!lightSrc || !darkSrc) return;
 
-            // Update ALL images inside the widget
             wrapper.querySelectorAll('img').forEach(img => {
-                if (!img.dataset.originalSrc) {
-                    img.dataset.originalSrc = img.src;
+                const targetSrc = isDark ? darkSrc : lightSrc;
+
+                if (img.src !== targetSrc) {
+                    img.src = targetSrc;
                 }
-                img.src = isDark ? darkSrc : lightSrc;
             });
         });
     }
 
-    // Detect theme
-    const storedPref = localStorage.getItem('dark-mode');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const isDarkMode = document.body.classList.contains('js-dark') ||
-                       storedPref === 'dark' ||
-                       (!storedPref && prefersDark);
+    /* 🔥 CRITICAL: force LIGHT on initial parse */
+    document.documentElement.classList.remove('js-dark');
+    updateThemeImages();
 
-    updateThemeImages(isDarkMode);
+    /* After DOM is stable */
+    document.addEventListener('DOMContentLoaded', updateThemeImages);
 
-    // Toggle support
+    /* Elementor dynamic support */
+    document.addEventListener('elementor/frontend/init', updateThemeImages);
+
+    /* Dark-mode toggle (unchanged behavior) */
     document.querySelectorAll('.dark-mode-toggle').forEach(btn => {
         btn.addEventListener('click', function () {
             const isDark = document.body.classList.toggle('js-dark');
             localStorage.setItem('dark-mode', isDark ? 'dark' : 'light');
-            updateThemeImages(isDark);
+            updateThemeImages();
         });
     });
 
-});
-
+})();
 
 
 // HERO SLIDER
