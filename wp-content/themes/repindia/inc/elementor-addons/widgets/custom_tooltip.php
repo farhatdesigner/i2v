@@ -783,7 +783,7 @@ class Custom_Tooltip extends Widget_Base
         if (!$css_added) {
             $css_added = true;
             echo '<style id="custom-tooltip-css">';
-            echo '.ctw-wrapper { position: relative; display: inline-block;width: 100%;text-align: left;}';
+            echo '.ctw-wrapper { position: relative; display:flex;width: 100%;text-align: left;}';
             echo '.ctw-trigger { cursor: pointer; display: inline-flex; align-items: center; }';
             echo '.ctw-title { display: inline-flex; align-items: center;}';
             echo '.ctw-title .border-b {border-bottom: 2px solid #D7DBE4; }';

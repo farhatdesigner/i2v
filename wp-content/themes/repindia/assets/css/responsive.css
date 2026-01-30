@@ -803,6 +803,7 @@ label.form-label.label_notic a {
     -webkit-box-orient: vertical;
     padding-bottom: 0;
     min-height: unset;
+    margin-bottom: 20px;
   }
   .accordion_set {
     padding: 16px 10px;

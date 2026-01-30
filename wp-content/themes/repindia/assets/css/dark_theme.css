@@ -997,7 +997,7 @@ header li.burger-icon .icon-sun,
 .js-dark .tool_start .elementor-heading-title {color: #E6BA85 !important;}
 .js-dark .card_title_tooltip .ctw-title .ctw-text p {color: rgb(255 255 255 / 90%) !important;}
 
-.bg-txt_icon img {background: #fff;border-radius: 100%;}
+.bg-txt_icon img {background: #fff;border-radius: 100% !important;}
 .js-dark .bg-txt_icon img {background: #262A30;}
 
 .js-dark .sticky-custom > ul > li:hover {
@@ -1016,9 +1016,12 @@ header li.burger-icon .icon-sun,
 }
 .js-dark .noticdark p,.js-dark .bolt p, .js-dark .dark-para {
   color: #FFFFFF !important;
-};
+}
 
+.js-dark .hz-slider-section .swiper-slide ul li>span>svg path {
+  fill: #D7DBE4;
+}
 
-.js-dark .black_bgimg.elementor-widget.elementor-widget-image {
+.js-dark .black_bgimg {
   background: #262A30 !important;
 }
