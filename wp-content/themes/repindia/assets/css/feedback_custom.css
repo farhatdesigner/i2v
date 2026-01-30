@@ -1478,9 +1478,10 @@ html {
   }
 
   .accordion_set > .select_div {
-    padding-left: 4rem;
+    padding-left: 1.5rem;
     text-align: left;
   }
+  .accontent p {margin: 10px 0;}
 
   .accontent {
     padding-left: 0rem;
@@ -1664,5 +1665,6 @@ html {
 
 .card-contents ul li > span {align-items: self-start;}
 
+.main_title_box p {font-size: 14px;}
   
 }
