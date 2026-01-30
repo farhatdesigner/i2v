@@ -917,7 +917,7 @@ class Custom_Tooltip extends Widget_Base
     .ctw-tooltip-inner p{ font-size: 14px;font-weight: 400;line-height: 20px; }
     /* button.ctw-learn-more-btn{ box-shadow: none!important;border: none;border-bottom: 1px solid rgba(255, 255, 255, 0.20); } */
     .ctw-title .ctw-text p{ font-size: 16px;line-height: 26px;color: #5C5C5C; }
-    .tooltiptitlebox .ctw-title .ctw-text p{ color: #262A30;font-size: 20px; }
+    .tooltiptitlebox .ctw-title .ctw-text p{ color: #06283D;font-size: 20px;font-weight: 500; }
     .toptooltitle .ctw-title .ctw-text p{ font-size: 14px;color: #262A30; font-weight: 500;}
     .para_tooltip .ctw-title .ctw-text p{ font-size: 14px; }
     .ctw-title:hover .border-b{ border-bottom: 2px solid #9ea1a8!important; }

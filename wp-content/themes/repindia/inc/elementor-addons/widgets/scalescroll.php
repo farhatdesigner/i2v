@@ -255,6 +255,14 @@ class Scalescroll extends Widget_Base
                 'default' => [],
             ]
         );
+        $repeater->add_control(
+            'bolt_dark_icon',
+            [
+                'label' => esc_html__('Bolt Box Dark Icon/Image', 'repindia'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [],
+            ]
+        );
 
         // Bolt CTA Text
         $repeater->add_control(
@@ -608,6 +616,7 @@ h4.subtitlebox {
                                     $cta_classes = !empty($item['cta_classes']) ? ' ' . esc_attr($item['cta_classes']) : '';
                                     $bolt_title = !empty($item['bolt_title']) ? $item['bolt_title'] : '';
                                     $bolt_icon = !empty($item['bolt_icon']['url']) ? $item['bolt_icon']['url'] : '';
+                                    $bolt_dark_icon = !empty($item['bolt_dark_icon']['url']) ? $item['bolt_dark_icon']['url'] : '';
                                     $bolt_cta_text = !empty($item['bolt_cta_text']) ? $item['bolt_cta_text'] : '';
                                     $bolt_cta_url = !empty($item['bolt_cta_url']['url']) ? $item['bolt_cta_url']['url'] : '';
                                     $bolt_cta_target = !empty($item['bolt_cta_url']['is_external']) ? 'target="_blank"' : '';
@@ -639,7 +648,10 @@ h4.subtitlebox {
                                             <?php if (!empty($bolt_title) || !empty($bolt_icon) || (!empty($bolt_cta_text) && !empty($bolt_cta_url))) : ?>
                                                 <div class="bolt">
                                                     <?php if (!empty($bolt_icon)) : ?>
-                                                        <img src="<?php echo esc_url($bolt_icon); ?>" alt="<?php echo esc_attr($bolt_title); ?>">
+                                                        <img class="lightfile" src="<?php echo esc_url($bolt_icon); ?>" alt="<?php echo esc_attr($bolt_title); ?>">
+                                                    <?php endif; ?>
+                                                    <?php if (!empty($bolt_dark_icon)) : ?>
+                                                        <img class="darkfile" src="<?php echo esc_url($bolt_dark_icon); ?>" alt="<?php echo esc_attr($bolt_title); ?>">
                                                     <?php endif; ?>
                                                     <?php if (!empty($bolt_title)) : ?>
                                                         <p><?php echo esc_html($bolt_title); ?></p>
