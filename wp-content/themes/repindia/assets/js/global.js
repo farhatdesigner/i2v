@@ -252,6 +252,8 @@ jQuery(document).ready(function ($) {
     });
 });
 
+// side menu js
+
 $(document).ready(function () {
     var scrollPosition = 0;
     var isMenuOpen = false;
@@ -356,6 +358,11 @@ $(document).ready(function () {
         // Store the exact scroll position we want to restore
         var restorePosition = scrollPosition;
         
+        // Temporarily disable smooth scroll behavior for instant scroll restoration
+        var originalHtmlScrollBehavior = $("html").css("scroll-behavior");
+        var originalBodyScrollBehavior = $("body").css("scroll-behavior");
+        $("html, body").css("scroll-behavior", "auto");
+        
         // First, restore overflow and padding (but keep position fixed temporarily)
         $("body").css({
             "overflow": "",
@@ -393,6 +400,14 @@ $(document).ready(function () {
                     document.documentElement.scrollTop = restorePosition;
                     document.body.scrollTop = restorePosition;
                     $(window).scrollTop(restorePosition);
+                }
+                
+                // Restore original scroll-behavior after scroll position is restored
+                if (originalHtmlScrollBehavior) {
+                    $("html").css("scroll-behavior", originalHtmlScrollBehavior);
+                }
+                if (originalBodyScrollBehavior) {
+                    $("body").css("scroll-behavior", originalBodyScrollBehavior);
                 }
             });
         });
@@ -466,6 +481,9 @@ $(document).ready(function () {
         }
     });
 });
+
+
+
 
 var swiper2 = new Swiper(".brandslider", {
     spaceBetween: 30,

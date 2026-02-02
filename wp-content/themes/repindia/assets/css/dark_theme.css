@@ -745,9 +745,9 @@ header li.burger-icon .icon-sun,
 .js-dark .custom-blog-filter-toggle-slider:before {
   background-color: #aeb6c9 !important;
 }
-.js-dark .ctw-has-learn-more .ctw-title .border-b {
-  border-bottom: 2px solid #464a4f !important;
-  color: rgba(255, 255, 255, 0.9) !important;
+.js-dark .toptooltitle .ctw-has-learn-more .ctw-title .border-b {
+    border-bottom: 2px solid #464a4f !important;
+    color: rgba(255, 255, 255, 0.9) !important;
 }
 .js-dark .border-dark_grey {
   border-bottom: 1px solid

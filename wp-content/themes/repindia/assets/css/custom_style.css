@@ -380,7 +380,7 @@ ul#header-main-menu li a {
   border-radius: 100%;
   top: 18px;
 }
-ul#header-main-menu li:last-child a {
+.search-popup-footer #header-main-menu li:last-child a {
   color: #5F6F94;
 }
 header #header-main-menu li {
