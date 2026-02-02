@@ -138,8 +138,8 @@ if (! function_exists('repindia_load_theme_scripts_and_styles')) {
 			'homeUrl' => esc_url(home_url('/'))
 		));
 		
-		// Save Swiper 4.5.1 reference before Elementor's Swiper 8 loads (only on homepage)
-		if (is_front_page()) {
+		// Save Swiper 4.5.1 reference before Elementor's Swiper 8 loads (on homepage and why-i2v page)
+		if (is_front_page() || (is_page() && get_page_template_slug() === 'why-i2v.php')) {
 			wp_add_inline_script('swiper-min', '
 				// Save Swiper 4.5.1 reference before Elementor loads Swiper 8
 				window.SwiperV4 = window.Swiper;

@@ -44,6 +44,11 @@
 
 // HERO SLIDER
 jQuery(document).ready(function ($) {
+    // Only initialize if the slider exists on the page
+    if ($('.hero-swiper-container').length === 0) {
+        return;
+    }
+
     var menu = [];
     $('.hero-swiper-container .swiper-slide').each(function (index) {
         menu.push($(this).find('.hero-slide-inner').attr("data-text"));
@@ -211,10 +216,32 @@ jQuery(document).ready(function ($) {
         }
     };
 
-    // Use Swiper 4.5.1 reference on homepage to avoid Elementor's Swiper 8 conflict
+    // Use Swiper 4.5.1 reference to avoid Elementor's Swiper 8 conflict
     // window.SwiperV4 is saved before Elementor loads its Swiper 8
-    var SwiperConstructor = (typeof window.SwiperV4 !== 'undefined') ? window.SwiperV4 : Swiper;
-    var swiper = new SwiperConstructor(".hero-swiper-container", swiperOptions);
+    // Wait for Swiper to be available before initializing
+    function initHeroSwiper() {
+        var container = document.querySelector('.hero-swiper-container');
+        if (!container) return;
+        
+        // Check if already initialized
+        if (container.swiper) return;
+        
+        var SwiperConstructor = (typeof window.SwiperV4 !== 'undefined') ? window.SwiperV4 : (typeof Swiper !== 'undefined' ? Swiper : null);
+        if (SwiperConstructor) {
+            var swiper = new SwiperConstructor(".hero-swiper-container", swiperOptions);
+        } else {
+            // Retry after a short delay if Swiper not loaded yet
+            setTimeout(initHeroSwiper, 100);
+        }
+    }
+    
+    // Initialize immediately or wait for Swiper
+    if (typeof Swiper !== 'undefined' || typeof window.SwiperV4 !== 'undefined') {
+        initHeroSwiper();
+    } else {
+        // Wait for Swiper to load
+        setTimeout(initHeroSwiper, 100);
+    }
 
     // DATA BACKGROUND IMAGE
     var sliderBgSetting = $(".hero-swiper-container .slide-bg-image");
