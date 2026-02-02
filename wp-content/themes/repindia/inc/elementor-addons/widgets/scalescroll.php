@@ -489,10 +489,7 @@ h4.subtitlebox {
     border: 1px solid #E6EBF2;
 }
 
-            @media(max-width: 768px){
-                .photo_custom .details * { text-align: left;}
-            
-            }
+
             /* Nested repeater image theme switching */
             .nested-image-wrapper .white_theme_img { display: block; }
             .nested-image-wrapper .black_theme_img { display: none; }
@@ -522,7 +519,7 @@ h4.subtitlebox {
             }
             .featuregroup_repeator h3.nested-title-1 {
                 color: #4A5673;
-    font-size: 16px !important;
+    font-size: 16px;
     font-style: normal;
     font-weight: 500 !important;
     line-height: 24px;
@@ -576,6 +573,25 @@ h4.subtitlebox {
 }
 
 .bolt img { width: 26px; }
+
+@media(max-width: 768px){
+    .photo_custom .details * { text-align: left;}
+}
+
+@media(max-width: 767px){
+    
+.featuregroup_repeator h3.nested-title-1 {
+    font-size: 14px;
+}
+
+.featuregroup_repeator .nested-description-1, .featuregroup_repeator .nested-description-1 p {font-size: 14px;line-height: 1.2 !important;}
+h4.boxtitle {
+    font-size: 11px;
+}
+
+}
+
+
         </style>
 
         <div class="makdmks">

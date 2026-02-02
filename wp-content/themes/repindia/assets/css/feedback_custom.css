@@ -1314,6 +1314,26 @@ div.pin-spacer > .hz-slider-topcaption {
 .elementor-element.elementor-element-a7263d7.onvif_txt.elementor-widget.elementor-widget-heading {
   margin-top: 6px;
 }
+.card-body_industry p{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  padding-bottom: 0;
+  min-height: unset;
+}
+.card_industry {
+  display: inline-block;
+}
+.card-body_industry .card-title{
+  font-size: 24px;
+  font-weight: 600;
+  color: #06283D;
+}
+.js-dark .card_industry {
+  background: #262a30;
+}
 
 @media (min-width: 768px) {
   .hz-slider-topcaption .swiper-slide h2 {
@@ -1470,6 +1490,10 @@ html {
     min-height: auto;
     margin-bottom: 1rem;
   }
+  .card_industry{ width: 100%!important; }
+  .grid-industry_list li {
+      width: 100% !important;
+  }
 }
 
 @media (max-width: 767px) {
@@ -1610,14 +1634,14 @@ html {
   }
   
   .hz-slider-topcaption .swiper-slide h3 {
-    font-size: 24px;
+    font-size: 28px;
     line-height: 30px;
   }
   
-  .hz-slider-topcaption .swiper-slide p {
-    font-size: 16px;
+  .hz-slider-topcaption .swiper-slide p, .featuregroup_repeator .nested-description-1, .featuregroup_repeator .nested-description-1 p, .nested-repeater-2.listedgroup_repeator ul li {
+    font-size: 14px;
   }
-  
+
   /* Mobile alignment for hz-slider-section list items */
   .hz-slider-section .swiper-slide ul li {
     display: flex;
@@ -1666,5 +1690,10 @@ html {
 .card-contents ul li > span {align-items: self-start;}
 
 .main_title_box p {font-size: 14px;}
+
+
+
+.center_tooltip .ctw-wrapper, .center_tooltip .ctw-title {justify-content: center;text-align: center !important;}
+.card_title_tooltip .ctw-title .ctw-text p {font-size: 20px;text-align: center;}
   
 }

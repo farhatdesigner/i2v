@@ -1,41 +1,4 @@
-// document.addEventListener("DOMContentLoaded", function () {
 
-//     function updateThemeImages(isDark) {
-//         document.querySelectorAll('.theme-img').forEach(wrapper => {
-//             const lightSrc = wrapper.getAttribute('data-light');
-//             const darkSrc  = wrapper.getAttribute('data-dark');
-
-//             if (!lightSrc || !darkSrc) return;
-
-//             // Update ALL images inside the widget
-//             wrapper.querySelectorAll('img').forEach(img => {
-//                 if (!img.dataset.originalSrc) {
-//                     img.dataset.originalSrc = img.src;
-//                 }
-//                 img.src = isDark ? darkSrc : lightSrc;
-//             });
-//         });
-//     }
-
-//     // Detect theme
-//     const storedPref = localStorage.getItem('dark-mode');
-//     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-//     const isDarkMode = document.body.classList.contains('js-dark') ||
-//                        storedPref === 'dark' ||
-//                        (!storedPref && prefersDark);
-
-//     updateThemeImages(isDarkMode);
-
-//     // Toggle support
-//     document.querySelectorAll('.dark-mode-toggle').forEach(btn => {
-//         btn.addEventListener('click', function () {
-//             const isDark = document.body.classList.toggle('js-dark');
-//             localStorage.setItem('dark-mode', isDark ? 'dark' : 'light');
-//             updateThemeImages(isDark);
-//         });
-//     });
-
-// });
 (function () {
 
     function updateThemeImages() {
@@ -728,12 +691,36 @@ function initStickyMenu(config) {
                 var href = $link.attr('href');
                 if (href && href.indexOf('#') !== -1) {
                     var sectionId = href.split('#')[1];
-                    sections.push('.' + sectionId);
+                    // Check if element exists as ID or class
+                    var $byId = $('#' + sectionId);
+                    var $byClass = $('.' + sectionId);
+                    if ($byId.length > 0) {
+                        sections.push('#' + sectionId); // Use ID selector
+                    } else if ($byClass.length > 0) {
+                        sections.push('.' + sectionId); // Use class selector
+                    } else {
+                        // Default to ID selector if element not found yet (might load later)
+                        sections.push('#' + sectionId);
+                    }
                 } else {
                     // Try data attribute or class
                     var dataTarget = $link.data('target') || $(this).data('section');
                     if (dataTarget) {
-                        sections.push('.' + dataTarget);
+                        // Check if it's an ID or class
+                        if (dataTarget.indexOf('#') === 0) {
+                            sections.push(dataTarget);
+                        } else if (dataTarget.indexOf('.') === 0) {
+                            sections.push(dataTarget);
+                        } else {
+                            // Try both ID and class
+                            var $byId = $('#' + dataTarget);
+                            var $byClass = $('.' + dataTarget);
+                            if ($byId.length > 0) {
+                                sections.push('#' + dataTarget);
+                            } else {
+                                sections.push('.' + dataTarget);
+                            }
+                        }
                     }
                 }
             }
@@ -1182,6 +1169,18 @@ var stickyMenuConfigs = {
         ],
         triggerOffset: 220, // Adjust if needed
         scrollThreshold: 120 // Fixed at 120px from top of viewport
+    },
+    // Configuration for sitemap page
+    sitemap: {
+        sections: [
+            "#product",
+            "#industries",
+            "#insight",
+            "#company",
+            "#quicklinks"
+        ],
+        triggerOffset: 220, // Adjust if needed
+        scrollThreshold: 120 // Fixed at 120px from top of viewport
     }
 };
 
@@ -1217,6 +1216,13 @@ jQuery(document).ready(function ($) {
         
         if (hasPartnerSections) {
             return stickyMenuConfigs.partnersystems;
+        }
+        
+        // Check for sitemap page sections (using ID selectors)
+        var hasSitemapSections = $("#product, #industries, #insight, #company, #quicklinks").length >= 3;
+        
+        if (hasSitemapSections) {
+            return stickyMenuConfigs.sitemap;
         }
         
         // If no specific sections found, try to auto-detect from menu

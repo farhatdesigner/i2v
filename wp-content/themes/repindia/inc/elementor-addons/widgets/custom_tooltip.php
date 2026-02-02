@@ -919,8 +919,10 @@ class Custom_Tooltip extends Widget_Base
     .ctw-title .ctw-text p{ font-size: 16px;line-height: 26px;color: #5C5C5C; }
     .tooltiptitlebox .ctw-title .ctw-text p{ color: #06283D;font-size: 20px;font-weight: 500; }
     .toptooltitle .ctw-title .ctw-text p{ font-size: 14px;color: #262A30; font-weight: 500;}
-    .para_tooltip .ctw-title .ctw-text p{ font-size: 14px; }
+    .para_tooltip .ctw-title .ctw-text p{ font-size: 16px; }
+    .tooltip_leftpara .para_tooltip .ctw-title .ctw-text p {font-size: 18px;}
     .ctw-title:hover .border-b{ border-bottom: 2px solid #9ea1a8!important; }
+    .group_tooltip .ctw-title .ctw-text p { font-weight: 500;font-size: 16px;}
     .js-dark .ctw-title:hover .border-b { border-bottom: 2px solid #7d8895 !important; }
     .js-dark .ctw-has-learn-more .ctw-title .border-b, .js-dark .ctw-title span.ctw-text,.js-dark .tooltiptitlebox .ctw-has-learn-more .ctw-title .border-b, .js-dark .tooltiptitlebox .ctw-title span.ctw-text {
         border-bottom: 2px solid #464a4f !important;
@@ -974,13 +976,29 @@ class Custom_Tooltip extends Widget_Base
             transform: translate(-50%, -50%) !important;
         }
         
-.ctw-trigger {
-    display: flex;
-}
+.ctw-trigger {display: flex;}
+.para_tooltip .ctw-title .ctw-text p {font-size: 14px;text-align: center;}
+.tooltiptitlebox .ctw-wrapper {text-align: center;align-items: center;justify-content: center;}
+.ctw-title.ctw-icon-left .ctw-text p {font-size: 14px;text-align: center;}
+.tooltip_leftpara .para_tooltip .ctw-title .ctw-text p {font-size: 16px;font-weight: 500;}
 
-.para_tooltip .ctw-title .ctw-text p {
-    font-size: 14px;
-}
+
+.elementor-element.group_tooltip .e-con-inner {display: inline-block !important;width: 100% !important;}
+.elementor-element.group_tooltip .e-con-inner .elementor-widget {display: inline !important;width: auto !important;}
+.elementor-element.group_tooltip .e-con-inner .elementor-widget-heading,
+.elementor-element.group_tooltip .e-con-inner .elementor-widget-custom_tooltip {display: inline !important;width: auto !important;}
+.elementor-element.group_tooltip .e-con-inner .elementor-widget p,
+.elementor-element.group_tooltip .e-con-inner .elementor-widget .elementor-heading-title {
+    display: inline !important;font-size: 14px;}
+  .group_tooltip {white-space: normal !important;}
+  .group_tooltip .ctw-wrapper {display: inline-flex !important;flex-wrap: wrap !important;width: auto !important;}
+  .group_tooltip .ctw-text,
+  .group_tooltip .ctw-title { display: inline !important;width: auto !important;white-space: normal !important;}
+  .group_tooltip .ctw-text p {display: inline !important;width: auto !important;white-space: normal !important;word-wrap: break-word !important;overflow-wrap: break-word !important;
+  }
+  .group_tooltip .elementor-widget-container {display: contents;}
+
+
     }
 </style>
         
