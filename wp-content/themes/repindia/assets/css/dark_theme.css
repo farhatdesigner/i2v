@@ -753,6 +753,9 @@ header li.burger-icon .icon-sun,
   border-bottom: 1px solid
     var(--Golbal-others-border-3, rgba(193, 196, 198, 0.2)) !important;
 }
+.js-dark #border_dark, .js-dark .h-full {
+    border-color: #c1c4c633;
+}
 .js-dark #why_oil {
   background-color: transparent !important;
 }
@@ -835,6 +838,9 @@ header li.burger-icon .icon-sun,
   border-bottom-color: #d7dbe4;
 }
 .js-dark .video_topcaption_white {
+  /* background: #262a30 !important;   */
+}
+.js-dark .video_topcaption_white .custom-container {
   background: #262a30 !important;
 }
 .js-dark .video_topcaption_white button {
@@ -1037,5 +1043,5 @@ header li.burger-icon .icon-sun,
 }
 
 .js-dark .elementor-position-left.theme-img {
-  border-color: rgb(193 196 198 / 20%);
+  border-color: rgb(193 196 198 / 20%) !important;
 }

@@ -1335,6 +1335,10 @@ div.pin-spacer > .hz-slider-topcaption {
   background: #262a30;
 }
 
+#img-custom .elementor-image-box-img {
+  height: 60px;
+}
+
 @media (min-width: 768px) {
   .hz-slider-topcaption .swiper-slide h2 {
     font-size: 32px;

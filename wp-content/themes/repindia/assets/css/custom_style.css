@@ -3633,6 +3633,7 @@ span.star {
 @media (min-width: 1025px) {
   .customtabsmart .smart-filter-menu .smart-tabsautoscroll {
     display: block !important;
+    max-width: fit-content;
   }
 
   .customtabsmart .smart-dropdown-label,

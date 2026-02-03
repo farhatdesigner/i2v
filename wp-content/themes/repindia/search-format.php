@@ -9,7 +9,7 @@ $thumbsize = 'repindia-blog-large';
 		</div>
 	    <?php echo the_excerpt(); ?>
         <div class="search_result_button">
-            <a class="theme-btn bg-trans border_btnlight global_btn" href="<?php echo esc_url( get_permalink() ); ?>"><?php echo esc_html__('Read More','repindia'); ?><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M12 12V0H0L12 12Z" fill="#EE7F2B"/></svg></a>
+            <a class="theme-btn bg-trans border_btnlight global_btn" href="<?php echo esc_url( get_permalink() ); ?>"><?php echo esc_html__('Read More','repindia'); ?></a>
         </div>
     </div>
 </div>
