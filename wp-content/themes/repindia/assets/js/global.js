@@ -1,41 +1,4 @@
-// document.addEventListener("DOMContentLoaded", function () {
 
-//     function updateThemeImages(isDark) {
-//         document.querySelectorAll('.theme-img').forEach(wrapper => {
-//             const lightSrc = wrapper.getAttribute('data-light');
-//             const darkSrc  = wrapper.getAttribute('data-dark');
-
-//             if (!lightSrc || !darkSrc) return;
-
-//             // Update ALL images inside the widget
-//             wrapper.querySelectorAll('img').forEach(img => {
-//                 if (!img.dataset.originalSrc) {
-//                     img.dataset.originalSrc = img.src;
-//                 }
-//                 img.src = isDark ? darkSrc : lightSrc;
-//             });
-//         });
-//     }
-
-//     // Detect theme
-//     const storedPref = localStorage.getItem('dark-mode');
-//     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-//     const isDarkMode = document.body.classList.contains('js-dark') ||
-//                        storedPref === 'dark' ||
-//                        (!storedPref && prefersDark);
-
-//     updateThemeImages(isDarkMode);
-
-//     // Toggle support
-//     document.querySelectorAll('.dark-mode-toggle').forEach(btn => {
-//         btn.addEventListener('click', function () {
-//             const isDark = document.body.classList.toggle('js-dark');
-//             localStorage.setItem('dark-mode', isDark ? 'dark' : 'light');
-//             updateThemeImages(isDark);
-//         });
-//     });
-
-// });
 (function () {
 
     function updateThemeImages() {
@@ -81,6 +44,11 @@
 
 // HERO SLIDER
 jQuery(document).ready(function ($) {
+    // Only initialize if the slider exists on the page
+    if ($('.hero-swiper-container').length === 0) {
+        return;
+    }
+
     var menu = [];
     $('.hero-swiper-container .swiper-slide').each(function (index) {
         menu.push($(this).find('.hero-slide-inner').attr("data-text"));
@@ -248,10 +216,32 @@ jQuery(document).ready(function ($) {
         }
     };
 
-    // Use Swiper 4.5.1 reference on homepage to avoid Elementor's Swiper 8 conflict
+    // Use Swiper 4.5.1 reference to avoid Elementor's Swiper 8 conflict
     // window.SwiperV4 is saved before Elementor loads its Swiper 8
-    var SwiperConstructor = (typeof window.SwiperV4 !== 'undefined') ? window.SwiperV4 : Swiper;
-    var swiper = new SwiperConstructor(".hero-swiper-container", swiperOptions);
+    // Wait for Swiper to be available before initializing
+    function initHeroSwiper() {
+        var container = document.querySelector('.hero-swiper-container');
+        if (!container) return;
+        
+        // Check if already initialized
+        if (container.swiper) return;
+        
+        var SwiperConstructor = (typeof window.SwiperV4 !== 'undefined') ? window.SwiperV4 : (typeof Swiper !== 'undefined' ? Swiper : null);
+        if (SwiperConstructor) {
+            var swiper = new SwiperConstructor(".hero-swiper-container", swiperOptions);
+        } else {
+            // Retry after a short delay if Swiper not loaded yet
+            setTimeout(initHeroSwiper, 100);
+        }
+    }
+    
+    // Initialize immediately or wait for Swiper
+    if (typeof Swiper !== 'undefined' || typeof window.SwiperV4 !== 'undefined') {
+        initHeroSwiper();
+    } else {
+        // Wait for Swiper to load
+        setTimeout(initHeroSwiper, 100);
+    }
 
     // DATA BACKGROUND IMAGE
     var sliderBgSetting = $(".hero-swiper-container .slide-bg-image");
@@ -261,6 +251,8 @@ jQuery(document).ready(function ($) {
         }
     });
 });
+
+// side menu js
 
 $(document).ready(function () {
     var scrollPosition = 0;
@@ -366,6 +358,11 @@ $(document).ready(function () {
         // Store the exact scroll position we want to restore
         var restorePosition = scrollPosition;
         
+        // Temporarily disable smooth scroll behavior for instant scroll restoration
+        var originalHtmlScrollBehavior = $("html").css("scroll-behavior");
+        var originalBodyScrollBehavior = $("body").css("scroll-behavior");
+        $("html, body").css("scroll-behavior", "auto");
+        
         // First, restore overflow and padding (but keep position fixed temporarily)
         $("body").css({
             "overflow": "",
@@ -403,6 +400,14 @@ $(document).ready(function () {
                     document.documentElement.scrollTop = restorePosition;
                     document.body.scrollTop = restorePosition;
                     $(window).scrollTop(restorePosition);
+                }
+                
+                // Restore original scroll-behavior after scroll position is restored
+                if (originalHtmlScrollBehavior) {
+                    $("html").css("scroll-behavior", originalHtmlScrollBehavior);
+                }
+                if (originalBodyScrollBehavior) {
+                    $("body").css("scroll-behavior", originalBodyScrollBehavior);
                 }
             });
         });
@@ -476,6 +481,9 @@ $(document).ready(function () {
         }
     });
 });
+
+
+
 
 var swiper2 = new Swiper(".brandslider", {
     spaceBetween: 30,
@@ -728,12 +736,36 @@ function initStickyMenu(config) {
                 var href = $link.attr('href');
                 if (href && href.indexOf('#') !== -1) {
                     var sectionId = href.split('#')[1];
-                    sections.push('.' + sectionId);
+                    // Check if element exists as ID or class
+                    var $byId = $('#' + sectionId);
+                    var $byClass = $('.' + sectionId);
+                    if ($byId.length > 0) {
+                        sections.push('#' + sectionId); // Use ID selector
+                    } else if ($byClass.length > 0) {
+                        sections.push('.' + sectionId); // Use class selector
+                    } else {
+                        // Default to ID selector if element not found yet (might load later)
+                        sections.push('#' + sectionId);
+                    }
                 } else {
                     // Try data attribute or class
                     var dataTarget = $link.data('target') || $(this).data('section');
                     if (dataTarget) {
-                        sections.push('.' + dataTarget);
+                        // Check if it's an ID or class
+                        if (dataTarget.indexOf('#') === 0) {
+                            sections.push(dataTarget);
+                        } else if (dataTarget.indexOf('.') === 0) {
+                            sections.push(dataTarget);
+                        } else {
+                            // Try both ID and class
+                            var $byId = $('#' + dataTarget);
+                            var $byClass = $('.' + dataTarget);
+                            if ($byId.length > 0) {
+                                sections.push('#' + dataTarget);
+                            } else {
+                                sections.push('.' + dataTarget);
+                            }
+                        }
                     }
                 }
             }
@@ -1182,6 +1214,18 @@ var stickyMenuConfigs = {
         ],
         triggerOffset: 220, // Adjust if needed
         scrollThreshold: 120 // Fixed at 120px from top of viewport
+    },
+    // Configuration for sitemap page
+    sitemap: {
+        sections: [
+            "#product",
+            "#industries",
+            "#insight",
+            "#company",
+            "#quicklinks"
+        ],
+        triggerOffset: 220, // Adjust if needed
+        scrollThreshold: 120 // Fixed at 120px from top of viewport
     }
 };
 
@@ -1217,6 +1261,13 @@ jQuery(document).ready(function ($) {
         
         if (hasPartnerSections) {
             return stickyMenuConfigs.partnersystems;
+        }
+        
+        // Check for sitemap page sections (using ID selectors)
+        var hasSitemapSections = $("#product, #industries, #insight, #company, #quicklinks").length >= 3;
+        
+        if (hasSitemapSections) {
+            return stickyMenuConfigs.sitemap;
         }
         
         // If no specific sections found, try to auto-detect from menu

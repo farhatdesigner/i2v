@@ -661,7 +661,6 @@ class Video_accordioncaption extends Widget_Base
                 }
 
                 .vac_main_title {
-                    font-size: 24px;
                     margin-bottom: 0;
                 }
 

@@ -70,6 +70,8 @@ header li.burger-icon .icon-sun,
   position: relative;
   width: auto;
 }
+
+
 .vids_inv .cornerbtn .theme-btn {
   width: auto;
   display: inline-block;
@@ -743,9 +745,9 @@ header li.burger-icon .icon-sun,
 .js-dark .custom-blog-filter-toggle-slider:before {
   background-color: #aeb6c9 !important;
 }
-.js-dark .ctw-has-learn-more .ctw-title .border-b {
-  border-bottom: 2px solid #464a4f !important;
-  color: rgba(255, 255, 255, 0.9) !important;
+.js-dark .toptooltitle .ctw-has-learn-more .ctw-title .border-b {
+    border-bottom: 2px solid #464a4f !important;
+    color: rgba(255, 255, 255, 0.9) !important;
 }
 .js-dark .border-dark_grey {
   border-bottom: 1px solid
@@ -816,6 +818,10 @@ header li.burger-icon .icon-sun,
 }
 .js-dark .border-second {
   border: var(--XSM, 4px) solid #262A30;
+}
+
+.js-dark .e-con-full.ai_smart_dark .elementor-position-left.theme-img {
+  border-color: rgb(193 196 198 / 10%) !important;
 }
 
 /* Dark theme chevron icon colors */
@@ -977,11 +983,15 @@ header li.burger-icon .icon-sun,
   color: #ffffff !important;
 }
 
- .js-dark .elementor-testimonial__text, .js-dark .elementor-testimonial__title {color: #AEB6C9!important;}
+ .js-dark .elementor-testimonial__text, .js-dark .elementor-testimonial__title {color: #ffffffe6 !important;}
+ .js-dark .elementor-testimonial__name {color: #D7DBE4 !important;}
 .js-dark .connection-lines svg path {color: #D7DBE4!important;}
 .js-dark .connection-lines svg path, .js-dark .right-connection_lines svg path {stroke: rgb(193 196 198 / 20%) !important;}
 .js-dark .connection-lines svg circle, .js-dark .right-connection_lines svg circle {stroke:none !important;}
 .js-dark .connection-lines svg circle, .js-dark .right-connection_lines svg circle {fill:#74C2ED !important;}
+
+
+.js-dark .floating_dark {border-color: #c1c4c61a !important;}
 
 
 .js-dark .faq_bg .elementor-element.elementor-widget-n-accordion > .e-n-accordion > .e-n-accordion-item > .e-n-accordion-item-title svg path {
@@ -1024,4 +1034,8 @@ header li.burger-icon .icon-sun,
 
 .js-dark .black_bgimg {
   background: #262A30 !important;
+}
+
+.js-dark .elementor-position-left.theme-img {
+  border-color: rgb(193 196 198 / 20%);
 }
