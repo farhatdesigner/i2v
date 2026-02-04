@@ -855,6 +855,18 @@ header li.burger-icon .icon-sun,
     fill: transparent!important;
     stroke: #ffffff!important;
 }
+
+
+
+#white_bg-conatainer .vac_chevron svg {stroke: #5F6F94 !important;}
+.js-dark #white_bg-conatainer .vac_chevron svg {
+  fill: transparent !important;
+  stroke: #D7DBE4 !important;
+}
+.js-dark #white_bg-conatainer .vac_accordion_set.active .vac_chevron svg {
+  stroke: #ffffff !important;
+}
+
 .js-dark .bg-trans:hover,.js-dark .bg-tran_lightcolor:hover {
   background: transparent !important;
   border-bottom: 1px solid #74C2ED;

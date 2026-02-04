@@ -1001,9 +1001,10 @@ class Custom_Tooltip extends Widget_Base
             }
 
             .js-dark .tooltiptitlebox .ctw-title .ctw-text p,
-            .js-dark .tooltiptitlebox .ctw-title .ctw-text p .border-b {
-                color: #ffff !important;
-            }
+            .js-dark .tooltiptitlebox .ctw-title .ctw-text p .border-b {color: #ffff !important;}
+
+              
+.defaultdark_paratool span.ctw-title.ctw-icon-left .ctw-text {color: #AEB6C9 !important;font-size: 16px;}
 
             @media (max-width: 768px) {
                 .ctw-tooltip-bottom {
@@ -1019,8 +1020,9 @@ class Custom_Tooltip extends Widget_Base
                 .toptooltitle .ctw-tooltip-bottom {
                     left: 50% !important;
                     right: auto !important;
-                    top: 40% !important;
+                    top: 28% !important;
                     transform: translate(-50%, -50%) !important;
+                    max-width: 360px !important;
                     position: fixed !important;
                 }
 
@@ -1033,6 +1035,15 @@ class Custom_Tooltip extends Widget_Base
                 }
 
             }
+
+            @media (max-width: 380px) {
+                .toptooltitle .ctw-tooltip-bottom {
+                    top: 38% !important;
+                }
+            }
+
+
+
         </style>
 
         <div class="ctw-wrapper <?php echo $show_learn_more ? 'ctw-has-learn-more' : ''; ?>"

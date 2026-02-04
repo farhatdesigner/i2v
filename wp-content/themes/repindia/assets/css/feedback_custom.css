@@ -10,6 +10,9 @@ html.lenis body {
 
 .bg-blacktheme {
   background-color: #0d1117;
+  min-height: 700px;
+  margin: 20px;
+  border-radius: 12px;
 }
 
 .radius-8 {
@@ -929,7 +932,7 @@ div.pin-spacer > .hz-slider-section {
   position: absolute;
   content: url("/i2v/wp-content/uploads/2025/12/Vector-8.svg");
   position: absolute;
-  right: -25%;
+  right: -20%;
   top: 25%;
   display: inline-block;
   width: auto;
@@ -939,7 +942,7 @@ div.pin-spacer > .hz-slider-section {
   position: absolute;
   content: url("/i2v/wp-content/uploads/2025/12/Vector-9.svg");
   position: absolute;
-  right: -40%;
+  right: -34%;
   top: 35%;
   display: inline-block;
   width: auto;
@@ -950,7 +953,7 @@ div.pin-spacer > .hz-slider-section {
   content: url("/i2v/wp-content/uploads/2025/12/Vector-10.svg");
   position: absolute;
   left: -35%;
-  top: 10%;
+  top: 18%;
   display: inline-block;
   width: auto;
   height: auto;
@@ -960,7 +963,7 @@ div.pin-spacer > .hz-slider-section {
   content: url("/i2v/wp-content/uploads/2025/12/Vector-11.svg");
   position: absolute;
   left: -40%;
-  top: 0%;
+  top: 65%;
   display: inline-block;
   width: auto;
   height: auto;
@@ -1195,6 +1198,10 @@ p.card-text_industry {
   .hz-slider-section .swiper-slide h2 {
     font-size: 32px;
   }
+  .security_issue .elementor-widget-image-box.elementor-position-right .elementor-image-box-wrapper {
+    flex-direction: row-reverse;
+    text-align: end;
+}
 }
 .hz-slider-section .swiper-slide-active {
   overflow: visible;
@@ -1498,6 +1505,7 @@ html {
   .grid-industry_list li {
       width: 100% !important;
   }
+
 }
 
 @media (max-width: 767px) {
@@ -1695,9 +1703,21 @@ html {
 
 .main_title_box p {font-size: 14px;}
 
-
-
 .center_tooltip .ctw-wrapper, .center_tooltip .ctw-title {justify-content: center;text-align: center !important;}
 .card_title_tooltip .ctw-title .ctw-text p {font-size: 20px;text-align: center;}
+
+
+  /* Fix group_tooltip mobile display */
+
+  .elementor-element.group_tooltip .e-con-inner,
+  .elementor-element.group_tooltip .e-con-inner .elementor-widget,
+  .elementor-element.group_tooltip .e-con-inner .elementor-widget p {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    word-wrap: normal !important;
+    overflow-wrap: normal !important;
+    line-height: 1.6 !important;
+  }
   
 }

@@ -620,6 +620,16 @@ class Video_accordioncaption extends Widget_Base
                 padding: 10px;
             }
 
+/* retail accordion */
+            
+#retail_grey-accrordion .vac_accordion_set.active {background: #FFFFFF;}
+#retail_grey-accrordion .vac_accordion_set.active .vac_chevron svg {stroke:#D7DBE4;}
+/* .js-dark #retail_grey-accrordion .vac_accordion_set.active {background: #FFFFFF;}
+.js-dark #retail_grey-accrordion .vac_accordion_set.active .vac_chevron svg {stroke:#D7DBE4;} */
+
+/* retail accordion dark theme */
+
+
 
             @media (max-width: 991px) {
 
