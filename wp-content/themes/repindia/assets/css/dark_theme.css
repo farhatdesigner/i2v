@@ -808,7 +808,7 @@ header li.burger-icon .icon-sun,
     border: 1px solid #C1C4C61A;
     background: #262A30;
 }
-.js-dark .explore_dark{border-bottom: 1px solid rgba(193, 196, 198, 0.1) !important;}
+.js-dark .explore_dark{border-color:rgba(193, 196, 198, 0.1) !important;}
 .js-dark .absolute_slider:before {
   background: #464a4f !important;
 }
@@ -849,7 +849,7 @@ header li.burger-icon .icon-sun,
  .js-dark .vac_accordion_set {border-bottom: 1px solid rgba(193, 196, 198, 0.1) !important;}
  .js-dark .vac_accordion_set.active {
   border-bottom: 1px solid rgba(193, 196, 198, 0.1) !important;
-  background: #464a4f !important;
+  background: #464a4f;
 }
 .js-dark .vac_chevron svg {
     fill: transparent!important;

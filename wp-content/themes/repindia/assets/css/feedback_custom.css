@@ -459,6 +459,7 @@ html.lenis body {
   position: relative;
   top: 38px;
   right: -40px;
+  border-radius: 4px 0 0 0 !important;
 }
 
 .card-contents h3 {
@@ -1192,6 +1193,7 @@ p.card-text_industry {
   content: '';
   height: 100%;
   width: 100%;
+  border-radius: 12px;
 }
 
 @media (min-width: 768px) {
