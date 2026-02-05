@@ -739,11 +739,15 @@ label.form-label.label_notic a {
     .elementor-element.heading_tablemenu.elementor-widget-icon-list
     ul
     li {
-    min-width: 240px;
-    width: 240px;
+    min-width: 200px;
+    width: 200px;
     display: inline-block;
     text-align: left;
   }
+  .detailtbas .elementor-element.heading_tablemenu.elementor-widget-icon-list ul li:nth-child(2){text-align: center;padding-left: 40px;}
+  .detailtbas .elementor-element.heading_tablemenu.elementor-widget-icon-list ul li:nth-child(3){text-align: center;padding-left: 60px;}
+  .detailtbas .elementor-element.heading_tablemenu.elementor-widget-icon-list ul li:nth-child(4){text-align: center;padding-left: 60px;}
+
   .detailtbas {
     max-width: 400px;
     overflow: scroll !important;

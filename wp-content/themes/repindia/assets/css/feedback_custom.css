@@ -10,6 +10,9 @@ html.lenis body {
 
 .bg-blacktheme {
   background-color: #0d1117;
+  min-height: 700px;
+  margin: 20px;
+  border-radius: 12px;
 }
 
 .radius-8 {
@@ -456,6 +459,7 @@ html.lenis body {
   position: relative;
   top: 38px;
   right: -40px;
+  border-radius: 4px 0 0 0 !important;
 }
 
 .card-contents h3 {
@@ -594,7 +598,7 @@ p#breadcrumbs svg {
     flex-direction: column;
     justify-content: start;
     /* padding: 80px 0; */
-    height: 60vh;
+    min-height: 60vh;
     margin-bottom: 2rem;
 }
 
@@ -929,7 +933,7 @@ div.pin-spacer > .hz-slider-section {
   position: absolute;
   content: url("/i2v/wp-content/uploads/2025/12/Vector-8.svg");
   position: absolute;
-  right: -25%;
+  right: -20%;
   top: 25%;
   display: inline-block;
   width: auto;
@@ -939,7 +943,7 @@ div.pin-spacer > .hz-slider-section {
   position: absolute;
   content: url("/i2v/wp-content/uploads/2025/12/Vector-9.svg");
   position: absolute;
-  right: -40%;
+  right: -34%;
   top: 35%;
   display: inline-block;
   width: auto;
@@ -950,7 +954,7 @@ div.pin-spacer > .hz-slider-section {
   content: url("/i2v/wp-content/uploads/2025/12/Vector-10.svg");
   position: absolute;
   left: -35%;
-  top: 10%;
+  top: 18%;
   display: inline-block;
   width: auto;
   height: auto;
@@ -960,7 +964,7 @@ div.pin-spacer > .hz-slider-section {
   content: url("/i2v/wp-content/uploads/2025/12/Vector-11.svg");
   position: absolute;
   left: -40%;
-  top: 0%;
+  top: 65%;
   display: inline-block;
   width: auto;
   height: auto;
@@ -1189,12 +1193,17 @@ p.card-text_industry {
   content: '';
   height: 100%;
   width: 100%;
+  border-radius: 12px;
 }
 
 @media (min-width: 768px) {
   .hz-slider-section .swiper-slide h2 {
     font-size: 32px;
   }
+  .security_issue .elementor-widget-image-box.elementor-position-right .elementor-image-box-wrapper {
+    flex-direction: row-reverse;
+    text-align: end;
+}
 }
 .hz-slider-section .swiper-slide-active {
   overflow: visible;
@@ -1313,6 +1322,30 @@ div.pin-spacer > .hz-slider-topcaption {
 
 .elementor-element.elementor-element-a7263d7.onvif_txt.elementor-widget.elementor-widget-heading {
   margin-top: 6px;
+}
+.card-body_industry p{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  padding-bottom: 0;
+  min-height: unset;
+}
+.card_industry {
+  display: inline-block;
+}
+.card-body_industry .card-title{
+  font-size: 24px;
+  font-weight: 600;
+  color: #06283D;
+}
+.js-dark .card_industry {
+  background: #262a30;
+}
+
+#img-custom .elementor-image-box-img {
+  height: 60px;
 }
 
 @media (min-width: 768px) {
@@ -1470,6 +1503,11 @@ html {
     min-height: auto;
     margin-bottom: 1rem;
   }
+  .card_industry{ width: 100%!important; }
+  .grid-industry_list li {
+      width: 100% !important;
+  }
+
 }
 
 @media (max-width: 767px) {
@@ -1610,14 +1648,14 @@ html {
   }
   
   .hz-slider-topcaption .swiper-slide h3 {
-    font-size: 24px;
+    font-size: 28px;
     line-height: 30px;
   }
   
-  .hz-slider-topcaption .swiper-slide p {
-    font-size: 16px;
+  .hz-slider-topcaption .swiper-slide p, .featuregroup_repeator .nested-description-1, .featuregroup_repeator .nested-description-1 p, .nested-repeater-2.listedgroup_repeator ul li {
+    font-size: 14px;
   }
-  
+
   /* Mobile alignment for hz-slider-section list items */
   .hz-slider-section .swiper-slide ul li {
     display: flex;
@@ -1666,5 +1704,22 @@ html {
 .card-contents ul li > span {align-items: self-start;}
 
 .main_title_box p {font-size: 14px;}
+
+.center_tooltip .ctw-wrapper, .center_tooltip .ctw-title {justify-content: center;text-align: center !important;}
+.card_title_tooltip .ctw-title .ctw-text p {font-size: 20px;text-align: center;}
+
+
+  /* Fix group_tooltip mobile display */
+
+  .elementor-element.group_tooltip .e-con-inner,
+  .elementor-element.group_tooltip .e-con-inner .elementor-widget,
+  .elementor-element.group_tooltip .e-con-inner .elementor-widget p {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    word-wrap: normal !important;
+    overflow-wrap: normal !important;
+    line-height: 1.6 !important;
+  }
   
 }
