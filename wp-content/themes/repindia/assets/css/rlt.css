@@ -22,3 +22,37 @@ ul.header-right-box{ gap: 10px;}
   border-top: 0;
 }
 .lang_switch .wpml-ls-legacy-dropdown-click .wpml-ls-sub-menu a{ margin: 0 2px; }
+
+
+/* RTL CSS */
+.rtl,.rtl .wpcf7{ direction: rtl; } 
+.rtl .wpml-ls-legacy-dropdown-click a.wpml-ls-item-toggle { padding-right: 8px;padding-left: 8px; }
+.rtl ul.header-right-box { padding-right: 40px;padding-left: 0; }
+.rtl .header-right-box > li:first-child { margin-right: 0;margin-left: 10px; }
+.rtl .toggle-menu-container{ left: unset;right: 0;transform: translateX(100%); }
+.rtl .toggle-menu-container.open-menu{ transform: translateX(0%); }
+.rtl .rightmenu_statictxt { padding-left: 0;padding-right: 20px; }
+.rtl #header-toggle-menu .sub-menu { padding-left: 0;padding-right: 20px; }
+.rtl ul.social_media_links > li > a > span{ margin-right: 0;margin-left: 8px; }
+.rtl ul#footermenu { padding-right: 0; }
+.rtl .footer_bottom span { padding-right: 0;padding-left: 20px; }
+.rtl .ms-2 { margin-left: 0px !important;margin-right: 0.5rem !important; }
+.rtl .form-control{ text-align: right; }
+.rtl .intl-tel-input.allow-dropdown .flag-container, .rtl .intl-tel-input.separate-dial-code .flag-container { right: 0;left: auto; }
+.rtl .intl-tel-input.separate-dial-code .selected-dial-code { border-right: 0;border-left: 2px solid rgba(0, 0, 0, 0.05); }
+.rtl .intl-tel-input.separate-dial-code .selected-dial-code { padding-left: 0;padding-right: 28px; }
+.rtl .career-apply-form .wpcf7-list-item { margin: 0 0 0 15px; }
+.rtl .search-popup-input{ padding: 12px 35px 12px 12px; }
+.rtl .search-icon { left: 0;right: 25px; }
+.rtl ul#header-main-menu li a { padding: 8px 16px 0 0;margin: 0 0 0 16px; }
+.rtl .search-popup-footer ul#header-main-menu li>a:before{ left: unset;right: 0; }
+.rtl .search-popup-footer{ justify-content: flex-start;gap: 0; }
+.rtl .search-popup-footer #header-main-menu { gap: 0; }
+.rtl .btn-demo{ width: auto; }
+.rtl .search-popup-container{ margin: 0 auto 0 0;border-radius: 0 0 12px 0; }
+
+
+
+@media (min-width: 1200px) {
+  .rtl .right-footer-menu { padding-left: 0;padding-right: 68px; }
+}
