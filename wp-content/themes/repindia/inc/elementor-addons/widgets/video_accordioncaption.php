@@ -659,6 +659,8 @@ class Video_accordioncaption extends Widget_Base
                 max-height: 300px;
             }
 
+            #retail_grey-accrordion .vac_accordion_sets{margin-top: 30px;}
+
             /* retail accordion dark theme */
 
 
@@ -875,7 +877,7 @@ class Video_accordioncaption extends Widget_Base
                     </div>
                 <?php endif; ?>
 
-                <div class="row g-0 align-items-center vac_vertical_scroller">
+                <div class="row g-0  vac_vertical_scroller">
                     <div class="col-md-6 col-12 vac_padd-accordion">
                         <?php if (!empty($left_block_title)): ?>
                             <h3><?php echo esc_html($left_block_title); ?></h3>

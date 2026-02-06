@@ -2443,6 +2443,10 @@ label.form-label.required_note-demo {
   background: linear-gradient(270deg, #f2f5fa 0%, rgb(255 255 255 / 0%) 83.82%);
 }
 
+.js-dark .purpose-slider-wrapper:before {background: linear-gradient(270deg, #000000 0%, rgb(145 138 138 / 0%) 83.82%);}
+
+#career_slider .purpose-slider-wrapper:before {visibility: hidden;}
+
 .purpose-swiper .swiper-slide figure.caption-scroll figcaption h3 {
   text-align: left;
   color: #ffffff;
@@ -2461,6 +2465,11 @@ label.form-label.required_note-demo {
   z-index: 9;
   width: 100%;
   transition: all 0.3s ease;
+}
+
+#partner_sticky .fixed-header {
+  left: auto;
+  right: auto;
 }
 
 .sticky-custom > ul > li,
@@ -3567,6 +3576,10 @@ span.star {
 }
 .career_faq .elementor-widget-n-accordion .e-n-accordion-item[open]>.e-n-accordion-item-title .e-n-accordion-item-title-icon span>svg path {
   fill: #D7DBE4;
+}
+.career_faq .e-opened {
+  position: relative;
+  right: 6px;
 }
 .form-control:focus {
   border-color: #0099ED;
