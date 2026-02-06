@@ -233,6 +233,14 @@ class Custom_Image_Circle extends Widget_Base {
                 transform: translate(-50%, -50%);
             }
             
+            {{WRAPPER}} .orbit-content-inner {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 10px;
+                width: 100%;
+            }
+            
             {{WRAPPER}} .orbit-icon {
                 flex-shrink: 0;
                 padding-left: 56px;
@@ -385,14 +393,16 @@ class Custom_Image_Circle extends Widget_Base {
                          style="<?php echo esc_attr($transform); ?>">
                         <div class="orbit-content" 
                              style="animation: <?php echo esc_attr($item_anim); ?> <?php echo $dur; ?>s linear infinite;">
-                            <?php if (!empty($item['image']['url'])) : ?>
-                                <div class="orbit-icon">
-                                    <img src="<?php echo esc_url($item['image']['url']); ?>" alt="<?php echo esc_attr($item['text'] ?? ''); ?>" />
-                                </div>
-                            <?php endif; ?>
-                            <?php if (!empty($item['text'])) : ?>
-                                <div class="orbit-text"><?php echo esc_html($item['text']); ?></div>
-                            <?php endif; ?>
+                            <div class="orbit-content-inner">
+                                <?php if (!empty($item['image']['url'])) : ?>
+                                    <div class="orbit-icon">
+                                        <img src="<?php echo esc_url($item['image']['url']); ?>" alt="<?php echo esc_attr($item['text'] ?? ''); ?>" />
+                                    </div>
+                                <?php endif; ?>
+                                <?php if (!empty($item['text'])) : ?>
+                                    <div class="orbit-text"><?php echo esc_html($item['text']); ?></div>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
     

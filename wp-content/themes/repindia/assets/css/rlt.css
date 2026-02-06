@@ -50,6 +50,17 @@ ul.header-right-box{ gap: 10px;}
 .rtl .search-popup-footer #header-main-menu { gap: 0; }
 .rtl .btn-demo{ width: auto; }
 .rtl .search-popup-container{ margin: 0 auto 0 0;border-radius: 0 0 12px 0; }
+/* Animated Orbit Circles widget – RTL layout and direction */
+.rtl .elementor-widget-custom_image_circle .orbit-system-wrapper { transform: scaleX(-1); }
+.rtl .elementor-widget-custom_image_circle .orbit-content-inner { transform: scaleX(-1);text-align: right; }
+.rtl .elementor-widget-custom_image_circle .orbit-item-wrapper { left: unset;right: 50%; }
+.rtl .elementor-widget-custom_image_circle .orbit-content { text-align: right; }
+.rtl .elementor-widget-custom_image_circle .orbit-icon { padding-left: 0;padding-right: 56px; }
+.rtl .elementor-widget-custom_image_circle .orbit-text { text-align: right; }
+
+.rtl .elementor-element.featured_leaf img { transform: scaleX(-1); }
+
+.rtl .ctw-tooltip-inner { text-align: right; }
 
 
 
