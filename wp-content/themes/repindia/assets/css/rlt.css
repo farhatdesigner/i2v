@@ -26,6 +26,23 @@ ul.header-right-box{ gap: 10px;}
 
 /* RTL CSS */
 .rtl,.rtl .wpcf7{ direction: rtl; } 
+.rtl [style*="text-align: left"] { text-align: right !important; }
+.rtl [style*="float: left"] { float: right !important; }
+.rtl [style*="float: right"] { float: left !important; }
+.rtl [style*="margin-left"] { margin-right: inherit !important; }
+.rtl [style*="padding-left"] { padding-right: inherit !important; }
+body.rtl .elementor-element {
+    --padding-inline-start: var(--padding-left)!important;
+    --padding-inline-end: var(--padding-right)!important;
+    --margin-inline-start: var(--margin-left)!important;
+    --margin-inline-end: var(--margin-right)!important;
+}
+body.rtl .elementor-section,
+body.rtl .elementor-column,
+body.rtl .elementor-widget-wrap {
+    direction: rtl!important;
+}
+
 .rtl .wpml-ls-legacy-dropdown-click a.wpml-ls-item-toggle { padding-right: 8px;padding-left: 8px; }
 .rtl ul.header-right-box { padding-right: 40px;padding-left: 0; }
 .rtl .header-right-box > li:first-child { margin-right: 0;margin-left: 10px; }
@@ -37,6 +54,7 @@ ul.header-right-box{ gap: 10px;}
 .rtl ul#footermenu { padding-right: 0; }
 .rtl .footer_bottom span { padding-right: 0;padding-left: 20px; }
 .rtl .ms-2 { margin-left: 0px !important;margin-right: 0.5rem !important; }
+.rtl .brochure-modal-close{ right: unset;left: 15px;font-size: 40px;font-weight: 600; }
 .rtl .form-control{ text-align: right; }
 .rtl .intl-tel-input.allow-dropdown .flag-container, .rtl .intl-tel-input.separate-dial-code .flag-container { right: 0;left: auto; }
 .rtl .intl-tel-input.separate-dial-code .selected-dial-code { border-right: 0;border-left: 2px solid rgba(0, 0, 0, 0.05); }
@@ -61,6 +79,17 @@ ul.header-right-box{ gap: 10px;}
 .rtl .elementor-element.featured_leaf img { transform: scaleX(-1); }
 
 .rtl .ctw-tooltip-inner { text-align: right; }
+.rtl .ctw-popup-close { right: unset;left: 12px; }
+.rtl .elementor-testimonial--layout-image_left .elementor-testimonial{ flex-direction: row-reverse; }
+.rtl .elementor-testimonial--align-left .elementor-testimonial{ text-align: right; }
+.rtl .reversetestimonial .swiper-pagination-bullets{ left: unset !important;right: 135px !important; }
+.rtl #tab_table .e-n-tabs-heading { margin-left: 0;margin-right: 203px;width: 294px; }
+.rtl .comparison-wrapper{ padding: 0 62px 0 0; }
+.rtl .comparison-wrapper ul:first-child { text-align: right; }
+.rtl .elementor-element.leadersslider .swiper .elementor-swiper-button-prev { left: unset;right: 0; }
+.rtl .purpose-slider-wrapper .purpose-swiper .swiper-horizontalmobile-next { right: unset;left: 10px;transform: scaleX(-1); }
+.rtl .purpose-slider-wrapper .purpose-swiper .swiper-horizontalmobile-prev{ transform: unset; }
+.rtl .elementor-element.withbg_imgbox.elementor-widget-image{ padding: 40px 40px 0px 0px; }
 
 
 
