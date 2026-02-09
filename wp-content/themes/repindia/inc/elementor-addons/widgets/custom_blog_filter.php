@@ -691,18 +691,31 @@ class Custom_Blog_Filter extends Widget_Base
                 align-items: center;
                 justify-content: space-between;
             }
+            .js-dark .custom-blog-filter-results{ border-color:#464A4F; }
 
             .custom-blog-filter-reset {
                 margin-top: 0;
-                border-bottom: 1px solid #E6EBF2;
+                /* border-bottom: 1px solid #E6EBF2; */
             }
 
             .custom-blog-filter-reset a {
-                color: #949494;
+                /* color: #949494; */
                 font-size: 14px;
                 font-style: normal;
                 font-weight: 600;
                 line-height: 20px;
+            }
+
+            .reset-disabled {
+                pointer-events: none;
+                opacity: 0.5;
+                cursor: not-allowed;
+                color: #949494!important;
+                border-color: #E6E6E6!important;
+            }
+            .js-dark .reset-disabled {
+                color: #949494!important;
+                border-color: #FFFFFF1A!important;
             }
 
             .custom-blog-filter-content {
@@ -915,6 +928,7 @@ class Custom_Blog_Filter extends Widget_Base
                 font-weight: 500;
                 line-height: 24px;
             }
+            .js-dark label.featuretitle { color: #D7DBE4; }
 
             .totalcount {
                 color: #5F6F94;
@@ -1216,7 +1230,7 @@ class Custom_Blog_Filter extends Widget_Base
                         <?php echo esc_html($total_posts); ?> out of <?php echo esc_html($total_posts); ?> results
                     </div>
                     <div class="custom-blog-filter-reset">
-                        <a href="#" class="blog-filter-reset-link">Reset all filters</a>
+                        <a href="#" class="blog-filter-reset-link reset-disabled theme-btn bg-trans border_btnlight" aria-disabled="true">Reset all filters</a>
                     </div>
                 </div>
             </div>
@@ -1581,6 +1595,28 @@ class Custom_Blog_Filter extends Widget_Base
                     }
 
                     updateCounts();
+                    updateResetButtonState();
+                }
+
+                function hasActiveFilters() {
+                    var searchActive = searchInput && searchInput.value.trim().length > 0;
+                    var categoryActive = false;
+                    categoryCheckboxes.forEach(function (checkbox) {
+                        if (checkbox.checked) categoryActive = true;
+                    });
+                    var featuredActive = featuredCheckbox && featuredCheckbox.checked;
+                    return searchActive || categoryActive || featuredActive;
+                }
+
+                function updateResetButtonState() {
+                    if (!resetLink) return;
+                    if (hasActiveFilters()) {
+                        resetLink.classList.remove('reset-disabled');
+                        resetLink.setAttribute('aria-disabled', 'false');
+                    } else {
+                        resetLink.classList.add('reset-disabled');
+                        resetLink.setAttribute('aria-disabled', 'true');
+                    }
                 }
 
                 function updateCounts() {
@@ -1640,6 +1676,7 @@ class Custom_Blog_Filter extends Widget_Base
                 if (resetLink) {
                     resetLink.addEventListener('click', function (e) {
                         e.preventDefault();
+                        if (!hasActiveFilters()) return;
                         resetFilters();
                     });
                 }
