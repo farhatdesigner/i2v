@@ -72,13 +72,22 @@
         } else if ($field.is('input[type="checkbox"], input[type="radio"]')) {
           var $group = $form.find('input[name="' + $field.attr('name') + '"]');
           return $group.filter(':checked').length > 0 ? 'checked' : '';
+        } else if ($field.is('input[type="file"]')) {
+          var el = $field[0];
+          return (el.files && el.files.length > 0) ? (el.files[0].name || 'file') : '';
         }
         return '';
+      }
+
+      // Only forms with .file-upload-box use hidden file inputs; this helper is used to scope file logic to those only.
+      function isFileInUploadBox($field) {
+        return $field.is('input[type="file"]') && $field.closest('.file-upload-box').length > 0;
       }
       
       // Helper: Validate specific field types
       function validateField($field, $form) {
-        if (!$field.is(':visible')) return true;
+        var allowValidateHiddenFile = isFileInUploadBox($field);
+        if (!$field.is(':visible') && !allowValidateHiddenFile) return true;
         
         var value = getFieldValue($field, $form);
         var fieldName = $field.attr('name') || '';
@@ -125,8 +134,8 @@
           $allFields.each(function() {
             var $field = $(this);
             
-            // Skip if field is not visible
-            if (!$field.is(':visible')) return true;
+            // Skip if field is not visible. Exception: file inputs inside .file-upload-box (only some CF7 forms) – validate those even when hidden.
+            if (!$field.is(':visible') && !isFileInUploadBox($field)) return true;
             
             // Check if field is required
             if (isFieldRequired($field)) {
@@ -522,7 +531,25 @@
           if ($noFileEl.length) {
             $noFileEl.text(fileName);
           }
+          var $box = $(this).closest('.file-upload-box');
+          if ($box.length && this.files.length > 0) {
+            $box.addClass('has-file');
+            $box.find('.file-name').text(fileName).show();
+          }
+          // Validation unchanged: still run after file selection
           validateAndUpdateSubmit($(this).closest('.wpcf7'));
+        });
+
+        // File upload box / browse link: open file dialog only (input has pointer-events: none in CSS).
+        // Does not run or alter validation; validation still runs on the input's native 'change' above.
+        $doc.off('click', '.wpcf7 .file-upload-box');
+        $doc.on('click', '.wpcf7 .file-upload-box', function(e) {
+          var $box = $(this);
+          var $input = $box.find('input[type="file"]');
+          if ($input.length && !$(e.target).is('input[type="file"]')) {
+            e.preventDefault();
+            $input[0].click();
+          }
         });
       }
       

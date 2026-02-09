@@ -523,9 +523,9 @@ label.form-label.label_notic a {
 .styled-career-form .file-upload-box.has-file .file-name {
   display: block;
 }
-.styled-career-form .file-upload-box.has-file p {
+/* .styled-career-form .file-upload-box.has-file p {
   display: none;
-}
+} */
 .career-apply-form.styled-career-form {
   padding: 40px;
   background: #fff;
