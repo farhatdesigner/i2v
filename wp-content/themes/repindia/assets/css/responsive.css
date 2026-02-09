@@ -453,6 +453,9 @@ label.form-label.label_notic a {
   list-style: disc;
   padding-inline-start: 18px;
 }
+.footer_copyright ul {
+    list-style: none !important;
+}
 .single-careers ul li {
   margin-bottom: 8px;
 }
@@ -576,6 +579,10 @@ label.form-label.label_notic a {
 .js-dark .career-apply-form label.form-label.notice-text a {
   text-decoration-color: #464a4f;
   color: rgba(255, 255, 255, 0.6);
+}
+
+.js-dark .darkbg-policy {
+  background: #262a30 !important;
 }
 
 /* @media (min-width: 1601px) {
