@@ -327,12 +327,15 @@ class Tabbed_Custom_Swiper extends Widget_Base
 
             }
 
-            #tabbedSliderWrapper  .slide-content p {
-                font-size: 14px;
-                color: #666;
-                margin: 0;
-                min-height: 50px;
-            }
+      
+#tabbedSliderWrapper .slide-content p {
+    font-size: 18px;
+    color: #666;
+    margin: 0;
+    min-height: 50px;
+    line-height: 26px !important;
+}
+
 
             #tabbedSliderWrapper .tabbed-slider-tabs .tab-btn:first-child {
                 border-radius: 100px 0 0 100px;
@@ -368,7 +371,7 @@ class Tabbed_Custom_Swiper extends Widget_Base
 
 #tabbedSliderWrapper .tab-btn {font-size: 12px;line-height: 1.2;}    
 #tabbedSliderWrapper .slide-content h3 {font-size: 18px;}
-#tabbedSliderWrapper .slide-content p {font-size: 11px;}
+#tabbedSliderWrapper .slide-content p {font-size: 14px;}
 #tabbedSliderWrapper .slide-content, #tabbedSliderWrapper .slide-content p{min-height: auto;}
 
 /* Equal height cards on mobile - all cards match tallest card */

@@ -10,6 +10,9 @@ html.lenis body {
 
 .bg-blacktheme {
   background-color: #0d1117;
+  min-height: 700px;
+  margin: 20px;
+  border-radius: 12px;
 }
 
 .radius-8 {
@@ -108,7 +111,7 @@ html.lenis body {
 }
 
 .txtflex p {
-  color: #5C5C5C;
+  color: #5c5c5c;
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
@@ -356,7 +359,9 @@ html.lenis body {
   bottom: 20px;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  transition:
+    opacity 0.3s ease-in-out,
+    visibility 0.3s ease-in-out;
   pointer-events: none;
 }
 
@@ -456,6 +461,7 @@ html.lenis body {
   position: relative;
   top: 38px;
   right: -40px;
+  border-radius: 4px 0 0 0 !important;
 }
 
 .card-contents h3 {
@@ -589,13 +595,13 @@ p#breadcrumbs svg {
 }
 
 .details {
-    /* outline: 1px solid green; */
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    /* padding: 80px 0; */
-    height: 60vh;
-    margin-bottom: 2rem;
+  /* outline: 1px solid green; */
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  /* padding: 80px 0; */
+  min-height: 60vh;
+  margin-bottom: 2rem;
 }
 
 .right {
@@ -625,7 +631,6 @@ p#breadcrumbs svg {
   height: 100%;
   object-fit: cover;
   max-height: 455px;
-
 }
 
 .proven_banner {
@@ -929,7 +934,7 @@ div.pin-spacer > .hz-slider-section {
   position: absolute;
   content: url("/i2v/wp-content/uploads/2025/12/Vector-8.svg");
   position: absolute;
-  right: -25%;
+  right: -20%;
   top: 25%;
   display: inline-block;
   width: auto;
@@ -939,7 +944,7 @@ div.pin-spacer > .hz-slider-section {
   position: absolute;
   content: url("/i2v/wp-content/uploads/2025/12/Vector-9.svg");
   position: absolute;
-  right: -40%;
+  right: -34%;
   top: 35%;
   display: inline-block;
   width: auto;
@@ -950,7 +955,7 @@ div.pin-spacer > .hz-slider-section {
   content: url("/i2v/wp-content/uploads/2025/12/Vector-10.svg");
   position: absolute;
   left: -35%;
-  top: 10%;
+  top: 18%;
   display: inline-block;
   width: auto;
   height: auto;
@@ -960,12 +965,17 @@ div.pin-spacer > .hz-slider-section {
   content: url("/i2v/wp-content/uploads/2025/12/Vector-11.svg");
   position: absolute;
   left: -40%;
-  top: 0%;
+  top: 65%;
   display: inline-block;
   width: auto;
   height: auto;
 }
-.js-dark .one_arrow:before, .js-dark .two_arrow:before, .js-dark .three_arrow:before, .js-dark .four_arrow:before {opacity: 0.3;}
+.js-dark .one_arrow:before,
+.js-dark .two_arrow:before,
+.js-dark .three_arrow:before,
+.js-dark .four_arrow:before {
+  opacity: 0.3;
+}
 
 /* .js-dark .one_arrow:before {
   content: url("https://reputationindia.in/i2v/wp-content/uploads/2026/01/darkVecto-8.svg");
@@ -1023,15 +1033,17 @@ div.pin-spacer > .hz-slider-section {
   padding: 8px 16px;
   width: 80%;
   border-radius: 8px;
-  color: #0099ED;
+  color: #0099ed;
   background: #fff;
-  border: 1px solid #E5E9EC;
+  border: 1px solid #e5e9ec;
 }
 .box-custom figcaption.widget-image-caption.wp-caption-text:hover {
-  border: 1px solid #008EDB;color: #008EDB;
+  border: 1px solid #008edb;
+  color: #008edb;
 }
 .box-custom figcaption.widget-image-caption.wp-caption-text:focus {
-  border: 1px solid #0074B2;color: #0074B2;
+  border: 1px solid #0074b2;
+  color: #0074b2;
 }
 
 /* Button hover effect */
@@ -1183,17 +1195,24 @@ p.card-text_industry {
   margin: 0;
 }
 .gradient_bg:before {
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.40) 0%, #000 100%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, #000 100%);
   filter: blur(1.5px);
   position: absolute;
-  content: '';
+  content: "";
   height: 100%;
   width: 100%;
+  border-radius: 12px;
 }
 
 @media (min-width: 768px) {
   .hz-slider-section .swiper-slide h2 {
     font-size: 32px;
+  }
+  .security_issue
+    .elementor-widget-image-box.elementor-position-right
+    .elementor-image-box-wrapper {
+    flex-direction: row-reverse;
+    text-align: end;
   }
 }
 .hz-slider-section .swiper-slide-active {
@@ -1295,6 +1314,7 @@ div.pin-spacer > .hz-slider-topcaption {
 .vac_padd-accordion > h3 {
   font-size: 16px;
   color: #06283d;
+  margin-bottom: 12px;
   font-weight: 500 !important;
 }
 
@@ -1313,6 +1333,44 @@ div.pin-spacer > .hz-slider-topcaption {
 
 .elementor-element.elementor-element-a7263d7.onvif_txt.elementor-widget.elementor-widget-heading {
   margin-top: 6px;
+}
+.card-body_industry p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  padding-bottom: 0;
+  min-height: unset;
+}
+.card_industry {
+  display: inline-block;
+}
+.card-body_industry .card-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #06283d;
+}
+.js-dark .card_industry {
+  background: #262a30;
+}
+
+#img-custom .elementor-image-box-img {
+  height: 60px;
+}
+.project_box .elementor-position-top {
+  position: relative;
+}
+.project_box .elementor-position-top:before {
+  position: absolute;
+  content: "";
+  right: -25px;
+  background: #d7dbe4;
+  width: 1px;
+  height: 100%;
+}
+.project_box .elementor-position-top:last-child:before {
+  visibility: hidden;
 }
 
 @media (min-width: 768px) {
@@ -1336,7 +1394,7 @@ div.pin-spacer > .hz-slider-topcaption {
     height: 300px;
     max-height: 300px;
   }
-  
+
   .hz-slider-topcaption .swiper-slide h3 {
     font-size: 26px;
     line-height: 32px;
@@ -1344,14 +1402,13 @@ div.pin-spacer > .hz-slider-topcaption {
   .hz-slider-topcaption .slider-content {
     min-height: 176px;
   }
-  
-.static_slide .slider-image_content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
-}
 
+  .static_slide .slider-image_content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
 }
 
 @media (min-width: 576px) {
@@ -1444,7 +1501,11 @@ div.pin-spacer > .hz-slider-topcaption {
   .details {
     padding: 30px 0;
     height: auto;
+    min-height: auto;
     margin: 0;
+  }
+  .project_box .elementor-position-top:before {
+    visibility: hidden;
   }
 }
 
@@ -1470,6 +1531,12 @@ html {
     min-height: auto;
     margin-bottom: 1rem;
   }
+  .card_industry {
+    width: 100% !important;
+  }
+  .grid-industry_list li {
+    width: 100% !important;
+  }
 }
 
 @media (max-width: 767px) {
@@ -1481,7 +1548,9 @@ html {
     padding-left: 1.5rem;
     text-align: left;
   }
-  .accontent p {margin: 10px 0;}
+  .accontent p {
+    margin: 10px 0;
+  }
 
   .accontent {
     padding-left: 0rem;
@@ -1490,7 +1559,6 @@ html {
   .logo_box ul {
     grid-template-columns: repeat(3, 1fr);
   }
-
 
   /* .btn-colum {
     flex-direction: row;
@@ -1603,21 +1671,24 @@ html {
     padding: 30px 0 0;
     min-height: 170px;
   }
-  
+
   .hz-slider-topcaption .slider-image img {
     height: 250px;
     max-height: 250px;
   }
-  
+
   .hz-slider-topcaption .swiper-slide h3 {
-    font-size: 24px;
+    font-size: 28px;
     line-height: 30px;
   }
-  
-  .hz-slider-topcaption .swiper-slide p {
-    font-size: 16px;
+
+  .hz-slider-topcaption .swiper-slide p,
+  .featuregroup_repeator .nested-description-1,
+  .featuregroup_repeator .nested-description-1 p,
+  .nested-repeater-2.listedgroup_repeator ul li {
+    font-size: 14px;
   }
-  
+
   /* Mobile alignment for hz-slider-section list items */
   .hz-slider-section .swiper-slide ul li {
     display: flex;
@@ -1625,46 +1696,96 @@ html {
     gap: 8px;
     flex-wrap: nowrap;
   }
-  
+
   .hz-slider-section .swiper-slide ul li > span {
     flex-shrink: 0;
     display: flex;
     align-items: center;
     margin-top: 2px;
   }
-  
+
   .hz-slider-section .swiper-slide ul li > span > svg {
     width: 16px;
     height: 16px;
     display: block;
   }
-  .hz-slider-section .slider-image img{
-  object-fit: cover;
-  object-position: center;
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-  max-height: 174px;
-}
-  .xl-btn { font-size: 18px !important;}
-  
-.cards-listing-section .custom-container{margin: 0 !important;width: 100% !important;}
-.card-text {font-size: 12px;}
-.card-body h5, .card-body_industry .card-title{font-size: 18px;}
-.expert_sec h3 { font-size: 28px;}
+  .hz-slider-section .slider-image img {
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    max-height: 174px;
+  }
+  .xl-btn {
+    font-size: 18px !important;
+  }
 
-.chosse_circle .elementor-icon-box-description, .customtabsmart .smart-content-inner-text p {font-size: 14px;}
+  .cards-listing-section .custom-container {
+    margin: 0 !important;
+    width: 100% !important;
+  }
+  .card-text {
+    font-size: 12px;
+  }
+  .card-body h5,
+  .card-body_industry .card-title {
+    font-size: 18px;
+  }
+  .expert_sec h3 {
+    font-size: 28px;
+  }
 
-.customtabsmart .smart-main_title {font-size: 28px;;}
-.ctw-trigger .ctw-title h3 {font-size: 28px;}
-.customtabsmart .smart-content-inner-text .smart-sub_title{font-size: 24px;}
-.customtabsmart .smart-microspace-inside {padding: 40px 0;}
+  .chosse_circle .elementor-icon-box-description,
+  .customtabsmart .smart-content-inner-text p {
+    font-size: 14px;
+  }
 
-.js-dark .center-content .black-theme-img {margin: 0 auto;}
+  .customtabsmart .smart-main_title {
+    font-size: 28px;
+  }
+  .ctw-trigger .ctw-title h3 {
+    font-size: 28px;
+  }
+  .customtabsmart .smart-content-inner-text .smart-sub_title {
+    font-size: 24px;
+  }
+  .customtabsmart .smart-microspace-inside {
+    padding: 40px 0;
+  }
 
+  .js-dark .center-content .black-theme-img {
+    margin: 0 auto;
+  }
 
-.card-contents ul li > span {align-items: self-start;}
+  .card-contents ul li > span {
+    align-items: self-start;
+  }
 
-.main_title_box p {font-size: 14px;}
-  
+  .main_title_box p {
+    font-size: 14px;
+  }
+
+  .center_tooltip .ctw-wrapper,
+  .center_tooltip .ctw-title {
+    justify-content: center;
+    text-align: center !important;
+  }
+  .card_title_tooltip .ctw-title .ctw-text p {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  /* Fix group_tooltip mobile display */
+
+  .elementor-element.group_tooltip .e-con-inner,
+  .elementor-element.group_tooltip .e-con-inner .elementor-widget,
+  .elementor-element.group_tooltip .e-con-inner .elementor-widget p {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    word-wrap: normal !important;
+    overflow-wrap: normal !important;
+    line-height: 1.6 !important;
+  }
 }

@@ -363,6 +363,10 @@ class Video_accordioncaption extends Widget_Base
                 will-change: background, padding;
             }
 
+            .vac_accordion_set.active+.vac_accordion_set {
+                border-top: none !important;
+            }
+
             .js-dark .vac_accordion_set {
                 border-top: 1px solid #c1c4c626 !important;
             }
@@ -402,7 +406,7 @@ class Video_accordioncaption extends Widget_Base
                 width: 64px;
                 height: 64px;
                 border-radius: 50%;
-                background-color: rgb(255 255 255 / 15%) !important;
+                background-color: #F2F5FA;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -412,7 +416,21 @@ class Video_accordioncaption extends Widget_Base
 
             .vac_accordion_set.active .vac_ac_icon_border {
                 background: #FFF;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            }
+
+            .js-dark .vac_ac_icon_border {
+                background-color: #D7DBE4;
+            }
+
+            .js-dark .vac_accordion_set.active .vac_ac_icon_border {
+                background: #ffffffe6;
+            }
+
+
+
+            #white_bg-conatainer .custom-container {
+                background: #ffffff;
+                padding: 80px 60px;
             }
 
             .js-dark .vac_accordion_set.active {
@@ -444,8 +462,8 @@ class Video_accordioncaption extends Widget_Base
             }
 
             /* .vac_accordion_set.active .vac_ac_icon {
-                                                                                                                                filter: brightness(0) invert(1);
-                                                                                                                            } */
+                                                                                                                                                                filter: brightness(0) invert(1);
+                                                                                                                                                            } */
 
             .vac_ac_header {
                 flex: 1;
@@ -615,6 +633,37 @@ class Video_accordioncaption extends Widget_Base
                 padding: 10px;
             }
 
+            /* retail accordion */
+
+            #retail_grey-accrordion .vac_accordion_set.active {
+                background: #FFFFFF;
+            }
+
+            #retail_grey-accrordion .vac_accordion_set.active .vac_chevron svg {
+                stroke: #D7DBE4;
+            }
+
+            /* .js-dark #retail_grey-accrordion .vac_accordion_set.active {background: #FFFFFF;}
+                        .js-dark #retail_grey-accrordion .vac_accordion_set.active .vac_chevron svg {stroke:#D7DBE4;} */
+
+            #retail_grey-accrordion .vac_accordion_set.active .vac_ac_icon_border {
+                background: #F2F5FA;
+            }
+
+            .js-dark #retail_grey-accrordion .vac_accordion_set.active {
+                background: #262A30;
+                border: none !important;
+            }
+
+            #retail_grey-accrordion .vac_padd-accordion_video .vac_accordion_video img {
+                max-height: 300px;
+            }
+
+            #retail_grey-accrordion .vac_accordion_sets{margin-top: 30px;}
+
+            /* retail accordion dark theme */
+
+
 
             @media (max-width: 991px) {
 
@@ -661,7 +710,6 @@ class Video_accordioncaption extends Widget_Base
                 }
 
                 .vac_main_title {
-                    font-size: 24px;
                     margin-bottom: 0;
                 }
 
@@ -681,7 +729,7 @@ class Video_accordioncaption extends Widget_Base
 
                 .vac_ac_header {
                     font-size: 14px;
-                    margin-left: 55px;
+                    margin-left: 38px;
                 }
 
                 .vac_accontent,
@@ -696,7 +744,7 @@ class Video_accordioncaption extends Widget_Base
                 }
 
                 .vac_accontent p {
-                    margin: 8px 15px 8px 75px;
+                    margin: 8px 15px 8px 58px;
                     font-size: 12px;
                 }
 
@@ -800,6 +848,10 @@ class Video_accordioncaption extends Widget_Base
                     overflow-x: visible;
                 }
 
+                #white_bg-conatainer .custom-container {
+                    padding: 20px;
+                }
+
                 .vac_chevron {
                     top: auto;
                 }
@@ -825,7 +877,7 @@ class Video_accordioncaption extends Widget_Base
                     </div>
                 <?php endif; ?>
 
-                <div class="row g-0 align-items-center vac_vertical_scroller">
+                <div class="row g-0  vac_vertical_scroller">
                     <div class="col-md-6 col-12 vac_padd-accordion">
                         <?php if (!empty($left_block_title)): ?>
                             <h3><?php echo esc_html($left_block_title); ?></h3>
@@ -901,26 +953,26 @@ class Video_accordioncaption extends Widget_Base
                                                             </div>
                                                         <?php endif; ?>
                                                         <?php if (!empty($item_detail_title) || !empty($item_detail_description) || !empty($item_tags)): ?>
-                                                        <div class="card-body">
-                                                            <?php if (!empty($item_detail_title)): ?>
-                                                                <h5 class="card-title"><?php echo esc_html($item_detail_title); ?></h5>
-                                                            <?php endif; ?>
-                                                            <?php if (!empty($item_detail_description)): ?>
-                                                                <p class="card-text text-muted">
-                                                                    <?php echo wp_kses_post($item_detail_description); ?>
-                                                                </p>
-                                                            <?php endif; ?>
-                                                            <?php if (!empty($item_tags)): ?>
-                                                                <div class="d-flex flex-wrap gap-2 mt-4">
-                                                                    <?php foreach ($item_tags as $tag): ?>
-                                                                        <?php $tag_text = !empty($tag['tag_text']) ? $tag['tag_text'] : ''; ?>
-                                                                        <?php if (!empty($tag_text)): ?>
-                                                                            <span class="badge-custom"><?php echo esc_html($tag_text); ?></span>
-                                                                        <?php endif; ?>
-                                                                    <?php endforeach; ?>
-                                                                </div>
-                                                            <?php endif; ?>
-                                                        </div>
+                                                            <div class="card-body">
+                                                                <?php if (!empty($item_detail_title)): ?>
+                                                                    <h5 class="card-title"><?php echo esc_html($item_detail_title); ?></h5>
+                                                                <?php endif; ?>
+                                                                <?php if (!empty($item_detail_description)): ?>
+                                                                    <p class="card-text text-muted">
+                                                                        <?php echo wp_kses_post($item_detail_description); ?>
+                                                                    </p>
+                                                                <?php endif; ?>
+                                                                <?php if (!empty($item_tags)): ?>
+                                                                    <div class="d-flex flex-wrap gap-2 mt-4">
+                                                                        <?php foreach ($item_tags as $tag): ?>
+                                                                            <?php $tag_text = !empty($tag['tag_text']) ? $tag['tag_text'] : ''; ?>
+                                                                            <?php if (!empty($tag_text)): ?>
+                                                                                <span class="badge-custom"><?php echo esc_html($tag_text); ?></span>
+                                                                            <?php endif; ?>
+                                                                        <?php endforeach; ?>
+                                                                    </div>
+                                                                <?php endif; ?>
+                                                            </div>
                                                         <?php endif; ?>
                                                     </div>
                                                 </div>
@@ -964,26 +1016,26 @@ class Video_accordioncaption extends Widget_Base
                                                     </div>
                                                 <?php endif; ?>
                                                 <?php if (!empty($item_detail_title) || !empty($item_detail_description) || !empty($item_tags)): ?>
-                                                <div class="card-body">
-                                                    <?php if (!empty($item_detail_title)): ?>
-                                                        <h5 class="card-title"><?php echo esc_html($item_detail_title); ?></h5>
-                                                    <?php endif; ?>
-                                                    <?php if (!empty($item_detail_description)): ?>
-                                                        <p class="card-text text-muted">
-                                                            <?php echo wp_kses_post($item_detail_description); ?>
-                                                        </p>
-                                                    <?php endif; ?>
-                                                    <?php if (!empty($item_tags)): ?>
-                                                        <div class="d-flex flex-wrap gap-2 mt-4">
-                                                            <?php foreach ($item_tags as $tag): ?>
-                                                                <?php $tag_text = !empty($tag['tag_text']) ? $tag['tag_text'] : ''; ?>
-                                                                <?php if (!empty($tag_text)): ?>
-                                                                    <span class="badge-custom"><?php echo esc_html($tag_text); ?></span>
-                                                                <?php endif; ?>
-                                                            <?php endforeach; ?>
-                                                        </div>
-                                                    <?php endif; ?>
-                                                </div>
+                                                    <div class="card-body">
+                                                        <?php if (!empty($item_detail_title)): ?>
+                                                            <h5 class="card-title"><?php echo esc_html($item_detail_title); ?></h5>
+                                                        <?php endif; ?>
+                                                        <?php if (!empty($item_detail_description)): ?>
+                                                            <p class="card-text text-muted">
+                                                                <?php echo wp_kses_post($item_detail_description); ?>
+                                                            </p>
+                                                        <?php endif; ?>
+                                                        <?php if (!empty($item_tags)): ?>
+                                                            <div class="d-flex flex-wrap gap-2 mt-4">
+                                                                <?php foreach ($item_tags as $tag): ?>
+                                                                    <?php $tag_text = !empty($tag['tag_text']) ? $tag['tag_text'] : ''; ?>
+                                                                    <?php if (!empty($tag_text)): ?>
+                                                                        <span class="badge-custom"><?php echo esc_html($tag_text); ?></span>
+                                                                    <?php endif; ?>
+                                                                <?php endforeach; ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    </div>
                                                 <?php endif; ?>
                                             </div>
                                         </li>

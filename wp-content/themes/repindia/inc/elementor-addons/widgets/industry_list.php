@@ -66,34 +66,7 @@ class Industry_List extends Widget_Base
         
         $query = new \WP_Query($args);
         ?>
-        <style>
-            .card-body_industry p{
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 3;
-                -webkit-box-orient: vertical;
-                padding-bottom: 0;
-                min-height: unset;
-            }
-            .card_industry {
-                display: inline-block;
-            }
-            .card-body_industry .card-title{
-                font-size: 24px;
-                font-weight: 600;
-                color: #06283D;
-            }
-            .js-dark .card_industry {
-                background: #262a30;
-            }
-            @media(max-width: 768px){
-                .card_industry{ width: 100%!important; }
-                .grid-industry_list li {
-                    width: 100% !important;
-                }
-            }
-        </style>
+
         <div class="industry-list-section">
             <section>
                 <div class="">

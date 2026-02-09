@@ -13,21 +13,22 @@ class Custom_Tooltip extends Widget_Base
     /**
      * Custom sanitization function that allows class attributes
      */
-    private function sanitize_wysiwyg_content($content) {
+    private function sanitize_wysiwyg_content($content)
+    {
         if (empty($content)) {
             return '';
         }
-        
+
         // Allow common HTML tags with class attributes
         $allowed_html = wp_kses_allowed_html('post');
-        
+
         // Ensure span tags can have class attribute
         if (isset($allowed_html['span'])) {
             $allowed_html['span']['class'] = true;
         } else {
             $allowed_html['span'] = array('class' => true);
         }
-        
+
         // Allow other common attributes on various tags
         $allowed_html['div']['class'] = true;
         $allowed_html['p']['class'] = true;
@@ -45,7 +46,7 @@ class Custom_Tooltip extends Widget_Base
         $allowed_html['ul']['class'] = true;
         $allowed_html['ol']['class'] = true;
         $allowed_html['li']['class'] = true;
-        
+
         return wp_kses($content, $allowed_html);
     }
     public function get_name()
@@ -760,7 +761,7 @@ class Custom_Tooltip extends Widget_Base
     protected function render()
     {
         $settings = $this->get_settings_for_display();
-        
+
         $trigger_type = !empty($settings['trigger_type']) ? esc_attr($settings['trigger_type']) : 'hover';
         $position = !empty($settings['position']) ? esc_attr($settings['position']) : 'top';
         $title_text = !empty($settings['title_text']) ? $settings['title_text'] : '';
@@ -805,8 +806,7 @@ class Custom_Tooltip extends Widget_Base
             echo '.ctw-popup-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.55); z-index: 99997; }';
             echo '.ctw-popup-box { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); background: #ffffff; padding: 20px; max-width: 600px; width: 90%; border-radius: 12px; z-index: 99998;box-shadow: 0 0 15px 0 rgba(138, 149, 158, 0.40);white-space: normal; }';
             echo '.ctw-popup-close { position: absolute; top: 12px; right: 12px; cursor: pointer; font-size: 22px; }';
-            echo '.ctw-learn-more-btn { border: 0;border-bottom: 1px solid #008ad633;    padding: 0 !important;border-radius: 0 !important; }';
-            echo '.ctw-learn-more-btn:hover{ border-bottom: 1px solid #74C2ED;color: #74C2ED !important; }';
+            echo '.ctw-learn-more-btn {padding: 0 !important;font-size: 16px !important;border-color: #E6EBF2; font-weight: 600 !important;border-radius: 0 !important;margin-top: 0.5rem;}';
             echo '.ctw-popup-content-wrapper { display: flex; align-items: flex-start; gap: 20px; }';
             echo '.ctw-popup-icon-wrapper { flex-shrink: 0; display: flex; align-items: center; justify-content: center; }';
             echo '.ctw-popup-icon-wrapper .ctw-popup-icon { font-size: 24px; color: #0073aa;max-width: 40px;max-height: 40px; }';
@@ -858,10 +858,17 @@ class Custom_Tooltip extends Widget_Base
             echo '}';
             echo '});';
             echo '}';
+            echo 'function hideTooltipsOnScroll() {';
+            echo 'if (typeof jQuery === "undefined") return;';
+            echo 'var $ = jQuery;';
+            echo '$(window).on("scroll.ctw-hide-tooltips", function() {';
+            echo '$(".ctw-tooltip.show, .ctw-tooltip-bottom.show, .moretooldiv.show").removeClass("show");';
+            echo '});';
+            echo '}';
             echo 'function runWhenJQueryReady() {';
             echo 'if (typeof jQuery !== "undefined") {';
-            echo 'jQuery(document).ready(function() { initCustomTooltips(); });';
-            echo 'jQuery(window).on("elementor/frontend/init", function() { initCustomTooltips(); });';
+            echo 'jQuery(document).ready(function() { initCustomTooltips(); hideTooltipsOnScroll(); });';
+            echo 'jQuery(window).on("elementor/frontend/init", function() { initCustomTooltips(); hideTooltipsOnScroll(); });';
             echo '} else {';
             echo 'setTimeout(runWhenJQueryReady, 100);';
             echo '}';
@@ -910,85 +917,143 @@ class Custom_Tooltip extends Widget_Base
             echo '})();';
             echo '</script>';
         }
-?>
-<style>
-    span.ctw-text p{ margin: 0;}
-    .ctw-tooltip-inner{ text-align: left; }
-    .ctw-tooltip-inner p{ font-size: 14px;font-weight: 400;line-height: 20px; }
-    /* button.ctw-learn-more-btn{ box-shadow: none!important;border: none;border-bottom: 1px solid rgba(255, 255, 255, 0.20); } */
-    .ctw-title .ctw-text p{ font-size: 16px;line-height: 26px;color: #5C5C5C; }
-    .tooltiptitlebox .ctw-title .ctw-text p{ color: #06283D;font-size: 20px;font-weight: 500; }
-    .toptooltitle .ctw-title .ctw-text p{ font-size: 14px;color: #262A30; font-weight: 500;}
-    .para_tooltip .ctw-title .ctw-text p{ font-size: 14px; }
-    .ctw-title:hover .border-b{ border-bottom: 2px solid #9ea1a8!important; }
-    .js-dark .ctw-title:hover .border-b { border-bottom: 2px solid #7d8895 !important; }
-    .js-dark .ctw-has-learn-more .ctw-title .border-b, .js-dark .ctw-title span.ctw-text,.js-dark .tooltiptitlebox .ctw-has-learn-more .ctw-title .border-b, .js-dark .tooltiptitlebox .ctw-title span.ctw-text {
-        border-bottom: 2px solid #464a4f !important;
-        color: #aeb6c9!important;
-    }
-    
-    
-    @media(max-width: 768px){
-        .elementor-element.tooltip_container {
-            position: relative;
-            display: flex;
-            flex-direction: row;
-            gap: 10px;
-        }
-        .elementor-element.tooltip_container .elementor-widget-custom_tooltip {
-            --align-self: start!important;
-        }
-        .ctw-tooltip-bottom {
-            left: 0;
-            transform: translateX(0%);
-        }
-        .ctw-tooltip-bottom.moretooldiv {
-            left: unset;
-        } 
-        .ctw-tooltip{ min-width: 328px; }
-        .intelligent_video .swiper-slide-image, .purpose-swiper .swiper-slide figure > img{
-            min-height: 350px;
-            max-height: 350px;
-        }
-    }
-    @media(max-width: 600px){
-        /* Mobile: treat tooltip like a centered popup box */
-        .ctw-tooltip {
-            position: fixed;
-            left: 50% !important;
-            top: 50%;
-            transform: translate(-50%, -50%) !important;
-            max-width: 320px;
-            width: calc(100vw - 40px);
-            min-width: 0;
-            z-index: 99997;
-        }
-        .ctw-tooltip-top,
-        .ctw-tooltip-bottom,
-        .ctw-tooltip-left,
-        .ctw-tooltip-right,
-        .ctw-tooltip-bottom.moretooldiv {
-            left: 50% !important;
-            right: auto !important;
-            top: 50%;
-            transform: translate(-50%, -50%) !important;
-        }
-        
-.ctw-trigger {
-    display: flex;
-}
+        ?>
+        <style>
+            span.ctw-text p {
+                margin: 0;
+            }
 
-.para_tooltip .ctw-title .ctw-text p {
-    font-size: 14px;
-}
-    }
-</style>
-        
-        <div class="ctw-wrapper <?php echo $show_learn_more ? 'ctw-has-learn-more' : ''; ?>" data-trigger="<?php echo $trigger_type; ?>" data-position="<?php echo $position; ?>" style="--ctw-arrow-color: <?php echo $show_learn_more ? $tooltip_bg_color : '#ffffff'; ?>;">
+            .ctw-tooltip-inner {
+                text-align: left;
+            }
+
+            .ctw-tooltip-inner p {
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 20px;
+            }
+
+            /* button.ctw-learn-more-btn{ box-shadow: none!important;border: none;border-bottom: 1px solid rgba(255, 255, 255, 0.20); } */
+            .ctw-title .ctw-text p {
+                font-size: 16px;
+                line-height: 26px;
+                color: #5C5C5C;
+            }
+
+            .tooltiptitlebox .ctw-title .ctw-text p {
+                color: #06283D;
+                font-size: 20px;
+                font-weight: 500;
+            }
+
+            .toptooltitle .ctw-title .ctw-text p {
+                font-size: 14px;
+                color: #262A30;
+                font-weight: 500;
+            }
+
+            .para_tooltip .ctw-title .ctw-text p {
+                font-size: 16px;
+            }
+
+            .tooltip_leftpara .para_tooltip .ctw-title .ctw-text p {
+                font-size: 18px;
+            }
+
+            .ctw-title:hover .border-b {
+                border-bottom: 2px solid #9ea1a8 !important;
+            }
+
+            .group_tooltip .ctw-title .ctw-text p {
+                font-weight: 500;
+                font-size: 16px;
+            }
+
+            .js-dark .ctw-title:hover .border-b {
+                border-bottom: 2px solid #7d8895 !important;
+            }
+
+            /* .js-dark .ctw-has-learn-more .ctw-title .border-b, .js-dark .ctw-title span.ctw-text,.js-dark .tooltiptitlebox .ctw-has-learn-more .ctw-title .border-b, .js-dark .tooltiptitlebox .ctw-title span.ctw-text {
+                                                                border-bottom: 2px solid #464a4f !important;
+                                                                color: #aeb6c9!important;
+                                                            } */
+            .js-dark .border-b {
+                border-bottom: 2px solid #464a4f !important;
+                color: #aeb6c9 !important;
+            }
+
+            .js-dark .ctw-title p .border-b {
+                color: #aeb6c9 !important;
+                border-bottom: 2px solid #464a4f !important;
+            }
+
+            .js-dark .ctw-tooltip-inner {
+                background-color: #262a30 !important;
+            }
+
+            .js-dark .ctw-tooltip-inner p strong {
+                color: rgb(255 255 255 / 90%) !important;
+            }
+
+            .js-dark #center_mobileviiew .ctw-wrapper.ctw-has-learn-more .border-b,
+            .js-dark #center_mobileviiew .ctw-title p .border-b {
+                color: #ffffff !important;
+            }
+
+            .js-dark .tooltiptitlebox .ctw-title .ctw-text p,
+            .js-dark .tooltiptitlebox .ctw-title .ctw-text p .border-b {color: #ffff !important;}
+
+              
+.defaultdark_paratool span.ctw-title.ctw-icon-left .ctw-text, 
+.defaultdark_paratool span.ctw-title.ctw-icon-left .ctw-text p {color: #AEB6C9 !important;font-size: 16px;}
+
+            @media (max-width: 768px) {
+                .ctw-tooltip-bottom {
+                    top: 0% !important;
+                    left: auto !important;
+                    right: auto !important;
+                    transform: translate(0%, 0%) !important;
+                    margin-top: 30px !important;
+                    z-index: 2 !important;
+                    position: absolute !important;
+                }
+
+                .toptooltitle .ctw-tooltip-bottom {
+                    left: 50% !important;
+                    right: auto !important;
+                    top: 28% !important;
+                    transform: translate(-50%, -50%) !important;
+                    max-width: 360px !important;
+                    position: fixed !important;
+                }
+
+                #center_mobileviiew .ctw-wrapper.ctw-has-learn-more {
+                    justify-content: center;
+                }
+
+                #center_mobileviiew .card_title_tooltip .ctw-title .ctw-text p {
+                    font-size: 20px;
+                }
+
+            }
+
+            @media (max-width: 380px) {
+                .toptooltitle .ctw-tooltip-bottom {
+                    top: 38% !important;
+                }
+            }
+
+
+
+        </style>
+
+        <div class="ctw-wrapper <?php echo $show_learn_more ? 'ctw-has-learn-more' : ''; ?>"
+            data-trigger="<?php echo $trigger_type; ?>" data-position="<?php echo $position; ?>"
+            style="--ctw-arrow-color: <?php echo $show_learn_more ? $tooltip_bg_color : '#ffffff'; ?>;">
             <div class="ctw-trigger">
                 <span class="ctw-title ctw-icon-<?php echo $icon_position; ?>" style="text-align: <?php echo $title_align; ?>;">
-                    <?php if ($show_icon && $icon_position === 'left') : ?>
-                        <?php if (!empty($settings['icon'])) : ?>
+                    <?php if ($show_icon && $icon_position === 'left'): ?>
+                        <?php if (!empty($settings['icon'])): ?>
                             <span class="ctw-icon ctw-icon-light">
                                 <?php
                                 \Elementor\Icons_Manager::render_icon($settings['icon'], [
@@ -997,7 +1062,7 @@ class Custom_Tooltip extends Widget_Base
                                 ?>
                             </span>
                         <?php endif; ?>
-                        <?php if (!empty($icon_dark)) : ?>
+                        <?php if (!empty($icon_dark)): ?>
                             <span class="ctw-icon ctw-icon-dark">
                                 <?php
                                 \Elementor\Icons_Manager::render_icon($icon_dark, [
@@ -1008,8 +1073,8 @@ class Custom_Tooltip extends Widget_Base
                         <?php endif; ?>
                     <?php endif; ?>
                     <span class="ctw-text"><?php echo $this->sanitize_wysiwyg_content($title_text); ?></span>
-                    <?php if ($show_icon && $icon_position === 'right') : ?>
-                        <?php if (!empty($settings['icon'])) : ?>
+                    <?php if ($show_icon && $icon_position === 'right'): ?>
+                        <?php if (!empty($settings['icon'])): ?>
                             <span class="ctw-icon ctw-icon-light">
                                 <?php
                                 \Elementor\Icons_Manager::render_icon($settings['icon'], [
@@ -1018,7 +1083,7 @@ class Custom_Tooltip extends Widget_Base
                                 ?>
                             </span>
                         <?php endif; ?>
-                        <?php if (!empty($icon_dark)) : ?>
+                        <?php if (!empty($icon_dark)): ?>
                             <span class="ctw-icon ctw-icon-dark">
                                 <?php
                                 \Elementor\Icons_Manager::render_icon($icon_dark, [
@@ -1029,31 +1094,36 @@ class Custom_Tooltip extends Widget_Base
                         <?php endif; ?>
                     <?php endif; ?>
                 </span>
-                
+
             </div>
-            <div class="ctw-tooltip ctw-tooltip-<?php echo $position; ?> <?php if($show_learn_more == 'yes'){ echo $showclass= 'moretooldiv'; }else{ echo $showclass= ''; } ?>">
-                    <div class="ctw-tooltip-inner">
-                        <?php echo $this->sanitize_wysiwyg_content($tooltip_description); ?>
-                        <?php if ($show_learn_more) : ?>
-                            <?php if (!empty($learn_more_text)){ ?>
-                            <button class="ctw-learn-more-btn theme-btn bg-trans border_btn darkcolor"><?php echo $learn_more_text; ?></button>
-                            <?php } ?>
-                        <?php endif; ?>
-                    </div>
+            <div class="ctw-tooltip ctw-tooltip-<?php echo $position; ?> <?php if ($show_learn_more == 'yes') {
+                    echo $showclass = 'moretooldiv';
+                } else {
+                    echo $showclass = '';
+                } ?>">
+                <div class="ctw-tooltip-inner">
+                    <?php echo $this->sanitize_wysiwyg_content($tooltip_description); ?>
+                    <?php if ($show_learn_more): ?>
+                        <?php if (!empty($learn_more_text)) { ?>
+                            <a href="javascript:void(0);"
+                                class="ctw-learn-more-btn theme-btn bg-trans border_btnlight"><?php echo $learn_more_text; ?></a>
+                        <?php } ?>
+                    <?php endif; ?>
                 </div>
-            
+            </div>
+
         </div>
-        <?php if ($show_learn_more) : ?>
+        <?php if ($show_learn_more): ?>
             <div class="ctw-popup-overlay" style="display:none;"></div>
             <div class="ctw-popup-box" style="display:none;">
                 <div class="ctw-popup-close">&times;</div>
                 <div class="ctw-popup-content-wrapper">
-                    <?php if ($show_popup_icon) : ?>
-                        <?php 
+                    <?php if ($show_popup_icon): ?>
+                        <?php
                         $has_icon = false;
                         $has_image = false;
                         $icon_to_render = null;
-                        
+
                         if ($popup_icon_type === 'icon') {
                             // Check processed variable first
                             if ($popup_icon && is_array($popup_icon)) {
@@ -1076,7 +1146,7 @@ class Custom_Tooltip extends Widget_Base
                                 }
                             }
                         }
-                        
+
                         if ($popup_icon_type === 'image') {
                             // Check processed variable first
                             if ($popup_image && isset($popup_image['url']) && !empty($popup_image['url'])) {
@@ -1089,9 +1159,9 @@ class Custom_Tooltip extends Widget_Base
                             }
                         }
                         ?>
-                        <?php if ($has_icon || $has_image) : ?>
+                        <?php if ($has_icon || $has_image): ?>
                             <div class="ctw-popup-icon-wrapper">
-                                <?php if ($has_icon && $icon_to_render) : ?>
+                                <?php if ($has_icon && $icon_to_render): ?>
                                     <span class="ctw-popup-icon">
                                         <?php
                                         \Elementor\Icons_Manager::render_icon($icon_to_render, [
@@ -1099,8 +1169,10 @@ class Custom_Tooltip extends Widget_Base
                                         ]);
                                         ?>
                                     </span>
-                                <?php elseif ($has_image) : ?>
-                                    <img src="<?php echo esc_url($popup_image['url']); ?>" alt="<?php echo esc_attr(!empty($popup_image['alt']) ? $popup_image['alt'] : ''); ?>" class="ctw-popup-icon" />
+                                <?php elseif ($has_image): ?>
+                                    <img src="<?php echo esc_url($popup_image['url']); ?>"
+                                        alt="<?php echo esc_attr(!empty($popup_image['alt']) ? $popup_image['alt'] : ''); ?>"
+                                        class="ctw-popup-icon" />
                                 <?php endif; ?>
                             </div>
                         <?php endif; ?>
@@ -1112,7 +1184,7 @@ class Custom_Tooltip extends Widget_Base
             </div>
         <?php endif; ?>
 
-<?php
+        <?php
     }
 }
 

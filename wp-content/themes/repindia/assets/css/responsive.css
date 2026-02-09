@@ -453,6 +453,9 @@ label.form-label.label_notic a {
   list-style: disc;
   padding-inline-start: 18px;
 }
+.footer_copyright ul {
+    list-style: none !important;
+}
 .single-careers ul li {
   margin-bottom: 8px;
 }
@@ -576,6 +579,10 @@ label.form-label.label_notic a {
 .js-dark .career-apply-form label.form-label.notice-text a {
   text-decoration-color: #464a4f;
   color: rgba(255, 255, 255, 0.6);
+}
+
+.js-dark .darkbg-policy {
+  background: #262a30 !important;
 }
 
 /* @media (min-width: 1601px) {
@@ -739,11 +746,15 @@ label.form-label.label_notic a {
     .elementor-element.heading_tablemenu.elementor-widget-icon-list
     ul
     li {
-    min-width: 240px;
-    width: 240px;
+    min-width: 200px;
+    width: 200px;
     display: inline-block;
     text-align: left;
   }
+  .detailtbas .elementor-element.heading_tablemenu.elementor-widget-icon-list ul li:nth-child(2){text-align: center;padding-left: 40px;}
+  .detailtbas .elementor-element.heading_tablemenu.elementor-widget-icon-list ul li:nth-child(3){text-align: center;padding-left: 60px;}
+  .detailtbas .elementor-element.heading_tablemenu.elementor-widget-icon-list ul li:nth-child(4){text-align: center;padding-left: 60px;}
+
   .detailtbas {
     max-width: 400px;
     overflow: scroll !important;
