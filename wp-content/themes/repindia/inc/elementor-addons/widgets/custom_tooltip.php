@@ -1004,7 +1004,8 @@ class Custom_Tooltip extends Widget_Base
             .js-dark .tooltiptitlebox .ctw-title .ctw-text p .border-b {color: #ffff !important;}
 
               
-.defaultdark_paratool span.ctw-title.ctw-icon-left .ctw-text {color: #AEB6C9 !important;font-size: 16px;}
+.defaultdark_paratool span.ctw-title.ctw-icon-left .ctw-text, 
+.defaultdark_paratool span.ctw-title.ctw-icon-left .ctw-text p {color: #AEB6C9 !important;font-size: 16px;}
 
             @media (max-width: 768px) {
                 .ctw-tooltip-bottom {
