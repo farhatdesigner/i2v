@@ -768,10 +768,127 @@
     });
   }
 
+  /**
+   * Initialize intl-tel-input for all CF7 phone fields using vanilla JS.
+   * - Works with multiple forms on the same page.
+   * - Uses classes only (no IDs).
+   * - Updates related country text and hidden dial code fields per form.
+   */
+  function initPhoneCountryFields() {
+    try {
+      // Ensure intl-tel-input is available
+      if (typeof window.intlTelInput !== 'function') return;
+
+      var phoneInputs = document.querySelectorAll('.phone-input');
+      if (!phoneInputs || !phoneInputs.length) return;
+
+      for (var i = 0; i < phoneInputs.length; i++) {
+        (function (input) {
+          // Avoid double-initialization
+          if (input.dataset.itiInitialized === '1') return;
+          input.dataset.itiInitialized = '1';
+
+          // Scope to the closest form
+          var form = input.closest('form');
+          if (!form) return;
+
+          var countryInput = form.querySelector('.country-input');
+          var dialCodeInput = form.querySelector('.dial-code');
+
+          // Prepare a flag element next to the country input (no dropdown)
+          var countryFlagEl = null;
+          if (countryInput && !countryInput.dataset.flagEnhanced) {
+            countryInput.dataset.flagEnhanced = '1';
+
+            // Wrap the country input so we can position a flag inside the same visual field
+            var wrapper = document.createElement('div');
+            wrapper.className = 'country-input-wrapper';
+
+            // Insert wrapper before the country input and move the input inside it
+            if (countryInput.parentNode) {
+              countryInput.parentNode.insertBefore(wrapper, countryInput);
+              wrapper.appendChild(countryInput);
+            }
+
+            // Create a span that will reuse intl-tel-input flag sprites
+            countryFlagEl = document.createElement('span');
+            countryFlagEl.className = 'country-flag-icon iti__flag';
+            wrapper.insertBefore(countryFlagEl, countryInput);
+
+            // Store a reference for later updates
+            countryInput._countryFlagEl = countryFlagEl;
+          } else if (countryInput && countryInput._countryFlagEl) {
+            countryFlagEl = countryInput._countryFlagEl;
+          }
+
+          // Initialize intl-tel-input
+          var iti;
+          try {
+            iti = window.intlTelInput(input, {
+              // Use a sensible default; CF7 forms are often India-focused, but this can be adjusted.
+              initialCountry: 'in',
+              separateDialCode: true,
+              nationalMode: true
+              // Assume utils script is already loaded if needed.
+            });
+          } catch (e) {
+            return;
+          }
+
+          function updateLinkedFields() {
+            try {
+              if (!iti) return;
+              var data = iti.getSelectedCountryData ? iti.getSelectedCountryData() : null;
+              if (!data) return;
+
+              if (countryInput) {
+                countryInput.value = data.name || '';
+
+                // Update the flag next to the country name
+                if (countryInput._countryFlagEl && data.iso2) {
+                  var flagEl = countryInput._countryFlagEl;
+                  var prevIso = flagEl.dataset.iso2;
+                  if (prevIso) {
+                    flagEl.classList.remove('iti__' + prevIso.toLowerCase());
+                  }
+                  var iso = String(data.iso2 || '').toLowerCase();
+                  if (iso) {
+                    flagEl.classList.add('iti__' + iso);
+                    flagEl.dataset.iso2 = iso;
+                  }
+                }
+              }
+
+              if (dialCodeInput) {
+                var dial = data.dialCode ? '+' + data.dialCode : '';
+                dialCodeInput.value = dial;
+              }
+            } catch (e) {
+              // Fail silently per form
+            }
+          }
+
+          // Initial sync
+          updateLinkedFields();
+
+          // Update on country change
+          input.addEventListener('countrychange', updateLinkedFields);
+        })(phoneInputs[i]);
+      }
+    } catch (e) {
+      // Global guard: never break the page if something goes wrong here
+      console.error('Error initializing phone/country fields:', e);
+    }
+  }
+
   // Start initialization
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initFormValidationScript);
+    document.addEventListener('DOMContentLoaded', function () {
+      initFormValidationScript();
+      initPhoneCountryFields();
+    });
   } else {
     initFormValidationScript();
+    initPhoneCountryFields();
   }
 })();
