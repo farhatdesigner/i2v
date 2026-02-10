@@ -257,6 +257,37 @@ global $repindia_option;
 </div>
 <!-- </div> -->
 
+<!-- Global CF7 error overlay -->
+<div class="cf7-error-overlay" aria-hidden="true">
+	<div class="cf7-error-dialog" role="dialog" aria-modal="true">
+		<div class="cf7-error-header">
+			<button type="button" class="cf7-error-close" data-cf7-error-close aria-label="<?php esc_attr_e( 'Close', 'repindia' ); ?>">
+				<span class="btn-closecustom" data-bs-dismiss="modal" aria-label="Close">
+							<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#000'>
+								<path
+									d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414' />
+							</svg>
+						</span>
+			</button>
+		</div>
+		<div class="cf7-error-body">
+			<h2 class="cf7-error-title"><?php esc_html_e( 'Something went wrong', 'repindia' ); ?></h2>
+			<p class="cf7-error-text">
+				<?php esc_html_e( 'We couldn’t send your message due to a network issue or an unexpected error. Please check your internet connection and try again.', 'repindia' ); ?>
+			</p>
+			<p class="cf7-error-text">
+				<?php esc_html_e( 'If the issue continues, feel free to reach us directly.', 'repindia' ); ?>
+			</p>
+			<div class="cf7-error-actions">
+				<div class="cf7-error-action-inner">
+					<a href="tel:+919810056691" class="cf7-error-btn theme-btn-white border-btn-grey"><?php echo esc_html( '+91 981-005-6691' ); ?></a>
+					<a href="mailto:i2v@i2vsys.com" class="cf7-error-btn theme-btn-white border-btn-grey"><?php echo esc_html( 'i2v@i2vsys.com' ); ?></a>
+				</div>
+				<a href="<?php echo esc_url(home_url('/')); ?>" class="cf7-error-btn theme-btn btn_transgreylight"><?php esc_html_e( 'Back to home', 'repindia' ); ?></a>
+			</div>
+		</div>
+	</div>
+</div>
 
 <!-- Modal -->
 <?php
