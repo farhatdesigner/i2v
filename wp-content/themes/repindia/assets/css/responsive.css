@@ -1,3 +1,29 @@
+/* Wrapper around the country text input */
+.country-input-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+/* The flag icon that reuses intl-tel-input sprites */
+.country-input-wrapper .country-flag-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 15px;
+  pointer-events: none;
+}
+/* Ensure the sprite is visible even if some other CSS overrides .iti__flag */
+.country-input-wrapper .country-flag-icon.iti__flag {
+  background-repeat: no-repeat;
+  background-color: #dbdbdb;
+}
+/* Add left padding so text doesn't overlap the flag */
+.country-input-wrapper .country-input {
+  padding-left: 44px;
+}
+
 .vmsfaq .e-n-accordion-item[open]>.e-n-accordion-item-title {
   background: transparent !important;
   color: #06283D !important;
