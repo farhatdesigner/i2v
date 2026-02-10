@@ -179,8 +179,19 @@ class Custom_Resource_List extends Widget_Base {
                 .resource-filter-item:hover span{ color: #4A5673; }
                 .resource-filter-item.active span{ color: #06283D; }
                 .resource-filter-clear-wrapper { margin-top: 0;padding: 8px; }
-                a.resource-filter-clear { color: #949494;text-decoration: none;border-bottom: 1px solid #E6E6E6;font-size: 16px;font-style: normal;font-weight: 600;line-height: 24px; }
-                a.resource-filter-clear:hover { color: #7b7676; }
+                a.resource-filter-clear { font-size: 16px;font-style: normal;font-weight: 600;line-height: 24px; }
+                /* a.resource-filter-clear:hover { color: #7b7676; } */
+                .reset-disabled {
+                    pointer-events: none;
+                    opacity: 0.5;
+                    cursor: not-allowed;
+                    color: #949494!important;
+                    border-color: #E6E6E6!important;
+                }
+                .js-dark .reset-disabled {
+                    color: #949494!important;
+                    border-color: #FFFFFF1A!important;
+                }
                 .resource-main-content { flex: 1; }
                 .resource-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
                 .resource-header h2 { font-size: 32px; font-weight: 600; margin: 0; color: #06283D; }
@@ -307,13 +318,13 @@ class Custom_Resource_List extends Widget_Base {
                 </div>
                 
                 <?php
-                $clear_filters_url = remove_query_arg(['resource_type', 'resource_product', 'sort', 'page']);
-                if (empty($url_type_slug) && empty($url_product_slug) && empty($url_sort)) {
-                    $clear_filters_url = '#';
-                }
+                $has_active_filters = !empty($url_type_slug) || !empty($url_product_slug) || $url_sort !== 'newest';
+                $clear_filters_url = $has_active_filters ? remove_query_arg(['resource_type', 'resource_product', 'sort', 'page']) : '#';
+                $clear_link_class = 'resource-filter-clear' . ($has_active_filters ? '' : ' reset-disabled');
+                $clear_link_aria = $has_active_filters ? 'false' : 'true';
                 ?>
                 <div class="resource-filter-clear-wrapper">
-                    <a href="<?php echo esc_url($clear_filters_url); ?>" class="resource-filter-clear"<?php echo (empty($url_type_slug) && empty($url_product_slug) && empty($url_sort)) ? ' style="pointer-events: none; opacity: 0.5;"' : ''; ?>>Clear filters</a>
+                    <a href="<?php echo esc_url($clear_filters_url); ?>" class="<?php echo esc_attr($clear_link_class); ?> theme-btn bg-trans border_btnlight" aria-disabled="<?php echo esc_attr($clear_link_aria); ?>">Clear filters</a>
                 </div>
             </div>
             
@@ -473,6 +484,16 @@ class Custom_Resource_List extends Widget_Base {
                 loadMoreBtn.addEventListener('click', function() {
                     var nextPage = parseInt(this.getAttribute('data-next-page')) || 2;
                     buildUrlAndReload(currentType, currentProduct, currentSort, nextPage);
+                });
+            }
+
+            // Clear filters link: do nothing when no filters applied (disabled state)
+            var clearLink = section.querySelector('a.resource-filter-clear');
+            if (clearLink) {
+                clearLink.addEventListener('click', function(e) {
+                    if (this.classList.contains('reset-disabled') || this.getAttribute('aria-disabled') === 'true') {
+                        e.preventDefault();
+                    }
                 });
             }
         })();

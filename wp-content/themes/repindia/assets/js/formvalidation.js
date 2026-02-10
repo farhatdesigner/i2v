@@ -72,13 +72,22 @@
         } else if ($field.is('input[type="checkbox"], input[type="radio"]')) {
           var $group = $form.find('input[name="' + $field.attr('name') + '"]');
           return $group.filter(':checked').length > 0 ? 'checked' : '';
+        } else if ($field.is('input[type="file"]')) {
+          var el = $field[0];
+          return (el.files && el.files.length > 0) ? (el.files[0].name || 'file') : '';
         }
         return '';
+      }
+
+      // Only forms with .file-upload-box use hidden file inputs; this helper is used to scope file logic to those only.
+      function isFileInUploadBox($field) {
+        return $field.is('input[type="file"]') && $field.closest('.file-upload-box').length > 0;
       }
       
       // Helper: Validate specific field types
       function validateField($field, $form) {
-        if (!$field.is(':visible')) return true;
+        var allowValidateHiddenFile = isFileInUploadBox($field);
+        if (!$field.is(':visible') && !allowValidateHiddenFile) return true;
         
         var value = getFieldValue($field, $form);
         var fieldName = $field.attr('name') || '';
@@ -125,8 +134,8 @@
           $allFields.each(function() {
             var $field = $(this);
             
-            // Skip if field is not visible
-            if (!$field.is(':visible')) return true;
+            // Skip if field is not visible. Exception: file inputs inside .file-upload-box (only some CF7 forms) – validate those even when hidden.
+            if (!$field.is(':visible') && !isFileInUploadBox($field)) return true;
             
             // Check if field is required
             if (isFieldRequired($field)) {
@@ -335,6 +344,29 @@
             sanitize: function(field, event) {
               var $field = $(field);
               var $wrap = $field.closest('.wpcf7-form-control-wrap');
+
+              // Always restrict typing to numeric digits (plus control/navigation keys)
+              if (event && event.type === 'keydown') {
+                var key = event.keyCode || event.which;
+
+                // Allow: backspace, delete, tab, escape, enter, arrows, home, end
+                var allowedKeys = [8, 9, 13, 27, 46, 35, 36, 37, 38, 39, 40];
+                if (allowedKeys.indexOf(key) !== -1) {
+                  return; // allow these keys
+                }
+
+                // Allow: Ctrl/Meta + A, C, V, X
+                if ((event.ctrlKey || event.metaKey) && [65, 67, 86, 88].indexOf(key) !== -1) {
+                  return;
+                }
+
+                // Allow number keys (top row 0–9 and numpad 0–9)
+                var isNumberKey = (key >= 48 && key <= 57) || (key >= 96 && key <= 105);
+                if (!isNumberKey) {
+                  event.preventDefault();
+                  return false;
+                }
+              }
               
               // Check if using intl-tel-input plugin
               var isIntlTelInput = $field.closest('.intl-tel-input').length > 0 || 
@@ -379,26 +411,6 @@
                   }, 100);
                 }
                 return; // Don't interfere with intl-tel-input's own handling
-              }
-              
-              // Standard phone field (not using intl-tel-input) - apply strict validation
-              // Prevent non-numeric keys on keydown
-              if (event && event.type === 'keydown') {
-                var key = event.keyCode || event.which;
-                // Allow: backspace (8), delete (46), tab (9), escape (27), enter (13), arrow keys (37-40), home (36), end (35)
-                var allowedKeys = [8, 9, 27, 13, 46, 37, 38, 39, 40, 36, 35];
-                if (allowedKeys.indexOf(key) !== -1) {
-                  return; // Allow these keys
-                }
-                // Allow Ctrl+A (65), Ctrl+C (67), Ctrl+V (86), Ctrl+X (88)
-                if ((event.ctrlKey || event.metaKey) && [65, 67, 86, 88].indexOf(key) !== -1) {
-                  return; // Allow these shortcuts
-                }
-                // Only allow number keys (0-9 on main keyboard and numpad)
-                if (!((key >= 48 && key <= 57) || (key >= 96 && key <= 105))) {
-                  event.preventDefault();
-                  return false;
-                }
               }
               
               // For input and paste events, clean the value (only for non-intl-tel-input fields)
@@ -522,7 +534,25 @@
           if ($noFileEl.length) {
             $noFileEl.text(fileName);
           }
+          var $box = $(this).closest('.file-upload-box');
+          if ($box.length && this.files.length > 0) {
+            $box.addClass('has-file');
+            $box.find('.file-name').text(fileName).show();
+          }
+          // Validation unchanged: still run after file selection
           validateAndUpdateSubmit($(this).closest('.wpcf7'));
+        });
+
+        // File upload box / browse link: open file dialog only (input has pointer-events: none in CSS).
+        // Does not run or alter validation; validation still runs on the input's native 'change' above.
+        $doc.off('click', '.wpcf7 .file-upload-box');
+        $doc.on('click', '.wpcf7 .file-upload-box', function(e) {
+          var $box = $(this);
+          var $input = $box.find('input[type="file"]');
+          if ($input.length && !$(e.target).is('input[type="file"]')) {
+            e.preventDefault();
+            $input[0].click();
+          }
         });
       }
       
@@ -741,10 +771,127 @@
     });
   }
 
+  /**
+   * Initialize intl-tel-input for all CF7 phone fields using vanilla JS.
+   * - Works with multiple forms on the same page.
+   * - Uses classes only (no IDs).
+   * - Updates related country text and hidden dial code fields per form.
+   */
+  function initPhoneCountryFields() {
+    try {
+      // Ensure intl-tel-input is available
+      if (typeof window.intlTelInput !== 'function') return;
+
+      var phoneInputs = document.querySelectorAll('.phone-input');
+      if (!phoneInputs || !phoneInputs.length) return;
+
+      for (var i = 0; i < phoneInputs.length; i++) {
+        (function (input) {
+          // Avoid double-initialization
+          if (input.dataset.itiInitialized === '1') return;
+          input.dataset.itiInitialized = '1';
+
+          // Scope to the closest form
+          var form = input.closest('form');
+          if (!form) return;
+
+          var countryInput = form.querySelector('.country-input');
+          var dialCodeInput = form.querySelector('.dial-code');
+
+          // Prepare a flag element next to the country input (no dropdown)
+          var countryFlagEl = null;
+          if (countryInput && !countryInput.dataset.flagEnhanced) {
+            countryInput.dataset.flagEnhanced = '1';
+
+            // Wrap the country input so we can position a flag inside the same visual field
+            var wrapper = document.createElement('div');
+            wrapper.className = 'country-input-wrapper';
+
+            // Insert wrapper before the country input and move the input inside it
+            if (countryInput.parentNode) {
+              countryInput.parentNode.insertBefore(wrapper, countryInput);
+              wrapper.appendChild(countryInput);
+            }
+
+            // Create a span that will reuse intl-tel-input flag sprites
+            countryFlagEl = document.createElement('span');
+            countryFlagEl.className = 'country-flag-icon iti__flag';
+            wrapper.insertBefore(countryFlagEl, countryInput);
+
+            // Store a reference for later updates
+            countryInput._countryFlagEl = countryFlagEl;
+          } else if (countryInput && countryInput._countryFlagEl) {
+            countryFlagEl = countryInput._countryFlagEl;
+          }
+
+          // Initialize intl-tel-input
+          var iti;
+          try {
+            iti = window.intlTelInput(input, {
+              // Use a sensible default; CF7 forms are often India-focused, but this can be adjusted.
+              initialCountry: 'in',
+              separateDialCode: true,
+              nationalMode: true
+              // Assume utils script is already loaded if needed.
+            });
+          } catch (e) {
+            return;
+          }
+
+          function updateLinkedFields() {
+            try {
+              if (!iti) return;
+              var data = iti.getSelectedCountryData ? iti.getSelectedCountryData() : null;
+              if (!data) return;
+
+              if (countryInput) {
+                countryInput.value = data.name || '';
+
+                // Update the flag next to the country name
+                if (countryInput._countryFlagEl && data.iso2) {
+                  var flagEl = countryInput._countryFlagEl;
+                  var prevIso = flagEl.dataset.iso2;
+                  if (prevIso) {
+                    flagEl.classList.remove('iti__' + prevIso.toLowerCase());
+                  }
+                  var iso = String(data.iso2 || '').toLowerCase();
+                  if (iso) {
+                    flagEl.classList.add('iti__' + iso);
+                    flagEl.dataset.iso2 = iso;
+                  }
+                }
+              }
+
+              if (dialCodeInput) {
+                var dial = data.dialCode ? '+' + data.dialCode : '';
+                dialCodeInput.value = dial;
+              }
+            } catch (e) {
+              // Fail silently per form
+            }
+          }
+
+          // Initial sync
+          updateLinkedFields();
+
+          // Update on country change
+          input.addEventListener('countrychange', updateLinkedFields);
+        })(phoneInputs[i]);
+      }
+    } catch (e) {
+      // Global guard: never break the page if something goes wrong here
+      console.error('Error initializing phone/country fields:', e);
+    }
+  }
+
   // Start initialization
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initFormValidationScript);
+    document.addEventListener('DOMContentLoaded', function () {
+      initFormValidationScript();
+      initPhoneCountryFields();
+    });
   } else {
     initFormValidationScript();
+    initPhoneCountryFields();
   }
 })();
