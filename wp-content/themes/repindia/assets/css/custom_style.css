@@ -3731,6 +3731,9 @@ span.star {
 .e-con-full.ai_smart_dark .elementor-position-left.theme-img {
   padding: 0 20px;
 }
+.elementor-element.awardbtn .elementor-button {
+  cursor: default;
+}
 
 @media (min-width: 768px) {
   .footer-accordion-icon {
