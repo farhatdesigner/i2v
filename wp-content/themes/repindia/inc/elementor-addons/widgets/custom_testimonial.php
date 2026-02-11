@@ -1234,7 +1234,7 @@ class Custom_Testimonial extends Widget_Base
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item img { transition: all .25s ease; display:block; }
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-placeholder { font-size: 12px; color: rgba(255,255,255,0.7); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px; }
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item.active { background: rgba(255,255,255,0.05); border-color: #74c2edcc; }
-            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item.active img { opacity: 1; }
+            #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tab-item.active img { opacity: 1;cursor: pointer; }
 
             /* arrows (scoped) - positioned relative to wrapper */
             #<?php echo esc_attr($widget_id); ?> .custom-testimonial-tabs-wrapper .swiper-button-prev,
@@ -1275,6 +1275,12 @@ class Custom_Testimonial extends Widget_Base
                 right: 0px !important;
             }
             
+            /* Hide nav when items fit in view (no scrolling needed) */
+            #<?php echo esc_attr($widget_id); ?>.custom-testimonial-nav-hidden .swiper-button-prev,
+            #<?php echo esc_attr($widget_id); ?>.custom-testimonial-nav-hidden .swiper-button-next {
+                display: none !important;
+            }
+
             /* Hide default Swiper arrow icons - using local icons instead */
             #<?php echo esc_attr($widget_id); ?> .swiper-button-prev:after,
             #<?php echo esc_attr($widget_id); ?> .swiper-button-next:after,
@@ -1540,6 +1546,7 @@ class Custom_Testimonial extends Widget_Base
                             // ensure correct active state on init (2nd visible)
                             setTimeout(function(){
                                 setActiveByVisibleIndex(this.activeIndex || 0);
+                                updateNavVisibility();
                             }.bind(this), 30);
                         },
                         slideChange: function(){
@@ -1547,6 +1554,7 @@ class Custom_Testimonial extends Widget_Base
                         },
                         resize: function(){
                             setActiveByVisibleIndex(this.activeIndex || 0);
+                            updateNavVisibility();
                         }
                     }
                 };
@@ -1670,6 +1678,20 @@ class Custom_Testimonial extends Widget_Base
 
                     // Sync testimonial content to the active index
                     switchTestimonial(activeIndex);
+                }
+
+                // Show/hide nav buttons based on item count vs slidesPerView
+                function updateNavVisibility() {
+                    if (!swiperInstance || !widgetEl) return;
+                    var totalItems = slides.length;
+                    var slidesPerView = swiperInstance.params && swiperInstance.params.slidesPerView;
+                    if (typeof slidesPerView === 'string') slidesPerView = parseFloat(slidesPerView) || 8;
+                    slidesPerView = Math.floor(slidesPerView) || 8;
+                    if (totalItems <= slidesPerView) {
+                        widgetEl.classList.add('custom-testimonial-nav-hidden');
+                    } else {
+                        widgetEl.classList.remove('custom-testimonial-nav-hidden');
+                    }
                 }
 
                 // Set active based on visible index (for automatic updates during scroll)
