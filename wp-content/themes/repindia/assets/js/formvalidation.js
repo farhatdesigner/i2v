@@ -344,6 +344,29 @@
             sanitize: function(field, event) {
               var $field = $(field);
               var $wrap = $field.closest('.wpcf7-form-control-wrap');
+
+              // Always restrict typing to numeric digits (plus control/navigation keys)
+              if (event && event.type === 'keydown') {
+                var key = event.keyCode || event.which;
+
+                // Allow: backspace, delete, tab, escape, enter, arrows, home, end
+                var allowedKeys = [8, 9, 13, 27, 46, 35, 36, 37, 38, 39, 40];
+                if (allowedKeys.indexOf(key) !== -1) {
+                  return; // allow these keys
+                }
+
+                // Allow: Ctrl/Meta + A, C, V, X
+                if ((event.ctrlKey || event.metaKey) && [65, 67, 86, 88].indexOf(key) !== -1) {
+                  return;
+                }
+
+                // Allow number keys (top row 0–9 and numpad 0–9)
+                var isNumberKey = (key >= 48 && key <= 57) || (key >= 96 && key <= 105);
+                if (!isNumberKey) {
+                  event.preventDefault();
+                  return false;
+                }
+              }
               
               // Check if using intl-tel-input plugin
               var isIntlTelInput = $field.closest('.intl-tel-input').length > 0 || 
@@ -388,26 +411,6 @@
                   }, 100);
                 }
                 return; // Don't interfere with intl-tel-input's own handling
-              }
-              
-              // Standard phone field (not using intl-tel-input) - apply strict validation
-              // Prevent non-numeric keys on keydown
-              if (event && event.type === 'keydown') {
-                var key = event.keyCode || event.which;
-                // Allow: backspace (8), delete (46), tab (9), escape (27), enter (13), arrow keys (37-40), home (36), end (35)
-                var allowedKeys = [8, 9, 27, 13, 46, 37, 38, 39, 40, 36, 35];
-                if (allowedKeys.indexOf(key) !== -1) {
-                  return; // Allow these keys
-                }
-                // Allow Ctrl+A (65), Ctrl+C (67), Ctrl+V (86), Ctrl+X (88)
-                if ((event.ctrlKey || event.metaKey) && [65, 67, 86, 88].indexOf(key) !== -1) {
-                  return; // Allow these shortcuts
-                }
-                // Only allow number keys (0-9 on main keyboard and numpad)
-                if (!((key >= 48 && key <= 57) || (key >= 96 && key <= 105))) {
-                  event.preventDefault();
-                  return false;
-                }
               }
               
               // For input and paste events, clean the value (only for non-intl-tel-input fields)
