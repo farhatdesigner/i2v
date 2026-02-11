@@ -773,7 +773,7 @@ js-dark .hero-slider .swiper-pagination-bullet {
   stroke-linecap: round;
   fill: none;
   stroke-dasharray: 100.53;
-  stroke-dashoffset: calc(100.53 * (1 - var(--progress)));
+  stroke-dashoffset: calc(100.53 * (1 - var(--progress, 0)));
   transition: stroke-dashoffset 0.1s linear;
 }
 
