@@ -265,11 +265,11 @@ class Customtabsolution extends Widget_Base
 			<section class="microspace-inside">
 				<div class="custom-container">
 					<div class="col-lg-8 col-xxl-7">
-						<h3 class="main_title quote">Integrated solutions to secure and streamline every facet of your operations </h3>
+						<h3 class="main_title quote"><?php echo esc_html('Integrated solutions to secure and streamline every facet of your operations', 'repindia'); ?> </h3>
 					</div>
 					<div class="contentWrapper">
 						<div class="filter-menu tabsWrapper">
-							<label class="dropdown-label">Solutions</label>
+							<label class="dropdown-label"><?php echo esc_html('Solutions', 'repindia'); ?></label>
 							<span class="select-brand"><?php echo esc_html($first_tab_title); ?></span>
 							<ul class="tabsautoscroll custom-tabs-list" id="solutionTab">
 								<?php if (!empty($solution_tabs)) : ?>

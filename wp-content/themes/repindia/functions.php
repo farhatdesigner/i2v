@@ -112,6 +112,7 @@ if (! function_exists('repindia_load_theme_scripts_and_styles')) {
 			wp_enqueue_style('dark-theme', get_template_directory_uri() . '/assets/css/dark_theme.css', null, REPINDIA_THEME_VERSION, 'all');
 			wp_enqueue_style('repindia-responsive', get_template_directory_uri() . '/assets/css/responsive.css', null, REPINDIA_THEME_VERSION, 'all');
 			wp_enqueue_style('repindia-search', get_template_directory_uri() . '/assets/css/search.css', null, REPINDIA_THEME_VERSION, 'all');
+			wp_enqueue_style('repindia-rtl', get_template_directory_uri() . '/assets/css/rlt.css', null, REPINDIA_THEME_VERSION, 'all');
 
 		/* Register Scripts */
 		// Deregister WordPress default jQuery
@@ -599,3 +600,23 @@ add_filter('wp_unique_term_slug', function ($slug, $term) {
 
 }, 10, 2);
 
+//Global translator helper function
+if ( ! function_exists( 'wpml_t' ) ) {
+    function wpml_t( $text, $context = 'Theme', $name = '' ) {
+        if ( empty( $name ) ) {
+            $name = md5( $text );
+        }
+        do_action(
+            'wpml_register_single_string',
+            $context,
+            $name,
+            $text
+        );
+        return apply_filters(
+            'wpml_translate_single_string',
+            $text,
+            $context,
+            $name
+        );
+    }
+}
