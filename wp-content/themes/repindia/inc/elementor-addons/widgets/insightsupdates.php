@@ -361,16 +361,6 @@ class Insightsupdates extends Widget_Base
         $remaining_posts = !empty($posts) && count($posts) > 1 ? array_slice($posts, 1) : [];
         
         ?>
-        <style>
-            .insights-updates-item-text_left-list li > span {
-                font-size: 14px;
-                color: #4a5673;
-                padding: 4px 12px;
-                display: inline-block;
-                border-radius: 28px;
-                border: 1px solid #e6ebf2;
-            }
-        </style>
         <div class="sectionsinsightsupdates grey-light">
          <section class="microspace-custom_outside custom-container">
             <div class="mx-auto">
@@ -425,7 +415,7 @@ class Insightsupdates extends Widget_Base
                                        <?php echo esc_html($first_post_title); ?>
                                     </h4>
                                     <?php if (!empty($first_post_excerpt)) : ?>
-                                       <div class="text-features">
+                                       <div class="insightleftdesc">
                                           <p><?php echo wp_kses_post($first_post_excerpt); ?></p>
                                        </div>
                                     <?php endif; ?>
