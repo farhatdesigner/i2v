@@ -858,6 +858,23 @@ class Custom_Tooltip extends Widget_Base
             echo 'function initCustomTooltips() {';
             echo 'if (typeof jQuery === "undefined") return;';
             echo 'var $ = jQuery;';
+            echo 'function positionTooltipByTrigger($wrapper) {';
+            echo 'var $tooltip = $wrapper.find(".ctw-tooltip");';
+            echo 'var $textTrigger = $wrapper.find(".ctw-text .ctw-trigger");';
+            echo 'if (!$textTrigger.length) $textTrigger = $wrapper.find(".ctw-trigger").first();';
+            echo 'var wrapper = $wrapper[0], tooltip = $tooltip[0], trigger = $textTrigger[0];';
+            echo 'if (!wrapper || !tooltip || !trigger) return;';
+            echo 'var wr = wrapper.getBoundingClientRect(), tr = trigger.getBoundingClientRect();';
+            echo 'var pos = $wrapper.data("position") || "bottom";';
+            echo 'var centerX = tr.left - wr.left + (tr.width / 2);';
+            echo 'var centerY = tr.top - wr.top + (tr.height / 2);';
+            echo 'var css = { right: "auto", bottom: "auto" };';
+            echo 'if (pos === "bottom") { css.left = centerX + "px"; css.top = (tr.bottom - wr.top + 8) + "px"; css.transform = "translateX(-50%)"; css.marginTop = "0"; }';
+            echo 'else if (pos === "top") { css.left = centerX + "px"; css.bottom = (wr.bottom - tr.top + 8) + "px"; css.top = "auto"; css.transform = "translateX(-50%)"; css.marginBottom = "0"; }';
+            echo 'else if (pos === "left") { css.right = (wr.right - tr.left + 8) + "px"; css.top = centerY + "px"; css.left = "auto"; css.transform = "translateY(-50%)"; }';
+            echo 'else if (pos === "right") { css.left = (tr.right - wr.left + 8) + "px"; css.top = centerY + "px"; css.transform = "translateY(-50%)"; }';
+            echo '$tooltip.css(css);';
+            echo '}';
             echo '$(".ctw-wrapper").each(function() {';
             echo 'var $wrapper = $(this);';
             echo 'var triggerType = $wrapper.data("trigger") || "hover";';
@@ -866,12 +883,12 @@ class Custom_Tooltip extends Widget_Base
             echo '$trigger.off("mouseenter mouseleave click");';
             echo '$(document).off("click.ctw-" + $wrapper.index());';
             echo 'if (triggerType === "hover") {';
-            echo '$trigger.on("mouseenter", function() { $tooltip.addClass("show"); });';
+            echo '$trigger.on("mouseenter", function() { positionTooltipByTrigger($wrapper); $tooltip.addClass("show"); });';
             echo '$trigger.on("mouseleave", function() { $tooltip.removeClass("show"); });';
             echo '$tooltip.on("mouseenter", function() { $(this).addClass("show"); });';
             echo '$tooltip.on("mouseleave", function() { $(this).removeClass("show"); });';
             echo '} else if (triggerType === "click") {';
-            echo '$trigger.on("click", function(e) { e.stopPropagation(); $tooltip.toggleClass("show"); });';
+            echo '$trigger.on("click", function(e) { e.stopPropagation(); positionTooltipByTrigger($wrapper); $tooltip.toggleClass("show"); });';
             echo '$(document).on("click.ctw-outside-" + $wrapper.index(), function(e) {';
             echo 'if ($tooltip.hasClass("show")) {';
             echo 'if (!$wrapper.is(e.target) && !$wrapper.has(e.target).length) {';
@@ -1023,14 +1040,13 @@ class Custom_Tooltip extends Widget_Base
             .js-dark #center_mobileviiew .ctw-title p .border-b {
                 color: #ffffff !important;
             }
-
             .js-dark .tooltiptitlebox .ctw-title .ctw-text p,
-            .js-dark .tooltiptitlebox .ctw-title .ctw-text p .border-b {color: #ffff !important;}
-
-              
-.defaultdark_paratool span.ctw-title.ctw-icon-left .ctw-text, 
-.defaultdark_paratool span.ctw-title.ctw-icon-left .ctw-text p {color: #AEB6C9 !important;font-size: 16px;}
-
+            .js-dark .tooltiptitlebox .ctw-title .ctw-text p .border-b {color: #ffff !important;}   
+            .defaultdark_paratool span.ctw-title.ctw-icon-left .ctw-text, 
+            .defaultdark_paratool span.ctw-title.ctw-icon-left .ctw-text p {color: #AEB6C9 !important;font-size: 16px;}
+            @media(max-width: 1400px) and (min-width: 1025px){
+                .ctw-tooltip-bottom { top: 100%; }
+            }
             @media (max-width: 768px) {
                 .ctw-tooltip-bottom {
                     top: 0% !important;
@@ -1041,7 +1057,6 @@ class Custom_Tooltip extends Widget_Base
                     z-index: 2 !important;
                     position: absolute !important;
                 }
-
                 .toptooltitle .ctw-tooltip-bottom {
                     left: 50% !important;
                     right: auto !important;
@@ -1050,14 +1065,13 @@ class Custom_Tooltip extends Widget_Base
                     max-width: 360px !important;
                     position: fixed !important;
                 }
-
                 #center_mobileviiew .ctw-wrapper.ctw-has-learn-more {
                     justify-content: center;
                 }
-
                 #center_mobileviiew .card_title_tooltip .ctw-title .ctw-text p {
                     font-size: 20px;
                 }
+                .ctw-title{ text-align: center!important; }
 
             }
 
