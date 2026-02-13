@@ -1,3 +1,29 @@
+/* Wrapper around the country text input */
+.country-input-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+/* The flag icon that reuses intl-tel-input sprites */
+.country-input-wrapper .country-flag-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 15px;
+  pointer-events: none;
+}
+/* Ensure the sprite is visible even if some other CSS overrides .iti__flag */
+.country-input-wrapper .country-flag-icon.iti__flag {
+  background-repeat: no-repeat;
+  background-color: #dbdbdb;
+}
+/* Add left padding so text doesn't overlap the flag */
+.country-input-wrapper .country-input {
+  padding-left: 44px;
+}
+
 .vmsfaq .e-n-accordion-item[open]>.e-n-accordion-item-title {
   background: transparent !important;
   color: #06283D !important;
@@ -316,7 +342,7 @@ input[type="checkbox"] {
 .wpcf7-list-item label {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
+  gap: 4px;
 }
 span.wpcf7-list-item-label {
   color: #5f6f94;
@@ -523,18 +549,18 @@ label.form-label.label_notic a {
 .styled-career-form .file-upload-box.has-file .file-name {
   display: block;
 }
-.styled-career-form .file-upload-box.has-file p {
+/* .styled-career-form .file-upload-box.has-file p {
   display: none;
-}
+} */
 .career-apply-form.styled-career-form {
   padding: 40px;
   background: #fff;
   border-radius: 16px;
 }
 .career-apply-form .wpcf7-list-item {
-  margin: 0 15px 0 0;
+  /* margin: 0 15px 0 0;
   width: 100%;
-  max-width: 30%;
+  max-width: 30%; */
 }
 .career-apply-form .wpcf7-list-item label {
   display: flex;
