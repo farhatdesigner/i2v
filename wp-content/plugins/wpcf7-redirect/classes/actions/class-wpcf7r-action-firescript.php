@@ -108,7 +108,7 @@ class WPCF7R_Action_FireScript extends WPCF7R_Action {
 
 		$script = $this->get( 'script' );
 
-		$script = $this->replace_tags( $script, array() );
+		$script = $this->replace_tags( $script, true );
 
 		return $script;
 	}
