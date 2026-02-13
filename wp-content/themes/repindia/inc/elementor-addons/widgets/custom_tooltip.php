@@ -88,6 +88,28 @@ class Custom_Tooltip extends Widget_Base
         );
 
         $this->add_control(
+            'pre_content',
+            [
+                'label' => esc_html__('Pre-content', 'repindia'),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'default' => '',
+                'label_block' => true,
+                'description' => esc_html__('Content displayed before Title Text (inside same trigger)', 'repindia'),
+            ]
+        );
+
+        $this->add_control(
+            'after_content',
+            [
+                'label' => esc_html__('After-content', 'repindia'),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'default' => '',
+                'label_block' => true,
+                'description' => esc_html__('Content displayed after Title Text (inside same trigger)', 'repindia'),
+            ]
+        );
+
+        $this->add_control(
             'icon',
             [
                 'label' => esc_html__('Icon', 'repindia'),
@@ -765,6 +787,8 @@ class Custom_Tooltip extends Widget_Base
         $trigger_type = !empty($settings['trigger_type']) ? esc_attr($settings['trigger_type']) : 'hover';
         $position = !empty($settings['position']) ? esc_attr($settings['position']) : 'top';
         $title_text = !empty($settings['title_text']) ? $settings['title_text'] : '';
+        $pre_content = !empty($settings['pre_content']) ? $settings['pre_content'] : '';
+        $after_content = !empty($settings['after_content']) ? $settings['after_content'] : '';
         $show_icon = !empty($settings['show_icon']) && $settings['show_icon'] === 'yes';
         $icon_position = !empty($settings['icon_position']) ? esc_attr($settings['icon_position']) : 'left';
         $title_align = !empty($settings['title_align']) ? esc_attr($settings['title_align']) : 'left';
@@ -795,7 +819,7 @@ class Custom_Tooltip extends Widget_Base
             echo '.ctw-tooltip-inner { position: relative; word-wrap: break-word;white-space: normal; }';
             echo '.ctw-tooltip-top { bottom: 100%; left: 50%; transform: translateX(-50%); margin-bottom: 8px; }';
             echo '.ctw-tooltip-top .ctw-tooltip-inner::after { content: ""; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--ctw-arrow-color, #333333); }';
-            echo '.ctw-tooltip-bottom { top: 100%; left: 50%; transform: translateX(-50%); margin-top: 0px; }';
+            echo '.ctw-tooltip-bottom { top: 26px; left: 50%; transform: translateX(-50%); margin-top: 0px; }';
             // echo '.ctw-tooltip-bottom .ctw-tooltip-inner::after { content: ""; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-bottom-color: var(--ctw-arrow-color, #333333); }';
             echo '.ctw-tooltip-left { right: 100%; top: 50%; transform: translateY(-50%); margin-right: 8px; }';
             echo '.ctw-tooltip-left .ctw-tooltip-inner::after { content: ""; position: absolute; left: 100%; top: 50%; transform: translateY(-50%); border: 6px solid transparent; border-left-color: var(--ctw-arrow-color, #333333); }';
@@ -1050,11 +1074,11 @@ class Custom_Tooltip extends Widget_Base
         <div class="ctw-wrapper <?php echo $show_learn_more ? 'ctw-has-learn-more' : ''; ?>"
             data-trigger="<?php echo $trigger_type; ?>" data-position="<?php echo $position; ?>"
             style="--ctw-arrow-color: <?php echo $show_learn_more ? $tooltip_bg_color : '#ffffff'; ?>;">
-            <div class="ctw-trigger">
+            <div class="">
                 <span class="ctw-title ctw-icon-<?php echo $icon_position; ?>" style="text-align: <?php echo $title_align; ?>;">
                     <?php if ($show_icon && $icon_position === 'left'): ?>
                         <?php if (!empty($settings['icon'])): ?>
-                            <span class="ctw-icon ctw-icon-light">
+                            <span class="ctw-trigger ctw-icon ctw-icon-light">
                                 <?php
                                 \Elementor\Icons_Manager::render_icon($settings['icon'], [
                                     'aria-hidden' => 'true',
@@ -1063,7 +1087,7 @@ class Custom_Tooltip extends Widget_Base
                             </span>
                         <?php endif; ?>
                         <?php if (!empty($icon_dark)): ?>
-                            <span class="ctw-icon ctw-icon-dark">
+                            <span class="ctw-trigger ctw-icon ctw-icon-dark">
                                 <?php
                                 \Elementor\Icons_Manager::render_icon($icon_dark, [
                                     'aria-hidden' => 'true',
@@ -1072,10 +1096,10 @@ class Custom_Tooltip extends Widget_Base
                             </span>
                         <?php endif; ?>
                     <?php endif; ?>
-                    <span class="ctw-text"><?php echo $this->sanitize_wysiwyg_content($title_text); ?></span>
+                    <span class="ctw-text"><?php echo $pre_content; ?> <span class="ctw-trigger"><?php echo $this->sanitize_wysiwyg_content($title_text); ?></span> <?php echo $after_content; ?></span>
                     <?php if ($show_icon && $icon_position === 'right'): ?>
                         <?php if (!empty($settings['icon'])): ?>
-                            <span class="ctw-icon ctw-icon-light">
+                            <span class="ctw-trigger ctw-icon ctw-icon-light">
                                 <?php
                                 \Elementor\Icons_Manager::render_icon($settings['icon'], [
                                     'aria-hidden' => 'true',
@@ -1084,7 +1108,7 @@ class Custom_Tooltip extends Widget_Base
                             </span>
                         <?php endif; ?>
                         <?php if (!empty($icon_dark)): ?>
-                            <span class="ctw-icon ctw-icon-dark">
+                            <span class="ctw-trigger ctw-icon ctw-icon-dark">
                                 <?php
                                 \Elementor\Icons_Manager::render_icon($icon_dark, [
                                     'aria-hidden' => 'true',

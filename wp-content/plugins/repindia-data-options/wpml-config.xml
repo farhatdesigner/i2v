@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wpml-config>
+    <admin-texts>
+        <key name="repindia_option">
+            <!-- Header: demo -->
+            <key name="demo_btn_url" />
+            <!-- Header: hamburger -->
+            <key name="hamburger_editor" />
+            <key name="hamburger_btn_url" />
+            <key name="hamburger_menu_item_1_title" />
+            <key name="hamburger_menu_item_1_url" />
+            <key name="hamburger_menu_item_2_title" />
+            <key name="hamburger_menu_item_2_url" />
+            <key name="hamburger_menu_item_3_title" />
+            <key name="hamburger_menu_item_3_url" />
+            <key name="hamburger_menu_item_4_title" />
+            <key name="hamburger_menu_item_4_url" />
+            <!-- Header / Footer: popup forms -->
+            <key name="demo_popup_form" />
+            <key name="contact_popup_form" />
+            <key name="channel_partner_form" />
+            <key name="technology_partner_form" />
+            <!-- Social (header + footer) -->
+            <key name="social_media_title" />
+            <key name="linkedin_title" />
+            <key name="youtube_title" />
+            <key name="linkedin-value" />
+            <key name="youtube-value" />
+            <!-- Footer: section titles -->
+            <key name="footer_product_title" />
+            <key name="footer_industry_title" />
+            <key name="footer_company_title" />
+            <key name="footer_resource_title" />
+            <key name="footer_legal_title" />
+            <!-- Footer: disclaimer & copyright -->
+            <key name="footer_disclaimer_desc" />
+            <key name="footer_copyright" />
+        </key>
+    </admin-texts>
+</wpml-config>

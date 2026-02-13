@@ -1,10 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <wpml-config>
     <custom-types>
         <custom-type translate="1">sidebar</custom-type>
-		<custom-type translate="2">gallery</custom-type>
-		<custom-type translate="3">testimonials</custom-type>
+        <custom-type translate="2">gallery</custom-type>
+        <custom-type translate="3">testimonials</custom-type>
     </custom-types>
     <taxonomies>
         <taxonomy translate="1">gallery-category</taxonomy>
     </taxonomies>
+
+    <!-- Custom Elementor widgets - WPML Translation Editor support -->
+    <elementor-widgets>
+        <!-- analytic_sidebar_nav -->
+        <widget name="analytic_sidebar_nav">
+            <fields-in-item items_of="nav_items">
+                <field editor_type="LINE">item_title</field>
+                <field editor_type="LINE">target_id</field>
+            </fields-in-item>
+        </widget>
+
+        <!-- video_accordioncaption -->
+        <widget name="video_accordioncaption">
+            <fields>
+                <field editor_type="LINE">section_title</field>
+                <field editor_type="AREA">section_description</field>
+                <field editor_type="LINE">left_block_title</field>
+                <field editor_type="LINE">right_block_title</field>
+            </fields>
+            <fields-in-item items_of="accordion_items">
+                <field editor_type="LINE">item_title</field>
+                <field editor_type="AREA">item_short_description</field>
+                <field editor_type="LINE">item_detail_title</field>
+                <field editor_type="AREA">item_detail_description</field>
+            </fields-in-item>
+            <fields-in-item items_of="item_tags">
+                <field editor_type="LINE">tag_text</field>
+            </fields-in-item>
+        </widget>
+
+        <!-- custom_tooltip -->
+        <widget name="custom_tooltip">
+            <fields>
+                <field editor_type="VISUAL">title_text</field>
+                <field editor_type="VISUAL">tooltip_description</field>
+                <field editor_type="LINE">learn_more_text</field>
+                <field editor_type="VISUAL">popup_content</field>
+            </fields>
+        </widget>
+
+        <!-- custom_testimonial -->
+        <widget name="custom_testimonial">
+            <fields-in-item items_of="testimonials_list">
+                <field editor_type="LINE">title</field>
+                <field editor_type="AREA">description</field>
+                <field editor_type="LINE">author_name</field>
+                <field editor_type="LINE">author_role</field>
+                <field editor_type="LINE">youtube_url</field>
+            </fields-in-item>
+        </widget>
+
+        <!-- video_accordionwhite -->
+        <widget name="video_accordionwhite">
+            <fields>
+                <field editor_type="LINE">section_title</field>
+                <field editor_type="AREA">section_description</field>
+            </fields>
+            <fields-in-item items_of="accordion_list">
+                <field editor_type="LINE">accordion_title</field>
+                <field editor_type="AREA">accordion_description</field>
+                <field editor_type="LINK">youtube_url</field>
+                <field editor_type="LINK">vimeo_url</field>
+            </fields-in-item>
+        </widget>
+
+        <!-- video_accordion -->
+        <widget name="video_accordion">
+            <fields>
+                <field editor_type="LINE">section_title</field>
+                <field editor_type="AREA">section_description</field>
+                <field editor_type="LINE">section_bottom_description</field>
+                <field editor_type="LINE">section_bottom_cta_text</field>
+                <field editor_type="LINK">section_bottom_cta_url</field>
+                <field editor_type="LINE">section_bottom_cta_classes</field>
+            </fields>
+            <fields-in-item items_of="accordion_list">
+                <field editor_type="LINE">item_title</field>
+                <field editor_type="AREA">item_description</field>
+                <field editor_type="LINE">item_cta_text</field>
+                <field editor_type="LINK">item_cta_url</field>
+                <field editor_type="LINE">item_cta_classes</field>
+                <field editor_type="LINE">item_youtube_video_id</field>
+            </fields-in-item>
+        </widget>
+
+        <!-- testimonial_slider -->
+        <widget name="testimonial_slider">
+            <fields>
+                <field editor_type="LINE">section_title</field>
+                <field editor_type="AREA">section_description</field>
+            </fields>
+            <fields-in-item items_of="testimonial_items">
+                <field editor_type="AREA">item_description</field>
+                <field editor_type="LINE">occupation</field>
+            </fields-in-item>
+            <fields-in-item items_of="assets">
+                <field editor_type="LINE">asset_title</field>
+                <field editor_type="LINE">asset_description</field>
+            </fields-in-item>
+        </widget>
+
+        <!-- vertcialaccordion -->
+        <widget name="vertcialaccordion">
+            <fields-in-item items_of="box_list">
+                <field editor_type="LINE">main_title</field>
+                <field editor_type="VISUAL">mission_para</field>
+            </fields-in-item>
+        </widget>
+
+        <!-- tabbed_custom_swiper -->
+        <widget name="tabbed_custom_swiper">
+            <fields-in-item items_of="tabs_list">
+                <field editor_type="LINE">tab_title</field>
+            </fields-in-item>
+            <fields-in-item items_of="tab_content_items">
+                <field editor_type="LINE">item_title</field>
+                <field editor_type="AREA">item_description</field>
+            </fields-in-item>
+        </widget>
+
+        <!-- singlescrollcards -->
+        <widget name="singlescrollcards">
+            <fields-in-item items_of="slider_items">
+                <field editor_type="LINE">slider_title</field>
+                <field editor_type="VISUAL">slider_description</field>
+            </fields-in-item>
+            <fields-in-item items_of="list_items">
+                <field editor_type="LINE">list_item_text</field>
+            </fields-in-item>
+        </widget>
+
+        <!-- scalescroll -->
+        <widget name="scalescroll">
+            <fields>
+                <field editor_type="LINE">section_title</field>
+                <field editor_type="AREA">section_description</field>
+            </fields>
+            <fields-in-item items_of="scroll_items">
+                <field editor_type="LINE">item_title</field>
+                <field editor_type="LINE">item_sub_title</field>
+                <field editor_type="VISUAL">item_description</field>
+                <field editor_type="LINE">cta_text</field>
+                <field editor_type="LINK">cta_url</field>
+                <field editor_type="LINE">cta_classes</field>
+                <field editor_type="LINE">bolt_title</field>
+                <field editor_type="LINE">bolt_cta_text</field>
+                <field editor_type="LINK">bolt_cta_url</field>
+                <field editor_type="LINE">bolt_cta_classes</field>
+                <field editor_type="LINE">feature_box_title</field>
+                <field editor_type="LINE">list_box_title</field>
+                <field editor_type="LINE">youtube_video_id_default</field>
+                <field editor_type="LINE">youtube_video_id_dark</field>
+            </fields-in-item>
+            <fields-in-item items_of="nested_items_1">
+                <field editor_type="LINE">nested_title</field>
+                <field editor_type="VISUAL">nested_description</field>
+            </fields-in-item>
+            <fields-in-item items_of="nested_items_2">
+                <field editor_type="LINE">nested_title_2</field>
+            </fields-in-item>
+        </widget>
+
+        <!-- scalescroll2 -->
+        <widget name="scalescroll2">
+            <fields>
+                <field editor_type="LINE">section_title</field>
+                <field editor_type="AREA">section_description</field>
+            </fields>
+            <fields-in-item items_of="scroll_items">
+                <field editor_type="LINE">item_title</field>
+                <field editor_type="VISUAL">item_tags</field>
+                <field editor_type="VISUAL">item_description</field>
+                <field editor_type="LINE">cta_text</field>
+                <field editor_type="LINK">cta_url</field>
+                <field editor_type="LINE">cta_classes</field>
+                <field editor_type="LINE">bolt_title</field>
+                <field editor_type="LINE">bolt_cta_text</field>
+                <field editor_type="LINK">bolt_cta_url</field>
+                <field editor_type="LINE">bolt_cta_classes</field>
+                <field editor_type="LINE">youtube_video_id_default</field>
+                <field editor_type="LINE">youtube_video_id_dark</field>
+            </fields-in-item>
+        </widget>
+
+        <!-- platformtab -->
+        <widget name="platformtab">
+            <fields-in-item items_of="box_list">
+                <field editor_type="LINE">main_title</field>
+                <field editor_type="VISUAL">mission_para</field>
+            </fields-in-item>
+        </widget>
+
+        <!-- insightsupdates -->
+        <widget name="insightsupdates">
+            <fields>
+                <field editor_type="LINE">section_title</field>
+                <field editor_type="AREA">section_description</field>
+            </fields>
+        </widget>
+
+        <!-- horizontal_slider_topcaption -->
+        <widget name="horizontal_slider_topcaption">
+            <fields-in-item items_of="slider_items">
+                <field editor_type="LINE">slider_title</field>
+                <field editor_type="VISUAL">slider_description</field>
+            </fields-in-item>
+            <fields>
+                <field editor_type="LINE">special_slide_title</field>
+                <field editor_type="VISUAL">special_slide_description</field>
+                <field editor_type="LINE">special_slide_cta_text</field>
+                <field editor_type="LINK">special_slide_cta_url</field>
+                <field editor_type="LINE">special_slide_cta_classes</field>
+            </fields>
+        </widget>
+
+        <!-- horizontal_slider: used by horizontal_slider.php (slider_items, list_items, special slide) and vertical_slider.php (cards_list) -->
+        <widget name="horizontal_slider">
+            <fields-in-item items_of="slider_items">
+                <field editor_type="LINE">slider_title</field>
+                <field editor_type="VISUAL">slider_description</field>
+            </fields-in-item>
+            <fields-in-item items_of="list_items">
+                <field editor_type="LINE">list_item_text</field>
+            </fields-in-item>
+            <fields-in-item items_of="cards_list">
+                <field editor_type="LINE">card_image_alt</field>
+                <field editor_type="LINE">card_title</field>
+                <field editor_type="AREA">card_description</field>
+            </fields-in-item>
+            <fields>
+                <field editor_type="LINE">special_slide_title</field>
+                <field editor_type="VISUAL">special_slide_description</field>
+                <field editor_type="LINE">special_slide_cta_text</field>
+                <field editor_type="LINK">special_slide_cta_url</field>
+                <field editor_type="LINE">special_slide_cta_classes</field>
+            </fields>
+        </widget>
+
+        <!-- home_banner -->
+        <widget name="home_banner">
+            <fields-in-item items_of="banner_slides">
+                <field editor_type="LINE">banner_title</field>
+                <field editor_type="VISUAL">banner_description</field>
+                <field editor_type="LINE">cta_one_text</field>
+                <field editor_type="LINK">cta_one_url</field>
+                <field editor_type="LINE">cta_one_classes</field>
+                <field editor_type="LINE">cta_two_text</field>
+                <field editor_type="LINK">cta_two_url</field>
+                <field editor_type="LINE">cta_two_classes</field>
+                <field editor_type="LINE">desktop_bg_video_id</field>
+                <field editor_type="LINE">desktop_bg_video_id_dark</field>
+                <field editor_type="LINE">mobile_bg_video_id</field>
+                <field editor_type="LINE">mobile_bg_video_id_dark</field>
+            </fields-in-item>
+        </widget>
+
+        <!-- customtabsmart -->
+        <widget name="customtabsmart">
+            <fields>
+                <field editor_type="LINE">section_title</field>
+                <field editor_type="AREA">section_description</field>
+            </fields>
+            <fields-in-item items_of="tabs_list">
+                <field editor_type="LINE">tab_title</field>
+                <field editor_type="LINE">item_title</field>
+                <field editor_type="VISUAL">item_description</field>
+                <field editor_type="LINE">cta_one_text</field>
+                <field editor_type="LINK">cta_one_url</field>
+                <field editor_type="LINE">cta_one_classes</field>
+                <field editor_type="LINE">cta_two_text</field>
+                <field editor_type="LINK">cta_two_url</field>
+                <field editor_type="LINE">cta_two_classes</field>
+            </fields-in-item>
+        </widget>
+
+        <!-- customtabsolution -->
+        <widget name="customtabsolution">
+            <fields-in-item items_of="solution_tabs">
+                <field editor_type="LINE">tab_title</field>
+                <field editor_type="LINE">tab_content_title</field>
+                <field editor_type="VISUAL">tab_content_description</field>
+                <field editor_type="LINE">primary_cta_text</field>
+                <field editor_type="LINK">primary_cta_url</field>
+                <field editor_type="LINE">primary_cta_classes</field>
+                <field editor_type="LINE">secondary_cta_text</field>
+                <field editor_type="LINK">secondary_cta_url</field>
+                <field editor_type="LINE">secondary_cta_classes</field>
+            </fields-in-item>
+            <fields-in-item items_of="list_items">
+                <field editor_type="LINE">list_item_text</field>
+            </fields-in-item>
+            <fields-in-item items_of="properties">
+                <field editor_type="LINE">property_title</field>
+            </fields-in-item>
+        </widget>
+
+        <!-- custom_technology_tab -->
+        <widget name="custom_technology_tab">
+            <fields-in-item items_of="tabs_list">
+                <field editor_type="LINE">tab_name</field>
+            </fields-in-item>
+        </widget>
+
+        <!-- custom_tab_section -->
+        <widget name="custom_tab_section">
+            <fields-in-item items_of="tab_items">
+                <field editor_type="LINE">tab_name</field>
+                <field editor_type="LINE">content_title</field>
+                <field editor_type="VISUAL">content_description</field>
+                <field editor_type="LINE">content_cta_text</field>
+                <field editor_type="LINK">content_cta_url</field>
+                <field editor_type="LINE">content_cta_classes</field>
+            </fields-in-item>
+        </widget>
+
+        <!-- custom_resource_list -->
+        <widget name="custom_resource_list">
+            <fields>
+                <field editor_type="LINE">section_title</field>
+                <field editor_type="AREA">section_subtitle</field>
+            </fields>
+        </widget>
+
+        <!-- cardscustom_purpose_slider (Custom Purpose Slider) -->
+        <widget name="cardscustom_purpose_slider">
+            <fields-in-item items_of="cards_list">
+                <field editor_type="LINE">card_image_alt</field>
+                <field editor_type="LINE">card_title</field>
+                <field editor_type="AREA">card_description</field>
+            </fields-in-item>
+        </widget>
+
+        <!-- custom_career_list -->
+        <widget name="custom_career_list">
+            <fields>
+                <field editor_type="LINE">section_title</field>
+                <field editor_type="AREA">section_subtitle</field>
+            </fields>
+        </widget>
+
+        <!-- carosoulslider -->
+        <widget name="carosoulslider">
+            <fields-in-item items_of="slides">
+                <field editor_type="LINE">slide_title</field>
+                <field editor_type="AREA">slide_content</field>
+                <field editor_type="LINE">slide_author</field>
+            </fields-in-item>
+        </widget>
+
+        <!-- custom_marquee -->
+        <widget name="custom_marquee">
+            <fields-in-item items_of="marquee_items">
+                <field editor_type="VISUAL">text_content</field>
+                <field editor_type="LINK">link</field>
+            </fields-in-item>
+        </widget>
+
+        <!-- custom_image_circle -->
+        <widget name="custom_image_circle">
+            <fields-in-item items_of="items_list">
+                <field editor_type="LINE">text</field>
+            </fields-in-item>
+        </widget>
+    </elementor-widgets>
 </wpml-config>

@@ -150,7 +150,7 @@ class Analytic_Sidebar_Nav extends Widget_Base
 ?>
         <div class="analytic-sidebar">
             <button type="button" class="analytic-mobile-toggle" aria-label="Toggle menu">
-                <span>Select video analytic</span>
+                <span><?php echo esc_html( wpml_t( 'Select video analytic', 'Repindia-Widgets', 'Analytic Sidebar title' ) ); ?></span>
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>

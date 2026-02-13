@@ -233,6 +233,14 @@ class Custom_Image_Circle extends Widget_Base {
                 transform: translate(-50%, -50%);
             }
             
+            {{WRAPPER}} .orbit-content-inner {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 10px;
+                width: 100%;
+            }
+            
             {{WRAPPER}} .orbit-icon {
                 flex-shrink: 0;
                 padding-left: 56px;
@@ -272,6 +280,18 @@ class Custom_Image_Circle extends Widget_Base {
                 to { transform: translate(-50%, -50%) rotate(360deg); }
             }
 
+            @media(max-width: 1400px) and (min-width: 1025px){
+                .orbit-system-wrapper{ min-height: 100vh; }
+                .orbit-system-wrapper .orbit-ring-0 { --ring-radius: 228px; }
+                .orbit-system-wrapper .orbit-ring-1 { --ring-radius: 420px; }
+                .orbit-system-wrapper .orbit-ring-2 { --ring-radius: 620px; }
+                .orbit-system-wrapper .orbit-ring-0 .orbit-item-wrapper { --ring-radius: 220px; }
+                .orbit-system-wrapper .orbit-ring-1 .orbit-item-wrapper { --ring-radius: 410px; }
+                .orbit-system-wrapper .orbit-ring-2 .orbit-item-wrapper { --ring-radius: 610px; }
+                .orbit-system-wrapper .orbit-content-inner .orbit-text { font-size: 16px!important;    line-height: 19px!important; }
+                .orbit-system-wrapper .orbit-content-inner .orbit-icon img { width: 70px!important;height: 70px!important; }
+                .elementor-element.animecircleleft h3.elementor-heading-title { font-size: 35px !important;line-height: 40px; }
+            }
             @media (max-width: 768px) {
                 .orbit-system-wrapper {
                     min-height: 482px !important;
@@ -385,14 +405,16 @@ class Custom_Image_Circle extends Widget_Base {
                          style="<?php echo esc_attr($transform); ?>">
                         <div class="orbit-content" 
                              style="animation: <?php echo esc_attr($item_anim); ?> <?php echo $dur; ?>s linear infinite;">
-                            <?php if (!empty($item['image']['url'])) : ?>
-                                <div class="orbit-icon">
-                                    <img src="<?php echo esc_url($item['image']['url']); ?>" alt="<?php echo esc_attr($item['text'] ?? ''); ?>" />
-                                </div>
-                            <?php endif; ?>
-                            <?php if (!empty($item['text'])) : ?>
-                                <div class="orbit-text"><?php echo esc_html($item['text']); ?></div>
-                            <?php endif; ?>
+                            <div class="orbit-content-inner">
+                                <?php if (!empty($item['image']['url'])) : ?>
+                                    <div class="orbit-icon">
+                                        <img src="<?php echo esc_url($item['image']['url']); ?>" alt="<?php echo esc_attr($item['text'] ?? ''); ?>" />
+                                    </div>
+                                <?php endif; ?>
+                                <?php if (!empty($item['text'])) : ?>
+                                    <div class="orbit-text"><?php echo esc_html($item['text']); ?></div>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
     
