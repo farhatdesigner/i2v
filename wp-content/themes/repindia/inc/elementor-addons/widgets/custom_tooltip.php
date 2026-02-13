@@ -812,6 +812,7 @@ class Custom_Tooltip extends Widget_Base
             echo '.ctw-trigger { cursor: pointer; display: inline-flex; align-items: center; }';
             echo '.ctw-title { display: inline-flex; align-items: center;}';
             echo '.ctw-title .border-b {border-bottom: 2px solid #D7DBE4; }';
+            echo '.default_darktool .ctw-title .border-b { border-bottom: 2px solid #D7DBE4; }';
             echo '.ctw-icon { display: inline-flex; align-items: center; justify-content: center; }';
             echo '.ctw-text { display: inline-block; }';
             echo '.ctw-tooltip { position: absolute; opacity: 0; visibility: hidden; transition: opacity 0.25s; z-index: 9999; pointer-events: none;min-width: 250px;width: 100%; }';
@@ -1071,8 +1072,10 @@ class Custom_Tooltip extends Widget_Base
                 #center_mobileviiew .card_title_tooltip .ctw-title .ctw-text p {
                     font-size: 20px;
                 }
-                .ctw-title{ text-align: center!important; }
 
+            }
+            @media(max-width: 600px){
+                .ctw-title{ text-align: center!important; }
             }
 
             @media (max-width: 380px) {
