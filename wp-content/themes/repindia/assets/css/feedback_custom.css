@@ -1125,7 +1125,7 @@ div.pin-spacer > .hz-slider-section {
   font-weight: 500;
 }
 
-.bredstyle > a {
+.bredstyle > a,.bredstyle > span {
   margin-bottom: 8px;
   border-radius: var(--3XL, 28px);
   border: 1px solid var(--Golbal-others-border, #e6ebf2);

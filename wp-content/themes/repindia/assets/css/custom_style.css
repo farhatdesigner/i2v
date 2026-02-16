@@ -2115,6 +2115,7 @@ label.form-label.required_note-demo {
   border-radius: 28px;
   border: 1px solid #e6ebf2;
   line-height: 20px;
+  background: #fff;
 }
 .insights-updates-item-text_left .date-author-txt {
   margin-top: 20px;
@@ -2686,7 +2687,7 @@ label.form-label.required_note-demo {
 }
 
 .box-custom {
-  box-shadow: 0 10px 20px 0 rgba(0, 82, 128, 0.1);
+  /* box-shadow: 0 10px 20px 0 rgba(0, 82, 128, 0.1); */
 }
 
 .btn-colum {
@@ -5037,4 +5038,8 @@ span.star {
 #quicklinks {
   scroll-margin-top: 100px;
   position: relative;
+}
+
+.elementor-element.enforcegrid_box .elementor-widget {
+  border-color: #D7DBE4!important;
 }

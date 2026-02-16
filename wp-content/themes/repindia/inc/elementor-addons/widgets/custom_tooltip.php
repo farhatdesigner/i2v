@@ -1076,6 +1076,7 @@ class Custom_Tooltip extends Widget_Base
             }
             @media(max-width: 600px){
                 .ctw-title{ text-align: center!important; }
+                .ctw-wrapper{ justify-content: center!important; }
             }
 
             @media (max-width: 380px) {

@@ -82,6 +82,15 @@
 @media(max-width: 1400px){
   .elementor-element.certificate_icon .elementor-widget-image img{ height: auto!important;max-height: 84px; }
 }
+@media(max-width: 1400px) and (min-width: 768px){
+  .listing-inner > ul{
+    max-height: 38vh;
+    overflow: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: #d5d5d5 transparent;
+  }
+}
 @media (max-width: 768px) {
   .cf7-error-overlay .cf7-error-dialog {
     padding: 24px 20px 28px;
