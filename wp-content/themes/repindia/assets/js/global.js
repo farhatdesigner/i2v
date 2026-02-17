@@ -259,7 +259,7 @@ $(document).ready(function () {
     var isMenuOpen = false;
     var modalScrollPosition = 0;
 
-    // Single debounced run after any modal close: re-create card ScrollTriggers so layout is always correct (fixes 2nd-open distortion)
+    // Single debounced run after any modal close: re-create cards + gallery ScrollTriggers so layout is correct (fixes popup-close distortion for both)
     window.scheduleCardsRefreshAfterModalClose = function () {
         if (window._cardsModalRefreshTimer) clearTimeout(window._cardsModalRefreshTimer);
         window._cardsModalRefreshTimer = setTimeout(function () {
@@ -267,9 +267,27 @@ $(document).ready(function () {
             if (typeof initCardsCustomBodyGSAP === "function") {
                 initCardsCustomBodyGSAP();
             }
+            if (typeof initGalleryGSAP === "function") {
+                initGalleryGSAP();
+            }
             if (typeof ScrollTrigger !== "undefined") {
                 requestAnimationFrame(function () {
                     ScrollTrigger.refresh();
+                    // Sync gallery visible photo to current scroll after re-create (so correct image shows)
+                    var gallerySections = document.querySelectorAll(".makdmks .detailsWrapper .details");
+                    var galleryPhotos = document.querySelectorAll(".makdmks .photo");
+                    if (gallerySections.length && galleryPhotos.length && typeof gsap !== "undefined") {
+                        var photoIndex = 0;
+                        for (var i = 0; i < gallerySections.length; i++) {
+                            var st = ScrollTrigger.getById("gallery-section-" + i);
+                            if (st && st.progress >= 0 && st.progress <= 1) {
+                                photoIndex = i;
+                                break;
+                            }
+                        }
+                        gsap.set(galleryPhotos, { opacity: 0 });
+                        gsap.set(galleryPhotos[photoIndex], { opacity: 1 });
+                    }
                 });
             }
         }, 350);
@@ -1906,72 +1924,106 @@ gsap.ticker.lagSmoothing(0);
 
 
 // Gallery Animation - Only on min-width 1200px and when gallery exists
-if (window.innerWidth >= 1200) {
-    // Scope gallery animation to .makdmks container to avoid conflicts
+// Wrapped in DOMContentLoaded + refresh on load; re-callable on modal close (kill + re-create) so popup close doesn't distort (same as cards-custom-body)
+function initGalleryGSAP() {
+    if (window.innerWidth < 1200) return;
     const makdmks = document.querySelector(".makdmks");
     const gallery = makdmks ? makdmks.querySelector(".gallery") : null;
-    
-    if (gallery) {
-        gsap.registerPlugin(ScrollTrigger);
-        
-        // collect sections + photos - scoped to makdmks container
-        // Only select details from the left sidebar (.detailsWrapper), not from inside photos
-        const sections = gsap.utils.toArray(".makdmks .detailsWrapper .details");
-        const photos   = gsap.utils.toArray(".makdmks .photo");
-        
-        // Skip if no sections found
-        if (sections.length > 0 && photos.length > 0) {
-            // set initial states
-            gsap.set(photos, { opacity: 0 });
-            gsap.set(photos[0], { opacity: 1 });
-            
-            // helper — show selected photo
-            function showPhoto(index) {
-                gsap.to(photos, { opacity: 0, duration: 0.4, overwrite: true });
-                gsap.to(photos[index], { opacity: 1, duration: 0.4, overwrite: true });
+    if (!gallery) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Kill existing gallery ScrollTriggers so re-call (e.g. after modal close) doesn't duplicate and layout is correct
+    if (typeof ScrollTrigger !== "undefined") {
+        ScrollTrigger.getAll().forEach(function (st) {
+            var id = st.vars && st.vars.id ? String(st.vars.id) : "";
+            if (id.indexOf("gallery-section-") === 0 || id === "gallery-pin") {
+                st.kill();
             }
-            
-            // change image based on section
-            sections.forEach((section, index) => {
-                ScrollTrigger.create({
-                    trigger: section,
-                    start: "top 25%",
-                    end: "bottom 25%",
-                    scrub: true,
-                    onEnter: () => showPhoto(index),
-                    onEnterBack: () => showPhoto(index),
-                    invalidateOnRefresh: true,
-                    // markers: true,
-                    id: "gallery-section-" + index
-                });
-            });
-            
-            // pin the right panel until last section reaches mid
-            ScrollTrigger.create({
-                trigger: ".makdmks .gallery",
-                start: "top 20%",
-                endTrigger: ".makdmks .detailsWrapper .details:last-child",
-                end: "top 20%",
-                pin: ".makdmks .right",
-                pinSpacing: false, // Changed to false to prevent spacing conflicts
-                invalidateOnRefresh: true,
-                refreshPriority: -1, // Lower priority, refreshes after others
-                // markers: true,
-                id: "gallery-pin"
-            });
-        }
-        
-        // Refresh ScrollTrigger on resize
+        });
+    }
+
+    const sections = gsap.utils.toArray(".makdmks .detailsWrapper .details");
+    const photos = gsap.utils.toArray(".makdmks .photo");
+    if (sections.length === 0 || photos.length === 0) return;
+
+    gsap.set(photos, { opacity: 0 });
+    gsap.set(photos[0], { opacity: 1 });
+
+    function showPhoto(index) {
+        gsap.to(photos, { opacity: 0, duration: 0.4, overwrite: true });
+        gsap.to(photos[index], { opacity: 1, duration: 0.4, overwrite: true });
+    }
+
+    sections.forEach((section, index) => {
+        ScrollTrigger.create({
+            trigger: section,
+            start: "top 25%",
+            end: "bottom 25%",
+            scrub: true,
+            onEnter: () => showPhoto(index),
+            onEnterBack: () => showPhoto(index),
+            invalidateOnRefresh: true,
+            id: "gallery-section-" + index
+        });
+    });
+
+    ScrollTrigger.create({
+        trigger: ".makdmks .gallery",
+        start: "top 20%",
+        endTrigger: ".makdmks .detailsWrapper .details:last-child",
+        end: "top 20%",
+        pin: ".makdmks .right",
+        pinSpacing: false,
+        invalidateOnRefresh: true,
+        refreshPriority: -1,
+        id: "gallery-pin"
+    });
+
+    // Refresh on resize (only bind once)
+    if (!window._galleryResizeBound) {
+        window._galleryResizeBound = true;
         let resizeTimer;
-        window.addEventListener("resize", () => {
+        window.addEventListener("resize", function () {
             clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(() => {
-                if (window.innerWidth >= 1200) {
+            resizeTimer = setTimeout(function () {
+                if (window.innerWidth >= 1200 && typeof ScrollTrigger !== "undefined") {
                     ScrollTrigger.refresh();
                 }
             }, 250);
         });
     }
+
+    // Refresh after load so midway-reload shows correct gallery state (same as cards-custom-body)
+    if (!window._galleryLoadBound) {
+        window._galleryLoadBound = true;
+        function refreshGalleryScrollTrigger() {
+            if (typeof ScrollTrigger === "undefined") return;
+            requestAnimationFrame(function () {
+                ScrollTrigger.refresh();
+            });
+            setTimeout(function () {
+                ScrollTrigger.refresh();
+            }, 100);
+            setTimeout(function () {
+                ScrollTrigger.refresh();
+            }, 500);
+        }
+        if (document.readyState === "complete") {
+            refreshGalleryScrollTrigger();
+        } else {
+            window.addEventListener("load", function galleryOnLoad() {
+                window.removeEventListener("load", galleryOnLoad);
+                refreshGalleryScrollTrigger();
+            });
+        }
+    }
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initGalleryGSAP);
+} else {
+    initGalleryGSAP();
 }
 
 
