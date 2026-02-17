@@ -15,6 +15,60 @@ a.explr_btn.xl-btn:hover,a.home_btn.xl-btn:hover,
 .btn-sec_gap.thankyou_btn{ align-items: center; }
 
 .wpcf7-form-control-wrap{ margin-bottom: 16px; }
+
+/* CF7 Radio - Pill-style buttons (no visible radio circles) */
+.wpcf7-form-control-wrap span.wpcf7-form-control.wpcf7-radio {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.wpcf7-form-control-wrap span.wpcf7-form-control.wpcf7-radio .wpcf7-list-item {
+  margin: 0;
+}
+.wpcf7-form-control-wrap span.wpcf7-form-control.wpcf7-radio .wpcf7-list-item label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-radius: 24px;
+  border: 1px solid #e5e9ec;
+  background: #fff;
+  padding: 8px 16px;
+  cursor: pointer;
+  height: auto;
+  min-height: 36px;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.wpcf7-form-control-wrap span.wpcf7-form-control.wpcf7-radio .wpcf7-list-item label input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
+.wpcf7-form-control-wrap span.wpcf7-form-control.wpcf7-radio .wpcf7-list-item label:has(input:checked) {
+  background: #f0f2f5;
+  border-color: #d0d5dd;
+}
+.wpcf7-form-control-wrap span.wpcf7-form-control.wpcf7-radio .wpcf7-list-item label .wpcf7-list-item-label {
+  color: #5f6f94;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+.js-dark .wpcf7-form-control-wrap span.wpcf7-form-control.wpcf7-radio .wpcf7-list-item label {
+  border-color: #464a4f;
+  background: #464a4f;
+}
+.js-dark .wpcf7-form-control-wrap span.wpcf7-form-control.wpcf7-radio .wpcf7-list-item label:has(input:checked) {
+  background: #5a5e64;
+  border-color: #6b6f75;
+}
+.js-dark .wpcf7-form-control-wrap span.wpcf7-form-control.wpcf7-radio .wpcf7-list-item label .wpcf7-list-item-label {
+  color: rgba(255, 255, 255, 0.6);
+}
 .formpopup_modal .modal-demo-form .modal-header{ padding: 15px 15px; }
 .formpopup_modal .modal-demo-form .modal-title { font-size: 18px;font-weight: 600; }
 .formpopup_modal .career-apply-form.styled-career-form { padding: 20px 30px; }
