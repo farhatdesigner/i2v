@@ -259,6 +259,22 @@ $(document).ready(function () {
     var isMenuOpen = false;
     var modalScrollPosition = 0;
 
+    // Single debounced run after any modal close: re-create card ScrollTriggers so layout is always correct (fixes 2nd-open distortion)
+    window.scheduleCardsRefreshAfterModalClose = function () {
+        if (window._cardsModalRefreshTimer) clearTimeout(window._cardsModalRefreshTimer);
+        window._cardsModalRefreshTimer = setTimeout(function () {
+            window._cardsModalRefreshTimer = null;
+            if (typeof initCardsCustomBodyGSAP === "function") {
+                initCardsCustomBodyGSAP();
+            }
+            if (typeof ScrollTrigger !== "undefined") {
+                requestAnimationFrame(function () {
+                    ScrollTrigger.refresh();
+                });
+            }
+        }, 350);
+    };
+
     // Helper function to get scrollbar width
     function getScrollbarWidth() {
         // Create a temporary div to measure scrollbar width
@@ -494,12 +510,17 @@ $(document).ready(function () {
         // Ensure we have a valid number
         modalScrollPosition = Math.max(0, Math.round(modalScrollPosition));
 
-        // Calculate scrollbar width to prevent layout shift
-        var scrollbarWidth = getScrollbarWidth();
+        // Unpin card ScrollTriggers BEFORE locking body so reflow from unpin doesn't distort the modal layout
+        if (typeof ScrollTrigger !== "undefined") {
+            ScrollTrigger.getAll().forEach(function(st) {
+                if (st.vars && st.vars.id && String(st.vars.id).indexOf("card-") === 0) {
+                    st.disable(false, false);
+                }
+            });
+        }
 
-        // Lock body scroll using position fixed
-        // Add padding-right equal to scrollbar width to prevent horizontal shift
-        // Use the exact scroll position to maintain visual position
+        // Then lock body scroll (order matters: unpin first, then fixed)
+        var scrollbarWidth = getScrollbarWidth();
         $("body").css({
             "overflow": "hidden",
             "position": "fixed",
@@ -510,16 +531,11 @@ $(document).ready(function () {
             "padding-right": scrollbarWidth + "px"
         });
 
-        // Prevent scroll events on body/overlay (but allow on modal content)
         $(window).on("scroll", preventModalBodyScroll);
-        // Prevent wheel events - check if in modal content, if not prevent
         document.addEventListener("wheel", preventModalBodyWheel, { passive: false, capture: false });
         $("body, .modal-backdrop").on("touchmove", preventModalBodyScroll);
-
-        // Ensure modal content can scroll by allowing wheel events on modal content
         $(".formpopup_modal .modal-content, .formpopup_modal .modal-body").on("wheel", function(e) {
-            // Allow natural scrolling - don't prevent
-            e.stopPropagation(); // Stop from bubbling to document handler
+            e.stopPropagation();
         });
     });
 
@@ -585,6 +601,16 @@ $(document).ready(function () {
                 if (originalBodyScrollBehavior) {
                     $("body").css("scroll-behavior", originalBodyScrollBehavior);
                 }
+
+                // Schedule single enable+refresh so card triggers don't run with stale positions (fixes 2nd open distortion)
+                if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
+                    window.scheduleCardsRefreshAfterModalClose();
+                }
+
+                // Re-run sticky fixed-header logic after popup close (programmatic scroll doesn't fire scroll; resize resets sticky state and re-evaluates fixed-header)
+                setTimeout(function () {
+                    $(window).trigger("resize");
+                }, 0);
             });
         });
     });
@@ -1731,6 +1757,15 @@ jQuery(document).ready(function() {
         accordionInstances.forEach(function(instance) {
             instance.pause();
         });
+
+        // Disable card Stacking ScrollTriggers while any modal is open (prevents distortion on 2nd open)
+        if (typeof ScrollTrigger !== "undefined") {
+            ScrollTrigger.getAll().forEach(function(st) {
+                if (st.vars && st.vars.id && String(st.vars.id).indexOf("card-") === 0) {
+                    st.disable(false, false);
+                }
+            });
+        }
         
         // Load video with autoplay when modal opens
         var modal = jQuery(this);
@@ -1774,6 +1809,16 @@ jQuery(document).ready(function() {
                 });
             }
         }, 100);
+
+        // Schedule single enable+refresh (shared with formpopup_modal so only one runs per close)
+        if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
+            window.scheduleCardsRefreshAfterModalClose();
+        }
+
+        // Re-run sticky fixed-header logic so fixed-header class is correct after any modal close
+        setTimeout(function () {
+            jQuery(window).trigger("resize");
+        }, 0);
     });
 });
 
@@ -1934,104 +1979,123 @@ if (window.innerWidth >= 1200) {
 
 
 // Card Stacking Animation - Only on min-width 1200px and when cards-custom-body exists
-if (window.innerWidth >= 1200) {
+// Wrapped in DOMContentLoaded so DOM (and .card-wrapper) is ready; refreshed on load so midway-reload shows correct state
+// Safe to call multiple times (e.g. after modal close): kills existing card triggers before creating new ones
+function initCardsCustomBodyGSAP() {
+    if (window.innerWidth < 1200) return;
     const cardsCustomBody = document.querySelector(".cards-custom-body");
-    
-    if (cardsCustomBody) {
-        console.clear();
-        
-        gsap.registerPlugin(ScrollTrigger);
-        
-        const cardsWrappers = gsap.utils.toArray(".card-wrapper");
-        const cards = gsap.utils.toArray(".card_display");
-        
-        const totalCards = cards.length;
-        
-        cardsWrappers.forEach((wrapper, i) => {
-            const card = cards[i];
-            
-            // Calculate reverse index matching CSS reference demo exactly
-            // CSS: --index0 = calc(var(--index) - 1) [0-based index]
-            // CSS: --reverse-index = calc(var(--numcards) - var(--index0))
-            // In JS: i is already 0-based, so index0 = i
-            // Reverse index = totalCards - i (matching CSS formula)
-            const reverseIndex = totalCards - i;
-            
-            // Calculate scale values matching reference demo formula exactly
-            // Reference: scale(calc(1.1 - calc(0.1 * var(--reverse-index))))
-            // Cards scale down as they stack: from 1.1 to smaller values
-            const targetScale = 1.1 - (0.1 * reverseIndex);
-            
-            // Set initial scale (cards start at full size, matching reference demo)
-            // Cards start at scale 1.0 and animate to targetScale as they scroll
-            gsap.set(card, {
-                scale: 1.0, // Start at normal size (matches CSS initial state)
-                rotation: 0,
-                transformOrigin: "top center",
-                y: 0,
-                x: 0,
-                force3D: true,
-                zIndex: i // Higher z-index for cards that stack on top (last card has highest z-index)
-            });
-            
-            // Create animation with scale effect (like reference demo)
-            // Card scales down as it gets pinned/stuck
-            gsap.to(card, {
-                scale: targetScale, // Scale down to target scale when pinned
-                rotation: 0,
-                transformOrigin: "top center",
-                y: 0,
-                ease: "none",
-                immediateRender: true,
-                force3D: true,
-                scrollTrigger: {
-                    trigger: wrapper,
-                    start: "top " + (150 + 50 * i),
-                    end: "bottom 550",
-                    endTrigger: ".wrapper",
-                    scrub: true,
-                    pin: wrapper,
-                    pinSpacing: false,
-                    anticipatePin: 1,
-                    invalidateOnRefresh: true,
-                    refreshPriority: 0,
-                    onEnter: () => {
-                        // Ensure card maintains correct position when entering
-                        gsap.set(card, {
-                            y: 0,
-                            x: 0,
-                            rotation: 0,
-                            force3D: true
-                        });
-                    },
-                    onEnterBack: () => {
-                        // Maintain position when scrolling back
-                        gsap.set(card, {
-                            y: 0,
-                            x: 0,
-                            rotation: 0,
-                            force3D: true
-                        });
-                    },
-                    // markers: {
-                    //     indent: 150 * i
-                    // },
-                    id: "card-" + (i + 1)
-                }
-            });
+    if (!cardsCustomBody) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Kill existing card ScrollTriggers so re-call (e.g. after modal close) doesn't duplicate
+    if (typeof ScrollTrigger !== "undefined") {
+        ScrollTrigger.getAll().forEach(function (st) {
+            if (st.vars && st.vars.id && String(st.vars.id).indexOf("card-") === 0) {
+                st.kill();
+            }
         });
-        
-        // Refresh ScrollTrigger on resize
+    }
+
+    const cardsWrappers = gsap.utils.toArray(".card-wrapper");
+    const cards = gsap.utils.toArray(".card_display");
+    const totalCards = cards.length;
+    if (!totalCards || cardsWrappers.length !== cards.length) return;
+
+    cardsWrappers.forEach((wrapper, i) => {
+        const card = cards[i];
+        if (!card) return;
+
+        // Calculate reverse index matching CSS reference demo exactly
+        const reverseIndex = totalCards - i;
+        const targetScale = 1.1 - (0.1 * reverseIndex);
+
+        // Set initial scale (cards start at full size)
+        gsap.set(card, {
+            scale: 1.0,
+            rotation: 0,
+            transformOrigin: "top center",
+            y: 0,
+            x: 0,
+            force3D: true,
+            zIndex: i
+        });
+
+        // Create animation with scale effect
+        gsap.to(card, {
+            scale: targetScale,
+            rotation: 0,
+            transformOrigin: "top center",
+            y: 0,
+            ease: "none",
+            immediateRender: true,
+            force3D: true,
+            scrollTrigger: {
+                trigger: wrapper,
+                start: "top " + (150 + 50 * i),
+                end: "bottom 550",
+                endTrigger: ".wrapper",
+                scrub: true,
+                pin: wrapper,
+                pinSpacing: false,
+                anticipatePin: 1,
+                invalidateOnRefresh: true,
+                refreshPriority: 1,
+                onEnter: () => {
+                    gsap.set(card, { y: 0, x: 0, rotation: 0, force3D: true });
+                },
+                onEnterBack: () => {
+                    gsap.set(card, { y: 0, x: 0, rotation: 0, force3D: true });
+                },
+                id: "card-" + (i + 1)
+            }
+        });
+    });
+
+    // Refresh on resize (only bind once to avoid duplicate listeners on re-init)
+    if (!window._cardsCustomBodyResizeBound) {
+        window._cardsCustomBodyResizeBound = true;
         let resizeTimer;
-        window.addEventListener("resize", () => {
+        window.addEventListener("resize", function () {
             clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(() => {
-                if (window.innerWidth >= 1200) {
+            resizeTimer = setTimeout(function () {
+                if (window.innerWidth >= 1200 && typeof ScrollTrigger !== "undefined") {
                     ScrollTrigger.refresh();
                 }
             }, 250);
         });
     }
+
+    // Critical: refresh after load so midway-reload (restored scroll) shows correct card state (only on first init)
+    function refreshCardsScrollTrigger() {
+        if (typeof ScrollTrigger === "undefined") return;
+        requestAnimationFrame(function () {
+            ScrollTrigger.refresh();
+        });
+        setTimeout(function () {
+            ScrollTrigger.refresh();
+        }, 100);
+        setTimeout(function () {
+            ScrollTrigger.refresh();
+        }, 500);
+    }
+    if (!window._cardsCustomBodyLoadBound) {
+        window._cardsCustomBodyLoadBound = true;
+        if (document.readyState === "complete") {
+            refreshCardsScrollTrigger();
+        } else {
+            window.addEventListener("load", function cardsOnLoad() {
+                window.removeEventListener("load", cardsOnLoad);
+                refreshCardsScrollTrigger();
+            });
+        }
+    }
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initCardsCustomBodyGSAP);
+} else {
+    initCardsCustomBodyGSAP();
 }
 
 
