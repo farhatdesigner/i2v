@@ -10,7 +10,8 @@ global $repindia_option;
 					<ul class="p-0 m-0 footer-accordion-menu">
 						<li class="footer-accordion-item">
 							<h3 class="footer-accordion-title">
-								<?php echo esc_attr($repindia_option['footer_product_title']); ?> <span class="footer-accordion-icon">+</span>
+								<?php echo esc_attr($repindia_option['footer_product_title']); ?> <span
+									class="footer-accordion-icon">+</span>
 							</h3>
 						</li>
 						<div class="footer-accordion-content">
@@ -38,7 +39,8 @@ global $repindia_option;
 								<li class="footer-accordion-item">
 									<h3 class="footer-accordion-title">
 										<?php echo esc_attr($repindia_option['footer_industry_title']); ?> <span
-											class="footer-accordion-icon">+</span></h3>
+											class="footer-accordion-icon">+</span>
+									</h3>
 								</li>
 								<div class="footer-accordion-content">
 									<?php
@@ -62,7 +64,8 @@ global $repindia_option;
 								<li class="footer-accordion-item">
 									<h3 class="footer-accordion-title">
 										<?php echo esc_attr($repindia_option['footer_company_title']); ?> <span
-											class="footer-accordion-icon">+</span></h3>
+											class="footer-accordion-icon">+</span>
+									</h3>
 								</li>
 								<div class="footer-accordion-content">
 									<?php
@@ -86,7 +89,8 @@ global $repindia_option;
 								<li class="footer-accordion-item">
 									<h3 class="footer-accordion-title">
 										<?php echo esc_attr($repindia_option['footer_resource_title']); ?> <span
-											class="footer-accordion-icon">+</span></h3>
+											class="footer-accordion-icon">+</span>
+									</h3>
 								</li>
 								<div class="footer-accordion-content">
 									<?php
@@ -110,7 +114,8 @@ global $repindia_option;
 								<li class="footer-accordion-item">
 									<h3 class="footer-accordion-title">
 										<?php echo esc_attr($repindia_option['footer_legal_title']); ?> <span
-											class="footer-accordion-icon">+</span></h3>
+											class="footer-accordion-icon">+</span>
+									</h3>
 								</li>
 								<div class="footer-accordion-content">
 									<?php
@@ -143,7 +148,7 @@ global $repindia_option;
 						<?php if (isset($repindia_option['footer_dscl_icon']['url']) && !empty($repindia_option['footer_dscl_icon']['url'])) { ?>
 							<span><img src="<?php echo esc_url($repindia_option['footer_dscl_icon']['url']); ?>"
 									alt="<?php bloginfo('name'); ?>" class="img-fluid"></span>
-						<?php
+							<?php
 						} ?>
 						<span class="disclaimer-text">
 							<?php
@@ -167,18 +172,18 @@ global $repindia_option;
 						<img src="<?php echo esc_url($repindia_option['footer_logo']['url']); ?>"
 							alt="<?php bloginfo('name'); ?>" class="img-fluid">
 					</div>
-				<?php
+					<?php
 				} ?>
 				<!-- Desktop only: center text -->
 				<?php
 				if (!empty($repindia_option['footer_copyright'])) { ?>
 					<div class="col-12 order-3 order-md-2 col-md-4 text-center mt-4 mt-md-0">
-					    <p class="mb-0"><?php echo wp_kses_post($repindia_option['footer_copyright']); ?></p>
+						<p class="mb-0"><?php echo wp_kses_post($repindia_option['footer_copyright']); ?></p>
 					</div>
-				<?php
+					<?php
 				}
 				?>
-					
+
 
 				<!-- Mobile: right icons | Desktop: right aligned -->
 				<?php
@@ -261,29 +266,34 @@ global $repindia_option;
 <div class="cf7-error-overlay" aria-hidden="true">
 	<div class="cf7-error-dialog" role="dialog" aria-modal="true">
 		<div class="cf7-error-header">
-			<button type="button" class="cf7-error-close" data-cf7-error-close aria-label="<?php esc_attr_e( 'Close', 'repindia' ); ?>">
+			<button type="button" class="cf7-error-close" data-cf7-error-close
+				aria-label="<?php esc_attr_e('Close', 'repindia'); ?>">
 				<span class="btn-closecustom" data-bs-dismiss="modal" aria-label="Close">
-							<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#000'>
-								<path
-									d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414' />
-							</svg>
-						</span>
+					<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd" clip-rule="evenodd"
+							d="M8.67339 8.67351C9.03788 8.30902 9.62883 8.30902 9.99332 8.67351L14 12.6802L18.0067 8.67351C18.3712 8.30902 18.9622 8.30902 19.3267 8.67351C19.6911 9.038 19.6911 9.62896 19.3267 9.99345L15.32 14.0001L19.3267 18.0068C19.6911 18.3713 19.6911 18.9623 19.3267 19.3268C18.9622 19.6913 18.3712 19.6913 18.0067 19.3268L14 15.3201L9.99332 19.3268C9.62883 19.6913 9.03788 19.6913 8.67339 19.3268C8.3089 18.9623 8.3089 18.3713 8.67339 18.0068L12.6801 14.0001L8.67339 9.99345C8.3089 9.62896 8.3089 9.038 8.67339 8.67351Z"
+							fill="#5F6F94" />
+					</svg>
+				</span>
 			</button>
 		</div>
 		<div class="cf7-error-body">
-			<h2 class="cf7-error-title"><?php esc_html_e( 'Something went wrong', 'repindia' ); ?></h2>
+			<h2 class="cf7-error-title"><?php esc_html_e('Something went wrong', 'repindia'); ?></h2>
 			<p class="cf7-error-text">
-				<?php esc_html_e( 'We couldn’t send your message due to a network issue or an unexpected error. Please check your internet connection and try again.', 'repindia' ); ?>
+				<?php esc_html_e('We couldn’t send your message due to a network issue or an unexpected error. Please check your internet connection and try again.', 'repindia'); ?>
 			</p>
 			<p class="cf7-error-text">
-				<?php esc_html_e( 'If the issue continues, feel free to reach us directly.', 'repindia' ); ?>
+				<?php esc_html_e('If the issue continues, feel free to reach us directly.', 'repindia'); ?>
 			</p>
 			<div class="cf7-error-actions">
 				<div class="cf7-error-action-inner">
-					<a href="tel:+919810056691" class="cf7-error-btn theme-btn-white border-btn-grey"><?php echo esc_html( '+91 981-005-6691' ); ?></a>
-					<a href="mailto:i2v@i2vsys.com" class="cf7-error-btn theme-btn-white border-btn-grey"><?php echo esc_html( 'i2v@i2vsys.com' ); ?></a>
+					<a href="tel:+919810056691"
+						class="cf7-error-btn theme-btn-white border-btn-grey"><?php echo esc_html('+91 981-005-6691'); ?></a>
+					<a href="mailto:i2v@i2vsys.com"
+						class="cf7-error-btn theme-btn-white border-btn-grey"><?php echo esc_html('i2v@i2vsys.com'); ?></a>
 				</div>
-				<a href="<?php echo esc_url(home_url('/')); ?>" class="cf7-error-btn theme-btn btn_transgreylight"><?php esc_html_e( 'Back to home', 'repindia' ); ?></a>
+				<a href="<?php echo esc_url(home_url('/')); ?>"
+					class="cf7-error-btn theme-btn btn_transgreylight"><?php esc_html_e('Back to home', 'repindia'); ?></a>
 			</div>
 		</div>
 	</div>
@@ -291,19 +301,21 @@ global $repindia_option;
 
 <!-- Modal -->
 <?php
-if (!empty($repindia_option['demo_popup_form'])) 
-{ ?>
-	<div class="formpopup_modal modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-		aria-labelledby="staticBackdropLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered 	modal-demo-form">
+if (!empty($repindia_option['demo_popup_form'])) { ?>
+	<div class="formpopup_modal modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="true"
+		tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog  modal-dialog-centered modal-demo-form">
 			<div class="modal-content">
 				<div class="modal-body">
 					<div class="modal-header">
-						<h5 class="modal-title" id="staticBackdropLabel"><?php echo esc_html( wpml_t( 'Request a demo', 'Repindia-Template', 'Header Demo Popup Text' ) ); ?></h5>
+						<h5 class="modal-title" id="staticBackdropLabel">
+							<?php echo esc_html(wpml_t('Request a demo', 'Repindia-Template', 'Header Demo Popup Text')); ?>
+						</h5>
 						<span class="btn-closecustom" data-bs-dismiss="modal" aria-label="Close">
-							<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#000'>
-								<path
-									d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414' />
+							<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd" clip-rule="evenodd"
+									d="M8.67339 8.67351C9.03788 8.30902 9.62883 8.30902 9.99332 8.67351L14 12.6802L18.0067 8.67351C18.3712 8.30902 18.9622 8.30902 19.3267 8.67351C19.6911 9.038 19.6911 9.62896 19.3267 9.99345L15.32 14.0001L19.3267 18.0068C19.6911 18.3713 19.6911 18.9623 19.3267 19.3268C18.9622 19.6913 18.3712 19.6913 18.0067 19.3268L14 15.3201L9.99332 19.3268C9.62883 19.6913 9.03788 19.6913 8.67339 19.3268C8.3089 18.9623 8.3089 18.3713 8.67339 18.0068L12.6801 14.0001L8.67339 9.99345C8.3089 9.62896 8.3089 9.038 8.67339 8.67351Z"
+									fill="#5F6F94" />
 							</svg>
 						</span>
 					</div>
@@ -320,16 +332,22 @@ if (!empty($repindia_option['demo_popup_form']))
 
 <!-- Contact Modal -->
 <?php
-if (!empty($repindia_option['contact_popup_form'])) 
-{ ?>
-	<div class="formpopup_modal modal fade" id="contactBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="contactBackdropLabel" aria-hidden="true">
+if (!empty($repindia_option['contact_popup_form'])) { ?>
+	<div class="formpopup_modal modal fade" id="contactBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+		tabindex="-1" aria-labelledby="contactBackdropLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-demo-form">
 			<div class="modal-content">
 				<div class="modal-body">
 					<div class="modal-header">
-						<h5 class="modal-title" id="contactBackdropLabel"><?php echo esc_html( wpml_t( 'Talk to our partner team', 'Repindia-Template', 'Header partner popup text' ) ); ?></h5>
+						<h5 class="modal-title" id="contactBackdropLabel">
+							<?php echo esc_html(wpml_t('Talk to our partner team', 'Repindia-Template', 'Header partner popup text')); ?>
+						</h5>
 						<span class="btn-closecustom" data-bs-dismiss="modal" aria-label="Close">
-							<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#000'><path d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414' /></svg>
+							<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd" clip-rule="evenodd"
+									d="M8.67339 8.67351C9.03788 8.30902 9.62883 8.30902 9.99332 8.67351L14 12.6802L18.0067 8.67351C18.3712 8.30902 18.9622 8.30902 19.3267 8.67351C19.6911 9.038 19.6911 9.62896 19.3267 9.99345L15.32 14.0001L19.3267 18.0068C19.6911 18.3713 19.6911 18.9623 19.3267 19.3268C18.9622 19.6913 18.3712 19.6913 18.0067 19.3268L14 15.3201L9.99332 19.3268C9.62883 19.6913 9.03788 19.6913 8.67339 19.3268C8.3089 18.9623 8.3089 18.3713 8.67339 18.0068L12.6801 14.0001L8.67339 9.99345C8.3089 9.62896 8.3089 9.038 8.67339 8.67351Z"
+									fill="#5F6F94" />
+							</svg>
 						</span>
 					</div>
 					<?php echo do_shortcode(wp_kses_post($repindia_option['contact_popup_form'])); ?>
@@ -341,17 +359,22 @@ if (!empty($repindia_option['contact_popup_form']))
 
 <!-- Channel Partner Modal -->
 <?php
-if (!empty($repindia_option['channel_partner_form'])) 
-{ ?>
-	<div class="formpopup_modal modal fade" id="channelPartnerBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-		aria-labelledby="channelPartnerBackdropLabel" aria-hidden="true">
+if (!empty($repindia_option['channel_partner_form'])) { ?>
+	<div class="formpopup_modal modal fade" id="channelPartnerBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+		tabindex="-1" aria-labelledby="channelPartnerBackdropLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-demo-form">
 			<div class="modal-content">
 				<div class="modal-body">
 					<div class="modal-header">
-						<h5 class="modal-title" id="channelPartnerBackdropLabel"><?php echo esc_html( wpml_t( 'Channel Partner', 'Repindia-Template', 'Channel Partner popup text' ) ); ?></h5>
+						<h5 class="modal-title" id="channelPartnerBackdropLabel">
+							<?php echo esc_html(wpml_t('Channel Partner', 'Repindia-Template', 'Channel Partner popup text')); ?>
+						</h5>
 						<span class="btn-closecustom" data-bs-dismiss="modal" aria-label="Close">
-							<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#000'><path d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414' /></svg>
+							<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd" clip-rule="evenodd"
+									d="M8.67339 8.67351C9.03788 8.30902 9.62883 8.30902 9.99332 8.67351L14 12.6802L18.0067 8.67351C18.3712 8.30902 18.9622 8.30902 19.3267 8.67351C19.6911 9.038 19.6911 9.62896 19.3267 9.99345L15.32 14.0001L19.3267 18.0068C19.6911 18.3713 19.6911 18.9623 19.3267 19.3268C18.9622 19.6913 18.3712 19.6913 18.0067 19.3268L14 15.3201L9.99332 19.3268C9.62883 19.6913 9.03788 19.6913 8.67339 19.3268C8.3089 18.9623 8.3089 18.3713 8.67339 18.0068L12.6801 14.0001L8.67339 9.99345C8.3089 9.62896 8.3089 9.038 8.67339 8.67351Z"
+									fill="#5F6F94" />
+							</svg>
 						</span>
 					</div>
 					<?php echo do_shortcode(wp_kses_post($repindia_option['channel_partner_form'])); ?>
@@ -363,19 +386,21 @@ if (!empty($repindia_option['channel_partner_form']))
 
 <!-- Technology Partner Modal -->
 <?php
-if (!empty($repindia_option['technology_partner_form'])) 
-{ ?>
-	<div class="formpopup_modal modal fade" id="technologyPartnerBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-		aria-labelledby="technologyPartnerBackdropLabel" aria-hidden="true">
+if (!empty($repindia_option['technology_partner_form'])) { ?>
+	<div class="formpopup_modal modal fade" id="technologyPartnerBackdrop" data-bs-backdrop="static"
+		data-bs-keyboard="false" tabindex="-1" aria-labelledby="technologyPartnerBackdropLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-demo-form">
 			<div class="modal-content">
 				<div class="modal-body">
 					<div class="modal-header">
-						<h5 class="modal-title" id="technologyPartnerBackdropLabel"><?php echo esc_html( wpml_t( 'Technology Partner', 'Repindia-Template', 'Technolgy Popup Header' ) ); ?></h5>
+						<h5 class="modal-title" id="technologyPartnerBackdropLabel">
+							<?php echo esc_html(wpml_t('Technology Partner', 'Repindia-Template', 'Technolgy Popup Header')); ?>
+						</h5>
 						<span class="btn-closecustom" data-bs-dismiss="modal" aria-label="Close">
-							<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#000'>
-								<path
-									d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414' />
+							<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd" clip-rule="evenodd"
+									d="M8.67339 8.67351C9.03788 8.30902 9.62883 8.30902 9.99332 8.67351L14 12.6802L18.0067 8.67351C18.3712 8.30902 18.9622 8.30902 19.3267 8.67351C19.6911 9.038 19.6911 9.62896 19.3267 9.99345L15.32 14.0001L19.3267 18.0068C19.6911 18.3713 19.6911 18.9623 19.3267 19.3268C18.9622 19.6913 18.3712 19.6913 18.0067 19.3268L14 15.3201L9.99332 19.3268C9.62883 19.6913 9.03788 19.6913 8.67339 19.3268C8.3089 18.9623 8.3089 18.3713 8.67339 18.0068L12.6801 14.0001L8.67339 9.99345C8.3089 9.62896 8.3089 9.038 8.67339 8.67351Z"
+									fill="#5F6F94" />
 							</svg>
 						</span>
 					</div>
@@ -388,129 +413,129 @@ if (!empty($repindia_option['technology_partner_form']))
 
 <!-- JavaScript to open modals for CTAs with data-modal-target attribute or class -->
 <script>
-(function() {
-	document.addEventListener('DOMContentLoaded', function() {
-		// Function to open modal by ID
-		function openModal(modalId) {
-			var modal = document.getElementById(modalId);
-			if (!modal) {
-				return false; // Modal doesn't exist
+	(function () {
+		document.addEventListener('DOMContentLoaded', function () {
+			// Function to open modal by ID
+			function openModal(modalId) {
+				var modal = document.getElementById(modalId);
+				if (!modal) {
+					return false; // Modal doesn't exist
+				}
+
+				// Check if Bootstrap modal is available
+				if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+					// Bootstrap 5
+					var modalInstance = bootstrap.Modal.getOrCreateInstance(modal);
+					modalInstance.show();
+					return true;
+				} else if (typeof jQuery !== 'undefined' && jQuery.fn.modal) {
+					// Bootstrap 4 (jQuery)
+					jQuery(modal).modal('show');
+					return true;
+				}
+				return false;
 			}
-			
-			// Check if Bootstrap modal is available
-			if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
-				// Bootstrap 5
-				var modalInstance = bootstrap.Modal.getOrCreateInstance(modal);
-				modalInstance.show();
-				return true;
-			} else if (typeof jQuery !== 'undefined' && jQuery.fn.modal) {
-				// Bootstrap 4 (jQuery)
-				jQuery(modal).modal('show');
-				return true;
-			}
-			return false;
-		}
-		
-		// Function to handle click event
-		function handleModalClick(e, modalId) {
-			var trigger = e.currentTarget;
-			
-			// If element has modal trigger class or data attribute, always open modal
-			// This ensures links with modal classes work properly
-			var hasModalTrigger = trigger.hasAttribute('data-modal-target') ||
-				trigger.classList.contains('open-demo-modal') ||
-				trigger.classList.contains('open-contact-modal') ||
-				trigger.classList.contains('open-channel-partner-modal') ||
-				trigger.classList.contains('open-technology-partner-modal');
-			
-			if (hasModalTrigger) {
-				// Prevent default to avoid navigation when modal trigger is present
+
+			// Function to handle click event
+			function handleModalClick(e, modalId) {
+				var trigger = e.currentTarget;
+
+				// If element has modal trigger class or data attribute, always open modal
+				// This ensures links with modal classes work properly
+				var hasModalTrigger = trigger.hasAttribute('data-modal-target') ||
+					trigger.classList.contains('open-demo-modal') ||
+					trigger.classList.contains('open-contact-modal') ||
+					trigger.classList.contains('open-channel-partner-modal') ||
+					trigger.classList.contains('open-technology-partner-modal');
+
+				if (hasModalTrigger) {
+					// Prevent default to avoid navigation when modal trigger is present
+					e.preventDefault();
+					// Open the modal
+					openModal(modalId);
+					return;
+				}
+
+				// Fallback: Check if it's a link with external URL (for backward compatibility)
+				if (trigger.tagName === 'A' && trigger.getAttribute('href')) {
+					var href = trigger.getAttribute('href');
+					// If it's an external link (not # or starting with #), don't prevent default
+					if (href !== '#' && !href.startsWith('#')) {
+						return; // Allow normal link behavior
+					}
+				}
+
+				// Prevent default to avoid navigation
 				e.preventDefault();
+
 				// Open the modal
 				openModal(modalId);
-				return;
 			}
-			
-			// Fallback: Check if it's a link with external URL (for backward compatibility)
-			if (trigger.tagName === 'A' && trigger.getAttribute('href')) {
-				var href = trigger.getAttribute('href');
-				// If it's an external link (not # or starting with #), don't prevent default
-				if (href !== '#' && !href.startsWith('#')) {
-					return; // Allow normal link behavior
+
+			// Handle elements with data-modal-target attribute (most flexible)
+			var dataModalTriggers = document.querySelectorAll('[data-modal-target]');
+			dataModalTriggers.forEach(function (trigger) {
+				var modalId = trigger.getAttribute('data-modal-target');
+				if (modalId) {
+					trigger.addEventListener('click', function (e) {
+						handleModalClick(e, modalId);
+					});
 				}
+			});
+
+			// Handle elements with class 'open-demo-modal' (backward compatibility)
+			var demoModalTriggers = document.querySelectorAll('.open-demo-modal');
+			if (demoModalTriggers.length > 0 && document.getElementById('staticBackdrop')) {
+				demoModalTriggers.forEach(function (trigger) {
+					// Skip if already has data-modal-target
+					if (!trigger.hasAttribute('data-modal-target')) {
+						trigger.addEventListener('click', function (e) {
+							handleModalClick(e, 'staticBackdrop');
+						});
+					}
+				});
 			}
-			
-			// Prevent default to avoid navigation
-			e.preventDefault();
-			
-			// Open the modal
-			openModal(modalId);
-		}
-		
-		// Handle elements with data-modal-target attribute (most flexible)
-		var dataModalTriggers = document.querySelectorAll('[data-modal-target]');
-		dataModalTriggers.forEach(function(trigger) {
-			var modalId = trigger.getAttribute('data-modal-target');
-			if (modalId) {
-				trigger.addEventListener('click', function(e) {
-					handleModalClick(e, modalId);
+
+			// Handle elements with class 'open-contact-modal'
+			var contactModalTriggers = document.querySelectorAll('.open-contact-modal');
+			if (contactModalTriggers.length > 0 && document.getElementById('contactBackdrop')) {
+				contactModalTriggers.forEach(function (trigger) {
+					// Skip if already has data-modal-target
+					if (!trigger.hasAttribute('data-modal-target')) {
+						trigger.addEventListener('click', function (e) {
+							handleModalClick(e, 'contactBackdrop');
+						});
+					}
+				});
+			}
+
+			// Handle elements with class 'open-channel-partner-modal'
+			var channelPartnerModalTriggers = document.querySelectorAll('.open-channel-partner-modal');
+			if (channelPartnerModalTriggers.length > 0 && document.getElementById('channelPartnerBackdrop')) {
+				channelPartnerModalTriggers.forEach(function (trigger) {
+					// Skip if already has data-modal-target
+					if (!trigger.hasAttribute('data-modal-target')) {
+						trigger.addEventListener('click', function (e) {
+							handleModalClick(e, 'channelPartnerBackdrop');
+						});
+					}
+				});
+			}
+
+			// Handle elements with class 'open-technology-partner-modal'
+			var technologyPartnerModalTriggers = document.querySelectorAll('.open-technology-partner-modal');
+			if (technologyPartnerModalTriggers.length > 0 && document.getElementById('technologyPartnerBackdrop')) {
+				technologyPartnerModalTriggers.forEach(function (trigger) {
+					// Skip if already has data-modal-target
+					if (!trigger.hasAttribute('data-modal-target')) {
+						trigger.addEventListener('click', function (e) {
+							handleModalClick(e, 'technologyPartnerBackdrop');
+						});
+					}
 				});
 			}
 		});
-		
-		// Handle elements with class 'open-demo-modal' (backward compatibility)
-		var demoModalTriggers = document.querySelectorAll('.open-demo-modal');
-		if (demoModalTriggers.length > 0 && document.getElementById('staticBackdrop')) {
-			demoModalTriggers.forEach(function(trigger) {
-				// Skip if already has data-modal-target
-				if (!trigger.hasAttribute('data-modal-target')) {
-					trigger.addEventListener('click', function(e) {
-						handleModalClick(e, 'staticBackdrop');
-					});
-				}
-			});
-		}
-		
-		// Handle elements with class 'open-contact-modal'
-		var contactModalTriggers = document.querySelectorAll('.open-contact-modal');
-		if (contactModalTriggers.length > 0 && document.getElementById('contactBackdrop')) {
-			contactModalTriggers.forEach(function(trigger) {
-				// Skip if already has data-modal-target
-				if (!trigger.hasAttribute('data-modal-target')) {
-					trigger.addEventListener('click', function(e) {
-						handleModalClick(e, 'contactBackdrop');
-					});
-				}
-			});
-		}
-		
-		// Handle elements with class 'open-channel-partner-modal'
-		var channelPartnerModalTriggers = document.querySelectorAll('.open-channel-partner-modal');
-		if (channelPartnerModalTriggers.length > 0 && document.getElementById('channelPartnerBackdrop')) {
-			channelPartnerModalTriggers.forEach(function(trigger) {
-				// Skip if already has data-modal-target
-				if (!trigger.hasAttribute('data-modal-target')) {
-					trigger.addEventListener('click', function(e) {
-						handleModalClick(e, 'channelPartnerBackdrop');
-					});
-				}
-			});
-		}
-		
-		// Handle elements with class 'open-technology-partner-modal'
-		var technologyPartnerModalTriggers = document.querySelectorAll('.open-technology-partner-modal');
-		if (technologyPartnerModalTriggers.length > 0 && document.getElementById('technologyPartnerBackdrop')) {
-			technologyPartnerModalTriggers.forEach(function(trigger) {
-				// Skip if already has data-modal-target
-				if (!trigger.hasAttribute('data-modal-target')) {
-					trigger.addEventListener('click', function(e) {
-						handleModalClick(e, 'technologyPartnerBackdrop');
-					});
-				}
-			});
-		}
-	});
-})();
+	})();
 </script>
 
 <?php

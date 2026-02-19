@@ -258,6 +258,7 @@ $(document).ready(function () {
     var scrollPosition = 0;
     var isMenuOpen = false;
     var modalScrollPosition = 0;
+    var brochureModalScrollPosition = 0;
 
     // Single debounced run after any modal close: re-create cards + gallery ScrollTriggers so layout is correct (fixes popup-close distortion for both)
     window.scheduleCardsRefreshAfterModalClose = function () {
@@ -438,6 +439,55 @@ $(document).ready(function () {
         }
 
         // Prevent wheel on body/overlay (outside modal content)
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }
+
+    // Prevent body scroll when brochure modal is open (allow scroll inside #brochureModal only)
+    function preventBrochureModalBodyScroll(e) {
+        var $target = $(e.target);
+        if ($target.closest("#brochureModal .modal-content, #brochureModal .modal-body").length) {
+            return true;
+        }
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }
+
+    function preventBrochureModalBodyWheel(e) {
+        var mouseX = e.clientX || (e.originalEvent && e.originalEvent.clientX) || 0;
+        var mouseY = e.clientY || (e.originalEvent && e.originalEvent.clientY) || 0;
+        var elementAtPoint = null;
+        if (document.elementFromPoint && mouseX > 0 && mouseY > 0) {
+            try {
+                elementAtPoint = document.elementFromPoint(mouseX, mouseY);
+            } catch (err) {}
+        }
+        if (elementAtPoint) {
+            var $elementAtPoint = $(elementAtPoint);
+            if ($elementAtPoint.closest("#brochureModal .modal-content, #brochureModal .modal-body").length) {
+                return;
+            }
+        }
+        var $target = $(e.target);
+        if ($target.closest("#brochureModal .modal-content, #brochureModal .modal-body").length) {
+            return;
+        }
+        var $modalContent = $("#brochureModal .modal-content");
+        if ($modalContent.length && $("#brochureModal").hasClass("show") && mouseX > 0 && mouseY > 0) {
+            var contentOffset = $modalContent.offset();
+            if (contentOffset) {
+                var contentWidth = $modalContent.outerWidth();
+                var contentHeight = $modalContent.outerHeight();
+                if (mouseX >= contentOffset.left &&
+                    mouseX <= contentOffset.left + contentWidth &&
+                    mouseY >= contentOffset.top &&
+                    mouseY <= contentOffset.top + contentHeight) {
+                    return;
+                }
+            }
+        }
         e.preventDefault();
         e.stopPropagation();
         return false;
@@ -633,52 +683,102 @@ $(document).ready(function () {
         });
     });
 
-    // Close formpopup_modal when clicking outside modal content (on overlay area)
-    $(document).on('click', '.formpopup_modal', function (e) {
-        var $target = $(e.target);
-        // If click is inside .modal-content, do nothing
-        if ($target.closest('.modal-content').length) {
-            return;
+    // Lock body scroll when brochure modal opens
+    $(document).on('show.bs.modal', '#brochureModal', function () {
+        brochureModalScrollPosition = window.pageYOffset ||
+            document.documentElement.scrollTop ||
+            document.body.scrollTop ||
+            $(window).scrollTop() ||
+            0;
+        brochureModalScrollPosition = Math.max(0, Math.round(brochureModalScrollPosition));
+
+        if (typeof ScrollTrigger !== "undefined") {
+            ScrollTrigger.getAll().forEach(function (st) {
+                if (st.vars && st.vars.id && String(st.vars.id).indexOf("card-") === 0) {
+                    st.disable(false, false);
+                }
+            });
         }
 
-        // Clicked on overlay / area outside modal body -> close modal
-        var modalElement = this;
+        var scrollbarWidth = getScrollbarWidth();
+        $("body").css({
+            "overflow": "hidden",
+            "position": "fixed",
+            "top": "-" + brochureModalScrollPosition + "px",
+            "left": "0",
+            "right": "0",
+            "width": "100%",
+            "padding-right": scrollbarWidth + "px"
+        });
 
-        // Prefer Bootstrap 5 Modal API if available
-        if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
-            var instance = bootstrap.Modal.getInstance(modalElement) || bootstrap.Modal.getOrCreateInstance(modalElement);
-            if (instance) {
-                instance.hide();
-                return;
+        $(window).on("scroll", preventBrochureModalBodyScroll);
+        document.addEventListener("wheel", preventBrochureModalBodyWheel, { passive: false, capture: false });
+        $("body, .modal-backdrop").on("touchmove", preventBrochureModalBodyScroll);
+        $("#brochureModal .modal-content, #brochureModal .modal-body").on("wheel", function (e) {
+            e.stopPropagation();
+        });
+    });
+
+    // Unlock body scroll when brochure modal closes
+    $(document).on('hidden.bs.modal', '#brochureModal', function () {
+        $(window).off("scroll", preventBrochureModalBodyScroll);
+        document.removeEventListener("wheel", preventBrochureModalBodyWheel, false);
+        $("body, .modal-backdrop").off("touchmove", preventBrochureModalBodyScroll);
+        $("#brochureModal .modal-content, #brochureModal .modal-body").off("wheel");
+
+        var restorePosition = brochureModalScrollPosition;
+        var originalHtmlScrollBehavior = $("html").css("scroll-behavior");
+        var originalBodyScrollBehavior = $("body").css("scroll-behavior");
+        $("html, body").css("scroll-behavior", "auto");
+
+        $("body").css({
+            "overflow": "",
+            "padding-right": ""
+        });
+
+        requestAnimationFrame(function () {
+            $("body").css({
+                "position": "",
+                "top": "",
+                "left": "",
+                "right": "",
+                "width": ""
+            });
+
+            if (window.scrollTo) {
+                window.scrollTo(0, restorePosition);
             }
-        }
+            document.documentElement.scrollTop = restorePosition;
+            document.body.scrollTop = restorePosition;
+            $(window).scrollTop(restorePosition);
 
-        // Fallback to jQuery-based modal (Bootstrap 4 style)
-        if (typeof jQuery !== 'undefined' &&
-            typeof jQuery.fn !== 'undefined' &&
-            typeof jQuery.fn.modal === 'function') {
-            jQuery(modalElement).modal('hide');
-        }
+            requestAnimationFrame(function () {
+                var currentScroll = window.pageYOffset || document.documentElement.scrollTop || $(window).scrollTop() || 0;
+                if (Math.abs(currentScroll - restorePosition) > 1) {
+                    if (window.scrollTo) {
+                        window.scrollTo(0, restorePosition);
+                    }
+                    document.documentElement.scrollTop = restorePosition;
+                    document.body.scrollTop = restorePosition;
+                    $(window).scrollTop(restorePosition);
+                }
+                if (originalHtmlScrollBehavior) {
+                    $("html").css("scroll-behavior", originalHtmlScrollBehavior);
+                }
+                if (originalBodyScrollBehavior) {
+                    $("body").css("scroll-behavior", originalBodyScrollBehavior);
+                }
+                if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
+                    window.scheduleCardsRefreshAfterModalClose();
+                }
+                setTimeout(function () {
+                    $(window).trigger("resize");
+                }, 0);
+            });
+        });
     });
 
-    // Close formpopup_modal when clicking outside modal body (on the backdrop)
-    $(document).on('click', '.modal-backdrop', function (e) {
-        // Find the currently open formpopup_modal
-        var $openModal = $('.formpopup_modal.show, .formpopup_modal.in').last();
-        if (!$openModal.length) return;
-
-        // Use Bootstrap's modal hide if available
-        if (typeof jQuery !== 'undefined' &&
-            typeof jQuery.fn !== 'undefined' &&
-            typeof jQuery.fn.modal === 'function') {
-            $openModal.modal('hide');
-        } else {
-            // Fallback: manually hide modal and remove backdrop
-            $openModal.removeClass('show in');
-            $('body').removeClass('modal-open');
-            $('.modal-backdrop').remove();
-        }
-    });
+    // Modal closes only via close (X) button - no close on outside/backdrop click
 
     // Open menu when burger icon is clicked
     $(".burger-icon").click(function () {

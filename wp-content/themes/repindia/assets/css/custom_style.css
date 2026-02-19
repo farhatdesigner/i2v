@@ -1080,9 +1080,6 @@ a:hover {
   color: #06283d;
   position: relative;
 }
-.listing-inner > ul > li > :hover {
-  /* border: 2px solid #0099ed !important; */
-}
 
 #header-toggle-menu > li > a:hover:before,
 #header-main-menu > li > a:hover:before,
@@ -1681,7 +1678,7 @@ h3 {
   box-shadow: 0 0 15px 0 rgba(138, 149, 158, 0.4);
 }
 
-.modal-demo-form .modal-body {
+.modal-demo-form .modal-body, #brochureModal .modal-body {
   padding: 0px;
 }
 .modal-demo-form .modal-header {
@@ -1711,15 +1708,36 @@ h3 {
   padding: 20px 20px 0;
 }
 .btn-closecustom svg {
-  width: 16px;
-  height: 16px;
+  width: 28px;
+  height: 28px;
   cursor: pointer;
+  border-radius: 100%;
+  border: 1px solid transparent;
 }
+.btn-closecustom svg:hover {
+  background: #e6ebf2;
+}
+.btn-closecustom svg:focus {
+  background: #e6ebf2;
+  border: 1px solid #d7dbe4;
+  outline: 0;
+}
+.js-dark .btn-closecustom svg path {
+  fill: #d7dbe4;
+}
+.js-dark .btn-closecustom svg:hover {
+  background: #ffffff1a;
+}
+.js-dark .btn-closecustom svg:focus {
+  border: 1px solid #c1c4c633;
+}
+
 .js-dark svg {
   fill: rgb(255 255 255 / 90%);
 }
 
 .js-dark .modal-demo-form .modal-header,
+.js-dark .brochure-modal-overlay .modal-header,
 .js-dark label.form-label.required_note-demo {
   border-bottom: 1px solid #464a4f;
 }
@@ -3849,6 +3867,10 @@ span.star {
   .tabsWrapper {
     height: 57px;
   }
+  .modal {
+    overflow: hidden;
+  }
+
   .modal-dialog.modal-demo-form {
     max-width: 768px;
   }
@@ -3994,6 +4016,7 @@ span.star {
   .content-inner-text {
     padding-left: 40px;
   }
+
 }
 @media (min-width: 1400px) {
   .video-analytics-widget .center-oval {
@@ -4066,9 +4089,11 @@ span.star {
 }
 
 @media (max-width: 1366px) {
-  /* .theme-btn.xl-btn {
-    padding: 12px 18px;
-  } */
+
+  .brochure-modal-content {
+    height: calc(100vh - 160px);
+}
+
 
   .animation_cards-text {
     width: 300px !important;
@@ -4091,8 +4116,9 @@ span.star {
   .industry_box {
     height: auto;
   }
-
-  
+  .listing-inner {
+    margin-top: 20px;
+  }
 }
 
 @media (max-width: 1200px) {
@@ -4978,6 +5004,7 @@ span.star {
     display: flex;
     flex-direction: column;
   }
+
 }
 
 @media (max-width: 380px) {
