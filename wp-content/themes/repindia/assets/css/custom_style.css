@@ -2560,12 +2560,60 @@ label.form-label.required_note-demo {
   background: linear-gradient(270deg, #f2f5fa 0%, rgb(255 255 255 / 0%) 83.82%);
 }
 
+.purpose-slider-wrapper:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 10%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(90deg, #f2f5fa 0%, rgb(255 255 255 / 0%) 83.82%);
+}
+
 .js-dark .purpose-slider-wrapper:before {
   background: linear-gradient(270deg, #000000 0%, rgb(145 138 138 / 0%) 83.82%);
 }
 
-#career_slider .purpose-slider-wrapper:before {
+.js-dark .purpose-slider-wrapper:after {
+  background: linear-gradient(90deg, #000000 0%, rgb(145 138 138 / 0%) 83.82%);
+}
+
+#career_slider .purpose-slider-wrapper:before,
+#career_slider .purpose-slider-wrapper:after {
   visibility: hidden;
+}
+
+/* industry-carousel / trusted_sec: left alignment and fade like purpose-slider-wrapper */
+.industry-carousel,
+.trusted_sec {
+  position: relative;
+}
+
+.industry-carousel .swiper-wrapper,
+.trusted_sec .swiper-wrapper {
+  justify-content: flex-start;
+}
+
+/* Single overlay with both gradients so right fade sits on top (not behind swiper transform) */
+.industry-carousel:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  pointer-events: none;
+  background: linear-gradient(90deg, #f2f5fa 0%, rgb(255 255 255 / 0%) 83.82%) left top / 10% 100% no-repeat,
+    linear-gradient(270deg, #f2f5fa 0%, rgb(255 255 255 / 0%) 83.82%) right top / 10% 100% no-repeat;
+}
+
+.js-dark .industry-carousel:after{
+  background: linear-gradient(90deg, #000000 0%, rgb(145 138 138 / 0%) 83.82%) left top / 10% 100% no-repeat,
+    linear-gradient(270deg, #000000 0%, rgb(145 138 138 / 0%) 83.82%) right top / 10% 100% no-repeat;
 }
 
 .purpose-swiper .swiper-slide figure.caption-scroll figcaption h3 {
@@ -3591,6 +3639,13 @@ ul.privacy-policy:last-child {
   margin: 0;
 }
 
+ul.privacy-policy li a, ul.privacy-policy li a:hover {
+  color: #74C2ED;
+}
+.elementor-image-box-description a {
+  color: #5C5C5C;
+}
+
 .privacy-policy-title {
   color: #06283d;
   font-size: 32px;
@@ -3617,6 +3672,11 @@ a.btn-simple {
   font-size: 20px;
   font-weight: 600;
   line-height: 26px;
+  border-radius: 8px;
+}
+a.btn-simple:hover {
+  background: #E6EBF2;
+  display: block;
 }
 span.star {
   color: #c92629;
@@ -4905,6 +4965,12 @@ span.star {
 
   .purpose-slider-wrapper:before {
     background: none;
+  }
+  .industry-carousel:after {
+    background: linear-gradient(90deg, #f2f5fa 0%, rgb(255 255 255 / 0%) 83.82%) left top / 10% 100% no-repeat;
+  }
+  .js-dark .industry-carousel:after {
+    background: linear-gradient(90deg, #000000 0%, rgb(145 138 138 / 0%) 83.82%) left top / 10% 100% no-repeat;
   }
   .accontent .accordion_video {
     top: 50%;

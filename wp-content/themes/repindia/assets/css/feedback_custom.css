@@ -545,7 +545,9 @@ html.lenis body {
 #breadcrumbs {
   margin-bottom: 48px;
 }
-
+.careers-template-default #breadcrumbs {
+  margin-top: 130px;
+}
 #breadcrumbs > span > span > a {
   border-radius: var(--3XL, 28px);
   border: 1px solid var(--Golbal-others-border, #e6ebf2);
