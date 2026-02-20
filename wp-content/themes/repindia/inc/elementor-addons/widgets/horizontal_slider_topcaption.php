@@ -249,6 +249,7 @@ class Horizontal_Slider_Topcaption extends Widget_Base
         
        <style>
         .hz-slider-topcaption .static_slide .slider-image.slider_static_img img{ width: auto;height: auto; }
+        .hz-slider-topcaption .swiper-slide.static_slide{background: transparent;}
         .static_slide .slider-image_content{ 
           flex: 1;
           display: flex;
@@ -313,12 +314,12 @@ class Horizontal_Slider_Topcaption extends Widget_Base
                             ?>
                             <div class="swiper-slide static_slide">
                                 <div class="slider-image_content">
-                                    <div class="slider-image slider_static_img">
+                                    <!-- <div class="slider-image slider_static_img">
                                         <img decoding="async" class="radius-12 white_theme_img"
                                             src="<?php echo esc_url($special_icon_default); ?>" alt="<?php echo esc_attr($special_icon_default_alt ? $special_icon_default_alt : $special_title); ?>">
                                         <img decoding="async" class="radius-12 black_theme_img"
                                             src="<?php echo esc_url($special_icon_dark); ?>" alt="<?php echo esc_attr($special_icon_dark_alt ? $special_icon_dark_alt : $special_title); ?>">
-                                    </div>
+                                    </div> -->
                                     <div class="slider-content_txt">
                                         <?php if (!empty($special_title)): ?>
                                             <h3><?php echo esc_html($special_title); ?></h3>
@@ -330,7 +331,7 @@ class Horizontal_Slider_Topcaption extends Widget_Base
                                         <?php endif; ?>
                                         <?php if (!empty($special_cta_text)): ?>
                                             <div class="btn-sec_gap justify-content-center full_mobile">
-                                                <a class="theme-btn-white xl-btn border-btn-grey<?php echo $special_cta_classes; ?>" href="<?php echo esc_url($special_cta_url); ?>" <?php echo esc_attr($special_cta_target); ?> <?php echo esc_attr($special_cta_nofollow); ?>><?php echo esc_html($special_cta_text); ?></a>
+                                                <a class="theme-btn-white  border-btn-grey<?php echo $special_cta_classes; ?>" href="<?php echo esc_url($special_cta_url); ?>" <?php echo esc_attr($special_cta_target); ?> <?php echo esc_attr($special_cta_nofollow); ?>><?php echo esc_html($special_cta_text); ?></a>
                                             </div>
                                         <?php endif; ?>
                                     </div>

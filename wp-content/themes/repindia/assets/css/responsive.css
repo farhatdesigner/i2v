@@ -402,7 +402,7 @@ select.form-control {
 }
 .wpcf7-not-valid-tip, #mobile-error {
   color: #C92629 !important;
-  font-size: 12px;
+  font-size: 10px;
 }
 .js-dark .form-control:hover {
   border-color: #008AD6; 

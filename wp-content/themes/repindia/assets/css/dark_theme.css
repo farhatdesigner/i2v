@@ -383,6 +383,17 @@ header li.burger-icon .icon-sun,
   fill: #D7DBE4;
 }
 .js-dark .leadersslider.elementor-element .swiper .elementor-swiper-button svg{ fill: #D7DBE4; }
+.js-dark .leadersslider.elementor-element .swiper .elementor-swiper-button:hover {
+  background: #5a5e64;
+  border-color: rgba(193, 196, 198, 0.4);
+}
+.js-dark .leadersslider.elementor-element .swiper .elementor-swiper-button:focus,
+.js-dark .leadersslider.elementor-element .swiper .elementor-swiper-button:focus-visible {
+  border-color:none;
+  box-shadow: none;
+}
+.js-dark .leadersslider.elementor-element .swiper .elementor-swiper-button svg{ stroke:#262a30;}
+
 .js-dark span.swiper-pagination-bullet {
   opacity: 1;
 }

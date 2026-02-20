@@ -321,7 +321,7 @@ class Scalescroll extends Widget_Base
             ]
         );
         $nested_repeater_1 = new \Elementor\Repeater();
-        
+
         // Image upload (default theme)
         $nested_repeater_1->add_control(
             'nested_image_default',
@@ -377,9 +377,9 @@ class Scalescroll extends Widget_Base
         );
 
         // Second Nested Repeater
-        
+
         $nested_repeater_2 = new \Elementor\Repeater();
-        
+
         // Image upload (default theme)
         $nested_repeater_2->add_control(
             'nested_image_default_2',
@@ -457,7 +457,7 @@ class Scalescroll extends Widget_Base
         $scroll_items = !empty($settings['scroll_items']) ? $settings['scroll_items'] : [];
         $section_title = !empty($settings['section_title']) ? $settings['section_title'] : '';
         $section_description = !empty($settings['section_description']) ? $settings['section_description'] : '';
-        $this->add_inline_editing_attributes('custom_class', 'basic'); 
+        $this->add_inline_editing_attributes('custom_class', 'basic');
 
         // Static SVG checkmark icon for list items
         $checkmark_svg_default = '<svg class="default_liicon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.26701 1.45496C4.91008 1.40364 5.52057 1.15077 6.01158 0.732335C7.15738 -0.244112 8.84262 -0.244112 9.98842 0.732335C10.4794 1.15077 11.0899 1.40364 11.733 1.45496C13.2336 1.57471 14.4253 2.76636 14.545 4.26701C14.5964 4.91008 14.8492 5.52057 15.2677 6.01158C16.2441 7.15738 16.2441 8.84262 15.2677 9.98842C14.8492 10.4794 14.5964 11.0899 14.545 11.733C14.4253 13.2336 13.2336 14.4253 11.733 14.545C11.0899 14.5964 10.4794 14.8492 9.98842 15.2677C8.84262 16.2441 7.15738 16.2441 6.01158 15.2677C5.52057 14.8492 4.91008 14.5964 4.26701 14.545C2.76636 14.4253 1.57471 13.2336 1.45496 11.733C1.40364 11.0899 1.15077 10.4794 0.732335 9.98842C-0.244112 8.84262 -0.244112 7.15738 0.732335 6.01158C1.15077 5.52057 1.40364 4.91008 1.45496 4.26701C1.57471 2.76636 2.76636 1.57471 4.26701 1.45496ZM11.7071 6.70711C12.0976 6.31658 12.0976 5.68342 11.7071 5.29289C11.3166 4.90237 10.6834 4.90237 10.2929 5.29289L7 8.58579L5.70711 7.29289C5.31658 6.90237 4.68342 6.90237 4.29289 7.29289C3.90237 7.68342 3.90237 8.31658 4.29289 8.70711L6.29289 10.7071C6.68342 11.0976 7.31658 11.0976 7.70711 10.7071L11.7071 6.70711Z" fill="#5F6F94"/></svg>';
@@ -466,67 +466,108 @@ class Scalescroll extends Widget_Base
 
         <style>
             .youtube-wrapper .white_theme_iframe,
-            .youtube-wrapper .white_theme_thumb { display: block; }
+            .youtube-wrapper .white_theme_thumb {
+                display: block;
+            }
+
             .youtube-wrapper .black_theme_iframe,
-            .youtube-wrapper .black_theme_thumb { display: none; }
+            .youtube-wrapper .black_theme_thumb {
+                display: none;
+            }
+
             .js-dark .youtube-wrapper .white_theme_iframe,
-            .js-dark .youtube-wrapper .white_theme_thumb { display: none; }
+            .js-dark .youtube-wrapper .white_theme_thumb {
+                display: none;
+            }
+
             .js-dark .youtube-wrapper .black_theme_iframe,
-            .js-dark .youtube-wrapper .black_theme_thumb { display: block; }
-         
-h4.subtitlebox {
-    background: #FFFFFF;
-    border-radius: 28px;
-    padding: 4px 12px;
-    color: #4A5673;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 20px;
-    width: auto;
-    display: inline-block;
-    text-align: left;
-    border: 1px solid #E6EBF2;
-}
+            .js-dark .youtube-wrapper .black_theme_thumb {
+                display: block;
+            }
+
+            h4.subtitlebox {
+                background: #FFFFFF;
+                border-radius: 28px;
+                padding: 4px 12px;
+                color: #4A5673;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 20px;
+                width: auto;
+                display: inline-block;
+                text-align: left;
+                border: 1px solid #E6EBF2;
+            }
 
 
             /* Nested repeater image theme switching */
-            .nested-image-wrapper .white_theme_img { display: block; }
-            .nested-image-wrapper .black_theme_img { display: none; }
-            .js-dark .nested-image-wrapper .white_theme_img { display: none; }
-            .js-dark .nested-image-wrapper .black_theme_img { display: block; }
+            .nested-image-wrapper .white_theme_img {
+                display: block;
+            }
+
+            .nested-image-wrapper .black_theme_img {
+                display: none;
+            }
+
+            .js-dark .nested-image-wrapper .white_theme_img {
+                display: none;
+            }
+
+            .js-dark .nested-image-wrapper .black_theme_img {
+                display: block;
+            }
+
             .js-dark .default_liicon,
-            .dark_liicon { display: none; }
-            .js-dark .dark_liicon { display: block; }
-            .hz-slider-section .swiper-slide ul li>span>svg { width: 14px;height: 14px; }
-            .featuregroup_repeator .nested-image-wrapper img,.featuregroup_repeator .nested-image-wrapper { width: 26px;height: 26px; }
+            .dark_liicon {
+                display: none;
+            }
+
+            .js-dark .dark_liicon {
+                display: block;
+            }
+
+            .hz-slider-section .swiper-slide ul li>span>svg {
+                width: 14px;
+                height: 14px;
+            }
+
+            .featuregroup_repeator .nested-image-wrapper img,
+            .featuregroup_repeator .nested-image-wrapper {
+                width: 26px;
+                height: 26px;
+                padding-bottom: 8px;
+            }
 
 
             .featuregroup_repeator .nested-image-wrapper img {
-    margin-bottom: 4px;
-}
+                margin-bottom: 4px;
+            }
 
             .featuregroup_repeator .nested-item-1 {
-                padding: 4px 16px;
-    border-radius: 8px;
-    background: #fff;
-    max-width: max-content;
-    border: 1px solid #E6EBF2;
-    width: calc(50% - 2px);
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
+                padding: 12px;
+                border-radius: 8px;
+                background: #fff;
+                max-width: max-content;
+                border: 1px solid #E6EBF2;
+                width: calc(50% - 2px);
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
             }
+
             .featuregroup_repeator h3.nested-title-1 {
-                color: #4A5673;
+                color: #06283D;
     font-size: 16px;
     font-style: normal;
-    font-weight: 500 !important;
+    font-weight: 600 !important;
     line-height: 24px;
-    margin: 0;
+    margin-bottom: 4px;
     text-align: left;
             }
-            .featuregroup_repeator .nested-description-1, .featuregroup_repeator .nested-description-1 p {
+
+            .featuregroup_repeator .nested-description-1,
+            .featuregroup_repeator .nested-description-1 p {
                 color: #5C5C5C;
                 font-size: 16px;
                 font-style: normal;
@@ -535,77 +576,102 @@ h4.subtitlebox {
                 margin: 0;
                 text-align: left;
             }
+
             .nested-repeater-1.featuregroup_repeator {
                 display: flex;
-    align-items: stretch;
-    gap: 4px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
+                align-items: stretch;
+                gap: 4px;
+                flex-wrap: wrap;
+                margin-bottom: 20px;
             }
-            .bolt{ max-width: 300px;margin-bottom: 0;margin-top: 20px; }
-            .listedgroup_repeator ul { padding: 0; }
-            .listedgroup_repeator li span { display: inline-block;width: auto; }
+
+            .bolt {
+                max-width: 300px;
+                margin-bottom: 0;
+                margin-top: 20px;
+            }
+
+            .listedgroup_repeator ul {
+                padding: 0;
+                gap: 8px;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .listedgroup_repeator li span {
+                display: inline-block;
+                width: auto;
+            }
+
             h4.boxtitle {
                 color: #5C5C5C;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 20px;
-    margin: 0px 0 8px;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 20px;
+                margin: 16px 0 8px;
             }
-          
+
             .js-dark .featuregroup_repeator .nested-item-1 {
-    background: #262A30;
-    border: 1px solid rgb(193 196 198 / 10%) !important;
-}
+                background: #262A30;
+                border: 1px solid rgb(193 196 198 / 10%) !important;
+            }
 
-.js-dark .featuregroup_repeator h3.nested-title-1 {
-    color: #D7DBE4 !important;
-}
+            .js-dark .featuregroup_repeator h3.nested-title-1 {
+                color: #D7DBE4 !important;
+            }
 
- .js-dark h4.boxtitle {
-    color: #AEB6C9 !important;
-}
-.js-dark h4.subtitlebox {
-    background: #262A30;
-    color: #D7DBE4 !important;
-    border: 1px solid rgb(193 196 198 / 10%);
-}
+            .js-dark h4.boxtitle {
+                color: #AEB6C9 !important;
+            }
 
-.bolt img { width: 26px; }
+            .js-dark h4.subtitlebox {
+                background: #262A30;
+                color: #D7DBE4 !important;
+                border: 1px solid rgb(193 196 198 / 10%);
+            }
 
-@media(max-width: 768px){
-    .photo_custom .details * { text-align: left;}
-}
+            .bolt img {
+                width: 26px;
+            }
 
-@media(max-width: 767px){
-    
-.featuregroup_repeator h3.nested-title-1 {
-    font-size: 14px;
-}
+            @media(max-width: 768px) {
+                .photo_custom .details * {
+                    text-align: left;
+                }
+            }
 
-.featuregroup_repeator .nested-description-1, .featuregroup_repeator .nested-description-1 p {font-size: 14px;line-height: 1.2 !important;}
-h4.boxtitle {
-    font-size: 11px;
-}
+            @media(max-width: 767px) {
 
-}
+                .featuregroup_repeator h3.nested-title-1 {
+                    font-size: 14px;
+                }
 
+                .featuregroup_repeator .nested-description-1,
+                .featuregroup_repeator .nested-description-1 p {
+                    font-size: 14px;
+                    line-height: 1.2 !important;
+                }
 
+                h4.boxtitle {
+                    font-size: 11px;
+                }
+
+            }
         </style>
 
         <div class="makdmks">
             <div class="custom-container">
-                <?php if (!empty($section_title) || !empty($section_description)) : ?>
+                <?php if (!empty($section_title) || !empty($section_description)): ?>
                     <div class="title-box">
                         <div class="col-lg-6 col-12">
                             <div class="width_define">
-                                <?php if (!empty($section_title)) : ?>
+                                <?php if (!empty($section_title)): ?>
                                     <h3 class="main_title quote mb-12">
                                         <?php echo esc_html($section_title); ?>
                                     </h3>
                                 <?php endif; ?>
-                                <?php if (!empty($section_description)) : ?>
+                                <?php if (!empty($section_description)): ?>
                                     <div class="text-left">
                                         <p><?php echo wp_kses_post($section_description); ?></p>
                                     </div>
@@ -615,11 +681,11 @@ h4.boxtitle {
                     </div>
                 <?php endif; ?>
 
-                <?php if (!empty($scroll_items)) : ?>
+                <?php if (!empty($scroll_items)): ?>
                     <div class="gallery">
                         <div class="left">
                             <div class="detailsWrapper">
-                                <?php foreach ($scroll_items as $index => $item) : ?>
+                                <?php foreach ($scroll_items as $index => $item): ?>
                                     <?php
                                     $item_num = $index + 1;
                                     $item_title = !empty($item['item_title']) ? $item['item_title'] : '';
@@ -643,52 +709,56 @@ h4.boxtitle {
                                     $list_box_title = !empty($item['list_box_title']) ? $item['list_box_title'] : '';
                                     ?>
                                     <div class="details details-<?php echo esc_attr($item_num); ?>">
-                                        <?php if ($has_blue_headline) : ?>
+                                        <?php if ($has_blue_headline): ?>
                                             <div class="headline blue"></div>
                                         <?php endif; ?>
                                         <div class="txtflex">
-                                            <?php if (!empty($item_sub_title)) : ?>
+                                            <?php if (!empty($item_sub_title)): ?>
                                                 <h4 class="subtitlebox"><?php echo esc_html($item_sub_title); ?></h4>
                                             <?php endif; ?>
-                                            <?php if (!empty($item_title)) : ?>
+                                            <?php if (!empty($item_title)): ?>
                                                 <h2><?php echo esc_html($item_title); ?></h2>
                                             <?php endif; ?>
-                                            <?php if (!empty($item_desc)) : ?>
+                                            <?php if (!empty($item_desc)): ?>
                                                 <p class="para-text"><?php echo wp_kses_post($item_desc); ?></p>
                                             <?php endif; ?>
-                                            <?php if (!empty($cta_text) && !empty($cta_url)) : ?>
+                                            <?php if (!empty($cta_text) && !empty($cta_url)): ?>
                                                 <div class="text-left">
-                                                    <a class="theme-btn bg-trans border_btnlight<?php echo $cta_classes; ?>" href="<?php echo esc_url($cta_url); ?>" <?php echo $cta_target; ?> <?php echo $cta_nofollow; ?>><?php echo esc_html($cta_text); ?></a>
+                                                    <a class="theme-btn bg-trans border_btnlight<?php echo $cta_classes; ?>"
+                                                        href="<?php echo esc_url($cta_url); ?>" <?php echo $cta_target; ?>                     <?php echo $cta_nofollow; ?>><?php echo esc_html($cta_text); ?></a>
                                                 </div>
                                             <?php endif; ?>
-                                            <?php if (!empty($bolt_title) || !empty($bolt_icon) || (!empty($bolt_cta_text) && !empty($bolt_cta_url))) : ?>
+                                            <?php if (!empty($bolt_title) || !empty($bolt_icon) || (!empty($bolt_cta_text) && !empty($bolt_cta_url))): ?>
                                                 <div class="bolt">
-                                                    <?php if (!empty($bolt_icon)) : ?>
-                                                        <img class="lightfile" src="<?php echo esc_url($bolt_icon); ?>" alt="<?php echo esc_attr($bolt_title); ?>">
+                                                    <?php if (!empty($bolt_icon)): ?>
+                                                        <img class="lightfile" src="<?php echo esc_url($bolt_icon); ?>"
+                                                            alt="<?php echo esc_attr($bolt_title); ?>">
                                                     <?php endif; ?>
-                                                    <?php if (!empty($bolt_dark_icon)) : ?>
-                                                        <img class="darkfile" src="<?php echo esc_url($bolt_dark_icon); ?>" alt="<?php echo esc_attr($bolt_title); ?>">
+                                                    <?php if (!empty($bolt_dark_icon)): ?>
+                                                        <img class="darkfile" src="<?php echo esc_url($bolt_dark_icon); ?>"
+                                                            alt="<?php echo esc_attr($bolt_title); ?>">
                                                     <?php endif; ?>
-                                                    <?php if (!empty($bolt_title)) : ?>
+                                                    <?php if (!empty($bolt_title)): ?>
                                                         <p><?php echo esc_html($bolt_title); ?></p>
                                                     <?php endif; ?>
-                                                    <?php if (!empty($bolt_cta_text) && !empty($bolt_cta_url)) : ?>
+                                                    <?php if (!empty($bolt_cta_text) && !empty($bolt_cta_url)): ?>
                                                         <div class="btn-bolt">
-                                                            <a href="<?php echo esc_url($bolt_cta_url); ?>" class="<?php echo $bolt_cta_classes; ?>" <?php echo $bolt_cta_target; ?> <?php echo $bolt_cta_nofollow; ?>><?php echo esc_html($bolt_cta_text); ?></a>
+                                                            <a href="<?php echo esc_url($bolt_cta_url); ?>"
+                                                                class="<?php echo $bolt_cta_classes; ?>" <?php echo $bolt_cta_target; ?>                         <?php echo $bolt_cta_nofollow; ?>><?php echo esc_html($bolt_cta_text); ?></a>
                                                         </div>
                                                     <?php endif; ?>
                                                 </div>
                                             <?php endif; ?>
-                                            
+
                                             <?php
                                             // First Nested Repeater
                                             $nested_items_1 = !empty($item['nested_items_1']) ? $item['nested_items_1'] : [];
-                                            if (!empty($nested_items_1)) : ?>
-                                                <?php if (!empty($feature_box_title)) : ?>
+                                            if (!empty($nested_items_1)): ?>
+                                                <?php if (!empty($feature_box_title)): ?>
                                                     <h4 class="boxtitle"><?php echo esc_html($feature_box_title); ?></h4>
                                                 <?php endif; ?>
                                                 <div class="nested-repeater-1 featuregroup_repeator">
-                                                    <?php foreach ($nested_items_1 as $nested_item_1) : ?>
+                                                    <?php foreach ($nested_items_1 as $nested_item_1): ?>
                                                         <?php
                                                         $nested_image_default_1 = !empty($nested_item_1['nested_image_default']['url']) ? $nested_item_1['nested_image_default']['url'] : '';
                                                         $nested_image_dark_1 = !empty($nested_item_1['nested_image_dark']['url']) ? $nested_item_1['nested_image_dark']['url'] : $nested_image_default_1;
@@ -696,29 +766,33 @@ h4.boxtitle {
                                                         $nested_description_1 = !empty($nested_item_1['nested_description']) ? $nested_item_1['nested_description'] : '';
                                                         ?>
                                                         <div class="nested-item-1">
-                                                            <?php if (!empty($nested_image_default_1)) : ?>
+                                                            <?php if (!empty($nested_image_default_1)): ?>
                                                                 <div class="nested-image-wrapper">
-                                                                    <img class="white_theme_img" src="<?php echo esc_url($nested_image_default_1); ?>" alt="<?php echo esc_attr($nested_title_1); ?>">
-                                                                    <img class="black_theme_img" src="<?php echo esc_url($nested_image_dark_1); ?>" alt="<?php echo esc_attr($nested_title_1); ?>">
+                                                                    <img class="white_theme_img"
+                                                                        src="<?php echo esc_url($nested_image_default_1); ?>"
+                                                                        alt="<?php echo esc_attr($nested_title_1); ?>">
+                                                                    <img class="black_theme_img" src="<?php echo esc_url($nested_image_dark_1); ?>"
+                                                                        alt="<?php echo esc_attr($nested_title_1); ?>">
                                                                 </div>
                                                             <?php endif; ?>
-                                                            <?php if (!empty($nested_title_1)) : ?>
+                                                            <?php if (!empty($nested_title_1)): ?>
                                                                 <h3 class="nested-title-1"><?php echo esc_html($nested_title_1); ?></h3>
                                                             <?php endif; ?>
-                                                            <?php if (!empty($nested_description_1)) : ?>
-                                                                <div class="nested-description-1"><?php echo wp_kses_post($nested_description_1); ?></div>
+                                                            <?php if (!empty($nested_description_1)): ?>
+                                                                <div class="nested-description-1"><?php echo wp_kses_post($nested_description_1); ?>
+                                                                </div>
                                                             <?php endif; ?>
                                                         </div>
                                                     <?php endforeach; ?>
                                                 </div>
                                             <?php endif; ?>
-                                            
+
                                             <?php
                                             // Second Nested Repeater
                                             $nested_items_2 = !empty($item['nested_items_2']) ? $item['nested_items_2'] : [];
-                                            if (!empty($nested_items_2)) : ?>
-                                                <?php if (!empty($list_box_title)) : ?>
-                                                    <h4  class="boxtitle"><?php echo esc_html($list_box_title); ?></h4>
+                                            if (!empty($nested_items_2)): ?>
+                                                <?php if (!empty($list_box_title)): ?>
+                                                    <h4 class="boxtitle"><?php echo esc_html($list_box_title); ?></h4>
                                                 <?php endif; ?>
                                                 <div class="nested-repeater-2 listedgroup_repeator">
                                                     <ul>
@@ -749,7 +823,7 @@ h4.boxtitle {
 
                         <div class="right">
                             <div class="photos">
-                                <?php foreach ($scroll_items as $index => $item) : ?>
+                                <?php foreach ($scroll_items as $index => $item): ?>
                                     <?php
                                     $item_num = $index + 1;
                                     $media_type = !empty($item['media_type']) ? $item['media_type'] : 'image';
@@ -771,13 +845,13 @@ h4.boxtitle {
                                     $has_blue_headline = !empty($item['has_blue_headline']) && $item['has_blue_headline'] === 'yes';
                                     $feature_box_title = !empty($item['feature_box_title']) ? $item['feature_box_title'] : '';
                                     $list_box_title = !empty($item['list_box_title']) ? $item['list_box_title'] : '';
-                                    
+
                                     // Image handling
                                     $image_default = !empty($item['item_image_default']['url']) ? $item['item_image_default']['url'] : '';
                                     $image_default_alt = !empty($item['item_image_default']['alt']) ? $item['item_image_default']['alt'] : $item_title;
                                     $image_dark = !empty($item['item_image_dark']['url']) ? $item['item_image_dark']['url'] : $image_default;
                                     $image_dark_alt = !empty($item['item_image_dark']['alt']) ? $item['item_image_dark']['alt'] : $image_default_alt;
-                                    
+
                                     // YouTube handling
                                     $youtube_id_default = !empty($item['youtube_video_id_default']) ? $item['youtube_video_id_default'] : '';
                                     $youtube_id_dark = !empty($item['youtube_video_id_dark']) ? $item['youtube_video_id_dark'] : $youtube_id_default;
@@ -785,18 +859,34 @@ h4.boxtitle {
                                     $youtube_thumb_dark = !empty($item['youtube_thumbnail_dark']['url']) ? $item['youtube_thumbnail_dark']['url'] : $youtube_thumb_default;
                                     ?>
                                     <div class="photo photo_custom">
-                                        <?php if ($media_type === 'image' && !empty($image_default)) : ?>
-                                            <img class="white_theme_img radius-12" decoding="async" src="<?php echo esc_url($image_default); ?>" alt="<?php echo esc_attr($image_default_alt); ?>">
-                                            <img class="black_theme_img radius-12" decoding="async" src="<?php echo esc_url($image_dark); ?>" alt="<?php echo esc_attr($image_dark_alt); ?>">
-                                        <?php elseif ($media_type === 'youtube' && !empty($youtube_id_default)) : ?>
-                                            <div class="youtube-wrapper radius-12" style="position: relative; width: 100%; height: 60vh; overflow: hidden; cursor: pointer;">
-                                                <iframe class="radius-12 youtube-iframe white_theme_iframe" data-video-id="<?php echo esc_attr($youtube_id_default); ?>" src="" width="100%" height="60vh" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="width: 100%; height: 60vh; position: absolute; top: 0; left: 0; z-index: 1;"></iframe>
-                                                <iframe class="radius-12 youtube-iframe black_theme_iframe" data-video-id="<?php echo esc_attr($youtube_id_dark); ?>" src="" width="100%" height="60vh" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="width: 100%; height: 60vh; position: absolute; top: 0; left: 0; z-index: 1; display: none;"></iframe>
-                                                <?php if (!empty($youtube_thumb_default)) : ?>
-                                                    <img src="<?php echo esc_url($youtube_thumb_default); ?>" alt="Video thumbnail" class="youtube-thumb white_theme_thumb" style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; top: 0; left: 0; z-index: 2; cursor: pointer;" />
+                                        <?php if ($media_type === 'image' && !empty($image_default)): ?>
+                                            <img class="white_theme_img radius-12" decoding="async"
+                                                src="<?php echo esc_url($image_default); ?>"
+                                                alt="<?php echo esc_attr($image_default_alt); ?>">
+                                            <img class="black_theme_img radius-12" decoding="async"
+                                                src="<?php echo esc_url($image_dark); ?>" alt="<?php echo esc_attr($image_dark_alt); ?>">
+                                        <?php elseif ($media_type === 'youtube' && !empty($youtube_id_default)): ?>
+                                            <div class="youtube-wrapper radius-12"
+                                                style="position: relative; width: 100%; height: 60vh; overflow: hidden; cursor: pointer;">
+                                                <iframe class="radius-12 youtube-iframe white_theme_iframe"
+                                                    data-video-id="<?php echo esc_attr($youtube_id_default); ?>" src="" width="100%"
+                                                    height="60vh" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture"
+                                                    allowfullscreen
+                                                    style="width: 100%; height: 60vh; position: absolute; top: 0; left: 0; z-index: 1;"></iframe>
+                                                <iframe class="radius-12 youtube-iframe black_theme_iframe"
+                                                    data-video-id="<?php echo esc_attr($youtube_id_dark); ?>" src="" width="100%"
+                                                    height="60vh" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture"
+                                                    allowfullscreen
+                                                    style="width: 100%; height: 60vh; position: absolute; top: 0; left: 0; z-index: 1; display: none;"></iframe>
+                                                <?php if (!empty($youtube_thumb_default)): ?>
+                                                    <img src="<?php echo esc_url($youtube_thumb_default); ?>" alt="Video thumbnail"
+                                                        class="youtube-thumb white_theme_thumb"
+                                                        style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; top: 0; left: 0; z-index: 2; cursor: pointer;" />
                                                 <?php endif; ?>
-                                                <?php if (!empty($youtube_thumb_dark)) : ?>
-                                                    <img src="<?php echo esc_url($youtube_thumb_dark); ?>" alt="Video thumbnail" class="youtube-thumb black_theme_thumb" style="width: 100%; height: 100%; object-fit: cover; display: none; position: absolute; top: 0; left: 0; z-index: 2; cursor: pointer;" />
+                                                <?php if (!empty($youtube_thumb_dark)): ?>
+                                                    <img src="<?php echo esc_url($youtube_thumb_dark); ?>" alt="Video thumbnail"
+                                                        class="youtube-thumb black_theme_thumb"
+                                                        style="width: 100%; height: 100%; object-fit: cover; display: none; position: absolute; top: 0; left: 0; z-index: 2; cursor: pointer;" />
                                                 <?php endif; ?>
                                                 <button class="play-btn" aria-label="Play video">
                                                     <svg width="32" height="32" viewBox="0 0 24 24" fill="white" style="margin-left: 4px;">
@@ -807,49 +897,53 @@ h4.boxtitle {
                                         <?php endif; ?>
 
                                         <div class="details details-<?php echo esc_attr($item_num); ?>">
-                                            <?php if ($has_blue_headline) : ?>
+                                            <?php if ($has_blue_headline): ?>
                                                 <div class="headline blue"></div>
                                             <?php endif; ?>
                                             <div class="txtflex">
-                                                <?php if (!empty($item_sub_title)) : ?>
+                                                <?php if (!empty($item_sub_title)): ?>
                                                     <h4 class="subtitlebox"><?php echo esc_html($item_sub_title); ?></h4>
                                                 <?php endif; ?>
-                                                <?php if (!empty($item_title)) : ?>
+                                                <?php if (!empty($item_title)): ?>
                                                     <h2><?php echo esc_html($item_title); ?></h2>
                                                 <?php endif; ?>
-                                                <?php if (!empty($item_desc)) : ?>
+                                                <?php if (!empty($item_desc)): ?>
                                                     <p class="para-text"><?php echo wp_kses_post($item_desc); ?></p>
                                                 <?php endif; ?>
-                                                <?php if (!empty($cta_text) && !empty($cta_url)) : ?>
+                                                <?php if (!empty($cta_text) && !empty($cta_url)): ?>
                                                     <div class="text-left">
-                                                        <a class="theme-btn bg-trans border_btnlight<?php echo $cta_classes; ?>" href="<?php echo esc_url($cta_url); ?>" <?php echo $cta_target; ?> <?php echo $cta_nofollow; ?>><?php echo esc_html($cta_text); ?></a>
+                                                        <a class="theme-btn bg-trans border_btnlight<?php echo $cta_classes; ?>"
+                                                            href="<?php echo esc_url($cta_url); ?>" <?php echo $cta_target; ?>                     <?php echo $cta_nofollow; ?>><?php echo esc_html($cta_text); ?></a>
                                                     </div>
                                                 <?php endif; ?>
-                                                <?php if (!empty($bolt_title) || !empty($bolt_icon) || (!empty($bolt_cta_text) && !empty($bolt_cta_url))) : ?>
+                                                <?php if (!empty($bolt_title) || !empty($bolt_icon) || (!empty($bolt_cta_text) && !empty($bolt_cta_url))): ?>
                                                     <div class="bolt">
-                                                        <?php if (!empty($bolt_icon)) : ?>
-                                                            <img src="<?php echo esc_url($bolt_icon); ?>" alt="<?php echo esc_attr($bolt_title); ?>">
+                                                        <?php if (!empty($bolt_icon)): ?>
+                                                            <img src="<?php echo esc_url($bolt_icon); ?>"
+                                                                alt="<?php echo esc_attr($bolt_title); ?>">
                                                         <?php endif; ?>
-                                                        <?php if (!empty($bolt_title)) : ?>
+                                                        <?php if (!empty($bolt_title)): ?>
                                                             <p><?php echo esc_html($bolt_title); ?></p>
                                                         <?php endif; ?>
-                                                        <?php if (!empty($bolt_cta_text) && !empty($bolt_cta_url)) : ?>
+                                                        <?php if (!empty($bolt_cta_text) && !empty($bolt_cta_url)): ?>
                                                             <div class="btn-bolt">
-                                                                <a href="<?php echo esc_url($bolt_cta_url); ?>" class="<?php echo $bolt_cta_classes; ?>" <?php echo $bolt_cta_target; ?> <?php echo $bolt_cta_nofollow; ?>><?php echo esc_html($bolt_cta_text); ?></a>
+                                                                <a href="<?php echo esc_url($bolt_cta_url); ?>"
+                                                                    class="<?php echo $bolt_cta_classes; ?>" <?php echo $bolt_cta_target; ?>
+                                                                    <?php echo $bolt_cta_nofollow; ?>><?php echo esc_html($bolt_cta_text); ?></a>
                                                             </div>
                                                         <?php endif; ?>
                                                     </div>
                                                 <?php endif; ?>
-                                                
+
                                                 <?php
                                                 // First Nested Repeater
                                                 $nested_items_1 = !empty($item['nested_items_1']) ? $item['nested_items_1'] : [];
-                                                if (!empty($nested_items_1)) : ?>
-                                                    <?php if (!empty($feature_box_title)) : ?>
+                                                if (!empty($nested_items_1)): ?>
+                                                    <?php if (!empty($feature_box_title)): ?>
                                                         <h4 class="boxtitle"><?php echo esc_html($feature_box_title); ?></h4>
                                                     <?php endif; ?>
                                                     <div class="nested-repeater-1 featuregroup_repeator">
-                                                        <?php foreach ($nested_items_1 as $nested_item_1) : ?>
+                                                        <?php foreach ($nested_items_1 as $nested_item_1): ?>
                                                             <?php
                                                             $nested_image_default_1 = !empty($nested_item_1['nested_image_default']['url']) ? $nested_item_1['nested_image_default']['url'] : '';
                                                             $nested_image_dark_1 = !empty($nested_item_1['nested_image_dark']['url']) ? $nested_item_1['nested_image_dark']['url'] : $nested_image_default_1;
@@ -857,31 +951,36 @@ h4.boxtitle {
                                                             $nested_description_1 = !empty($nested_item_1['nested_description']) ? $nested_item_1['nested_description'] : '';
                                                             ?>
                                                             <div class="nested-item-1">
-                                                                <?php if (!empty($nested_image_default_1)) : ?>
+                                                                <?php if (!empty($nested_image_default_1)): ?>
                                                                     <div class="nested-image-wrapper">
-                                                                        <img class="white_theme_img" src="<?php echo esc_url($nested_image_default_1); ?>" alt="<?php echo esc_attr($nested_title_1); ?>">
-                                                                        <img class="black_theme_img" src="<?php echo esc_url($nested_image_dark_1); ?>" alt="<?php echo esc_attr($nested_title_1); ?>">
+                                                                        <img class="white_theme_img"
+                                                                            src="<?php echo esc_url($nested_image_default_1); ?>"
+                                                                            alt="<?php echo esc_attr($nested_title_1); ?>">
+                                                                        <img class="black_theme_img"
+                                                                            src="<?php echo esc_url($nested_image_dark_1); ?>"
+                                                                            alt="<?php echo esc_attr($nested_title_1); ?>">
                                                                     </div>
                                                                 <?php endif; ?>
-                                                                <?php if (!empty($nested_title_1)) : ?>
+                                                                <?php if (!empty($nested_title_1)): ?>
                                                                     <h3 class="nested-title-1"><?php echo esc_html($nested_title_1); ?></h3>
                                                                 <?php endif; ?>
-                                                                <?php if (!empty($nested_description_1)) : ?>
-                                                                    <div class="nested-description-1"><?php echo wp_kses_post($nested_description_1); ?></div>
+                                                                <?php if (!empty($nested_description_1)): ?>
+                                                                    <div class="nested-description-1">
+                                                                        <?php echo wp_kses_post($nested_description_1); ?></div>
                                                                 <?php endif; ?>
                                                             </div>
                                                         <?php endforeach; ?>
                                                     </div>
                                                 <?php endif; ?>
-                                                
+
                                                 <?php
                                                 // Second Nested Repeater
                                                 $nested_items_2 = !empty($item['nested_items_2']) ? $item['nested_items_2'] : [];
-                                                if (!empty($nested_items_2)) : ?>
-                                                    <?php if (!empty($list_box_title)) : ?>
+                                                if (!empty($nested_items_2)): ?>
+                                                    <?php if (!empty($list_box_title)): ?>
                                                         <h4 class="boxtitle"><?php echo esc_html($list_box_title); ?></h4>
                                                     <?php endif; ?>
-                                                    <div class="nested-repeater-2 listedgroup_repeator"> 
+                                                    <div class="nested-repeater-2 listedgroup_repeator">
                                                         <ul>
                                                             <?php foreach ($nested_items_2 as $nested_item_2): ?>
                                                                 <?php
@@ -927,7 +1026,7 @@ h4.boxtitle {
                             // Determine which iframe and thumb to use based on theme
                             function getActiveElements() {
                                 const isDark = document.body.classList.contains('js-dark') || document.documentElement.classList.contains('js-dark');
-                                const activeIframe = isDark 
+                                const activeIframe = isDark
                                     ? wrapper.querySelector('.black_theme_iframe') || wrapper.querySelector('.youtube-iframe')
                                     : wrapper.querySelector('.white_theme_iframe') || wrapper.querySelector('.youtube-iframe');
                                 const activeThumb = isDark
@@ -942,14 +1041,14 @@ h4.boxtitle {
                                     thumb.style.display = 'none';
                                 }
                                 // Hide all thumbs
-                                thumbs.forEach(function(t) { t.style.display = 'none'; });
+                                thumbs.forEach(function (t) { t.style.display = 'none'; });
                                 // Hide all iframes first
-                                iframes.forEach(function(i) { i.style.display = 'none'; });
-                                
+                                iframes.forEach(function (i) { i.style.display = 'none'; });
+
                                 if (playBtn) {
                                     playBtn.style.display = 'none';
                                 }
-                                
+
                                 if (iframe) {
                                     const videoId = iframe.getAttribute('data-video-id');
                                     iframe.style.display = 'block';
@@ -958,7 +1057,7 @@ h4.boxtitle {
                             }
 
                             // Add click listeners to all thumbs
-                            thumbs.forEach(function(thumb) {
+                            thumbs.forEach(function (thumb) {
                                 thumb.addEventListener('click', playVideo);
                             });
 
