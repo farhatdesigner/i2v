@@ -772,11 +772,10 @@ label.form-label.label_notic a {
     -webkit-transform: translateZ(0);
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    /* Prevent sub-pixel rendering issues */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* Prevent layout shifts */
     min-height: 0;
+    /* No transition: when sticky header fixes/unfixes, section scrolls normally without animation/jerk */
     transition: none;
   }
 

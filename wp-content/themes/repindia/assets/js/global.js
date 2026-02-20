@@ -260,16 +260,26 @@ $(document).ready(function () {
     var modalScrollPosition = 0;
     var brochureModalScrollPosition = 0;
 
-    // Single debounced run after any modal close: re-create cards + gallery ScrollTriggers so layout is correct (fixes popup-close distortion for both)
+    // Single debounced run after any modal close: re-create cards + gallery ScrollTriggers so layout is correct (fixes popup-close distortion for cards, gallery, hz-slider-section, hz-slider-topcaption)
     window.scheduleCardsRefreshAfterModalClose = function () {
         if (window._cardsModalRefreshTimer) clearTimeout(window._cardsModalRefreshTimer);
         window._cardsModalRefreshTimer = setTimeout(function () {
             window._cardsModalRefreshTimer = null;
+            // Ensure body is fully reset before re-creating pins (prevents distorted layout)
+            $("body").removeClass("modal-open");
+            $("body").css({ "overflow": "", "padding-right": "", "position": "", "top": "", "left": "", "right": "", "width": "" });
             if (typeof initCardsCustomBodyGSAP === "function") {
                 initCardsCustomBodyGSAP();
             }
             if (typeof initGalleryGSAP === "function") {
                 initGalleryGSAP();
+            }
+            // Re-create hz-slider-section and hz-slider-topcaption pins (same as cards/gallery: fixes popup-close UI distortion)
+            if (typeof window.reinitHzSliderSectionGSAP === "function") {
+                window.reinitHzSliderSectionGSAP();
+            }
+            if (typeof window.reinitHzSliderTopcaptionGSAP === "function") {
+                window.reinitHzSliderTopcaptionGSAP();
             }
             if (typeof ScrollTrigger !== "undefined") {
                 requestAnimationFrame(function () {
@@ -289,9 +299,35 @@ $(document).ready(function () {
                         gsap.set(galleryPhotos, { opacity: 0 });
                         gsap.set(galleryPhotos[photoIndex], { opacity: 1 });
                     }
+                    // Sync hz-slider-section and hz-slider-topcaption visible slide to current scroll
+                    if (typeof window.syncHzSliderSectionToScroll === "function") {
+                        window.syncHzSliderSectionToScroll();
+                    }
+                    if (typeof window.syncHzSliderTopcaptionToScroll === "function") {
+                        window.syncHzSliderTopcaptionToScroll();
+                    }
                 });
+                // Second refresh after short delay so pin spacers settle correctly after popup close
+                setTimeout(function () {
+                    ScrollTrigger.refresh();
+                    if (typeof window.syncHzSliderSectionToScroll === "function") {
+                        window.syncHzSliderSectionToScroll();
+                    }
+                    if (typeof window.syncHzSliderTopcaptionToScroll === "function") {
+                        window.syncHzSliderTopcaptionToScroll();
+                    }
+                }, 100);
+                setTimeout(function () {
+                    ScrollTrigger.refresh();
+                    if (typeof window.syncHzSliderSectionToScroll === "function") {
+                        window.syncHzSliderSectionToScroll();
+                    }
+                    if (typeof window.syncHzSliderTopcaptionToScroll === "function") {
+                        window.syncHzSliderTopcaptionToScroll();
+                    }
+                }, 500);
             }
-        }, 350);
+        }, 450);
     };
 
     // Helper function to get scrollbar width
@@ -586,6 +622,13 @@ $(document).ready(function () {
                 }
             });
         }
+        // Destroy hz-slider pin triggers before locking body so pin-spacers are removed and layout doesn't break on close
+        if (typeof window.destroyHzSliderSectionGSAP === "function") {
+            window.destroyHzSliderSectionGSAP();
+        }
+        if (typeof window.destroyHzSliderTopcaptionGSAP === "function") {
+            window.destroyHzSliderTopcaptionGSAP();
+        }
 
         // Then lock body scroll (order matters: unpin first, then fixed)
         var scrollbarWidth = getScrollbarWidth();
@@ -670,6 +713,10 @@ $(document).ready(function () {
                     $("body").css("scroll-behavior", originalBodyScrollBehavior);
                 }
 
+                // Force-clear any residual body styles and Bootstrap modal-open so layout is correct before refresh
+                $("body").removeClass("modal-open");
+                $("body").css({ "overflow": "", "padding-right": "", "position": "", "top": "", "left": "", "right": "", "width": "" });
+
                 // Schedule single enable+refresh so card triggers don't run with stale positions (fixes 2nd open distortion)
                 if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
                     window.scheduleCardsRefreshAfterModalClose();
@@ -692,9 +739,11 @@ $(document).ready(function () {
             0;
         brochureModalScrollPosition = Math.max(0, Math.round(brochureModalScrollPosition));
 
+        // Disable card + hz-slider pin ScrollTriggers before locking body (same as cards)
         if (typeof ScrollTrigger !== "undefined") {
             ScrollTrigger.getAll().forEach(function (st) {
-                if (st.vars && st.vars.id && String(st.vars.id).indexOf("card-") === 0) {
+                var id = st.vars && st.vars.id ? String(st.vars.id) : "";
+                if (id.indexOf("card-") === 0 || id === "hz-slider-pin" || id === "hz-slider-topcaption-pin") {
                     st.disable(false, false);
                 }
             });
@@ -768,6 +817,8 @@ $(document).ready(function () {
                 if (originalBodyScrollBehavior) {
                     $("body").css("scroll-behavior", originalBodyScrollBehavior);
                 }
+                $("body").removeClass("modal-open");
+                $("body").css({ "overflow": "", "padding-right": "", "position": "", "top": "", "left": "", "right": "", "width": "" });
                 if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
                     window.scheduleCardsRefreshAfterModalClose();
                 }
@@ -1437,43 +1488,37 @@ function initStickyMenu(config) {
         // Create spacer if it doesn't exist
         createMenuSpacer();
         
-        // Add or remove fixed-header class based on scroll position
+        // Add or remove fixed-header class based on scroll position (same frame = no jerk)
         if (shouldBeFixed && !currentFixedHeaderState) {
             // Menu is about to become fixed - get current height BEFORE it becomes fixed
             var currentHeight = $menu.outerHeight(true); // Include margins
             
-            // Set spacer height FIRST to prevent layout shift
+            // Set spacer height and show it in same frame, then add class (smooth normal scroll)
             menuSpacer.css({
                 'display': 'block',
                 'height': currentHeight + 'px'
             });
-            
-            // Now add fixed-header class
             $menu.addClass('fixed-header');
             
-            // Recalculate positions after menu becomes fixed (small delay for browser to apply styles)
-            setTimeout(function() {
+            requestAnimationFrame(function() {
                 updatePositions();
-            }, 50);
+            });
             
         } else if (!shouldBeFixed && currentFixedHeaderState) {
-            // Menu is about to become unfixed - remove fixed-header first
+            // Menu is about to become unfixed - remove class and hide spacer in same frame to avoid jerk
             $menu.removeClass('fixed-header');
+            menuSpacer.css({
+                'display': 'none',
+                'height': '0px'
+            });
             
-            // Hide spacer after a small delay to allow menu to return to normal flow
-            setTimeout(function() {
-                menuSpacer.css({
-                    'display': 'none',
-                    'height': '0px'
-                });
-                
-                // Recalculate initial position after menu becomes unfixed
+            requestAnimationFrame(function() {
                 var elementOffset = $menu.offset();
                 if (elementOffset) {
                     stickyElementInitialTop = elementOffset.top;
                 }
                 updatePositions();
-            }, 50);
+            });
         }
         
         // Refresh ScrollTrigger when fixed-header state changes (affects layout)
@@ -1876,10 +1921,11 @@ jQuery(document).ready(function() {
             instance.pause();
         });
 
-        // Disable card Stacking ScrollTriggers while any modal is open (prevents distortion on 2nd open)
+        // Disable card + hz-slider pin ScrollTriggers while any modal is open (same as cards; re-create on close)
         if (typeof ScrollTrigger !== "undefined") {
             ScrollTrigger.getAll().forEach(function(st) {
-                if (st.vars && st.vars.id && String(st.vars.id).indexOf("card-") === 0) {
+                var id = st.vars && st.vars.id ? String(st.vars.id) : "";
+                if (id.indexOf("card-") === 0 || id === "hz-slider-pin" || id === "hz-slider-topcaption-pin") {
                     st.disable(false, false);
                 }
             });
@@ -1928,7 +1974,9 @@ jQuery(document).ready(function() {
             }
         }, 100);
 
-        // Schedule single enable+refresh (shared with formpopup_modal so only one runs per close)
+        // Force-clear body and modal-open so layout resets before refresh (shared with formpopup/brochure close)
+        jQuery("body").removeClass("modal-open");
+        jQuery("body").css({ "overflow": "", "padding-right": "", "position": "", "top": "", "left": "", "right": "", "width": "" });
         if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
             window.scheduleCardsRefreshAfterModalClose();
         }
@@ -2398,6 +2446,28 @@ if (document.querySelector(".hz-slider-section .swiper")) {
   // Initialize on page load
   initHzSliderGSAP();
   
+  // Destroy-only: call when modal opens so pin-spacers are removed before body is fixed (prevents layout distortion)
+  window.destroyHzSliderSectionGSAP = destroyHzSliderGSAP;
+  // Re-init GSAP pin after popup close (same as cards/gallery: destroy + create so layout is correct)
+  window.reinitHzSliderSectionGSAP = function () {
+    if (window.innerWidth >= 1024) {
+      destroyHzSliderGSAP();
+      initHzSliderGSAP();
+    }
+  };
+  // Sync hz-slider-section Swiper to current scroll position (call after reinit + refresh)
+  window.syncHzSliderSectionToScroll = function () {
+    if (typeof ScrollTrigger === "undefined" || window.innerWidth < 1024) return;
+    var st = ScrollTrigger.getById("hz-slider-pin");
+    if (!st || !hzSwiper.slides.length) return;
+    var totalSlides = hzSwiper.slides.length;
+    var snap = gsap.utils.snap(1 / totalSlides);
+    var idx = Math.round(snap(st.progress) * totalSlides);
+    idx = Math.min(idx, totalSlides - 1);
+    currentSlide = idx;
+    hzSwiper.slideTo(idx, 0);
+  };
+
   // Handle resize - enable/disable GSAP pin based on screen width
   let hzResizeTimer;
   window.addEventListener("resize", function() {
@@ -2421,6 +2491,31 @@ if (document.querySelector(".hz-slider-section .swiper")) {
       }
     }, 250);
   });
+
+  // Refresh after load so midway-reload shows correct hz-slider-section state (same as gallery / cards)
+  if (!window._hzSliderSectionLoadBound) {
+    window._hzSliderSectionLoadBound = true;
+    function refreshHzSliderSectionScrollTrigger() {
+      if (typeof ScrollTrigger === "undefined") return;
+      requestAnimationFrame(function () {
+        ScrollTrigger.refresh();
+      });
+      setTimeout(function () {
+        ScrollTrigger.refresh();
+      }, 100);
+      setTimeout(function () {
+        ScrollTrigger.refresh();
+      }, 500);
+    }
+    if (document.readyState === "complete") {
+      refreshHzSliderSectionScrollTrigger();
+    } else {
+      window.addEventListener("load", function hzSliderSectionOnLoad() {
+        window.removeEventListener("load", hzSliderSectionOnLoad);
+        refreshHzSliderSectionScrollTrigger();
+      });
+    }
+  }
 }
 
 // Horizontal Slider Topcaption (unique instance - no conflict with hz-slider-section)
@@ -2565,6 +2660,28 @@ if (document.querySelector(".hz-slider-topcaption .swiper")) {
   // Initialize on page load
   initHzTopcaptionGSAP();
   
+  // Destroy-only: call when modal opens so pin-spacers are removed before body is fixed (prevents layout distortion)
+  window.destroyHzSliderTopcaptionGSAP = destroyHzTopcaptionGSAP;
+  // Re-init GSAP pin after popup close (same as cards/gallery: destroy + create so layout is correct)
+  window.reinitHzSliderTopcaptionGSAP = function () {
+    if (window.innerWidth >= 1024) {
+      destroyHzTopcaptionGSAP();
+      initHzTopcaptionGSAP();
+    }
+  };
+  // Sync hz-slider-topcaption Swiper to current scroll position (call after reinit + refresh)
+  window.syncHzSliderTopcaptionToScroll = function () {
+    if (typeof ScrollTrigger === "undefined" || window.innerWidth < 1024) return;
+    var st = ScrollTrigger.getById("hz-slider-topcaption-pin");
+    if (!st || !hzTopcaptionSwiper.slides.length) return;
+    var totalSlides = hzTopcaptionSwiper.slides.length;
+    var snap = gsap.utils.snap(1 / totalSlides);
+    var idx = Math.round(snap(st.progress) * totalSlides);
+    idx = Math.min(idx, totalSlides - 1);
+    currentTopcaptionSlide = idx;
+    hzTopcaptionSwiper.slideTo(idx, 0);
+  };
+
   // Handle resize - enable/disable GSAP pin based on screen width
   let hzTopcaptionResizeTimer;
   window.addEventListener("resize", function() {
@@ -2588,6 +2705,31 @@ if (document.querySelector(".hz-slider-topcaption .swiper")) {
       }
     }, 250);
   });
+
+  // Refresh after load so midway-reload shows correct hz-slider-topcaption state (same as gallery / cards)
+  if (!window._hzSliderTopcaptionLoadBound) {
+    window._hzSliderTopcaptionLoadBound = true;
+    function refreshHzSliderTopcaptionScrollTrigger() {
+      if (typeof ScrollTrigger === "undefined") return;
+      requestAnimationFrame(function () {
+        ScrollTrigger.refresh();
+      });
+      setTimeout(function () {
+        ScrollTrigger.refresh();
+      }, 100);
+      setTimeout(function () {
+        ScrollTrigger.refresh();
+      }, 500);
+    }
+    if (document.readyState === "complete") {
+      refreshHzSliderTopcaptionScrollTrigger();
+    } else {
+      window.addEventListener("load", function hzSliderTopcaptionOnLoad() {
+        window.removeEventListener("load", hzSliderTopcaptionOnLoad);
+        refreshHzSliderTopcaptionScrollTrigger();
+      });
+    }
+  }
 }
 
 // Global ScrollTrigger refresh after all triggers are initialized

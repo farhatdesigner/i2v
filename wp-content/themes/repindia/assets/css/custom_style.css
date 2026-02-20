@@ -361,7 +361,7 @@ ul#header-main-menu li a {
   font-size: 18px;
   font-weight: 600;
   position: relative;
-  padding: 8px 16px 0 36px;
+  padding: 8px 16px 8px 16px;
 }
 
 .btn-demo {
@@ -370,13 +370,13 @@ ul#header-main-menu li a {
   font-weight: 600;
   position: relative;
   padding: 8px 16px;
-  width: 30%;
+  margin-right: 14px;
 }
 .search-popup-footer ul#header-main-menu li > a:before {
   background: #8793af;
   position: absolute;
   content: "";
-  left: 0;
+  left: -14px;
   width: 4px;
   height: 4px;
   border-radius: 100%;
@@ -385,6 +385,7 @@ ul#header-main-menu li a {
 .search-popup-footer #header-main-menu li:last-child a {
   color: #5f6f94;
 }
+.search-popup-footer #header-main-menu li{margin: 0 14px;}
 header #header-main-menu li {
   position: relative;
 }
