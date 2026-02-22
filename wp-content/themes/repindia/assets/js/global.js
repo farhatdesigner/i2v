@@ -49,6 +49,9 @@ jQuery(document).ready(function ($) {
         return;
     }
 
+    var slideCount = $('.hero-swiper-container .swiper-slide').length;
+    var isSingleSlide = slideCount <= 1;
+
     var menu = [];
     $('.hero-swiper-container .swiper-slide').each(function (index) {
         menu.push($(this).find('.hero-slide-inner').attr("data-text"));
@@ -152,38 +155,38 @@ jQuery(document).ready(function ($) {
     }
 
     var swiperOptions = {
-        loop: true,
+        loop: !isSingleSlide,
         speed: 1000,
         parallax: true,
-        autoplay: {
+        allowTouchMove: !isSingleSlide,
+        autoplay: isSingleSlide ? false : {
             delay: 6500,
             disableOnInteraction: false,
         },
         watchSlidesProgress: true,
-        pagination: {
+        pagination: isSingleSlide ? false : {
             el: '.hero-swiper-container .swiper-pagination',
             clickable: true,
         },
-
-        navigation: {
+        navigation: isSingleSlide ? false : {
             nextEl: '.hero-swiper-container .swiper-button-next',
             prevEl: '.hero-swiper-container .swiper-button-prev',
         },
-
-
         on: {
             progress: function () {
+                if (isSingleSlide) return;
                 var swiper = this;
                 for (var i = 0; i < swiper.slides.length; i++) {
                     var slideProgress = swiper.slides[i].progress;
                     var innerOffset = swiper.width * interleaveOffset;
                     var innerTranslate = slideProgress * innerOffset;
-                    swiper.slides[i].querySelector(".hero-slide-inner").style.transform =
-                        "translate3d(" + innerTranslate + "px, 0, 0)";
+                    var inner = swiper.slides[i].querySelector(".hero-slide-inner");
+                    if (inner) inner.style.transform = "translate3d(" + innerTranslate + "px, 0, 0)";
                 }
             },
 
             touchStart: function () {
+                if (isSingleSlide) return;
                 var swiper = this;
                 for (var i = 0; i < swiper.slides.length; i++) {
                     swiper.slides[i].style.transition = "";
@@ -191,27 +194,25 @@ jQuery(document).ready(function ($) {
             },
 
             setTransition: function (speed) {
+                if (isSingleSlide) return;
                 var swiper = this;
                 for (var i = 0; i < swiper.slides.length; i++) {
                     swiper.slides[i].style.transition = speed + "ms";
-                    swiper.slides[i].querySelector(".hero-slide-inner").style.transition =
-                        speed + "ms";
+                    var inner = swiper.slides[i].querySelector(".hero-slide-inner");
+                    if (inner) inner.style.transition = speed + "ms";
                 }
             },
 
             autoplayStart: function () {
-                // Start progress animation when autoplay starts
-                startProgressAnimation();
+                if (!isSingleSlide) startProgressAnimation();
             },
 
             slideChange: function () {
-                // Restart progress animation on each slide change
-                startProgressAnimation();
+                if (!isSingleSlide) startProgressAnimation();
             },
 
             init: function () {
-                // Start progress animation on initial load
-                startProgressAnimation();
+                if (!isSingleSlide) startProgressAnimation();
             }
         }
     };

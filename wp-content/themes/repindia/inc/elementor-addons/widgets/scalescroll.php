@@ -545,24 +545,24 @@ class Scalescroll extends Widget_Base
             }
 
             .featuregroup_repeator .nested-item-1 {
-                padding: 12px;
-                border-radius: 8px;
-                background: #fff;
-                max-width: max-content;
-                border: 1px solid #E6EBF2;
-                width: calc(50% - 2px);
-                display: flex;
-                flex-direction: column;
-                align-items: stretch;
+                padding: 4px 16px;
+    border-radius: 100px;
+    background: #fff;
+    max-width: max-content;
+    border: 1px solid #E6EBF2;
+    /* width: calc(50% - 2px); */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
             }
 
             .featuregroup_repeator h3.nested-title-1 {
                 color: #06283D;
     font-size: 16px;
     font-style: normal;
-    font-weight: 600 !important;
+    font-weight: 500 !important;
     line-height: 24px;
-    margin-bottom: 4px;
+    margin-bottom: 0;
     text-align: left;
             }
 
@@ -602,6 +602,13 @@ class Scalescroll extends Widget_Base
                 display: inline-block;
                 width: auto;
             }
+            
+.js-dark .listedgroup_repeator li span svg path {
+    fill: #669477;
+}
+.listedgroup_repeator li span svg path {
+    fill: #418259;
+}
 
             h4.boxtitle {
                 color: #5C5C5C;

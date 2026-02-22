@@ -304,6 +304,7 @@ class home_banner extends Widget_Base
 		
 		// Get banner slides from repeater
 		$banner_slides = !empty($settings['banner_slides']) ? $settings['banner_slides'] : [];
+		$is_single_slide = count($banner_slides) <= 1;
 		
 		// Helper function to generate YouTube embed URL from video ID
 		$get_youtube_embed_url = function($video_id) {
@@ -320,8 +321,8 @@ class home_banner extends Widget_Base
 		?>
 		
 		<div class="sectionshomebanner">
-		<section class="hero-slider hero-style">
-      <div class="swiper-container hero-swiper-container">
+		<section class="hero-slider hero-style<?php echo $is_single_slide ? ' hero-single-slide' : ''; ?>">
+      <div class="swiper-container hero-swiper-container" data-single-slide="<?php echo $is_single_slide ? '1' : '0'; ?>">
          <div class="swiper-wrapper">
             <?php if (!empty($banner_slides)) : ?>
                <?php foreach ($banner_slides as $slide) : ?>
@@ -479,7 +480,8 @@ class home_banner extends Widget_Base
          </div>
          <!-- end swiper-wrapper -->
 
-         <!-- swipper controls -->
+         <?php if (!$is_single_slide) : ?>
+         <!-- swiper controls (hidden when single slide) -->
          <div class="swiper-pagination"></div>
          <div class="text-container position-relative">
             <div class="swiper-button-container position-absolute">
@@ -491,6 +493,7 @@ class home_banner extends Widget_Base
                </div>
             </div>
          </div>
+         <?php endif; ?>
       </div>
    </section>
    <!-- end of hero slider -->

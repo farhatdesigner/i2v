@@ -445,7 +445,7 @@ html.lenis body {
   border-radius: 12px;
   border: var(--SM, 8px) solid var(--Golbal-backgrounds-global-bg-2, #262a30);
   background: var(--Golbal-backgrounds-global-bg-2, #262a30);
-  padding: var(--4XL, 32px);
+  padding: 32px;
   overflow: hidden;
 }
 
@@ -1418,6 +1418,10 @@ div.pin-spacer > .hz-slider-topcaption {
     flex-direction: column;
     min-height: 100%;
   }
+  
+.card-wrapper_single {
+  padding: 16px 18px;
+}
 }
 
 @media (min-width: 576px) {
