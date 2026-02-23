@@ -68,6 +68,7 @@ if ($filter_type === 'all') {
 	wp_reset_postdata();
 }
 ?>
+<?php if ($search_query_obj->have_posts()) : ?>
 <div class="search_result_header" style="background-image: url('<?php echo esc_url( home_url( '/' ) ); ?>wp-content/uploads/2024/03/home_banner.webp');" >
 	<div class="custom-container">
 		<div class="inner_page_banner_content">
@@ -76,10 +77,12 @@ if ($filter_type === 'all') {
 		</div>
 	</div>
 </div>
+<?php endif; ?>
 <div class="global_search search_layout">
 	<div class="custom-container">
 		<div class="search-results-wrapper">
 			<!-- Search Tabs -->
+			<?php if ($search_query_obj->have_posts()) : ?>
 			<div class="search-tabs-container">
 				<ul class="search-tabs-list">
 					<li>
@@ -112,6 +115,7 @@ if ($filter_type === 'all') {
 					</li>
 				</ul>
 			</div>
+			<?php endif; ?>
 
 			<!-- Results Count -->
 			<?php if ($search_query_obj->have_posts() || $all_results_count > 0) : ?>
@@ -155,11 +159,11 @@ if ($filter_type === 'all') {
 								$pagination_args = array(
 									'total' => $search_query_obj->max_num_pages,
 									'current' => $paged,
-									'prev_text' => '<i class="fa fa-angle-left"></i>',
-									'next_text' => '<i class="fa fa-angle-right"></i>',
+									'prev_text' => '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M14.5172 17.7169C15.0726 17.1615 15.0726 16.261 14.5172 15.7055L9.83394 11.0223L14.5172 6.33909C15.0726 5.78368 15.0726 4.88317 14.5172 4.32776C13.9618 3.77235 13.0613 3.77235 12.5058 4.32776L6.81695 10.0166C6.26154 10.5721 6.26154 11.4726 6.81695 12.028L12.5058 17.7169C13.0613 18.2723 13.9618 18.2723 14.5172 17.7169Z" fill="#5F6F94"/></svg>',
+									'next_text' => '<svg xmlns="http://www.w3.org/2000/svg" width="9" height="15" viewBox="0 0 9 15" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.41656 0.416507C-0.138853 0.971919 -0.138853 1.87242 0.41656 2.42783L5.09978 7.11106L0.416559 11.7943C-0.138853 12.3497 -0.138853 13.2502 0.416559 13.8056C0.971971 14.361 1.87247 14.361 2.42788 13.8056L8.11677 8.11672C8.67219 7.56131 8.67219 6.66081 8.11677 6.1054L2.42789 0.416507C1.87247 -0.138905 0.971972 -0.138905 0.41656 0.416507Z" fill="#5F6F94"/></svg>',
 									'type' => 'plain',
 									'base' => $base_url . '%_%',
-									'format' => '?paged=%#%',
+									'format' => '&paged=%#%',
 								);
 								
 								echo paginate_links($pagination_args);

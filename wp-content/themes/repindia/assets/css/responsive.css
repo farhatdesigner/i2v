@@ -702,11 +702,10 @@ border-radius: 12px;
   margin-top: 16px;
 }
 .career-apply-form span.wpcf7-form-control.wpcf7-radio .wpcf7-list-item label {
-  border-radius: 12px;
-  border: 1px solid #e5e9ec;
-  height: 48px;
-  background: #fff;
-  padding: 5px 12px;
+  border-radius: 24px;
+  padding: 8px 16px;
+  height: auto;
+  min-height: 36px;
 }
 .career-apply-form label.form-label.notice-text a {
   text-decoration: underline;
