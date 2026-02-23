@@ -135,7 +135,7 @@ class Cardslisting extends Widget_Base
                                                         <?php foreach ($product_tags as $tag) : ?>
                                                             <span class="badge-custom"><?php echo esc_html($tag->name); ?></span>
                                                         <?php endforeach; ?>
-                                                        <span class="badge-cusotm bg-trans_txt">and more</span>
+                                                        <span class="badge-cusotm bg-trans_txt"><?php echo esc_html( wpml_t( 'and more', 'Repindia-Widgets', 'Card listing read more' ) ); ?></span>
                                                     </div>
                                                 <?php endif; ?>
                                             </div>

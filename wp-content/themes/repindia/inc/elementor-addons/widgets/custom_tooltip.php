@@ -88,6 +88,28 @@ class Custom_Tooltip extends Widget_Base
         );
 
         $this->add_control(
+            'pre_content',
+            [
+                'label' => esc_html__('Pre-content', 'repindia'),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'default' => '',
+                'label_block' => true,
+                'description' => esc_html__('Content displayed before Title Text (inside same trigger)', 'repindia'),
+            ]
+        );
+
+        $this->add_control(
+            'after_content',
+            [
+                'label' => esc_html__('After-content', 'repindia'),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'default' => '',
+                'label_block' => true,
+                'description' => esc_html__('Content displayed after Title Text (inside same trigger)', 'repindia'),
+            ]
+        );
+
+        $this->add_control(
             'icon',
             [
                 'label' => esc_html__('Icon', 'repindia'),
@@ -765,6 +787,8 @@ class Custom_Tooltip extends Widget_Base
         $trigger_type = !empty($settings['trigger_type']) ? esc_attr($settings['trigger_type']) : 'hover';
         $position = !empty($settings['position']) ? esc_attr($settings['position']) : 'top';
         $title_text = !empty($settings['title_text']) ? $settings['title_text'] : '';
+        $pre_content = !empty($settings['pre_content']) ? $settings['pre_content'] : '';
+        $after_content = !empty($settings['after_content']) ? $settings['after_content'] : '';
         $show_icon = !empty($settings['show_icon']) && $settings['show_icon'] === 'yes';
         $icon_position = !empty($settings['icon_position']) ? esc_attr($settings['icon_position']) : 'left';
         $title_align = !empty($settings['title_align']) ? esc_attr($settings['title_align']) : 'left';
@@ -788,6 +812,7 @@ class Custom_Tooltip extends Widget_Base
             echo '.ctw-trigger { cursor: pointer; display: inline-flex; align-items: center; }';
             echo '.ctw-title { display: inline-flex; align-items: center;}';
             echo '.ctw-title .border-b {border-bottom: 2px solid #D7DBE4; }';
+            echo '.default_darktool .ctw-title .border-b { border-bottom: 2px solid #D7DBE4; }';
             echo '.ctw-icon { display: inline-flex; align-items: center; justify-content: center; }';
             echo '.ctw-text { display: inline-block; }';
             echo '.ctw-tooltip { position: absolute; opacity: 0; visibility: hidden; transition: opacity 0.25s; z-index: 9999; pointer-events: none;min-width: 250px;width: 100%; }';
@@ -795,7 +820,7 @@ class Custom_Tooltip extends Widget_Base
             echo '.ctw-tooltip-inner { position: relative; word-wrap: break-word;white-space: normal; }';
             echo '.ctw-tooltip-top { bottom: 100%; left: 50%; transform: translateX(-50%); margin-bottom: 8px; }';
             echo '.ctw-tooltip-top .ctw-tooltip-inner::after { content: ""; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--ctw-arrow-color, #333333); }';
-            echo '.ctw-tooltip-bottom { top: 100%; left: 50%; transform: translateX(-50%); margin-top: 0px; }';
+            echo '.ctw-tooltip-bottom { top: 26px; left: 50%; transform: translateX(-50%); margin-top: 0px; }';
             // echo '.ctw-tooltip-bottom .ctw-tooltip-inner::after { content: ""; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-bottom-color: var(--ctw-arrow-color, #333333); }';
             echo '.ctw-tooltip-left { right: 100%; top: 50%; transform: translateY(-50%); margin-right: 8px; }';
             echo '.ctw-tooltip-left .ctw-tooltip-inner::after { content: ""; position: absolute; left: 100%; top: 50%; transform: translateY(-50%); border: 6px solid transparent; border-left-color: var(--ctw-arrow-color, #333333); }';
@@ -834,6 +859,23 @@ class Custom_Tooltip extends Widget_Base
             echo 'function initCustomTooltips() {';
             echo 'if (typeof jQuery === "undefined") return;';
             echo 'var $ = jQuery;';
+            echo 'function positionTooltipByTrigger($wrapper) {';
+            echo 'var $tooltip = $wrapper.find(".ctw-tooltip");';
+            echo 'var $textTrigger = $wrapper.find(".ctw-text .ctw-trigger");';
+            echo 'if (!$textTrigger.length) $textTrigger = $wrapper.find(".ctw-trigger").first();';
+            echo 'var wrapper = $wrapper[0], tooltip = $tooltip[0], trigger = $textTrigger[0];';
+            echo 'if (!wrapper || !tooltip || !trigger) return;';
+            echo 'var wr = wrapper.getBoundingClientRect(), tr = trigger.getBoundingClientRect();';
+            echo 'var pos = $wrapper.data("position") || "bottom";';
+            echo 'var centerX = tr.left - wr.left + (tr.width / 2);';
+            echo 'var centerY = tr.top - wr.top + (tr.height / 2);';
+            echo 'var css = { right: "auto", bottom: "auto" };';
+            echo 'if (pos === "bottom") { css.left = centerX + "px"; css.top = (tr.bottom - wr.top + 8) + "px"; css.transform = "translateX(-50%)"; css.marginTop = "0"; }';
+            echo 'else if (pos === "top") { css.left = centerX + "px"; css.bottom = (wr.bottom - tr.top + 8) + "px"; css.top = "auto"; css.transform = "translateX(-50%)"; css.marginBottom = "0"; }';
+            echo 'else if (pos === "left") { css.right = (wr.right - tr.left + 8) + "px"; css.top = centerY + "px"; css.left = "auto"; css.transform = "translateY(-50%)"; }';
+            echo 'else if (pos === "right") { css.left = (tr.right - wr.left + 8) + "px"; css.top = centerY + "px"; css.transform = "translateY(-50%)"; }';
+            echo '$tooltip.css(css);';
+            echo '}';
             echo '$(".ctw-wrapper").each(function() {';
             echo 'var $wrapper = $(this);';
             echo 'var triggerType = $wrapper.data("trigger") || "hover";';
@@ -842,12 +884,12 @@ class Custom_Tooltip extends Widget_Base
             echo '$trigger.off("mouseenter mouseleave click");';
             echo '$(document).off("click.ctw-" + $wrapper.index());';
             echo 'if (triggerType === "hover") {';
-            echo '$trigger.on("mouseenter", function() { $tooltip.addClass("show"); });';
+            echo '$trigger.on("mouseenter", function() { positionTooltipByTrigger($wrapper); $tooltip.addClass("show"); });';
             echo '$trigger.on("mouseleave", function() { $tooltip.removeClass("show"); });';
             echo '$tooltip.on("mouseenter", function() { $(this).addClass("show"); });';
             echo '$tooltip.on("mouseleave", function() { $(this).removeClass("show"); });';
             echo '} else if (triggerType === "click") {';
-            echo '$trigger.on("click", function(e) { e.stopPropagation(); $tooltip.toggleClass("show"); });';
+            echo '$trigger.on("click", function(e) { e.stopPropagation(); positionTooltipByTrigger($wrapper); $tooltip.toggleClass("show"); });';
             echo '$(document).on("click.ctw-outside-" + $wrapper.index(), function(e) {';
             echo 'if ($tooltip.hasClass("show")) {';
             echo 'if (!$wrapper.is(e.target) && !$wrapper.has(e.target).length) {';
@@ -999,14 +1041,13 @@ class Custom_Tooltip extends Widget_Base
             .js-dark #center_mobileviiew .ctw-title p .border-b {
                 color: #ffffff !important;
             }
-
             .js-dark .tooltiptitlebox .ctw-title .ctw-text p,
-            .js-dark .tooltiptitlebox .ctw-title .ctw-text p .border-b {color: #ffff !important;}
-
-              
-.defaultdark_paratool span.ctw-title.ctw-icon-left .ctw-text, 
-.defaultdark_paratool span.ctw-title.ctw-icon-left .ctw-text p {color: #AEB6C9 !important;font-size: 16px;}
-
+            .js-dark .tooltiptitlebox .ctw-title .ctw-text p .border-b {color: #ffff !important;}   
+            .defaultdark_paratool span.ctw-title.ctw-icon-left .ctw-text, 
+            .defaultdark_paratool span.ctw-title.ctw-icon-left .ctw-text p {color: #AEB6C9 !important;font-size: 16px;}
+            @media(max-width: 1400px) and (min-width: 1025px){
+                .ctw-tooltip-bottom { top: 100%; }
+            }
             @media (max-width: 768px) {
                 .ctw-tooltip-bottom {
                     top: 0% !important;
@@ -1017,7 +1058,6 @@ class Custom_Tooltip extends Widget_Base
                     z-index: 2 !important;
                     position: absolute !important;
                 }
-
                 .toptooltitle .ctw-tooltip-bottom {
                     left: 50% !important;
                     right: auto !important;
@@ -1026,15 +1066,17 @@ class Custom_Tooltip extends Widget_Base
                     max-width: 360px !important;
                     position: fixed !important;
                 }
-
                 #center_mobileviiew .ctw-wrapper.ctw-has-learn-more {
                     justify-content: center;
                 }
-
                 #center_mobileviiew .card_title_tooltip .ctw-title .ctw-text p {
                     font-size: 20px;
                 }
 
+            }
+            @media(max-width: 600px){
+                .ctw-title{ text-align: center!important; }
+                .ctw-wrapper{ justify-content: center!important; }
             }
 
             @media (max-width: 380px) {
@@ -1050,11 +1092,11 @@ class Custom_Tooltip extends Widget_Base
         <div class="ctw-wrapper <?php echo $show_learn_more ? 'ctw-has-learn-more' : ''; ?>"
             data-trigger="<?php echo $trigger_type; ?>" data-position="<?php echo $position; ?>"
             style="--ctw-arrow-color: <?php echo $show_learn_more ? $tooltip_bg_color : '#ffffff'; ?>;">
-            <div class="ctw-trigger">
+            <div class="">
                 <span class="ctw-title ctw-icon-<?php echo $icon_position; ?>" style="text-align: <?php echo $title_align; ?>;">
                     <?php if ($show_icon && $icon_position === 'left'): ?>
                         <?php if (!empty($settings['icon'])): ?>
-                            <span class="ctw-icon ctw-icon-light">
+                            <span class="ctw-trigger ctw-icon ctw-icon-light">
                                 <?php
                                 \Elementor\Icons_Manager::render_icon($settings['icon'], [
                                     'aria-hidden' => 'true',
@@ -1063,7 +1105,7 @@ class Custom_Tooltip extends Widget_Base
                             </span>
                         <?php endif; ?>
                         <?php if (!empty($icon_dark)): ?>
-                            <span class="ctw-icon ctw-icon-dark">
+                            <span class="ctw-trigger ctw-icon ctw-icon-dark">
                                 <?php
                                 \Elementor\Icons_Manager::render_icon($icon_dark, [
                                     'aria-hidden' => 'true',
@@ -1072,10 +1114,10 @@ class Custom_Tooltip extends Widget_Base
                             </span>
                         <?php endif; ?>
                     <?php endif; ?>
-                    <span class="ctw-text"><?php echo $this->sanitize_wysiwyg_content($title_text); ?></span>
+                    <span class="ctw-text"><?php echo $pre_content; ?> <span class="ctw-trigger"><?php echo $this->sanitize_wysiwyg_content($title_text); ?></span> <?php echo $after_content; ?></span>
                     <?php if ($show_icon && $icon_position === 'right'): ?>
                         <?php if (!empty($settings['icon'])): ?>
-                            <span class="ctw-icon ctw-icon-light">
+                            <span class="ctw-trigger ctw-icon ctw-icon-light">
                                 <?php
                                 \Elementor\Icons_Manager::render_icon($settings['icon'], [
                                     'aria-hidden' => 'true',
@@ -1084,7 +1126,7 @@ class Custom_Tooltip extends Widget_Base
                             </span>
                         <?php endif; ?>
                         <?php if (!empty($icon_dark)): ?>
-                            <span class="ctw-icon ctw-icon-dark">
+                            <span class="ctw-trigger ctw-icon ctw-icon-dark">
                                 <?php
                                 \Elementor\Icons_Manager::render_icon($icon_dark, [
                                     'aria-hidden' => 'true',

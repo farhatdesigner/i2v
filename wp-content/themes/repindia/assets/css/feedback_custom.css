@@ -445,7 +445,8 @@ html.lenis body {
   border-radius: 12px;
   border: var(--SM, 8px) solid var(--Golbal-backgrounds-global-bg-2, #262a30);
   background: var(--Golbal-backgrounds-global-bg-2, #262a30);
-  padding: var(--4XL, 32px);
+  padding: 32px;
+  overflow: hidden;
 }
 
 .flex-cards {
@@ -462,6 +463,7 @@ html.lenis body {
   top: 38px;
   right: -40px;
   border-radius: 4px 0 0 0 !important;
+  box-shadow: 18px 18px 48px 0 rgba(0, 0, 0, 0.30), -18px -18px 48px 0 rgba(0, 0, 0, 0.30) !important;
 }
 
 .card-contents h3 {
@@ -543,7 +545,9 @@ html.lenis body {
 #breadcrumbs {
   margin-bottom: 48px;
 }
-
+.careers-template-default #breadcrumbs {
+  margin-top: 130px;
+}
 #breadcrumbs > span > span > a {
   border-radius: var(--3XL, 28px);
   border: 1px solid var(--Golbal-others-border, #e6ebf2);
@@ -630,7 +634,7 @@ p#breadcrumbs svg {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  max-height: 455px;
+  max-height:600px;
 }
 
 .proven_banner {
@@ -871,7 +875,7 @@ div.pin-spacer > .hz-slider-section {
   flex-shrink: 0;
 }
 .slider-image_content {
-  padding: 48px;
+  padding: 30px;
   height: 100%;
   display: flex;
   align-items: center;
@@ -1125,7 +1129,12 @@ div.pin-spacer > .hz-slider-section {
   font-weight: 500;
 }
 
-.bredstyle > a {
+.elementor-shortcode > span a:hover {
+  background: transparent;
+}
+
+.bredstyle > a,
+.bredstyle > span {
   margin-bottom: 8px;
   border-radius: var(--3XL, 28px);
   border: 1px solid var(--Golbal-others-border, #e6ebf2);
@@ -1409,6 +1418,10 @@ div.pin-spacer > .hz-slider-topcaption {
     flex-direction: column;
     min-height: 100%;
   }
+  
+.card-wrapper_single {
+  padding: 16px 18px;
+}
 }
 
 @media (min-width: 576px) {
@@ -1434,7 +1447,16 @@ div.pin-spacer > .hz-slider-topcaption {
     padding: 0;
   }
 }
-
+@media (max-width: 1400px) and (min-width: 1025px) {
+  .elementor-element .xl-btn {
+    padding: 10px 15px !important;
+    font-size: 16px !important;
+  }
+  .hero-slider .hero-slide-inner,
+  .hero-slider {
+    height: 90vh;
+  }
+}
 @media (max-width: 1179px) {
   .container-page {
     display: none;
@@ -1660,6 +1682,7 @@ html {
   }
   .insights-updates-item h4 {
     font-size: 18px;
+    line-height: 26px;
   }
   .hero-slider .swiper-pagination.swiper-pagination-bullets {
     left: 0;
@@ -1671,7 +1694,17 @@ html {
     padding: 30px 0 0;
     min-height: 170px;
   }
-
+  .insightleftdesc p,
+  .insights-updates-item-text_left .date-author-txt p span:first-child,
+  .date-author-txt p span:last-child {
+    font-size: 14px;
+  }
+  .insights-updates-item-text_left .date-author-txt {
+    margin-top: 10px;
+  }
+  .lisitng-inner .d-flex::after {
+    width: 100%;
+  }
   .hz-slider-topcaption .slider-image img {
     height: 250px;
     max-height: 250px;

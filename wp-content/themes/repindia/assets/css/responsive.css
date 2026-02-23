@@ -1,3 +1,106 @@
+/* Global CF7 error overlay */
+.cf7-error-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(12, 22, 46, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+.cf7-error-overlay.cf7-error-overlay--visible {
+  opacity: 1;
+  visibility: visible;
+}
+.cf7-error-overlay .cf7-error-dialog {
+  background: #fff;
+  border-radius: 12px;
+  max-width: 640px;
+  width: 90%;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+  padding: 32px 40px 36px;
+}
+.cf7-error-overlay .cf7-error-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 24px;
+}
+.cf7-error-overlay .cf7-error-heading {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+.cf7-error-overlay .cf7-error-close {
+  border: none;
+  background: transparent;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+.cf7-error-overlay .cf7-error-title {
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #06283D;
+}
+.cf7-error-overlay .cf7-error-text {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #5C5C5C;
+  font-weight: 500;
+}
+.cf7-error-overlay .cf7-error-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+}
+.cf7-error-overlay .cf7-error-body {
+  text-align: center;padding: 0 60px 20px;
+}
+.cf7-error-overlay .cf7-error-action-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.cf7-error-overlay .cf7-error-btn.btn_transgreylight{
+  max-width: 118px;
+  display: inline-block;
+  width: auto;
+  margin: 0 auto;
+}
+.js-dark .cf7-error-overlay .cf7-error-dialog{ background: #262a30; }
+@media(max-width: 1400px){
+  .elementor-element.certificate_icon .elementor-widget-image img{ height: auto!important;max-height: 84px; }
+}
+@media(max-width: 1400px) and (min-width: 768px){
+  .listing-inner > ul{
+    max-height: 38vh;
+    overflow: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: #d5d5d5 transparent;
+  }
+}
+@media (max-width: 768px) {
+  .cf7-error-overlay .cf7-error-dialog {
+    padding: 24px 20px 28px;
+  }
+  .cf7-error-overlay .cf7-error-title {
+    font-size: 20px;
+  }
+  .cf7-error-overlay .cf7-error-body { padding: 0; }
+  .cf7-error-overlay .cf7-error-action-inner{ flex-direction: column; }
+}
 /* Wrapper around the country text input */
 .country-input-wrapper {
   position: relative;
@@ -140,7 +243,7 @@ h4.contenttitle {
 }
 
 .contentdesc p.paracontsub {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   line-height: 20px !important;
   letter-spacing: 1.4px;
@@ -268,13 +371,26 @@ label.form-label {
   -moz-appearance: auto;
   appearance: auto;
   margin-bottom: 16px;
+  
 }
 input.form-control,
 select.form-control {
   height: 48px;
   width: 100%;
 }
-
+.formpopup_modal select.form-control, .contactform_box select.form-control {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M4.29289 8.29289C4.68342 7.90237 5.31658 7.90237 5.70711 8.29289L12 14.5858L18.2929 8.29289C18.6834 7.90237 19.3166 7.90237 19.7071 8.29289C20.0976 8.68342 20.0976 9.31658 19.7071 9.70711L12.7071 16.7071C12.3166 17.0976 11.6834 17.0976 11.2929 16.7071L4.29289 9.70711C3.90237 9.31658 3.90237 8.68342 4.29289 8.29289Z' fill='%235F6F94'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 24px 24px;
+  padding-right: 40px;
+}
+.js-dark .formpopup_modal select.form-control, .js-dark .contactform_box select.form-control {
+  background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M4.29289 8.29289C4.68342 7.90237 5.31658 7.90237 5.70711 8.29289L12 14.5858L18.2929 8.29289C18.6834 7.90237 19.3166 7.90237 19.7071 8.29289C20.0976 8.68342 20.0976 9.31658 19.7071 9.70711L12.7071 16.7071C12.3166 17.0976 11.6834 17.0976 11.2929 16.7071L4.29289 9.70711C3.90237 9.31658 3.90237 8.68342 4.29289 8.29289Z' fill='%23AEB6C9'/%3E%3C/svg%3E");
+}
 
 .form-control:hover {
   border-color: #0099ED; 
@@ -286,7 +402,7 @@ select.form-control {
 }
 .wpcf7-not-valid-tip, #mobile-error {
   color: #C92629 !important;
-  font-size: 12px;
+  font-size: 10px;
 }
 .js-dark .form-control:hover {
   border-color: #008AD6; 
@@ -496,9 +612,15 @@ label.form-label.label_notic a {
   gap: 16px;
   cursor: pointer;
   transition: border-color 0.3s ease;
+  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='12' ry='12' stroke='%23E6EBF2FF' stroke-width='1' stroke-dasharray='7.7' stroke-dashoffset='60' stroke-linecap='square'/%3e%3c/svg%3e");
+border-radius: 12px;
 }
 .styled-career-form .file-upload-box:hover {
   border-color: #4a90e2;
+}
+.styled-career-form .file-upload-box.drag-over {
+  border-color: #4a90e2;
+  background: rgba(74, 144, 226, 0.06);
 }
 .styled-career-form .file-upload-box .file-icon {
   flex-shrink: 0;
@@ -602,6 +724,10 @@ label.form-label.label_notic a {
 .js-dark .styled-career-form .file-upload-box {
   border-color: #464a4f;
 }
+.js-dark .styled-career-form .file-upload-box.drag-over {
+  border-color: #4a90e2;
+  background: rgba(74, 144, 226, 0.12);
+}
 .js-dark .career-apply-form label.form-label.notice-text a {
   text-decoration-color: #464a4f;
   color: rgba(255, 255, 255, 0.6);
@@ -656,11 +782,10 @@ label.form-label.label_notic a {
     -webkit-transform: translateZ(0);
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    /* Prevent sub-pixel rendering issues */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* Prevent layout shifts */
     min-height: 0;
+    /* No transition: when sticky header fixes/unfixes, section scrolls normally without animation/jerk */
     transition: none;
   }
 

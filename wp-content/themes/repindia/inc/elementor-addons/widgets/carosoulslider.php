@@ -119,8 +119,8 @@ class Carosoulslider extends Widget_Base
                                 <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Ellipse-9.svg" alt="profile" />
                             </div>
                             <div class="testimonial-content">
-                                <p>“We needed a surveillance platform that could handle complex deployments across departments, integrate with traffic systems, and remain responsive 24/7. i2V delivered.”</p>
-                                <span>— Deputy Commissioner, Urban Traffic & Transport Authority</span>
+                                <p>“<?php echo esc_html( wpml_t( 'We needed a surveillance platform that could handle complex deployments across departments, integrate with traffic systems, and remain responsive 24/7. i2V delivered.', 'Repindia-Widgets', 'Carousel Slider testi 1' ) ); ?>”</p>
+                                <span>— <?php echo esc_html( wpml_t( 'Deputy Commissioner, Urban Traffic & Transport Authority', 'Repindia-Widgets', 'Carousel Slider testi desig 1' ) ); ?></span>
                             </div>
                         </div>
                     </div>
@@ -132,8 +132,8 @@ class Carosoulslider extends Widget_Base
                                 <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Ellipse-11.svg" alt="profile" />
                             </div>
                             <div class="testimonial-content">
-                                <p>“i2V has helped us manage thousands of live feeds across multiple control centers with zero downtime. The system is reliable, easy to scale, and integrates well with our existing infrastructure.”</p>
-                                <span>— City Surveillance Command Head, Major Smart City Project, India</span>
+                                <p>“<?php echo esc_html( wpml_t( 'i2V has helped us manage thousands of live feeds across multiple control centers with zero downtime. The system is reliable, easy to scale, and integrates well with our existing infrastructure.', 'Repindia-Widgets', 'Carousel Slider testi 2' ) ); ?>”</p>
+                                <span>— <?php echo esc_html( wpml_t( 'City Surveillance Command Head, Major Smart City Project, India', 'Repindia-Widgets', 'Carousel Slider testi desig 2' ) ); ?></span>
                             </div>
                         </div>
                     </div>
@@ -144,8 +144,8 @@ class Carosoulslider extends Widget_Base
                                 <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Ellipse-9.svg" alt="profile" />
                             </div>
                             <div class="testimonial-content">
-                                <p>“We needed a surveillance platform that could handle complex deployments across departments, integrate with traffic systems, and remain responsive 24/7. i2V delivered.”</p>
-                                <span>— Deputy Commissioner, Urban Traffic & Transport Authority</span>
+                                <p>“<?php echo esc_html( wpml_t( 'We needed a surveillance platform that could handle complex deployments across departments, integrate with traffic systems, and remain responsive 24/7. i2V delivered.', 'Repindia-Widgets', 'Carousel Slider testi 3' ) ); ?>”</p>
+                                <span>— <?php echo esc_html( wpml_t( 'Deputy Commissioner, Urban Traffic & Transport Authority', 'Repindia-Widgets', 'Carousel Slider testi desig 3' ) ); ?></span>
                             </div>
                         </div>
                     </div>
@@ -156,8 +156,8 @@ class Carosoulslider extends Widget_Base
                                 <img src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2025/11/Ellipse-11.svg" alt="profile" />
                             </div>
                             <div class="testimonial-content">
-                                <p>“i2V has helped us manage thousands of live feeds across multiple control centers with zero downtime. The system is reliable, easy to scale, and integrates well with our existing infrastructure.”</p>
-                                <span>— City Surveillance Command Head, Major Smart City Project, India</span>
+                                <p>“<?php echo esc_html( wpml_t( 'i2V has helped us manage thousands of live feeds across multiple control centers with zero downtime. The system is reliable, easy to scale, and integrates well with our existing infrastructure.', 'Repindia-Widgets', 'Carousel Slider testi 4' ) ); ?>”</p>
+                                <span>— <?php echo esc_html( wpml_t( 'City Surveillance Command Head, Major Smart City Project, India', 'Repindia-Widgets', 'Carousel Slider testi desig 4' ) ); ?></span>
                             </div>
                         </div>
                     </div>

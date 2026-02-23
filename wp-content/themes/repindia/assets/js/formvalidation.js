@@ -325,6 +325,21 @@
       // Consolidated event handlers
       function setupEventHandlers() {
         var $doc = $(document);
+
+        // Global CF7 error overlay helpers
+        function showCf7ErrorOverlay() {
+          var $overlay = $('.cf7-error-overlay');
+          if ($overlay.length) {
+            $overlay.addClass('cf7-error-overlay--visible');
+          }
+        }
+
+        function hideCf7ErrorOverlay() {
+          var $overlay = $('.cf7-error-overlay');
+          if ($overlay.length) {
+            $overlay.removeClass('cf7-error-overlay--visible');
+          }
+        }
         
         // Input sanitization and validation - consolidated handlers
         var handlers = [
@@ -471,6 +486,20 @@
             }
           });
         });
+
+        // Close CF7 error overlay on close button or clicking outside dialog
+        $doc.off('click', '.cf7-error-close[data-cf7-error-close]');
+        $doc.on('click', '.cf7-error-close[data-cf7-error-close]', function(e) {
+          e.preventDefault();
+          hideCf7ErrorOverlay();
+        });
+
+        $doc.off('click', '.cf7-error-overlay');
+        $doc.on('click', '.cf7-error-overlay', function(e) {
+          if ($(e.target).is('.cf7-error-overlay')) {
+            hideCf7ErrorOverlay();
+          }
+        });
         
         // Special handler for phone field - only for non-intl-tel-input fields
         $doc.off('focus', '.wpcf7 input[name="phone"]');
@@ -554,6 +583,42 @@
             $input[0].click();
           }
         });
+
+        // Drag and drop for file upload box: allow dropping files onto the box.
+        $doc.off('dragover', '.wpcf7 .file-upload-box');
+        $doc.on('dragover', '.wpcf7 .file-upload-box', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          $(this).addClass('drag-over');
+        });
+        $doc.off('dragleave', '.wpcf7 .file-upload-box');
+        $doc.on('dragleave', '.wpcf7 .file-upload-box', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          $(this).removeClass('drag-over');
+        });
+        $doc.off('drop', '.wpcf7 .file-upload-box');
+        $doc.on('drop', '.wpcf7 .file-upload-box', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          $(this).removeClass('drag-over');
+          var $box = $(this);
+          var $input = $box.find('input[type="file"]');
+          if (!$input.length || !e.originalEvent.dataTransfer || !e.originalEvent.dataTransfer.files.length) return;
+          var inputEl = $input[0];
+          var files = e.originalEvent.dataTransfer.files;
+          try {
+            var dt = new DataTransfer();
+            var maxFiles = inputEl.multiple ? files.length : 1;
+            for (var i = 0; i < files.length && i < maxFiles; i++) {
+              dt.items.add(files[i]);
+            }
+            inputEl.files = dt.files;
+            $input.trigger('change');
+          } catch (err) {
+            // Fallback for older browsers: at least prevent default and show box state
+          }
+        });
       }
       
       // Initialize forms
@@ -610,8 +675,52 @@
         if ($form.length) {
           toggleSubmitButton($form, false);
           setTimeout(function() { validateAndUpdateSubmit($form); }, 100);
+
+          // Show global error overlay for CF7 error events, hide default CF7 message
+          var type = e.type;
+          if (type === 'wpcf7invalid' || type === 'wpcf7spam' || type === 'wpcf7mailfailed') {
+            $form.find('.wpcf7-response-output').hide();
+            // Use the helper from setupEventHandlers via document
+            $(document).trigger('cf7-show-global-error');
+          } else if (type === 'wpcf7mailsent') {
+            $(document).trigger('cf7-hide-global-error');
+          }
         } else {
           setTimeout(initFormValidation, 100);
+        }
+      });
+
+      // Bridge custom events to overlay helpers
+      $(document).on('cf7-show-global-error', function() {
+        // Close any already-open modals/popups so only the CF7 error popup is visible
+        var openModals = document.querySelectorAll('.modal.show');
+        if (openModals.length) {
+          if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+            openModals.forEach(function(modalEl) {
+              var instance = bootstrap.Modal.getInstance(modalEl);
+              if (instance) {
+                instance.hide();
+              }
+            });
+          } else if (typeof jQuery !== 'undefined' && jQuery.fn.modal) {
+            jQuery('.modal.show').modal('hide');
+          }
+        }
+        // Close custom overlays (e.g. brochure, resource) that use .active class
+        jQuery('.brochure-modal-overlay.active, .resource-modal-overlay.active, .formpopup_modal.active').removeClass('active');
+        // Small delay so backdrop clears before showing CF7 error
+        setTimeout(function() {
+          var $overlay = $('.cf7-error-overlay');
+          if ($overlay.length) {
+            $overlay.addClass('cf7-error-overlay--visible');
+          }
+        }, 150);
+      });
+
+      $(document).on('cf7-hide-global-error', function() {
+        var $overlay = $('.cf7-error-overlay');
+        if ($overlay.length) {
+          $overlay.removeClass('cf7-error-overlay--visible');
         }
       });
       
