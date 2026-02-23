@@ -565,6 +565,11 @@ class Scalescroll extends Widget_Base
     margin-bottom: 0;
     text-align: left;
             }
+            #transportation_analytics .featuregroup_repeator .nested-item-1 {
+                padding: 12px;
+                border-radius: 8px;
+                width: calc(50% - 2px);
+            }
 
             .featuregroup_repeator .nested-description-1,
             .featuregroup_repeator .nested-description-1 p {
