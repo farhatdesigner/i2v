@@ -338,6 +338,7 @@
           var $overlay = $('.cf7-error-overlay');
           if ($overlay.length) {
             $overlay.removeClass('cf7-error-overlay--visible');
+            $(document).trigger('cf7-hide-global-error');
           }
         }
         
@@ -683,6 +684,20 @@
             // Use the helper from setupEventHandlers via document
             $(document).trigger('cf7-show-global-error');
           } else if (type === 'wpcf7mailsent') {
+            // Close form popup on success first so body is restored by modal's hidden handler
+            var openModals = document.querySelectorAll('.modal.show');
+            if (openModals.length) {
+              if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+                openModals.forEach(function(modalEl) {
+                  var instance = bootstrap.Modal.getInstance(modalEl);
+                  if (instance) {
+                    instance.hide();
+                  }
+                });
+              } else if (typeof jQuery !== 'undefined' && jQuery.fn.modal) {
+                jQuery('.modal.show').modal('hide');
+              }
+            }
             $(document).trigger('cf7-hide-global-error');
           }
         } else {
@@ -692,6 +707,7 @@
 
       // Bridge custom events to overlay helpers
       $(document).on('cf7-show-global-error', function() {
+        window.cf7OverlayShowing = true;
         // Close any already-open modals/popups so only the CF7 error popup is visible
         var openModals = document.querySelectorAll('.modal.show');
         if (openModals.length) {
@@ -708,16 +724,20 @@
         }
         // Close custom overlays (e.g. brochure, resource) that use .active class
         jQuery('.brochure-modal-overlay.active, .resource-modal-overlay.active, .formpopup_modal.active').removeClass('active');
-        // Small delay so backdrop clears before showing CF7 error
+        // Small delay so backdrop clears before showing CF7 error; then fire event so global.js locks body after modal close
         setTimeout(function() {
           var $overlay = $('.cf7-error-overlay');
           if ($overlay.length) {
             $overlay.addClass('cf7-error-overlay--visible');
+            $(document).trigger('cf7-overlay-visible');
+          } else {
+            window.cf7OverlayShowing = false;
           }
         }, 150);
       });
 
       $(document).on('cf7-hide-global-error', function() {
+        window.cf7OverlayShowing = false;
         var $overlay = $('.cf7-error-overlay');
         if ($overlay.length) {
           $overlay.removeClass('cf7-error-overlay--visible');

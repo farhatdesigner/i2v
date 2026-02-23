@@ -60,7 +60,7 @@ global $repindia_option;
                                         <?php
                                         if (isset($repindia_option['hamburger_demo_btn']) && $repindia_option['hamburger_demo_btn'] == 1) { ?>
                                             <div class="expert_btn">
-                                                <a href="<?php echo esc_attr($repindia_option['hamburger_btn_url']); ?>"
+                                                <a href="javascript:void(0)"
                                                     class="theme-btn-white border-btn-grey" data-modal-target="contactBackdrop"><?php echo esc_html( wpml_t( 'Talk to our expert', 'Repindia-Template', 'Header expert button Text' ) ); ?></a>
                                             </div>
                                             <?php

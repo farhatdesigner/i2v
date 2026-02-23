@@ -2,7 +2,7 @@
 .cf7-error-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(12, 22, 46, 0.55);
+  background: rgb(0 0 0 / 30%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,6 +14,10 @@
 .cf7-error-overlay.cf7-error-overlay--visible {
   opacity: 1;
   visibility: visible;
+}
+.cf7-error-overlay .cf7-error-dialog {
+}
+.cf7-error-overlay .cf7-error-dialog {
 }
 .cf7-error-overlay .cf7-error-dialog {
   background: #fff;
