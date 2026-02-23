@@ -402,7 +402,7 @@ ul#header-main-menu li a {
 .js-dark .search-popup-footer #header-main-menu li:last-child a {
   color: #aeb6c9;
 }
-.search-popup-footer #header-main-menu li{margin: 0 14px;}
+.search-popup-footer #header-main-menu li{margin: 0 14px;padding: 0;list-style: none;}
 header #header-main-menu li {
   position: relative;
 }
@@ -2257,6 +2257,7 @@ label.form-label.required_note-demo {
 .footer {
   background-color: #262a30;
   margin-top: 80px !important;
+  text-align: left;
 }
 
 .footer h3 {

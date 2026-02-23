@@ -192,8 +192,8 @@
 
 @media (max-width: 768px) {
   .search-popup-columns {
-    grid-template-columns: 1fr;
-    gap: 30px;
+    /* grid-template-columns: 1fr; */
+    gap: 15px;
   }
 }
 
@@ -216,6 +216,8 @@
   flex-wrap: wrap;
   gap: 4px;
   flex-direction: column;
+  list-style: none !important;
+  padding-inline-start: 0 !important;
 }
 
 .search-popup-list li {
@@ -675,7 +677,7 @@
     text-align: center;
   }
   .search-input-wrapper {
-    gap: 8px;
+    gap: 3px;
   }
 
   .search-tabs-container {

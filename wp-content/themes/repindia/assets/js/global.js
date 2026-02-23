@@ -261,7 +261,7 @@ $(document).ready(function () {
     var modalScrollPosition = 0;
     var brochureModalScrollPosition = 0;
 
-    // Single debounced run after any modal close: re-create cards + gallery ScrollTriggers so layout is correct (fixes popup-close distortion for both)
+    // Single debounced run after any modal/menu close: re-create cards + gallery + hz-slider ScrollTriggers so layout is correct (fixes popup-close distortion for careers-list and industry details)
     window.scheduleCardsRefreshAfterModalClose = function () {
         if (window._cardsModalRefreshTimer) clearTimeout(window._cardsModalRefreshTimer);
         window._cardsModalRefreshTimer = setTimeout(function () {
@@ -271,6 +271,13 @@ $(document).ready(function () {
             }
             if (typeof initGalleryGSAP === "function") {
                 initGalleryGSAP();
+            }
+            // Re-init horizontal sliders (hz-slider-section, hz-slider-topcaption) so layout is correct after menu/modal close
+            if (typeof window.reinitHzSliderSectionGSAP === "function") {
+                window.reinitHzSliderSectionGSAP();
+            }
+            if (typeof window.reinitHzSliderTopcaptionGSAP === "function") {
+                window.reinitHzSliderTopcaptionGSAP();
             }
             if (typeof ScrollTrigger !== "undefined") {
                 requestAnimationFrame(function () {
@@ -288,6 +295,13 @@ $(document).ready(function () {
                         }
                         gsap.set(galleryPhotos, { opacity: 0 });
                         gsap.set(galleryPhotos[photoIndex], { opacity: 1 });
+                    }
+                    // Sync horizontal sliders to current scroll position after reinit
+                    if (typeof window.syncHzSliderSectionToScroll === "function") {
+                        window.syncHzSliderSectionToScroll();
+                    }
+                    if (typeof window.syncHzSliderTopcaptionToScroll === "function") {
+                        window.syncHzSliderTopcaptionToScroll();
                     }
                     // Re-apply scroll after GSAP refresh (next tick) so layout and scroll stay in sync when modal scroll came from body.style.top e.g. hamburger open
                     if (window._modalRestoreScrollPosition != null) {
@@ -571,6 +585,11 @@ $(document).ready(function () {
                 }
                 if (originalBodyScrollBehavior) {
                     $("body").css("scroll-behavior", originalBodyScrollBehavior);
+                }
+                // Re-run ScrollTrigger/slider refresh after menu close (fixes careers-list hz-slider distortion when menu popup is closed)
+                window._modalRestoreScrollPosition = restorePosition;
+                if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
+                    window.scheduleCardsRefreshAfterModalClose();
                 }
             });
         });
