@@ -445,7 +445,7 @@ html.lenis body {
   border-radius: 12px;
   border: var(--SM, 8px) solid var(--Golbal-backgrounds-global-bg-2, #262a30);
   background: var(--Golbal-backgrounds-global-bg-2, #262a30);
-  padding: var(--4XL, 32px);
+  padding: 32px;
   overflow: hidden;
 }
 
@@ -545,7 +545,9 @@ html.lenis body {
 #breadcrumbs {
   margin-bottom: 48px;
 }
-
+.careers-template-default #breadcrumbs {
+  margin-top: 130px;
+}
 #breadcrumbs > span > span > a {
   border-radius: var(--3XL, 28px);
   border: 1px solid var(--Golbal-others-border, #e6ebf2);
@@ -632,7 +634,7 @@ p#breadcrumbs svg {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  max-height: 455px;
+  max-height:600px;
 }
 
 .proven_banner {
@@ -873,7 +875,7 @@ div.pin-spacer > .hz-slider-section {
   flex-shrink: 0;
 }
 .slider-image_content {
-  padding: 48px;
+  padding: 30px;
   height: 100%;
   display: flex;
   align-items: center;
@@ -1125,6 +1127,10 @@ div.pin-spacer > .hz-slider-section {
   color: var(--tabs-tab-btn-text-default, #4a5673);
   font-size: 14px;
   font-weight: 500;
+}
+
+.elementor-shortcode > span a:hover {
+  background: transparent;
 }
 
 .bredstyle > a,
@@ -1412,6 +1418,10 @@ div.pin-spacer > .hz-slider-topcaption {
     flex-direction: column;
     min-height: 100%;
   }
+  
+.card-wrapper_single {
+  padding: 16px 18px;
+}
 }
 
 @media (min-width: 576px) {

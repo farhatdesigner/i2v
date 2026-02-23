@@ -114,6 +114,7 @@ class Custom_Technology_Tab extends Widget_Base
         ?>
 
         <style>
+            body {overflow: visible !important;}
             .<?php echo esc_attr($widget_id); ?> {
                 display: flex;
                 gap: 80px;
@@ -121,6 +122,9 @@ class Custom_Technology_Tab extends Widget_Base
             }
             .<?php echo esc_attr($widget_id); ?> .tech-tabs-nav {
                 flex: 0 0 350px;
+                align-self: flex-start;
+                position: sticky;
+                top: 120px;
                 background: #fff;
                 border-radius: 8px;
                 padding: 4px;
@@ -291,6 +295,7 @@ class Custom_Technology_Tab extends Widget_Base
                     display: none;
                 }
             }
+ 
         </style>
 
         <div class="<?php echo esc_attr($widget_id); ?> tech-tab-container">
