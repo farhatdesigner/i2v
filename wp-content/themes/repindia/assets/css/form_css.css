@@ -24,7 +24,7 @@ a.explr_btn.xl-btn:hover,a.home_btn.xl-btn:hover,
   align-items: center;
 }
 .wpcf7-form-control-wrap span.wpcf7-form-control.wpcf7-radio .wpcf7-list-item {
-  margin: 0;
+  margin: 0; width: auto;
 }
 .wpcf7-form-control-wrap span.wpcf7-form-control.wpcf7-radio .wpcf7-list-item label {
   display: inline-flex;
@@ -48,9 +48,10 @@ a.explr_btn.xl-btn:hover,a.home_btn.xl-btn:hover,
   margin: 0;
   padding: 0;
 }
-.wpcf7-form-control-wrap span.wpcf7-form-control.wpcf7-radio .wpcf7-list-item label:has(input:checked) {
-  background: #f0f2f5;
-  border-color: #d0d5dd;
+.wpcf7-form-control-wrap span.wpcf7-form-control.wpcf7-radio .wpcf7-list-item label:has(input:checked),
+.wpcf7-form-control-wrap span.wpcf7-form-control.wpcf7-radio .wpcf7-list-item label:hover {
+  background: #F2F5FA;
+  border-color: #D7DBE4;
 }
 .wpcf7-form-control-wrap span.wpcf7-form-control.wpcf7-radio .wpcf7-list-item label .wpcf7-list-item-label {
   color: #5f6f94;
