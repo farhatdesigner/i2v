@@ -583,6 +583,42 @@
             $input[0].click();
           }
         });
+
+        // Drag and drop for file upload box: allow dropping files onto the box.
+        $doc.off('dragover', '.wpcf7 .file-upload-box');
+        $doc.on('dragover', '.wpcf7 .file-upload-box', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          $(this).addClass('drag-over');
+        });
+        $doc.off('dragleave', '.wpcf7 .file-upload-box');
+        $doc.on('dragleave', '.wpcf7 .file-upload-box', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          $(this).removeClass('drag-over');
+        });
+        $doc.off('drop', '.wpcf7 .file-upload-box');
+        $doc.on('drop', '.wpcf7 .file-upload-box', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          $(this).removeClass('drag-over');
+          var $box = $(this);
+          var $input = $box.find('input[type="file"]');
+          if (!$input.length || !e.originalEvent.dataTransfer || !e.originalEvent.dataTransfer.files.length) return;
+          var inputEl = $input[0];
+          var files = e.originalEvent.dataTransfer.files;
+          try {
+            var dt = new DataTransfer();
+            var maxFiles = inputEl.multiple ? files.length : 1;
+            for (var i = 0; i < files.length && i < maxFiles; i++) {
+              dt.items.add(files[i]);
+            }
+            inputEl.files = dt.files;
+            $input.trigger('change');
+          } catch (err) {
+            // Fallback for older browsers: at least prevent default and show box state
+          }
+        });
       }
       
       // Initialize forms

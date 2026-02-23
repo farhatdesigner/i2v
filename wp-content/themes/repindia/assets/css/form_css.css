@@ -15,15 +15,52 @@ a.explr_btn.xl-btn:hover,a.home_btn.xl-btn:hover,
 .btn-sec_gap.thankyou_btn{ align-items: center; }
 
 .wpcf7-form-control-wrap{ margin-bottom: 16px; }
-.formpopup_modal .modal-demo-form .modal-header{ padding: 15px 15px; }
+.formpopup_modal .modal-demo-form .modal-header{
+  padding: 15px 15px;
+    position: fixed;
+    max-width: 766px;
+    background: #fff;
+    z-index: 2;
+}
 .formpopup_modal .modal-demo-form .modal-title { font-size: 18px;font-weight: 600; }
-.formpopup_modal .career-apply-form.styled-career-form { padding: 20px 30px; }
+.formpopup_modal .career-apply-form.styled-career-form { padding: 20px 30px;padding-top: 85px;}
 .formpopup_modal form.wpcf7-form p { margin: 0; }
 .formpopup_modal input.form-control, select.form-control{ max-height: 40px; }
 .formpopup_modal .form-control{ border-radius: 8px; }
-.formpopup_modal .modal-content{ z-index: 99999;overflow-y: scroll;max-height: 95vh; }
+.formpopup_modal .modal-content {
+  z-index: 99999;
+  overflow-y: auto;
+  max-height: 95vh;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: #d5d5d5 transparent;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Custom scrollbar for form popup (same as toggle-menu) */
+.formpopup_modal .modal-content::-webkit-scrollbar {
+  width: 6px;
+}
+.formpopup_modal .modal-content::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+.formpopup_modal .modal-content::-webkit-scrollbar-thumb {
+  background: #d5d5d5;
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+.formpopup_modal .modal-content::-webkit-scrollbar-thumb:hover {
+  background: #d5d5d5;
+}
+.formpopup_modal .modal-content::-webkit-scrollbar-button {
+  display: none;
+  height: 0;
+  width: 0;
+}
+.js-dark .formpopup_modal .modal-content {scrollbar-color: rgba(255, 255, 255, 0.3) transparent;}
 .formpopup_modal .formnotic { margin: 8px 0px; }
-.formpopup_modal .career-apply-form.styled-career-form.popupform { padding: 20px 30px; }
+.formpopup_modal .career-apply-form.styled-career-form.popupform { padding: 20px 30px; padding-top: 85px;}
 textarea.form-control{ max-height: 100px; }
 .wpcf7-not-valid-tip{ font-size: 14px;line-height: normal;margin-top: 3px; }
 .form-control{ margin-bottom: 0px!important; }
@@ -38,3 +75,9 @@ textarea.form-control{ max-height: 100px; }
   cursor: not-allowed !important;
   pointer-events: none;
 }
+@media (max-width: 767px) {
+  .formpopup_modal .modal-demo-form .modal-header {
+    max-width: calc(100% - 18px);
+  }
+}
+

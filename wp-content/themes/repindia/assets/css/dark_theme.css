@@ -383,6 +383,17 @@ header li.burger-icon .icon-sun,
   fill: #D7DBE4;
 }
 .js-dark .leadersslider.elementor-element .swiper .elementor-swiper-button svg{ fill: #D7DBE4; }
+.js-dark .leadersslider.elementor-element .swiper .elementor-swiper-button:hover {
+  background: #5a5e64;
+  border-color: rgba(193, 196, 198, 0.4);
+}
+.js-dark .leadersslider.elementor-element .swiper .elementor-swiper-button:focus,
+.js-dark .leadersslider.elementor-element .swiper .elementor-swiper-button:focus-visible {
+  border-color:none;
+  box-shadow: none;
+}
+.js-dark .leadersslider.elementor-element .swiper .elementor-swiper-button svg{ stroke:#262a30;}
+
 .js-dark span.swiper-pagination-bullet {
   opacity: 1;
 }
@@ -606,10 +617,10 @@ header li.burger-icon .icon-sun,
 .js-dark .dark-circle-txt .elementor-icon-box-description {
   color: #AEB6C9 !important;
 }
-.js-dark .modal-demo-form .modal-content {
+.js-dark .modal-demo-form .modal-content, .js-dark .brochure-modal-overlay  .modal-content, .js-dark .brochure-modal-overlay  .modal-header, .js-dark .formpopup_modal .modal-demo-form .modal-header {
   background: #262a30 !important;
 }
-.js-dark .modal-demo-form .btn-demo_close p {
+.js-dark .modal-demo-form .btn-demo_close p, .js-dark .formpopup_modal .modal-demo-form .modal-title, .js-dark .brochure-modal-overlay  .modal-title {
   color: #d7dbe4 !important;
 }
 .js-dark .modal-demo-form .btn-demo_close .btn_cancel {
@@ -763,9 +774,7 @@ header li.burger-icon .icon-sun,
   background-color: transparent;
 }
 
-.js-dark .btn-simple {
-  color: #ffffff;
-}
+
 .js-dark .box-custom {
   background:#262a30 !important;
 }

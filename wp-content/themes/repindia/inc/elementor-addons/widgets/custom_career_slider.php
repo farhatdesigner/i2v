@@ -572,21 +572,27 @@ class Custom_Career_Slider extends Widget_Base
                                     slidesPerView: 3,
                                     slidesPerGroup: 1,
                                     spaceBetween: 20,
-                                    allowTouchMove: false,
+                                    allowTouchMove: true,
                                 },
                                 // 1024px and above: 4 slides (desktop)
                                 1024: {
                                     slidesPerView: 4,
                                     slidesPerGroup: 1,
                                     spaceBetween: 20,
-                                    allowTouchMove: false,
+                                    allowTouchMove: true,
                                 },
                                 // 1200px and above: still 4 slides
                                 1200: {
+                                    slidesPerView: 3,
+                                    slidesPerGroup: 1,
+                                    spaceBetween: 20,
+                                    allowTouchMove: true,
+                                },
+                                1400: {
                                     slidesPerView: "auto",
                                     slidesPerGroup: 1,
                                     spaceBetween: 20,
-                                    allowTouchMove: false,
+                                    allowTouchMove: true,
                                 }
                             }
                         };

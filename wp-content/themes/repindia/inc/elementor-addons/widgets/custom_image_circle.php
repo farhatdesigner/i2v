@@ -365,7 +365,7 @@ class Custom_Image_Circle extends Widget_Base {
                 }
                 .orbit-ring{
                     top: 100%;
-                    left: 50%;
+                    left: 50%!important;
                 }
                 .orbit-icon {
                     padding-left: 0;
