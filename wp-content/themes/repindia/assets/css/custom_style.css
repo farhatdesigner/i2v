@@ -597,6 +597,12 @@ h2 {
   pointer-events: none;
 }
 
+.iti__country-list {
+  width: auto;
+  max-width: 335px;
+  overflow-x: hidden !important;
+}
+
 /* Ensure video covers full area with proper aspect ratio */
 @media (min-aspect-ratio: 16/9) {
   .hero-slider .slide-video-white iframe,

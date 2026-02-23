@@ -260,12 +260,19 @@ $(document).ready(function () {
     var isMenuOpen = false;
     var modalScrollPosition = 0;
     var brochureModalScrollPosition = 0;
+    var cf7OverlayScrollPosition = 0;
+    var cf7OverlayBodyLocked = false;
+    var formpopupLastFocusedElement = null;
 
     // Single debounced run after any modal close: re-create cards + gallery ScrollTriggers so layout is correct (fixes popup-close distortion for cards, gallery, hz-slider-section, hz-slider-topcaption)
     window.scheduleCardsRefreshAfterModalClose = function () {
         if (window._cardsModalRefreshTimer) clearTimeout(window._cardsModalRefreshTimer);
         window._cardsModalRefreshTimer = setTimeout(function () {
             window._cardsModalRefreshTimer = null;
+            // Skip refresh if any modal or CF7 error overlay is open (user closed then reopened quickly – avoids page refresh / layout jump while open)
+            if ($(".modal.show").length || $(".cf7-error-overlay.cf7-error-overlay--visible").length) {
+                return;
+            }
             // Ensure body is fully reset before re-creating pins (prevents distorted layout)
             $("body").removeClass("modal-open");
             $("body").css({ "overflow": "", "padding-right": "", "position": "", "top": "", "left": "", "right": "", "width": "" });
@@ -530,6 +537,141 @@ $(document).ready(function () {
         return false;
     }
 
+    // Prevent body scroll when CF7 error overlay is open (same behaviour as formpopup_modal)
+    function preventCf7OverlayBodyScroll(e) {
+        var $target = $(e.target);
+        if ($target.closest(".cf7-error-overlay .cf7-error-dialog, .cf7-error-overlay .cf7-error-body").length) {
+            return true;
+        }
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }
+
+    function preventCf7OverlayBodyWheel(e) {
+        var mouseX = e.clientX || (e.originalEvent && e.originalEvent.clientX) || 0;
+        var mouseY = e.clientY || (e.originalEvent && e.originalEvent.clientY) || 0;
+        var elementAtPoint = null;
+        if (document.elementFromPoint && mouseX > 0 && mouseY > 0) {
+            try {
+                elementAtPoint = document.elementFromPoint(mouseX, mouseY);
+            } catch (err) {}
+        }
+        if (elementAtPoint) {
+            var $elementAtPoint = $(elementAtPoint);
+            if ($elementAtPoint.closest(".cf7-error-overlay .cf7-error-dialog, .cf7-error-overlay .cf7-error-body").length) {
+                return;
+            }
+        }
+        var $target = $(e.target);
+        if ($target.closest(".cf7-error-overlay .cf7-error-dialog, .cf7-error-overlay .cf7-error-body").length) {
+            return;
+        }
+        var $dialog = $(".cf7-error-overlay .cf7-error-dialog");
+        if ($dialog.length && $(".cf7-error-overlay").hasClass("cf7-error-overlay--visible") && mouseX > 0 && mouseY > 0) {
+            var contentOffset = $dialog.offset();
+            if (contentOffset) {
+                var contentWidth = $dialog.outerWidth();
+                var contentHeight = $dialog.outerHeight();
+                if (mouseX >= contentOffset.left &&
+                    mouseX <= contentOffset.left + contentWidth &&
+                    mouseY >= contentOffset.top &&
+                    mouseY <= contentOffset.top + contentHeight) {
+                    return;
+                }
+            }
+        }
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }
+
+    // Lock body when CF7 error overlay is actually visible (after modal close + 150ms delay)
+    $(document).on("cf7-overlay-visible", function () {
+        cf7OverlayBodyLocked = true;
+        cf7OverlayScrollPosition = window.pageYOffset ||
+            document.documentElement.scrollTop ||
+            document.body.scrollTop ||
+            $(window).scrollTop() ||
+            0;
+        cf7OverlayScrollPosition = Math.max(0, Math.round(cf7OverlayScrollPosition));
+        var scrollbarWidth = getScrollbarWidth();
+        $("body").css({
+            "overflow": "hidden",
+            "position": "fixed",
+            "top": "-" + cf7OverlayScrollPosition + "px",
+            "left": "0",
+            "right": "0",
+            "width": "100%",
+            "padding-right": scrollbarWidth + "px"
+        });
+        $(window).on("scroll", preventCf7OverlayBodyScroll);
+        document.addEventListener("wheel", preventCf7OverlayBodyWheel, { passive: false, capture: false });
+        $("body, .cf7-error-overlay").on("touchmove", preventCf7OverlayBodyScroll);
+        $(".cf7-error-overlay .cf7-error-dialog, .cf7-error-overlay .cf7-error-body").on("wheel", function (e) {
+            e.stopPropagation();
+        });
+    });
+
+    // Unlock body when CF7 error overlay is hidden (close button, click outside, or on success)
+    $(document).on("cf7-hide-global-error", function () {
+        $(window).off("scroll", preventCf7OverlayBodyScroll);
+        document.removeEventListener("wheel", preventCf7OverlayBodyWheel, false);
+        $("body, .cf7-error-overlay").off("touchmove", preventCf7OverlayBodyScroll);
+        $(".cf7-error-overlay .cf7-error-dialog, .cf7-error-overlay .cf7-error-body").off("wheel");
+
+        if (!cf7OverlayBodyLocked) {
+            $("body").css({ "overflow": "", "padding-right": "", "position": "", "top": "", "left": "", "right": "", "width": "" });
+            return;
+        }
+        cf7OverlayBodyLocked = false;
+        var restorePosition = cf7OverlayScrollPosition;
+        var originalHtmlScrollBehavior = $("html").css("scroll-behavior");
+        var originalBodyScrollBehavior = $("body").css("scroll-behavior");
+        $("html, body").css("scroll-behavior", "auto");
+        $("body").css({ "overflow": "", "padding-right": "" });
+        requestAnimationFrame(function () {
+            $("body").css({
+                "position": "",
+                "top": "",
+                "left": "",
+                "right": "",
+                "width": ""
+            });
+            if (window.scrollTo) {
+                window.scrollTo(0, restorePosition);
+            }
+            document.documentElement.scrollTop = restorePosition;
+            document.body.scrollTop = restorePosition;
+            $(window).scrollTop(restorePosition);
+            requestAnimationFrame(function () {
+                var currentScroll = window.pageYOffset || document.documentElement.scrollTop || $(window).scrollTop() || 0;
+                if (Math.abs(currentScroll - restorePosition) > 1) {
+                    if (window.scrollTo) {
+                        window.scrollTo(0, restorePosition);
+                    }
+                    document.documentElement.scrollTop = restorePosition;
+                    document.body.scrollTop = restorePosition;
+                    $(window).scrollTop(restorePosition);
+                }
+                if (originalHtmlScrollBehavior) {
+                    $("html").css("scroll-behavior", originalHtmlScrollBehavior);
+                }
+                if (originalBodyScrollBehavior) {
+                    $("body").css("scroll-behavior", originalBodyScrollBehavior);
+                }
+                $("body").removeClass("modal-open");
+                $("body").css({ "overflow": "", "padding-right": "", "position": "", "top": "", "left": "", "right": "", "width": "" });
+                if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
+                    window.scheduleCardsRefreshAfterModalClose();
+                }
+                setTimeout(function () {
+                    $(window).trigger("resize");
+                }, 0);
+            });
+        });
+    });
+
     // Function to close the menu
     function closeMenu() {
         $(".burger-icon").removeClass("active-burger");
@@ -603,6 +745,14 @@ $(document).ready(function () {
         isMenuOpen = false;
     }
 
+    // Track last focused form field inside formpopup so we can restore it when modal is reopened
+    $(document).on('focusin', '.formpopup_modal', function (e) {
+        var el = e.target;
+        if (el && (el.tagName === "INPUT" || el.tagName === "TEXTAREA" || el.tagName === "SELECT")) {
+            formpopupLastFocusedElement = el;
+        }
+    });
+
     // Lock body scroll when formpopup_modal opens
     $(document).on('show.bs.modal', '.formpopup_modal', function () {
         // Save current scroll position using multiple methods for reliability
@@ -611,6 +761,17 @@ $(document).ready(function () {
                               document.body.scrollTop ||
                               $(window).scrollTop() ||
                               0;
+
+        // When body is already position:fixed (e.g. hamburger menu open), pageYOffset is often 0 - use body's top so we don't restore to 0 on modal close
+        if (modalScrollPosition === 0 && document.body.style.position === "fixed" && document.body.style.top) {
+            var topVal = document.body.style.top;
+            if (topVal && topVal.indexOf("-") === 0) {
+                var fromTop = Math.abs(parseInt(topVal, 10));
+                if (!isNaN(fromTop)) {
+                    modalScrollPosition = fromTop;
+                }
+            }
+        }
 
         // Ensure we have a valid number
         modalScrollPosition = Math.max(0, Math.round(modalScrollPosition));
@@ -651,13 +812,47 @@ $(document).ready(function () {
         });
     });
 
+    // Restore focus to last typed field when formpopup_modal is reopened
+    $(document).on('shown.bs.modal', '.formpopup_modal', function () {
+        if (formpopupLastFocusedElement && typeof formpopupLastFocusedElement.focus === "function") {
+            var modalEl = this;
+            if (modalEl.contains(formpopupLastFocusedElement)) {
+                setTimeout(function () {
+                    formpopupLastFocusedElement.focus();
+                }, 0);
+            }
+            formpopupLastFocusedElement = null;
+        }
+    });
+
     // Unlock body scroll when formpopup_modal closes
     $(document).on('hidden.bs.modal', '.formpopup_modal', function () {
+        // Reset all forms and validation state when user closes modal (X) so next open shows empty form
+        var $modal = $(this);
+        $modal.find("form").each(function () {
+            var form = this;
+            if (typeof form.reset === "function") {
+                form.reset();
+            }
+        });
+        $modal.find(".wpcf7-response-output").text("").hide();
+        $modal.find(".wpcf7-form-control-wrap").removeClass("wpcf7-not-valid");
+        $modal.find(".wpcf7-not-valid").removeClass("wpcf7-not-valid");
+        $modal.find("[id='mobile-error'], .wpcf7-form-control-wrap .error, .wpcf7-form-control-wrap [role='alert']").text("").hide();
+        if (typeof $modal.find(".wpcf7").trigger === "function") {
+            $modal.find(".wpcf7").trigger("reset");
+        }
+
         // Remove event listeners
         $(window).off("scroll", preventModalBodyScroll);
         document.removeEventListener("wheel", preventModalBodyWheel, false);
         $("body, .modal-backdrop").off("touchmove", preventModalBodyScroll);
         $(".formpopup_modal .modal-content, .formpopup_modal .modal-body").off("wheel");
+
+        // If CF7 error overlay is being shown, do not restore body (it will lock when overlay becomes visible)
+        if (window.cf7OverlayShowing) {
+            return;
+        }
 
         // Store the exact scroll position we want to restore
         var restorePosition = modalScrollPosition;
