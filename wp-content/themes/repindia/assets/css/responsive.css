@@ -1030,8 +1030,9 @@ border-radius: 12px;
   .career-apply-form span.wpcf7-form-control.wpcf7-radio {
     display: flex;
     align-items: start;
-    flex-direction: column;
+    /* flex-direction: column; */
     justify-content: start;
+    max-width: max-content;
   }
   .career-apply-form .wpcf7-list-item {
     margin: 0 0px 10px 0;

@@ -1423,6 +1423,10 @@ div.pin-spacer > .hz-slider-topcaption {
 .card-wrapper_single {
   padding: 16px 18px;
 }
+
+.hz-slider-section .slider-image img {
+  max-height: 320px;
+}
 }
 
 @media (min-width: 576px) {
