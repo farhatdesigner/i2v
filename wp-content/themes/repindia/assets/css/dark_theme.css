@@ -241,8 +241,9 @@ header li.burger-icon .icon-sun,
   color: #aeb6c9;
 }
 .js-dark .we-hiring-txt {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(193, 196, 198, 0.1);
+  color: #74C2ED;
+  background: #464A4F;
+  border: 1px solid #C1C4C633;
 }
 .js-dark .rightmenu_statictxt h4 {
   color: #aeb6c9 !important;

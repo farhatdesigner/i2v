@@ -165,7 +165,7 @@ class Custom_Resource_List extends Widget_Base {
         ?>
         <div class="resource-filter-section" id="resource-filter-section">
             <style>
-                .resource-filter-section { display: flex; gap: 40px; max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
+                .resource-filter-section { display: flex;align-items: flex-start; gap: 40px; max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
                 .resource-filter-sidebar { width: 385px;flex-shrink: 0;background: #fff;border-radius: 12px;padding: 8px; }
                 .resource-filter-sidebar h2 { margin: 0 0 2px 0;color: #06283D;font-size: 18px;font-style: normal;font-weight: 500;line-height: 26px; }
                 .resource-filter-sidebar p { color: #5C5C5C;font-size: 14px;font-style: normal;font-weight: 400;line-height: 20px;margin: 0; }
