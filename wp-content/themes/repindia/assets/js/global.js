@@ -260,29 +260,19 @@ $(document).ready(function () {
     var isMenuOpen = false;
     var modalScrollPosition = 0;
     var brochureModalScrollPosition = 0;
-    var cf7OverlayScrollPosition = 0;
-    var cf7OverlayBodyLocked = false;
-    var formpopupLastFocusedElement = null;
 
-    // Single debounced run after any modal close: re-create cards + gallery ScrollTriggers so layout is correct (fixes popup-close distortion for cards, gallery, hz-slider-section, hz-slider-topcaption)
+    // Single debounced run after any modal/menu close: re-create cards + gallery + hz-slider ScrollTriggers so layout is correct (fixes popup-close distortion for careers-list and industry details)
     window.scheduleCardsRefreshAfterModalClose = function () {
         if (window._cardsModalRefreshTimer) clearTimeout(window._cardsModalRefreshTimer);
         window._cardsModalRefreshTimer = setTimeout(function () {
             window._cardsModalRefreshTimer = null;
-            // Skip refresh if any modal or CF7 error overlay is open (user closed then reopened quickly – avoids page refresh / layout jump while open)
-            if ($(".modal.show").length || $(".cf7-error-overlay.cf7-error-overlay--visible").length) {
-                return;
-            }
-            // Ensure body is fully reset before re-creating pins (prevents distorted layout)
-            $("body").removeClass("modal-open");
-            $("body").css({ "overflow": "", "padding-right": "", "position": "", "top": "", "left": "", "right": "", "width": "" });
             if (typeof initCardsCustomBodyGSAP === "function") {
                 initCardsCustomBodyGSAP();
             }
             if (typeof initGalleryGSAP === "function") {
                 initGalleryGSAP();
             }
-            // Re-create hz-slider-section and hz-slider-topcaption pins (same as cards/gallery: fixes popup-close UI distortion)
+            // Re-init horizontal sliders (hz-slider-section, hz-slider-topcaption) so layout is correct after menu/modal close
             if (typeof window.reinitHzSliderSectionGSAP === "function") {
                 window.reinitHzSliderSectionGSAP();
             }
@@ -292,7 +282,6 @@ $(document).ready(function () {
             if (typeof ScrollTrigger !== "undefined") {
                 requestAnimationFrame(function () {
                     ScrollTrigger.refresh();
-                    // Sync gallery visible photo to current scroll after re-create (so correct image shows)
                     var gallerySections = document.querySelectorAll(".makdmks .detailsWrapper .details");
                     var galleryPhotos = document.querySelectorAll(".makdmks .photo");
                     if (gallerySections.length && galleryPhotos.length && typeof gsap !== "undefined") {
@@ -307,35 +296,28 @@ $(document).ready(function () {
                         gsap.set(galleryPhotos, { opacity: 0 });
                         gsap.set(galleryPhotos[photoIndex], { opacity: 1 });
                     }
-                    // Sync hz-slider-section and hz-slider-topcaption visible slide to current scroll
+                    // Sync horizontal sliders to current scroll position after reinit
                     if (typeof window.syncHzSliderSectionToScroll === "function") {
                         window.syncHzSliderSectionToScroll();
                     }
                     if (typeof window.syncHzSliderTopcaptionToScroll === "function") {
                         window.syncHzSliderTopcaptionToScroll();
+                    }
+                    // Re-apply scroll after GSAP refresh (next tick) so layout and scroll stay in sync when modal scroll came from body.style.top e.g. hamburger open
+                    if (window._modalRestoreScrollPosition != null) {
+                        var pos = Math.max(0, Math.round(window._modalRestoreScrollPosition));
+                        window._modalRestoreScrollPosition = null;
+                        setTimeout(function () {
+                            window.scrollTo(0, pos);
+                            document.documentElement.scrollTop = pos;
+                            document.body.scrollTop = pos;
+                        }, 0);
                     }
                 });
-                // Second refresh after short delay so pin spacers settle correctly after popup close
-                setTimeout(function () {
-                    ScrollTrigger.refresh();
-                    if (typeof window.syncHzSliderSectionToScroll === "function") {
-                        window.syncHzSliderSectionToScroll();
-                    }
-                    if (typeof window.syncHzSliderTopcaptionToScroll === "function") {
-                        window.syncHzSliderTopcaptionToScroll();
-                    }
-                }, 100);
-                setTimeout(function () {
-                    ScrollTrigger.refresh();
-                    if (typeof window.syncHzSliderSectionToScroll === "function") {
-                        window.syncHzSliderSectionToScroll();
-                    }
-                    if (typeof window.syncHzSliderTopcaptionToScroll === "function") {
-                        window.syncHzSliderTopcaptionToScroll();
-                    }
-                }, 500);
+            } else if (window._modalRestoreScrollPosition != null) {
+                window._modalRestoreScrollPosition = null;
             }
-        }, 450);
+        }, 350);
     };
 
     // Helper function to get scrollbar width
@@ -537,141 +519,6 @@ $(document).ready(function () {
         return false;
     }
 
-    // Prevent body scroll when CF7 error overlay is open (same behaviour as formpopup_modal)
-    function preventCf7OverlayBodyScroll(e) {
-        var $target = $(e.target);
-        if ($target.closest(".cf7-error-overlay .cf7-error-dialog, .cf7-error-overlay .cf7-error-body").length) {
-            return true;
-        }
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-    }
-
-    function preventCf7OverlayBodyWheel(e) {
-        var mouseX = e.clientX || (e.originalEvent && e.originalEvent.clientX) || 0;
-        var mouseY = e.clientY || (e.originalEvent && e.originalEvent.clientY) || 0;
-        var elementAtPoint = null;
-        if (document.elementFromPoint && mouseX > 0 && mouseY > 0) {
-            try {
-                elementAtPoint = document.elementFromPoint(mouseX, mouseY);
-            } catch (err) {}
-        }
-        if (elementAtPoint) {
-            var $elementAtPoint = $(elementAtPoint);
-            if ($elementAtPoint.closest(".cf7-error-overlay .cf7-error-dialog, .cf7-error-overlay .cf7-error-body").length) {
-                return;
-            }
-        }
-        var $target = $(e.target);
-        if ($target.closest(".cf7-error-overlay .cf7-error-dialog, .cf7-error-overlay .cf7-error-body").length) {
-            return;
-        }
-        var $dialog = $(".cf7-error-overlay .cf7-error-dialog");
-        if ($dialog.length && $(".cf7-error-overlay").hasClass("cf7-error-overlay--visible") && mouseX > 0 && mouseY > 0) {
-            var contentOffset = $dialog.offset();
-            if (contentOffset) {
-                var contentWidth = $dialog.outerWidth();
-                var contentHeight = $dialog.outerHeight();
-                if (mouseX >= contentOffset.left &&
-                    mouseX <= contentOffset.left + contentWidth &&
-                    mouseY >= contentOffset.top &&
-                    mouseY <= contentOffset.top + contentHeight) {
-                    return;
-                }
-            }
-        }
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-    }
-
-    // Lock body when CF7 error overlay is actually visible (after modal close + 150ms delay)
-    $(document).on("cf7-overlay-visible", function () {
-        cf7OverlayBodyLocked = true;
-        cf7OverlayScrollPosition = window.pageYOffset ||
-            document.documentElement.scrollTop ||
-            document.body.scrollTop ||
-            $(window).scrollTop() ||
-            0;
-        cf7OverlayScrollPosition = Math.max(0, Math.round(cf7OverlayScrollPosition));
-        var scrollbarWidth = getScrollbarWidth();
-        $("body").css({
-            "overflow": "hidden",
-            "position": "fixed",
-            "top": "-" + cf7OverlayScrollPosition + "px",
-            "left": "0",
-            "right": "0",
-            "width": "100%",
-            "padding-right": scrollbarWidth + "px"
-        });
-        $(window).on("scroll", preventCf7OverlayBodyScroll);
-        document.addEventListener("wheel", preventCf7OverlayBodyWheel, { passive: false, capture: false });
-        $("body, .cf7-error-overlay").on("touchmove", preventCf7OverlayBodyScroll);
-        $(".cf7-error-overlay .cf7-error-dialog, .cf7-error-overlay .cf7-error-body").on("wheel", function (e) {
-            e.stopPropagation();
-        });
-    });
-
-    // Unlock body when CF7 error overlay is hidden (close button, click outside, or on success)
-    $(document).on("cf7-hide-global-error", function () {
-        $(window).off("scroll", preventCf7OverlayBodyScroll);
-        document.removeEventListener("wheel", preventCf7OverlayBodyWheel, false);
-        $("body, .cf7-error-overlay").off("touchmove", preventCf7OverlayBodyScroll);
-        $(".cf7-error-overlay .cf7-error-dialog, .cf7-error-overlay .cf7-error-body").off("wheel");
-
-        if (!cf7OverlayBodyLocked) {
-            $("body").css({ "overflow": "", "padding-right": "", "position": "", "top": "", "left": "", "right": "", "width": "" });
-            return;
-        }
-        cf7OverlayBodyLocked = false;
-        var restorePosition = cf7OverlayScrollPosition;
-        var originalHtmlScrollBehavior = $("html").css("scroll-behavior");
-        var originalBodyScrollBehavior = $("body").css("scroll-behavior");
-        $("html, body").css("scroll-behavior", "auto");
-        $("body").css({ "overflow": "", "padding-right": "" });
-        requestAnimationFrame(function () {
-            $("body").css({
-                "position": "",
-                "top": "",
-                "left": "",
-                "right": "",
-                "width": ""
-            });
-            if (window.scrollTo) {
-                window.scrollTo(0, restorePosition);
-            }
-            document.documentElement.scrollTop = restorePosition;
-            document.body.scrollTop = restorePosition;
-            $(window).scrollTop(restorePosition);
-            requestAnimationFrame(function () {
-                var currentScroll = window.pageYOffset || document.documentElement.scrollTop || $(window).scrollTop() || 0;
-                if (Math.abs(currentScroll - restorePosition) > 1) {
-                    if (window.scrollTo) {
-                        window.scrollTo(0, restorePosition);
-                    }
-                    document.documentElement.scrollTop = restorePosition;
-                    document.body.scrollTop = restorePosition;
-                    $(window).scrollTop(restorePosition);
-                }
-                if (originalHtmlScrollBehavior) {
-                    $("html").css("scroll-behavior", originalHtmlScrollBehavior);
-                }
-                if (originalBodyScrollBehavior) {
-                    $("body").css("scroll-behavior", originalBodyScrollBehavior);
-                }
-                $("body").removeClass("modal-open");
-                $("body").css({ "overflow": "", "padding-right": "", "position": "", "top": "", "left": "", "right": "", "width": "" });
-                if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
-                    window.scheduleCardsRefreshAfterModalClose();
-                }
-                setTimeout(function () {
-                    $(window).trigger("resize");
-                }, 0);
-            });
-        });
-    });
-
     // Function to close the menu
     function closeMenu() {
         $(".burger-icon").removeClass("active-burger");
@@ -739,6 +586,11 @@ $(document).ready(function () {
                 if (originalBodyScrollBehavior) {
                     $("body").css("scroll-behavior", originalBodyScrollBehavior);
                 }
+                // Re-run ScrollTrigger/slider refresh after menu close (fixes careers-list hz-slider distortion when menu popup is closed)
+                window._modalRestoreScrollPosition = restorePosition;
+                if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
+                    window.scheduleCardsRefreshAfterModalClose();
+                }
             });
         });
         
@@ -753,6 +605,8 @@ $(document).ready(function () {
         }
     });
 
+
+
     // Lock body scroll when formpopup_modal opens
     $(document).on('show.bs.modal', '.formpopup_modal', function () {
         // Save current scroll position using multiple methods for reliability
@@ -762,16 +616,18 @@ $(document).ready(function () {
                               $(window).scrollTop() ||
                               0;
 
-        // When body is already position:fixed (e.g. hamburger menu open), pageYOffset is often 0 - use body's top so we don't restore to 0 on modal close
-        if (modalScrollPosition === 0 && document.body.style.position === "fixed" && document.body.style.top) {
-            var topVal = document.body.style.top;
-            if (topVal && topVal.indexOf("-") === 0) {
-                var fromTop = Math.abs(parseInt(topVal, 10));
-                if (!isNaN(fromTop)) {
-                    modalScrollPosition = fromTop;
+                // When body is already position:fixed (e.g. hamburger menu open), pageYOffset is often 0 - use body's top so we don't restore to 0 on modal close
+                if (modalScrollPosition === 0 && document.body.style.position === "fixed" && document.body.style.top) {
+                    var topVal = document.body.style.top;
+                    if (topVal && topVal.indexOf("-") === 0) {
+                        var fromTop = Math.abs(parseInt(topVal, 10));
+                        if (!isNaN(fromTop)) {
+                            modalScrollPosition = fromTop;
+                        }
+                    }
                 }
-            }
-        }
+        
+                              
 
         // Ensure we have a valid number
         modalScrollPosition = Math.max(0, Math.round(modalScrollPosition));
@@ -783,13 +639,6 @@ $(document).ready(function () {
                     st.disable(false, false);
                 }
             });
-        }
-        // Destroy hz-slider pin triggers before locking body so pin-spacers are removed and layout doesn't break on close
-        if (typeof window.destroyHzSliderSectionGSAP === "function") {
-            window.destroyHzSliderSectionGSAP();
-        }
-        if (typeof window.destroyHzSliderTopcaptionGSAP === "function") {
-            window.destroyHzSliderTopcaptionGSAP();
         }
 
         // Then lock body scroll (order matters: unpin first, then fixed)
@@ -812,47 +661,13 @@ $(document).ready(function () {
         });
     });
 
-    // Restore focus to last typed field when formpopup_modal is reopened
-    $(document).on('shown.bs.modal', '.formpopup_modal', function () {
-        if (formpopupLastFocusedElement && typeof formpopupLastFocusedElement.focus === "function") {
-            var modalEl = this;
-            if (modalEl.contains(formpopupLastFocusedElement)) {
-                setTimeout(function () {
-                    formpopupLastFocusedElement.focus();
-                }, 0);
-            }
-            formpopupLastFocusedElement = null;
-        }
-    });
-
     // Unlock body scroll when formpopup_modal closes
     $(document).on('hidden.bs.modal', '.formpopup_modal', function () {
-        // Reset all forms and validation state when user closes modal (X) so next open shows empty form
-        var $modal = $(this);
-        $modal.find("form").each(function () {
-            var form = this;
-            if (typeof form.reset === "function") {
-                form.reset();
-            }
-        });
-        $modal.find(".wpcf7-response-output").text("").hide();
-        $modal.find(".wpcf7-form-control-wrap").removeClass("wpcf7-not-valid");
-        $modal.find(".wpcf7-not-valid").removeClass("wpcf7-not-valid");
-        $modal.find("[id='mobile-error'], .wpcf7-form-control-wrap .error, .wpcf7-form-control-wrap [role='alert']").text("").hide();
-        if (typeof $modal.find(".wpcf7").trigger === "function") {
-            $modal.find(".wpcf7").trigger("reset");
-        }
-
         // Remove event listeners
         $(window).off("scroll", preventModalBodyScroll);
         document.removeEventListener("wheel", preventModalBodyWheel, false);
         $("body, .modal-backdrop").off("touchmove", preventModalBodyScroll);
         $(".formpopup_modal .modal-content, .formpopup_modal .modal-body").off("wheel");
-
-        // If CF7 error overlay is being shown, do not restore body (it will lock when overlay becomes visible)
-        if (window.cf7OverlayShowing) {
-            return;
-        }
 
         // Store the exact scroll position we want to restore
         var restorePosition = modalScrollPosition;
@@ -909,11 +724,8 @@ $(document).ready(function () {
                     $("body").css("scroll-behavior", originalBodyScrollBehavior);
                 }
 
-                // Force-clear any residual body styles and Bootstrap modal-open so layout is correct before refresh
-                $("body").removeClass("modal-open");
-                $("body").css({ "overflow": "", "padding-right": "", "position": "", "top": "", "left": "", "right": "", "width": "" });
-
-                // Schedule single enable+refresh so card triggers don't run with stale positions (fixes 2nd open distortion)
+                // Pass intended scroll position so it can be re-applied after GSAP refresh (avoids GSAP/scroll conflict when body was fixed e.g. hamburger)
+                window._modalRestoreScrollPosition = restorePosition;
                 if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
                     window.scheduleCardsRefreshAfterModalClose();
                 }
@@ -935,11 +747,9 @@ $(document).ready(function () {
             0;
         brochureModalScrollPosition = Math.max(0, Math.round(brochureModalScrollPosition));
 
-        // Disable card + hz-slider pin ScrollTriggers before locking body (same as cards)
         if (typeof ScrollTrigger !== "undefined") {
             ScrollTrigger.getAll().forEach(function (st) {
-                var id = st.vars && st.vars.id ? String(st.vars.id) : "";
-                if (id.indexOf("card-") === 0 || id === "hz-slider-pin" || id === "hz-slider-topcaption-pin") {
+                if (st.vars && st.vars.id && String(st.vars.id).indexOf("card-") === 0) {
                     st.disable(false, false);
                 }
             });
@@ -1013,8 +823,7 @@ $(document).ready(function () {
                 if (originalBodyScrollBehavior) {
                     $("body").css("scroll-behavior", originalBodyScrollBehavior);
                 }
-                $("body").removeClass("modal-open");
-                $("body").css({ "overflow": "", "padding-right": "", "position": "", "top": "", "left": "", "right": "", "width": "" });
+                window._modalRestoreScrollPosition = restorePosition;
                 if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
                     window.scheduleCardsRefreshAfterModalClose();
                 }
@@ -2117,13 +1926,13 @@ jQuery(document).ready(function() {
             instance.pause();
         });
 
-        // Disable card + hz-slider pin ScrollTriggers while any modal is open (same as cards; re-create on close)
+        if (typeof window.destroyHzSliderSectionGSAP === "function") window.destroyHzSliderSectionGSAP();
+        if (typeof window.destroyHzSliderTopcaptionGSAP === "function") window.destroyHzSliderTopcaptionGSAP();
+        if (typeof window.destroySectionsscrollGSAP === "function") window.destroySectionsscrollGSAP();
         if (typeof ScrollTrigger !== "undefined") {
             ScrollTrigger.getAll().forEach(function(st) {
                 var id = st.vars && st.vars.id ? String(st.vars.id) : "";
-                if (id.indexOf("card-") === 0 || id === "hz-slider-pin" || id === "hz-slider-topcaption-pin") {
-                    st.disable(false, false);
-                }
+                if (id.indexOf("card-") === 0) st.disable(false, false);
             });
         }
         
@@ -2170,9 +1979,11 @@ jQuery(document).ready(function() {
             }
         }, 100);
 
-        // Force-clear body and modal-open so layout resets before refresh (shared with formpopup/brochure close)
-        jQuery("body").removeClass("modal-open");
-        jQuery("body").css({ "overflow": "", "padding-right": "", "position": "", "top": "", "left": "", "right": "", "width": "" });
+        if (typeof window.forceBodyReset === "function") window.forceBodyReset();
+        else {
+            jQuery("body").removeClass("modal-open");
+            jQuery("body").css({ "overflow": "auto", "padding-right": "0", "position": "", "top": "", "left": "", "right": "", "width": "" });
+        }
         if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
             window.scheduleCardsRefreshAfterModalClose();
         }
@@ -2185,57 +1996,46 @@ jQuery(document).ready(function() {
 });
 
 
-if (window.innerWidth >= 1180 && document.querySelector(".sectionsscroll")) {
+function initSectionsscrollGSAP() {
+    if (window.innerWidth < 1180 || !document.querySelector(".sectionsscroll")) return;
+    if (typeof ScrollTrigger === "undefined") return;
     gsap.registerPlugin(ScrollTrigger);
-    ScrollTrigger.config({
-        autoRefreshEvents: 'visibilitychange,DOMContentLoaded,load',
-    })
-    const resize = () => {
-        console.log('resize')
-        ScrollTrigger.refresh()
-    }
-    
-    // Only select panels within sectionsscroll to avoid conflicts
-    const sectionsscrollEl = document.querySelector(".sectionsscroll");
-    const panels = gsap.utils.toArray(".sectionsscroll .animate-right");
-    const content = gsap.utils.toArray(".sectionsscroll .animate-left");
-    
-    // Skip if no panels found
-    if (panels.length > 0) {
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: ".sectionsscroll",
-                start: "top 20%",
-                endTrigger: '.sectionsscroll',
-                end: () => "+=" + 200 * panels.length + "%",
-                pin: true,
-                pinSpacing: true,
-                markers: false,
-                scrub: 1,
-                invalidateOnRefresh: true,
-                refreshPriority: 1, // Higher priority, refreshes first
-                id: "sectionsscroll-pin"
-            }
-        });
-        panels.forEach((panel, index) => {
-            tl.from(
-                panel,
-                {
-                    yPercent: 100,
-                    ease: "slow",
-                },
-                "+=0.1"
-            );
-            tl.from(
-                content[index],
-                {
-                    yPercent: 100,
-                    ease: "slow",
-                },
-                "<"
-            );
-        });
-    }
+    ScrollTrigger.getAll().forEach(function (st) {
+        if (st.vars && st.vars.id === "sectionsscroll-pin") st.kill();
+    });
+    var panels = gsap.utils.toArray(".sectionsscroll .animate-right");
+    var content = gsap.utils.toArray(".sectionsscroll .animate-left");
+    if (panels.length === 0) return;
+    var tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: ".sectionsscroll",
+            start: "top 20%",
+            endTrigger: ".sectionsscroll",
+            end: function () { return "+=" + (200 * panels.length) + "%"; },
+            pin: true,
+            pinSpacing: true,
+            markers: false,
+            scrub: 1,
+            invalidateOnRefresh: true,
+            refreshPriority: 1,
+            id: "sectionsscroll-pin"
+        }
+    });
+    panels.forEach(function (panel, index) {
+        tl.from(panel, { yPercent: 100, ease: "slow" }, "+=0.1");
+        tl.from(content[index], { yPercent: 100, ease: "slow" }, "<");
+    });
+}
+function destroySectionsscrollGSAP() {
+    if (typeof ScrollTrigger === "undefined") return;
+    var st = ScrollTrigger.getById("sectionsscroll-pin");
+    if (st) st.kill();
+}
+window.destroySectionsscrollGSAP = destroySectionsscrollGSAP;
+window.reinitSectionsscrollGSAP = initSectionsscrollGSAP;
+if (window.innerWidth >= 1180 && document.querySelector(".sectionsscroll")) {
+    ScrollTrigger.config({ autoRefreshEvents: "visibilitychange,DOMContentLoaded,load" });
+    initSectionsscrollGSAP();
 }
 
 
@@ -2939,3 +2739,18 @@ if (typeof ScrollTrigger !== 'undefined' && window.innerWidth >= 1024) {
     });
 }
 
+
+
+const sliderWrapper = document.querySelector('.purpose-slider-wrapper');
+const prevButton = document.querySelector('.swiper-horizontalmobile-prev');
+
+const observer = new MutationObserver(() => {
+    if (prevButton.classList.contains('swiper-button-disabled')) {
+        sliderWrapper.classList.add('hide-after');
+    } else {
+        sliderWrapper.classList.remove('hide-after');
+    }
+});
+
+// Observe class changes
+observer.observe(prevButton, { attributes: true, attributeFilter: ['class'] });

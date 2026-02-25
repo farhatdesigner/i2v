@@ -382,6 +382,10 @@ select.form-control {
   height: 48px;
   width: 100%;
 }
+
+.wpcf7-not-valid.form-control {
+  border: 1px solid #C92629;
+}
 .formpopup_modal select.form-control, .contactform_box select.form-control {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -481,6 +485,7 @@ label.form-label.label_notic {
   margin-bottom: 16px;
   margin-top: 16px;
   font-weight: 400;
+  color: #5F6F94;
 }
 input.wpcf7-submit.form-control.submitbtn {
   height: auto;
@@ -493,6 +498,17 @@ input.wpcf7-submit.form-control.submitbtn {
   line-height: normal;
   margin: 0;
 }
+
+.js-dark input.wpcf7-submit.form-control.submitbtn {
+  background: #007ABE;
+}
+
+
+.iti.iti--allow-dropdown.iti--separate-dial-code.iti--show-flags {
+  width: 100%;
+}
+input:-internal-autofill-selected{background: inherit !important;}
+
 .wpcf7-spinner {
   width: 15px;
   height: 15px;
@@ -501,6 +517,18 @@ input.wpcf7-submit.form-control.submitbtn {
   right: 0;
   top: 0;
   z-index: 1;
+}
+.contactus_form input.wpcf7-submit.form-control.submitbtn:disabled, input.wpcf7-submit.form-control.submitbtn:disabled {
+  background: #D5D5D5;
+  color: #757575;
+  opacity: 1;
+}
+
+.js-dark .contactus_form input.wpcf7-submit.form-control.submitbtn:disabled, .js-dark input.wpcf7-submit.form-control.submitbtn:disabled {
+  background: #D5D5D5;
+  color: #757575;
+  margin: 0;
+  opacity: 1;
 }
 
 label.form-label.required_note svg {
@@ -527,7 +555,7 @@ label.form-label.required_note {
   background-color: #0d1117 !important;
 }
 .js-dark .form-control {
-  border: 1px solid #464a4f;
+  border: 1px solid #ffffff26;
   background: #464a4f;
   color: rgba(255, 255, 255, 0.6);
 }
@@ -595,30 +623,37 @@ label.form-label.label_notic a {
   bottom: unset;
   top: 0;
 }
-.single-careers ul {
+.list_stylecustom ul {
   list-style: disc;
   padding-inline-start: 18px;
 }
 .footer_copyright ul {
     list-style: none !important;
 }
-.single-careers ul li {
+.list_stylecustom ul li {
   margin-bottom: 8px;
 }
 .styled-career-form .file-upload-box {
-  border: 2px dashed #c9ced3;
+  /* border: 2px dashed #E6EBF2; */
   border-radius: 12px;
   padding: 20px;
   text-align: left;
   position: relative;
   display: flex;
-  align-items: center;
-  gap: 16px;
+  align-items: flex-start;
+  gap: 12px;
   cursor: pointer;
   transition: border-color 0.3s ease;
-  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='12' ry='12' stroke='%23E6EBF2FF' stroke-width='1' stroke-dasharray='7.7' stroke-dashoffset='60' stroke-linecap='square'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='12' ry='12' stroke='%23E6EBF2FF' stroke-width='2' stroke-dasharray='7.7' stroke-dashoffset='10' stroke-linecap='square'/%3e%3c/svg%3e");
 border-radius: 12px;
 }
+
+.js-dark .styled-career-form .file-upload-box {
+  background-color: #464a4f;
+  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='12' ry='12' stroke='%23FFFFFF26' stroke-width='2' stroke-dasharray='7.7' stroke-dashoffset='10' stroke-linecap='square'/%3e%3c/svg%3e");
+  border-radius: 12px;
+}
+
 .styled-career-form .file-upload-box:hover {
   border-color: #4a90e2;
 }
@@ -639,23 +674,26 @@ border-radius: 12px;
   flex: 1;
 }
 .styled-career-form .file-upload-box p {
-  font-size: 14px;
-  margin-bottom: 6px;
+  font-size: 16px;
+  margin-bottom:0;
   color: #5f6f94;
   line-height: 20px;
   font-weight: 500;
 }
 .styled-career-form .file-upload-box .browse-link {
-  color: #4a90e2;
+  color: #0099ED;
   text-decoration: underline;
   cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
 }
 .styled-career-form .file-upload-box small {
-  font-size: 12px;
-  color: #8793af;
+  font-size: 14px;
+  color: #8793AF;
   display: block;
   margin-top: 4px;
   line-height: 16px;
+  font-weight: 500;
 }
 .styled-career-form .file-upload-box input[type="file"] {
   position: absolute;
@@ -675,6 +713,14 @@ border-radius: 12px;
 .styled-career-form .file-upload-box.has-file .file-name {
   display: block;
 }
+
+.js-dark .styled-career-form .file-upload-box p {color: #D7DBE4 !important;}
+.js-dark .styled-career-form .file-upload-box .file-name {color: #D7DBE4 !important;}
+.js-dark .styled-career-form .file-upload-box small {color: #8793AF !important;}
+.js-dark .styled-career-form .file-upload-box .browse-link {color: #74C2ED !important;}
+.js-dark .styled-career-form .file-upload-box .file-icon svg path:first-child {fill: #ffffff1a;}
+.js-dark .styled-career-form .file-upload-box .file-icon svg path:last-child {fill: #D7DBE4;;}
+
 /* .styled-career-form .file-upload-box.has-file p {
   display: none;
 } */
@@ -720,9 +766,9 @@ border-radius: 12px;
   span.wpcf7-form-control.wpcf7-radio
   .wpcf7-list-item
   label {
-  border-color: #464a4f;
-  background: #464a4f;
-  color: rgba(255, 255, 255, 0.6);
+    border-color: #464a4f;
+    background: transparent;
+    color: #D7DBE4;
 }
 .js-dark .styled-career-form .file-upload-box {
   border-color: #464a4f;
@@ -1030,8 +1076,9 @@ border-radius: 12px;
   .career-apply-form span.wpcf7-form-control.wpcf7-radio {
     display: flex;
     align-items: start;
-    flex-direction: column;
+    /* flex-direction: column; */
     justify-content: start;
+    max-width: max-content;
   }
   .career-apply-form .wpcf7-list-item {
     margin: 0 0px 10px 0;
