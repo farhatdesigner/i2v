@@ -110,7 +110,8 @@
   align-items: center;
   justify-content: center;
   color: #5f6f94;
-  transition: color 0.3s;
+  transition: color 0.3s, background-color 0.3s;
+  border-radius: 100%;
 }
 /* Search popup dark-mode-toggle: match header appearance */
 .search-input-wrapper .dark-mode-toggle.search-popup-theme-toggle {
@@ -124,7 +125,8 @@
   min-width: 34px;
   min-height: 34px;
   color: #5f6f94;
-  transition: color 0.3s;
+  transition: color 0.3s, background-color 0.3s;
+  border-radius: 100%;
 }
 
 .search-input-wrapper .dark-mode-toggle.search-popup-theme-toggle .icon-sun,
@@ -144,7 +146,8 @@
   align-items: center;
   justify-content: center;
   color: #5f6f94;
-  transition: color 0.3s;
+  transition: color 0.3s, background-color 0.3s;
+  border-radius: 100%;
 }
 
 .js-dark .search-popup-close,
@@ -156,11 +159,21 @@
 .search-popup-close:hover,
 .search-popup-theme-toggle:hover {
   color: #333;
+  background-color: #e6ebf2;
+}
+
+.js-dark .search-popup-close svg path,
+.js-dark .search-popup-theme-toggle svg path {
+  fill: #EFF1F5 !important;
 }
 
 .js-dark .search-popup-close:hover,
 .js-dark .search-popup-theme-toggle:hover {
-  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.js-dark .search-popup-close:hover svg path,
+.js-dark .search-popup-theme-toggle:hover svg path {
+  fill: #EFF1F5 !important;
 }
 
 /* Search Popup Content */

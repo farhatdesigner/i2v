@@ -2739,3 +2739,18 @@ if (typeof ScrollTrigger !== 'undefined' && window.innerWidth >= 1024) {
     });
 }
 
+
+
+const sliderWrapper = document.querySelector('.purpose-slider-wrapper');
+const prevButton = document.querySelector('.swiper-horizontalmobile-prev');
+
+const observer = new MutationObserver(() => {
+    if (prevButton.classList.contains('swiper-button-disabled')) {
+        sliderWrapper.classList.add('hide-after');
+    } else {
+        sliderWrapper.classList.remove('hide-after');
+    }
+});
+
+// Observe class changes
+observer.observe(prevButton, { attributes: true, attributeFilter: ['class'] });

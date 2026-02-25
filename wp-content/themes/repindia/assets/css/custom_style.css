@@ -368,7 +368,7 @@ ul#header-main-menu li a {
   gap: 0;
 }
 .btn-demo {
-  color: #0099ed;
+  color: #0099ED;
   font-size: 18px;
   font-weight: 600;
   position: relative;
@@ -380,12 +380,7 @@ ul#header-main-menu li a {
   background: #E6EBF2;
   color: #008EDB;
 }
-.js-dark .search-popup-footer #header-main-menu a, .js-dark .search-popup-footer .btn-demo {
-  color: #D7DBE4;
-}
-.js-dark .search-popup-footer #header-main-menu a:hover, .js-dark .search-popup-footer .btn-demo:hover {
-  background: #464a4f;
-}
+
 .search-popup-footer ul#header-main-menu li > a:before {
   background: #8793af;
   position: absolute;
@@ -398,11 +393,22 @@ ul#header-main-menu li a {
   opacity: 1;
 }
 .search-popup-footer #header-main-menu li:last-child a {
-  color: #5f6f94;
+  color: #5F6F94;
+}
+.search-popup-footer #header-main-menu li:last-child a:hover {
+  color: #4A5673;
+  background: #E6EBF2;
 }
 
 .js-dark .search-popup-footer #header-main-menu li:last-child a {
-  color: #aeb6c9;
+  color: #D7DBE4;
+}
+.js-dark .search-popup-footer #header-main-menu a, .js-dark .search-popup-footer .btn-demo {
+  color: #74C2ED;
+}
+.js-dark .search-popup-footer #header-main-menu a:hover, .js-dark .search-popup-footer .btn-demo:hover {
+  background: #ffffff1a !important;
+  color: #D7DBE4 !important;
 }
 .search-popup-footer #header-main-menu li{margin: 0 14px;padding: 0;list-style: none;}
 header #header-main-menu li {
