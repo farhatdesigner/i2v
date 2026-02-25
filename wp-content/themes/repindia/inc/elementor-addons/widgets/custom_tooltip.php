@@ -264,38 +264,6 @@ class Custom_Tooltip extends Widget_Base
         );
 
         $this->add_control(
-            'popup_icon_type',
-            [
-                'label' => esc_html__('Popup Icon Type', 'repindia'),
-                'type' => \Elementor\Controls_Manager::SELECT,
-                'default' => 'icon',
-                'options' => [
-                    'icon' => esc_html__('Icon', 'repindia'),
-                    'image' => esc_html__('Image', 'repindia'),
-                ],
-                'condition' => [
-                    'show_learn_more' => 'yes',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'popup_icon',
-            [
-                'label' => esc_html__('Popup Icon', 'repindia'),
-                'type' => \Elementor\Controls_Manager::ICONS,
-                'default' => [
-                    'value' => 'fas fa-info-circle',
-                    'library' => 'fa-solid',
-                ],
-                'condition' => [
-                    'show_learn_more' => 'yes',
-                    'popup_icon_type' => 'icon',
-                ],
-            ]
-        );
-
-        $this->add_control(
             'popup_image',
             [
                 'label' => esc_html__('Popup Image', 'repindia'),
@@ -305,8 +273,22 @@ class Custom_Tooltip extends Widget_Base
                 ],
                 'condition' => [
                     'show_learn_more' => 'yes',
-                    'popup_icon_type' => 'image',
                 ],
+            ]
+        );
+
+        $this->add_control(
+            'popup_image_dark',
+            [
+                'label' => esc_html__('Popup Image (Dark Theme)', 'repindia'),
+                'type' => \Elementor\Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => '',
+                ],
+                'condition' => [
+                    'show_learn_more' => 'yes',
+                ],
+                'description' => esc_html__('Image displayed in popup when dark mode is active (body has js-dark class). Falls back to Popup Image if empty.', 'repindia'),
             ]
         );
 
@@ -723,7 +705,7 @@ class Custom_Tooltip extends Widget_Base
                 ],
                 'default' => [
                     'unit' => 'px',
-                    'size' => 48,
+                    'size' => 40,
                 ],
                 'selectors' => [
                     '{{WRAPPER}} .ctw-popup-icon-wrapper .ctw-popup-icon' => 'font-size: {{SIZE}}{{UNIT}};',
@@ -741,9 +723,6 @@ class Custom_Tooltip extends Widget_Base
                 'selectors' => [
                     '{{WRAPPER}} .ctw-popup-icon-wrapper .ctw-popup-icon' => 'color: {{VALUE}};',
                     '{{WRAPPER}} .ctw-popup-icon-wrapper .ctw-popup-icon svg' => 'fill: {{VALUE}};',
-                ],
-                'condition' => [
-                    'popup_icon_type' => 'icon',
                 ],
             ]
         );
@@ -799,9 +778,8 @@ class Custom_Tooltip extends Widget_Base
         $learn_more_text = !empty($settings['learn_more_text']) ? esc_html($settings['learn_more_text']) : 'Learn more';
         $popup_content = !empty($settings['popup_content']) ? $settings['popup_content'] : '';
         $show_popup_icon = !empty($settings['show_popup_icon']) && $settings['show_popup_icon'] === 'yes';
-        $popup_icon_type = !empty($settings['popup_icon_type']) ? esc_attr($settings['popup_icon_type']) : 'icon';
-        $popup_icon = !empty($settings['popup_icon']) ? $settings['popup_icon'] : null;
-        $popup_image = !empty($settings['popup_image']) ? $settings['popup_image'] : null;
+        $popup_image = !empty($settings['popup_image']) && isset($settings['popup_image']['url']) && !empty($settings['popup_image']['url']) ? $settings['popup_image'] : null;
+        $popup_image_dark = !empty($settings['popup_image_dark']) && isset($settings['popup_image_dark']['url']) && !empty($settings['popup_image_dark']['url']) ? $settings['popup_image_dark'] : null;
 
         // Add inline CSS only once per page
         static $css_added = false;
@@ -852,6 +830,9 @@ class Custom_Tooltip extends Widget_Base
             echo '.ctw-icon-dark { display: none; }';
             echo 'body.js-dark .ctw-icon-light { display: none; }';
             echo 'body.js-dark .ctw-icon-dark { display: inline-flex; }';
+            echo '.ctw-popup-icon-dark { display: none; }';
+            echo 'body.js-dark .ctw-popup-icon-light { display: none; }';
+            echo 'body.js-dark .ctw-popup-icon-dark { display: flex; align-items: center; justify-content: center; }';
             echo '</style>';
         }
 
@@ -1182,59 +1163,24 @@ class Custom_Tooltip extends Widget_Base
                 <div class="ctw-popup-content-wrapper">
                     <?php if ($show_popup_icon): ?>
                         <?php
-                        $has_icon = false;
-                        $has_image = false;
-                        $icon_to_render = null;
-
-                        if ($popup_icon_type === 'icon') {
-                            // Check processed variable first
-                            if ($popup_icon && is_array($popup_icon)) {
-                                if (isset($popup_icon['value']) && !empty($popup_icon['value'])) {
-                                    $has_icon = true;
-                                    $icon_to_render = $popup_icon;
-                                } elseif (isset($popup_icon['library']) && !empty($popup_icon['library'])) {
-                                    $has_icon = true;
-                                    $icon_to_render = $popup_icon;
-                                }
-                            }
-                            // Fallback to raw settings
-                            if (!$has_icon && !empty($settings['popup_icon']) && is_array($settings['popup_icon'])) {
-                                if (isset($settings['popup_icon']['value']) && !empty($settings['popup_icon']['value'])) {
-                                    $has_icon = true;
-                                    $icon_to_render = $settings['popup_icon'];
-                                } elseif (isset($settings['popup_icon']['library']) && !empty($settings['popup_icon']['library'])) {
-                                    $has_icon = true;
-                                    $icon_to_render = $settings['popup_icon'];
-                                }
-                            }
-                        }
-
-                        if ($popup_icon_type === 'image') {
-                            // Check processed variable first
-                            if ($popup_image && isset($popup_image['url']) && !empty($popup_image['url'])) {
-                                $has_image = true;
-                            }
-                            // Fallback to raw settings
-                            if (!$has_image && !empty($settings['popup_image']) && isset($settings['popup_image']['url']) && !empty($settings['popup_image']['url'])) {
-                                $has_image = true;
-                                $popup_image = $settings['popup_image'];
-                            }
-                        }
+                        $popup_image_light = $popup_image;
+                        $popup_image_dark_final = $popup_image_dark ? $popup_image_dark : $popup_image;
                         ?>
-                        <?php if ($has_icon || $has_image): ?>
+                        <?php if ($popup_image_light || $popup_image_dark_final): ?>
                             <div class="ctw-popup-icon-wrapper">
-                                <?php if ($has_icon && $icon_to_render): ?>
-                                    <span class="ctw-popup-icon">
-                                        <?php
-                                        \Elementor\Icons_Manager::render_icon($icon_to_render, [
-                                            'aria-hidden' => 'true',
-                                        ]);
-                                        ?>
+                                <?php if ($popup_image_light): ?>
+                                    <span class="ctw-popup-icon ctw-popup-icon-light">
+                                        <img src="<?php echo esc_url($popup_image_light['url']); ?>"
+                                            alt="<?php echo esc_attr(!empty($popup_image_light['alt']) ? $popup_image_light['alt'] : ''); ?>"
+                                            class="ctw-popup-icon" />
                                     </span>
-                                <?php elseif ($has_image): ?>
-                                    <img src="<?php echo esc_url($popup_image['url']); ?>"
-                                        alt="<?php echo esc_attr(!empty($popup_image['alt']) ? $popup_image['alt'] : ''); ?>"
-                                        class="ctw-popup-icon" />
+                                <?php endif; ?>
+                                <?php if ($popup_image_dark_final): ?>
+                                    <span class="ctw-popup-icon ctw-popup-icon-dark">
+                                        <img src="<?php echo esc_url($popup_image_dark_final['url']); ?>"
+                                            alt="<?php echo esc_attr(!empty($popup_image_dark_final['alt']) ? $popup_image_dark_final['alt'] : ''); ?>"
+                                            class="ctw-popup-icon" />
+                                    </span>
                                 <?php endif; ?>
                             </div>
                         <?php endif; ?>
