@@ -106,12 +106,19 @@
   border: none;
   cursor: pointer;
   padding: 5px;
+  min-width: 34px;
+  min-height: 34px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #5f6f94;
   transition: color 0.3s, background-color 0.3s;
   border-radius: 100%;
+}
+.search-popup-close svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
 }
 /* Search popup dark-mode-toggle: match header appearance */
 .search-input-wrapper .dark-mode-toggle.search-popup-theme-toggle {
@@ -129,11 +136,17 @@
   border-radius: 100%;
 }
 
+/* Override global .dark-mode-toggle icon size so theme toggle matches close icon (22px) */
 .search-input-wrapper .dark-mode-toggle.search-popup-theme-toggle .icon-sun,
-.search-input-wrapper .dark-mode-toggle.search-popup-theme-toggle .icon-moon {
-  width: 24px;
-  height: 24px;
-  margin: 5.3px;
+.search-input-wrapper .dark-mode-toggle.search-popup-theme-toggle .icon-moon,
+.search-popup-theme-toggle .icon-sun,
+.search-popup-theme-toggle .icon-moon {
+  width: 22px !important;
+  height: 22px !important;
+  min-width: 22px;
+  min-height: 22px;
+  margin: 0 !important;
+  flex-shrink: 0;
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
@@ -161,6 +174,21 @@
   color: #333;
   background-color: #e6ebf2;
 }
+.search-input-wrapper .dark-mode-toggle.search-popup-close:hover,
+.search-input-wrapper .dark-mode-toggle.search-popup-theme-toggle:hover {
+  background-color: #e6ebf2;
+}
+.search-input-wrapper .dark-mode-toggle.search-popup-close:hover 
+.search-input-wrapper .dark-mode-toggle.search-popup-theme-toggle:hover {
+  background-color: #e6ebf2;
+}
+
+
+/* Light mode: ensure icon (moon) fill updates on hover (overrides inline fill) */
+.search-popup-theme-toggle svg path {
+  fill: #5f6f94;
+  transition: fill 0.3s ease;
+}
 
 .js-dark .search-popup-close svg path,
 .js-dark .search-popup-theme-toggle svg path {
@@ -169,7 +197,7 @@
 
 .js-dark .search-popup-close:hover,
 .js-dark .search-popup-theme-toggle:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.1) !important;
 }
 .js-dark .search-popup-close:hover svg path,
 .js-dark .search-popup-theme-toggle:hover svg path {
