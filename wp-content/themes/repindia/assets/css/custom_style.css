@@ -1041,6 +1041,7 @@ a:hover {
   z-index: 10;
   transform: translateX(-100%);
   transition: all 500ms ease 0ms;
+  text-align: left;
 }
 
 .toggle-menu-container.open-menu {
@@ -3057,13 +3058,29 @@ label.form-label.required_note-demo {
 
 .leadersslider.elementor-element .swiper .elementor-swiper-button svg{ stroke: #ffffff;
     stroke-width: 50px;}
-.leadersslider.elementor-element .swiper .elementor-swiper-button:hover svg{ stroke: #e6ebf2;}
+.leadersslider.elementor-element .swiper .elementor-swiper-button:hover svg{ stroke: #e6ebf2;
+  width: 40px;
+  height: 40px;
+}
 
 .elementor-element.leadersslider .swiper .elementor-swiper-button-prev {
   left: 0;
 }
 
 .elementor-element.leadersslider .swiper ~ .elementor-swiper-button-prev {
+/* Purpose slider nav – same hover as leadersslider (no stroke) */
+.purpose-slider-wrapper .purpose-swiper .swiper-button-next,
+.purpose-slider-wrapper .purpose-swiper .swiper-button-prev {
+  background: #fff;
+  border: 1px solid #e5e9ec;
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.purpose-slider-wrapper .purpose-swiper .swiper-button-next:hover,
+.purpose-slider-wrapper .purpose-swiper .swiper-button-prev:hover {
+  background-color: #e6ebf2;
+  border-color: #c5c9cc;
+}
+
   right: 0;
 }
 
@@ -3732,6 +3749,9 @@ svg.connection-line-7 {
 ul.privacy-policy {
   padding: 0px 0px 40px 0px;
   margin: 0;
+}
+ul.privacy-policy li {
+  margin-bottom: 12px;
 }
 ul.privacy-policy:last-child {
   padding: 0;

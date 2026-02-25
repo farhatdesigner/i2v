@@ -81,7 +81,7 @@ a.explr_btn.xl-btn:hover,a.home_btn.xl-btn:hover,
 .formpopup_modal .modal-demo-form .modal-title { font-size: 18px;font-weight: 600; }
 .formpopup_modal .career-apply-form.styled-career-form { padding: 20px 30px;padding-top: 85px;}
 .formpopup_modal form.wpcf7-form p { margin: 0; }
-.formpopup_modal input.form-control, select.form-control{ max-height: 40px; }
+/* .formpopup_modal input.form-control, select.form-control{ max-height: 40px; } */
 .formpopup_modal .form-control{ border-radius: 8px; }
 .formpopup_modal .modal-content {
   z-index: 99999;

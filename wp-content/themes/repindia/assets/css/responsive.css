@@ -382,6 +382,10 @@ select.form-control {
   height: 48px;
   width: 100%;
 }
+
+.wpcf7-not-valid.form-control {
+  border: 1px solid #C92629;
+}
 .formpopup_modal select.form-control, .contactform_box select.form-control {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -481,6 +485,7 @@ label.form-label.label_notic {
   margin-bottom: 16px;
   margin-top: 16px;
   font-weight: 400;
+  color: #5F6F94;
 }
 input.wpcf7-submit.form-control.submitbtn {
   height: auto;
@@ -493,6 +498,17 @@ input.wpcf7-submit.form-control.submitbtn {
   line-height: normal;
   margin: 0;
 }
+
+.js-dark input.wpcf7-submit.form-control.submitbtn {
+  background: #007ABE;
+}
+
+
+.iti.iti--allow-dropdown.iti--separate-dial-code.iti--show-flags {
+  width: 100%;
+}
+input:-internal-autofill-selected{background: inherit !important;}
+
 .wpcf7-spinner {
   width: 15px;
   height: 15px;
@@ -502,13 +518,13 @@ input.wpcf7-submit.form-control.submitbtn {
   top: 0;
   z-index: 1;
 }
-.contactus_form input.wpcf7-submit.form-control.submitbtn {
+.contactus_form input.wpcf7-submit.form-control.submitbtn:disabled, input.wpcf7-submit.form-control.submitbtn:disabled {
   background: #D5D5D5;
   color: #757575;
   opacity: 1;
 }
 
-.js-dark .contactus_form input.wpcf7-submit.form-control.submitbtn {
+.js-dark .contactus_form input.wpcf7-submit.form-control.submitbtn:disabled, .js-dark input.wpcf7-submit.form-control.submitbtn:disabled {
   background: #D5D5D5;
   color: #757575;
   margin: 0;
@@ -607,14 +623,14 @@ label.form-label.label_notic a {
   bottom: unset;
   top: 0;
 }
-.single-careers ul {
+.list_stylecustom ul {
   list-style: disc;
   padding-inline-start: 18px;
 }
 .footer_copyright ul {
     list-style: none !important;
 }
-.single-careers ul li {
+.list_stylecustom ul li {
   margin-bottom: 8px;
 }
 .styled-career-form .file-upload-box {

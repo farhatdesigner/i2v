@@ -926,6 +926,18 @@ header li.burger-icon .icon-sun,
   background: rgba(255, 206, 147, 0.1);
   color: #fff;
 }
+/* Purpose slider nav – same as leadersslider (no stroke) */
+.js-dark .purpose-slider-wrapper .purpose-swiper .swiper-button-next,
+.js-dark .purpose-slider-wrapper .purpose-swiper .swiper-button-prev {
+  background: #464a4f;
+  border-color: rgba(193, 196, 198, 0.2);
+}
+.js-dark .purpose-slider-wrapper .purpose-swiper .swiper-button-next:hover,
+.js-dark .purpose-slider-wrapper .purpose-swiper .swiper-button-prev:hover {
+  background: #5a5e64;
+  border-color: rgba(193, 196, 198, 0.4);
+}
+
 .js-dark .purpose-slider-wrapper .purpose-swiper:before{ 
   background: linear-gradient(270deg, rgba(13, 17, 23, 0.00) 0%, #0D1117 83.82%); }
 
