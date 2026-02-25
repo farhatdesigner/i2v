@@ -465,10 +465,26 @@ class Scalescroll2 extends Widget_Base
                             $youtube_thumb_dark = !empty($item['youtube_thumbnail_dark']['url']) ? $item['youtube_thumbnail_dark']['url'] : $youtube_thumb_default;
                             ?>
 
-                            <div class="photo photo_custom"> 
-                                <?php if ( !empty($image_default)) : ?>
+                            <div class="photo photo_custom">
+                                <?php if ($media_type === 'image' && !empty($image_default)) : ?>
                                     <img class="white_theme_img radius-12" decoding="async" src="<?php echo esc_url($image_default); ?>" alt="<?php echo esc_attr($image_default_alt); ?>">
                                     <img class="black_theme_img radius-12" decoding="async" src="<?php echo esc_url($image_dark); ?>" alt="<?php echo esc_attr($image_dark_alt); ?>">
+                                <?php elseif ($media_type === 'youtube' && !empty($youtube_id_default)) : ?>
+                                    <?php
+                                    $youtube_thumb_default_final = !empty($youtube_thumb_default) ? $youtube_thumb_default : 'https://img.youtube.com/vi/' . esc_attr($youtube_id_default) . '/hqdefault.jpg';
+                                    $youtube_thumb_dark_final = !empty($youtube_thumb_dark) ? $youtube_thumb_dark : 'https://img.youtube.com/vi/' . esc_attr($youtube_id_dark) . '/hqdefault.jpg';
+                                    ?>
+                                    <div class="youtube-wrapper radius-12" style="position: relative; width: 100%; height: 60vh; overflow: hidden; cursor: pointer;">
+                                        <iframe class="radius-12 youtube-iframe white_theme_iframe" data-video-id="<?php echo esc_attr($youtube_id_default); ?>" src="" width="100%" height="60vh" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture mute" allowfullscreen style="width: 100%; height: 60vh; position: absolute; top: 0; left: 0; z-index: 1;"></iframe>
+                                        <iframe class="radius-12 youtube-iframe black_theme_iframe" data-video-id="<?php echo esc_attr($youtube_id_dark); ?>" src="" width="100%" height="60vh" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture mute" allowfullscreen style="width: 100%; height: 60vh; position: absolute; top: 0; left: 0; z-index: 1; display: none;"></iframe>
+                                        <img src="<?php echo esc_url($youtube_thumb_default_final); ?>" alt="Video thumbnail" class="youtube-thumb white_theme_thumb" style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; top: 0; left: 0; z-index: 2; cursor: pointer;" />
+                                        <img src="<?php echo esc_url($youtube_thumb_dark_final); ?>" alt="Video thumbnail" class="youtube-thumb black_theme_thumb" style="width: 100%; height: 100%; object-fit: cover; display: none; position: absolute; top: 0; left: 0; z-index: 2; cursor: pointer;" />
+                                        <button class="play-btn" aria-label="Play video">
+                                            <svg width="32" height="32" viewBox="0 0 24 24" fill="white" style="margin-left: 4px;">
+                                                <path d="M8 5v14l11-7z" />
+                                            </svg>
+                                        </button>
+                                    </div>
                                 <?php endif; ?>
 
                                 <div class="details details-<?php echo esc_attr($item_num); ?>">
@@ -515,6 +531,85 @@ class Scalescroll2 extends Widget_Base
             </div>
         </div>
 
+        <script>
+            (function () {
+                document.addEventListener('DOMContentLoaded', function () {
+                    const youtubeWrappers = document.querySelectorAll('.scalescroll2-widget .youtube-wrapper');
+                    youtubeWrappers.forEach(function (wrapper) {
+                        const thumbs = wrapper.querySelectorAll('.youtube-thumb');
+                        const iframes = wrapper.querySelectorAll('.youtube-iframe');
+                        const playBtn = wrapper.querySelector('.play-btn');
+                        let isPlaying = false;
+
+                        if (iframes.length > 0) {
+                            function getActiveElements() {
+                                const isDark = document.body.classList.contains('js-dark') || document.documentElement.classList.contains('js-dark');
+                                const activeIframe = isDark
+                                    ? wrapper.querySelector('.black_theme_iframe') || wrapper.querySelector('.youtube-iframe')
+                                    : wrapper.querySelector('.white_theme_iframe') || wrapper.querySelector('.youtube-iframe');
+                                const activeThumb = isDark
+                                    ? wrapper.querySelector('.black_theme_thumb') || wrapper.querySelector('.youtube-thumb')
+                                    : wrapper.querySelector('.white_theme_thumb') || wrapper.querySelector('.youtube-thumb');
+                                return { iframe: activeIframe, thumb: activeThumb };
+                            }
+
+                            function playVideo(muted) {
+                                if (isPlaying) return;
+                                isPlaying = true;
+                                const { iframe, thumb } = getActiveElements();
+                                if (thumb) thumb.style.display = 'none';
+                                thumbs.forEach(function (t) { t.style.display = 'none'; });
+                                iframes.forEach(function (i) { i.style.display = 'none'; });
+                                if (playBtn) playBtn.style.display = 'none';
+
+                                if (iframe) {
+                                    const videoId = iframe.getAttribute('data-video-id');
+                                    iframe.style.display = 'block';
+                                    var params = 'autoplay=1&rel=0';
+                                    if (muted) params += '&mute=1';
+                                    iframe.src = 'https://www.youtube.com/embed/' + videoId + '?' + params;
+                                }
+                            }
+
+                            function stopVideo() {
+                                if (!isPlaying) return;
+                                isPlaying = false;
+                                iframes.forEach(function (i) {
+                                    i.src = 'about:blank';
+                                    i.style.display = 'none';
+                                });
+                                thumbs.forEach(function (t) { t.style.display = ''; });
+                                if (playBtn) playBtn.style.display = 'block';
+                            }
+
+                            thumbs.forEach(function (thumb) {
+                                thumb.addEventListener('click', function () { playVideo(false); });
+                            });
+                            if (playBtn) {
+                                playBtn.addEventListener('click', function (e) {
+                                    e.stopPropagation();
+                                    playVideo(false);
+                                });
+                            }
+                            wrapper.addEventListener('click', function (e) {
+                                if (e.target === wrapper) playVideo(false);
+                            });
+
+                            var observer = new IntersectionObserver(function (entries) {
+                                entries.forEach(function (entry) {
+                                    if (entry.isIntersecting) {
+                                        playVideo(true);
+                                    } else {
+                                        stopVideo();
+                                    }
+                                });
+                            }, { threshold: 0.25, rootMargin: '0px' });
+                            observer.observe(wrapper);
+                        }
+                    });
+                });
+            })();
+        </script>
 
 <?php
     }
