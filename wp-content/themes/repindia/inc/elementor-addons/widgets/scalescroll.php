@@ -557,7 +557,7 @@ class Scalescroll extends Widget_Base
             }
 
             .featuregroup_repeator h3.nested-title-1 {
-                color: #06283D;
+                color: #4A5673;
     font-size: 16px;
     font-style: normal;
     font-weight: 500 !important;

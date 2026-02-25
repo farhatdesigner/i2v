@@ -158,12 +158,32 @@ class Custom_Purpose_Slider extends Widget_Base
 
                     <!-- Navigation -->
                     <div class="swiper-button-next swiper-horizontalmobile-next">
-                        <img class="default_liicon" src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-white.svg" alt="Next">
-                        <img class="dark_liicon" src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/dark_right_arrow.svg" alt="Next">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M20 0.5C30.7696 0.5 39.5 9.23045 39.5 20C39.5 30.7696 30.7696 39.5 20 39.5C9.23045 39.5 0.5 30.7696 0.5 20C0.5 9.23045 9.23045 0.5 20 0.5Z"
+                                fill="white" />
+                            <path
+                                d="M20 0.5C30.7696 0.5 39.5 9.23045 39.5 20C39.5 30.7696 30.7696 39.5 20 39.5C9.23045 39.5 0.5 30.7696 0.5 20C0.5 9.23045 9.23045 0.5 20 0.5Z"
+                                stroke="#E5E9EC" />
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M20.3254 13.6575C20.7593 13.2236 21.4628 13.2236 21.8967 13.6575L27.4523 19.213C27.6607 19.4214 27.7777 19.704 27.7777 19.9987C27.7777 20.2934 27.6607 20.576 27.4523 20.7844L21.8967 26.3399C21.4628 26.7738 20.7593 26.7738 20.3254 26.3399C19.8915 25.906 19.8915 25.2025 20.3254 24.7686L23.9842 21.1098L13.3333 21.1098C12.7196 21.1098 12.2222 20.6123 12.2222 19.9987C12.2222 19.385 12.7196 18.8876 13.3333 18.8876L23.9842 18.8876L20.3254 15.2288C19.8915 14.7949 19.8915 14.0914 20.3254 13.6575Z"
+                                fill="#5F6F94" />
+                        </svg>
                     </div>
                     <div class="swiper-button-prev swiper-horizontalmobile-prev">
-                        <img class="default_liicon" src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-white.svg" alt="Prev">
-                        <img class="dark_liicon" src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/dark_right_arrow.svg" alt="Prev">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M20 0.5C30.7696 0.5 39.5 9.23045 39.5 20C39.5 30.7696 30.7696 39.5 20 39.5C9.23045 39.5 0.5 30.7696 0.5 20C0.5 9.23045 9.23045 0.5 20 0.5Z"
+                                fill="white" />
+                            <path
+                                d="M20 0.5C30.7696 0.5 39.5 9.23045 39.5 20C39.5 30.7696 30.7696 39.5 20 39.5C9.23045 39.5 0.5 30.7696 0.5 20C0.5 9.23045 9.23045 0.5 20 0.5Z"
+                                stroke="#E5E9EC" />
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M19.6746 13.6575C20.1085 14.0914 20.1085 14.7949 19.6746 15.2288L16.0158 18.8876L26.6667 18.8876C27.2803 18.8876 27.7778 19.385 27.7778 19.9987C27.7778 20.6123 27.2803 21.1098 26.6667 21.1098L16.0158 21.1098L19.6746 24.7686C20.1085 25.2025 20.1085 25.906 19.6746 26.3399C19.2406 26.7738 18.5371 26.7738 18.1032 26.3399L12.5477 20.7844C12.3393 20.576 12.2222 20.2934 12.2222 19.9987C12.2222 19.704 12.3393 19.4214 12.5477 19.213L18.1032 13.6575C18.5371 13.2236 19.2406 13.2236 19.6746 13.6575Z"
+                                fill="#949494" />
+                        </svg>
+
+
                     </div>
                 </div>
             </div>
@@ -178,6 +198,7 @@ class Custom_Purpose_Slider extends Widget_Base
             .js-dark .dark_liicon {
                 display: block;
             }
+
             .purpose-slider-wrapper {
                 position: relative;
             }
@@ -231,7 +252,39 @@ class Custom_Purpose_Slider extends Widget_Base
 
             .purpose-slider-wrapper .purpose-swiper .swiper-horizontalmobile-prev {
                 left: 10px;
-                transform: translateY(-20px) rotate(180deg);
+                /* transform: translateY(-20px) rotate(180deg); */
+            }
+
+
+            .purpose-slider-wrapper .purpose-swiper .swiper-horizontalmobile-next:hover svg path,
+            .purpose-slider-wrapper .purpose-swiper .swiper-horizontalmobile-prev:hover svg path {
+                stroke: #c5c9cc;
+                fill: #e6ebf2;
+                opacity: 1;
+            }
+
+            .purpose-slider-wrapper .purpose-swiper .swiper-horizontalmobile-next:hover svg path:last-child,
+            .purpose-slider-wrapper .purpose-swiper .swiper-horizontalmobile-prev:hover svg path:last-child {
+                stroke: transparent;
+                fill: #5F6F94;
+            }
+
+
+            .js-dark .purpose-slider-wrapper .purpose-swiper .swiper-horizontalmobile-next svg path,
+            .js-dark .purpose-slider-wrapper .purpose-swiper .swiper-horizontalmobile-prev svg path {
+                stroke: #c1c4c633;
+                fill: #464a4f;
+                opacity: 1;
+            }
+
+            .js-dark .purpose-slider-wrapper .purpose-swiper .swiper-horizontalmobile-next svg path:last-child,
+            .js-dark .purpose-slider-wrapper .purpose-swiper .swiper-horizontalmobile-prev svg path:last-child {
+                stroke: transparent;
+                fill: #D7DBE4;
+            }
+            .js-dark .purpose-slider-wrapper .purpose-swiper .swiper-horizontalmobile-next:hover svg path,
+            .js-dark .purpose-slider-wrapper .purpose-swiper .swiper-horizontalmobile-prev:hover svg path {
+                stroke: rgba(193, 196, 198, 0.4);;
             }
 
             .swiper-button-next.swiper-button-disabled,

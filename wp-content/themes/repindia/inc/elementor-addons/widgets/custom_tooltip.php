@@ -830,7 +830,12 @@ class Custom_Tooltip extends Widget_Base
             echo '.ctw-tooltip-inner b,.ctw-tooltip-inner strong{ font-weight: bold!important;}';
             echo '.ctw-popup-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.55); z-index: 99997; }';
             echo '.ctw-popup-box { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); background: #ffffff; padding: 20px; max-width: 600px; width: 90%; border-radius: 12px; z-index: 99998;box-shadow: 0 0 15px 0 rgba(138, 149, 158, 0.40);white-space: normal; }';
-            echo '.ctw-popup-close { position: absolute; top: 12px; right: 12px; cursor: pointer; font-size: 22px; }';
+            echo '.ctw-popup-close { position: absolute; top: 12px; right: 12px; cursor: pointer; 
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+    border-radius: 100%;
+    text-align: center;}';
             echo '.ctw-learn-more-btn {padding: 0 !important;font-size: 16px !important;border-color: #E6EBF2; font-weight: 600 !important;border-radius: 0 !important;margin-top: 0.5rem;}';
             echo '.ctw-popup-content-wrapper { display: flex; align-items: flex-start; gap: 20px; }';
             echo '.ctw-popup-icon-wrapper { flex-shrink: 0; display: flex; align-items: center; justify-content: center; }';
@@ -981,7 +986,22 @@ class Custom_Tooltip extends Widget_Base
                 line-height: 26px;
                 color: #5C5C5C;
             }
+            .ctw-popup-close:hover {
+  background: #e6ebf2;
+}
+.ctw-popup-close:focus {
+  background: #e6ebf2;
+  border: 1px solid #d7dbe4;
+  outline: 0;
+}
 
+.js-dark .ctw-popup-close:hover {
+  background: #ffffff1a;
+  color: #d7dbe4;
+}
+.js-dark .ctw-popup-box {
+  background: #262A30;
+}
             .tooltiptitlebox .ctw-title .ctw-text p {
                 color: #06283D;
                 font-size: 20px;

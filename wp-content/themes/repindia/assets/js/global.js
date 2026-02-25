@@ -261,21 +261,18 @@ $(document).ready(function () {
     var modalScrollPosition = 0;
     var brochureModalScrollPosition = 0;
 
-    // Single debounced run after any modal close: re-create cards + gallery ScrollTriggers so layout is correct (fixes popup-close distortion for cards, gallery, hz-slider-section, hz-slider-topcaption)
+    // Single debounced run after any modal/menu close: re-create cards + gallery + hz-slider ScrollTriggers so layout is correct (fixes popup-close distortion for careers-list and industry details)
     window.scheduleCardsRefreshAfterModalClose = function () {
         if (window._cardsModalRefreshTimer) clearTimeout(window._cardsModalRefreshTimer);
         window._cardsModalRefreshTimer = setTimeout(function () {
             window._cardsModalRefreshTimer = null;
-            // Ensure body is fully reset before re-creating pins (prevents distorted layout)
-            $("body").removeClass("modal-open");
-            $("body").css({ "overflow": "", "padding-right": "", "position": "", "top": "", "left": "", "right": "", "width": "" });
             if (typeof initCardsCustomBodyGSAP === "function") {
                 initCardsCustomBodyGSAP();
             }
             if (typeof initGalleryGSAP === "function") {
                 initGalleryGSAP();
             }
-            // Re-create hz-slider-section and hz-slider-topcaption pins (same as cards/gallery: fixes popup-close UI distortion)
+            // Re-init horizontal sliders (hz-slider-section, hz-slider-topcaption) so layout is correct after menu/modal close
             if (typeof window.reinitHzSliderSectionGSAP === "function") {
                 window.reinitHzSliderSectionGSAP();
             }
@@ -285,7 +282,6 @@ $(document).ready(function () {
             if (typeof ScrollTrigger !== "undefined") {
                 requestAnimationFrame(function () {
                     ScrollTrigger.refresh();
-                    // Sync gallery visible photo to current scroll after re-create (so correct image shows)
                     var gallerySections = document.querySelectorAll(".makdmks .detailsWrapper .details");
                     var galleryPhotos = document.querySelectorAll(".makdmks .photo");
                     if (gallerySections.length && galleryPhotos.length && typeof gsap !== "undefined") {
@@ -300,35 +296,28 @@ $(document).ready(function () {
                         gsap.set(galleryPhotos, { opacity: 0 });
                         gsap.set(galleryPhotos[photoIndex], { opacity: 1 });
                     }
-                    // Sync hz-slider-section and hz-slider-topcaption visible slide to current scroll
+                    // Sync horizontal sliders to current scroll position after reinit
                     if (typeof window.syncHzSliderSectionToScroll === "function") {
                         window.syncHzSliderSectionToScroll();
                     }
                     if (typeof window.syncHzSliderTopcaptionToScroll === "function") {
                         window.syncHzSliderTopcaptionToScroll();
+                    }
+                    // Re-apply scroll after GSAP refresh (next tick) so layout and scroll stay in sync when modal scroll came from body.style.top e.g. hamburger open
+                    if (window._modalRestoreScrollPosition != null) {
+                        var pos = Math.max(0, Math.round(window._modalRestoreScrollPosition));
+                        window._modalRestoreScrollPosition = null;
+                        setTimeout(function () {
+                            window.scrollTo(0, pos);
+                            document.documentElement.scrollTop = pos;
+                            document.body.scrollTop = pos;
+                        }, 0);
                     }
                 });
-                // Second refresh after short delay so pin spacers settle correctly after popup close
-                setTimeout(function () {
-                    ScrollTrigger.refresh();
-                    if (typeof window.syncHzSliderSectionToScroll === "function") {
-                        window.syncHzSliderSectionToScroll();
-                    }
-                    if (typeof window.syncHzSliderTopcaptionToScroll === "function") {
-                        window.syncHzSliderTopcaptionToScroll();
-                    }
-                }, 100);
-                setTimeout(function () {
-                    ScrollTrigger.refresh();
-                    if (typeof window.syncHzSliderSectionToScroll === "function") {
-                        window.syncHzSliderSectionToScroll();
-                    }
-                    if (typeof window.syncHzSliderTopcaptionToScroll === "function") {
-                        window.syncHzSliderTopcaptionToScroll();
-                    }
-                }, 500);
+            } else if (window._modalRestoreScrollPosition != null) {
+                window._modalRestoreScrollPosition = null;
             }
-        }, 450);
+        }, 350);
     };
 
     // Helper function to get scrollbar width
@@ -597,11 +586,26 @@ $(document).ready(function () {
                 if (originalBodyScrollBehavior) {
                     $("body").css("scroll-behavior", originalBodyScrollBehavior);
                 }
+                // Re-run ScrollTrigger/slider refresh after menu close (fixes careers-list hz-slider distortion when menu popup is closed)
+                window._modalRestoreScrollPosition = restorePosition;
+                if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
+                    window.scheduleCardsRefreshAfterModalClose();
+                }
             });
         });
         
         isMenuOpen = false;
     }
+
+    // Track last focused form field inside formpopup so we can restore it when modal is reopened
+    $(document).on('focusin', '.formpopup_modal', function (e) {
+        var el = e.target;
+        if (el && (el.tagName === "INPUT" || el.tagName === "TEXTAREA" || el.tagName === "SELECT")) {
+            formpopupLastFocusedElement = el;
+        }
+    });
+
+
 
     // Lock body scroll when formpopup_modal opens
     $(document).on('show.bs.modal', '.formpopup_modal', function () {
@@ -611,6 +615,19 @@ $(document).ready(function () {
                               document.body.scrollTop ||
                               $(window).scrollTop() ||
                               0;
+
+                // When body is already position:fixed (e.g. hamburger menu open), pageYOffset is often 0 - use body's top so we don't restore to 0 on modal close
+                if (modalScrollPosition === 0 && document.body.style.position === "fixed" && document.body.style.top) {
+                    var topVal = document.body.style.top;
+                    if (topVal && topVal.indexOf("-") === 0) {
+                        var fromTop = Math.abs(parseInt(topVal, 10));
+                        if (!isNaN(fromTop)) {
+                            modalScrollPosition = fromTop;
+                        }
+                    }
+                }
+        
+                              
 
         // Ensure we have a valid number
         modalScrollPosition = Math.max(0, Math.round(modalScrollPosition));
@@ -622,13 +639,6 @@ $(document).ready(function () {
                     st.disable(false, false);
                 }
             });
-        }
-        // Destroy hz-slider pin triggers before locking body so pin-spacers are removed and layout doesn't break on close
-        if (typeof window.destroyHzSliderSectionGSAP === "function") {
-            window.destroyHzSliderSectionGSAP();
-        }
-        if (typeof window.destroyHzSliderTopcaptionGSAP === "function") {
-            window.destroyHzSliderTopcaptionGSAP();
         }
 
         // Then lock body scroll (order matters: unpin first, then fixed)
@@ -714,11 +724,8 @@ $(document).ready(function () {
                     $("body").css("scroll-behavior", originalBodyScrollBehavior);
                 }
 
-                // Force-clear any residual body styles and Bootstrap modal-open so layout is correct before refresh
-                $("body").removeClass("modal-open");
-                $("body").css({ "overflow": "", "padding-right": "", "position": "", "top": "", "left": "", "right": "", "width": "" });
-
-                // Schedule single enable+refresh so card triggers don't run with stale positions (fixes 2nd open distortion)
+                // Pass intended scroll position so it can be re-applied after GSAP refresh (avoids GSAP/scroll conflict when body was fixed e.g. hamburger)
+                window._modalRestoreScrollPosition = restorePosition;
                 if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
                     window.scheduleCardsRefreshAfterModalClose();
                 }
@@ -740,11 +747,9 @@ $(document).ready(function () {
             0;
         brochureModalScrollPosition = Math.max(0, Math.round(brochureModalScrollPosition));
 
-        // Disable card + hz-slider pin ScrollTriggers before locking body (same as cards)
         if (typeof ScrollTrigger !== "undefined") {
             ScrollTrigger.getAll().forEach(function (st) {
-                var id = st.vars && st.vars.id ? String(st.vars.id) : "";
-                if (id.indexOf("card-") === 0 || id === "hz-slider-pin" || id === "hz-slider-topcaption-pin") {
+                if (st.vars && st.vars.id && String(st.vars.id).indexOf("card-") === 0) {
                     st.disable(false, false);
                 }
             });
@@ -818,8 +823,7 @@ $(document).ready(function () {
                 if (originalBodyScrollBehavior) {
                     $("body").css("scroll-behavior", originalBodyScrollBehavior);
                 }
-                $("body").removeClass("modal-open");
-                $("body").css({ "overflow": "", "padding-right": "", "position": "", "top": "", "left": "", "right": "", "width": "" });
+                window._modalRestoreScrollPosition = restorePosition;
                 if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
                     window.scheduleCardsRefreshAfterModalClose();
                 }
@@ -1922,13 +1926,13 @@ jQuery(document).ready(function() {
             instance.pause();
         });
 
-        // Disable card + hz-slider pin ScrollTriggers while any modal is open (same as cards; re-create on close)
+        if (typeof window.destroyHzSliderSectionGSAP === "function") window.destroyHzSliderSectionGSAP();
+        if (typeof window.destroyHzSliderTopcaptionGSAP === "function") window.destroyHzSliderTopcaptionGSAP();
+        if (typeof window.destroySectionsscrollGSAP === "function") window.destroySectionsscrollGSAP();
         if (typeof ScrollTrigger !== "undefined") {
             ScrollTrigger.getAll().forEach(function(st) {
                 var id = st.vars && st.vars.id ? String(st.vars.id) : "";
-                if (id.indexOf("card-") === 0 || id === "hz-slider-pin" || id === "hz-slider-topcaption-pin") {
-                    st.disable(false, false);
-                }
+                if (id.indexOf("card-") === 0) st.disable(false, false);
             });
         }
         
@@ -1975,9 +1979,11 @@ jQuery(document).ready(function() {
             }
         }, 100);
 
-        // Force-clear body and modal-open so layout resets before refresh (shared with formpopup/brochure close)
-        jQuery("body").removeClass("modal-open");
-        jQuery("body").css({ "overflow": "", "padding-right": "", "position": "", "top": "", "left": "", "right": "", "width": "" });
+        if (typeof window.forceBodyReset === "function") window.forceBodyReset();
+        else {
+            jQuery("body").removeClass("modal-open");
+            jQuery("body").css({ "overflow": "auto", "padding-right": "0", "position": "", "top": "", "left": "", "right": "", "width": "" });
+        }
         if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
             window.scheduleCardsRefreshAfterModalClose();
         }
@@ -1990,57 +1996,46 @@ jQuery(document).ready(function() {
 });
 
 
-if (window.innerWidth >= 1180 && document.querySelector(".sectionsscroll")) {
+function initSectionsscrollGSAP() {
+    if (window.innerWidth < 1180 || !document.querySelector(".sectionsscroll")) return;
+    if (typeof ScrollTrigger === "undefined") return;
     gsap.registerPlugin(ScrollTrigger);
-    ScrollTrigger.config({
-        autoRefreshEvents: 'visibilitychange,DOMContentLoaded,load',
-    })
-    const resize = () => {
-        console.log('resize')
-        ScrollTrigger.refresh()
-    }
-    
-    // Only select panels within sectionsscroll to avoid conflicts
-    const sectionsscrollEl = document.querySelector(".sectionsscroll");
-    const panels = gsap.utils.toArray(".sectionsscroll .animate-right");
-    const content = gsap.utils.toArray(".sectionsscroll .animate-left");
-    
-    // Skip if no panels found
-    if (panels.length > 0) {
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: ".sectionsscroll",
-                start: "top 20%",
-                endTrigger: '.sectionsscroll',
-                end: () => "+=" + 200 * panels.length + "%",
-                pin: true,
-                pinSpacing: true,
-                markers: false,
-                scrub: 1,
-                invalidateOnRefresh: true,
-                refreshPriority: 1, // Higher priority, refreshes first
-                id: "sectionsscroll-pin"
-            }
-        });
-        panels.forEach((panel, index) => {
-            tl.from(
-                panel,
-                {
-                    yPercent: 100,
-                    ease: "slow",
-                },
-                "+=0.1"
-            );
-            tl.from(
-                content[index],
-                {
-                    yPercent: 100,
-                    ease: "slow",
-                },
-                "<"
-            );
-        });
-    }
+    ScrollTrigger.getAll().forEach(function (st) {
+        if (st.vars && st.vars.id === "sectionsscroll-pin") st.kill();
+    });
+    var panels = gsap.utils.toArray(".sectionsscroll .animate-right");
+    var content = gsap.utils.toArray(".sectionsscroll .animate-left");
+    if (panels.length === 0) return;
+    var tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: ".sectionsscroll",
+            start: "top 20%",
+            endTrigger: ".sectionsscroll",
+            end: function () { return "+=" + (200 * panels.length) + "%"; },
+            pin: true,
+            pinSpacing: true,
+            markers: false,
+            scrub: 1,
+            invalidateOnRefresh: true,
+            refreshPriority: 1,
+            id: "sectionsscroll-pin"
+        }
+    });
+    panels.forEach(function (panel, index) {
+        tl.from(panel, { yPercent: 100, ease: "slow" }, "+=0.1");
+        tl.from(content[index], { yPercent: 100, ease: "slow" }, "<");
+    });
+}
+function destroySectionsscrollGSAP() {
+    if (typeof ScrollTrigger === "undefined") return;
+    var st = ScrollTrigger.getById("sectionsscroll-pin");
+    if (st) st.kill();
+}
+window.destroySectionsscrollGSAP = destroySectionsscrollGSAP;
+window.reinitSectionsscrollGSAP = initSectionsscrollGSAP;
+if (window.innerWidth >= 1180 && document.querySelector(".sectionsscroll")) {
+    ScrollTrigger.config({ autoRefreshEvents: "visibilitychange,DOMContentLoaded,load" });
+    initSectionsscrollGSAP();
 }
 
 
@@ -2744,3 +2739,18 @@ if (typeof ScrollTrigger !== 'undefined' && window.innerWidth >= 1024) {
     });
 }
 
+
+
+const sliderWrapper = document.querySelector('.purpose-slider-wrapper');
+const prevButton = document.querySelector('.swiper-horizontalmobile-prev');
+
+const observer = new MutationObserver(() => {
+    if (prevButton.classList.contains('swiper-button-disabled')) {
+        sliderWrapper.classList.add('hide-after');
+    } else {
+        sliderWrapper.classList.remove('hide-after');
+    }
+});
+
+// Observe class changes
+observer.observe(prevButton, { attributes: true, attributeFilter: ['class'] });
