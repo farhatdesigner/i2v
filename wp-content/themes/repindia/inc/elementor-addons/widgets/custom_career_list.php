@@ -224,7 +224,7 @@ class Custom_Career_List extends Widget_Base {
         .js-dark .career_whywork .purpose-swiper .swiper-slide figure.caption-scroll figcaption{ background: transparent; border-bottom-left-radius: 12px;border-bottom-right-radius: 12px; }
         .js-dark .elementor-element.career_faq .e-n-accordion-item .e-flex.e-con.e-child,.js-dark .elementor-element.career_faq  .elementor-widget-n-accordion .e-n-accordion-item-title{
             background-color: #262A30 !important;
-            border: 1px solid rgb(193 196 198 / 20%) !important;
+            border: 1px solid var(--Golbal-others-border, rgba(193, 196, 198, 0.1)) !important;
         }
         
 

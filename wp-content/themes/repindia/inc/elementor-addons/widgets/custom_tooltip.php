@@ -815,7 +815,7 @@ class Custom_Tooltip extends Widget_Base
     border-radius: 100%;
     text-align: center;}';
             echo '.ctw-learn-more-btn {padding: 0 !important;font-size: 16px !important;border-color: #E6EBF2; font-weight: 600 !important;border-radius: 0 !important;margin-top: 0.5rem;}';
-            echo '.ctw-popup-content-wrapper { display: flex; align-items: flex-start; gap: 20px; }';
+            echo '.ctw-popup-content-wrapper { display: flex; align-items: flex-start; gap: 20px;padding-right: 20px; }';
             echo '.ctw-popup-icon-wrapper { flex-shrink: 0; display: flex; align-items: center; justify-content: center; }';
             echo '.ctw-popup-icon-wrapper .ctw-popup-icon { font-size: 24px; color: #0073aa;max-width: 40px;max-height: 40px; }';
             echo '.ctw-popup-icon-wrapper .ctw-popup-icon img,.ctw-popup-icon-wrapper .ctw-popup-icon svg { max-width: 40px; height: 40px; display: block; }';
