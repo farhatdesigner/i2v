@@ -2773,7 +2773,12 @@ label.form-label.required_note-demo {
   > .e-n-tab-title[aria-selected="false"]:not(:hover) {
   border: 0 !important;
 }
-
+#tab_table .elementor-element.elementor-element-4cde0ab.elementor-widget-n-tabs > .e-n-tabs > .e-n-tabs-heading > .e-n-tab-title[aria-selected="false"]:not(:hover) {
+  border: 1px solid transparent !important;
+}
+ #tab_table button[aria-selected="false"]:hover span.e-n-tab-title-text  {
+  color: #06283d;
+}
 .js-dark
   .elementor-element.elementor-widget-n-tabs
   > .e-n-tabs[data-touch-mode="false"]
@@ -2873,10 +2878,10 @@ label.form-label.required_note-demo {
 
 #tab_table .e-n-tabs-heading {
   background: #fff;
-  width: 280px;
+  max-width: max-content;
   border-radius: 40px;
   border: 1px solid #e6ebf2;
-  gap: 20px;
+  gap: 8px;
   align-items: center;
   justify-content: center;
   padding: 8px;

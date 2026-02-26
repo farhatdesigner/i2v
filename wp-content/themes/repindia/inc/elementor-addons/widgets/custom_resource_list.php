@@ -223,7 +223,8 @@ class Custom_Resource_List extends Widget_Base {
                 .js-dark .resource-sort select{ border-color: #464a4f;;color: rgba(255, 255, 255, 0.9);background: #262A30;appearance:none; background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%234A5673' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center;text-overflow: ellipsis;white-space: nowrap; }
                 .js-dark .resource-sort select option{ border-color: #262A30; }
                 .js-dark .resource-file-size{ color: rgba(255, 255, 255, 0.9); }
-                .js-dark .resource-type-badge{ background: rgba(255, 206, 147, 0.1);color: #fff; }
+                .js-dark .resource-type-badge{background: rgba(255, 206, 147, 0.1);color: #D7DBE4;border: 1px solid rgb(255 255 255 / 10%);}
+                .js-dark .resource-card:hover .resource-type-badge {border: 1px solid rgb(255 255 255 / 10%);}
                 img.filter-icon-dark{ display: none; }
                 .js-dark img.filter-icon{ display: none; }
                 .js-dark img.filter-icon-dark{ display: block; }
