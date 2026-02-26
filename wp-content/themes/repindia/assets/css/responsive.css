@@ -299,6 +299,10 @@ a.blank_anchor:hover {
   .js-dark .elementor-element.partner_choose_desc .elementor-widget-image-box,.js-dark .elementor-element.partner_tech_desc .elementor-widget-image-box {
   background-color: #262a30 !important;
 }
+
+.js-dark .elementor-6096 .elementor-element.elementor-element-10af7b1d > .e-n-accordion > .e-n-accordion-item > .e-n-accordion-item-title {
+  border-color: #3e4144;
+}
 .js-dark
   .elementor-element.partner_choose_desc
   .e-n-accordion-item

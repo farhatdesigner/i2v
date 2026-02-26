@@ -291,9 +291,14 @@ header li.burger-icon .icon-sun,
 }
 .js-dark #breadcrumbs > span > span > a,
 .js-dark .elementor-shortcode > span a {
-  border: 1px solid rgba(193, 196, 198, 0.1);
-  background: #262a30;
-  color: #d7dbe4;
+  border: 1px solid rgb(193 196 198 / 10%);
+  background: #262A30;
+  color: #D7DBE4;
+}
+.js-dark #breadcrumbs > span > span > a:hover {
+  background: #ffffff26;
+  border: 1px solid #C1C4C6;
+  color: #D7DBE4;
 }
 .js-dark #breadcrumbs svg path {
   fill: #d7dbe4;

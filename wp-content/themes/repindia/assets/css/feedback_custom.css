@@ -551,16 +551,17 @@ html.lenis body {
 }
 #breadcrumbs > span > span > a {
   border-radius: var(--3XL, 28px);
-  border: 1px solid var(--Golbal-others-border, #e6ebf2);
+  border: 1px solid#E6EBF2;
   background: var(--tabs-tab-fill-bg-default, #fff);
   padding: 4px 12px;
-  color: var(--tabs-tab-btn-text-default, #4a5673);
+  color: #4A5673;
   font-size: 14px;
   font-weight: 500;
 }
 #breadcrumbs > span > span > a:hover {
-  background: #f2f5fa;
-  border: 1px solid #d7dbe4;
+  background: #F2F5FA;
+  border: 1px solid #D7DBE4;
+  color:#06283D;
 }
 
 span.breadcrumb_last {

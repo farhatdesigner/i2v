@@ -611,7 +611,7 @@ h2 {
 
 .iti__country-list {
   width: auto;
-  max-width: 335px;
+  max-width: 316px;
   overflow-x: hidden !important;
 }
 /* Scrollbar same as modal */
@@ -3767,7 +3767,9 @@ ul.privacy-policy li a, ul.privacy-policy li a:hover {
 .elementor-image-box-description a {
   color: #5C5C5C;
 }
-
+.js-dark .elementor-image-box-description a {
+  color: #AEB6C9;
+}
 .privacy-policy-title {
   color: #06283d;
   font-size: 32px;
