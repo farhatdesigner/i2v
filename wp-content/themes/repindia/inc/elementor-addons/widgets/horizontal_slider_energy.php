@@ -137,13 +137,29 @@ class Horizontal_Slider_Energy extends Widget_Base
         ?>
         
        <style>
-        .hz-slider-topcaption .static_slide .slider-image.slider_static_img img{ width: auto;height: auto; }
-        .hz-slider-topcaption .swiper-slide.static_slide{background: transparent;}
+        .hz-slider-energy .static_slide .slider-image.slider_static_img img{ width: auto;height: auto; }
+        .hz-slider-energy .swiper-slide.static_slide{background: transparent;}
         .static_slide .slider-image_content{ 
           flex: 1;
           display: flex;
           flex-direction: column;
           min-height: 100%;
+        }
+        .hz-slider-topcaption.hz-slider-energy .swiper-slide .slider-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .hz-slider-topcaption.hz-slider-energy .swiper-slide .slider-content img {
+            width: 45px;
+            height: 45px;
+        }
+        .hz-slider-topcaption.hz-slider-energy .swiper-slide .slider-image { position: relative; }
+        .hz-slider-topcaption.hz-slider-energy .swiper-slide {
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, #000 100%);
+            padding: 0;
         }
         @media(max-width: 768px){
             .static_slide .slider-image_content { 
@@ -152,9 +168,9 @@ class Horizontal_Slider_Energy extends Widget_Base
             }
         }
        </style>
-        <div class="hz-slider-topcaption">
+        <div class="hz-slider-topcaption hz-slider-energy">
             <section class="slider">
-                <div class="swiper">
+                <div class="swiper energyswiper">
                     <div class="swiper-wrapper">
                         <?php if (!empty($slider_items)) : ?>
                         <?php foreach ($slider_items as $item) : ?>
@@ -171,24 +187,24 @@ class Horizontal_Slider_Energy extends Widget_Base
                                 $description = !empty($item['slider_description']) ? $item['slider_description'] : '';
                                 ?>
                                 <div class="swiper-slide">
-                                    <div class="slider-content">
-                                        <?php if (!empty($default_logo_icon)) : ?>
-                                            <img class="logo_iconimg white_theme_img" src="<?php echo esc_url($default_logo_icon); ?>" alt="<?php echo esc_attr($default_logo_icon_alt); ?>">
-                                            <img class="logo_iconimg black_theme_img" src="<?php echo esc_url($dark_logo_image_); ?>" alt="<?php echo esc_attr($dark_logo_image__alt); ?>">
-                                        <?php endif; ?>
-                                        <?php if (!empty($title)) : ?>
-                                            <h3><?php echo esc_html($title); ?></h3>
-                                        <?php endif; ?>
-                                        <?php if (!empty($description)) : ?>
-                                            <p><?php echo wp_kses_post($description); ?></p>
-                                        <?php endif; ?>
-                                    </div>
-                                    <?php if (!empty($image_default)) : ?>
-                                        <div class="slider-image">
+                                    <div class="slider-image">
+                                        <?php if (!empty($image_default)) : ?>
                                             <img class="white_theme_img" src="<?php echo esc_url($image_default); ?>" alt="<?php echo esc_attr($image_default_alt); ?>">
                                             <img class="black_theme_img" src="<?php echo esc_url($image_dark); ?>" alt="<?php echo esc_attr($image_dark_alt); ?>">
+                                        <?php endif; ?>
+                                        <div class="slider-content">
+                                            <?php if (!empty($default_logo_icon)) : ?>
+                                                <img class="logo_iconimg white_theme_img" src="<?php echo esc_url($default_logo_icon); ?>" alt="<?php echo esc_attr($default_logo_icon_alt); ?>">
+                                                <img class="logo_iconimg black_theme_img" src="<?php echo esc_url($dark_logo_image_); ?>" alt="<?php echo esc_attr($dark_logo_image__alt); ?>">
+                                            <?php endif; ?>
+                                            <?php if (!empty($title)) : ?>
+                                                <h3><?php echo esc_html($title); ?></h3>
+                                            <?php endif; ?>
+                                            <?php if (!empty($description)) : ?>
+                                                <p><?php echo wp_kses_post($description); ?></p>
+                                            <?php endif; ?>
                                         </div>
-                                    <?php endif; ?>
+                                    </div>
                                 </div>
                                 <?php endforeach; ?>
                             <?php endif; ?>
