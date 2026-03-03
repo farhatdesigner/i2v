@@ -137,6 +137,21 @@ class Horizontal_Slider_Energy extends Widget_Base
         ?>
         
        <style>
+        /* Ensure energy slider full width, starts from container, auto-adjust slides */
+        .elementor-widget-horizontal_slider_energy,
+        .elementor-widget-horizontal_slider_energy > .elementor-widget-container {
+          padding: 0 !important;
+          margin: 0 !important;
+          max-width: 100% !important;
+          width: 100% !important;
+        }
+        .hz-slider-energy .energyswiper {
+          width: 100%;
+          overflow: visible;
+        }
+        .hz-slider-energy .slider {
+          width: 100%;
+        }
         .hz-slider-energy .static_slide .slider-image.slider_static_img img{ width: auto;height: auto; }
         .hz-slider-energy .swiper-slide.static_slide{background: transparent;}
         .static_slide .slider-image_content{ 
@@ -160,7 +175,7 @@ class Horizontal_Slider_Energy extends Widget_Base
             height: 45px;
         }
         .hz-slider-topcaption.hz-slider-energy .swiper-slide .slider-image { position: relative; }
-        .hz-slider-topcaption.hz-slider-energy .swiper-slide{ position: relative;padding: 0;border-radius: 12px;overflow: hidden; }
+        .hz-slider-topcaption.hz-slider-energy .swiper-slide{ position: relative;padding: 0;border-radius: 12px; }
         .hz-slider-topcaption.hz-slider-energy .swiper-slide:before {
             background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, #000 100%);
             padding: 0;
@@ -179,6 +194,7 @@ class Horizontal_Slider_Energy extends Widget_Base
             color: rgba(255, 255, 255, 0.90);
             margin-bottom: 8px;
             margin-top: 17px;
+            max-width: 85%;
         }
         .hz-slider-topcaption.hz-slider-energy .swiper-slide p {
             color: #AEB6C9;
@@ -187,11 +203,59 @@ class Horizontal_Slider_Energy extends Widget_Base
             font-weight: 400;
             line-height: 24px !important;
             margin: 0;
+            max-width: 85%;
         }
         .hz-slider-topcaption.hz-slider-energy .slider-image img.bgslider_img {
-            height: 100%;
+            height: 475px;
             min-height: 475px;
             max-height: 100%;
+        }
+        /* Expand/collapse description - energy slider only */
+        .hz-slider-energy .slider-content {
+            position: relative;
+        }
+        .hz-slider-energy .collapsed_desc {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s ease-in-out;
+        }
+        .hz-slider-energy .slider-content.expanded .collapsed_desc {
+            max-height: 500px;
+            transition: max-height 0.6s ease-in-out;
+        }
+        .hz-slider-energy .energy-toggle-btn {
+            position: absolute;
+            bottom: 32px;
+            right: 32px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #464A4F;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            line-height: 1;
+            font-weight: 300;
+            transition: background 0.2s;
+            z-index: 5;
+        }
+        .hz-slider-energy .energy-toggle-btn .icon-minus { display: none; }
+        .hz-slider-energy .energy-toggle-btn .icon-plus { display: inline; }
+        .hz-slider-energy .slider-content.expanded .energy-toggle-btn .icon-minus { display: inline; }
+        .hz-slider-energy .slider-content.expanded .energy-toggle-btn .icon-plus { display: none; }
+        .hz-slider-energy .slider-content:has(.energy-toggle-btn) {
+            padding-right: 52px;
+            padding-bottom: 8px;
+        }
+        .hz-slider-energy .collapsed_desc p {
+            margin: 0 0 8px;
+        }
+        .hz-slider-energy .collapsed_desc p:last-child {
+            margin-bottom: 0;
         }
         @media(max-width: 768px){
             .static_slide .slider-image_content { 
@@ -200,8 +264,9 @@ class Horizontal_Slider_Energy extends Widget_Base
             }
         }
        </style>
-        <div class="hz-slider-topcaption hz-slider-energy">
-            <section class="slider">
+        <div class="custom-container">
+            <div class="hz-slider-topcaption hz-slider-energy">
+                <section class="slider">
                 <div class="swiper energyswiper">
                     <div class="swiper-wrapper">
                         <?php if (!empty($slider_items)) : ?>
@@ -233,9 +298,13 @@ class Horizontal_Slider_Energy extends Widget_Base
                                                 <h3><?php echo esc_html($title); ?></h3>
                                             <?php endif; ?>
                                             <?php if (!empty($description)) : ?>
-                                                <div class="collasped_desc">
-                                                <?php echo wp_kses_post($description); ?>
+                                                <div class="collapsed_desc">
+                                                    <?php echo wp_kses_post($description); ?>
                                                 </div>
+                                                <button type="button" class="energy-toggle-btn" aria-label="<?php echo esc_attr__('Toggle description', 'repindia'); ?>">
+                                                    <span class="icon-plus">+</span>
+                                                    <span class="icon-minus">−</span>
+                                                </button>
                                             <?php endif; ?>
                                         </div>
                                     </div>
@@ -245,8 +314,24 @@ class Horizontal_Slider_Energy extends Widget_Base
 
                     </div>
                 </div>
-            </section>
+                </section>
+            </div>
         </div>
+
+        <script>
+        (function() {
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelectorAll('.hz-slider-energy .energy-toggle-btn').forEach(function(btn) {
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        var content = this.closest('.slider-content');
+                        if (content) content.classList.toggle('expanded');
+                    });
+                });
+            });
+        })();
+        </script>
 
         <?php
     }

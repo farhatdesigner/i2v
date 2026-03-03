@@ -1269,6 +1269,18 @@ div.pin-spacer > .hz-slider-topcaption {
   width: 100% !important;
 }
 
+/* Energy slider: align with container, remove Elementor padding */
+.elementor-widget-horizontal_slider_energy,
+.elementor-widget-horizontal_slider_energy > .elementor-widget-container {
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
+}
+.elementor-widget-horizontal_slider_energy .custom-container {
+  padding: 0 !important;
+}
+
 .hz-slider-topcaption section:not(.slider) {
   display: flex;
   flex-flow: column nowrap;

@@ -2754,6 +2754,8 @@ if (document.querySelector(".hz-slider-energy .energyswiper")) {
     effect: 'slide',
     resistance: true,
     resistanceRatio: 0.85,
+    observer: true,
+    observeParents: true,
     breakpoints: {
       580: { slidesPerView: 1.1, spaceBetween: 20 },
       768: { slidesPerView: 1.2, spaceBetween: 20 },
@@ -2778,6 +2780,10 @@ if (document.querySelector(".hz-slider-energy .energyswiper")) {
   }
   applyCorrectEnergySlidesPerView();
   setTimeout(applyCorrectEnergySlidesPerView, 100);
+  window.addEventListener('load', function() {
+    applyCorrectEnergySlidesPerView();
+    hzEnergySwiper.update();
+  });
 
   function initHzEnergyGSAP() {
     if (window.innerWidth < 1024) return;
@@ -2842,6 +2848,7 @@ if (document.querySelector(".hz-slider-energy .energyswiper")) {
     clearTimeout(hzEnergyResizeTimer);
     hzEnergyResizeTimer = setTimeout(function () {
       applyCorrectEnergySlidesPerView();
+      hzEnergySwiper.update();
       const isDesktop = window.innerWidth >= 1024;
       const hasGSAP = hzEnergyScrollTrigger !== null;
       if (isDesktop && !hasGSAP) initHzEnergyGSAP();
