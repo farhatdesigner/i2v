@@ -2796,10 +2796,10 @@ if (document.querySelector(".hz-slider-energy .energyswiper")) {
     hzEnergyTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: ".hz-slider-energy .slider",
-        pin: ".elementor-widget-horizontal_slider_energy .custom-container",
+        pin: ".elementor-element.energycontainer.custom-container",
         pinSpacing: true,
         pinReparent: false,
-        start: "top 20%",
+        start: "top 190px",
         end: "+=" + scrollDistance + "vh",
         scrub: 2,
         markers: false,
