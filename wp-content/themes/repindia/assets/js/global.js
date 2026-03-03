@@ -2746,7 +2746,7 @@ if (document.querySelector(".hz-slider-energy .energyswiper")) {
     speed: 1200,
     loop: false,
     slidesPerView: 1.1,
-    spaceBetween: 30,
+    spaceBetween: 20,
     loopAddBlankSlides: false,
     slideToClickedSlide: true,
     centeredSlides: false,
@@ -2755,10 +2755,10 @@ if (document.querySelector(".hz-slider-energy .energyswiper")) {
     resistance: true,
     resistanceRatio: 0.85,
     breakpoints: {
-      580: { slidesPerView: 1.1, spaceBetween: 30 },
-      768: { slidesPerView: 1.2, spaceBetween: 30 },
-      1024: { slidesPerView: 1.5, spaceBetween: 30 },
-      1280: { slidesPerView: 3.1, spaceBetween: 30 }
+      580: { slidesPerView: 1.1, spaceBetween: 20 },
+      768: { slidesPerView: 1.2, spaceBetween: 20 },
+      1024: { slidesPerView: 1.5, spaceBetween: 20 },
+      1280: { slidesPerView: 3.1, spaceBetween: 20 }
     }
   });
 

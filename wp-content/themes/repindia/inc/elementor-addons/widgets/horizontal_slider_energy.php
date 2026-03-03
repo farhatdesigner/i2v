@@ -147,19 +147,51 @@ class Horizontal_Slider_Energy extends Widget_Base
         }
         .hz-slider-topcaption.hz-slider-energy .swiper-slide .slider-content {
             position: absolute;
-            top: 0;
+            bottom: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            justify-content: flex-end;
+            padding: 32px;
+            z-index: 333;
         }
         .hz-slider-topcaption.hz-slider-energy .swiper-slide .slider-content img {
             width: 45px;
             height: 45px;
         }
         .hz-slider-topcaption.hz-slider-energy .swiper-slide .slider-image { position: relative; }
-        .hz-slider-topcaption.hz-slider-energy .swiper-slide {
+        .hz-slider-topcaption.hz-slider-energy .swiper-slide{ position: relative;padding: 0;border-radius: 12px;overflow: hidden; }
+        .hz-slider-topcaption.hz-slider-energy .swiper-slide:before {
             background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, #000 100%);
             padding: 0;
+            width: 100%;
+            height: 100%;
+            content: '';
+            position: absolute;
+            z-index: 2;
+            border-radius: 12px;
+        }
+        .hz-slider-topcaption.hz-slider-energy .swiper-slide h3 {
+            font-size: 28px;
+            font-style: normal;
+            font-weight: 500!important;
+            line-height: 34px;
+            color: rgba(255, 255, 255, 0.90);
+            margin-bottom: 8px;
+            margin-top: 17px;
+        }
+        .hz-slider-topcaption.hz-slider-energy .swiper-slide p {
+            color: #AEB6C9;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 24px !important;
+            margin: 0;
+        }
+        .hz-slider-topcaption.hz-slider-energy .slider-image img.bgslider_img {
+            height: 100%;
+            min-height: 475px;
+            max-height: 100%;
         }
         @media(max-width: 768px){
             .static_slide .slider-image_content { 
@@ -189,8 +221,8 @@ class Horizontal_Slider_Energy extends Widget_Base
                                 <div class="swiper-slide">
                                     <div class="slider-image">
                                         <?php if (!empty($image_default)) : ?>
-                                            <img class="white_theme_img" src="<?php echo esc_url($image_default); ?>" alt="<?php echo esc_attr($image_default_alt); ?>">
-                                            <img class="black_theme_img" src="<?php echo esc_url($image_dark); ?>" alt="<?php echo esc_attr($image_dark_alt); ?>">
+                                            <img class="bgslider_img white_theme_img" src="<?php echo esc_url($image_default); ?>" alt="<?php echo esc_attr($image_default_alt); ?>">
+                                            <img class="bgslider_img black_theme_img" src="<?php echo esc_url($image_dark); ?>" alt="<?php echo esc_attr($image_dark_alt); ?>">
                                         <?php endif; ?>
                                         <div class="slider-content">
                                             <?php if (!empty($default_logo_icon)) : ?>
@@ -201,7 +233,9 @@ class Horizontal_Slider_Energy extends Widget_Base
                                                 <h3><?php echo esc_html($title); ?></h3>
                                             <?php endif; ?>
                                             <?php if (!empty($description)) : ?>
-                                                <p><?php echo wp_kses_post($description); ?></p>
+                                                <div class="collasped_desc">
+                                                <?php echo wp_kses_post($description); ?>
+                                                </div>
                                             <?php endif; ?>
                                         </div>
                                     </div>
