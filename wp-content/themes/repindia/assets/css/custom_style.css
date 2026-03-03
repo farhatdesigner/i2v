@@ -5333,3 +5333,8 @@ span.star {
 .elementor-element.enforcegrid_box .elementor-widget {
   border-color: #d7dbe4 !important;
 }
+.elementor-element.realitybox {
+  width: 224px !important;
+  max-width: 100% !important; 
+  min-width: 224px !important;
+}
