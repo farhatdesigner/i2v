@@ -196,7 +196,7 @@ class Horizontal_Slider_Energy extends Widget_Base
             margin-top: 17px;
             max-width: 85%;
         }
-        .hz-slider-topcaption.hz-slider-energy .swiper-slide p {
+        .hz-slider-topcaption.hz-slider-energy .swiper-slide p, .hz-slider-topcaption.hz-slider-energy .swiper-slide .collapsed_desc-inner {
             color: #AEB6C9;
             font-size: 16px;
             font-style: normal;
@@ -292,7 +292,7 @@ class Horizontal_Slider_Energy extends Widget_Base
                 width: 35px;
                 height: 35px; 
             }
-            .hz-slider-topcaption.hz-slider-energy .swiper-slide p {
+            .hz-slider-topcaption.hz-slider-energy .swiper-slide p,.hz-slider-topcaption.hz-slider-energy .swiper-slide .collapsed_desc-inner {
                 font-size: 14px;
                 line-height: 20px !important;
             }
