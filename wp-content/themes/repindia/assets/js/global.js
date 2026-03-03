@@ -2796,7 +2796,7 @@ if (document.querySelector(".hz-slider-energy .energyswiper")) {
     hzEnergyTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: ".hz-slider-energy .slider",
-        pin: ".hz-slider-energy",
+        pin: ".elementor-widget-horizontal_slider_energy .custom-container",
         pinSpacing: true,
         pinReparent: false,
         start: "top 20%",
@@ -2806,6 +2806,18 @@ if (document.querySelector(".hz-slider-energy .energyswiper")) {
         invalidateOnRefresh: true,
         refreshPriority: 1,
         id: "hz-slider-energy-pin",
+        onEnter: () => {
+          requestAnimationFrame(() => {
+            applyCorrectEnergySlidesPerView();
+            hzEnergySwiper.update();
+          });
+        },
+        onEnterBack: () => {
+          requestAnimationFrame(() => {
+            applyCorrectEnergySlidesPerView();
+            hzEnergySwiper.update();
+          });
+        },
         onUpdate: (self) => {
           const updatedIndex = Math.round(snap(self.progress) * totalSlides);
           if (updatedIndex !== currentEnergySlide) {
