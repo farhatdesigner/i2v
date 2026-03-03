@@ -215,13 +215,15 @@ class Horizontal_Slider_Energy extends Widget_Base
             position: relative;
         }
         .hz-slider-energy .collapsed_desc {
-            max-height: 0;
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .hz-slider-energy .collapsed_desc-inner {
             overflow: hidden;
-            transition: max-height 0.6s ease-in-out;
         }
         .hz-slider-energy .slider-content.expanded .collapsed_desc {
-            max-height: 500px;
-            transition: max-height 0.6s ease-in-out;
+            grid-template-rows: 1fr;
         }
         .hz-slider-energy .energy-toggle-btn {
             position: absolute;
@@ -240,21 +242,33 @@ class Horizontal_Slider_Energy extends Widget_Base
             font-size: 24px;
             line-height: 1;
             font-weight: 300;
-            transition: background 0.2s;
+            transition: background 0.25s ease, transform 0.2s ease;
             z-index: 5;
         }
-        .hz-slider-energy .energy-toggle-btn .icon-minus { display: none; }
-        .hz-slider-energy .energy-toggle-btn .icon-plus { display: inline; }
-        .hz-slider-energy .slider-content.expanded .energy-toggle-btn .icon-minus { display: inline; }
-        .hz-slider-energy .slider-content.expanded .energy-toggle-btn .icon-plus { display: none; }
+        .hz-slider-energy .energy-toggle-btn:hover {
+            background: #5a5f66;
+        }
+        .hz-slider-energy .energy-toggle-btn .icon-minus,
+        .hz-slider-energy .energy-toggle-btn .icon-plus {
+            transition: opacity 0.25s ease;
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hz-slider-energy .energy-toggle-btn .icon-minus { opacity: 0; }
+        .hz-slider-energy .energy-toggle-btn .icon-plus { opacity: 1; }
+        .hz-slider-energy .slider-content.expanded .energy-toggle-btn .icon-minus { opacity: 1; }
+        .hz-slider-energy .slider-content.expanded .energy-toggle-btn .icon-plus { opacity: 0; }
         .hz-slider-energy .slider-content:has(.energy-toggle-btn) {
             padding-right: 52px;
             padding-bottom: 8px;
         }
-        .hz-slider-energy .collapsed_desc p {
+        .hz-slider-energy .collapsed_desc-inner p {
             margin: 0 0 8px;
         }
-        .hz-slider-energy .collapsed_desc p:last-child {
+        .hz-slider-energy .collapsed_desc-inner p:last-child {
             margin-bottom: 0;
         }
         @media(max-width: 768px){
@@ -262,9 +276,36 @@ class Horizontal_Slider_Energy extends Widget_Base
               min-height: 100%;
               padding: 38px;
             }
+            .hz-slider-topcaption.hz-slider-energy .slider-image img.bgslider_img {
+                height: 100%;
+                min-height: 370px;
+            }
+            .hz-slider-topcaption.hz-slider-energy .swiper-slide h3 {
+                font-size: 20px;
+                font-style: normal;
+                line-height: 24px;
+                margin-top: 15px;
+                max-width: 90%;
+            }
+            .hz-slider-energy .energy-toggle-btn{ bottom: 15px;
+                right: 15px;
+                width: 35px;
+                height: 35px; 
+            }
+            .hz-slider-topcaption.hz-slider-energy .swiper-slide p {
+                font-size: 14px;
+                line-height: 20px !important;
+            }
+            .hz-slider-topcaption.hz-slider-energy .swiper-slide .slider-content {
+                padding: 15px;
+            }
+            .hz-slider-topcaption.hz-slider-energy .swiper-slide .slider-content img {
+                width: 35px;
+                height: 35px;
+            }
         }
        </style>
-        <div class="custom-container">
+        <!-- <div class="custom-container"> -->
             <div class="hz-slider-topcaption hz-slider-energy">
                 <section class="slider">
                 <div class="swiper energyswiper">
@@ -299,7 +340,9 @@ class Horizontal_Slider_Energy extends Widget_Base
                                             <?php endif; ?>
                                             <?php if (!empty($description)) : ?>
                                                 <div class="collapsed_desc">
-                                                    <?php echo wp_kses_post($description); ?>
+                                                    <div class="collapsed_desc-inner">
+                                                        <?php echo wp_kses_post($description); ?>
+                                                    </div>
                                                 </div>
                                                 <button type="button" class="energy-toggle-btn" aria-label="<?php echo esc_attr__('Toggle description', 'repindia'); ?>">
                                                     <span class="icon-plus">+</span>
@@ -316,7 +359,7 @@ class Horizontal_Slider_Energy extends Widget_Base
                 </div>
                 </section>
             </div>
-        </div>
+        <!-- </div> -->
 
         <script>
         (function() {
