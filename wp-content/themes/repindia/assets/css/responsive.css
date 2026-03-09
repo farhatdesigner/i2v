@@ -918,6 +918,9 @@ border-radius: 12px;
   .insights-updates-item-text p {
     margin: 0;
   }
+  .elementor-element.realitybox {
+      width: 100% !important;
+  }
 }
 @media (max-width: 992px) {
   .insights-updates-item-small-icon > img {
