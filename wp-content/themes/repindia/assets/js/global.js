@@ -279,6 +279,9 @@ $(document).ready(function () {
             if (typeof window.reinitHzSliderTopcaptionGSAP === "function") {
                 window.reinitHzSliderTopcaptionGSAP();
             }
+            if (typeof window.reinitHzSliderEnergyGSAP === "function") {
+                window.reinitHzSliderEnergyGSAP();
+            }
             if (typeof ScrollTrigger !== "undefined") {
                 requestAnimationFrame(function () {
                     ScrollTrigger.refresh();
@@ -302,6 +305,9 @@ $(document).ready(function () {
                     }
                     if (typeof window.syncHzSliderTopcaptionToScroll === "function") {
                         window.syncHzSliderTopcaptionToScroll();
+                    }
+                    if (typeof window.syncHzSliderEnergyToScroll === "function") {
+                        window.syncHzSliderEnergyToScroll();
                     }
                     // Re-apply scroll after GSAP refresh (next tick) so layout and scroll stay in sync when modal scroll came from body.style.top e.g. hamburger open
                     if (window._modalRestoreScrollPosition != null) {
@@ -1928,6 +1934,7 @@ jQuery(document).ready(function() {
 
         if (typeof window.destroyHzSliderSectionGSAP === "function") window.destroyHzSliderSectionGSAP();
         if (typeof window.destroyHzSliderTopcaptionGSAP === "function") window.destroyHzSliderTopcaptionGSAP();
+        if (typeof window.destroyHzSliderEnergyGSAP === "function") window.destroyHzSliderEnergyGSAP();
         if (typeof window.destroySectionsscrollGSAP === "function") window.destroySectionsscrollGSAP();
         if (typeof ScrollTrigger !== "undefined") {
             ScrollTrigger.getAll().forEach(function(st) {
@@ -2515,13 +2522,14 @@ if (document.querySelector(".hz-slider-section .swiper")) {
 }
 
 // Horizontal Slider Topcaption (unique instance - no conflict with hz-slider-section)
-if (document.querySelector(".hz-slider-topcaption .swiper")) {
+// Excludes energyswiper so energy widget gets its own config
+if (document.querySelector(".hz-slider-topcaption .swiper:not(.energyswiper)")) {
   // Store reference to ScrollTrigger instance for cleanup
   let hzTopcaptionScrollTrigger = null;
   let hzTopcaptionTimeline = null;
   let currentTopcaptionSlide = 0;
   
-  const hzTopcaptionSwiper = new Swiper(".hz-slider-topcaption .swiper", {
+  const hzTopcaptionSwiper = new Swiper(".hz-slider-topcaption .swiper:not(.energyswiper)", {
     speed: 1200,
     loop: false,
     slidesPerView: 1.1,
@@ -2728,6 +2736,152 @@ if (document.querySelector(".hz-slider-topcaption .swiper")) {
   }
 }
 
+// Horizontal Slider Energy (3.1 slides on desktop vs 4.1 for topcaption)
+if (document.querySelector(".hz-slider-energy .energyswiper")) {
+  let hzEnergyScrollTrigger = null;
+  let hzEnergyTimeline = null;
+  let currentEnergySlide = 0;
+
+  const hzEnergySwiper = new Swiper(".hz-slider-energy .energyswiper", {
+    speed: 1200,
+    loop: false,
+    slidesPerView: 1.1,
+    spaceBetween: 20,
+    loopAddBlankSlides: false,
+    slideToClickedSlide: true,
+    centeredSlides: false,
+    allowTouchMove: window.innerWidth < 1024,
+    effect: 'slide',
+    resistance: true,
+    resistanceRatio: 0.85,
+    observer: true,
+    observeParents: true,
+    breakpoints: {
+      580: { slidesPerView: 1.1, spaceBetween: 20 },
+      768: { slidesPerView: 1.2, spaceBetween: 20 },
+      1024: { slidesPerView: 1.5, spaceBetween: 20 },
+      1280: { slidesPerView: 3.1, spaceBetween: 20 }
+    }
+  });
+
+  hzEnergySwiper.slideTo(0);
+
+  function applyCorrectEnergySlidesPerView() {
+    const width = window.innerWidth;
+    let slidesPerView = 1.1;
+    if (width >= 1280) slidesPerView = 3.1;
+    else if (width >= 1024) slidesPerView = 1.5;
+    else if (width >= 768) slidesPerView = 1.2;
+    else slidesPerView = 1.1;
+    if (hzEnergySwiper.params.slidesPerView !== slidesPerView) {
+      hzEnergySwiper.params.slidesPerView = slidesPerView;
+      hzEnergySwiper.update();
+    }
+  }
+  applyCorrectEnergySlidesPerView();
+  setTimeout(applyCorrectEnergySlidesPerView, 100);
+  window.addEventListener('load', function() {
+    applyCorrectEnergySlidesPerView();
+    hzEnergySwiper.update();
+  });
+
+  function initHzEnergyGSAP() {
+    if (window.innerWidth < 1024) return;
+    gsap.registerPlugin(ScrollTrigger);
+    const totalSlides = hzEnergySwiper.slides.length;
+    const snap = gsap.utils.snap(1 / totalSlides);
+    const scrollDistance = totalSlides * 150;
+    hzEnergySwiper.allowTouchMove = false;
+    applyCorrectEnergySlidesPerView();
+    hzEnergyTimeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".hz-slider-energy .slider",
+        pin: ".elementor-element.energycontainer.custom-container",
+        pinSpacing: true,
+        pinReparent: false,
+        start: "top 190px",
+        end: "+=" + scrollDistance + "vh",
+        scrub: 2,
+        markers: false,
+        invalidateOnRefresh: true,
+        refreshPriority: 1,
+        id: "hz-slider-energy-pin",
+        onEnter: () => {
+          requestAnimationFrame(() => {
+            applyCorrectEnergySlidesPerView();
+            hzEnergySwiper.update();
+          });
+        },
+        onEnterBack: () => {
+          requestAnimationFrame(() => {
+            applyCorrectEnergySlidesPerView();
+            hzEnergySwiper.update();
+          });
+        },
+        onUpdate: (self) => {
+          const updatedIndex = Math.round(snap(self.progress) * totalSlides);
+          if (updatedIndex !== currentEnergySlide) {
+            currentEnergySlide = updatedIndex;
+            hzEnergySwiper.slideTo(currentEnergySlide, 1200);
+          }
+        }
+      }
+    });
+    hzEnergyScrollTrigger = hzEnergyTimeline.scrollTrigger;
+  }
+
+  function destroyHzEnergyGSAP() {
+    if (hzEnergyScrollTrigger) { hzEnergyScrollTrigger.kill(); hzEnergyScrollTrigger = null; }
+    if (hzEnergyTimeline) { hzEnergyTimeline.kill(); hzEnergyTimeline = null; }
+    hzEnergySwiper.allowTouchMove = true;
+    hzEnergySwiper.update();
+    currentEnergySlide = 0;
+    hzEnergySwiper.slideTo(0);
+  }
+
+  initHzEnergyGSAP();
+  window.destroyHzSliderEnergyGSAP = destroyHzEnergyGSAP;
+  window.reinitHzSliderEnergyGSAP = function () {
+    if (window.innerWidth >= 1024) { destroyHzEnergyGSAP(); initHzEnergyGSAP(); }
+  };
+  window.syncHzSliderEnergyToScroll = function () {
+    if (typeof ScrollTrigger === "undefined" || window.innerWidth < 1024) return;
+    var st = ScrollTrigger.getById("hz-slider-energy-pin");
+    if (!st || !hzEnergySwiper.slides.length) return;
+    var totalSlides = hzEnergySwiper.slides.length;
+    var snap = gsap.utils.snap(1 / totalSlides);
+    var idx = Math.min(Math.round(snap(st.progress) * totalSlides), totalSlides - 1);
+    currentEnergySlide = idx;
+    hzEnergySwiper.slideTo(idx, 0);
+  };
+
+  let hzEnergyResizeTimer;
+  window.addEventListener("resize", function () {
+    clearTimeout(hzEnergyResizeTimer);
+    hzEnergyResizeTimer = setTimeout(function () {
+      applyCorrectEnergySlidesPerView();
+      hzEnergySwiper.update();
+      const isDesktop = window.innerWidth >= 1024;
+      const hasGSAP = hzEnergyScrollTrigger !== null;
+      if (isDesktop && !hasGSAP) initHzEnergyGSAP();
+      else if (!isDesktop && hasGSAP) destroyHzEnergyGSAP();
+      else if (isDesktop && hasGSAP) ScrollTrigger.refresh();
+    }, 250);
+  });
+
+  if (!window._hzSliderEnergyLoadBound) {
+    window._hzSliderEnergyLoadBound = true;
+    function refreshHzEnergyScrollTrigger() {
+      if (typeof ScrollTrigger === "undefined") return;
+      requestAnimationFrame(function () { ScrollTrigger.refresh(); });
+      setTimeout(function () { ScrollTrigger.refresh(); }, 100);
+      setTimeout(function () { ScrollTrigger.refresh(); }, 500);
+    }
+    if (document.readyState === "complete") refreshHzEnergyScrollTrigger();
+    else window.addEventListener("load", function handler() { window.removeEventListener("load", handler); refreshHzEnergyScrollTrigger(); });
+  }
+}
+
 // Global ScrollTrigger refresh after all triggers are initialized
 // This ensures all ScrollTriggers are properly calculated relative to each other
 if (typeof ScrollTrigger !== 'undefined' && window.innerWidth >= 1024) {
@@ -2744,13 +2898,15 @@ if (typeof ScrollTrigger !== 'undefined' && window.innerWidth >= 1024) {
 const sliderWrapper = document.querySelector('.purpose-slider-wrapper');
 const prevButton = document.querySelector('.swiper-horizontalmobile-prev');
 
-const observer = new MutationObserver(() => {
-    if (prevButton.classList.contains('swiper-button-disabled')) {
-        sliderWrapper.classList.add('hide-after');
-    } else {
-        sliderWrapper.classList.remove('hide-after');
-    }
-});
+if (sliderWrapper && prevButton) {
+    const observer = new MutationObserver(() => {
+        if (prevButton.classList.contains('swiper-button-disabled')) {
+            sliderWrapper.classList.add('hide-after');
+        } else {
+            sliderWrapper.classList.remove('hide-after');
+        }
+    });
 
-// Observe class changes
-observer.observe(prevButton, { attributes: true, attributeFilter: ['class'] });
+    // Observe class changes
+    observer.observe(prevButton, { attributes: true, attributeFilter: ['class'] });
+}

@@ -611,7 +611,7 @@ h2 {
 
 .iti__country-list {
   width: auto;
-  max-width: 335px;
+  max-width: 316px;
   overflow-x: hidden !important;
 }
 /* Scrollbar same as modal */
@@ -2773,7 +2773,12 @@ label.form-label.required_note-demo {
   > .e-n-tab-title[aria-selected="false"]:not(:hover) {
   border: 0 !important;
 }
-
+#tab_table .elementor-element.elementor-element-4cde0ab.elementor-widget-n-tabs > .e-n-tabs > .e-n-tabs-heading > .e-n-tab-title[aria-selected="false"]:not(:hover) {
+  border: 1px solid transparent !important;
+}
+ #tab_table button[aria-selected="false"]:hover span.e-n-tab-title-text  {
+  color: #06283d;
+}
 .js-dark
   .elementor-element.elementor-widget-n-tabs
   > .e-n-tabs[data-touch-mode="false"]
@@ -2873,10 +2878,10 @@ label.form-label.required_note-demo {
 
 #tab_table .e-n-tabs-heading {
   background: #fff;
-  width: 280px;
+  max-width: max-content;
   border-radius: 40px;
   border: 1px solid #e6ebf2;
-  gap: 20px;
+  gap: 8px;
   align-items: center;
   justify-content: center;
   padding: 8px;
@@ -3767,7 +3772,9 @@ ul.privacy-policy li a, ul.privacy-policy li a:hover {
 .elementor-image-box-description a {
   color: #5C5C5C;
 }
-
+.js-dark .elementor-image-box-description a {
+  color: #AEB6C9;
+}
 .privacy-policy-title {
   color: #06283d;
   font-size: 32px;
@@ -5325,4 +5332,9 @@ span.star {
 
 .elementor-element.enforcegrid_box .elementor-widget {
   border-color: #d7dbe4 !important;
+}
+.elementor-element.realitybox {
+  width: 224px !important;
+  max-width: 100% !important; 
+  min-width: 224px !important;
 }
