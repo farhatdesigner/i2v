@@ -286,14 +286,25 @@ header li.burger-icon .icon-sun,
 }
 .js-dark .elementor-element.e-con-full.withdark.e-flex.e-con.e-child {
   border-radius: var(--XSM, 4px);
-  border: 1px solid var(--Golbal-others-border-3, rgba(193, 196, 198, 0.2));
+  /* border: 1px solid var(--Golbal-others-border-3, rgba(193, 196, 198, 0.2)); */
   background: var(--Golbal-utlities-warning-10, rgba(255, 206, 147, 0.1));
 }
 .js-dark #breadcrumbs > span > span > a,
 .js-dark .elementor-shortcode > span a {
-  border: 1px solid rgba(193, 196, 198, 0.1);
-  background: #262a30;
-  color: #d7dbe4;
+  border: 1px solid rgb(193 196 198 / 10%);
+  background: #262A30;
+  color: #D7DBE4;
+}
+.js-dark .elementor-shortcode > span a:hover {
+  background: #ffffff26;
+  border: 1px solid rgb(193 196 198 / 20%);
+  color: #D7DBE4;
+}
+
+.js-dark #breadcrumbs > span > span > a:hover {
+  background: #ffffff26;
+  border: 1px solid rgb(193 196 198 / 20%);
+  color: #D7DBE4;
 }
 .js-dark #breadcrumbs svg path {
   fill: #d7dbe4;
@@ -398,7 +409,10 @@ header li.burger-icon .icon-sun,
 .js-dark span.swiper-pagination-bullet {
   opacity: 1;
 }
-.js-dark span.swiper-pagination-bullet.swiper-pagination-bullet-active {
+.js-dark .leadersslider span.swiper-pagination-bullet.swiper-pagination-bullet {
+  background-color: #262A30  !important;
+}
+.js-dark .leadersslider span.swiper-pagination-bullet.swiper-pagination-bullet-active {
   background-color: #74C2ED !important;
 }
 .js-dark .hero-swiper-container span.swiper-pagination-bullet.swiper-pagination-bullet-active {
@@ -410,7 +424,7 @@ header li.burger-icon .icon-sun,
 }
 /* .js-dark #tab_table button.e-n-tab-title{ background: transparent; } */
 .js-dark #tab_table button span.e-n-tab-title-text {
-  color: #d7dbe4 !important;
+  color: #ffffff !important;
 }
 .js-dark
   .elementor-widget-n-tabs
@@ -926,6 +940,12 @@ header li.burger-icon .icon-sun,
   background: rgba(255, 206, 147, 0.1);
   color: #fff;
 }
+.js-dark .bredstyle > a, .js-dark .bredstyle > span {
+  border: 1px solid rgb(193 196 198 / 10%);
+  background: transparent;
+ color: #D7DBE4 !important;
+}
+
 /* Purpose slider nav – same as leadersslider (no stroke) */
 .js-dark .purpose-slider-wrapper .purpose-swiper .swiper-button-next,
 .js-dark .purpose-slider-wrapper .purpose-swiper .swiper-button-prev {

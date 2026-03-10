@@ -299,6 +299,14 @@ a.blank_anchor:hover {
   .js-dark .elementor-element.partner_choose_desc .elementor-widget-image-box,.js-dark .elementor-element.partner_tech_desc .elementor-widget-image-box {
   background-color: #262a30 !important;
 }
+
+.js-dark .elementor-6096 .elementor-element.elementor-element-10af7b1d > .e-n-accordion > .e-n-accordion-item > .e-n-accordion-item-title, .js-dark .elementor-6096 .elementor-element.elementor-element-235e345 > .e-n-accordion > .e-n-accordion-item > .e-n-accordion-item-title {
+  border-color: #3e4144;
+}
+
+.js-dark .career_faq .e-n-accordion-item[open] .e-flex.e-con-boxed.e-con.e-child {
+  border: none !important;
+}
 .js-dark
   .elementor-element.partner_choose_desc
   .e-n-accordion-item
@@ -714,6 +722,9 @@ border-radius: 12px;
   display: block;
 }
 
+.iti--separate-dial-code .iti__selected-flag {
+  border-radius: 10px 0 0 10px;
+}
 .js-dark .styled-career-form .file-upload-box p {color: #D7DBE4 !important;}
 .js-dark .styled-career-form .file-upload-box .file-name {color: #D7DBE4 !important;}
 .js-dark .styled-career-form .file-upload-box small {color: #8793AF !important;}
@@ -906,6 +917,9 @@ border-radius: 12px;
   }
   .insights-updates-item-text p {
     margin: 0;
+  }
+  .elementor-element.realitybox {
+      width: 100% !important;
   }
 }
 @media (max-width: 992px) {
