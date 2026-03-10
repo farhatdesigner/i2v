@@ -908,6 +908,11 @@ border-radius: 12px;
     right: auto !important;
   }
 }
+@media(max-width: 1200px) and (min-width: 768px){
+  .right-connection_lines {
+    right: -80px;
+  }
+}
 @media (max-width: 1025px) {
   .date-author-txt p span:first-child {
     padding-right: 7px;

@@ -3396,8 +3396,8 @@ label.form-label.required_note-demo {
 
 .video-analytics-widget .center-oval {
   position: absolute;
-  left: 52%;
-  top: 30vh;
+  left: 50%;
+  top: 37vh;
   width: 120px;
   z-index: 10;
   text-align: center;
@@ -3405,7 +3405,7 @@ label.form-label.required_note-demo {
 
 .right-connection_lines {
   position: absolute;
-  top: 40vh;
+  top: 47vh;
   right: 0;
   overflow: visible;
 }
@@ -3430,12 +3430,13 @@ svg[class^="connection-line-"] {
   position: absolute;
   width: 331px;
   overflow: visible;
-  left: 0 !important;
+  left: -20px !important;
   fill: transparent !important;
 }
 
 svg.connection-line-1 {
   top: 35px;
+
 }
 
 svg.connection-line-2 {
@@ -4250,12 +4251,12 @@ span.star {
 @media (min-width: 1400px) {
   .video-analytics-widget .center-oval {
     left: 45%;
-    top: 18vh;
+    top: 24vh;
     width: 160px;
   }
 
   .right-connection_lines {
-    top: 26vh;
+    top: 34vh;
   }
 
   svg[class^="connection-line-"] {
@@ -4275,19 +4276,19 @@ span.star {
   }
 
   svg.connection-line-4 {
-    top: 260px;
+    top: 280px;
   }
 
   svg.connection-line-5 {
-    top: 255px;
+    top: 280px;
   }
 
   svg.connection-line-6 {
-    top: 260px;
+    top: 280px;
   }
 
   svg.connection-line-7 {
-    top: 265px;
+    top: 275px;
   }
 
   .animtion_sec {
@@ -4795,10 +4796,11 @@ span.star {
     position: absolute;
     left: 0;
     right: 0;
-    top: 210px;
+    top: 70px;
     margin: 0 auto;
     width: 100%;
   }
+  .video-analytics-widget { min-height: 340px; }
   .right-connection_lines {
     top: 90px;
     right: 0;
