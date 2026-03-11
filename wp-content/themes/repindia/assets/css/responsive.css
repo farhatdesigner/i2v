@@ -418,7 +418,7 @@ select.form-control {
 }
 .wpcf7-not-valid-tip, #mobile-error {
   color: #C92629 !important;
-  font-size: 10px;
+  font-size: 14px;
 }
 .js-dark .form-control:hover {
   border-color: #008AD6; 
@@ -1122,6 +1122,9 @@ border-radius: 12px;
   .icon_custom_text {
       gap: 15px;
       flex-direction: column;
+  }
+  .wpcf7-not-valid-tip, #mobile-error {
+      font-size: 12px;
   }
 }
 .sticky-wrapper-img {

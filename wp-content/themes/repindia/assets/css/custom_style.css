@@ -3039,7 +3039,7 @@ label.form-label.required_note-demo {
 
 .leadersslider.elementor-element .swiper .elementor-swiper-button {
   z-index: 6;
-  padding: 5px;
+  padding: 9px;
   background: #fff;
   border-radius: 100px;
   display: flex;
@@ -3047,6 +3047,7 @@ label.form-label.required_note-demo {
   justify-content: center;
   border: 1px solid #e5e9ec;
   transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  font-size: 24px!important;
 }
 
 .leadersslider.elementor-element .swiper .elementor-swiper-button:hover {
@@ -4033,8 +4034,12 @@ span.star {
   background: #464a4f;
 }
 .js-dark .wpcf7 input[type="checkbox"]:checked {
-  background: #0099ed;
-  border-color: #0099ed;
+  background: #384157;
+  border-color: #384157;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+  background-size: 12px;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .single-newsroom .elementor-widget-icon-box .elementor-icon-box-icon {
   max-width: 16px;
@@ -4066,6 +4071,7 @@ span.star {
 .ai_explore_dark .box-custom h3.elementor-heading-title {
   font-weight: 400 !important;
 }
+.videoframe iframe{ height: 75vh; }
 @media (min-width: 768px) {
   .footer-accordion-icon {
     display: none;
@@ -5246,6 +5252,7 @@ span.star {
   width: 30px;
   height: 30px;
 }
+.videoframe iframe{ height: 60vh; }
 
 }
 

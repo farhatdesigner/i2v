@@ -620,3 +620,13 @@ if ( ! function_exists( 'wpml_t' ) ) {
         );
     }
 }
+
+//
+if (!shortcode_exists('last_url_segment')) {
+    function get_last_url_segment() {
+        $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $segments = explode('/', trim($path, '/'));
+        return end($segments);
+    }
+    add_shortcode('last_url_segment', 'get_last_url_segment');
+}

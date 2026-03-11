@@ -456,9 +456,9 @@ class Video_accordion extends Widget_Base
                                             <?php endif; ?>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <div class="modal-body p-4">
+                                        <div class="modal-body p-4 videoframe">
                                             <?php if (!empty($item_youtube_video_id)): ?>
-                                                <iframe width="100%" height="450"
+                                                <iframe 
                                                     data-src="https://www.youtube.com/embed/<?php echo esc_attr($item_youtube_video_id); ?>"
                                                     frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
                                                 </iframe>
