@@ -1127,6 +1127,10 @@ border-radius: 12px;
       font-size: 12px;
   }
 }
+@media(max-width: 768px){
+  .social_media_links .cursor-auto,ul.social_media_links > li > a > small { display: none; }
+  ul.social_media_links { justify-content: space-between; }
+}
 .sticky-wrapper-img {
   width: 570px !important;
 }
