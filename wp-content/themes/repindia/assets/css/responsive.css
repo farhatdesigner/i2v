@@ -908,6 +908,9 @@ border-radius: 12px;
     right: auto !important;
   }
 }
+@media(min-width: 768px){
+  ul.social_media_links > li.mobile_search_theme_switch { display: none; }
+}
 @media(max-width: 1200px) and (min-width: 768px){
   .right-connection_lines {
     right: -80px;
