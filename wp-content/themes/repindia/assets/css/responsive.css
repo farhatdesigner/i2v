@@ -1130,10 +1130,6 @@ border-radius: 12px;
       font-size: 12px;
   }
 }
-@media(max-width: 768px){
-  .social_media_links .cursor-auto,ul.social_media_links > li > a > small { display: none; }
-  ul.social_media_links { justify-content: space-between; }
-}
 .sticky-wrapper-img {
   width: 570px !important;
 }
@@ -1144,3 +1140,20 @@ border-radius: 12px;
 .js-dark .black-theme-img {
   display: block !important;
 }
+@media(max-width: 768px){
+    .social_media_links .cursor-auto,ul.social_media_links > li > a > small { display: none; }
+    ul.social_media_links { justify-content: space-between; }
+    .elementor-element.reversetestimonial .elementor-testimonial {
+      flex-direction: column-reverse;
+      align-items: flex-start; 
+    }
+    .elementor-element.gradient_bg img { object-fit: cover;min-height: 440px; }
+    .choose_slider .elementor-widget-testimonial-carousel .swiper-slide{ padding: 20px 0; }
+    .choose_slider .elementor-testimonial__image img{ min-height: 200px; }
+    .badge-custom,.badge-cusotm.bg-trans_txt { font-size: 12px;line-height: 18px; }
+    .card-title { color: #06283D; }
+    .cards-listing-section .card-body { padding: 20px !important; }
+    .brochure_download,.formpopup_modal .career-apply-form.styled-career-form.popupform { padding-left: 16px;padding-right: 16px; }
+    
+}
+

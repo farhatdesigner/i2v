@@ -497,6 +497,15 @@ class Custom_Tab_Section extends Widget_Base
                 height: 40px;
                 object-fit: contain;
             }
+            @media(max-width: 768px){
+                .sec-panel-text h4{ font-size: 20px; }
+                .sec-panel-text p{ font-size: 16px; }
+                .sec-tabs-list .sec-tab-item{ display: flex;align-items: center; }
+                .sec-tab-text { line-height: normal; }
+                .sec-tabs-list.show-dropdown { box-shadow: 0 0 10px rgba(0, 82, 128, 0.1);border-bottom: 1px solid #000 !important;border-radius: 12px;margin: 0;padding-top: 0; }
+                .sec-select-brand{ padding: 8px 30px 8px 15px; }
+                .sec-select-brand:after{ right: 10px;top: 40%; }
+            }
         </style>
 
         <div class="sec-tabs-wrapper">
