@@ -518,13 +518,15 @@ input.wpcf7-submit.form-control.submitbtn {
 input:-internal-autofill-selected{background: inherit !important;}
 
 .wpcf7-spinner {
-  width: 15px;
-  height: 15px;
+  width: 25px;
+  height: 25px;
   margin: 0;
   position: absolute;
-  right: 0;
-  top: 0;
+  right: -30px;
+  top: 7px;
   z-index: 1;
+  background-color: transparent;
+  border: 5px solid #D5D5D5;
 }
 .contactus_form input.wpcf7-submit.form-control.submitbtn:disabled, input.wpcf7-submit.form-control.submitbtn:disabled {
   background: #D5D5D5;
@@ -551,6 +553,11 @@ label.form-label.required_note svg {
 .wpcf7-spinner::before {
   top: 0px;
   left: 0px;
+  transform-origin: 9px 9px;
+  animation-duration: 2000ms;
+  background-color: #007ABE;
+  width: 5px;
+  height: 5px;    
 }
 label.form-label.required_note {
   margin: 0;
@@ -1154,6 +1161,13 @@ border-radius: 12px;
     .card-title { color: #06283D; }
     .cards-listing-section .card-body { padding: 20px !important; }
     .brochure_download,.formpopup_modal .career-apply-form.styled-career-form.popupform { padding-left: 16px;padding-right: 16px; }
+    .elementor-element.product_banner img { object-fit: cover; }
+    .card-wrapper_single { padding: 20px 0 0; }
+    .card-wrapper_single .card-contents { padding: 0 20px; }
+    .card-wrapper_single .card-img_single > img { padding-top: 0;margin-top: 30px; }
+    .e-con-full.ai_smart_dark .elementor-position-left.theme-img{ padding: 0; }
+    .accordion_sets .accontent p { margin: 10px 0 0 1.5rem; }
+    .elementor-element.lefticon_box .elementor-image-box-wrapper { display: flex;flex-direction: row;gap: 10px; }
     
 }
 
