@@ -5183,7 +5183,7 @@ span.star {
     margin-bottom: 20px;
   }
 
-  .e-con-full .banner_content_txt_proven {
+  .e-con-full .banner_content_txt_proven,.banner_content_txt {
     width: 90% !important;
     /* margin: 0 auto !important; */
     /* background: #262a30; */

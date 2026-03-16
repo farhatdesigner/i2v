@@ -1168,6 +1168,10 @@ border-radius: 12px;
     .e-con-full.ai_smart_dark .elementor-position-left.theme-img{ padding: 0; }
     .accordion_sets .accontent p { margin: 10px 0 0 1.5rem; }
     .elementor-element.lefticon_box .elementor-image-box-wrapper { display: flex;flex-direction: row;gap: 10px; }
+    .title-box { margin-bottom: 30px; }
+    .details { padding: 15px 0 10px; }
+    .photo_custom .details h2{ font-size: 20px; }
+    .hz-slider-section .swiper-slide p,.hz-slider-section .swiper-slide ul li{ font-size: 16px;line-height: normal !important; }
     
 }
 

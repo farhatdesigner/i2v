@@ -1674,7 +1674,7 @@ html {
   .banner_content_txt {
     background: #262a30;
     padding: 20px 20px;
-    position: static !important;
+    /* position: static !important; */
   }
 
   .img-50 {
@@ -1862,6 +1862,8 @@ html {
   .custom-container.partner_sec { margin-top: 40px !important;padding-bottom: 40px !important; }
   .elementor-element.customicon_widget .elementor-image-box-wrapper { display: flex;align-items: center;gap: 10px; }
   .hz-slider-section .swiper-slide h3 { font-size: 20px;line-height: 25px; }
+  .elementor-element.anpr_choosen .gradient_bg img { object-fit: cover;min-height: 760px; }
+  .caption_impact > figure > img { max-height: 350px;height: 100%; }
 }
 .elementor-element.dashed_border {
   background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='12' ry='12' stroke='%23D7DBE4FF' stroke-width='4' stroke-dasharray='7%2c 7' stroke-dashoffset='11' stroke-linecap='butt'/%3e%3c/svg%3e");
