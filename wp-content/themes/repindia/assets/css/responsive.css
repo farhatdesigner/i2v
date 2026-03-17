@@ -1172,8 +1172,8 @@ border-radius: 12px;
     .details { padding: 15px 0 10px; }
     .photo_custom .details h2{ font-size: 20px; }
     .hz-slider-section .swiper-slide p,.hz-slider-section .swiper-slide ul li{ font-size: 16px;line-height: normal !important; }
-    .elementor-element.grid_layout_mbl { display: flex;align-items: flex-start;max-width: 350px;overflow-x: scroll;width: 100%; }
-    .elementor-element.grid_layout_mbl .caption_impact{ width: 100%;min-width: 248px;max-width: 248px; }
+    .elementor-element.grid_layout_mbl { display: flex;align-items: flex-start;max-width: 350px;overflow-x: scroll;width: 100%;flex-wrap: nowrap;gap: 10px; }
+    .elementor-element.grid_layout_mbl .caption_impact,.elementor-element.grid_layout_mbl .box-custom{ width: 100%;min-width: 248px;max-width: 248px; }
     
 }
 
