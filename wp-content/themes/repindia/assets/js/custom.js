@@ -171,7 +171,12 @@
             document.body.style.overflow = '';
         }
 
-        function openPopup(videoId) {
+        function openPopup(videoId, link) {
+            var titleEl = popup.querySelector('.global-youtube-popup__title');
+            if (titleEl && link) {
+                var title = link.getAttribute('data-title') || link.getAttribute('title') || link.textContent.trim();
+                titleEl.textContent = title || 'Video';
+            }
             iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1';
             popup.classList.add('active');
             popup.setAttribute('aria-hidden', 'false');
@@ -194,7 +199,7 @@
             var href = link.getAttribute('href') || '';
             var videoId = getYoutubeVideoId(href);
             if (videoId) {
-                openPopup(videoId);
+                openPopup(videoId, link);
             }
         });
     }
