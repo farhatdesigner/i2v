@@ -87,7 +87,7 @@ header li.burger-icon .icon-sun,
 .js-dark p,
 .js-dark.content-inner-icons ul li span,
 .js-dark .industry_box .elementor-icon-box-title,
-.js-dark .industry_box .elementor-icon-box-title span {
+.js-dark .industry_box .elementor-icon-box-title span,.js-dark span.ctw-text {
   color: #aeb6c9 !important;
 }
 .js-dark .darklogo,
@@ -109,6 +109,9 @@ header li.burger-icon .icon-sun,
 .js-dark h5,
 .js-dark h6 {
   color: rgba(255, 255, 255, 0.9) !important;
+}
+.js-dark span.ctw-text {
+  color: #aeb6c9 !important;
 }
 .js-dark .rounded-4 {
   background: #262a30;
