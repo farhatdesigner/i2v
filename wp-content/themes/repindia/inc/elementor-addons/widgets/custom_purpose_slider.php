@@ -286,9 +286,25 @@ class Custom_Purpose_Slider extends Widget_Base
                         // Special Slide
                         $show_special_slide = !empty($settings['show_special_slide']) && $settings['show_special_slide'] === 'yes';
                         if ($show_special_slide):
-                            $special_icon_default = !empty($settings['special_slide_icon_default']['url']) ? $settings['special_slide_icon_default']['url'] : get_template_directory_uri() . '/assets/images/12/Light-QR.svg';
+                            $special_icon_default = '';
+                            if (!empty($settings['special_slide_icon_default']['url'])) {
+                                $special_icon_default = $settings['special_slide_icon_default']['url'];
+                            } elseif (!empty($settings['special_slide_icon_default']['id'])) {
+                                $special_icon_default = wp_get_attachment_image_url($settings['special_slide_icon_default']['id'], 'full');
+                            } else {
+                                $special_icon_default = get_template_directory_uri() . '/assets/images/12/Light-QR.svg';
+                            }
+                            $has_default_icon = !empty($settings['special_slide_icon_default']['url']) || !empty($settings['special_slide_icon_default']['id']);
                             $special_icon_default_alt = !empty($settings['special_slide_icon_default']['alt']) ? $settings['special_slide_icon_default']['alt'] : '';
-                            $special_icon_dark = !empty($settings['special_slide_icon_dark']['url']) ? $settings['special_slide_icon_dark']['url'] : get_template_directory_uri() . '/assets/images/12/Dark-QR.svg';
+                            $special_icon_dark = '';
+                            if (!empty($settings['special_slide_icon_dark']['url'])) {
+                                $special_icon_dark = $settings['special_slide_icon_dark']['url'];
+                            } elseif (!empty($settings['special_slide_icon_dark']['id'])) {
+                                $special_icon_dark = wp_get_attachment_image_url($settings['special_slide_icon_dark']['id'], 'full');
+                            }
+                            if (empty($special_icon_dark)) {
+                                $special_icon_dark = $special_icon_default;
+                            }
                             $special_icon_dark_alt = !empty($settings['special_slide_icon_dark']['alt']) ? $settings['special_slide_icon_dark']['alt'] : $special_icon_default_alt;
                             $special_title = !empty($settings['special_slide_title']) ? $settings['special_slide_title'] : 'Lear more about how surveillance and security come together in one dashboard';
                             $special_description = !empty($settings['special_slide_description']) ? $settings['special_slide_description'] : '';
@@ -300,12 +316,14 @@ class Custom_Purpose_Slider extends Widget_Base
                         ?>
                         <div class="swiper-slide">
                             <div class="slider-image_content">
+                                <?php if ($has_default_icon): ?>
                                 <div class="slider-image">
                                     <img decoding="async" class="radius-12 white_theme_img"
                                         src="<?php echo esc_url($special_icon_default); ?>" alt="<?php echo esc_attr($special_icon_default_alt ? $special_icon_default_alt : $special_title); ?>">
                                     <img decoding="async" class="radius-12 black_theme_img"
                                         src="<?php echo esc_url($special_icon_dark); ?>" alt="<?php echo esc_attr($special_icon_dark_alt ? $special_icon_dark_alt : $special_title); ?>">
                                 </div>
+                                <?php endif; ?>
                                 <div class="slider-content_txt">
                                     <?php if (!empty($special_title)): ?>
                                         <h3><?php echo esc_html($special_title); ?></h3>
