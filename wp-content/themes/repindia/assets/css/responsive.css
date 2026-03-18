@@ -1174,6 +1174,10 @@ border-radius: 12px;
     .hz-slider-section .swiper-slide p,.hz-slider-section .swiper-slide ul li{ font-size: 16px;line-height: normal !important; }
     .elementor-element.grid_layout_mbl { display: flex;align-items: flex-start;max-width: 350px;overflow-x: scroll;width: 100%;flex-wrap: nowrap;gap: 10px; }
     .elementor-element.grid_layout_mbl .caption_impact,.elementor-element.grid_layout_mbl .box-custom{ width: 100%;min-width: 248px;max-width: 248px; }
+    .vms_accord.elementor-widget-n-tabs .e-n-tabs-heading{ display: inline-block; }
+    #tab_table .vms_accord .e-n-tabs-heading{ margin-left: 0;width: 100%!important;max-width: 100%;background: transparent;border: 0;padding: 0;display: flex;align-items: center;justify-content: center;gap: 10px; }
+    .vms_accord.elementor-widget-n-tabs .e-n-tab-title{ width: 100%!important;border-color: #D7DBE4 !important;margin: 0px!important; }
+    #tab_table .elementor-element.elementor-element-4cde0ab.elementor-widget-n-tabs > .e-n-tabs > .e-n-tabs-heading > .e-n-tab-title[aria-selected="false"]:not(:hover) { border: 1px solid #D7DBE4 !important;margin: 0px!important; }
     
 }
 
