@@ -207,9 +207,9 @@ class Analytic_Sidebar_Nav extends Widget_Base
 
         <style>
         .analytic-sidebar {
-            position: sticky !important;
+            /* position: sticky !important;
             top: 80px !important;
-            max-height: calc(100vh - 80px) !important;
+            max-height: calc(100vh - 80px) !important; */
             overflow-y: auto !important;
             overflow-x: hidden !important;
             padding: 10px;
