@@ -270,6 +270,16 @@ class Analytic_Sidebar_Nav extends Widget_Base
             width: 16px;
             height: 16px;
         }
+        .js-dark .analytic-nav li:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+.js-dark .analytic-nav li:hover span.title {
+    color: #ffff !important;
+}
+
+.js-dark .analytic-sidebar .analytic-search {
+    background: #ffffff;
+}
         
         /* Light/Dark Mode Icon Switching */
         .icon img.icon-dark { display: none; }
@@ -282,7 +292,9 @@ class Analytic_Sidebar_Nav extends Widget_Base
         .video_analytic_sidebar,
         .elementor-element.video_analytic_sidebar {
             height: auto;
-            max-height: 766px;
+            max-height: max-content;
+            position: sticky;
+            top: 100px;
         }
         
         /* Enable manual scrolling for right content section */
@@ -297,6 +309,9 @@ class Analytic_Sidebar_Nav extends Widget_Base
             overscroll-behavior: contain;
         }
         
+html.lenis,  body {
+    overflow-x:visible;
+}
         
         /* Mobile Dropdown Styles */
         @media (max-width: 768px) {
@@ -344,7 +359,7 @@ class Analytic_Sidebar_Nav extends Widget_Base
                 overflow-y: auto;
                 border: 1px solid #ddd;
                 border-radius: 6px;
-                background: #fff;
+                /* background: #fff; */
                 margin-top: 12px;
                 position: relative;
                 z-index: 10;
@@ -365,7 +380,12 @@ class Analytic_Sidebar_Nav extends Widget_Base
                 max-height: 600px !important;
             }
         }
-        
+        @media (max-width: 767px){
+        .video_analytic_sidebar, .elementor-element.video_analytic_sidebar { 
+    position: static;
+}
+}
+
         @media (min-width: 769px) {
             .analytic-mobile-toggle {
                 display: none !important;
