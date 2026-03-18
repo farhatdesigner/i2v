@@ -5443,8 +5443,11 @@ span.star {
   background: linear-gradient(rgb(116 194 237 / 15%), rgb(116 194 237 / 15%));background-size: 100% 6px; background-repeat: no-repeat;background-position: 0 calc(100% - 6px);box-decoration-break: clone;-webkit-box-decoration-break: clone;
 }
 
-
-
+.slider-image_content .slider-content_txt h3 { color: #06283D;font-size: 24px;font-style: normal;font-weight: 600;line-height: 30px; }
+.slider-image_content .slider-image img{ width: 50px;height: 50px; }
+.purpose-slider-wrapper .slider-image_content{ min-height: 420px;background: #fff; }
+.js-dark .purpose-slider-wrapper .slider-image_content{ background: #262a30; }
+ 
 
 @media(max-width: 768px){
   .global-youtube-popup__body { padding: 10px 15px; }
