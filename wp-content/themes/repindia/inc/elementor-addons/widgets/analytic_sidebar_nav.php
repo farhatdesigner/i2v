@@ -282,7 +282,9 @@ class Analytic_Sidebar_Nav extends Widget_Base
         .video_analytic_sidebar,
         .elementor-element.video_analytic_sidebar {
             height: auto;
-            max-height: 766px;
+            max-height: max-content;
+            position: sticky;
+            top: 100px;
         }
         
         /* Enable manual scrolling for right content section */
@@ -297,6 +299,9 @@ class Analytic_Sidebar_Nav extends Widget_Base
             overscroll-behavior: contain;
         }
         
+html.lenis,  body {
+    overflow-x:visible;
+}
         
         /* Mobile Dropdown Styles */
         @media (max-width: 768px) {
