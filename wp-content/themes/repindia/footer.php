@@ -538,6 +538,26 @@ if (!empty($repindia_option['technology_partner_form'])) { ?>
 	})();
 </script>
 
+<!-- Global YouTube Video Popup (single reusable container) - matches video_accordion layout -->
+<div id="global-youtube-popup" class="global-youtube-popup" aria-hidden="true" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e('YouTube video', 'repindia'); ?>">
+	<div class="global-youtube-popup__backdrop"></div>
+	<div class="global-youtube-popup__dialog">
+		<div class="global-youtube-popup__content">
+			<div class="global-youtube-popup__header">
+				<h1 class="global-youtube-popup__title" id="global-youtube-popup-title"><?php esc_html_e('Video', 'repindia'); ?></h1>
+				<button type="button" class="global-youtube-popup__close" aria-label="<?php esc_attr_e('Close', 'repindia'); ?>">
+					<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd" clip-rule="evenodd" d="M8.67339 8.67351C9.03788 8.30902 9.62883 8.30902 9.99332 8.67351L14 12.6802L18.0067 8.67351C18.3712 8.30902 18.9622 8.30902 19.3267 8.67351C19.6911 9.038 19.6911 9.62896 19.3267 9.99345L15.32 14.0001L19.3267 18.0068C19.6911 18.3713 19.6911 18.9623 19.3267 19.3268C18.9622 19.6913 18.3712 19.6913 18.0067 19.3268L14 15.3201L9.99332 19.3268C9.62883 19.6913 9.03788 19.6913 8.67339 19.3268C8.3089 18.9623 8.3089 18.3713 8.67339 18.0068L12.6801 14.0001L8.67339 9.99345C8.3089 9.62896 8.3089 9.038 8.67339 8.67351Z" fill="#5F6F94"/>
+					</svg>
+				</button>
+			</div>
+			<div class="global-youtube-popup__body videoframe">
+				<iframe id="global-youtube-popup-iframe" class="global-youtube-popup__iframe" src="" title="<?php esc_attr_e('YouTube video', 'repindia'); ?>" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+			</div>
+		</div>
+	</div>
+</div>
+
 <?php
 wp_footer();
 ?>
