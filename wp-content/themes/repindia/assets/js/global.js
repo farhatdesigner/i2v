@@ -2315,7 +2315,7 @@ if (document.querySelector(".hz-slider-section .swiper")) {
     //   delay: 5000,
     //   disableOnInteraction: false
     // },
-    speed: 1200,
+    speed: 2000,
     loop: false,
     slidesPerView: 1.1,
     spaceBetween: 30,
@@ -2389,10 +2389,12 @@ if (document.querySelector(".hz-slider-section .swiper")) {
     gsap.registerPlugin(ScrollTrigger);
     
     const totalSlides = hzSwiper.slides.length;
-    const snap = gsap.utils.snap(1 / totalSlides);
+    const maxIndex = Math.max(0, totalSlides - 1);
+    if (maxIndex === 0) return;
+    const snap = gsap.utils.snap(1 / maxIndex);
     
     // Calculate scroll distance based on number of slides (150vh per slide for slower scroll)
-    const scrollDistance = totalSlides * 150;
+    const scrollDistance = totalSlides * 300;
     
     // Disable Swiper touch on desktop (controlled by scroll)
     hzSwiper.allowTouchMove = false;
@@ -2413,10 +2415,11 @@ if (document.querySelector(".hz-slider-section .swiper")) {
         refreshPriority: 2, // Higher priority than gallery
         id: "hz-slider-pin",
         onUpdate: (self) => {
-          const updatedIndex = Math.round(snap(self.progress) * totalSlides);
+          let updatedIndex = Math.round(snap(self.progress) * maxIndex);
+          updatedIndex = Math.max(0, Math.min(updatedIndex, maxIndex));
           if (updatedIndex !== currentSlide) {
             currentSlide = updatedIndex;
-            hzSwiper.slideTo(currentSlide, 1200); // Use slower speed for programmatic slide changes
+            hzSwiper.slideTo(currentSlide, 2000); // Use slower speed for programmatic slide changes
           }
         }
       }
@@ -2464,9 +2467,11 @@ if (document.querySelector(".hz-slider-section .swiper")) {
     var st = ScrollTrigger.getById("hz-slider-pin");
     if (!st || !hzSwiper.slides.length) return;
     var totalSlides = hzSwiper.slides.length;
-    var snap = gsap.utils.snap(1 / totalSlides);
-    var idx = Math.round(snap(st.progress) * totalSlides);
-    idx = Math.min(idx, totalSlides - 1);
+    var maxIndex = Math.max(0, totalSlides - 1);
+    if (maxIndex === 0) return;
+    var snap = gsap.utils.snap(1 / maxIndex);
+    var idx = Math.round(snap(st.progress) * maxIndex);
+    idx = Math.max(0, Math.min(idx, maxIndex));
     currentSlide = idx;
     hzSwiper.slideTo(idx, 0);
   };
@@ -2530,7 +2535,7 @@ if (document.querySelector(".hz-slider-topcaption .swiper:not(.energyswiper)")) 
   let currentTopcaptionSlide = 0;
   
   const hzTopcaptionSwiper = new Swiper(".hz-slider-topcaption .swiper:not(.energyswiper)", {
-    speed: 1200,
+    speed: 2000,
     loop: false,
     slidesPerView: 1.1,
     spaceBetween: 30,
@@ -2604,10 +2609,12 @@ if (document.querySelector(".hz-slider-topcaption .swiper:not(.energyswiper)")) 
     gsap.registerPlugin(ScrollTrigger);
     
     const totalSlides = hzTopcaptionSwiper.slides.length;
-    const snap = gsap.utils.snap(1 / totalSlides);
+    const maxIndex = Math.max(0, totalSlides - 1);
+    if (maxIndex === 0) return;
+    const snap = gsap.utils.snap(1 / maxIndex);
     
     // Calculate scroll distance based on number of slides (150vh per slide for slower scroll)
-    const scrollDistance = totalSlides * 150;
+    const scrollDistance = totalSlides * 300;
     
     // Disable Swiper touch on desktop (controlled by scroll)
     hzTopcaptionSwiper.allowTouchMove = false;
@@ -2628,10 +2635,11 @@ if (document.querySelector(".hz-slider-topcaption .swiper:not(.energyswiper)")) 
         refreshPriority: 1,
         id: "hz-slider-topcaption-pin",
         onUpdate: (self) => {
-          const updatedIndex = Math.round(snap(self.progress) * totalSlides);
+          let updatedIndex = Math.round(snap(self.progress) * maxIndex);
+          updatedIndex = Math.max(0, Math.min(updatedIndex, maxIndex));
           if (updatedIndex !== currentTopcaptionSlide) {
             currentTopcaptionSlide = updatedIndex;
-            hzTopcaptionSwiper.slideTo(currentTopcaptionSlide, 1200); // Use slower speed for programmatic slide changes
+            hzTopcaptionSwiper.slideTo(currentTopcaptionSlide, 2000); // Use slower speed for programmatic slide changes
           }
         }
       }
@@ -2679,9 +2687,11 @@ if (document.querySelector(".hz-slider-topcaption .swiper:not(.energyswiper)")) 
     var st = ScrollTrigger.getById("hz-slider-topcaption-pin");
     if (!st || !hzTopcaptionSwiper.slides.length) return;
     var totalSlides = hzTopcaptionSwiper.slides.length;
-    var snap = gsap.utils.snap(1 / totalSlides);
-    var idx = Math.round(snap(st.progress) * totalSlides);
-    idx = Math.min(idx, totalSlides - 1);
+    var maxIndex = Math.max(0, totalSlides - 1);
+    if (maxIndex === 0) return;
+    var snap = gsap.utils.snap(1 / maxIndex);
+    var idx = Math.round(snap(st.progress) * maxIndex);
+    idx = Math.max(0, Math.min(idx, maxIndex));
     currentTopcaptionSlide = idx;
     hzTopcaptionSwiper.slideTo(idx, 0);
   };
@@ -2743,10 +2753,10 @@ if (document.querySelector(".hz-slider-energy .energyswiper")) {
   let currentEnergySlide = 0;
 
   const hzEnergySwiper = new Swiper(".hz-slider-energy .energyswiper", {
-    speed: 1200,
+    speed: 2000,
     loop: false,
     slidesPerView: 1.1,
-    spaceBetween: 20,
+    spaceBetween: 30,
     loopAddBlankSlides: false,
     slideToClickedSlide: true,
     centeredSlides: false,
@@ -2754,13 +2764,11 @@ if (document.querySelector(".hz-slider-energy .energyswiper")) {
     effect: 'slide',
     resistance: true,
     resistanceRatio: 0.85,
-    observer: true,
-    observeParents: true,
     breakpoints: {
-      580: { slidesPerView: 1.1, spaceBetween: 20 },
-      768: { slidesPerView: 1.2, spaceBetween: 20 },
-      1024: { slidesPerView: 1.5, spaceBetween: 20 },
-      1280: { slidesPerView: 3.1, spaceBetween: 20 }
+      580: { slidesPerView: 1.1, spaceBetween: 30 },
+      768: { slidesPerView: 1.2, spaceBetween: 30 },
+      1024: { slidesPerView: 1.5, spaceBetween: 30 },
+      1280: { slidesPerView: 3.1, spaceBetween: 30 }
     }
   });
 
@@ -2780,49 +2788,36 @@ if (document.querySelector(".hz-slider-energy .energyswiper")) {
   }
   applyCorrectEnergySlidesPerView();
   setTimeout(applyCorrectEnergySlidesPerView, 100);
-  window.addEventListener('load', function() {
-    applyCorrectEnergySlidesPerView();
-    hzEnergySwiper.update();
-  });
 
   function initHzEnergyGSAP() {
     if (window.innerWidth < 1024) return;
     gsap.registerPlugin(ScrollTrigger);
     const totalSlides = hzEnergySwiper.slides.length;
-    const snap = gsap.utils.snap(1 / totalSlides);
-    const scrollDistance = totalSlides * 150;
+    const maxIndex = Math.max(0, totalSlides - 1);
+    if (maxIndex === 0) return;
+    const snap = gsap.utils.snap(1 / maxIndex);
+    const scrollDistance = totalSlides * 300;
     hzEnergySwiper.allowTouchMove = false;
     applyCorrectEnergySlidesPerView();
     hzEnergyTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: ".hz-slider-energy .slider",
-        pin: ".elementor-element.energycontainer.custom-container",
+        pin: ".hz-slider-energy",
         pinSpacing: true,
         pinReparent: false,
-        start: "top 190px",
+        start: "top 15%",
         end: "+=" + scrollDistance + "vh",
         scrub: 2,
         markers: false,
         invalidateOnRefresh: true,
-        refreshPriority: 1,
+        refreshPriority: 2,
         id: "hz-slider-energy-pin",
-        onEnter: () => {
-          requestAnimationFrame(() => {
-            applyCorrectEnergySlidesPerView();
-            hzEnergySwiper.update();
-          });
-        },
-        onEnterBack: () => {
-          requestAnimationFrame(() => {
-            applyCorrectEnergySlidesPerView();
-            hzEnergySwiper.update();
-          });
-        },
         onUpdate: (self) => {
-          const updatedIndex = Math.round(snap(self.progress) * totalSlides);
+          let updatedIndex = Math.round(snap(self.progress) * maxIndex);
+          updatedIndex = Math.max(0, Math.min(updatedIndex, maxIndex));
           if (updatedIndex !== currentEnergySlide) {
             currentEnergySlide = updatedIndex;
-            hzEnergySwiper.slideTo(currentEnergySlide, 1200);
+            hzEnergySwiper.slideTo(currentEnergySlide, 2000);
           }
         }
       }
@@ -2849,8 +2844,11 @@ if (document.querySelector(".hz-slider-energy .energyswiper")) {
     var st = ScrollTrigger.getById("hz-slider-energy-pin");
     if (!st || !hzEnergySwiper.slides.length) return;
     var totalSlides = hzEnergySwiper.slides.length;
-    var snap = gsap.utils.snap(1 / totalSlides);
-    var idx = Math.min(Math.round(snap(st.progress) * totalSlides), totalSlides - 1);
+    var maxIndex = Math.max(0, totalSlides - 1);
+    if (maxIndex === 0) return;
+    var snap = gsap.utils.snap(1 / maxIndex);
+    var idx = Math.round(snap(st.progress) * maxIndex);
+    idx = Math.max(0, Math.min(idx, maxIndex));
     currentEnergySlide = idx;
     hzEnergySwiper.slideTo(idx, 0);
   };
