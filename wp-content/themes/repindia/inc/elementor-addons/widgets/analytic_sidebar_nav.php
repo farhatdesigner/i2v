@@ -270,6 +270,16 @@ class Analytic_Sidebar_Nav extends Widget_Base
             width: 16px;
             height: 16px;
         }
+        .js-dark .analytic-nav li:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+.js-dark .analytic-nav li:hover span.title {
+    color: #ffff !important;
+}
+
+.js-dark .analytic-sidebar .analytic-search {
+    background: #ffffff;
+}
         
         /* Light/Dark Mode Icon Switching */
         .icon img.icon-dark { display: none; }
@@ -349,7 +359,7 @@ html.lenis,  body {
                 overflow-y: auto;
                 border: 1px solid #ddd;
                 border-radius: 6px;
-                background: #fff;
+                /* background: #fff; */
                 margin-top: 12px;
                 position: relative;
                 z-index: 10;
@@ -370,7 +380,12 @@ html.lenis,  body {
                 max-height: 600px !important;
             }
         }
-        
+        @media (max-width: 767px){
+        .video_analytic_sidebar, .elementor-element.video_analytic_sidebar { 
+    position: static;
+}
+}
+
         @media (min-width: 769px) {
             .analytic-mobile-toggle {
                 display: none !important;
