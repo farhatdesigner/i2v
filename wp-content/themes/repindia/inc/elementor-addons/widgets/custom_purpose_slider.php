@@ -484,7 +484,7 @@ class Custom_Purpose_Slider extends Widget_Base
             /* Mobile-specific styles for touch/swipe (below 767px) */
             @media (max-width: 767px) {
                 .purpose-slider-wrapper .purpose-swiper {
-                    overflow: hidden !important;
+                    /* overflow: hidden !important; */
                     touch-action: pan-x;
                     -webkit-overflow-scrolling: touch;
                 }
