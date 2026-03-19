@@ -499,7 +499,7 @@ header li.burger-icon .icon-sun,
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 .js-dark .elementor-element .iccc_actions .elementor-widget-icon-box,
-.js-dark .elementor-element .iccc_actions .e-con-full.e-flex {
+.js-dark .elementor-element .iccc_actions .e-con-full.e-flex, .js-dark .elementor-element .iccc_actions .elementor-widget-image-box {
   border-color: rgba(193, 196, 198, 0.2);
 }
 .js-dark .cornerbtn .theme-btn,
