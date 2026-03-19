@@ -1147,6 +1147,15 @@ border-radius: 12px;
 .js-dark .black-theme-img {
   display: block !important;
 }
+@media(max-width: 1024px) and (min-width:768px){
+  .group_tooltip .ctw-text {
+      display: flex;
+      width: 100%;
+      max-width: 100%;
+      flex-wrap: wrap;
+      justify-content: center;
+  }
+}
 @media(max-width: 768px){
     .social_media_links .cursor-auto,ul.social_media_links > li > a > small { display: none; }
     ul.social_media_links { justify-content: space-between; }
