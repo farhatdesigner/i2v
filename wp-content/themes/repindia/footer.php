@@ -566,7 +566,7 @@ if (!empty($repindia_option['technology_partner_form'])) { ?>
         if (el) {
             setTimeout(function () {
                 el.scrollIntoView({ behavior: "smooth" });
-            }, 800);
+            }, 150);
         }
     }
     });
