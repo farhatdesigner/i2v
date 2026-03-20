@@ -558,6 +558,19 @@ if (!empty($repindia_option['technology_partner_form'])) { ?>
 	</div>
 </div>
 
+<!-- Smooth scroll effect script -->/
+ <script>
+	window.addEventListener("load", function () {
+    if (window.location.hash) {
+        const el = document.querySelector(window.location.hash);
+        if (el) {
+            setTimeout(function () {
+                el.scrollIntoView({ behavior: "smooth" });
+            }, 800);
+        }
+    }
+    });
+ </script>
 <?php
 wp_footer();
 ?>
