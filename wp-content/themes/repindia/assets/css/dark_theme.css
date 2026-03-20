@@ -782,7 +782,7 @@ header li.burger-icon .icon-sun,
   border-bottom: 1px solid
     var(--Golbal-others-border-3, rgba(193, 196, 198, 0.2)) !important;
 }
-.js-dark #border_dark, .js-dark .h-full {
+.js-dark #border_dark,.js-dark .border_dark, .js-dark .h-full {
     border-color: #c1c4c633;
 }
 .js-dark #why_oil {
