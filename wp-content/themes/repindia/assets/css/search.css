@@ -727,7 +727,7 @@
   }
   .search-popup-input{ padding: 8px 12px 8px 34px;height: 38px;font-size: 14px; }
   .search-icon { left: 20px;width: 18px;height: 18px; }
-  .search-popup-content { padding: 0;box-shadow: 0 0 10px rgba(0, 82, 128, 0.1);border-bottom-left-radius: 12px;border-bottom-right-radius: 12px; }
+  .search-popup-content { padding: 0;box-shadow: 1px 8px 10px rgba(0, 82, 128, 0.1);border-bottom-left-radius: 12px;border-bottom-right-radius: 12px;overflow: hidden; }
   .search-popup-footer a.btn-demo { width: auto;padding: 4px 10px; }
   .search-popup-term { padding: 0; }
   .search-popup-footer ul#header-main-menu li > a:before{ display: none; }
