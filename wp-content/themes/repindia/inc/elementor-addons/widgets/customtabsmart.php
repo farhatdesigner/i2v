@@ -242,7 +242,7 @@ class Customtabsmart extends Widget_Base
 				<div class="custom-container">
 					<?php if (!empty($section_title)): ?>
 						<div class="col-lg-8 col-xxl-7">
-							<h3 class="smart-main_title quote"><?php echo esc_html($section_title); ?></h3>
+							<h2 class="smart-main_title quote"><?php echo esc_html($section_title); ?></h2>
 						</div>
 					<?php endif; ?>
 					<?php if (!empty($section_description)): ?>

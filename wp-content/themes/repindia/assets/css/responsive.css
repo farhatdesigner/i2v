@@ -1205,6 +1205,7 @@ border-radius: 12px;
     .hero-style .slide-title, .hero-style .slide-text, .hero-style .slide-btns { max-width: 100%; }
     .slide-btns { margin-top: 30px; }
     .grey-btn{ width: 100%; }
+    .theme-btn{width: 100%;text-align: center;}
     .inner_page_banner_content h1 { font-size: 28px; }
     .search_result_header { margin-top: 100px; }
     .search-results-content { margin-top: 25px!important; }
