@@ -186,7 +186,7 @@ class Testimonial_Slider extends Widget_Base
                     <!-- Header -->
                     <div class="row ts_header_row g-0">
                         <div class="col-lg-6">
-                            <h2 class="ts_main_title"><?php echo esc_html($settings['section_title']); ?></h2>
+                            <h3 class="ts_main_title"><?php echo esc_html($settings['section_title']); ?></h3>
                         </div>
                         <div class="col-lg-6">
                             <p class="ts_header_description"><?php echo esc_html($settings['section_description']); ?></p>

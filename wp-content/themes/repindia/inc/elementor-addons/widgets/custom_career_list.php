@@ -163,7 +163,7 @@ class Custom_Career_List extends Widget_Base {
 
             <div class="career-header-section">
                 <div class="career-header-content">
-                    <h2 class="career-main-title"><?php echo esc_html($section_title); ?></h2>
+                    <h3 class="career-main-title"><?php echo esc_html($section_title); ?></h3>
                     <?php if (!empty($section_subtitle)): ?><p class="career-subtitle"><?php echo esc_html($section_subtitle); ?></p><?php endif; ?>
                 </div>
                 <?php if ($enable_filter && !empty($filter_terms)): ?>

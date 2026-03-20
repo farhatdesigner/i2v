@@ -351,9 +351,9 @@ class Scalescroll2 extends Widget_Base
                         <div class="col-lg-5 col-xl-4 col-12">
                             <div class="width_define">
                                 <?php if (!empty($section_title)) : ?>
-                                    <h3 class="main_title quote mb-12">
+                                    <h2 class="main_title quote mb-12">
                                         <?php echo esc_html($section_title); ?>
-                                    </h3>
+                                    </h2>
                                 <?php endif; ?>
                                 <?php if (!empty($section_description)) : ?>
                                     <div class="text-left">
