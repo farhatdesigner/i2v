@@ -250,8 +250,8 @@ function add_products_cpt_breadcrumb( $links ) {
     if ( is_singular( 'products' ) ) {
         // Add "Products" after Home
         $breadcrumb = array(
-            'url'  => home_url( '/i2vs-products/' ),
-            'text' => 'i2VS products',
+            'url'  => home_url( '/products/' ),
+            'text' => 'Products',
         );
         array_splice( $links, 1, 0, array( $breadcrumb ) );
     }

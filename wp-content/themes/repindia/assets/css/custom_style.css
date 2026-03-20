@@ -4858,7 +4858,7 @@ span.star {
   }
 
   .hero-style .slide-title h2 {
-    font-size: 32px;
+    font-size: 28px;
   }
 
   .btn-sec_gap {
@@ -4951,7 +4951,7 @@ span.star {
   }
 
   .grid-listing {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
   }
 
   .grid-listing li {
@@ -5260,9 +5260,9 @@ span.star {
 }
 
 @media (max-width: 380px) {
-  .hero-style .slide-title h2 {
+  /* .hero-style .slide-title h2 {
     font-size: 30px;
-  }
+  } */
 
   .badge-custom {
     padding: 2px 13px;
