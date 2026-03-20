@@ -72,7 +72,7 @@ if ($filter_type === 'all') {
 <div class="search_result_header" style="background-image: url('<?php echo esc_url( home_url( '/' ) ); ?>wp-content/uploads/2024/03/home_banner.webp');" >
 	<div class="custom-container">
 		<div class="inner_page_banner_content">
-			<h1><?php echo esc_html__( 'Search result', 'repindia' ) ?></h1>
+			<h1><?php echo esc_html__( 'Search Results for “i2V VMS Pre” — i2V Products & Resources', 'repindia' ) ?></h1>
 			<p><?php echo esc_html__( 'Browse through resources matching your search. Quickly find software downloads, manuals, brochures, or tutorials to get the information you need.', 'repindia' ); ?></p>
 		</div>
 	</div>
