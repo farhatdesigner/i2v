@@ -188,7 +188,7 @@ class Custom_Career_List extends Widget_Base {
         </div>
 
         <style>
-        #<?php echo $uid; ?> .career-header-section { display:flex; justify-content:space-between; align-items:flex-start; gap:20px; margin-bottom:48px; }
+        #<?php echo $uid; ?> .career-header-section { display:flex; justify-content:space-between; align-items:flex-start; gap:20px; margin-bottom:36px; }
         #<?php echo $uid; ?> .career-main-title { font-size:48px;font-weight: 600;color:#06283D; margin:0 0 12px;line-height: normal;  }
         #<?php echo $uid; ?> .career-subtitle { color:#5C5C5C;font-size: 18px;font-weight:400;line-height: 26px; margin:0; }
         #<?php echo $uid; ?> .career-filter-section { min-width:345px; }
