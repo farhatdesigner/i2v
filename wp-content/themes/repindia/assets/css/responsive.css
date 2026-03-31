@@ -1001,7 +1001,7 @@ border-radius: 12px;
 }
   .enterprisebanner ul.elementor-icon-list-items.elementor-inline-items {
     flex-wrap: unset;
-    max-width: 400px;
+    /* max-width: max-content; */
     overflow: scroll;
     justify-content: start;
   }
@@ -1082,11 +1082,11 @@ border-radius: 12px;
   .txtflex h2 {
     font-size: 24px;
     line-height: 1.2em;
-    text-align: center;
+    text-align: left;
   }
   .txtflex p {
     font-size: 14px;
-    text-align: center;
+    text-align: left;
   }
   
 .featuregroup_repeator .nested-item-1 {
