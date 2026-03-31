@@ -4444,6 +4444,10 @@ span.star {
   width: calc(50% - 20px);
 }
 
+.txtflex, .bolt {
+  max-width: 100% !important;
+}
+
 }
 
 @media screen and (max-width: 1024px) {
