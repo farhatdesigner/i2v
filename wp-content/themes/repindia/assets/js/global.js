@@ -217,6 +217,44 @@ jQuery(document).ready(function ($) {
         }
     };
 
+    // Hero video iframes: size from wrapper box (16:9 cover). Pure CSS vw/vh does not match .hero-slider height.
+    var heroVideoEmbedResizeBound = false;
+
+    function resizeHeroVideoEmbeds() {
+        document.querySelectorAll('.hero-slider .slide-video-white, .hero-slider .slide-video-dark').forEach(function (wrap) {
+            var iframe = wrap.querySelector('iframe');
+            if (!iframe) return;
+            var w = wrap.clientWidth;
+            var h = wrap.clientHeight;
+            if (!w || !h) return;
+            var s = Math.max(w / 16, h / 9);
+            iframe.style.width = (16 * s) + 'px';
+            iframe.style.height = (9 * s) + 'px';
+        });
+    }
+
+    function bindHeroVideoEmbedResize() {
+        resizeHeroVideoEmbeds();
+        if (heroVideoEmbedResizeBound) return;
+        heroVideoEmbedResizeBound = true;
+        var schedule = function () {
+            resizeHeroVideoEmbeds();
+        };
+        window.addEventListener('resize', schedule);
+        window.addEventListener('orientationchange', function () {
+            setTimeout(schedule, 200);
+            setTimeout(schedule, 500);
+        });
+        if (typeof ResizeObserver !== 'undefined') {
+            var ro = new ResizeObserver(schedule);
+            document.querySelectorAll('.hero-slider .slide-video-white, .hero-slider .slide-video-dark').forEach(function (el) {
+                ro.observe(el);
+            });
+            var heroRoot = document.querySelector('.sectionshomebanner .hero-slider');
+            if (heroRoot) ro.observe(heroRoot);
+        }
+    }
+
     // Use Swiper 4.5.1 reference to avoid Elementor's Swiper 8 conflict
     // window.SwiperV4 is saved before Elementor loads its Swiper 8
     // Wait for Swiper to be available before initializing
@@ -230,6 +268,9 @@ jQuery(document).ready(function ($) {
         var SwiperConstructor = (typeof window.SwiperV4 !== 'undefined') ? window.SwiperV4 : (typeof Swiper !== 'undefined' ? Swiper : null);
         if (SwiperConstructor) {
             var swiper = new SwiperConstructor(".hero-swiper-container", swiperOptions);
+            bindHeroVideoEmbedResize();
+            setTimeout(resizeHeroVideoEmbeds, 50);
+            setTimeout(resizeHeroVideoEmbeds, 400);
         } else {
             // Retry after a short delay if Swiper not loaded yet
             setTimeout(initHeroSwiper, 100);
