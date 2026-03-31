@@ -558,7 +558,7 @@ if (!empty($repindia_option['technology_partner_form'])) { ?>
 	</div>
 </div>
 
-<!-- Smooth scroll effect script -->/
+<!-- Smooth scroll effect script -->
  <script>
 	window.addEventListener("load", function () {
     if (window.location.hash) {

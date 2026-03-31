@@ -520,10 +520,13 @@ input[type="text" i] {
                     top: auto !important;
                     max-height: none !important;
                     overflow: visible !important;
+                    padding: 8px;
                 }
 
                 .analytic-sidebar .analytic-search-wrapper {
                     margin-bottom: 12px;
+                    padding: 0;
+
                 }
 
                 /* Mobile dropdown button */

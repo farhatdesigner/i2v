@@ -286,6 +286,7 @@ class Horizontal_Slider_Energy extends Widget_Base
                 line-height: 24px;
                 margin-top: 15px;
                 max-width: 90%;
+                padding-right: 15px;
             }
             .hz-slider-energy .energy-toggle-btn{ bottom: 15px;
                 right: 15px;

@@ -413,6 +413,7 @@ class Custom_Blog_Filter extends Widget_Base
                 gap: 49px;
                 max-width: 100%;
                 margin: 0 auto;
+                width: calc(100% - 0px) !important;
                 padding: 0px;
                 background: transparent;
             }
