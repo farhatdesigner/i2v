@@ -57,12 +57,20 @@
     document.querySelectorAll('.dark-mode-toggle').forEach(btn => {
         btn.addEventListener('click', function () {
             const isDark = document.body.classList.toggle('js-dark');
+
+            if (isDark) {
+                document.documentElement.classList.add('js-dark');
+            } else {
+                document.documentElement.classList.remove('js-dark');
+            }
+
             setCookie('site-theme', isDark ? 'dark' : 'light', 365);
             updateThemeImages();
         });
     });
 
 })();
+
 
 
 // HERO SLIDER
