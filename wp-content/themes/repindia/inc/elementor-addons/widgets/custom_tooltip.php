@@ -875,7 +875,17 @@ class Custom_Tooltip extends Widget_Base
             echo '$tooltip.on("mouseenter", function() { $(this).addClass("show"); });';
             echo '$tooltip.on("mouseleave", function() { $(this).removeClass("show"); });';
             echo '} else if (triggerType === "click") {';
-            echo '$trigger.on("click", function(e) { e.stopPropagation(); positionTooltipByTrigger($wrapper); $tooltip.toggleClass("show"); });';
+            echo '$trigger.on("click", function(e) {';
+            echo 'e.stopPropagation();';
+            echo '$(".ctw-tooltip.show, .ctw-tooltip-bottom.show, .moretooldiv.show").each(function() {';
+            echo 'var $thisTooltip = $(this);';
+            echo 'if (!$wrapper.has($thisTooltip).length) {';
+            echo '$thisTooltip.removeClass("show");';
+            echo '}';
+            echo '});';
+            echo 'positionTooltipByTrigger($wrapper);';
+            echo '$tooltip.toggleClass("show");';
+            echo '});';
             echo '$(document).on("click.ctw-outside-" + $wrapper.index(), function(e) {';
             echo 'if ($tooltip.hasClass("show")) {';
             echo 'if (!$wrapper.is(e.target) && !$wrapper.has(e.target).length) {';

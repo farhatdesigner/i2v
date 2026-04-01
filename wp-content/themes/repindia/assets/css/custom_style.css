@@ -1081,6 +1081,7 @@ a:hover {
   /* scroll-behavior: smooth; */
   /* scrollbar-width: thin; */
   /* scrollbar-color: #d5d5d5 transparent;*/
+  width: 100%;
 }
 
 /* Custom scrollbar for inside-menu-container-inner */
@@ -1189,7 +1190,7 @@ a:hover {
 }
 
 #header-toggle-menu > li:nth-last-child(4) > a:hover:before {
-  content: none !important;
+  content: none !important; 
   pointer-events: none !important;
   visibility: hidden !important;
 }

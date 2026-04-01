@@ -49,7 +49,7 @@ global $repindia_option;
                                 }
                                 ?>
 
-                                <ul class="rightmenu_statictxt">
+                                <!-- <ul class="rightmenu_statictxt">
                                     <li class="hamburger_right_desc_box">
 
                                         <?php
@@ -111,7 +111,7 @@ global $repindia_option;
                                             </ul>
                                         </div>
                                     </li>
-                                </ul>
+                                </ul> -->
 
                                 <?php
                                 // Check if social media is enabled

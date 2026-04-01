@@ -316,8 +316,8 @@ class Analytic_Sidebar_Nav extends Widget_Base
             }
 
 input[type="text" i] {
-    padding-block: 0px;
-    padding-inline: 0px;
+    /* padding-block: 0px;
+    padding-inline: 0px; */
 }
 
 .video_analytic_sidebar .elementor-heading-title {

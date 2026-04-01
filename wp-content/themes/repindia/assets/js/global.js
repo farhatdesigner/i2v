@@ -710,6 +710,14 @@ $(document).ready(function () {
 
     // Unlock body scroll when formpopup_modal closes
     $(document).on('hidden.bs.modal', '.formpopup_modal', function () {
+
+    // Reset all forms inside the modal so it always opens in a clean state
+    $(this).find('form').each(function () {
+        if (typeof this.reset === "function") {
+            this.reset();
+        }
+    });
+
         // Remove event listeners
         $(window).off("scroll", preventModalBodyScroll);
         document.removeEventListener("wheel", preventModalBodyWheel, false);
