@@ -197,7 +197,8 @@
   border-bottom: 1px solid rgba(193, 196, 198, 0.1) !important;
 }
 .js-dark .news_main_section .sticky-custom > ul > li:hover {
-  background: transparent;
+  background: transparent !important;
+  border: 0 !important;
 }
 .js-dark
   .news_main_section

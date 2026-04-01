@@ -1,6 +1,33 @@
 
 (function () {
 
+    function getCookie(name) {
+        const match = document.cookie.match(new RegExp('(?:^|; )' + name.replace(/([.$?*|{}()[\]\\/+^])/g, '\\$1') + '=([^;]*)'));
+        return match ? decodeURIComponent(match[1]) : null;
+    }
+
+    function setCookie(name, value, days) {
+        let expires = '';
+        if (typeof days === 'number') {
+            const date = new Date();
+            date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+            expires = '; expires=' + date.toUTCString();
+        }
+        document.cookie = name + '=' + encodeURIComponent(value) + expires + '; path=/';
+    }
+
+    // Apply saved theme immediately on parse (no flicker)
+    (function applyInitialThemeFromCookie() {
+        const saved = getCookie('site-theme');
+        if (saved === 'dark') {
+            document.documentElement.classList.add('js-dark');
+            document.body.classList.add('js-dark');
+        } else if (saved === 'light') {
+            document.documentElement.classList.remove('js-dark');
+            document.body.classList.remove('js-dark');
+        }
+    })();
+
     function updateThemeImages() {
         const isDark = document.body.classList.contains('js-dark');
 
@@ -20,21 +47,17 @@
         });
     }
 
-    /* 🔥 CRITICAL: force LIGHT on initial parse */
-    document.documentElement.classList.remove('js-dark');
-    updateThemeImages();
-
     /* After DOM is stable */
     document.addEventListener('DOMContentLoaded', updateThemeImages);
 
     /* Elementor dynamic support */
     document.addEventListener('elementor/frontend/init', updateThemeImages);
 
-    /* Dark-mode toggle (unchanged behavior) */
+    /* Dark-mode toggle */
     document.querySelectorAll('.dark-mode-toggle').forEach(btn => {
         btn.addEventListener('click', function () {
             const isDark = document.body.classList.toggle('js-dark');
-            localStorage.setItem('dark-mode', isDark ? 'dark' : 'light');
+            setCookie('site-theme', isDark ? 'dark' : 'light', 365);
             updateThemeImages();
         });
     });
@@ -710,7 +733,6 @@ $(document).ready(function () {
 
     // Unlock body scroll when formpopup_modal closes
     $(document).on('hidden.bs.modal', '.formpopup_modal', function () {
-
     // Reset all forms inside the modal so it always opens in a clean state
     $(this).find('form').each(function () {
         if (typeof this.reset === "function") {

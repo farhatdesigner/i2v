@@ -1179,10 +1179,10 @@ div.pin-spacer > .hz-slider-section {
   width: calc(25% - 20px);
   border-radius: 12px;
 }
-/* .industry-list-section .grid-industry_list li:nth-child(6n + 1),
+.industry-list-section .grid-industry_list li:nth-child(6n + 1),
 .industry-list-section .grid-industry_list li:nth-child(6n + 6) {
   width: calc(50% - 0px);
-} */
+}
 .card_industry {
   padding: 8px;
   border-radius: 12px;
