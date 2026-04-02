@@ -287,7 +287,7 @@ class Horizontal_Slider extends Widget_Base
                 height: 14px;
             }
         </style>
-        <section class="custom-container">
+        <section class="custom-container mobile_container">
             <div class="hz-slider-section">
                 <section class="slider">
                     <div class="swiper">
