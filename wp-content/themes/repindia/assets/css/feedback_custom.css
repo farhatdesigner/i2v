@@ -1179,10 +1179,52 @@ div.pin-spacer > .hz-slider-section {
   width: calc(25% - 20px);
   border-radius: 12px;
 }
-.industry-list-section .grid-industry_list li:nth-child(6n + 1),
-.industry-list-section .grid-industry_list li:nth-child(6n + 6) {
+.industry-list-section .grid-industry_list:not(.grid-industry_list--last-row-four) li:nth-child(6n + 1),
+.industry-list-section .grid-industry_list:not(.grid-industry_list--last-row-four) li:nth-child(6n + 6) {
   width: calc(50% - 0px);
 }
+
+/* Industry List: second <ul> when total % 3 === 1 — four equal columns (desktop only, ≥769px); mobile matches default list */
+@media (min-width: 769px) {
+  .industry-list-section .grid-industry_list--last-row-four {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .industry-list-section .grid-industry_list--last-row-four > li {
+    width: auto !important;
+    max-width: none;
+    min-width: 0;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+  .industry-list-section .grid-industry_list--last-row-four {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Two lists in one section: row gap between blocks matches flex gap; bottom spacing stays on last list */
+.industry-list-section .grid-industry_list:not(:last-child) {
+  margin-bottom: 20px;
+}
+.industry-list-section .grid-industry_list:last-child {
+  margin-bottom: 80px;
+}
+
+@media (max-width: 768px) {
+  .industry-list-section .grid-industry_list--last-row-four {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .industry-list-section .grid-industry_list--last-row-four > li {
+    width: 100% !important;
+    max-width: 100%;
+    min-width: 0;
+  }
+}
+
 .card_industry {
   padding: 8px;
   border-radius: 12px;
