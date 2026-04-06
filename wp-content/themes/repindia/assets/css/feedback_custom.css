@@ -1936,7 +1936,7 @@ html {
 .hz-slider-section .swiper-slide, .hz-slider-topcaption .swiper-slide {width:85%;}
 .hz-slider-section .slider .swiper .swiper-slide:last-child,  .hz-slider-section .slider, 
 .hz-slider-topcaption .slider .swiper .swiper-slide:last-child,  .hz-slider-topcaption .slider {margin-right:20px !important}
-
+.content_mobile-mrgin {margin-left: 20px !important;margin-right: 20px !important;}
 
 
 }
