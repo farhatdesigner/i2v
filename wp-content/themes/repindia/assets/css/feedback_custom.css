@@ -301,12 +301,12 @@ html.lenis body {
   color: var(--Golbal-text-text-1, rgba(255, 255, 255, 0.9));
 }
 
-.accordion_set > .select_div {
+.accordion_set > .select_div, .accordion_set > .select_div:hover {
   width: 100%;
   display: flex;
   cursor: pointer;
   border: none;
-  background: transparent;
+  background: transparent !important;
   -webkit-transition: all 0.2s linear;
   -moz-transition: all 0.2s linear;
   transition: all 0.2s linear;

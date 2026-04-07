@@ -495,6 +495,7 @@ label.form-label.label_notic {
   margin-top: 16px;
   font-weight: 400;
   color: #5F6F94;
+  position: relative;
 }
 input.wpcf7-submit.form-control.submitbtn {
   height: auto;
@@ -604,7 +605,12 @@ label.form-label.required_note {
 label.form-label.label_notic a {
   color: #5c5c5c;
   font-weight: 500;
+  position: relative;
 }
+
+
+.js-dark label.form-label.label_notic a {color: rgb(255 255 255 / 70%);}
+.js-dark label.form-label.label_notic a:hover {color: #ffffff;}
 .btn-sec_gap.titlegrep.with_whitebg .grey-btn {
   border-color: #e6ebf2;
   background: #fff;
@@ -777,6 +783,15 @@ border-radius: 12px;
   text-decoration-color: #d7dbe4;
   color: #5c5c5c;
 }
+.js-dark .career-apply-form label.form-label.notice-text a {
+  text-decoration-color: #d7dbe44f;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.js-dark .career-apply-form label.form-label.notice-text a:hover {
+  text-decoration-color: #464a4f;
+  color: #ffffff;
+}
 .js-dark .career-apply-form.styled-career-form {
   background: #262a30;
 }
@@ -795,10 +810,6 @@ border-radius: 12px;
 .js-dark .styled-career-form .file-upload-box.drag-over {
   border-color: #4a90e2;
   background: rgba(74, 144, 226, 0.12);
-}
-.js-dark .career-apply-form label.form-label.notice-text a {
-  text-decoration-color: #464a4f;
-  color: rgba(255, 255, 255, 0.6);
 }
 
 .js-dark .darkbg-policy {
@@ -1192,8 +1203,6 @@ border-radius: 12px;
     .details { padding: 15px 0 10px; }
     .photo_custom .details h2{ font-size: 20px; }
     .hz-slider-section .swiper-slide p,.hz-slider-section .swiper-slide ul li{ font-size: 16px;line-height: normal !important; }
-    .elementor-element.grid_layout_mbl { display: flex;align-items: stretch;max-width: 350px;overflow-x: scroll;width: 100%;flex-wrap: nowrap;gap: 10px; }
-    .elementor-element.grid_layout_mbl .caption_impact,.elementor-element.grid_layout_mbl .box-custom{ width: 100%;min-width: 248px;max-width: 248px; }
     .vms_accord.elementor-widget-n-tabs .e-n-tabs-heading{ display: inline-block; }
     #tab_table .vms_accord .e-n-tabs-heading{ margin-left: 0;width: 100%!important;max-width: 100%;background: transparent;border: 0;padding: 0;display: flex;align-items: center;justify-content: center;gap: 10px; }
     .vms_accord.elementor-widget-n-tabs .e-n-tab-title{ width: 100%!important;border-color: #D7DBE4 !important;margin: 0px!important; }
