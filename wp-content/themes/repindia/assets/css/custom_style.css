@@ -3117,6 +3117,9 @@ label.form-label.required_note-demo {
 .box-custom a {
   cursor: inherit;
 }
+.grid_rowboxes .box-custom a, .grid_rowboxes .box-custom a img {
+  width: 100%;
+}
 /* .explore_dark span.e-opened svg {
   width: 42px;
   height: 32px !important;
