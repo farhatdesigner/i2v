@@ -1106,3 +1106,4 @@ header li.burger-icon .icon-sun,
 .js-dark .modal-demo-form .modal-content,.js-dark .global-youtube-popup__content,.js-dark .ctw-tooltip-inner,.js-dark .elementor-element.floating_dark .enterprisebanner.elementor-widget {
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.30)!important;
 }
+.project_box .elementor-position-top:before {background: #c1c4c633;}
