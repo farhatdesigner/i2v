@@ -845,6 +845,9 @@ class Custom_Blog_Filter extends Widget_Base
                 justify-content: center;
                 flex-direction: column;
             }
+            .js-dark .custom-blog-filter-no-results {
+                background: #262a30;
+            }
 
             .custom-blog-filter-no-results-icon {
                 width: 120px;
@@ -896,6 +899,9 @@ class Custom_Blog_Filter extends Widget_Base
                 text-align: center;
                 margin-top: 40px;
             }
+            
+.js-dark .custom-blog-filter-search-icon {
+    fill: rgb(255 255 255 / 0%);}
 
             /* .custom-blog-filter-load-more-btn {
                                                                 padding: 12px 24px;

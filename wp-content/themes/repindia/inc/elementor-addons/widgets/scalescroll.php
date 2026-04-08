@@ -668,6 +668,12 @@ class Scalescroll extends Widget_Base
                 h4.boxtitle {
                     font-size: 11px;
                 }
+                
+.featuregroup_repeator .nested-image-wrapper img, .featuregroup_repeator .nested-image-wrapper {
+    width: 32px;
+    height: 32px;
+    padding-bottom: 0;
+}
 
             }
         </style>
