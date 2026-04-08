@@ -199,13 +199,7 @@ class Analytic_Sidebar_Nav extends Widget_Base
                                 fill="#D7DBE4" />
                         </svg> -->
 
-                        
-<svg  class="check-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g opacity="0.5">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M16.7071 5.29289C17.0976 5.68342 17.0976 6.31658 16.7071 6.70711L8.70711 14.7071C8.31658 15.0976 7.68342 15.0976 7.29289 14.7071L3.29289 10.7071C2.90237 10.3166 2.90237 9.68342 3.29289 9.29289C3.68342 8.90237 4.31658 8.90237 4.70711 9.29289L8 12.5858L15.2929 5.29289C15.6834 4.90237 16.3166 4.90237 16.7071 5.29289Z" fill="#06283D"/>
-</g>
-</svg>
-
+                        <svg  class="check-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><g opacity="0.5"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.7071 5.29289C17.0976 5.68342 17.0976 6.31658 16.7071 6.70711L8.70711 14.7071C8.31658 15.0976 7.68342 15.0976 7.29289 14.7071L3.29289 10.7071C2.90237 10.3166 2.90237 9.68342 3.29289 9.29289C3.68342 8.90237 4.31658 8.90237 4.70711 9.29289L8 12.5858L15.2929 5.29289C15.6834 4.90237 16.3166 4.90237 16.7071 5.29289Z" fill="#06283D"/></g></svg>
 
                         </span>
                         <?php
@@ -238,65 +232,36 @@ class Analytic_Sidebar_Nav extends Widget_Base
 
         <style>
             .analytic-sidebar {
-                /* position: sticky !important;
-                                    top: 80px !important;
-                                    max-height: calc(100vh - 80px) !important; */
                 overflow-y: auto !important;
                 overflow-x: hidden !important;
-                /* padding: 10px; */
                 border-radius: 8px;
                 -webkit-overflow-scrolling: touch !important;
-                /* Smooth scrolling on iOS */
                 scroll-behavior: smooth;
                 overscroll-behavior: contain;
                 scrollbar-width: thin;
                 scrollbar-color: #d5d5d5 transparent;
-                /* Ensure mouse wheel scrolling works */
             }
-
-            .analytic-sidebar::-webkit-scrollbar {
-                width: 6px;
-            }
-
-            .analytic-sidebar::-webkit-scrollbar-track {
-                background: transparent;
-                border-radius: 10px;
-            }
-
+            .analytic-sidebar::-webkit-scrollbar { width: 6px; }
+            .analytic-sidebar::-webkit-scrollbar-track { background: transparent;border-radius: 10px; }
             .analytic-sidebar::-webkit-scrollbar-thumb {
                 background: #d5d5d5;
                 border-radius: 10px;
                 transition: background 0.3s ease;
             }
-
-            .analytic-sidebar::-webkit-scrollbar-thumb:hover {
-                background: #d5d5d5;
-            }
-
-            .analytic-sidebar::-webkit-scrollbar-button {
-                display: none;
-                height: 0;
-                width: 0;
-            }
-
-            .analytic-sidebar .analytic-search-wrapper {
-                position: relative;
-                margin-bottom: 0;
-                padding: 8px;
-            }
-
+            .analytic-sidebar::-webkit-scrollbar-thumb:hover { background: #d5d5d5; }
+            .analytic-sidebar::-webkit-scrollbar-button { display: none;height: 0;width: 0; }
+            .analytic-sidebar .analytic-search-wrapper { position: relative;margin-bottom: 0;padding: 8px; }
             .analytic-sidebar .analytic-search-wrapper .analytic-search-icon {
                 position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 24px;
-    height: 24px;
-    color: #999;
-    pointer-events: none;
-    z-index: 1;
+                right: 20px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 24px;
+                height: 24px;
+                color: #999;
+                pointer-events: none;
+                z-index: 1;
             }
-
             .analytic-sidebar .analytic-search {
                 width: 100%;
                 padding: 12px 8px 12px 8px;
@@ -304,38 +269,17 @@ class Analytic_Sidebar_Nav extends Widget_Base
                 border-radius: 8px;
                 background: #F2F5FA;
             }
-
-            .analytic-sidebar .analytic-search::placeholder {
-                color: #999;
-            }
-
+            .analytic-sidebar .analytic-search::placeholder { color: #999; }
             .analytic-sidebar .analytic-search:focus,
-            .analytic-sidebar .analytic-search:focus-visible {
-                outline: none !important;
-                box-shadow: none !important;
+            .analytic-sidebar .analytic-search:focus-visible { outline: none !important;box-shadow: none !important; }
+            input[type="text" i] {
+                /* padding-block: 0px;
+                padding-inline: 0px; */
             }
-
-input[type="text" i] {
-    /* padding-block: 0px;
-    padding-inline: 0px; */
-}
-
-.video_analytic_sidebar .elementor-heading-title {
-    padding: 8px;
-}
-.js-dark .analytic-nav li .check-icon path {
-    fill: #D7DBE4;
-}
-.js-dark .video_analytic_sidebar  .elementor-heading-title {
-    color: rgb(255 255 255 / 60%) !important;
-    padding: 8px 8px 0 8px;
-}
-            .analytic-nav {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-            }
-
+            .video_analytic_sidebar .elementor-heading-title { padding: 8px; }
+            .js-dark .analytic-nav li .check-icon path { fill: #D7DBE4; }
+            .js-dark .video_analytic_sidebar  .elementor-heading-title { color: rgb(255 255 255 / 60%) !important;padding: 8px 8px 0 8px; }
+            .analytic-nav { list-style: none;padding: 0;margin: 0; }
             .analytic-nav li {
                 padding: 10px 12px 12px 30px;
                 cursor: pointer;
@@ -346,28 +290,10 @@ input[type="text" i] {
                 transition: 0.2s;
                 margin-bottom: 2px;
             }
-
-            .analytic-nav li:hover {
-                background: #f0f4ff;
-            }
-
-            .analytic-nav li.active {
-                background: #E6E6E6 !important;
-                font-weight: 600;
-            }
-
-            .analytic-nav li .icon svg {
-                width: 18px;
-                height: 18px;
-            }
-
-            .analytic-nav li .icon img {
-                width: 24px;
-                height: 24px;
-                object-fit: contain;
-            }
-
-            /* Check icon for active items */
+            .analytic-nav li:hover { background: #f0f4ff; }
+            .analytic-nav li.active { background: #E6E6E6 !important;font-weight: 600; }
+            .analytic-nav li .icon svg { width: 18px;height: 18px; }
+            .analytic-nav li .icon img { width: 24px;height: 24px;object-fit: contain; }
             .analytic-nav li .check-icon {
                 display: none;
                 margin-left: 0;
@@ -378,141 +304,52 @@ input[type="text" i] {
                 position: absolute;
                 left: 16px;
             }
-
-            .analytic-nav li.active .check-icon {
-                display: block;
+            .analytic-nav li.active .check-icon { display: block; }
+            .analytic-nav li .check-icon svg { width: 16px;height: 16px; }
+            .js-dark .analytic-nav li:hover { background: rgba(255, 255, 255, 0.15); }
+            .js-dark .analytic-nav li span.title { color: #D7DBE4 !important; }
+            .js-dark .analytic-sidebar .analytic-search { background: #31353B; }
+            .js-dark .analytic-sidebar .analytic-search::placeholder { color: rgb(255 255 255 / 60%);opacity: 1;background: 1px solid rgb(255 255 255 / 15%); }
+            .icon img.icon-dark { display: none; }
+            .icon img.icon-light { display: inline-block; }
+            body.js-dark .icon img.icon-light { display: none; }
+            body.js-dark .icon img.icon-dark { display: inline-block; }
+            /* Desktop-only: sticky + scrollable sidebar when items overflow */
+            @media (min-width: 768px) {
+                .video_analytic_sidebar,
+                .elementor-element.video_analytic_sidebar {
+                    position: sticky;
+                    top: 100px;
+                    max-height: calc(100vh - 120px);
+                    overflow-y: auto;
+                    overflow-x: hidden;
+                }
             }
-
-            .analytic-nav li .check-icon svg {
-                width: 16px;
-                height: 16px;
-            }
-
-
-            .js-dark .analytic-nav li:hover {
-                background: rgba(255, 255, 255, 0.15);
-            }
-
-            .js-dark .analytic-nav li span.title {
-                color: #D7DBE4 !important;
-            }
-
-            .js-dark .analytic-sidebar .analytic-search {
-                background: #31353B;
-            }
-
-            .js-dark .analytic-sidebar .analytic-search::placeholder {
-                color: rgb(255 255 255 / 60%);
-                opacity: 1;
-                background: 1px solid rgb(255 255 255 / 15%);
-            }
-
-            /* Light/Dark Mode Icon Switching */
-            .icon img.icon-dark {
-                display: none;
-            }
-
-            .icon img.icon-light {
-                display: inline-block;
-            }
-
-            body.js-dark .icon img.icon-light {
-                display: none;
-            }
-
-            body.js-dark .icon img.icon-dark {
-                display: inline-block;
-            }
-
-            /* Enable manual scrolling for sidebar - let the sticky sidebar handle its own scroll */
-            .video_analytic_sidebar,
-            .elementor-element.video_analytic_sidebar {
-                height: auto;
-                max-height: max-content;
-                position: sticky;
-                top: 100px;
-            }
-
             /* Enable manual scrolling for right content section */
             .right_content_section,
             .elementor-element.right_content_section {
-                max-height: 1914px !important;
-                overflow-y: auto !important;
-                overflow-x: hidden !important;
-                -webkit-overflow-scrolling: touch !important;
-                scroll-behavior: smooth;
-                /* Ensure mouse wheel scrolling works */
-                overscroll-behavior: contain;
-                scrollbar-width: thin;
-                scrollbar-color: #d5d5d5 transparent;
+                max-height: none !important;
+                overflow: visible !important;
             }
-
             .right_content_section::-webkit-scrollbar,
-            .elementor-element.right_content_section::-webkit-scrollbar {
-                width: 6px;
-            }
-
+            .elementor-element.right_content_section::-webkit-scrollbar { width: 6px; }
             .right_content_section::-webkit-scrollbar-track,
-            .elementor-element.right_content_section::-webkit-scrollbar-track {
-                background: transparent;
-                border-radius: 10px;
-            }
-
+            .elementor-element.right_content_section::-webkit-scrollbar-track { background: transparent;border-radius: 10px; }
             .right_content_section::-webkit-scrollbar-thumb,
-            .elementor-element.right_content_section::-webkit-scrollbar-thumb {
-                background: #d5d5d5;
-                border-radius: 10px;
-                transition: background 0.3s ease;
-            }
-
+            .elementor-element.right_content_section::-webkit-scrollbar-thumb { background: #d5d5d5;border-radius: 10px;transition: background 0.3s ease; }
             .right_content_section::-webkit-scrollbar-thumb:hover,
-            .elementor-element.right_content_section::-webkit-scrollbar-thumb:hover {
-                background: #d5d5d5;
-            }
-
-            .right_content_section::-webkit-scrollbar-button,
-            .elementor-element.right_content_section::-webkit-scrollbar-button {
-                display: none;
-                height: 0;
-                width: 0;
-            }
-
-            html.lenis,
-            body {
-                overflow-x: visible;
-            }
-            
-.js-dark .analytic-sidebar-hr {
-    color: #C1C4C6;
-}
-
-.js-dark .analytic-sidebar {
-    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
-}
-
-.js-dark .analytic-sidebar::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
-}
-
-.js-dark .analytic-sidebar::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.3);
-}
-
-.js-dark .right_content_section,
-.js-dark .elementor-element.right_content_section {
-    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
-}
-
-.js-dark .right_content_section::-webkit-scrollbar-thumb,
-.js-dark .elementor-element.right_content_section::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
-}
-
-.js-dark .right_content_section::-webkit-scrollbar-thumb:hover,
-.js-dark .elementor-element.right_content_section::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.3);
-}
-
+            .elementor-element.right_content_section::-webkit-scrollbar-thumb:hover { background: #d5d5d5; }
+            .right_content_section::-webkit-scrollbar-button,.elementor-element.right_content_section::-webkit-scrollbar-button { display: none;height: 0;width: 0; }
+            html.lenis, body { overflow-x: visible; }
+            .js-dark .analytic-sidebar-hr { color: #C1C4C6; }
+            .js-dark .analytic-sidebar { scrollbar-color: rgba(255, 255, 255, 0.3) transparent; }
+            .js-dark .analytic-sidebar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.3); }
+            .js-dark .analytic-sidebar::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.3); }
+            .js-dark .right_content_section,.js-dark .elementor-element.right_content_section { scrollbar-color: rgba(255, 255, 255, 0.3) transparent; }
+            .js-dark .right_content_section::-webkit-scrollbar-thumb,
+            .js-dark .elementor-element.right_content_section::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.3); }
+            .js-dark .right_content_section::-webkit-scrollbar-thumb:hover,
+            .js-dark .elementor-element.right_content_section::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.3); }
             /* Mobile Dropdown Styles */
             @media (max-width: 768px) {
                 .analytic-sidebar {
@@ -522,14 +359,7 @@ input[type="text" i] {
                     overflow: visible !important;
                     padding: 8px;
                 }
-
-                .analytic-sidebar .analytic-search-wrapper {
-                    margin-bottom: 12px;
-                    padding: 0;
-
-                }
-
-                /* Mobile dropdown button */
+                .analytic-sidebar .analytic-search-wrapper { margin-bottom: 12px;padding: 0; }
                 .analytic-mobile-toggle {
                     display: block;
                     width: 100%;
@@ -544,17 +374,8 @@ input[type="text" i] {
                     align-items: center;
                     justify-content: space-between;
                 }
-
-                .analytic-mobile-toggle svg {
-                    width: 20px;
-                    height: 20px;
-                    transition: transform 0.3s ease;
-                }
-
-                .analytic-mobile-toggle.active svg {
-                    transform: rotate(180deg);
-                }
-
+                .analytic-mobile-toggle svg { width: 20px;height: 20px;transition: transform 0.3s ease; }
+                .analytic-mobile-toggle.active svg { transform: rotate(180deg); }
                 /* Hide nav by default on mobile */
                 .analytic-nav {
                     display: none !important;
@@ -562,52 +383,24 @@ input[type="text" i] {
                     overflow-y: auto;
                     border: 1px solid #ddd;
                     border-radius: 6px;
-                    /* background: #fff; */
                     margin-top: 12px;
                     position: relative;
                     z-index: 10;
                 }
-
-                .analytic-nav.mobile-open {
-                    display: block !important;
-                }
-
+                .analytic-nav.mobile-open { display: block !important; }
                 /* Ensure toggle button is visible and clickable on mobile */
-                .analytic-mobile-toggle {
-                    display: flex !important;
-                    z-index: 10;
-                    position: relative;
-                }
-
-                .right_content_section,
-                .elementor-element.right_content_section {
-                    max-height: 600px !important;
-                }
+                .analytic-mobile-toggle { display: flex !important;z-index: 10;position: relative; }
+                .right_content_section,.elementor-element.right_content_section { max-height: none !important; }
             }
-
             @media (max-width: 767px) {
-
-                .video_analytic_sidebar,
-                .elementor-element.video_analytic_sidebar {
-                    position: static;
-                }
+                .video_analytic_sidebar,.elementor-element.video_analytic_sidebar {  position: static; }
             }
-
             @media (min-width: 769px) {
-                .analytic-mobile-toggle {
-                    display: none !important;
-                }
-
-                .analytic-nav {
-                    display: block !important;
-                    padding: 8px;
-                }
+                .analytic-mobile-toggle { display: none !important; }
+                .analytic-nav { display: block !important;padding: 8px; }
             }
-
             /* Ensure search icon is visible on all screen sizes */
-            .analytic-sidebar .analytic-search-wrapper .analytic-search-icon {
-                display: block !important;
-            }
+            .analytic-sidebar .analytic-search-wrapper .analytic-search-icon { display: block !important; }
         </style>
 
         <script>
@@ -715,11 +508,10 @@ input[type="text" i] {
 
                 // Wait for DOM to be ready
                 function init() {
-                    const rightContentSection = document.querySelector('.right_content_section');
                     const navItems = document.querySelectorAll(".analytic-nav li");
                     const searchInput = document.querySelector(".analytic-search");
 
-                    if (!rightContentSection || navItems.length === 0) {
+                    if (navItems.length === 0) {
                         // Retry if elements not found
                         setTimeout(init, 100);
                         return;
@@ -727,12 +519,7 @@ input[type="text" i] {
 
                     // Check if already initialized to prevent duplicate event listeners
                     const sidebar = document.querySelector('.analytic-sidebar');
-                    if (sidebar && sidebar.dataset.initialized === 'true') {
-                        return;
-                    }
-                    if (sidebar) {
-                        sidebar.dataset.initialized = 'true';
-                    }
+                    const alreadyInitialized = !!(sidebar && sidebar.dataset.initialized === 'true');
 
                     // Get all target sections
                     const sections = Array.from(navItems).map(item => {
@@ -746,6 +533,40 @@ input[type="text" i] {
                     let currentActiveIndex = -1;
                     let isUserScrolling = false;
                     let scrollTimeout;
+                    let rafPending = false;
+                    const SECTION_SCROLL_OFFSET = 100; // px (desired 80–120)
+
+                    // Mobile-only: behave like tabs (show only active section, no scrolling/viewport detection)
+                    function handleMobileTabs() {
+                        if (window.innerWidth >= 768) return;
+
+                        const hideAll = () => {
+                            sections.forEach((sec) => {
+                                if (!sec) return;
+                                sec.style.display = 'none';
+                            });
+                        };
+
+                        const showOnly = (targetSelector) => {
+                            hideAll();
+                            if (!targetSelector) return;
+                            const activeSection = document.querySelector(targetSelector);
+                            if (activeSection) {
+                                activeSection.style.display = 'block';
+                            }
+                        };
+
+                        // Initialize visible section based on active tab (or first tab)
+                        const firstActive = document.querySelector('.analytic-nav li.active') || navItems[0];
+                        if (firstActive) {
+                            showOnly(firstActive.getAttribute('data-target'));
+                        }
+
+                        // Expose helper for click handler reuse
+                        return { showOnly };
+                    }
+
+                    const mobileTabs = handleMobileTabs();
 
                     // Helper function to calculate offsetTop relative to container
                     // Uses getBoundingClientRect for accurate calculation in all cases
@@ -783,29 +604,24 @@ input[type="text" i] {
                             }
 
                             const target = document.querySelector(item.dataset.target);
-                            if (!target || !rightContentSection) return;
+                            if (!target) return;
+
+                            // Mobile: tab-style behavior (no scrolling, just show/hide sections)
+                            if (window.innerWidth < 768) {
+                                navItems.forEach(n => n.classList.remove("active"));
+                                item.classList.add("active");
+                                currentActiveIndex = index;
+
+                                if (mobileTabs && typeof mobileTabs.showOnly === 'function') {
+                                    mobileTabs.showOnly(item.getAttribute('data-target'));
+                                }
+                                return;
+                            }
 
                             // Ensure target is visible (remove any display:none that might be hiding it)
                             if (target.style.display === 'none') {
                                 target.style.display = '';
                             }
-
-                            // Check if target is within rightContentSection or its children
-                            let targetInContainer = rightContentSection.contains(target);
-                            if (!targetInContainer) {
-                                // Try to find the target's parent that is within rightContentSection
-                                let parent = target.parentElement;
-                                while (parent && parent !== document.body) {
-                                    if (rightContentSection.contains(parent)) {
-                                        targetInContainer = true;
-                                        break;
-                                    }
-                                    parent = parent.parentElement;
-                                }
-                            }
-
-                            // If target is not in container, try to scroll to it anyway (might be in a nested structure)
-                            // We'll still attempt to scroll
 
                             // Set user scrolling flag
                             isUserScrolling = true;
@@ -837,74 +653,35 @@ input[type="text" i] {
                                 }
                             });
 
-                            // Calculate exact offsetTop of target relative to right_content_section
-                            // This ensures the section scrolls to the very top of the container
-                            let targetOffsetTop = 0;
-                            let scrollPosition = 0;
-
-                            if (targetInContainer || rightContentSection.contains(target)) {
-                                targetOffsetTop = getOffsetTop(target, rightContentSection);
-                                // Get maximum scroll position
-                                const maxScroll = rightContentSection.scrollHeight - rightContentSection.clientHeight;
-                                // Calculate the scroll position to bring target to top
-                                // Clamp between 0 and maxScroll to prevent over-scrolling
-                                scrollPosition = Math.max(0, Math.min(targetOffsetTop, maxScroll));
-                            } else {
-                                // If target is not in container, calculate relative to document
-                                const targetRect = target.getBoundingClientRect();
-                                const containerRect = rightContentSection.getBoundingClientRect();
-                                const currentScroll = rightContentSection.scrollTop;
-                                targetOffsetTop = currentScroll + (targetRect.top - containerRect.top);
-                                const maxScroll = rightContentSection.scrollHeight - rightContentSection.clientHeight;
-                                scrollPosition = Math.max(0, Math.min(targetOffsetTop, maxScroll));
-                            }
-
-                            // Function to perform the scroll - try multiple methods
                             const performScroll = () => {
-                                // Always scroll the container first (this is the primary method)
                                 try {
-                                    if (rightContentSection) {
-                                        if (rightContentSection.scrollTo) {
-                                            rightContentSection.scrollTo({
-                                                top: scrollPosition,
-                                                behavior: "smooth"
-                                            });
-                                        } else {
-                                            rightContentSection.scrollTop = scrollPosition;
-                                        }
+                                    const rightContentSection =
+                                        document.querySelector('.right_content_section') ||
+                                        document.querySelector('.elementor-element.right_content_section');
+
+                                    const offset = window.innerWidth >= 768 ? SECTION_SCROLL_OFFSET : 0;
+
+                                    // If the right container is scrollable, scroll it with offset; otherwise scroll the page.
+                                    const canContainerScroll = !!(rightContentSection && (rightContentSection.scrollHeight > rightContentSection.clientHeight));
+
+                                    if (canContainerScroll && rightContentSection) {
+                                        const containerRect = rightContentSection.getBoundingClientRect();
+                                        const targetRect = target.getBoundingClientRect();
+                                        const top = rightContentSection.scrollTop + (targetRect.top - containerRect.top) - offset;
+
+                                        rightContentSection.scrollTo({
+                                            top: Math.max(0, top),
+                                            behavior: "smooth"
+                                        });
+                                    } else {
+                                        const targetY = window.pageYOffset + target.getBoundingClientRect().top - offset;
+                                        window.scrollTo({
+                                            top: Math.max(0, targetY),
+                                            behavior: "smooth"
+                                        });
                                     }
                                 } catch (e) {
-                                    console.warn('Container scroll failed:', e);
-                                }
-
-                                // On mobile, also ensure the target is visible in viewport
-                                if (window.innerWidth <= 768) {
-                                    setTimeout(() => {
-                                        try {
-                                            // Check if target is visible in the container viewport
-                                            const containerRect = rightContentSection.getBoundingClientRect();
-                                            const targetRect = target.getBoundingClientRect();
-
-                                            // If target is not visible in container, scroll again
-                                            if (targetRect.top < containerRect.top || targetRect.bottom > containerRect.bottom) {
-                                                // Recalculate and scroll
-                                                const newTargetOffsetTop = getOffsetTop(target, rightContentSection);
-                                                const newMaxScroll = rightContentSection.scrollHeight - rightContentSection.clientHeight;
-                                                const newScrollPosition = Math.max(0, Math.min(newTargetOffsetTop, newMaxScroll));
-
-                                                if (rightContentSection.scrollTo) {
-                                                    rightContentSection.scrollTo({
-                                                        top: newScrollPosition,
-                                                        behavior: "smooth"
-                                                    });
-                                                } else {
-                                                    rightContentSection.scrollTop = newScrollPosition;
-                                                }
-                                            }
-                                        } catch (e) {
-                                            console.warn('Mobile scroll verification failed:', e);
-                                        }
-                                    }, 200);
+                                    console.warn('Scroll failed:', e);
                                 }
                             };
 
@@ -964,51 +741,53 @@ input[type="text" i] {
 
                     // Highlight Active Section based on scroll position in right_content_section
                     function updateActiveSection() {
+                        // Mobile: disable scroll-based activation logic
+                        if (window.innerWidth < 768) return;
                         if (isUserScrolling) return;
-
-                        const scrollTop = rightContentSection.scrollTop;
-                        const containerHeight = rightContentSection.clientHeight;
-                        const viewportTop = scrollTop;
-                        const viewportBottom = scrollTop + containerHeight;
+                        // Use the same offset as click-scroll so "active" matches what the user sees.
+                        const markerY = window.innerWidth >= 768 ? SECTION_SCROLL_OFFSET : 150; // desktop uses offset; mobile stays as before
 
                         let activeIndex = -1;
-                        let minDistance = Infinity;
+                        let bestDistance = Infinity;
 
-                        // Find which section is most visible in the viewport
-                        sections.forEach((sec, index) => {
-                            if (!sec) return;
+                        for (let i = 0; i < sections.length; i++) {
+                            const sec = sections[i];
+                            if (!sec) continue;
 
-                            const secOffsetTop = sec.offsetTop;
-                            const secOffsetBottom = secOffsetTop + sec.offsetHeight;
+                            const rect = sec.getBoundingClientRect();
+                            const isVisibleAtMarker = rect.top <= markerY && rect.bottom >= markerY;
+                            if (!isVisibleAtMarker) continue;
 
-                            // Check if section is visible in viewport
-                            if (secOffsetTop <= viewportBottom && secOffsetBottom >= viewportTop) {
-                                // Section is visible, calculate how much is visible
-                                const visibleTop = Math.max(secOffsetTop, viewportTop);
-                                const visibleBottom = Math.min(secOffsetBottom, viewportBottom);
-                                const visibleHeight = visibleBottom - visibleTop;
-                                const distance = Math.abs(viewportTop - secOffsetTop);
+                            const distance = Math.abs(rect.top - markerY);
+                            if (distance < bestDistance) {
+                                bestDistance = distance;
+                                activeIndex = i;
+                            }
+                        }
 
-                                // Prefer section that starts closest to viewport top
-                                if (visibleHeight > 0 && distance < minDistance) {
-                                    minDistance = distance;
-                                    activeIndex = index;
+                        // Fallback: if nothing spans the marker line, choose section whose top is closest (but above marker preferred)
+                        if (activeIndex === -1) {
+                            let bestAbove = -Infinity;
+                            let bestAboveIndex = -1;
+                            let bestBelow = Infinity;
+                            let bestBelowIndex = -1;
+
+                            for (let i = 0; i < sections.length; i++) {
+                                const sec = sections[i];
+                                if (!sec) continue;
+                                const rect = sec.getBoundingClientRect();
+                                const delta = rect.top - markerY;
+
+                                if (delta <= 0 && delta > bestAbove) {
+                                    bestAbove = delta;
+                                    bestAboveIndex = i;
+                                } else if (delta > 0 && delta < bestBelow) {
+                                    bestBelow = delta;
+                                    bestBelowIndex = i;
                                 }
                             }
-                        });
 
-                        // If no section is clearly visible, find the closest one
-                        if (activeIndex === -1 && sections.length > 0) {
-                            sections.forEach((sec, index) => {
-                                if (!sec) return;
-                                const secOffsetTop = sec.offsetTop;
-                                const distance = Math.abs(scrollTop - secOffsetTop);
-
-                                if (distance < minDistance) {
-                                    minDistance = distance;
-                                    activeIndex = index;
-                                }
-                            });
+                            activeIndex = bestAboveIndex !== -1 ? bestAboveIndex : bestBelowIndex;
                         }
 
                         // Update active class
@@ -1030,31 +809,63 @@ input[type="text" i] {
                                     }
                                 }
 
-                                // Scroll sidebar item into view if needed
-                                const sidebar = document.querySelector('.analytic-sidebar');
-                                if (sidebar) {
-                                    const itemRect = navItems[activeIndex].getBoundingClientRect();
-                                    const sidebarRect = sidebar.getBoundingClientRect();
-                                    if (itemRect.bottom > sidebarRect.bottom || itemRect.top < sidebarRect.top) {
-                                        navItems[activeIndex].scrollIntoView({
-                                            block: "nearest",
-                                            behavior: "smooth"
-                                        });
+                                // Desktop-only: auto-scroll sidebar so active tab stays visible (use scrollTop/offsetTop math)
+                                if (window.innerWidth >= 768) {
+                                    const sidebar = document.querySelector('.video_analytic_sidebar');
+                                    const activeItem = navItems[activeIndex];
+                                    if (sidebar && activeItem && sidebar.scrollHeight > sidebar.clientHeight) {
+                                        const itemTop = activeItem.offsetTop;
+                                        const itemBottom = itemTop + activeItem.offsetHeight;
+
+                                        const viewTop = sidebar.scrollTop;
+                                        const viewBottom = viewTop + sidebar.clientHeight;
+
+                                        if (itemTop < viewTop || itemBottom > viewBottom) {
+                                            sidebar.scrollTo({
+                                                top: Math.max(0, itemTop - 60),
+                                                behavior: "smooth"
+                                            });
+                                        }
                                     }
                                 }
                             }
                         }
                     }
 
-                    // Listen to scroll events on right_content_section container
-                    rightContentSection.addEventListener("scroll", () => {
-                        updateActiveSection();
-                    }, { passive: true });
+                    function onContainerScroll() {
+                        // Mobile: disable scroll-based activation logic
+                        if (window.innerWidth < 768) return;
+                        if (isUserScrolling) return;
+                        if (rafPending) return;
+                        rafPending = true;
 
-                    // Initial call to set active section
+                        requestAnimationFrame(() => {
+                            rafPending = false;
+                            updateActiveSection();
+                        });
+                    }
+
+                    // Listen to page scroll (mouse wheel + touch + trackpad)
+                    if (window.innerWidth >= 768 && !window.__analyticSidebarNavScrollBound) {
+                        window.__analyticSidebarNavScrollBound = true;
+                        window.addEventListener("scroll", onContainerScroll, { passive: true });
+                        window.addEventListener("resize", onContainerScroll, { passive: true });
+                    }
+
+                    // Initial call to set active section based on current scroll state
                     setTimeout(() => {
                         updateActiveSection();
-                    }, 200);
+                    }, 50);
+
+                    // If this widget was already initialized, don't re-bind click/search handlers.
+                    if (alreadyInitialized) {
+                        return;
+                    }
+
+                    if (sidebar) {
+                        sidebar.dataset.initialized = 'true';
+                    }
+
                 }
 
                 // Initialize when DOM is ready
