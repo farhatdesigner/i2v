@@ -381,8 +381,8 @@ class Custom_Latest_Resource extends Widget_Base
             .custom-latest-resource-card-content {
                 padding: 8px 8px 8px 8px;
                 gap: 8px;
-                display: flex;
-                flex-direction: column;
+                /* display: flex;
+                flex-direction: column; */
             }
 
             .custom-latest-resource-image-wrapper img {
