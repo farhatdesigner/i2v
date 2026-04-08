@@ -16,17 +16,22 @@
         document.cookie = name + '=' + encodeURIComponent(value) + expires + '; path=/';
     }
 
-    // Apply saved theme immediately on parse (no flicker)
+    // Apply saved theme immediately on parse (no flicker).
+    // Note: `body` may not exist yet depending on script placement.
     (function applyInitialThemeFromCookie() {
         const saved = getCookie('site-theme');
         if (saved === 'dark') {
             document.documentElement.classList.add('js-dark');
-            document.body.classList.add('js-dark');
         } else if (saved === 'light') {
             document.documentElement.classList.remove('js-dark');
-            document.body.classList.remove('js-dark');
         }
     })();
+
+    function syncBodyThemeClass() {
+        const isDark = document.documentElement.classList.contains('js-dark');
+        if (!document.body) return;
+        document.body.classList.toggle('js-dark', isDark);
+    }
 
     function updateThemeImages() {
         const isDark = document.body.classList.contains('js-dark');
@@ -48,7 +53,10 @@
     }
 
     /* After DOM is stable */
-    document.addEventListener('DOMContentLoaded', updateThemeImages);
+    document.addEventListener('DOMContentLoaded', function () {
+        syncBodyThemeClass();
+        updateThemeImages();
+    });
 
     /* Elementor dynamic support */
     document.addEventListener('elementor/frontend/init', updateThemeImages);
@@ -56,13 +64,9 @@
     /* Dark-mode toggle */
     document.querySelectorAll('.dark-mode-toggle').forEach(btn => {
         btn.addEventListener('click', function () {
-            const isDark = document.body.classList.toggle('js-dark');
-
-            if (isDark) {
-                document.documentElement.classList.add('js-dark');
-            } else {
-                document.documentElement.classList.remove('js-dark');
-            }
+            const isDark = !document.documentElement.classList.contains('js-dark');
+            document.documentElement.classList.toggle('js-dark', isDark);
+            syncBodyThemeClass();
 
             setCookie('site-theme', isDark ? 'dark' : 'light', 365);
             updateThemeImages();

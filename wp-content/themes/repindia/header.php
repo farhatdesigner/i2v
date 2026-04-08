@@ -14,6 +14,16 @@ global $repindia_option;
 <head class="is-smooth-scroll-compatible is-loading" lang="en"">
     <meta charset=" <?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+        (function () {
+            try {
+                var m = document.cookie.match(/(?:^|;\s*)site-theme=([^;]+)/);
+                var saved = m ? decodeURIComponent(m[1]) : null;
+                if (saved === 'dark') document.documentElement.classList.add('js-dark');
+                else if (saved === 'light') document.documentElement.classList.remove('js-dark');
+            } catch (e) {}
+        })();
+    </script>
     <?php wp_head(); ?>
 </head>
 
