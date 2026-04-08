@@ -4114,6 +4114,15 @@ span.star {
   font-weight: 400 !important;
 }
 .videoframe iframe{ height: 75vh; }
+
+#box_vertical .elementor-image-box-wrapper {
+    flex-direction: column;
+}
+#box_vertical .elementor-image-box-title {
+  color: #aeb6c9 !important;
+  font-weight: 500 !important;
+}
+
 @media (min-width: 768px) {
   .footer-accordion-icon {
     display: none;
