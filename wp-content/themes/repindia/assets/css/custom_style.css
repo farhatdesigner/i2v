@@ -1,6 +1,11 @@
 *{ scroll-behavior: smooth;}
 
-.js-dark {
+html.js-dark {
+  background-color: #0d1117;
+  color: #f0f0f0;
+}
+
+html.js-dark body {
   background-color: #0d1117;
   color: #f0f0f0;
 }
@@ -2834,6 +2839,13 @@ label.form-label.required_note-demo {
   border: var(--SM, 8px) solid var(--Golbal-backgrounds-global-bg-1, #fff);
   box-shadow: 0 0 10px 0 rgba(0, 82, 128, 0.1);
 }
+
+.shadowboth_theme img {
+  box-shadow: 0 0 15px 0 rgba(138, 149, 158, 0.40);
+}
+.js-dark .shadowboth_theme img {
+  box-shadow: 18px 18px 48px 0 rgba(0, 0, 0, 0.30), -18px -18px 48px 0 rgba(0, 0, 0, 0.30);
+}
 .view-bg img {
   margin-bottom: 0;
 }
@@ -4214,7 +4226,10 @@ span.star {
   }
 
   .cards-listing-section .grid-listing li:nth-child(4),
-  .cards-listing-section .grid-listing li:nth-child(5) {
+  .cards-listing-section .grid-listing li:nth-child(5),
+  .cards-listing-section .grid-listing li:nth-child(6),
+  .cards-listing-section .grid-listing li:nth-child(7)
+  {
     width: calc(50% - 13px);
   }
 
