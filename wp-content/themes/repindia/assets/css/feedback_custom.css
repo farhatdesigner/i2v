@@ -365,7 +365,7 @@ html.lenis body {
     opacity 0.3s ease-in-out,
     visibility 0.3s ease-in-out;
   pointer-events: none;
-  padding: 20px;
+  padding:8px;
 }
 
 .accordion_video.active {
