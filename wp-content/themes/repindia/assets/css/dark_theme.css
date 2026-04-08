@@ -1107,3 +1107,4 @@ header li.burger-icon .icon-sun,
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.30)!important;
 }
 .project_box .elementor-position-top:before {background: #c1c4c633;}
+.js-dark .redtooltip h4.elementor-heading-title.elementor-size-default {color: #E6BA85 !important;}
