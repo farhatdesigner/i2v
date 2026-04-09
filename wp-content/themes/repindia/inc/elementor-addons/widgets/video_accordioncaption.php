@@ -419,7 +419,7 @@ class Video_accordioncaption extends Widget_Base
             }
 
             .js-dark .vac_ac_icon_border {
-                background-color: #ffffff1a;
+                background-color: #ffffff1a !important;
             }
 
             .js-dark .vac_accordion_set.active .vac_ac_icon_border {
