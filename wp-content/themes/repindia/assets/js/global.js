@@ -78,6 +78,8 @@
 
 
 // HERO SLIDER
+
+
 jQuery(document).ready(function ($) {
     // Only initialize if the slider exists on the page
     if ($('.hero-swiper-container').length === 0) {
