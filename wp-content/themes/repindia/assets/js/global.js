@@ -1402,8 +1402,9 @@ function initStickyMenu(config) {
                     menuHeight = $menu.outerHeight(true) || 0; // include margins
                 }
 
-                // Small extra padding so section title is not glued to the menu
-                var extraPadding = 20;
+                // Move section further down in viewport on click
+                // (current spacing + additional 200px as requested)
+                var extraPadding = 120;
 
                 var exactPosition = $target.offset().top - menuHeight - extraPadding;
                 if (exactPosition < 0) {
@@ -2993,3 +2994,49 @@ if (sliderWrapper && prevButton) {
     // Observe class changes
     observer.observe(prevButton, { attributes: true, attributeFilter: ['class'] });
 }
+
+// Viewport-based autoplay for native HTML5 videos:
+// - plays (muted) + loops while in view
+// - pauses when out of view
+// - does not change src (no reload)
+(function () {
+    function initViewportVideos() {
+        if (typeof IntersectionObserver === "undefined") return;
+
+        var videos = Array.prototype.slice.call(
+            document.querySelectorAll('video[data-viewport-autoplay], video.js-viewport-autoplay')
+        );
+        if (!videos.length) return;
+
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                var v = entry.target;
+                if (!v || v.tagName !== "VIDEO") return;
+
+                // Ensure required attributes for policy + looping.
+                v.muted = true;
+                v.loop = true;
+                v.playsInline = true;
+                v.setAttribute("playsinline", "");
+                v.setAttribute("muted", "");
+                v.setAttribute("loop", "");
+
+                if (entry.isIntersecting) {
+                    // Avoid throwing on browsers that block autoplay until interaction.
+                    var p = v.play();
+                    if (p && typeof p.catch === "function") p.catch(function () { });
+                } else {
+                    v.pause();
+                }
+            });
+        }, { threshold: 0.25, rootMargin: "0px" });
+
+        videos.forEach(function (v) { io.observe(v); });
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initViewportVideos);
+    } else {
+        initViewportVideos();
+    }
+})();

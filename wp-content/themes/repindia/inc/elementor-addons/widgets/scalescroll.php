@@ -536,7 +536,7 @@ class Scalescroll extends Widget_Base
             .featuregroup_repeator .nested-image-wrapper {
                 width: 26px;
                 height: 26px;
-                padding-bottom: 8px;
+                /* padding-bottom: 8px; */
             }
 
 
@@ -1033,79 +1033,89 @@ class Scalescroll extends Widget_Base
 
         <script>
             (function () {
-                document.addEventListener('DOMContentLoaded', function () {
-                    const youtubeWrappers = document.querySelectorAll('.scalescroll-widget .youtube-wrapper');
+                function postYouTubeCommand(iframe, func) {
+                    if (!iframe || !iframe.contentWindow) return;
+                    iframe.contentWindow.postMessage(
+                        JSON.stringify({ event: "command", func: func, args: [] }),
+                        "*"
+                    );
+                }
+
+                function ensureYouTubeSrc(iframe, opts) {
+                    if (!iframe) return;
+                    if (iframe.dataset.ytLoaded === "1") return;
+
+                    var videoId = iframe.getAttribute("data-video-id");
+                    if (!videoId) return;
+
+                    var origin = (window.location && window.location.origin) ? window.location.origin : "";
+                    var params = [
+                        "autoplay=" + (opts.autoplay ? "1" : "0"),
+                        "mute=" + (opts.muted ? "1" : "0"),
+                        "loop=1",
+                        "playlist=" + encodeURIComponent(videoId),
+                        "rel=0",
+                        "playsinline=1",
+                        "controls=0",
+                        "enablejsapi=1"
+                    ];
+                    if (origin) params.push("origin=" + encodeURIComponent(origin));
+
+                    iframe.src = "https://www.youtube.com/embed/" + encodeURIComponent(videoId) + "?" + params.join("&");
+                    iframe.dataset.ytLoaded = "1";
+                }
+
+                function getActiveIframe(wrapper) {
+                    var isDark = document.body.classList.contains("js-dark") || document.documentElement.classList.contains("js-dark");
+                    return isDark
+                        ? (wrapper.querySelector(".black_theme_iframe") || wrapper.querySelector(".youtube-iframe"))
+                        : (wrapper.querySelector(".white_theme_iframe") || wrapper.querySelector(".youtube-iframe"));
+                }
+
+                function hideThumbsAndButton(wrapper) {
+                    var thumbs = wrapper.querySelectorAll(".youtube-thumb");
+                    thumbs.forEach(function (t) { t.style.display = "none"; });
+                    var playBtn = wrapper.querySelector(".play-btn");
+                    if (playBtn) playBtn.style.display = "none";
+                }
+
+                document.addEventListener("DOMContentLoaded", function () {
+                    var youtubeWrappers = document.querySelectorAll(".scalescroll-widget .youtube-wrapper");
                     youtubeWrappers.forEach(function (wrapper) {
-                        const thumbs = wrapper.querySelectorAll('.youtube-thumb');
-                        const iframes = wrapper.querySelectorAll('.youtube-iframe');
-                        const playBtn = wrapper.querySelector('.play-btn');
-                        let isPlaying = false;
+                        var iframes = wrapper.querySelectorAll(".youtube-iframe");
+                        if (!iframes.length) return;
 
-                        if (iframes.length > 0) {
-                            function getActiveElements() {
-                                const isDark = document.body.classList.contains('js-dark') || document.documentElement.classList.contains('js-dark');
-                                const activeIframe = isDark
-                                    ? wrapper.querySelector('.black_theme_iframe') || wrapper.querySelector('.youtube-iframe')
-                                    : wrapper.querySelector('.white_theme_iframe') || wrapper.querySelector('.youtube-iframe');
-                                const activeThumb = isDark
-                                    ? wrapper.querySelector('.black_theme_thumb') || wrapper.querySelector('.youtube-thumb')
-                                    : wrapper.querySelector('.white_theme_thumb') || wrapper.querySelector('.youtube-thumb');
-                                return { iframe: activeIframe, thumb: activeThumb };
-                            }
+                        // Never show both theme iframes at once (avoids double decode / extra work).
+                        iframes.forEach(function (i) { i.style.display = "none"; });
+                        var active = getActiveIframe(wrapper);
+                        if (active) active.style.display = "block";
 
-                            function playVideo(muted) {
-                                if (isPlaying) return;
-                                isPlaying = true;
-                                const { iframe, thumb } = getActiveElements();
-                                if (thumb) thumb.style.display = 'none';
-                                thumbs.forEach(function (t) { t.style.display = 'none'; });
-                                iframes.forEach(function (i) { i.style.display = 'none'; });
-                                if (playBtn) playBtn.style.display = 'none';
+                        // Autoplay muted when visible, pause when hidden, resume without reloading.
+                        var observer = new IntersectionObserver(function (entries) {
+                            entries.forEach(function (entry) {
+                                var iframe = getActiveIframe(wrapper);
+                                if (!iframe) return;
 
-                                if (iframe) {
-                                    const videoId = iframe.getAttribute('data-video-id');
-                                    iframe.style.display = 'block';
-                                    var params = 'autoplay=1&rel=0';
-                                    if (muted) params += '&mute=1';
-                                    iframe.src = 'https://www.youtube.com/embed/' + videoId + '?' + params;
+                                if (entry.isIntersecting) {
+                                    hideThumbsAndButton(wrapper);
+                                    ensureYouTubeSrc(iframe, { autoplay: true, muted: true });
+                                    postYouTubeCommand(iframe, "playVideo");
+                                } else {
+                                    postYouTubeCommand(iframe, "pauseVideo");
                                 }
-                            }
-
-                            function stopVideo() {
-                                if (!isPlaying) return;
-                                isPlaying = false;
-                                iframes.forEach(function (i) {
-                                    i.src = 'about:blank';
-                                    i.style.display = 'none';
-                                });
-                                thumbs.forEach(function (t) { t.style.display = ''; });
-                                if (playBtn) playBtn.style.display = 'block';
-                            }
-
-                            thumbs.forEach(function (thumb) {
-                                thumb.addEventListener('click', function () { playVideo(false); });
                             });
-                            if (playBtn) {
-                                playBtn.addEventListener('click', function (e) {
-                                    e.stopPropagation();
-                                    playVideo(false);
-                                });
-                            }
-                            wrapper.addEventListener('click', function (e) {
-                                if (e.target === wrapper) playVideo(false);
-                            });
+                        }, { threshold: 0.25, rootMargin: "0px" });
+                        observer.observe(wrapper);
 
-                            var observer = new IntersectionObserver(function (entries) {
-                                entries.forEach(function (entry) {
-                                    if (entry.isIntersecting) {
-                                        playVideo(true);
-                                    } else {
-                                        stopVideo();
-                                    }
-                                });
-                            }, { threshold: 0.25, rootMargin: '0px' });
-                            observer.observe(wrapper);
-                        }
+                        // If the user explicitly clicks, keep playing and unmute (still no reload).
+                        wrapper.addEventListener("click", function () {
+                            var iframe = getActiveIframe(wrapper);
+                            if (!iframe) return;
+                            hideThumbsAndButton(wrapper);
+                            ensureYouTubeSrc(iframe, { autoplay: true, muted: false });
+                            postYouTubeCommand(iframe, "playVideo");
+                            postYouTubeCommand(iframe, "unMute");
+                        });
                     });
                 });
             })();
