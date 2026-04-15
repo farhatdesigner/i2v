@@ -13,7 +13,7 @@ global $repindia_option;
 								<?php echo esc_attr($repindia_option['footer_product_title']); ?> <span
 									class="footer-accordion-icon">+</span>
 							</h3>
-						</li>
+						</li>da
 						<div class="footer-accordion-content">
 							<?php
 							if (has_nav_menu('footer-product-menu')) {
@@ -405,6 +405,239 @@ if (!empty($repindia_option['technology_partner_form'])) { ?>
 						</span>
 					</div>
 					<?php echo do_shortcode(wp_kses_post($repindia_option['technology_partner_form'])); ?>
+				</div>
+			</div>
+		</div>
+	</div>
+<?php } ?>
+
+
+<!-- technology-partners modal -->
+<?php
+if (!empty($repindia_option['demo_popup_form'])) { ?>
+	<div class="formpopup_modal modal fade" id="technologyPartnersBackdrop" data-bs-backdrop="static" data-bs-keyboard="true"
+		tabindex="-1" aria-labelledby="technologyPartnersBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog  modal-dialog-centered modal-technology-partners-form">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="modal-header">
+						<h5 class="modal-title" id="technologyPartnersBackdropLabel">
+							Technology Partners
+						</h5>
+						<span class="btn-closecustom" data-bs-dismiss="modal" aria-label="Close">
+							<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd" clip-rule="evenodd"
+									d="M8.67339 8.67351C9.03788 8.30902 9.62883 8.30902 9.99332 8.67351L14 12.6802L18.0067 8.67351C18.3712 8.30902 18.9622 8.30902 19.3267 8.67351C19.6911 9.038 19.6911 9.62896 19.3267 9.99345L15.32 14.0001L19.3267 18.0068C19.6911 18.3713 19.6911 18.9623 19.3267 19.3268C18.9622 19.6913 18.3712 19.6913 18.0067 19.3268L14 15.3201L9.99332 19.3268C9.62883 19.6913 9.03788 19.6913 8.67339 19.3268C8.3089 18.9623 8.3089 18.3713 8.67339 18.0068L12.6801 14.0001L8.67339 9.99345C8.3089 9.62896 8.3089 9.038 8.67339 8.67351Z"
+									fill="#5F6F94" />
+							</svg>
+						</span>
+					</div>
+					<div class="modal-body-content">
+					<div class="tech-images-grid">
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="camera-surveillance-manufacturers" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url( home_url( '/wp-content/uploads/2026/01/Vector.svg' ) ); ?>" alt="Camera &amp; surveillance manufacturers">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url( home_url( '/wp-content/uploads/2026/01/Vector.svg' ) ); ?>" alt="Camera &amp; surveillance manufacturers">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="camera-surveillance-manufacturers" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Vector-1.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Vector-1.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="camera-surveillance-manufacturers" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Vector-2.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Vector-2.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="camera-surveillance-manufacturers" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Image.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Image.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="camera-surveillance-manufacturers" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Image-1.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Image-1.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="camera-surveillance-manufacturers" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Vector-3.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Vector-3.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="camera-surveillance-manufacturers" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-15.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-15.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="camera-surveillance-manufacturers" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Vector-4.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Vector-4.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="camera-surveillance-manufacturers" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Vector-5.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Vector-5.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="camera-surveillance-manufacturers" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-1-3.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-1-3.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="camera-surveillance-manufacturers" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Vector-6.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Vector-6.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="camera-surveillance-manufacturers" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Vector-7.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Vector-7.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="camera-surveillance-manufacturers" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Vector-8.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Vector-8.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="camera-surveillance-manufacturers" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Vector-9.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Vector-9.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="camera-surveillance-manufacturers" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-2-3.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-2-3.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="camera-surveillance-manufacturers" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-3-3.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-3-3.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="security-systems-intrusion-detection" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-4-3.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-4-3.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="security-systems-intrusion-detection" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-5-3.svg' ));?>" alt="Security systems &amp; intrusion detection">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-5-3.svg' ));?>" alt="Security systems &amp; intrusion detection">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="security-systems-intrusion-detection" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-6-3.svg' ));?>" alt="Security systems &amp; intrusion detection">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-6-3.svg' ));?>" alt="Security systems &amp; intrusion detection">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="security-systems-intrusion-detection" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-7-3.svg' ));?>" alt="Security systems &amp; intrusion detection">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-7-3.svg' ));?>" alt="Security systems &amp; intrusion detection">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="security-systems-intrusion-detection" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-8-3.svg' ));?>" alt="Security systems &amp; intrusion detection">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-8-3.svg' ));?>" alt="Security systems &amp; intrusion detection">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="security-systems-intrusion-detection" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-9-2.svg' ));?>" alt="Security systems &amp; intrusion detection">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-9-2.svg' ));?>" alt="Security systems &amp; intrusion detection">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="security-systems-intrusion-detection" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-10-2.svg' ));?>" alt="Security systems &amp; intrusion detection">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-10-2.svg' ));?>" alt="Security systems &amp; intrusion detection">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="security-systems-intrusion-detection" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-11-1.svg' ));?>" alt="Security systems &amp; intrusion detection">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-11-1.svg' ));?>" alt="Security systems &amp; intrusion detection">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="security-systems-intrusion-detection" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-12-1.svg' ));?>" alt="Security systems &amp; intrusion detection">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-12-1.svg' ));?>" alt="Security systems &amp; intrusion detection">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="security-systems-intrusion-detection" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-13-1.svg' ));?>" alt="Security systems &amp; intrusion detection">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-13-1.svg' ));?>" alt="Security systems &amp; intrusion detection">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="security-systems-intrusion-detection" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-14-1.svg' ));?>" alt="Security systems &amp; intrusion detection">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-14-1.svg' ));?>" alt="Security systems &amp; intrusion detection">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="security-systems-intrusion-detection" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-15-1.svg' ));?>" alt="Security systems &amp; intrusion detection">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-15-1.svg' ));?>" alt="Security systems &amp; intrusion detection">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="ai-analytics-software" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-16.svg' ));?>" alt="AI, analytics &amp; software">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-16.svg' ));?>" alt="AI, analytics &amp; software">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="ai-analytics-software" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-17.svg' ));?>" alt="AI, analytics &amp; software">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-17.svg' ));?>" alt="AI, analytics &amp; software">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="ai-analytics-software" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-18.svg' ));?>" alt="AI, analytics &amp; software">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-18.svg' ));?>" alt="AI, analytics &amp; software">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="ai-analytics-software" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-19.svg' ));?>" alt="AI, analytics &amp; software">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-19.svg' ));?>" alt="AI, analytics &amp; software">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="ai-analytics-software" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-20.svg' ));?>" alt="AI, analytics &amp; software">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-20.svg' ));?>" alt="AI, analytics &amp; software">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="ai-analytics-software" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-21.svg' ));?>" alt="AI, analytics &amp; software">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-21.svg' ));?>" alt="AI, analytics &amp; software">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="ai-analytics-software" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-22.svg' ));?>" alt="AI, analytics &amp; software">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-22.svg' ));?>" alt="AI, analytics &amp; software">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="ai-analytics-software" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-23.svg' ));?>" alt="AI, analytics &amp; software">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-23.svg' ));?>" alt="AI, analytics &amp; software">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="ai-analytics-software" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-24.svg' ));?>" alt="AI, analytics &amp; software">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-24.svg' ));?>" alt="AI, analytics &amp; software">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="ai-analytics-software" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-25.svg' ));?>" alt="AI, analytics &amp; software">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-25.svg' ));?>" alt="AI, analytics &amp; software">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="ai-analytics-software" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-26.svg' ));?>" alt="AI, analytics &amp; software">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-26.svg' ));?>" alt="AI, analytics &amp; software">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="ai-analytics-software" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-27.svg' ));?>" alt="AI, analytics &amp; software">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-27.svg' ));?>" alt="AI, analytics &amp; software">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="it-computing-infrastructure" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-28.svg' ));?>" alt="IT, computing &amp; infrastructure">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-28.svg' ));?>" alt="IT, computing &amp; infrastructure">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="it-computing-infrastructure" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-29.svg' ));?>" alt="IT, computing &amp; infrastructure">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-29.svg' ));?>" alt="IT, computing &amp; infrastructure">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="it-computing-infrastructure" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-30.svg' ));?>" alt="IT, computing &amp; infrastructure">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-30.svg' ));?>" alt="IT, computing &amp; infrastructure">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="it-computing-infrastructure" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-31.svg' ));?>" alt="IT, computing &amp; infrastructure">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-31.svg' ));?>" alt="IT, computing &amp; infrastructure">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="it-computing-infrastructure" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-32.svg' ));?>" alt="IT, computing &amp; infrastructure">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-32.svg' ));?>" alt="IT, computing &amp; infrastructure">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="it-computing-infrastructure" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-33.svg' ));?>" alt="IT, computing &amp; infrastructure">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-33.svg' ));?>" alt="IT, computing &amp; infrastructure">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="it-computing-infrastructure" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-34.svg' ));?>" alt="IT, computing &amp; infrastructure">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-34.svg' ));?>" alt="IT, computing &amp; infrastructure">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="it-computing-infrastructure" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-35.svg' ));?>" alt="IT, computing &amp; infrastructure">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-35.svg' ));?>" alt="IT, computing &amp; infrastructure">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="it-computing-infrastructure" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-36.svg' ));?>" alt="IT, computing &amp; infrastructure">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-36.svg' ));?>" alt="IT, computing &amp; infrastructure">
+                    </div>
+                                    <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="it-computing-infrastructure" data-has-dark="0">
+                        <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-37.svg' ));?>" alt="IT, computing &amp; infrastructure">
+						<img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Container-37.svg' ));?>" alt="IT, computing &amp; infrastructure">
+                    </div>
+                            </div>
+
+
+					</div>
 				</div>
 			</div>
 		</div>

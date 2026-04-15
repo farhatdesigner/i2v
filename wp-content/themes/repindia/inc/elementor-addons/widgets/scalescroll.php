@@ -743,7 +743,8 @@ class Scalescroll extends Widget_Base
                                             <?php if (!empty($cta_text) && !empty($cta_url)): ?>
                                                 <div class="text-left">
                                                     <a class="theme-btn bg-trans border_btnlight<?php echo $cta_classes; ?>"
-                                                        href="<?php echo esc_url($cta_url); ?>" <?php echo $cta_target; ?>                     <?php echo $cta_nofollow; ?>><?php echo esc_html($cta_text); ?></a>
+                                                        href="javascript:void(0)" data-bs-toggle="modal"
+                                                        data-bs-target="#technologyPartnersBackdrop"<?php echo $cta_target; ?>   <?php echo $cta_nofollow; ?>><?php echo esc_html($cta_text); ?></a>
                                                 </div>
                                             <?php endif; ?>
                                             <?php if (!empty($bolt_title) || !empty($bolt_icon) || (!empty($bolt_cta_text) && !empty($bolt_cta_url))): ?>
@@ -930,8 +931,9 @@ class Scalescroll extends Widget_Base
                                                 <?php endif; ?>
                                                 <?php if (!empty($cta_text) && !empty($cta_url)): ?>
                                                     <div class="text-left">
-                                                        <a class="theme-btn bg-trans border_btnlight<?php echo $cta_classes; ?>"
-                                                            href="<?php echo esc_url($cta_url); ?>" <?php echo $cta_target; ?>                     <?php echo $cta_nofollow; ?>><?php echo esc_html($cta_text); ?></a>
+                                                        <a class="theme-btn bg-trans border_btnlight <?php echo $cta_classes; ?>"
+                                                            href="javascript:void(0)" data-bs-toggle="modal"
+                                                            data-bs-target="#technologyPartnersBackdrop"<?php echo $cta_target; ?>   <?php echo $cta_nofollow; ?>><?php echo esc_html($cta_text); ?></a>
                                                     </div>
                                                 <?php endif; ?>
                                                 <?php if (!empty($bolt_title) || !empty($bolt_icon) || (!empty($bolt_cta_text) && !empty($bolt_cta_url))): ?>
