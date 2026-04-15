@@ -792,7 +792,7 @@ border-radius: 12px;
   text-decoration-color: #464a4f;
   color: #ffffff;
 }
-.js-dark .career-apply-form.styled-career-form {
+.js-dark .career-apply-form.styled-career-form, .js-dark .formpopup_modal .modal-technology-partners-form .modal-content {
   background: #262a30;
 }
 .js-dark
@@ -1191,7 +1191,7 @@ border-radius: 12px;
     .badge-custom,.badge-cusotm.bg-trans_txt { font-size: 12px;line-height: 18px; }
     .card-title { color: #06283D; }
     .cards-listing-section .card-body { padding: 20px !important; }
-    .brochure_download,.formpopup_modal .career-apply-form.styled-career-form.popupform { padding-left: 16px;padding-right: 16px; }
+    .brochure_download,.formpopup_modal .career-apply-form.styled-career-form.popupform, .formpopup_modal .modal-technology-partners-form .modal-body-content { padding-left: 16px;padding-right: 16px; }
     .elementor-element.product_banner img { object-fit: cover; }
     .card-wrapper_single { padding: 20px 0 0; }
     .card-wrapper_single .card-contents { padding: 0 20px; }
@@ -1219,10 +1219,12 @@ border-radius: 12px;
     .slide-btns { margin-top: 30px; }
     .grey-btn{ width: 100%; }
     .theme-btn{width: 100%;text-align: center;}
-    .contentdesc .theme-btn, .industry_icons .theme-btn {width: auto; text-align: left;}
+    .contentdesc .theme-btn, .industry_icons .theme-btn, .photo_custom .details .theme-btn, .accordion_wrap .theme-btn {width: auto; text-align: left;}
     .inner_page_banner_content h1 { font-size: 28px; }
     .search_result_header { margin-top: 100px; }
     .search-results-content { margin-top: 25px!important; }
+    .photo_custom { margin-bottom: 40px;}
+  
     
     
 }
