@@ -462,6 +462,19 @@ class Scalescroll extends Widget_Base
             ]
         );
 
+        $repeater->add_control(
+            'partner_popup_header_title',
+            [
+                'label' => esc_html__('Partner Popup Header Title', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => esc_html__('Technology Partners', 'repindia'),
+                'label_block' => true,
+                'condition' => [
+                    'enable_partner_popup' => 'yes',
+                ],
+            ]
+        );
+
         $partner_popup_repeater = new \Elementor\Repeater();
         $partner_popup_repeater->add_control(
             'partner_image',
@@ -805,6 +818,7 @@ class Scalescroll extends Widget_Base
                                     // Partner popup per item (fallbacks to existing static modal if not configured)
                                     $enable_partner_popup = !empty($item['enable_partner_popup']) && $item['enable_partner_popup'] === 'yes';
                                     $partner_popup_button_text = !empty($item['partner_popup_button_text']) ? $item['partner_popup_button_text'] : 'View all supported devices';
+                                    $partner_popup_header_title = !empty($item['partner_popup_header_title']) ? $item['partner_popup_header_title'] : 'Technology Partners';
                                     $partner_popup_items = !empty($item['partner_popup_items']) ? $item['partner_popup_items'] : [];
                                     $has_partner_popup_items = $enable_partner_popup && !empty($partner_popup_items);
 
@@ -851,7 +865,7 @@ class Scalescroll extends Widget_Base
                                                         <a class="theme-btn bg-trans border_btnlight "
                                                             href="javascript:void(0)" data-bs-toggle="modal"
                                                             data-bs-target="#technologyPartnersDynamicModal"
-                                                            data-popup-title="<?php echo esc_attr('Technology Partners'); ?>"
+                                                            data-popup-title="<?php echo esc_attr($partner_popup_header_title); ?>"
                                                             data-popup-items="<?php echo esc_attr($partner_popup_json); ?>"><?php echo esc_html(!empty($partner_popup_button_text) ? $partner_popup_button_text : 'View all supported devices'); ?></a>
                                                     <?php endif; ?>
                                                 </div>
@@ -990,6 +1004,7 @@ class Scalescroll extends Widget_Base
                                     // Partner popup per item (fallbacks to existing static modal if not configured)
                                     $enable_partner_popup = !empty($item['enable_partner_popup']) && $item['enable_partner_popup'] === 'yes';
                                     $partner_popup_button_text = !empty($item['partner_popup_button_text']) ? $item['partner_popup_button_text'] : 'View all supported devices';
+                                    $partner_popup_header_title = !empty($item['partner_popup_header_title']) ? $item['partner_popup_header_title'] : 'Technology Partners';
                                     $partner_popup_items = !empty($item['partner_popup_items']) ? $item['partner_popup_items'] : [];
                                     $has_partner_popup_items = $enable_partner_popup && !empty($partner_popup_items);
 
@@ -1076,7 +1091,7 @@ class Scalescroll extends Widget_Base
                                                             <a class="theme-btn bg-trans border_btnlight "
                                                                 href="javascript:void(0)" data-bs-toggle="modal"
                                                                 data-bs-target="#technologyPartnersDynamicModal"
-                                                                data-popup-title="<?php echo esc_attr('Technology Partners'); ?>"
+                                                                data-popup-title="<?php echo esc_attr($partner_popup_header_title); ?>"
                                                                 data-popup-items="<?php echo esc_attr($partner_popup_json); ?>"><?php echo esc_html(!empty($partner_popup_button_text) ? $partner_popup_button_text : 'View all supported devices'); ?></a>
                                                         <?php endif; ?>
                                                     </div>
@@ -1193,34 +1208,6 @@ class Scalescroll extends Widget_Base
                 </div>
             </div>
         </div>
-
-        <!-- technology-partners modal (static fallback) -->
-        <!-- <div class="formpopup_modal modal fade" id="technologyPartnersBackdrop" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="technologyPartnersBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog  modal-dialog-centered modal-technology-partners-form">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="technologyPartnersBackdropLabel">Technology Partners</h5>
-                            <span class="btn-closecustom" data-bs-dismiss="modal" aria-label="Close"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.67339 8.67351C9.03788 8.30902 9.62883 8.30902 9.99332 8.67351L14 12.6802L18.0067 8.67351C18.3712 8.30902 18.9622 8.30902 19.3267 8.67351C19.6911 9.038 19.6911 9.62896 19.3267 9.99345L15.32 14.0001L19.3267 18.0068C19.6911 18.3713 19.6911 18.9623 19.3267 19.3268C18.9622 19.6913 18.3712 19.6913 18.0067 19.3268L14 15.3201L9.99332 19.3268C9.62883 19.6913 9.03788 19.6913 8.67339 19.3268C8.3089 18.9623 8.3089 18.3713 8.67339 18.0068L12.6801 14.0001L8.67339 9.99345C8.3089 9.62896 8.3089 9.038 8.67339 8.67351Z" fill="#5F6F94" /></svg></span>
-                        </div>
-                        <div class="modal-body-content">
-                            <div class="tech-images-grid">
-
-                                <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="camera-surveillance-manufacturers" data-has-dark="0">
-                                    <img class="white_theme_img" decoding="async" src="<?php echo esc_url( home_url( '/wp-content/uploads/2026/01/Vector.svg' ) ); ?>" alt="Camera &amp; surveillance manufacturers">
-                                    <img class="black_theme_img" decoding="async" src="<?php echo esc_url( home_url( '/wp-content/uploads/2026/01/Vector.svg' ) ); ?>" alt="Camera &amp; surveillance manufacturers">
-                                </div>
-                                <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="camera-surveillance-manufacturers" data-has-dark="0">
-                                    <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Vector-1.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
-                                    <img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Vector-1.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
 
         <script>
             (function () {
