@@ -13,7 +13,7 @@ global $repindia_option;
 								<?php echo esc_attr($repindia_option['footer_product_title']); ?> <span
 									class="footer-accordion-icon">+</span>
 							</h3>
-						</li>da
+						</li>
 						<div class="footer-accordion-content">
 							<?php
 							if (has_nav_menu('footer-product-menu')) {
