@@ -436,6 +436,82 @@ class Scalescroll extends Widget_Base
             ]
         );
 
+        // Partner popup (per main repeater item)
+        $repeater->add_control(
+            'enable_partner_popup',
+            [
+                'label' => esc_html__('Enable Partner Popup', 'repindia'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => esc_html__('Yes', 'repindia'),
+                'label_off' => esc_html__('No', 'repindia'),
+                'return_value' => 'yes',
+                'default' => 'no',
+            ]
+        );
+
+        $repeater->add_control(
+            'partner_popup_button_text',
+            [
+                'label' => esc_html__('Partner Popup Button Text', 'repindia'),
+                'type' => Controls_Manager::TEXTAREA,
+                'default' => esc_html__('View all supported devices', 'repindia'),
+                'label_block' => true,
+                'condition' => [
+                    'enable_partner_popup' => 'yes',
+                ],
+            ]
+        );
+
+        $partner_popup_repeater = new \Elementor\Repeater();
+        $partner_popup_repeater->add_control(
+            'partner_image',
+            [
+                'label' => esc_html__('Partner Image', 'repindia'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [],
+            ]
+        );
+        $partner_popup_repeater->add_control(
+            'partner_dark_image',
+            [
+                'label' => esc_html__('Partner Dark Image (Optional)', 'repindia'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [],
+            ]
+        );
+        $partner_popup_repeater->add_control(
+            'partner_alt_text',
+            [
+                'label' => esc_html__('Partner Alt Text', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'label_block' => true,
+            ]
+        );
+        $partner_popup_repeater->add_control(
+            'partner_tab',
+            [
+                'label' => esc_html__('Partner Tab (Optional)', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'label_block' => true,
+            ]
+        );
+
+        $repeater->add_control(
+            'partner_popup_items',
+            [
+                'label' => esc_html__('Partner Popup Items', 'repindia'),
+                'type' => Controls_Manager::REPEATER,
+                'fields' => $partner_popup_repeater->get_controls(),
+                'default' => [],
+                'title_field' => '{{{ partner_alt_text }}}',
+                'condition' => [
+                    'enable_partner_popup' => 'yes',
+                ],
+            ]
+        );
+
         $this->add_control(
             'scroll_items',
             [
@@ -725,6 +801,30 @@ class Scalescroll extends Widget_Base
                                     $has_blue_headline = !empty($item['has_blue_headline']) && $item['has_blue_headline'] === 'yes';
                                     $feature_box_title = !empty($item['feature_box_title']) ? $item['feature_box_title'] : '';
                                     $list_box_title = !empty($item['list_box_title']) ? $item['list_box_title'] : '';
+
+                                    // Partner popup per item (fallbacks to existing static modal if not configured)
+                                    $enable_partner_popup = !empty($item['enable_partner_popup']) && $item['enable_partner_popup'] === 'yes';
+                                    $partner_popup_button_text = !empty($item['partner_popup_button_text']) ? $item['partner_popup_button_text'] : 'View all supported devices';
+                                    $partner_popup_items = !empty($item['partner_popup_items']) ? $item['partner_popup_items'] : [];
+                                    $has_partner_popup_items = $enable_partner_popup && !empty($partner_popup_items);
+
+                                    $partner_popup_payload = [];
+                                    if ($has_partner_popup_items) {
+                                        foreach ($partner_popup_items as $popup_item) {
+                                            $partner_image = !empty($popup_item['partner_image']['url']) ? $popup_item['partner_image']['url'] : '';
+                                            if (empty($partner_image)) {
+                                                continue;
+                                            }
+                                            $partner_popup_payload[] = [
+                                                'partner_image' => $partner_image,
+                                                'partner_dark_image' => !empty($popup_item['partner_dark_image']['url']) ? $popup_item['partner_dark_image']['url'] : '',
+                                                'partner_alt_text' => !empty($popup_item['partner_alt_text']) ? $popup_item['partner_alt_text'] : '',
+                                                'partner_tab' => !empty($popup_item['partner_tab']) ? $popup_item['partner_tab'] : '',
+                                            ];
+                                        }
+                                        $has_partner_popup_items = !empty($partner_popup_payload);
+                                    }
+                                    $partner_popup_json = $has_partner_popup_items ? wp_json_encode($partner_popup_payload) : '';
                                     ?>
                                     <div class="details details-<?php echo esc_attr($item_num); ?>">
                                         <?php if ($has_blue_headline): ?>
@@ -740,13 +840,22 @@ class Scalescroll extends Widget_Base
                                             <?php if (!empty($item_desc)): ?>
                                                 <p class="para-text"><?php echo wp_kses_post($item_desc); ?></p>
                                             <?php endif; ?>
-                                            <?php if (!empty($cta_text) && !empty($cta_url)): ?>
+                                            <?php if (!empty($cta_text) && !empty($cta_url)) : ?>
                                                 <div class="text-left">
-                                                    <a class="theme-btn bg-trans border_btnlight<?php echo $cta_classes; ?>"
-                                                        href="javascript:void(0)" data-bs-toggle="modal"
-                                                        data-bs-target="#technologyPartnersBackdrop"<?php echo $cta_target; ?>   <?php echo $cta_nofollow; ?>><?php echo esc_html($cta_text); ?></a>
+                                                    <a class="theme-btn bg-trans border_btnlight<?php echo $cta_classes; ?>" href="<?php echo esc_url($cta_url); ?>" <?php echo $cta_target; ?> <?php echo $cta_nofollow; ?>><?php echo esc_html($cta_text); ?></a>
                                                 </div>
                                             <?php endif; ?>
+                                            <?php //if (!empty($cta_text) && !empty($cta_url)): ?>
+                                                <div class="text-left">
+                                                    <?php if ($has_partner_popup_items): ?>
+                                                        <a class="theme-btn bg-trans border_btnlight "
+                                                            href="javascript:void(0)" data-bs-toggle="modal"
+                                                            data-bs-target="#technologyPartnersDynamicModal"
+                                                            data-popup-title="<?php echo esc_attr('Technology Partners'); ?>"
+                                                            data-popup-items="<?php echo esc_attr($partner_popup_json); ?>"><?php echo esc_html(!empty($partner_popup_button_text) ? $partner_popup_button_text : 'View all supported devices'); ?></a>
+                                                    <?php endif; ?>
+                                                </div>
+                                            <?php //endif; ?>
                                             <?php if (!empty($bolt_title) || !empty($bolt_icon) || (!empty($bolt_cta_text) && !empty($bolt_cta_url))): ?>
                                                 <div class="bolt">
                                                     <?php if (!empty($bolt_icon)): ?>
@@ -836,6 +945,7 @@ class Scalescroll extends Widget_Base
                                             <?php endif; ?>
                                         </div>
                                     </div>
+
                                 <?php endforeach; ?>
                             </div>
                         </div>
@@ -876,6 +986,30 @@ class Scalescroll extends Widget_Base
                                     $youtube_id_dark = !empty($item['youtube_video_id_dark']) ? $item['youtube_video_id_dark'] : $youtube_id_default;
                                     $youtube_thumb_default = !empty($item['youtube_thumbnail_default']['url']) ? $item['youtube_thumbnail_default']['url'] : '';
                                     $youtube_thumb_dark = !empty($item['youtube_thumbnail_dark']['url']) ? $item['youtube_thumbnail_dark']['url'] : $youtube_thumb_default;
+
+                                    // Partner popup per item (fallbacks to existing static modal if not configured)
+                                    $enable_partner_popup = !empty($item['enable_partner_popup']) && $item['enable_partner_popup'] === 'yes';
+                                    $partner_popup_button_text = !empty($item['partner_popup_button_text']) ? $item['partner_popup_button_text'] : 'View all supported devices';
+                                    $partner_popup_items = !empty($item['partner_popup_items']) ? $item['partner_popup_items'] : [];
+                                    $has_partner_popup_items = $enable_partner_popup && !empty($partner_popup_items);
+
+                                    $partner_popup_payload = [];
+                                    if ($has_partner_popup_items) {
+                                        foreach ($partner_popup_items as $popup_item) {
+                                            $partner_image = !empty($popup_item['partner_image']['url']) ? $popup_item['partner_image']['url'] : '';
+                                            if (empty($partner_image)) {
+                                                continue;
+                                            }
+                                            $partner_popup_payload[] = [
+                                                'partner_image' => $partner_image,
+                                                'partner_dark_image' => !empty($popup_item['partner_dark_image']['url']) ? $popup_item['partner_dark_image']['url'] : '',
+                                                'partner_alt_text' => !empty($popup_item['partner_alt_text']) ? $popup_item['partner_alt_text'] : '',
+                                                'partner_tab' => !empty($popup_item['partner_tab']) ? $popup_item['partner_tab'] : '',
+                                            ];
+                                        }
+                                        $has_partner_popup_items = !empty($partner_popup_payload);
+                                    }
+                                    $partner_popup_json = $has_partner_popup_items ? wp_json_encode($partner_popup_payload) : '';
                                     ?>
                                     <div class="photo photo_custom">
                                         <?php if ($media_type === 'image' && !empty($image_default)): ?>
@@ -936,6 +1070,17 @@ class Scalescroll extends Widget_Base
                                                             data-bs-target="#technologyPartnersBackdrop"<?php echo $cta_target; ?>   <?php echo $cta_nofollow; ?>><?php echo esc_html($cta_text); ?></a>
                                                     </div>
                                                 <?php endif; ?>
+                                                <?php //if (!empty($cta_text) && !empty($cta_url)): ?>
+                                                    <div class="text-left">
+                                                        <?php if ($has_partner_popup_items): ?>
+                                                            <a class="theme-btn bg-trans border_btnlight "
+                                                                href="javascript:void(0)" data-bs-toggle="modal"
+                                                                data-bs-target="#technologyPartnersDynamicModal"
+                                                                data-popup-title="<?php echo esc_attr('Technology Partners'); ?>"
+                                                                data-popup-items="<?php echo esc_attr($partner_popup_json); ?>"><?php echo esc_html(!empty($partner_popup_button_text) ? $partner_popup_button_text : 'View all supported devices'); ?></a>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                <?php //endif; ?>
                                                 <?php if (!empty($bolt_title) || !empty($bolt_icon) || (!empty($bolt_cta_text) && !empty($bolt_cta_url))): ?>
                                                     <div class="bolt">
                                                         <?php if (!empty($bolt_icon)): ?>
@@ -1032,9 +1177,106 @@ class Scalescroll extends Widget_Base
 
             </div>
         </div>
+        <!-- technology-partners dynamic modal (reusable) -->
+        <div class="formpopup_modal modal fade" id="technologyPartnersDynamicModal" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="technologyPartnersDynamicModalLabel" aria-hidden="true">
+            <div class="modal-dialog  modal-dialog-centered modal-technology-partners-form">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="technologyPartnersDynamicModalLabel">Technology Partners</h5>
+                            <span class="btn-closecustom" data-bs-dismiss="modal" aria-label="Close"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.67339 8.67351C9.03788 8.30902 9.62883 8.30902 9.99332 8.67351L14 12.6802L18.0067 8.67351C18.3712 8.30902 18.9622 8.30902 19.3267 8.67351C19.6911 9.038 19.6911 9.62896 19.3267 9.99345L15.32 14.0001L19.3267 18.0068C19.6911 18.3713 19.6911 18.9623 19.3267 19.3268C18.9622 19.6913 18.3712 19.6913 18.0067 19.3268L14 15.3201L9.99332 19.3268C9.62883 19.6913 9.03788 19.6913 8.67339 19.3268C8.3089 18.9623 8.3089 18.3713 8.67339 18.0068L12.6801 14.0001L8.67339 9.99345C8.3089 9.62896 8.3089 9.038 8.67339 8.67351Z" fill="#5F6F94" /></svg></span>
+                        </div>
+                        <div class="modal-body-content">
+                            <div class="tech-images-grid"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- technology-partners modal (static fallback) -->
+        <!-- <div class="formpopup_modal modal fade" id="technologyPartnersBackdrop" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="technologyPartnersBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog  modal-dialog-centered modal-technology-partners-form">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="technologyPartnersBackdropLabel">Technology Partners</h5>
+                            <span class="btn-closecustom" data-bs-dismiss="modal" aria-label="Close"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.67339 8.67351C9.03788 8.30902 9.62883 8.30902 9.99332 8.67351L14 12.6802L18.0067 8.67351C18.3712 8.30902 18.9622 8.30902 19.3267 8.67351C19.6911 9.038 19.6911 9.62896 19.3267 9.99345L15.32 14.0001L19.3267 18.0068C19.6911 18.3713 19.6911 18.9623 19.3267 19.3268C18.9622 19.6913 18.3712 19.6913 18.0067 19.3268L14 15.3201L9.99332 19.3268C9.62883 19.6913 9.03788 19.6913 8.67339 19.3268C8.3089 18.9623 8.3089 18.3713 8.67339 18.0068L12.6801 14.0001L8.67339 9.99345C8.3089 9.62896 8.3089 9.038 8.67339 8.67351Z" fill="#5F6F94" /></svg></span>
+                        </div>
+                        <div class="modal-body-content">
+                            <div class="tech-images-grid">
+
+                                <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="camera-surveillance-manufacturers" data-has-dark="0">
+                                    <img class="white_theme_img" decoding="async" src="<?php echo esc_url( home_url( '/wp-content/uploads/2026/01/Vector.svg' ) ); ?>" alt="Camera &amp; surveillance manufacturers">
+                                    <img class="black_theme_img" decoding="async" src="<?php echo esc_url( home_url( '/wp-content/uploads/2026/01/Vector.svg' ) ); ?>" alt="Camera &amp; surveillance manufacturers">
+                                </div>
+                                <div class="tech-image-item tech-image-light tech-image-fallback" data-tab="camera-surveillance-manufacturers" data-has-dark="0">
+                                    <img class="white_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Vector-1.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+                                    <img class="black_theme_img" decoding="async" src="<?php echo esc_url ( home_url( '/wp-content/uploads/2026/01/Vector-1.svg' ));?>" alt="Camera &amp; surveillance manufacturers">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
 
         <script>
             (function () {
+                function populateTechnologyPartnersDynamicModal(triggerEl) {
+                    if (!triggerEl) return;
+
+                    var raw = triggerEl.getAttribute("data-popup-items");
+                    if (!raw) return;
+
+                    var items;
+                    try {
+                        items = JSON.parse(raw);
+                    } catch (e) {
+                        return;
+                    }
+                    if (!Array.isArray(items) || !items.length) return;
+
+                    var modal = document.getElementById("technologyPartnersDynamicModal");
+                    if (!modal) return;
+
+                    var titleText = triggerEl.getAttribute("data-popup-title") || "Technology Partners";
+                    var titleEl = modal.querySelector("#technologyPartnersDynamicModalLabel");
+                    if (titleEl) titleEl.textContent = titleText;
+
+                    var grid = modal.querySelector(".tech-images-grid");
+                    if (!grid) return;
+                    grid.innerHTML = "";
+
+                    items.forEach(function (it) {
+                        if (!it || !it.partner_image) return;
+
+                        var wrapper = document.createElement("div");
+                        wrapper.className = "tech-image-item tech-image-light tech-image-fallback";
+                        wrapper.setAttribute("data-tab", it.partner_tab || "");
+
+                        var hasDark = !!(it.partner_dark_image);
+                        wrapper.setAttribute("data-has-dark", hasDark ? "1" : "0");
+
+                        var imgWhite = document.createElement("img");
+                        imgWhite.className = "white_theme_img";
+                        imgWhite.decoding = "async";
+                        imgWhite.src = it.partner_image;
+                        imgWhite.alt = it.partner_alt_text || "";
+
+                        var imgBlack = document.createElement("img");
+                        imgBlack.className = "black_theme_img";
+                        imgBlack.decoding = "async";
+                        imgBlack.src = hasDark ? it.partner_dark_image : it.partner_image;
+                        imgBlack.alt = it.partner_alt_text || "";
+
+                        wrapper.appendChild(imgWhite);
+                        wrapper.appendChild(imgBlack);
+                        grid.appendChild(wrapper);
+                    });
+                }
+
                 function postYouTubeCommand(iframe, func) {
                     if (!iframe || !iframe.contentWindow) return;
                     iframe.contentWindow.postMessage(
@@ -1082,6 +1324,12 @@ class Scalescroll extends Widget_Base
                 }
 
                 document.addEventListener("DOMContentLoaded", function () {
+                    document.addEventListener("click", function (e) {
+                        var trigger = e.target && e.target.closest ? e.target.closest('[data-popup-items][data-bs-target="#technologyPartnersDynamicModal"]') : null;
+                        if (!trigger) return;
+                        populateTechnologyPartnersDynamicModal(trigger);
+                    });
+
                     var youtubeWrappers = document.querySelectorAll(".scalescroll-widget .youtube-wrapper");
                     youtubeWrappers.forEach(function (wrapper) {
                         var iframes = wrapper.querySelectorAll(".youtube-iframe");
