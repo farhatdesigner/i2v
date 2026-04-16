@@ -441,6 +441,7 @@ class Custom_Latest_Resource extends Widget_Base
                 padding-bottom: 0;
                 min-height: unset; */
                 color: #06283D;
+                display: block;
             }
 
             .custom-latest-resource-pagination {
