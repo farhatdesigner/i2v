@@ -681,7 +681,7 @@ h2 {
 
 /* Gradient overlay using pseudo-element */
 .hero-slider .hero-slide-inner::before {
-  content: "";
+  /* content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -694,8 +694,11 @@ h2 {
   );
   z-index: 1;
   border-radius: 12px;
-  pointer-events: none;
+  pointer-events: none; */
 }
+
+.hero-slider .hero-slide-inner::before{ display:none; }
+
 
 /* Ensure text container is above gradient */
 .hero-slider .hero-slide-inner .text-container {
@@ -4125,8 +4128,8 @@ span.star {
     flex-direction: column;
 }
 #box_vertical .elementor-image-box-title {
-  color: #aeb6c9 !important;
-  font-weight: 500 !important;
+  /* color: #aeb6c9 !important;
+  font-weight: 500 !important; */
 }
 
 @media (min-width: 768px) {

@@ -113,6 +113,10 @@ header li.burger-icon .icon-sun,
 .js-dark span.ctw-text {
   color: #aeb6c9 !important;
 }
+
+.js-dark .tool_dark_hard span.ctw-text {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
 .js-dark .rounded-4 {
   background: #262a30;
 }

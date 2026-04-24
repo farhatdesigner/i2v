@@ -225,7 +225,7 @@ class Custom_Resource_List extends Widget_Base {
                 .js-dark .resource-sort select option{ border-color: #262A30; }
                 .js-dark .resource-file-size{ color: rgba(255, 255, 255, 0.9); }
                 .js-dark .resource-type-badge{background: rgba(255, 206, 147, 0.1);color: #D7DBE4;border: 1px solid rgb(255 255 255 / 10%);}
-                .js-dark .resource-card:hover .resource-type-badge {border: 1px solid rgb(255 255 255 / 10%);}
+                .js-dark .resource-card:hover .resource-type-badge {border: 1px solid rgb(255 255 255 / 10%);}.js-dark .bg-resources span.btn-blue {background: #007ABE;}
                 img.filter-icon-dark{ display: none; }
                 .js-dark img.filter-icon{ display: none; }
                 .js-dark img.filter-icon-dark{ display: block; }

@@ -92,7 +92,7 @@ class Industry_List extends Widget_Base
                                     <?php endif; ?>
                                     <div class="d-flex flex-wrap mt-1">
                                         <div class="text-left">
-                                            <span class="theme-btn bg-trans border_btnlight" href="#">Explore Details</span>
+                                            <span class="theme-btn bg-trans border_btnlight" href="#">Explore details</span>
                                         </div>
                                     </div>
                                 </div>

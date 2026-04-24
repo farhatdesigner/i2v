@@ -413,7 +413,7 @@ class Custom_Latest_Resource extends Widget_Base
             }
 
             .custom-latest-resource-taxonomy {
-                display: inline-block;
+                display: block !important;
                 padding: 4px 16px;
                 background: #E5F6FF;
                 color: #0074B2;
@@ -441,7 +441,7 @@ class Custom_Latest_Resource extends Widget_Base
                 padding-bottom: 0;
                 min-height: unset; */
                 color: #06283D;
-                display: block;
+                display: inline-block;
             }
 
             .custom-latest-resource-pagination {
