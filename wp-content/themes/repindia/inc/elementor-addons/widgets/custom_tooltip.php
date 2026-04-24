@@ -977,22 +977,26 @@ class Custom_Tooltip extends Widget_Base
                 line-height: 26px;
                 color: #5C5C5C;
             }
-            .ctw-popup-close:hover {
-  background: #e6ebf2;
-}
-.ctw-popup-close:focus {
-  background: #e6ebf2;
-  border: 1px solid #d7dbe4;
-  outline: 0;
-}
 
-.js-dark .ctw-popup-close:hover {
-  background: #ffffff1a;
-  color: #d7dbe4;
-}
-.js-dark .ctw-popup-box {
-  background: #262A30;
-}
+            .ctw-popup-close:hover {
+                background: #e6ebf2;
+            }
+
+            .ctw-popup-close:focus {
+                background: #e6ebf2;
+                border: 1px solid #d7dbe4;
+                outline: 0;
+            }
+
+            .js-dark .ctw-popup-close:hover {
+                background: #ffffff1a;
+                color: #d7dbe4;
+            }
+
+            .js-dark .ctw-popup-box {
+                background: #262A30;
+            }
+
             .tooltiptitlebox .ctw-title .ctw-text p {
                 color: #06283D;
                 font-size: 20px;
@@ -1022,14 +1026,24 @@ class Custom_Tooltip extends Widget_Base
                 font-size: 16px;
             }
 
+
+            .parentoneline_tooltip {
+                display: block;
+            }
+
+            .onelinetooltip {
+                display: inline-flex;
+                max-width: max-content !important;
+            }
+
             .js-dark .ctw-title:hover .border-b {
                 border-bottom: 2px solid #7d8895 !important;
             }
 
             /* .js-dark .ctw-has-learn-more .ctw-title .border-b, .js-dark .ctw-title span.ctw-text,.js-dark .tooltiptitlebox .ctw-has-learn-more .ctw-title .border-b, .js-dark .tooltiptitlebox .ctw-title span.ctw-text {
-                                                                border-bottom: 2px solid #464a4f !important;
-                                                                color: #aeb6c9!important;
-                                                            } */
+                                                                        border-bottom: 2px solid #464a4f !important;
+                                                                        color: #aeb6c9!important;
+                                                                    } */
             .js-dark .border-b {
                 border-bottom: 2px solid #464a4f !important;
                 color: #aeb6c9 !important;
@@ -1052,13 +1066,24 @@ class Custom_Tooltip extends Widget_Base
             .js-dark #center_mobileviiew .ctw-title p .border-b {
                 color: #ffffff !important;
             }
+
             .js-dark .tooltiptitlebox .ctw-title .ctw-text p,
-            .js-dark .tooltiptitlebox .ctw-title .ctw-text p .border-b {color: #ffff !important;}   
-            .defaultdark_paratool span.ctw-title.ctw-icon-left .ctw-text, 
-            .defaultdark_paratool span.ctw-title.ctw-icon-left .ctw-text p {color: #AEB6C9 !important;font-size: 16px;}
-            @media(max-width: 1400px) and (min-width: 1025px){
-                .ctw-tooltip-bottom { top: 100%; }
+            .js-dark .tooltiptitlebox .ctw-title .ctw-text p .border-b {
+                color: #ffff !important;
             }
+
+            .defaultdark_paratool span.ctw-title.ctw-icon-left .ctw-text,
+            .defaultdark_paratool span.ctw-title.ctw-icon-left .ctw-text p {
+                color: #AEB6C9 !important;
+                font-size: 16px;
+            }
+
+            @media(max-width: 1400px) and (min-width: 1025px) {
+                .ctw-tooltip-bottom {
+                    top: 100%;
+                }
+            }
+
             @media (max-width: 768px) {
                 .ctw-tooltip-bottom {
                     top: 0% !important;
@@ -1069,6 +1094,7 @@ class Custom_Tooltip extends Widget_Base
                     z-index: 2 !important;
                     position: absolute !important;
                 }
+
                 .toptooltitle .ctw-tooltip-bottom {
                     left: 50% !important;
                     right: auto !important;
@@ -1077,20 +1103,37 @@ class Custom_Tooltip extends Widget_Base
                     max-width: 360px !important;
                     position: fixed !important;
                 }
+
                 #center_mobileviiew .ctw-wrapper.ctw-has-learn-more {
                     justify-content: center;
                 }
+
                 #center_mobileviiew .card_title_tooltip .ctw-title .ctw-text p {
                     font-size: 20px;
                 }
 
             }
-            @media(max-width: 600px){
-                .ctw-title{ text-align: left!important; }
-                .ctw-wrapper{ justify-content: start!important; }
-                #choose_video .ctw-wrapper {justify-content: center !important;}
-                #center_mobileviiew .ctw-title{ text-align: center!important; }
-                #center_mobileviiew .ctw-wrapper{ justify-content: center!important; }
+
+            @media(max-width: 600px) {
+                .ctw-title {
+                    text-align: left !important;
+                }
+
+                .ctw-wrapper {
+                    justify-content: start !important;
+                }
+
+                #choose_video .ctw-wrapper {
+                    justify-content: center !important;
+                }
+
+                #center_mobileviiew .ctw-title {
+                    text-align: center !important;
+                }
+
+                #center_mobileviiew .ctw-wrapper {
+                    justify-content: center !important;
+                }
             }
 
             @media (max-width: 380px) {
@@ -1098,9 +1141,6 @@ class Custom_Tooltip extends Widget_Base
                     top: 38% !important;
                 }
             }
-
-
-
         </style>
 
         <div class="ctw-wrapper <?php echo $show_learn_more ? 'ctw-has-learn-more' : ''; ?>"
@@ -1128,7 +1168,9 @@ class Custom_Tooltip extends Widget_Base
                             </span>
                         <?php endif; ?>
                     <?php endif; ?>
-                    <span class="ctw-text"><?php echo $pre_content; ?> <span class="ctw-trigger"><?php echo $this->sanitize_wysiwyg_content($title_text); ?></span> <?php echo $after_content; ?></span>
+                    <span class="ctw-text"><?php echo $pre_content; ?> <span
+                            class="ctw-trigger"><?php echo $this->sanitize_wysiwyg_content($title_text); ?></span>
+                        <?php echo $after_content; ?></span>
                     <?php if ($show_icon && $icon_position === 'right'): ?>
                         <?php if (!empty($settings['icon'])): ?>
                             <span class="ctw-trigger ctw-icon ctw-icon-light">

@@ -659,6 +659,10 @@ class Scalescroll extends Widget_Base
                 border-radius: 8px;
                 width: calc(50% - 2px);
             }
+            #transportation_analytics .featuregroup_repeator .nested-item-1:nth-child(3) {
+    width: 100% !important;
+    max-width: 100%;
+}
 
             .featuregroup_repeator .nested-description-1,
             .featuregroup_repeator .nested-description-1 p {
