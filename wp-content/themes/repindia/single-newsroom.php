@@ -16,6 +16,7 @@ $newscategories = get_the_category();
                 right: 80px;
                 top: 128px;
                 opacity: 0;
+                z-index:2;
                 transition: opacity 0.3s ease;
             }
 

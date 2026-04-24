@@ -436,6 +436,95 @@ class Scalescroll extends Widget_Base
             ]
         );
 
+        // Partner popup (per main repeater item)
+        $repeater->add_control(
+            'enable_partner_popup',
+            [
+                'label' => esc_html__('Enable Partner Popup', 'repindia'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => esc_html__('Yes', 'repindia'),
+                'label_off' => esc_html__('No', 'repindia'),
+                'return_value' => 'yes',
+                'default' => 'no',
+            ]
+        );
+
+        $repeater->add_control(
+            'partner_popup_button_text',
+            [
+                'label' => esc_html__('Partner Popup Button Text', 'repindia'),
+                'type' => Controls_Manager::TEXTAREA,
+                'default' => esc_html__('View all supported devices', 'repindia'),
+                'label_block' => true,
+                'condition' => [
+                    'enable_partner_popup' => 'yes',
+                ],
+            ]
+        );
+
+        $repeater->add_control(
+            'partner_popup_header_title',
+            [
+                'label' => esc_html__('Partner Popup Header Title', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => esc_html__('Technology Partners', 'repindia'),
+                'label_block' => true,
+                'condition' => [
+                    'enable_partner_popup' => 'yes',
+                ],
+            ]
+        );
+
+        $partner_popup_repeater = new \Elementor\Repeater();
+        $partner_popup_repeater->add_control(
+            'partner_image',
+            [
+                'label' => esc_html__('Partner Image', 'repindia'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [],
+            ]
+        );
+        $partner_popup_repeater->add_control(
+            'partner_dark_image',
+            [
+                'label' => esc_html__('Partner Dark Image (Optional)', 'repindia'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [],
+            ]
+        );
+        $partner_popup_repeater->add_control(
+            'partner_alt_text',
+            [
+                'label' => esc_html__('Partner Alt Text', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'label_block' => true,
+            ]
+        );
+        $partner_popup_repeater->add_control(
+            'partner_tab',
+            [
+                'label' => esc_html__('Partner Tab (Optional)', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'label_block' => true,
+            ]
+        );
+
+        $repeater->add_control(
+            'partner_popup_items',
+            [
+                'label' => esc_html__('Partner Popup Items', 'repindia'),
+                'type' => Controls_Manager::REPEATER,
+                'fields' => $partner_popup_repeater->get_controls(),
+                'default' => [],
+                'title_field' => '{{{ partner_alt_text }}}',
+                'condition' => [
+                    'enable_partner_popup' => 'yes',
+                ],
+            ]
+        );
+
         $this->add_control(
             'scroll_items',
             [
@@ -536,7 +625,7 @@ class Scalescroll extends Widget_Base
             .featuregroup_repeator .nested-image-wrapper {
                 width: 26px;
                 height: 26px;
-                padding-bottom: 8px;
+                /* padding-bottom: 8px; */
             }
 
 
@@ -570,6 +659,10 @@ class Scalescroll extends Widget_Base
                 border-radius: 8px;
                 width: calc(50% - 2px);
             }
+            #transportation_analytics .featuregroup_repeator .nested-item-1:nth-child(3) {
+    width: 100% !important;
+    max-width: 100%;
+}
 
             .featuregroup_repeator .nested-description-1,
             .featuregroup_repeator .nested-description-1 p {
@@ -644,7 +737,7 @@ class Scalescroll extends Widget_Base
             }
 
             .bolt img {
-                width: 26px;
+                width: 40px;
             }
 
             @media(max-width: 768px) {
@@ -668,20 +761,26 @@ class Scalescroll extends Widget_Base
                 h4.boxtitle {
                     font-size: 11px;
                 }
+                
+.featuregroup_repeator .nested-image-wrapper img, .featuregroup_repeator .nested-image-wrapper {
+    width: 32px;
+    height: 32px;
+    padding-bottom: 0;
+}
 
             }
         </style>
 
-        <div class="makdmks">
+        <div class="makdmks scalescroll-widget">
             <div class="custom-container">
                 <?php if (!empty($section_title) || !empty($section_description)): ?>
                     <div class="title-box">
                         <div class="col-lg-6 col-12">
                             <div class="width_define">
                                 <?php if (!empty($section_title)): ?>
-                                    <h3 class="main_title quote mb-12">
+                                    <h2 class="main_title quote mb-12">
                                         <?php echo esc_html($section_title); ?>
-                                    </h3>
+                                    </h2>
                                 <?php endif; ?>
                                 <?php if (!empty($section_description)): ?>
                                     <div class="text-left">
@@ -719,6 +818,31 @@ class Scalescroll extends Widget_Base
                                     $has_blue_headline = !empty($item['has_blue_headline']) && $item['has_blue_headline'] === 'yes';
                                     $feature_box_title = !empty($item['feature_box_title']) ? $item['feature_box_title'] : '';
                                     $list_box_title = !empty($item['list_box_title']) ? $item['list_box_title'] : '';
+
+                                    // Partner popup per item (fallbacks to existing static modal if not configured)
+                                    $enable_partner_popup = !empty($item['enable_partner_popup']) && $item['enable_partner_popup'] === 'yes';
+                                    $partner_popup_button_text = !empty($item['partner_popup_button_text']) ? $item['partner_popup_button_text'] : 'View all supported devices';
+                                    $partner_popup_header_title = !empty($item['partner_popup_header_title']) ? $item['partner_popup_header_title'] : 'Technology Partners';
+                                    $partner_popup_items = !empty($item['partner_popup_items']) ? $item['partner_popup_items'] : [];
+                                    $has_partner_popup_items = $enable_partner_popup && !empty($partner_popup_items);
+
+                                    $partner_popup_payload = [];
+                                    if ($has_partner_popup_items) {
+                                        foreach ($partner_popup_items as $popup_item) {
+                                            $partner_image = !empty($popup_item['partner_image']['url']) ? $popup_item['partner_image']['url'] : '';
+                                            if (empty($partner_image)) {
+                                                continue;
+                                            }
+                                            $partner_popup_payload[] = [
+                                                'partner_image' => $partner_image,
+                                                'partner_dark_image' => !empty($popup_item['partner_dark_image']['url']) ? $popup_item['partner_dark_image']['url'] : '',
+                                                'partner_alt_text' => !empty($popup_item['partner_alt_text']) ? $popup_item['partner_alt_text'] : '',
+                                                'partner_tab' => !empty($popup_item['partner_tab']) ? $popup_item['partner_tab'] : '',
+                                            ];
+                                        }
+                                        $has_partner_popup_items = !empty($partner_popup_payload);
+                                    }
+                                    $partner_popup_json = $has_partner_popup_items ? wp_json_encode($partner_popup_payload) : '';
                                     ?>
                                     <div class="details details-<?php echo esc_attr($item_num); ?>">
                                         <?php if ($has_blue_headline): ?>
@@ -734,12 +858,22 @@ class Scalescroll extends Widget_Base
                                             <?php if (!empty($item_desc)): ?>
                                                 <p class="para-text"><?php echo wp_kses_post($item_desc); ?></p>
                                             <?php endif; ?>
-                                            <?php if (!empty($cta_text) && !empty($cta_url)): ?>
+                                            <?php if (!empty($cta_text) && !empty($cta_url)) : ?>
                                                 <div class="text-left">
-                                                    <a class="theme-btn bg-trans border_btnlight<?php echo $cta_classes; ?>"
-                                                        href="<?php echo esc_url($cta_url); ?>" <?php echo $cta_target; ?>                     <?php echo $cta_nofollow; ?>><?php echo esc_html($cta_text); ?></a>
+                                                    <a class="theme-btn bg-trans border_btnlight<?php echo $cta_classes; ?>" href="<?php echo esc_url($cta_url); ?>" <?php echo $cta_target; ?> <?php echo $cta_nofollow; ?>><?php echo esc_html($cta_text); ?></a>
                                                 </div>
                                             <?php endif; ?>
+                                            <?php //if (!empty($cta_text) && !empty($cta_url)): ?>
+                                                <div class="text-left">
+                                                    <?php if ($has_partner_popup_items): ?>
+                                                        <a class="theme-btn bg-trans border_btnlight "
+                                                            href="javascript:void(0)" data-bs-toggle="modal"
+                                                            data-bs-target="#technologyPartnersDynamicModal"
+                                                            data-popup-title="<?php echo esc_attr($partner_popup_header_title); ?>"
+                                                            data-popup-items="<?php echo esc_attr($partner_popup_json); ?>"><?php echo esc_html(!empty($partner_popup_button_text) ? $partner_popup_button_text : 'View all supported devices'); ?></a>
+                                                    <?php endif; ?>
+                                                </div>
+                                            <?php //endif; ?>
                                             <?php if (!empty($bolt_title) || !empty($bolt_icon) || (!empty($bolt_cta_text) && !empty($bolt_cta_url))): ?>
                                                 <div class="bolt">
                                                     <?php if (!empty($bolt_icon)): ?>
@@ -829,6 +963,7 @@ class Scalescroll extends Widget_Base
                                             <?php endif; ?>
                                         </div>
                                     </div>
+
                                 <?php endforeach; ?>
                             </div>
                         </div>
@@ -869,6 +1004,31 @@ class Scalescroll extends Widget_Base
                                     $youtube_id_dark = !empty($item['youtube_video_id_dark']) ? $item['youtube_video_id_dark'] : $youtube_id_default;
                                     $youtube_thumb_default = !empty($item['youtube_thumbnail_default']['url']) ? $item['youtube_thumbnail_default']['url'] : '';
                                     $youtube_thumb_dark = !empty($item['youtube_thumbnail_dark']['url']) ? $item['youtube_thumbnail_dark']['url'] : $youtube_thumb_default;
+
+                                    // Partner popup per item (fallbacks to existing static modal if not configured)
+                                    $enable_partner_popup = !empty($item['enable_partner_popup']) && $item['enable_partner_popup'] === 'yes';
+                                    $partner_popup_button_text = !empty($item['partner_popup_button_text']) ? $item['partner_popup_button_text'] : 'View all supported devices';
+                                    $partner_popup_header_title = !empty($item['partner_popup_header_title']) ? $item['partner_popup_header_title'] : 'Technology Partners';
+                                    $partner_popup_items = !empty($item['partner_popup_items']) ? $item['partner_popup_items'] : [];
+                                    $has_partner_popup_items = $enable_partner_popup && !empty($partner_popup_items);
+
+                                    $partner_popup_payload = [];
+                                    if ($has_partner_popup_items) {
+                                        foreach ($partner_popup_items as $popup_item) {
+                                            $partner_image = !empty($popup_item['partner_image']['url']) ? $popup_item['partner_image']['url'] : '';
+                                            if (empty($partner_image)) {
+                                                continue;
+                                            }
+                                            $partner_popup_payload[] = [
+                                                'partner_image' => $partner_image,
+                                                'partner_dark_image' => !empty($popup_item['partner_dark_image']['url']) ? $popup_item['partner_dark_image']['url'] : '',
+                                                'partner_alt_text' => !empty($popup_item['partner_alt_text']) ? $popup_item['partner_alt_text'] : '',
+                                                'partner_tab' => !empty($popup_item['partner_tab']) ? $popup_item['partner_tab'] : '',
+                                            ];
+                                        }
+                                        $has_partner_popup_items = !empty($partner_popup_payload);
+                                    }
+                                    $partner_popup_json = $has_partner_popup_items ? wp_json_encode($partner_popup_payload) : '';
                                     ?>
                                     <div class="photo photo_custom">
                                         <?php if ($media_type === 'image' && !empty($image_default)): ?>
@@ -878,6 +1038,10 @@ class Scalescroll extends Widget_Base
                                             <img class="black_theme_img radius-12" decoding="async"
                                                 src="<?php echo esc_url($image_dark); ?>" alt="<?php echo esc_attr($image_dark_alt); ?>">
                                         <?php elseif ($media_type === 'youtube' && !empty($youtube_id_default)): ?>
+                                            <?php
+                                            $youtube_thumb_default_final = !empty($youtube_thumb_default) ? $youtube_thumb_default : 'https://img.youtube.com/vi/' . $youtube_id_default . '/hqdefault.jpg';
+                                            $youtube_thumb_dark_final = !empty($youtube_thumb_dark) ? $youtube_thumb_dark : 'https://img.youtube.com/vi/' . $youtube_id_dark . '/hqdefault.jpg';
+                                            ?>
                                             <div class="youtube-wrapper radius-12"
                                                 style="position: relative; width: 100%; height: 60vh; overflow: hidden; cursor: pointer;">
                                                 <iframe class="radius-12 youtube-iframe white_theme_iframe"
@@ -887,19 +1051,15 @@ class Scalescroll extends Widget_Base
                                                     style="width: 100%; height: 60vh; position: absolute; top: 0; left: 0; z-index: 1;"></iframe>
                                                 <iframe class="radius-12 youtube-iframe black_theme_iframe"
                                                     data-video-id="<?php echo esc_attr($youtube_id_dark); ?>" src="" width="100%"
-                                                    height="60vh" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture"
+                                                    height="60vh" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture mute"
                                                     allowfullscreen
                                                     style="width: 100%; height: 60vh; position: absolute; top: 0; left: 0; z-index: 1; display: none;"></iframe>
-                                                <?php if (!empty($youtube_thumb_default)): ?>
-                                                    <img src="<?php echo esc_url($youtube_thumb_default); ?>" alt="Video thumbnail"
-                                                        class="youtube-thumb white_theme_thumb"
-                                                        style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; top: 0; left: 0; z-index: 2; cursor: pointer;" />
-                                                <?php endif; ?>
-                                                <?php if (!empty($youtube_thumb_dark)): ?>
-                                                    <img src="<?php echo esc_url($youtube_thumb_dark); ?>" alt="Video thumbnail"
-                                                        class="youtube-thumb black_theme_thumb"
-                                                        style="width: 100%; height: 100%; object-fit: cover; display: none; position: absolute; top: 0; left: 0; z-index: 2; cursor: pointer;" />
-                                                <?php endif; ?>
+                                                <img src="<?php echo esc_url($youtube_thumb_default_final); ?>" alt="Video thumbnail"
+                                                    class="youtube-thumb white_theme_thumb"
+                                                    style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; top: 0; left: 0; z-index: 2; cursor: pointer;" />
+                                                <img src="<?php echo esc_url($youtube_thumb_dark_final); ?>" alt="Video thumbnail"
+                                                    class="youtube-thumb black_theme_thumb"
+                                                    style="width: 100%; height: 100%; object-fit: cover; display: none; position: absolute; top: 0; left: 0; z-index: 2; cursor: pointer;" />
                                                 <button class="play-btn" aria-label="Play video">
                                                     <svg width="32" height="32" viewBox="0 0 24 24" fill="white" style="margin-left: 4px;">
                                                         <path d="M8 5v14l11-7z" />
@@ -924,10 +1084,22 @@ class Scalescroll extends Widget_Base
                                                 <?php endif; ?>
                                                 <?php if (!empty($cta_text) && !empty($cta_url)): ?>
                                                     <div class="text-left">
-                                                        <a class="theme-btn bg-trans border_btnlight<?php echo $cta_classes; ?>"
-                                                            href="<?php echo esc_url($cta_url); ?>" <?php echo $cta_target; ?>                     <?php echo $cta_nofollow; ?>><?php echo esc_html($cta_text); ?></a>
+                                                        <a class="theme-btn bg-trans border_btnlight <?php echo $cta_classes; ?>"
+                                                            href="javascript:void(0)" data-bs-toggle="modal"
+                                                            data-bs-target="#technologyPartnersBackdrop"<?php echo $cta_target; ?>   <?php echo $cta_nofollow; ?>><?php echo esc_html($cta_text); ?></a>
                                                     </div>
                                                 <?php endif; ?>
+                                                <?php //if (!empty($cta_text) && !empty($cta_url)): ?>
+                                                    <div class="text-left">
+                                                        <?php if ($has_partner_popup_items): ?>
+                                                            <a class="theme-btn bg-trans border_btnlight "
+                                                                href="javascript:void(0)" data-bs-toggle="modal"
+                                                                data-bs-target="#technologyPartnersDynamicModal"
+                                                                data-popup-title="<?php echo esc_attr($partner_popup_header_title); ?>"
+                                                                data-popup-items="<?php echo esc_attr($partner_popup_json); ?>"><?php echo esc_html(!empty($partner_popup_button_text) ? $partner_popup_button_text : 'View all supported devices'); ?></a>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                <?php //endif; ?>
                                                 <?php if (!empty($bolt_title) || !empty($bolt_icon) || (!empty($bolt_cta_text) && !empty($bolt_cta_url))): ?>
                                                     <div class="bolt">
                                                         <?php if (!empty($bolt_icon)): ?>
@@ -1024,67 +1196,167 @@ class Scalescroll extends Widget_Base
 
             </div>
         </div>
+        <!-- technology-partners dynamic modal (reusable) -->
+        <div class="formpopup_modal modal fade" id="technologyPartnersDynamicModal" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="technologyPartnersDynamicModalLabel" aria-hidden="true">
+            <div class="modal-dialog  modal-dialog-centered modal-technology-partners-form">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="technologyPartnersDynamicModalLabel">Technology Partners</h5>
+                            <span class="btn-closecustom" data-bs-dismiss="modal" aria-label="Close"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.67339 8.67351C9.03788 8.30902 9.62883 8.30902 9.99332 8.67351L14 12.6802L18.0067 8.67351C18.3712 8.30902 18.9622 8.30902 19.3267 8.67351C19.6911 9.038 19.6911 9.62896 19.3267 9.99345L15.32 14.0001L19.3267 18.0068C19.6911 18.3713 19.6911 18.9623 19.3267 19.3268C18.9622 19.6913 18.3712 19.6913 18.0067 19.3268L14 15.3201L9.99332 19.3268C9.62883 19.6913 9.03788 19.6913 8.67339 19.3268C8.3089 18.9623 8.3089 18.3713 8.67339 18.0068L12.6801 14.0001L8.67339 9.99345C8.3089 9.62896 8.3089 9.038 8.67339 8.67351Z" fill="#5F6F94" /></svg></span>
+                        </div>
+                        <div class="modal-body-content">
+                            <div class="tech-images-grid"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <script>
             (function () {
-                document.addEventListener('DOMContentLoaded', function () {
-                    const youtubeWrappers = document.querySelectorAll('.youtube-wrapper');
+                function populateTechnologyPartnersDynamicModal(triggerEl) {
+                    if (!triggerEl) return;
+
+                    var raw = triggerEl.getAttribute("data-popup-items");
+                    if (!raw) return;
+
+                    var items;
+                    try {
+                        items = JSON.parse(raw);
+                    } catch (e) {
+                        return;
+                    }
+                    if (!Array.isArray(items) || !items.length) return;
+
+                    var modal = document.getElementById("technologyPartnersDynamicModal");
+                    if (!modal) return;
+
+                    var titleText = triggerEl.getAttribute("data-popup-title") || "Technology Partners";
+                    var titleEl = modal.querySelector("#technologyPartnersDynamicModalLabel");
+                    if (titleEl) titleEl.textContent = titleText;
+
+                    var grid = modal.querySelector(".tech-images-grid");
+                    if (!grid) return;
+                    grid.innerHTML = "";
+
+                    items.forEach(function (it) {
+                        if (!it || !it.partner_image) return;
+
+                        var wrapper = document.createElement("div");
+                        wrapper.className = "tech-image-item tech-image-light tech-image-fallback";
+                        wrapper.setAttribute("data-tab", it.partner_tab || "");
+
+                        var hasDark = !!(it.partner_dark_image);
+                        wrapper.setAttribute("data-has-dark", hasDark ? "1" : "0");
+
+                        var imgWhite = document.createElement("img");
+                        imgWhite.className = "white_theme_img";
+                        imgWhite.decoding = "async";
+                        imgWhite.src = it.partner_image;
+                        imgWhite.alt = it.partner_alt_text || "";
+
+                        var imgBlack = document.createElement("img");
+                        imgBlack.className = "black_theme_img";
+                        imgBlack.decoding = "async";
+                        imgBlack.src = hasDark ? it.partner_dark_image : it.partner_image;
+                        imgBlack.alt = it.partner_alt_text || "";
+
+                        wrapper.appendChild(imgWhite);
+                        wrapper.appendChild(imgBlack);
+                        grid.appendChild(wrapper);
+                    });
+                }
+
+                function postYouTubeCommand(iframe, func) {
+                    if (!iframe || !iframe.contentWindow) return;
+                    iframe.contentWindow.postMessage(
+                        JSON.stringify({ event: "command", func: func, args: [] }),
+                        "*"
+                    );
+                }
+
+                function ensureYouTubeSrc(iframe, opts) {
+                    if (!iframe) return;
+                    if (iframe.dataset.ytLoaded === "1") return;
+
+                    var videoId = iframe.getAttribute("data-video-id");
+                    if (!videoId) return;
+
+                    var origin = (window.location && window.location.origin) ? window.location.origin : "";
+                    var params = [
+                        "autoplay=" + (opts.autoplay ? "1" : "0"),
+                        "mute=" + (opts.muted ? "1" : "0"),
+                        "loop=1",
+                        "playlist=" + encodeURIComponent(videoId),
+                        "rel=0",
+                        "playsinline=1",
+                        "controls=0",
+                        "enablejsapi=1"
+                    ];
+                    if (origin) params.push("origin=" + encodeURIComponent(origin));
+
+                    iframe.src = "https://www.youtube.com/embed/" + encodeURIComponent(videoId) + "?" + params.join("&");
+                    iframe.dataset.ytLoaded = "1";
+                }
+
+                function getActiveIframe(wrapper) {
+                    var isDark = document.body.classList.contains("js-dark") || document.documentElement.classList.contains("js-dark");
+                    return isDark
+                        ? (wrapper.querySelector(".black_theme_iframe") || wrapper.querySelector(".youtube-iframe"))
+                        : (wrapper.querySelector(".white_theme_iframe") || wrapper.querySelector(".youtube-iframe"));
+                }
+
+                function hideThumbsAndButton(wrapper) {
+                    var thumbs = wrapper.querySelectorAll(".youtube-thumb");
+                    thumbs.forEach(function (t) { t.style.display = "none"; });
+                    var playBtn = wrapper.querySelector(".play-btn");
+                    if (playBtn) playBtn.style.display = "none";
+                }
+
+                document.addEventListener("DOMContentLoaded", function () {
+                    document.addEventListener("click", function (e) {
+                        var trigger = e.target && e.target.closest ? e.target.closest('[data-popup-items][data-bs-target="#technologyPartnersDynamicModal"]') : null;
+                        if (!trigger) return;
+                        populateTechnologyPartnersDynamicModal(trigger);
+                    });
+
+                    var youtubeWrappers = document.querySelectorAll(".scalescroll-widget .youtube-wrapper");
                     youtubeWrappers.forEach(function (wrapper) {
-                        const thumbs = wrapper.querySelectorAll('.youtube-thumb');
-                        const iframes = wrapper.querySelectorAll('.youtube-iframe');
-                        const playBtn = wrapper.querySelector('.play-btn');
+                        var iframes = wrapper.querySelectorAll(".youtube-iframe");
+                        if (!iframes.length) return;
 
-                        if (thumbs.length > 0 && iframes.length > 0) {
-                            // Determine which iframe and thumb to use based on theme
-                            function getActiveElements() {
-                                const isDark = document.body.classList.contains('js-dark') || document.documentElement.classList.contains('js-dark');
-                                const activeIframe = isDark
-                                    ? wrapper.querySelector('.black_theme_iframe') || wrapper.querySelector('.youtube-iframe')
-                                    : wrapper.querySelector('.white_theme_iframe') || wrapper.querySelector('.youtube-iframe');
-                                const activeThumb = isDark
-                                    ? wrapper.querySelector('.black_theme_thumb') || wrapper.querySelector('.youtube-thumb')
-                                    : wrapper.querySelector('.white_theme_thumb') || wrapper.querySelector('.youtube-thumb');
-                                return { iframe: activeIframe, thumb: activeThumb };
-                            }
+                        // Never show both theme iframes at once (avoids double decode / extra work).
+                        iframes.forEach(function (i) { i.style.display = "none"; });
+                        var active = getActiveIframe(wrapper);
+                        if (active) active.style.display = "block";
 
-                            function playVideo() {
-                                const { iframe, thumb } = getActiveElements();
-                                if (thumb) {
-                                    thumb.style.display = 'none';
-                                }
-                                // Hide all thumbs
-                                thumbs.forEach(function (t) { t.style.display = 'none'; });
-                                // Hide all iframes first
-                                iframes.forEach(function (i) { i.style.display = 'none'; });
+                        // Autoplay muted when visible, pause when hidden, resume without reloading.
+                        var observer = new IntersectionObserver(function (entries) {
+                            entries.forEach(function (entry) {
+                                var iframe = getActiveIframe(wrapper);
+                                if (!iframe) return;
 
-                                if (playBtn) {
-                                    playBtn.style.display = 'none';
-                                }
-
-                                if (iframe) {
-                                    const videoId = iframe.getAttribute('data-video-id');
-                                    iframe.style.display = 'block';
-                                    iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
-                                }
-                            }
-
-                            // Add click listeners to all thumbs
-                            thumbs.forEach(function (thumb) {
-                                thumb.addEventListener('click', playVideo);
-                            });
-
-                            if (playBtn) {
-                                playBtn.addEventListener('click', function (e) {
-                                    e.stopPropagation();
-                                    playVideo();
-                                });
-                            }
-                            wrapper.addEventListener('click', function (e) {
-                                if (e.target === wrapper) {
-                                    playVideo();
+                                if (entry.isIntersecting) {
+                                    hideThumbsAndButton(wrapper);
+                                    ensureYouTubeSrc(iframe, { autoplay: true, muted: true });
+                                    postYouTubeCommand(iframe, "playVideo");
+                                } else {
+                                    postYouTubeCommand(iframe, "pauseVideo");
                                 }
                             });
-                        }
+                        }, { threshold: 0.25, rootMargin: "0px" });
+                        observer.observe(wrapper);
+
+                        // If the user explicitly clicks, keep playing and unmute (still no reload).
+                        wrapper.addEventListener("click", function () {
+                            var iframe = getActiveIframe(wrapper);
+                            if (!iframe) return;
+                            hideThumbsAndButton(wrapper);
+                            ensureYouTubeSrc(iframe, { autoplay: true, muted: false });
+                            postYouTubeCommand(iframe, "playVideo");
+                            postYouTubeCommand(iframe, "unMute");
+                        });
                     });
                 });
             })();

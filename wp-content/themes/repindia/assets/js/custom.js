@@ -130,6 +130,87 @@
 //     setupStickyBehavior("technology_partner", "partner_tech_title", "partner_tech_img", "partner_tech_desc");
 // });
 
+/**
+ * Global YouTube Video Popup
+ * Single reusable popup for anchors with class .youtube-popup containing YouTube URLs.
+ * Uses event delegation - one listener on document. Video stops when popup closes.
+ */
+(function() {
+    'use strict';
+
+    var popupInitialized = false;
+
+    function getYoutubeVideoId(url) {
+        if (!url || typeof url !== 'string') return null;
+        var id = null;
+        if (url.indexOf('youtube.com/watch') !== -1) {
+            var match = url.match(/[?&]v=([^&]+)/);
+            id = match ? match[1] : null;
+        } else if (url.indexOf('youtu.be/') !== -1) {
+            var shortMatch = url.match(/youtu\.be\/([^?&#]+)/);
+            id = shortMatch ? shortMatch[1] : null;
+        } else if (url.indexOf('youtube.com/embed/') !== -1) {
+            var embedMatch = url.match(/youtube\.com\/embed\/([^?&#]+)/);
+            id = embedMatch ? embedMatch[1] : null;
+        }
+        return id ? id : null;
+    }
+
+    function initGlobalYoutubePopup() {
+        if (popupInitialized) return;
+        var popup = document.getElementById('global-youtube-popup');
+        var iframe = document.getElementById('global-youtube-popup-iframe');
+        if (!popup || !iframe) return;
+
+        popupInitialized = true;
+
+        function closePopup() {
+            iframe.src = '';
+            popup.classList.remove('active');
+            popup.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        function openPopup(videoId, link) {
+            var titleEl = popup.querySelector('.global-youtube-popup__title');
+            if (titleEl && link) {
+                var title = link.getAttribute('data-title') || link.getAttribute('title') || link.textContent.trim();
+                titleEl.textContent = title || 'Video';
+            }
+            iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1';
+            popup.classList.add('active');
+            popup.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        popup.querySelector('.global-youtube-popup__close').addEventListener('click', closePopup);
+        popup.querySelector('.global-youtube-popup__backdrop').addEventListener('click', closePopup);
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && popup.classList.contains('active')) {
+                closePopup();
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            var link = e.target.closest('a.youtube-popup');
+            if (!link) return;
+            e.preventDefault();
+            var href = link.getAttribute('href') || '';
+            var videoId = getYoutubeVideoId(href);
+            if (videoId) {
+                openPopup(videoId, link);
+            }
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initGlobalYoutubePopup);
+    } else {
+        initGlobalYoutubePopup();
+    }
+})();
+
 // Blog Listing Tab
 (function() {
     'use strict';

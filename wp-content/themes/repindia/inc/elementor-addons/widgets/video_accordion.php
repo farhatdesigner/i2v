@@ -187,6 +187,21 @@ class Video_accordion extends Widget_Base
         );
 
         $repeater->add_control(
+            'item_modal_video_url',
+            [
+                'label' => esc_html__('Modal Video URL', 'repindia'),
+                'type' => \Elementor\Controls_Manager::URL,
+                'default' => [
+                    'url' => '',
+                    'is_external' => false,
+                    'nofollow' => false,
+                ],
+                'description' => esc_html__('Optional: if YouTube ID is empty, this URL will be used for the modal video (YouTube/Vimeo URL or direct .mp4/.webm).', 'repindia'),
+                'label_block' => true,
+            ]
+        );
+
+        $repeater->add_control(
             'accordion_icon',
             [
                 'label' => esc_html__('Accordion Icon', 'repindia'),
@@ -354,6 +369,8 @@ class Video_accordion extends Widget_Base
                                     $item_video_thumbnail = !empty($item['item_video_thumbnail']['url']) ? $item['item_video_thumbnail']['url'] : '';
                                     $item_video_thumbnail_alt = !empty($item['item_video_thumbnail']['alt']) ? $item['item_video_thumbnail']['alt'] : $item_title;
                                     $item_youtube_video_id = !empty($item['item_youtube_video_id']) ? $item['item_youtube_video_id'] : '';
+                                    $item_modal_video_url = !empty($item['item_modal_video_url']['url']) ? $item['item_modal_video_url']['url'] : '';
+                                    $should_enable_modal = (!empty($item_youtube_video_id) || !empty($item_modal_video_url));
                                     $accordion_icon = !empty($item['accordion_icon']['url']) ? $item['accordion_icon']['url'] : '';
                                     $modal_id = 'staticBackdrop' . ($index + 1);
                                     ?>
@@ -382,7 +399,11 @@ class Video_accordion extends Widget_Base
                                             <?php endif; ?>
                                             <?php if (!empty($item_video_thumbnail)): ?>
                                                 <div class="accordion_video">
-                                                    <img data-bs-toggle="modal" data-bs-target="#<?php echo esc_attr($modal_id); ?>"
+                                                    <img
+                                                        <?php if ($should_enable_modal): ?>
+                                                            data-bs-toggle="modal" data-bs-target="#<?php echo esc_attr($modal_id); ?>"
+                                                        <?php endif; ?>
+                                                        class="<?php echo $should_enable_modal ? '' : 'is-disabled'; ?>"
                                                         src="<?php echo esc_url($item_video_thumbnail); ?>"
                                                         alt="<?php echo esc_attr($item_video_thumbnail_alt); ?>" width="100%" height="100%">
                                                 </div>
@@ -421,11 +442,18 @@ class Video_accordion extends Widget_Base
                                     <?php
                                     $item_video_thumbnail = !empty($item['item_video_thumbnail']['url']) ? $item['item_video_thumbnail']['url'] : '';
                                     $item_video_thumbnail_alt = !empty($item['item_video_thumbnail']['alt']) ? $item['item_video_thumbnail']['alt'] : (!empty($item['item_title']) ? $item['item_title'] : '');
+                                    $item_youtube_video_id = !empty($item['item_youtube_video_id']) ? $item['item_youtube_video_id'] : '';
+                                    $item_modal_video_url = !empty($item['item_modal_video_url']['url']) ? $item['item_modal_video_url']['url'] : '';
+                                    $should_enable_modal = (!empty($item_youtube_video_id) || !empty($item_modal_video_url));
                                     $modal_id = 'staticBackdrop' . ($index + 1);
                                     ?>
                                     <?php if (!empty($item_video_thumbnail)): ?>
                                         <div class="accordion_video">
-                                            <img data-bs-toggle="modal" data-bs-target="#<?php echo esc_attr($modal_id); ?>"
+                                            <img
+                                                <?php if ($should_enable_modal): ?>
+                                                    data-bs-toggle="modal" data-bs-target="#<?php echo esc_attr($modal_id); ?>"
+                                                <?php endif; ?>
+                                                class="<?php echo $should_enable_modal ? '' : 'is-disabled'; ?>"
                                                 src="<?php echo esc_url($item_video_thumbnail); ?>"
                                                 alt="<?php echo esc_attr($item_video_thumbnail_alt); ?>" width="100%" height="100%">
                                         </div>
@@ -440,33 +468,64 @@ class Video_accordion extends Widget_Base
                             <?php
                             $item_title = !empty($item['item_title']) ? $item['item_title'] : '';
                             $item_youtube_video_id = !empty($item['item_youtube_video_id']) ? $item['item_youtube_video_id'] : '';
+                            $item_modal_video_url = !empty($item['item_modal_video_url']['url']) ? $item['item_modal_video_url']['url'] : '';
+                            $should_enable_modal = (!empty($item_youtube_video_id) || !empty($item_modal_video_url));
                             $modal_id = 'staticBackdrop' . ($index + 1);
                             $modal_label_id = 'staticBackdropLabel' . ($index + 1);
                             ?>
                             <!-- Vertically centered modal -->
-                            <div class="modal fade" id="<?php echo esc_attr($modal_id); ?>" data-bs-backdrop="static"
-                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="<?php echo esc_attr($modal_label_id); ?>"
-                                aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <?php if (!empty($item_title)): ?>
-                                                <h1 class="modal-title fs-5" id="<?php echo esc_attr($modal_label_id); ?>">
-                                                    <?php echo esc_html($item_title); ?></h1>
-                                            <?php endif; ?>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body p-4">
-                                            <?php if (!empty($item_youtube_video_id)): ?>
-                                                <iframe width="100%" height="450"
-                                                    data-src="https://www.youtube.com/embed/<?php echo esc_attr($item_youtube_video_id); ?>"
-                                                    frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-                                                </iframe>
-                                            <?php endif; ?>
+                            <?php if ($should_enable_modal): ?>
+                                <div class="modal fade" id="<?php echo esc_attr($modal_id); ?>" data-bs-backdrop="static"
+                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="<?php echo esc_attr($modal_label_id); ?>"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <?php if (!empty($item_title)): ?>
+                                                    <h1 class="modal-title fs-5" id="<?php echo esc_attr($modal_label_id); ?>">
+                                                        <?php echo esc_html($item_title); ?></h1>
+                                                <?php endif; ?>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body p-4 videoframe">
+                                                <?php if (!empty($item_youtube_video_id)): ?>
+                                                    <iframe
+                                                        data-src="https://www.youtube.com/embed/<?php echo esc_attr($item_youtube_video_id); ?>"
+                                                        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+                                                    </iframe>
+                                                <?php elseif (!empty($item_modal_video_url)): ?>
+                                                    <?php
+                                                    $youtube_from_url = $this->get_youtube_id($item_modal_video_url);
+                                                    $vimeo_from_url = $this->get_vimeo_id($item_modal_video_url);
+                                                    $path = wp_parse_url($item_modal_video_url, PHP_URL_PATH);
+                                                    $ext = is_string($path) ? strtolower(pathinfo($path, PATHINFO_EXTENSION)) : '';
+                                                    $is_direct_video = in_array($ext, ['mp4', 'webm', 'ogg'], true);
+                                                    ?>
+                                                    <?php if (!empty($youtube_from_url)): ?>
+                                                        <iframe
+                                                            data-src="https://www.youtube.com/embed/<?php echo esc_attr($youtube_from_url); ?>"
+                                                            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+                                                        </iframe>
+                                                    <?php elseif (!empty($vimeo_from_url)): ?>
+                                                        <iframe
+                                                            data-src="https://player.vimeo.com/video/<?php echo esc_attr($vimeo_from_url); ?>"
+                                                            frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen>
+                                                        </iframe>
+                                                    <?php elseif ($is_direct_video): ?>
+                                                        <video controls autoplay playsinline style="width:100%;height:auto;">
+                                                            <source src="<?php echo esc_url($item_modal_video_url); ?>" type="<?php echo esc_attr('video/' . $ext); ?>">
+                                                        </video>
+                                                    <?php else: ?>
+                                                        <a href="<?php echo esc_url($item_modal_video_url); ?>" target="_blank" rel="noopener noreferrer">
+                                                            <?php echo esc_html($item_modal_video_url); ?>
+                                                        </a>
+                                                    <?php endif; ?>
+                                                <?php endif; ?>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            <?php endif; ?>
                         <?php endforeach; ?>
                     <?php endif; ?>
 

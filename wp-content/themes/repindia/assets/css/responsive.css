@@ -197,7 +197,8 @@
   border-bottom: 1px solid rgba(193, 196, 198, 0.1) !important;
 }
 .js-dark .news_main_section .sticky-custom > ul > li:hover {
-  background: transparent;
+  background: transparent !important;
+  border: 0 !important;
 }
 .js-dark
   .news_main_section
@@ -418,7 +419,7 @@ select.form-control {
 }
 .wpcf7-not-valid-tip, #mobile-error {
   color: #C92629 !important;
-  font-size: 10px;
+  font-size: 14px;
 }
 .js-dark .form-control:hover {
   border-color: #008AD6; 
@@ -494,6 +495,7 @@ label.form-label.label_notic {
   margin-top: 16px;
   font-weight: 400;
   color: #5F6F94;
+  position: relative;
 }
 input.wpcf7-submit.form-control.submitbtn {
   height: auto;
@@ -518,13 +520,15 @@ input.wpcf7-submit.form-control.submitbtn {
 input:-internal-autofill-selected{background: inherit !important;}
 
 .wpcf7-spinner {
-  width: 15px;
-  height: 15px;
+  width: 25px;
+  height: 25px;
   margin: 0;
   position: absolute;
-  right: 0;
-  top: 0;
+  right: -30px;
+  top: 7px;
   z-index: 1;
+  background-color: transparent;
+  border: 5px solid #D5D5D5;
 }
 .contactus_form input.wpcf7-submit.form-control.submitbtn:disabled, input.wpcf7-submit.form-control.submitbtn:disabled {
   background: #D5D5D5;
@@ -551,6 +555,11 @@ label.form-label.required_note svg {
 .wpcf7-spinner::before {
   top: 0px;
   left: 0px;
+  transform-origin: 9px 9px;
+  animation-duration: 2000ms;
+  background-color: #007ABE;
+  width: 5px;
+  height: 5px;    
 }
 label.form-label.required_note {
   margin: 0;
@@ -596,7 +605,12 @@ label.form-label.required_note {
 label.form-label.label_notic a {
   color: #5c5c5c;
   font-weight: 500;
+  position: relative;
 }
+
+
+.js-dark label.form-label.label_notic a {color: rgb(255 255 255 / 70%);}
+.js-dark label.form-label.label_notic a:hover {color: #ffffff;}
 .btn-sec_gap.titlegrep.with_whitebg .grey-btn {
   border-color: #e6ebf2;
   background: #fff;
@@ -769,7 +783,16 @@ border-radius: 12px;
   text-decoration-color: #d7dbe4;
   color: #5c5c5c;
 }
-.js-dark .career-apply-form.styled-career-form {
+.js-dark .career-apply-form label.form-label.notice-text a {
+  text-decoration-color: #d7dbe44f;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.js-dark .career-apply-form label.form-label.notice-text a:hover {
+  text-decoration-color: #464a4f;
+  color: #ffffff;
+}
+.js-dark .career-apply-form.styled-career-form, .js-dark .formpopup_modal .modal-technology-partners-form .modal-content {
   background: #262a30;
 }
 .js-dark
@@ -787,10 +810,6 @@ border-radius: 12px;
 .js-dark .styled-career-form .file-upload-box.drag-over {
   border-color: #4a90e2;
   background: rgba(74, 144, 226, 0.12);
-}
-.js-dark .career-apply-form label.form-label.notice-text a {
-  text-decoration-color: #464a4f;
-  color: rgba(255, 255, 255, 0.6);
 }
 
 .js-dark .darkbg-policy {
@@ -908,6 +927,14 @@ border-radius: 12px;
     right: auto !important;
   }
 }
+@media(min-width: 768px){
+  ul.social_media_links > li.mobile_search_theme_switch { display: none; }
+}
+@media(max-width: 1200px) and (min-width: 768px){
+  .right-connection_lines {
+    right: -80px;
+  }
+}
 @media (max-width: 1025px) {
   .date-author-txt p span:first-child {
     padding-right: 7px;
@@ -986,7 +1013,7 @@ border-radius: 12px;
 }
   .enterprisebanner ul.elementor-icon-list-items.elementor-inline-items {
     flex-wrap: unset;
-    max-width: 400px;
+    /* max-width: max-content; */
     overflow: scroll;
     justify-content: start;
   }
@@ -1054,7 +1081,10 @@ border-radius: 12px;
     flex-direction: column;
     width: 100%;
   }
-  .accordion_wrap {
+.partner_choose_desc .elementor-element.icc_bannerbtn .btn-sec_gap, .partner_tech_desc .elementor-element.icc_bannerbtn .btn-sec_gap {align-items: flex-start;flex-direction: row;}
+.partner_choose_desc .elementor-element.icc_bannerbtn .btn-sec_gap .theme-btn, .partner_tech_desc .elementor-element.icc_bannerbtn .btn-sec_gap .theme-btn {max-width: fit-content;}
+  
+.accordion_wrap {
     margin-bottom: 60px;
   }
   .cornerbtn .btn-colum {
@@ -1064,11 +1094,11 @@ border-radius: 12px;
   .txtflex h2 {
     font-size: 24px;
     line-height: 1.2em;
-    text-align: center;
+    text-align: left;
   }
   .txtflex p {
     font-size: 14px;
-    text-align: center;
+    text-align: left;
   }
   
 .featuregroup_repeator .nested-item-1 {
@@ -1118,6 +1148,9 @@ border-radius: 12px;
       gap: 15px;
       flex-direction: column;
   }
+  .wpcf7-not-valid-tip, #mobile-error {
+      font-size: 12px;
+  }
 }
 .sticky-wrapper-img {
   width: 570px !important;
@@ -1129,3 +1162,70 @@ border-radius: 12px;
 .js-dark .black-theme-img {
   display: block !important;
 }
+@media(max-width: 1024px) and (min-width:768px){
+  .group_tooltip .ctw-text {
+      display: flex;
+      width: 100%;
+      max-width: 100%;
+      flex-wrap: wrap;
+      justify-content: center;
+  }
+  .e-con-full .banner_content_txt_proven,.banner_content_txt {
+    width: 90% !important;
+    padding: 20px 20px !important;
+    border-radius: 12px !important;
+    left: 50%;
+    transform: translate(-50%, 0%);
+  }
+}
+@media(max-width: 768px){
+    .social_media_links .cursor-auto,ul.social_media_links > li > a > small { display: none; }
+    ul.social_media_links { justify-content: space-between; }
+    .elementor-element.reversetestimonial .elementor-testimonial {
+      flex-direction: column-reverse;
+      align-items: flex-start; 
+    }
+    .elementor-element.gradient_bg img { object-fit: cover;min-height: 440px; }
+    .choose_slider .elementor-widget-testimonial-carousel .swiper-slide{ padding: 20px 0; }
+    .choose_slider .elementor-testimonial__image img{ min-height: 200px; }
+    .badge-custom,.badge-cusotm.bg-trans_txt { font-size: 12px;line-height: 18px; }
+    .card-title { color: #06283D; }
+    .cards-listing-section .card-body { padding: 20px !important; }
+    .brochure_download,.formpopup_modal .career-apply-form.styled-career-form.popupform, .formpopup_modal .modal-technology-partners-form .modal-body-content { padding-left: 16px;padding-right: 16px; }
+    .elementor-element.product_banner img { object-fit: cover; }
+    .card-wrapper_single { padding: 20px 0 0; }
+    .card-wrapper_single .card-contents { padding: 0 20px; }
+    .card-wrapper_single .card-img_single > img { padding-top: 0;margin-top: 30px; }
+    .e-con-full.ai_smart_dark .elementor-position-left.theme-img{ padding: 0; }
+    .accordion_sets .accontent p { margin: 10px 0 0 1.5rem; }
+    .elementor-element.lefticon_box .elementor-image-box-wrapper { display: flex;flex-direction: row;gap: 10px; }
+    .title-box { margin-bottom: 30px; }
+    .details { padding: 15px 0 10px; }
+    .photo_custom .details h2{ font-size: 20px; }
+    .hz-slider-section .swiper-slide p,.hz-slider-section .swiper-slide ul li{ font-size: 16px;line-height: normal !important; }
+    .vms_accord.elementor-widget-n-tabs .e-n-tabs-heading{ display: inline-block; }
+    #tab_table .vms_accord .e-n-tabs-heading{ margin-left: 0;width: 100%!important;max-width: 100%;background: transparent;border: 0;padding: 0;display: flex;align-items: center;justify-content: center;gap: 10px; }
+    .vms_accord.elementor-widget-n-tabs .e-n-tab-title{ width: 100%!important;border-color: #D7DBE4 !important;margin: 0px!important; }
+    #tab_table .elementor-element.elementor-element-4cde0ab.elementor-widget-n-tabs > .e-n-tabs > .e-n-tabs-heading > .e-n-tab-title[aria-selected="false"]:not(:hover) { border: 1px solid #D7DBE4 !important;margin: 0px!important; }
+    .content-inner-text { margin-top: 40px; }
+    .content-inner-text .sub_title { margin-bottom: 15px; }
+    .content-inner-icons ul { margin: 30px 0 0; }
+    .content-inner-icons div { justify-content: flex-start; }
+    .chosse_circle .elementor-icon-box-wrapper { padding: 0 0 20px; }
+    .sectionsinsightsupdates .mx-auto .text-center { text-align: left !important; }
+    .sectionsinsightsupdates h3 { margin-bottom: 10px; }
+    .insights-updates{ margin-top: 20px;}
+    .hero-style .slide-title, .hero-style .slide-text, .hero-style .slide-btns { max-width: 100%; }
+    .slide-btns { margin-top: 30px; }
+    .grey-btn{ width: 100%; }
+    .theme-btn{width: 100%;text-align: center;}
+    .contentdesc .theme-btn, .industry_icons .theme-btn, .photo_custom .details .theme-btn, .accordion_wrap .theme-btn {width: auto; text-align: left;}
+    .inner_page_banner_content h1 { font-size: 28px; }
+    .search_result_header { margin-top: 100px; }
+    .search-results-content { margin-top: 25px!important; }
+    .photo_custom { margin-bottom: 40px;}
+  
+    
+    
+}
+

@@ -87,7 +87,7 @@ header li.burger-icon .icon-sun,
 .js-dark p,
 .js-dark.content-inner-icons ul li span,
 .js-dark .industry_box .elementor-icon-box-title,
-.js-dark .industry_box .elementor-icon-box-title span {
+.js-dark .industry_box .elementor-icon-box-title span,.js-dark span.ctw-text {
   color: #aeb6c9 !important;
 }
 .js-dark .darklogo,
@@ -108,6 +108,13 @@ header li.burger-icon .icon-sun,
 .js-dark h4,
 .js-dark h5,
 .js-dark h6 {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+.js-dark span.ctw-text {
+  color: #aeb6c9 !important;
+}
+
+.js-dark .tool_dark_hard span.ctw-text {
   color: rgba(255, 255, 255, 0.9) !important;
 }
 .js-dark .rounded-4 {
@@ -330,8 +337,8 @@ header li.burger-icon .icon-sun,
   color: rgba(255, 255, 255, 0.9) !important;
 }
 .accordion_video {
-  top: 50%;
-  transform: translateY(-50%);
+  /* top: 50%;
+  transform: translateY(-50%); */
 }
 .padd-accordion_video {
   min-height: 700px;
@@ -496,7 +503,7 @@ header li.burger-icon .icon-sun,
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 .js-dark .elementor-element .iccc_actions .elementor-widget-icon-box,
-.js-dark .elementor-element .iccc_actions .e-con-full.e-flex {
+.js-dark .elementor-element .iccc_actions .e-con-full.e-flex, .js-dark .elementor-element .iccc_actions .elementor-widget-image-box {
   border-color: rgba(193, 196, 198, 0.2);
 }
 .js-dark .cornerbtn .theme-btn,
@@ -632,13 +639,13 @@ header li.burger-icon .icon-sun,
 .js-dark .dark-circle-txt .elementor-icon-box-description {
   color: #AEB6C9 !important;
 }
-.js-dark .modal-demo-form .modal-content, .js-dark .brochure-modal-overlay  .modal-content, .js-dark .brochure-modal-overlay  .modal-header, .js-dark .formpopup_modal .modal-demo-form .modal-header {
+.js-dark .modal-demo-form .modal-content, .js-dark .brochure-modal-overlay  .modal-content, .js-dark .brochure-modal-overlay  .modal-header, .js-dark .formpopup_modal .modal-demo-form .modal-header, .js-dark .formpopup_modal .modal-technology-partners-form .modal-header {
   background: #262a30 !important;
 }
 .js-dark .modal-demo-form .btn-demo_close p, .js-dark .formpopup_modal .modal-demo-form .modal-title, .js-dark .brochure-modal-overlay  .modal-title {
   color: #d7dbe4 !important;
 }
-.js-dark .modal-demo-form .btn-demo_close .btn_cancel {
+.js-dark .modal-demo-form .btn-demo_close .btn_cancel, .js-dark .formpopup_modal .modal-technology-partners-form .modal-title {
   color: #d7dbe4;
 }
 /* Dark mode styles for smart tabs */
@@ -779,7 +786,7 @@ header li.burger-icon .icon-sun,
   border-bottom: 1px solid
     var(--Golbal-others-border-3, rgba(193, 196, 198, 0.2)) !important;
 }
-.js-dark #border_dark, .js-dark .h-full {
+.js-dark #border_dark,.js-dark .border_dark, .js-dark .h-full {
     border-color: #c1c4c633;
 }
 .js-dark #why_oil {
@@ -917,7 +924,8 @@ header li.burger-icon .icon-sun,
 .js-dark .elementor-element.darkmode_custom.e-flex,.js-dark .elementor-element.darkmode_custom {
   background-color: #ffffff1a !important;
 }
-.js-dark .elementor-element.e-con-full.video_analytic_sidebar,.elementor-element.e-con-full.video_analytic_sidebar .analytic-sidebar {
+.js-dark .elementor-element.e-con-full.video_analytic_sidebar,
+.js-dark .elementor-element.e-con-full.video_analytic_sidebar .analytic-sidebar {
   background: #262A30 !important;
   background-color: #262A30 !important;
 }
@@ -1099,3 +1107,8 @@ header li.burger-icon .icon-sun,
 .js-dark .elementor-position-left.theme-img {
   border-color: rgb(193 196 198 / 20%) !important;
 }
+.js-dark .modal-demo-form .modal-content,.js-dark .global-youtube-popup__content,.js-dark .ctw-tooltip-inner,.js-dark .elementor-element.floating_dark .enterprisebanner.elementor-widget, .js-dark .ctw-popup-box, .js-dark .formpopup_modal .modal-technology-partners-form .modal-content {
+  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.30)!important;
+}
+.project_box .elementor-position-top:before {background: #c1c4c633;}
+.js-dark .redtooltip h4.elementor-heading-title.elementor-size-default {color: #E6BA85 !important;}

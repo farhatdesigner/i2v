@@ -27,6 +27,7 @@ if ($download_b) { ?>
         .brochure-modal-content {
             background: #fff;
             max-height: 100vh;
+            height: 95vh;
             /* height: calc(100vh - 160px); */
             overflow: auto;
             scroll-behavior: smooth;

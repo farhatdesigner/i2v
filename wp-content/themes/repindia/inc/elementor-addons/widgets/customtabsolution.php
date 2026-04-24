@@ -261,11 +261,18 @@ class Customtabsolution extends Widget_Base
 		$first_tab_title = !empty($solution_tabs[0]['tab_title']) ? $solution_tabs[0]['tab_title'] : 'i2V\'s VMS';
 		?>
 
+
+<style>
+.weight-600 {
+	font-weight: 600;
+}
+</style>
+
 		<div class="customtabsolution">
 			<section class="microspace-inside">
 				<div class="custom-container">
 					<div class="col-lg-8 col-xxl-7">
-						<h3 class="main_title quote"><?php echo esc_html('Integrated solutions to secure and streamline every facet of your operations', 'repindia'); ?> </h3>
+						<h1 class="main_title quote weight-600"><?php echo esc_html('Integrated solutions to secure and streamline every facet of your operations', 'repindia'); ?> </h1>
 					</div>
 					<div class="contentWrapper">
 						<div class="filter-menu tabsWrapper">

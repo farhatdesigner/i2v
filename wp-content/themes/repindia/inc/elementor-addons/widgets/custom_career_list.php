@@ -163,7 +163,7 @@ class Custom_Career_List extends Widget_Base {
 
             <div class="career-header-section">
                 <div class="career-header-content">
-                    <h2 class="career-main-title"><?php echo esc_html($section_title); ?></h2>
+                    <h3 class="career-main-title"><?php echo esc_html($section_title); ?></h3>
                     <?php if (!empty($section_subtitle)): ?><p class="career-subtitle"><?php echo esc_html($section_subtitle); ?></p><?php endif; ?>
                 </div>
                 <?php if ($enable_filter && !empty($filter_terms)): ?>
@@ -188,15 +188,16 @@ class Custom_Career_List extends Widget_Base {
         </div>
 
         <style>
-        #<?php echo $uid; ?> .career-header-section { display:flex; justify-content:space-between; align-items:flex-start; gap:20px; margin-bottom:48px; }
+        #<?php echo $uid; ?> .career-header-section { display:flex; justify-content:space-between; align-items:flex-start; gap:20px; margin-bottom:36px; }
         #<?php echo $uid; ?> .career-main-title { font-size:48px;font-weight: 600;color:#06283D; margin:0 0 12px;line-height: normal;  }
         #<?php echo $uid; ?> .career-subtitle { color:#5C5C5C;font-size: 18px;font-weight:400;line-height: 26px; margin:0; }
         #<?php echo $uid; ?> .career-filter-section { min-width:345px; }
         #<?php echo $uid; ?> .career-team-filter { width:100%; padding:10px 40px 10px 16px; border-radius:12px; border:1px solid #E5E9EC; background:#F2F5FA; height:48px; color:#4A5673; font-size:16px; font-weight:400; cursor:pointer; appearance:none; background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%235F6F94' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 16px center; }
         
         #<?php echo $uid; ?> .career-team-filter:focus { outline:none; border-color:#E5E9EC; }
-        #<?php echo $uid; ?> .career-team-filter option { border:1px solid #E5E9EC; padding:8px; background:#FFFFFF; color:#4A5673; }
-        #<?php echo $uid; ?> .career-team-filter option:checked, #<?php echo $uid; ?> .career-team-filter option:hover { background:#06283D; color:#FFFFFF; }
+        #<?php echo $uid; ?> .career-team-filter option { border:1px solid #E5E9EC; padding:5px;font-size: 12px;background:#FFFFFF; color:#4A5673; }
+        #<?php echo $uid; ?> .career-team-filter option:checked, #<?php echo $uid; ?> .career-team-filter option:hover {background: #f2f5fa;
+            color: #5F6F94;}
         #<?php echo $uid; ?> .career-table-header { display:grid; grid-template-columns: 1fr 2fr 1fr; gap:16px; padding:12px 0; border-bottom:1px solid #E6EBF2; color:#5F6F94; font-weight:600; font-size:16px;line-height: 26px;margin-bottom: 12px; }
         #<?php echo $uid; ?> .career-team-group { margin-bottom: 48px;display: grid;grid-template-columns: 1fr 3fr;gap: 16px; }
         #<?php echo $uid; ?> .career-team-group:last-child{ margin-bottom: 0;}

@@ -99,6 +99,135 @@ class Custom_Purpose_Slider extends Widget_Base
         );
 
         $this->end_controls_section();
+        // Special Slide Section
+        $this->start_controls_section(
+            'section_special_slide',
+            [
+                'label' => esc_html__('Static Slide Item', 'repindia'),
+                'tab' => Controls_Manager::TAB_CONTENT,
+            ]
+        );
+
+        // Enable/Disable Special Slide
+        $this->add_control(
+            'show_special_slide',
+            [
+                'label' => esc_html__('Show Static Slide Item', 'repindia'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => esc_html__('Yes', 'repindia'),
+                'label_off' => esc_html__('No', 'repindia'),
+                'return_value' => 'yes',
+                'default' => 'no',
+            ]
+        );
+
+        // Default Theme Icon/Image
+        $this->add_control(
+            'special_slide_icon_default',
+            [
+                'label' => esc_html__('Default Theme Icon/Image', 'repindia'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => get_template_directory_uri() . '/assets/images/12/Light-QR.svg',
+                ],
+                'condition' => [
+                    'show_special_slide' => 'yes',
+                ],
+            ]
+        );
+
+        // Dark Theme Icon/Image
+        $this->add_control(
+            'special_slide_icon_dark',
+            [
+                'label' => esc_html__('Dark Theme Icon/Image', 'repindia'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => get_template_directory_uri() . '/assets/images/12/Dark-QR.svg',
+                ],
+                'description' => esc_html__('Leave empty to use default icon for dark theme', 'repindia'),
+                'condition' => [
+                    'show_special_slide' => 'yes',
+                ],
+            ]
+        );
+
+        // Title
+        $this->add_control(
+            'special_slide_title',
+            [
+                'label' => esc_html__('Title', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => 'Lear more about how surveillance and security come together in one dashboard',
+                'label_block' => true,
+                'condition' => [
+                    'show_special_slide' => 'yes',
+                ],
+            ]
+        );
+
+        // Description
+        $this->add_control(
+            'special_slide_description',
+            [
+                'label' => esc_html__('Description', 'repindia'),
+                'type' => Controls_Manager::WYSIWYG,
+                'default' => '',
+                'label_block' => true,
+                'condition' => [
+                    'show_special_slide' => 'yes',
+                ],
+            ]
+        );
+
+        // CTA Text
+        $this->add_control(
+            'special_slide_cta_text',
+            [
+                'label' => esc_html__('CTA Text', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => 'Request technical walkthrough',
+                'label_block' => true,
+                'condition' => [
+                    'show_special_slide' => 'yes',
+                ],
+            ]
+        );
+
+        // CTA URL
+        $this->add_control(
+            'special_slide_cta_url',
+            [
+                'label' => esc_html__('CTA URL', 'repindia'),
+                'type' => Controls_Manager::URL,
+                'default' => [
+                    'url' => '#',
+                    'is_external' => false,
+                    'nofollow' => false,
+                ],
+                'label_block' => true,
+                'condition' => [
+                    'show_special_slide' => 'yes',
+                ],
+            ]
+        );
+
+        // CTA Additional Classes
+        $this->add_control(
+            'special_slide_cta_classes',
+            [
+                'label' => esc_html__('CTA Additional Classes', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'description' => esc_html__('Add custom CSS classes for the CTA link (separate multiple classes with spaces)', 'repindia'),
+                'label_block' => true,
+                'condition' => [
+                    'show_special_slide' => 'yes',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
     }
 
     protected function render()
@@ -153,6 +282,66 @@ class Custom_Purpose_Slider extends Widget_Base
                             </div>
 
                         <?php endforeach; ?>
+                        <?php
+                        // Special Slide
+                        $show_special_slide = !empty($settings['show_special_slide']) && $settings['show_special_slide'] === 'yes';
+                        if ($show_special_slide):
+                            $special_icon_default = '';
+                            if (!empty($settings['special_slide_icon_default']['url'])) {
+                                $special_icon_default = $settings['special_slide_icon_default']['url'];
+                            } elseif (!empty($settings['special_slide_icon_default']['id'])) {
+                                $special_icon_default = wp_get_attachment_image_url($settings['special_slide_icon_default']['id'], 'full');
+                            } else {
+                                $special_icon_default = get_template_directory_uri() . '/assets/images/12/Light-QR.svg';
+                            }
+                            $has_default_icon = !empty($settings['special_slide_icon_default']['url']) || !empty($settings['special_slide_icon_default']['id']);
+                            $special_icon_default_alt = !empty($settings['special_slide_icon_default']['alt']) ? $settings['special_slide_icon_default']['alt'] : '';
+                            $special_icon_dark = '';
+                            if (!empty($settings['special_slide_icon_dark']['url'])) {
+                                $special_icon_dark = $settings['special_slide_icon_dark']['url'];
+                            } elseif (!empty($settings['special_slide_icon_dark']['id'])) {
+                                $special_icon_dark = wp_get_attachment_image_url($settings['special_slide_icon_dark']['id'], 'full');
+                            }
+                            if (empty($special_icon_dark)) {
+                                $special_icon_dark = $special_icon_default;
+                            }
+                            $special_icon_dark_alt = !empty($settings['special_slide_icon_dark']['alt']) ? $settings['special_slide_icon_dark']['alt'] : $special_icon_default_alt;
+                            $special_title = !empty($settings['special_slide_title']) ? $settings['special_slide_title'] : 'Lear more about how surveillance and security come together in one dashboard';
+                            $special_description = !empty($settings['special_slide_description']) ? $settings['special_slide_description'] : '';
+                            $special_cta_text = !empty($settings['special_slide_cta_text']) ? $settings['special_slide_cta_text'] : 'Request technical walkthrough';
+                            $special_cta_url = !empty($settings['special_slide_cta_url']['url']) ? $settings['special_slide_cta_url']['url'] : '#';
+                            $special_cta_target = !empty($settings['special_slide_cta_url']['is_external']) ? 'target="_blank"' : '';
+                            $special_cta_nofollow = !empty($settings['special_slide_cta_url']['nofollow']) ? 'rel="nofollow"' : '';
+                            $special_cta_classes = !empty($settings['special_slide_cta_classes']) ? ' ' . esc_attr($settings['special_slide_cta_classes']) : '';
+                        ?>
+                        <div class="swiper-slide">
+                            <div class="slider-image_content">
+                                <?php if ($has_default_icon): ?>
+                                <div class="slider-image">
+                                    <img decoding="async" class="radius-12 white_theme_img"
+                                        src="<?php echo esc_url($special_icon_default); ?>" alt="<?php echo esc_attr($special_icon_default_alt ? $special_icon_default_alt : $special_title); ?>">
+                                    <img decoding="async" class="radius-12 black_theme_img"
+                                        src="<?php echo esc_url($special_icon_dark); ?>" alt="<?php echo esc_attr($special_icon_dark_alt ? $special_icon_dark_alt : $special_title); ?>">
+                                </div>
+                                <?php endif; ?>
+                                <div class="slider-content_txt">
+                                    <?php if (!empty($special_title)): ?>
+                                        <h3><?php echo esc_html($special_title); ?></h3>
+                                    <?php endif; ?>
+                                    <?php if (!empty($special_description)): ?>
+                                        <div class="special-slide-description">
+                                            <?php echo wp_kses_post($special_description); ?>
+                                        </div>
+                                    <?php endif; ?>
+                                    <?php if (!empty($special_cta_text)): ?>
+                                        <div class="btn-sec_gap justify-content-center full_mobile">
+                                            <a href="<?php echo esc_url($special_cta_url); ?>" class="theme-btn bg-trans border_btnlight <?php echo $special_cta_classes; ?>" <?php echo esc_attr($special_cta_target); ?> <?php echo esc_attr($special_cta_nofollow); ?>><?php echo esc_html($special_cta_text); ?></a>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endif; ?>
 
                     </div>
 
@@ -295,7 +484,7 @@ class Custom_Purpose_Slider extends Widget_Base
             /* Mobile-specific styles for touch/swipe (below 767px) */
             @media (max-width: 767px) {
                 .purpose-slider-wrapper .purpose-swiper {
-                    overflow: hidden !important;
+                    /* overflow: hidden !important; */
                     touch-action: pan-x;
                     -webkit-overflow-scrolling: touch;
                 }

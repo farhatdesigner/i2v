@@ -131,7 +131,7 @@ class Cardslisting extends Widget_Base
                                                     </p>
                                                 <?php endif; ?>
                                                 <?php if (!empty($product_tags) && !is_wp_error($product_tags)) : ?>
-                                                    <div class="d-flex flex-wrap gap-2 mt-4">
+                                                    <div class="d-flex flex-wrap align-items-center gap-2 mt-4">
                                                         <?php foreach ($product_tags as $tag) : ?>
                                                             <span class="badge-custom"><?php echo esc_html($tag->name); ?></span>
                                                         <?php endforeach; ?>

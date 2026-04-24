@@ -53,6 +53,8 @@ class Widget_Loader
 		require_once(__DIR__.'/widgets/custom_blog_filter.php');
 		require_once(__DIR__.'/widgets/custom_store_locator.php');
 		require_once(__DIR__.'/widgets/horizontal_slider_energy.php');
+		require_once(__DIR__.'/widgets/leaders_testimonial.php');
+		
 		
     }
     public function register_widgets()
@@ -97,6 +99,7 @@ class Widget_Loader
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Blog_Filter() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Custom_Store_Locator() );
 		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Horizontal_Slider_Energy() );
+		\Elementor\Plugin::instance()->widgets_manager->register( new Widgets\Leaders_Testimonial() );
 		
     }
 	public function __construct()

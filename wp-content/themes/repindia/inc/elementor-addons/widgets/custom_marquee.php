@@ -503,14 +503,11 @@ class Custom_Marquee extends Widget_Base
             $css_added = true;
             echo '<style id="custom-marquee-css">';
             echo '.cmarq-wrapper { width: 100%; overflow: hidden; position: relative; }';
-            echo '.cmarq-track { display: flex; flex-wrap: nowrap; white-space: nowrap; }';
+            echo '.cmarq-track { display: flex; flex-wrap: nowrap; white-space: nowrap; width: max-content; will-change: transform; backface-visibility: hidden; }';
             echo '.cmarq-item { display: inline-flex; align-items: center; flex-shrink: 0; }';
             echo '.cmarq-item img { display: block; }';
             echo '.cmarq-item a { text-decoration: none; display: inline-flex; align-items: center; }';
             echo '.cmarq-content { display: inline-block; }';
-            echo '.cmarq-wrapper[data-hover="yes"]:hover .cmarq-track { animation-play-state: paused !important; }';
-            echo '@keyframes cmarq-scroll-left { from { transform: translateX(0); } to { transform: translateX(-50%); } }';
-            echo '@keyframes cmarq-scroll-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }';
             echo '</style>';
         }
 
@@ -520,41 +517,44 @@ class Custom_Marquee extends Widget_Base
             $js_added = true;
             echo '<script id="custom-marquee-js">';
             echo '(function() {';
+            echo 'var marquees = [], rafId = null, lastTime = 0;';
+            echo 'function tick(timestamp) {';
+            echo 'marquees = marquees.filter(function(m) { return m.wrapper.isConnected; });';
+            echo 'if (!marquees.length) { rafId = null; return; }';
+            echo 'var dt = lastTime ? Math.min(timestamp - lastTime, 50) : 0;';
+            echo 'lastTime = timestamp;';
+            echo 'marquees.forEach(function(m) {';
+            echo 'if (m.pauseOnHover && m.hovered) return;';
+            echo 'm.pos += m.velocity * (dt / 1000);';
+            echo 'if (m.pos >= m.loopWidth) m.pos -= m.loopWidth;';
+            echo 'else if (m.pos < 0) m.pos += m.loopWidth;';
+            echo 'm.track.style.transform = "translate3d(" + (m.direction === "right" ? m.pos : -m.pos) + "px, 0, 0)";';
+            echo '});';
+            echo 'rafId = requestAnimationFrame(tick);';
+            echo '}';
             echo 'function initCustomMarquees() {';
-            echo 'if (typeof jQuery === "undefined") return;';
-            echo 'var $ = jQuery;';
-            echo '$(".cmarq-wrapper").each(function() {';
-            echo 'var $wrapper = $(this);';
-            echo 'if ($wrapper.data("initialized")) return;';
-            echo '$wrapper.data("initialized", true);';
-            echo 'var speed = parseFloat($wrapper.data("speed")) || 40;';
-            echo 'var direction = $wrapper.data("direction") || "left";';
-            echo 'var gap = parseFloat($wrapper.data("gap")) || 40;';
-            echo 'var $track = $wrapper.find(".cmarq-track");';
-            echo 'var $items = $track.find(".cmarq-item");';
-            echo 'if ($items.length === 0) return;';
-            echo '$track.css("--gap", gap + "px");';
-            echo 'var $clone = $track.clone();';
-            echo '$clone.find(".cmarq-item").each(function() {';
-            echo '$(this).css("padding-right", gap + "px");';
+            echo 'document.querySelectorAll(".cmarq-wrapper").forEach(function(wrapper) {';
+            echo 'if (wrapper.dataset.initialized === "1") return;';
+            echo 'wrapper.dataset.initialized = "1";';
+            echo 'var track = wrapper.querySelector(".cmarq-track");';
+            echo 'if (!track || !track.children.length) return;';
+            echo 'var speed = parseFloat(wrapper.dataset.speed) || 40;';
+            echo 'var direction = wrapper.dataset.direction || "left";';
+            echo 'var pauseOnHover = wrapper.dataset.hover === "yes";';
+            echo 'var loopWidth = track.offsetWidth / 2;';
+            echo 'if (loopWidth <= 0) return;';
+            echo 'var m = { wrapper: wrapper, track: track, loopWidth: loopWidth, velocity: loopWidth / speed, direction: direction, pauseOnHover: pauseOnHover, pos: 0, hovered: false };';
+            echo 'if (pauseOnHover) { wrapper.addEventListener("mouseenter", function() { m.hovered = true; }); wrapper.addEventListener("mouseleave", function() { m.hovered = false; }); }';
+            echo 'marquees.push(m);';
             echo '});';
-            echo '$track.append($clone.html());';
-            echo 'var animationName = direction === "right" ? "cmarq-scroll-right" : "cmarq-scroll-left";';
-            echo '$track.css({';
-            echo '"animation": animationName + " " + speed + "s linear infinite",';
-            echo '"-webkit-animation": animationName + " " + speed + "s linear infinite"';
-            echo '});';
-            echo '});';
+            echo 'if (marquees.length && !rafId) { lastTime = 0; rafId = requestAnimationFrame(tick); }';
             echo '}';
-            echo 'function runWhenJQueryReady() {';
-            echo 'if (typeof jQuery !== "undefined") {';
-            echo 'jQuery(document).ready(function() { initCustomMarquees(); });';
-            echo 'jQuery(window).on("elementor/frontend/init", function() { initCustomMarquees(); });';
-            echo '} else {';
-            echo 'setTimeout(runWhenJQueryReady, 100);';
+            echo 'function run() {';
+            echo 'if (document.readyState !== "loading") initCustomMarquees();';
+            echo 'else document.addEventListener("DOMContentLoaded", initCustomMarquees);';
+            echo 'if (typeof jQuery !== "undefined") jQuery(window).on("elementor/frontend/init", initCustomMarquees);';
             echo '}';
-            echo '}';
-            echo 'runWhenJQueryReady();';
+            echo 'run();';
             echo '})();';
             echo '</script>';
         }
@@ -563,6 +563,7 @@ class Custom_Marquee extends Widget_Base
         <div class="cmarq-wrapper" data-speed="<?php echo esc_attr($speed); ?>" data-direction="<?php echo esc_attr($direction); ?>" data-hover="<?php echo esc_attr($pause_on_hover); ?>" data-gap="<?php echo esc_attr($gap); ?>" style="--gap: <?php echo esc_attr($gap); ?>px;">
             <div class="cmarq-track">
                 <?php if (!empty($marquee_items)) : ?>
+                    <?php for ($duplicate = 0; $duplicate < 2; $duplicate++) : ?>
                     <?php foreach ($marquee_items as $item) : ?>
                         <?php
                         $item_type = !empty($item['item_type']) ? $item['item_type'] : 'text';
@@ -609,6 +610,7 @@ class Custom_Marquee extends Widget_Base
                             <?php endif; ?>
                         </div>
                     <?php endforeach; ?>
+                    <?php endfor; ?>
                 <?php endif; ?>
             </div>
         </div>
