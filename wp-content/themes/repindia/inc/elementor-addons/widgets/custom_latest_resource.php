@@ -381,8 +381,8 @@ class Custom_Latest_Resource extends Widget_Base
             .custom-latest-resource-card-content {
                 padding: 8px 8px 8px 8px;
                 gap: 8px;
-                display: flex;
-                flex-direction: column;
+                /* display: flex;
+                flex-direction: column; */
             }
 
             .custom-latest-resource-image-wrapper img {
@@ -413,7 +413,7 @@ class Custom_Latest_Resource extends Widget_Base
             }
 
             .custom-latest-resource-taxonomy {
-                display: inline-block;
+                display: block !important;
                 padding: 4px 16px;
                 background: #E5F6FF;
                 color: #0074B2;
@@ -433,14 +433,15 @@ class Custom_Latest_Resource extends Widget_Base
                 font-style: normal;
                 font-weight: 600;
                 line-height: 26px;
-                overflow: hidden;
+                /* overflow: hidden;
                 text-overflow: ellipsis;
                 display: -webkit-box;
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
                 padding-bottom: 0;
-                min-height: unset;
+                min-height: unset; */
                 color: #06283D;
+                display: inline-block;
             }
 
             .custom-latest-resource-pagination {

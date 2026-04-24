@@ -20,7 +20,7 @@
 
     // DOM Elements
     let popup = null;
-    let trigger = null;
+    let triggers = [];
     let closeBtn = null;
     let searchInput = null;
     let recentList = null;
@@ -49,15 +49,15 @@
     function setup() {
         // Get DOM elements
         popup = document.getElementById(SEARCH_POPUP_ID);
-        trigger = document.querySelector('.' + SEARCH_TRIGGER_CLASS);
+        triggers = document.querySelectorAll('.' + SEARCH_TRIGGER_CLASS);
         closeBtn = popup ? popup.querySelector('.' + SEARCH_CLOSE_CLASS) : null;
         searchInput = popup ? popup.querySelector('.' + SEARCH_INPUT_CLASS) : null;
         recentList = document.getElementById(RECENT_SEARCHES_LIST_ID);
         popularList = document.getElementById(POPULAR_SEARCHES_LIST_ID);
         searchTabs = document.querySelectorAll('.' + SEARCH_TAB_CLASS);
 
-        if (!popup || !trigger) {
-            return; // Search popup not available
+        if (!popup || triggers.length === 0) {
+            return; // Search popup or triggers not available
         }
 
         // Setup popup behavior
@@ -79,10 +79,12 @@
      * Setup popup open/close behavior
      */
     function setupPopup() {
-        // Open popup
-        trigger.addEventListener('click', function(e) {
-            e.preventDefault();
-            openPopup();
+        // Open popup - attach to all trigger buttons
+        triggers.forEach(function(trigger) {
+            trigger.addEventListener('click', function(e) {
+                e.preventDefault();
+                openPopup();
+            });
         });
 
         // Close popup

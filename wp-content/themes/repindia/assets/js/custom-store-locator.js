@@ -117,7 +117,7 @@
         // Initialize Leaflet map
         const map = L.map(mapId, {
             zoomControl: true,
-            scrollWheelZoom: true,
+            scrollWheelZoom: false,
             doubleClickZoom: true,
             boxZoom: true,
             keyboard: true,

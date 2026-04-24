@@ -200,8 +200,9 @@ class Custom_Resource_List extends Widget_Base {
                 .resource-sort { position: relative; }
                 .resource-sort select { width:100%;min-width: 180px; padding:8px 12px; border-radius:8px; border:1px solid #E5E9EC; background:#fff; height:auto; color:#06283D; font-size:16px; font-weight:400; cursor:pointer; appearance:none; background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%234A5673' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center;text-overflow: ellipsis;white-space: nowrap; }
                 .resource-sort select:focus { outline:none; border-color:#E5E9EC; }
-                .resource-sort select option { border:1px solid #E5E9EC; padding:8px; background:#FFFFFF; color:#4A5673; }
-                .resource-sort select option:checked, .resource-sort select option:hover { background:#06283D; color:#FFFFFF; }
+                .resource-sort select option { border:1px solid #E5E9EC; padding:5px;font-size: 12px; background:#FFFFFF; color:#4A5673; }
+                .resource-sort select option:checked, .resource-sort select option:hover{background: #f2f5fa;
+                color: #5F6F94;}
                 .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(24%, 3fr)); gap: 20px; margin-bottom: 0; }
                 .resource-card { border: 0;border-radius: 12px;display: flex;flex-direction: column;background: #fff;transition: box-shadow 0.2s;height: 100%;gap: 12px;padding: 8px; }
                 .resource-image { width: 100%; height: 200px; overflow: hidden; background: #f5f5f5; flex-shrink: 0;border-radius: 12px; }
@@ -224,7 +225,7 @@ class Custom_Resource_List extends Widget_Base {
                 .js-dark .resource-sort select option{ border-color: #262A30; }
                 .js-dark .resource-file-size{ color: rgba(255, 255, 255, 0.9); }
                 .js-dark .resource-type-badge{background: rgba(255, 206, 147, 0.1);color: #D7DBE4;border: 1px solid rgb(255 255 255 / 10%);}
-                .js-dark .resource-card:hover .resource-type-badge {border: 1px solid rgb(255 255 255 / 10%);}
+                .js-dark .resource-card:hover .resource-type-badge {border: 1px solid rgb(255 255 255 / 10%);}.js-dark .bg-resources span.btn-blue {background: #007ABE;}
                 img.filter-icon-dark{ display: none; }
                 .js-dark img.filter-icon{ display: none; }
                 .js-dark img.filter-icon-dark{ display: block; }

@@ -930,8 +930,8 @@ class Video_accordionwhite extends Widget_Base
                                     <h1 class="modal-title fs-5" id="vawBackdropLabel">Enhanced security & safety</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body p-4">
-                                    <iframe width="100%" height="450" data-src="https://www.youtube.com/embed/9xwazD5SyVg"
+                                <div class="modal-body p-4 videoframe">
+                                    <iframe data-src="https://www.youtube.com/embed/9xwazD5SyVg"
                                         frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
                                     </iframe>
                                 </div>

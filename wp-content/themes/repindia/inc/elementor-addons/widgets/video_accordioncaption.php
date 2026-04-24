@@ -419,7 +419,7 @@ class Video_accordioncaption extends Widget_Base
             }
 
             .js-dark .vac_ac_icon_border {
-                background-color: #ffffff1a;
+                background-color: #ffffff1a !important;
             }
 
             .js-dark .vac_accordion_set.active .vac_ac_icon_border {
@@ -866,9 +866,9 @@ class Video_accordioncaption extends Widget_Base
                     <div class="col-md-6 col-12">
                         <div class="vac_main_title_box">
                             <?php if (!empty($section_title)): ?>
-                                <h3 class="vac_main_title vac-title">
+                                <h2 class="vac_main_title vac-title">
                                     <?php echo esc_html($section_title); ?>
-                                </h3>
+                                </h2>
                             <?php endif; ?>
                             <?php if (!empty($section_description)): ?>
                                 <p><?php echo wp_kses_post($section_description); ?></p>

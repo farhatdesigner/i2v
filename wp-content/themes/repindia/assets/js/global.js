@@ -1,6 +1,38 @@
 
 (function () {
 
+    function getCookie(name) {
+        const match = document.cookie.match(new RegExp('(?:^|; )' + name.replace(/([.$?*|{}()[\]\\/+^])/g, '\\$1') + '=([^;]*)'));
+        return match ? decodeURIComponent(match[1]) : null;
+    }
+
+    function setCookie(name, value, days) {
+        let expires = '';
+        if (typeof days === 'number') {
+            const date = new Date();
+            date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+            expires = '; expires=' + date.toUTCString();
+        }
+        document.cookie = name + '=' + encodeURIComponent(value) + expires + '; path=/';
+    }
+
+    // Apply saved theme immediately on parse (no flicker).
+    // Note: `body` may not exist yet depending on script placement.
+    (function applyInitialThemeFromCookie() {
+        const saved = getCookie('site-theme');
+        if (saved === 'dark') {
+            document.documentElement.classList.add('js-dark');
+        } else if (saved === 'light') {
+            document.documentElement.classList.remove('js-dark');
+        }
+    })();
+
+    function syncBodyThemeClass() {
+        const isDark = document.documentElement.classList.contains('js-dark');
+        if (!document.body) return;
+        document.body.classList.toggle('js-dark', isDark);
+    }
+
     function updateThemeImages() {
         const isDark = document.body.classList.contains('js-dark');
 
@@ -20,21 +52,23 @@
         });
     }
 
-    /* 🔥 CRITICAL: force LIGHT on initial parse */
-    document.documentElement.classList.remove('js-dark');
-    updateThemeImages();
-
     /* After DOM is stable */
-    document.addEventListener('DOMContentLoaded', updateThemeImages);
+    document.addEventListener('DOMContentLoaded', function () {
+        syncBodyThemeClass();
+        updateThemeImages();
+    });
 
     /* Elementor dynamic support */
     document.addEventListener('elementor/frontend/init', updateThemeImages);
 
-    /* Dark-mode toggle (unchanged behavior) */
+    /* Dark-mode toggle */
     document.querySelectorAll('.dark-mode-toggle').forEach(btn => {
         btn.addEventListener('click', function () {
-            const isDark = document.body.classList.toggle('js-dark');
-            localStorage.setItem('dark-mode', isDark ? 'dark' : 'light');
+            const isDark = !document.documentElement.classList.contains('js-dark');
+            document.documentElement.classList.toggle('js-dark', isDark);
+            syncBodyThemeClass();
+
+            setCookie('site-theme', isDark ? 'dark' : 'light', 365);
             updateThemeImages();
         });
     });
@@ -42,7 +76,10 @@
 })();
 
 
+
 // HERO SLIDER
+
+
 jQuery(document).ready(function ($) {
     // Only initialize if the slider exists on the page
     if ($('.hero-swiper-container').length === 0) {
@@ -217,6 +254,44 @@ jQuery(document).ready(function ($) {
         }
     };
 
+    // Hero video iframes: size from wrapper box (16:9 cover). Pure CSS vw/vh does not match .hero-slider height.
+    var heroVideoEmbedResizeBound = false;
+
+    function resizeHeroVideoEmbeds() {
+        document.querySelectorAll('.hero-slider .slide-video-white, .hero-slider .slide-video-dark').forEach(function (wrap) {
+            var iframe = wrap.querySelector('iframe');
+            if (!iframe) return;
+            var w = wrap.clientWidth;
+            var h = wrap.clientHeight;
+            if (!w || !h) return;
+            var s = Math.max(w / 16, h / 9);
+            iframe.style.width = (16 * s) + 'px';
+            iframe.style.height = (9 * s) + 'px';
+        });
+    }
+
+    function bindHeroVideoEmbedResize() {
+        resizeHeroVideoEmbeds();
+        if (heroVideoEmbedResizeBound) return;
+        heroVideoEmbedResizeBound = true;
+        var schedule = function () {
+            resizeHeroVideoEmbeds();
+        };
+        window.addEventListener('resize', schedule);
+        window.addEventListener('orientationchange', function () {
+            setTimeout(schedule, 200);
+            setTimeout(schedule, 500);
+        });
+        if (typeof ResizeObserver !== 'undefined') {
+            var ro = new ResizeObserver(schedule);
+            document.querySelectorAll('.hero-slider .slide-video-white, .hero-slider .slide-video-dark').forEach(function (el) {
+                ro.observe(el);
+            });
+            var heroRoot = document.querySelector('.sectionshomebanner .hero-slider');
+            if (heroRoot) ro.observe(heroRoot);
+        }
+    }
+
     // Use Swiper 4.5.1 reference to avoid Elementor's Swiper 8 conflict
     // window.SwiperV4 is saved before Elementor loads its Swiper 8
     // Wait for Swiper to be available before initializing
@@ -230,6 +305,9 @@ jQuery(document).ready(function ($) {
         var SwiperConstructor = (typeof window.SwiperV4 !== 'undefined') ? window.SwiperV4 : (typeof Swiper !== 'undefined' ? Swiper : null);
         if (SwiperConstructor) {
             var swiper = new SwiperConstructor(".hero-swiper-container", swiperOptions);
+            bindHeroVideoEmbedResize();
+            setTimeout(resizeHeroVideoEmbeds, 50);
+            setTimeout(resizeHeroVideoEmbeds, 400);
         } else {
             // Retry after a short delay if Swiper not loaded yet
             setTimeout(initHeroSwiper, 100);
@@ -669,6 +747,13 @@ $(document).ready(function () {
 
     // Unlock body scroll when formpopup_modal closes
     $(document).on('hidden.bs.modal', '.formpopup_modal', function () {
+    // Reset all forms inside the modal so it always opens in a clean state
+    $(this).find('form').each(function () {
+        if (typeof this.reset === "function") {
+            this.reset();
+        }
+    });
+
         // Remove event listeners
         $(window).off("scroll", preventModalBodyScroll);
         document.removeEventListener("wheel", preventModalBodyWheel, false);
@@ -1317,8 +1402,9 @@ function initStickyMenu(config) {
                     menuHeight = $menu.outerHeight(true) || 0; // include margins
                 }
 
-                // Small extra padding so section title is not glued to the menu
-                var extraPadding = 20;
+                // Move section further down in viewport on click
+                // (current spacing + additional 200px as requested)
+                var extraPadding = 120;
 
                 var exactPosition = $target.offset().top - menuHeight - extraPadding;
                 if (exactPosition < 0) {
@@ -2304,594 +2390,592 @@ if (document.readyState === "loading") {
 
 
 
-if (document.querySelector(".hz-slider-section .swiper")) {
-  // Store reference to ScrollTrigger instance for cleanup
-  let hzScrollTrigger = null;
-  let hzTimeline = null;
-  let currentSlide = 0;
+// if (document.querySelector(".hz-slider-section .swiper")) {
+//   // Store reference to ScrollTrigger instance for cleanup
+//   let hzScrollTrigger = null;
+//   let hzTimeline = null;
+//   let currentSlide = 0;
   
-  const hzSwiper = new Swiper(".hz-slider-section .swiper", {
-    // autoplay: {
-    //   delay: 5000,
-    //   disableOnInteraction: false
-    // },
-    speed: 1200,
-    loop: false,
-    slidesPerView: 1.1,
-    spaceBetween: 30,
-    loopAddBlankSlides: false,
-    slideToClickedSlide: true,
-    centeredSlides: false,
-    // Enable touch move on mobile, disable on desktop (will be controlled by GSAP)
-    allowTouchMove: window.innerWidth < 1024,
-    // Add smooth easing for transitions
-    effect: 'slide',
-    resistance: true,
-    resistanceRatio: 0.85,
-    breakpoints: {
-      580: {
-        slidesPerView: 1.1,
-        spaceBetween: 30
-      },
-      768: {
-        slidesPerView: 1.2,
-        spaceBetween: 30
-      },
-      1024: {
-        slidesPerView: 1.5,
-        spaceBetween: 30
-      },
-      1280: {
-        slidesPerView: 2.3,
-        spaceBetween: 30
-      }
-    }
-  });
+//   const hzSwiper = new Swiper(".hz-slider-section .swiper", {
+//     // autoplay: {
+//     //   delay: 5000,
+//     //   disableOnInteraction: false
+//     // },
+//     speed: 2000,
+//     loop: false,
+//     slidesPerView: 1.1,
+//     spaceBetween: 30,
+//     loopAddBlankSlides: false,
+//     slideToClickedSlide: true,
+//     centeredSlides: false,
+//     // Enable touch move on mobile, disable on desktop (will be controlled by GSAP)
+//     allowTouchMove: window.innerWidth < 1024,
+//     // Add smooth easing for transitions
+//     effect: 'slide',
+//     resistance: true,
+//     resistanceRatio: 0.85,
+//     breakpoints: {
+//       580: {
+//         slidesPerView: 1.1,
+//         spaceBetween: 30
+//       },
+//       768: {
+//         slidesPerView: 1.2,
+//         spaceBetween: 30
+//       },
+//       1024: {
+//         slidesPerView: 1.5,
+//         spaceBetween: 30
+//       },
+//       1280: {
+//         slidesPerView: 2.3,
+//         spaceBetween: 30
+//       }
+//     }
+//   });
   
-  hzSwiper.slideTo(0);
+//   hzSwiper.slideTo(0);
   
-  // Function to apply correct slidesPerView based on window width
-  function applyCorrectSlidesPerView() {
-    const width = window.innerWidth;
-    let slidesPerView = 1.1;
+//   // Function to apply correct slidesPerView based on window width
+//   function applyCorrectSlidesPerView() {
+//     const width = window.innerWidth;
+//     let slidesPerView = 1.1;
     
-    if (width >= 1280) {
-      slidesPerView = 2.3;
-    } else if (width >= 1024) {
-      slidesPerView = 1.5;
-    } else if (width >= 768) {
-      slidesPerView = 1.2;
-    } else {
-      slidesPerView = 1.1;
-    }
+//     if (width >= 1280) {
+//       slidesPerView = 2.3;
+//     } else if (width >= 1024) {
+//       slidesPerView = 1.5;
+//     } else if (width >= 768) {
+//       slidesPerView = 1.2;
+//     } else {
+//       slidesPerView = 1.1;
+//     }
     
-    // Only update if the value has changed
-    if (hzSwiper.params.slidesPerView !== slidesPerView) {
-      hzSwiper.params.slidesPerView = slidesPerView;
-      hzSwiper.update();
-    }
-  }
+//     // Only update if the value has changed
+//     if (hzSwiper.params.slidesPerView !== slidesPerView) {
+//       hzSwiper.params.slidesPerView = slidesPerView;
+//       hzSwiper.update();
+//     }
+//   }
   
-  // Apply correct slidesPerView immediately and after a short delay
-  applyCorrectSlidesPerView();
-  setTimeout(function() {
-    applyCorrectSlidesPerView();
-  }, 100);
+//   // Apply correct slidesPerView immediately and after a short delay
+//   applyCorrectSlidesPerView();
+//   setTimeout(function() {
+//     applyCorrectSlidesPerView();
+//   }, 100);
   
-  // Function to initialize GSAP pin animation (desktop only)
-  function initHzSliderGSAP() {
-    // Only initialize if screen width is 1024px or above
-    if (window.innerWidth < 1024) {
-      return;
-    }
+//   // Function to initialize GSAP pin animation (desktop only)
+//   function initHzSliderGSAP() {
+//     // Only initialize if screen width is 1024px or above
+//     if (window.innerWidth < 1024) {
+//       return;
+//     }
     
-    // Register GSAP plugin
-    gsap.registerPlugin(ScrollTrigger);
+//     // Register GSAP plugin
+//     gsap.registerPlugin(ScrollTrigger);
     
-    const totalSlides = hzSwiper.slides.length;
-    const snap = gsap.utils.snap(1 / totalSlides);
+//     const totalSlides = hzSwiper.slides.length;
+//     const maxIndex = Math.max(0, totalSlides - 1);
+//     if (maxIndex === 0) return;
+//     const snap = gsap.utils.snap(1 / maxIndex);
     
-    // Calculate scroll distance based on number of slides (150vh per slide for slower scroll)
-    const scrollDistance = totalSlides * 150;
+//     // Calculate scroll distance based on number of slides (150vh per slide for slower scroll)
+//     const scrollDistance = totalSlides * 300;
     
-    // Disable Swiper touch on desktop (controlled by scroll)
-    hzSwiper.allowTouchMove = false;
-    // Apply correct slidesPerView based on screen size
-    applyCorrectSlidesPerView();
+//     // Disable Swiper touch on desktop (controlled by scroll)
+//     hzSwiper.allowTouchMove = false;
+//     // Apply correct slidesPerView based on screen size
+//     applyCorrectSlidesPerView();
     
-    hzTimeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".hz-slider-section .slider",
-        pin: ".hz-slider-section",
-        pinSpacing: true,
-        pinReparent: false, // Changed to false to prevent DOM reparenting issues
-        start: "top 15%",
-        end: "+=" + scrollDistance + "vh", // Dynamic based on slides
-        scrub: 2, // Increased from true to 2 for smoother, slower scroll response
-        markers: false,
-        invalidateOnRefresh: true,
-        refreshPriority: 2, // Higher priority than gallery
-        id: "hz-slider-pin",
-        onUpdate: (self) => {
-          const updatedIndex = Math.round(snap(self.progress) * totalSlides);
-          if (updatedIndex !== currentSlide) {
-            currentSlide = updatedIndex;
-            hzSwiper.slideTo(currentSlide, 1200); // Use slower speed for programmatic slide changes
-          }
-        }
-      }
-    });
+//     hzTimeline = gsap.timeline({
+//       scrollTrigger: {
+//         trigger: ".hz-slider-section .slider",
+//         pin: ".hz-slider-section",
+//         pinSpacing: true,
+//         pinReparent: false, // Changed to false to prevent DOM reparenting issues
+//         start: "top 15%",
+//         end: "+=" + scrollDistance + "vh", // Dynamic based on slides
+//         scrub: 2, // Increased from true to 2 for smoother, slower scroll response
+//         markers: false,
+//         invalidateOnRefresh: true,
+//         refreshPriority: 2, // Higher priority than gallery
+//         id: "hz-slider-pin",
+//         onUpdate: (self) => {
+//           let updatedIndex = Math.round(snap(self.progress) * maxIndex);
+//           updatedIndex = Math.max(0, Math.min(updatedIndex, maxIndex));
+//           if (updatedIndex !== currentSlide) {
+//             currentSlide = updatedIndex;
+//             hzSwiper.slideTo(currentSlide, 2000); // Use slower speed for programmatic slide changes
+//           }
+//         }
+//       }
+//     });
     
-    // Store reference for cleanup
-    hzScrollTrigger = hzTimeline.scrollTrigger;
-  }
+//     // Store reference for cleanup
+//     hzScrollTrigger = hzTimeline.scrollTrigger;
+//   }
   
-  // Function to destroy GSAP pin animation (for mobile)
-  function destroyHzSliderGSAP() {
-    if (hzScrollTrigger) {
-      hzScrollTrigger.kill();
-      hzScrollTrigger = null;
-    }
-    if (hzTimeline) {
-      hzTimeline.kill();
-      hzTimeline = null;
-    }
+//   // Function to destroy GSAP pin animation (for mobile)
+//   function destroyHzSliderGSAP() {
+//     if (hzScrollTrigger) {
+//       hzScrollTrigger.kill();
+//       hzScrollTrigger = null;
+//     }
+//     if (hzTimeline) {
+//       hzTimeline.kill();
+//       hzTimeline = null;
+//     }
     
-    // Enable Swiper touch on mobile
-    hzSwiper.allowTouchMove = true;
-    hzSwiper.update();
+//     // Enable Swiper touch on mobile
+//     hzSwiper.allowTouchMove = true;
+//     hzSwiper.update();
     
-    // Reset slide position
-    currentSlide = 0;
-    hzSwiper.slideTo(0);
-  }
+//     // Reset slide position
+//     currentSlide = 0;
+//     hzSwiper.slideTo(0);
+//   }
   
-  // Initialize on page load
-  initHzSliderGSAP();
+//   // Initialize on page load
+//   initHzSliderGSAP();
   
-  // Destroy-only: call when modal opens so pin-spacers are removed before body is fixed (prevents layout distortion)
-  window.destroyHzSliderSectionGSAP = destroyHzSliderGSAP;
-  // Re-init GSAP pin after popup close (same as cards/gallery: destroy + create so layout is correct)
-  window.reinitHzSliderSectionGSAP = function () {
-    if (window.innerWidth >= 1024) {
-      destroyHzSliderGSAP();
-      initHzSliderGSAP();
-    }
-  };
-  // Sync hz-slider-section Swiper to current scroll position (call after reinit + refresh)
-  window.syncHzSliderSectionToScroll = function () {
-    if (typeof ScrollTrigger === "undefined" || window.innerWidth < 1024) return;
-    var st = ScrollTrigger.getById("hz-slider-pin");
-    if (!st || !hzSwiper.slides.length) return;
-    var totalSlides = hzSwiper.slides.length;
-    var snap = gsap.utils.snap(1 / totalSlides);
-    var idx = Math.round(snap(st.progress) * totalSlides);
-    idx = Math.min(idx, totalSlides - 1);
-    currentSlide = idx;
-    hzSwiper.slideTo(idx, 0);
-  };
+//   // Destroy-only: call when modal opens so pin-spacers are removed before body is fixed (prevents layout distortion)
+//   window.destroyHzSliderSectionGSAP = destroyHzSliderGSAP;
+//   // Re-init GSAP pin after popup close (same as cards/gallery: destroy + create so layout is correct)
+//   window.reinitHzSliderSectionGSAP = function () {
+//     if (window.innerWidth >= 1024) {
+//       destroyHzSliderGSAP();
+//       initHzSliderGSAP();
+//     }
+//   };
+//   // Sync hz-slider-section Swiper to current scroll position (call after reinit + refresh)
+//   window.syncHzSliderSectionToScroll = function () {
+//     if (typeof ScrollTrigger === "undefined" || window.innerWidth < 1024) return;
+//     var st = ScrollTrigger.getById("hz-slider-pin");
+//     if (!st || !hzSwiper.slides.length) return;
+//     var totalSlides = hzSwiper.slides.length;
+//     var maxIndex = Math.max(0, totalSlides - 1);
+//     if (maxIndex === 0) return;
+//     var snap = gsap.utils.snap(1 / maxIndex);
+//     var idx = Math.round(snap(st.progress) * maxIndex);
+//     idx = Math.max(0, Math.min(idx, maxIndex));
+//     currentSlide = idx;
+//     hzSwiper.slideTo(idx, 0);
+//   };
 
-  // Handle resize - enable/disable GSAP pin based on screen width
-  let hzResizeTimer;
-  window.addEventListener("resize", function() {
-    clearTimeout(hzResizeTimer);
-    hzResizeTimer = setTimeout(function() {
-      // Update Swiper to apply breakpoint changes
-      applyCorrectSlidesPerView();
+//   // Handle resize - enable/disable GSAP pin based on screen width
+//   let hzResizeTimer;
+//   window.addEventListener("resize", function() {
+//     clearTimeout(hzResizeTimer);
+//     hzResizeTimer = setTimeout(function() {
+//       // Update Swiper to apply breakpoint changes
+//       applyCorrectSlidesPerView();
       
-      const isDesktop = window.innerWidth >= 1024;
-      const hasGSAP = hzScrollTrigger !== null;
+//       const isDesktop = window.innerWidth >= 1024;
+//       const hasGSAP = hzScrollTrigger !== null;
       
-      if (isDesktop && !hasGSAP) {
-        // Switched to desktop - initialize GSAP pin
-        initHzSliderGSAP();
-      } else if (!isDesktop && hasGSAP) {
-        // Switched to mobile - destroy GSAP pin
-        destroyHzSliderGSAP();
-      } else if (isDesktop && hasGSAP) {
-        // Still on desktop - refresh ScrollTrigger
-        ScrollTrigger.refresh();
-      }
-    }, 250);
-  });
+//       if (isDesktop && !hasGSAP) {
+//         // Switched to desktop - initialize GSAP pin
+//         initHzSliderGSAP();
+//       } else if (!isDesktop && hasGSAP) {
+//         // Switched to mobile - destroy GSAP pin
+//         destroyHzSliderGSAP();
+//       } else if (isDesktop && hasGSAP) {
+//         // Still on desktop - refresh ScrollTrigger
+//         ScrollTrigger.refresh();
+//       }
+//     }, 250);
+//   });
 
-  // Refresh after load so midway-reload shows correct hz-slider-section state (same as gallery / cards)
-  if (!window._hzSliderSectionLoadBound) {
-    window._hzSliderSectionLoadBound = true;
-    function refreshHzSliderSectionScrollTrigger() {
-      if (typeof ScrollTrigger === "undefined") return;
-      requestAnimationFrame(function () {
-        ScrollTrigger.refresh();
-      });
-      setTimeout(function () {
-        ScrollTrigger.refresh();
-      }, 100);
-      setTimeout(function () {
-        ScrollTrigger.refresh();
-      }, 500);
-    }
-    if (document.readyState === "complete") {
-      refreshHzSliderSectionScrollTrigger();
-    } else {
-      window.addEventListener("load", function hzSliderSectionOnLoad() {
-        window.removeEventListener("load", hzSliderSectionOnLoad);
-        refreshHzSliderSectionScrollTrigger();
-      });
-    }
-  }
-}
+//   // Refresh after load so midway-reload shows correct hz-slider-section state (same as gallery / cards)
+//   if (!window._hzSliderSectionLoadBound) {
+//     window._hzSliderSectionLoadBound = true;
+//     function refreshHzSliderSectionScrollTrigger() {
+//       if (typeof ScrollTrigger === "undefined") return;
+//       requestAnimationFrame(function () {
+//         ScrollTrigger.refresh();
+//       });
+//       setTimeout(function () {
+//         ScrollTrigger.refresh();
+//       }, 100);
+//       setTimeout(function () {
+//         ScrollTrigger.refresh();
+//       }, 500);
+//     }
+//     if (document.readyState === "complete") {
+//       refreshHzSliderSectionScrollTrigger();
+//     } else {
+//       window.addEventListener("load", function hzSliderSectionOnLoad() {
+//         window.removeEventListener("load", hzSliderSectionOnLoad);
+//         refreshHzSliderSectionScrollTrigger();
+//       });
+//     }
+//   }
+// }
 
 // Horizontal Slider Topcaption (unique instance - no conflict with hz-slider-section)
 // Excludes energyswiper so energy widget gets its own config
-if (document.querySelector(".hz-slider-topcaption .swiper:not(.energyswiper)")) {
-  // Store reference to ScrollTrigger instance for cleanup
-  let hzTopcaptionScrollTrigger = null;
-  let hzTopcaptionTimeline = null;
-  let currentTopcaptionSlide = 0;
+// if (document.querySelector(".hz-slider-topcaption .swiper:not(.energyswiper)")) {
+//   // Store reference to ScrollTrigger instance for cleanup
+//   let hzTopcaptionScrollTrigger = null;
+//   let hzTopcaptionTimeline = null;
+//   let currentTopcaptionSlide = 0;
   
-  const hzTopcaptionSwiper = new Swiper(".hz-slider-topcaption .swiper:not(.energyswiper)", {
-    speed: 1200,
-    loop: false,
-    slidesPerView: 1.1,
-    spaceBetween: 30,
-    loopAddBlankSlides: false,
-    slideToClickedSlide: true,
-    centeredSlides: false,
-    // Enable touch move on mobile, disable on desktop (will be controlled by GSAP)
-    allowTouchMove: window.innerWidth < 1024,
-    // Add smooth easing for transitions
-    effect: 'slide',
-    resistance: true,
-    resistanceRatio: 0.85,
-    breakpoints: {
-      580: {
-        slidesPerView: 1.1,
-        spaceBetween: 30
-      },
-      768: {
-        slidesPerView: 1.2,
-        spaceBetween: 30
-      },
-      1024: {
-        slidesPerView: 1.5,
-        spaceBetween: 30
-      },
-      1280: {
-        slidesPerView: 4.1,
-        spaceBetween: 30
-      }
-    }
-  });
+//   const hzTopcaptionSwiper = new Swiper(".hz-slider-topcaption .swiper:not(.energyswiper)", {
+//     speed: 2000,
+//     loop: false,
+//     slidesPerView: 1.1,
+//     spaceBetween: 30,
+//     loopAddBlankSlides: false,
+//     slideToClickedSlide: true,
+//     centeredSlides: false,
+//     // Enable touch move on mobile, disable on desktop (will be controlled by GSAP)
+//     allowTouchMove: window.innerWidth < 1024,
+//     // Add smooth easing for transitions
+//     effect: 'slide',
+//     resistance: true,
+//     resistanceRatio: 0.85,
+//     breakpoints: {
+//       580: {
+//         slidesPerView: 1.1,
+//         spaceBetween: 30
+//       },
+//       768: {
+//         slidesPerView: 1.2,
+//         spaceBetween: 30
+//       },
+//       1024: {
+//         slidesPerView: 1.5,
+//         spaceBetween: 30
+//       },
+//       1280: {
+//         slidesPerView: 4.1,
+//         spaceBetween: 30
+//       }
+//     }
+//   });
   
-  hzTopcaptionSwiper.slideTo(0);
+//   hzTopcaptionSwiper.slideTo(0);
   
-  // Function to apply correct slidesPerView based on window width
-  function applyCorrectTopcaptionSlidesPerView() {
-    const width = window.innerWidth;
-    let slidesPerView = 1.1;
+//   // Function to apply correct slidesPerView based on window width
+//   function applyCorrectTopcaptionSlidesPerView() {
+//     const width = window.innerWidth;
+//     let slidesPerView = 1.1;
     
-    if (width >= 1280) {
-      slidesPerView = 4.1;
-    } else if (width >= 1024) {
-      slidesPerView = 1.5;
-    } else if (width >= 768) {
-      slidesPerView = 1.2;
-    } else {
-      slidesPerView = 1.1;
-    }
+//     if (width >= 1280) {
+//       slidesPerView = 4.1;
+//     } else if (width >= 1024) {
+//       slidesPerView = 1.5;
+//     } else if (width >= 768) {
+//       slidesPerView = 1.2;
+//     } else {
+//       slidesPerView = 1.1;
+//     }
     
-    // Only update if the value has changed
-    if (hzTopcaptionSwiper.params.slidesPerView !== slidesPerView) {
-      hzTopcaptionSwiper.params.slidesPerView = slidesPerView;
-      hzTopcaptionSwiper.update();
-    }
-  }
+//     // Only update if the value has changed
+//     if (hzTopcaptionSwiper.params.slidesPerView !== slidesPerView) {
+//       hzTopcaptionSwiper.params.slidesPerView = slidesPerView;
+//       hzTopcaptionSwiper.update();
+//     }
+//   }
   
-  // Apply correct slidesPerView immediately and after a short delay
-  applyCorrectTopcaptionSlidesPerView();
-  setTimeout(function() {
-    applyCorrectTopcaptionSlidesPerView();
-  }, 100);
+//   // Apply correct slidesPerView immediately and after a short delay
+//   applyCorrectTopcaptionSlidesPerView();
+//   setTimeout(function() {
+//     applyCorrectTopcaptionSlidesPerView();
+//   }, 100);
   
-  // Function to initialize GSAP pin animation (desktop only)
-  function initHzTopcaptionGSAP() {
-    // Only initialize if screen width is 1024px or above
-    if (window.innerWidth < 1024) {
-      return;
-    }
+//   // Function to initialize GSAP pin animation (desktop only)
+//   function initHzTopcaptionGSAP() {
+//     // Only initialize if screen width is 1024px or above
+//     if (window.innerWidth < 1024) {
+//       return;
+//     }
     
-    // Register GSAP plugin
-    gsap.registerPlugin(ScrollTrigger);
+//     // Register GSAP plugin
+//     gsap.registerPlugin(ScrollTrigger);
     
-    const totalSlides = hzTopcaptionSwiper.slides.length;
-    const snap = gsap.utils.snap(1 / totalSlides);
+//     const totalSlides = hzTopcaptionSwiper.slides.length;
+//     const maxIndex = Math.max(0, totalSlides - 1);
+//     if (maxIndex === 0) return;
+//     const snap = gsap.utils.snap(1 / maxIndex);
     
-    // Calculate scroll distance based on number of slides (150vh per slide for slower scroll)
-    const scrollDistance = totalSlides * 150;
+//     // Calculate scroll distance based on number of slides (150vh per slide for slower scroll)
+//     const scrollDistance = totalSlides * 300;
     
-    // Disable Swiper touch on desktop (controlled by scroll)
-    hzTopcaptionSwiper.allowTouchMove = false;
-    // Apply correct slidesPerView based on screen size
-    applyCorrectTopcaptionSlidesPerView();
+//     // Disable Swiper touch on desktop (controlled by scroll)
+//     hzTopcaptionSwiper.allowTouchMove = false;
+//     // Apply correct slidesPerView based on screen size
+//     applyCorrectTopcaptionSlidesPerView();
     
-    hzTopcaptionTimeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".hz-slider-topcaption .slider",
-        pin: ".hz-slider-topcaption",
-        pinSpacing: true,
-        pinReparent: false, // Changed to false to prevent DOM reparenting issues
-        start: "top 20%",
-        end: "+=" + scrollDistance + "vh",
-        scrub: 2, // Increased from true to 2 for smoother, slower scroll response
-        markers: false,
-        invalidateOnRefresh: true,
-        refreshPriority: 1,
-        id: "hz-slider-topcaption-pin",
-        onUpdate: (self) => {
-          const updatedIndex = Math.round(snap(self.progress) * totalSlides);
-          if (updatedIndex !== currentTopcaptionSlide) {
-            currentTopcaptionSlide = updatedIndex;
-            hzTopcaptionSwiper.slideTo(currentTopcaptionSlide, 1200); // Use slower speed for programmatic slide changes
-          }
-        }
-      }
-    });
+//     hzTopcaptionTimeline = gsap.timeline({
+//       scrollTrigger: {
+//         trigger: ".hz-slider-topcaption .slider",
+//         pin: ".hz-slider-topcaption",
+//         pinSpacing: true,
+//         pinReparent: false, // Changed to false to prevent DOM reparenting issues
+//         start: "top 20%",
+//         end: "+=" + scrollDistance + "vh",
+//         scrub: 2, // Increased from true to 2 for smoother, slower scroll response
+//         markers: false,
+//         invalidateOnRefresh: true,
+//         refreshPriority: 1,
+//         id: "hz-slider-topcaption-pin",
+//         onUpdate: (self) => {
+//           let updatedIndex = Math.round(snap(self.progress) * maxIndex);
+//           updatedIndex = Math.max(0, Math.min(updatedIndex, maxIndex));
+//           if (updatedIndex !== currentTopcaptionSlide) {
+//             currentTopcaptionSlide = updatedIndex;
+//             hzTopcaptionSwiper.slideTo(currentTopcaptionSlide, 2000); // Use slower speed for programmatic slide changes
+//           }
+//         }
+//       }
+//     });
     
-    // Store reference for cleanup
-    hzTopcaptionScrollTrigger = hzTopcaptionTimeline.scrollTrigger;
-  }
+//     // Store reference for cleanup
+//     hzTopcaptionScrollTrigger = hzTopcaptionTimeline.scrollTrigger;
+//   }
   
-  // Function to destroy GSAP pin animation (for mobile)
-  function destroyHzTopcaptionGSAP() {
-    if (hzTopcaptionScrollTrigger) {
-      hzTopcaptionScrollTrigger.kill();
-      hzTopcaptionScrollTrigger = null;
-    }
-    if (hzTopcaptionTimeline) {
-      hzTopcaptionTimeline.kill();
-      hzTopcaptionTimeline = null;
-    }
+//   // Function to destroy GSAP pin animation (for mobile)
+//   function destroyHzTopcaptionGSAP() {
+//     if (hzTopcaptionScrollTrigger) {
+//       hzTopcaptionScrollTrigger.kill();
+//       hzTopcaptionScrollTrigger = null;
+//     }
+//     if (hzTopcaptionTimeline) {
+//       hzTopcaptionTimeline.kill();
+//       hzTopcaptionTimeline = null;
+//     }
     
-    // Enable Swiper touch on mobile
-    hzTopcaptionSwiper.allowTouchMove = true;
-    hzTopcaptionSwiper.update();
+//     // Enable Swiper touch on mobile
+//     hzTopcaptionSwiper.allowTouchMove = true;
+//     hzTopcaptionSwiper.update();
     
-    // Reset slide position
-    currentTopcaptionSlide = 0;
-    hzTopcaptionSwiper.slideTo(0);
-  }
+//     // Reset slide position
+//     currentTopcaptionSlide = 0;
+//     hzTopcaptionSwiper.slideTo(0);
+//   }
   
-  // Initialize on page load
-  initHzTopcaptionGSAP();
+//   // Initialize on page load
+//   initHzTopcaptionGSAP();
   
-  // Destroy-only: call when modal opens so pin-spacers are removed before body is fixed (prevents layout distortion)
-  window.destroyHzSliderTopcaptionGSAP = destroyHzTopcaptionGSAP;
-  // Re-init GSAP pin after popup close (same as cards/gallery: destroy + create so layout is correct)
-  window.reinitHzSliderTopcaptionGSAP = function () {
-    if (window.innerWidth >= 1024) {
-      destroyHzTopcaptionGSAP();
-      initHzTopcaptionGSAP();
-    }
-  };
-  // Sync hz-slider-topcaption Swiper to current scroll position (call after reinit + refresh)
-  window.syncHzSliderTopcaptionToScroll = function () {
-    if (typeof ScrollTrigger === "undefined" || window.innerWidth < 1024) return;
-    var st = ScrollTrigger.getById("hz-slider-topcaption-pin");
-    if (!st || !hzTopcaptionSwiper.slides.length) return;
-    var totalSlides = hzTopcaptionSwiper.slides.length;
-    var snap = gsap.utils.snap(1 / totalSlides);
-    var idx = Math.round(snap(st.progress) * totalSlides);
-    idx = Math.min(idx, totalSlides - 1);
-    currentTopcaptionSlide = idx;
-    hzTopcaptionSwiper.slideTo(idx, 0);
-  };
+//   // Destroy-only: call when modal opens so pin-spacers are removed before body is fixed (prevents layout distortion)
+//   window.destroyHzSliderTopcaptionGSAP = destroyHzTopcaptionGSAP;
+//   // Re-init GSAP pin after popup close (same as cards/gallery: destroy + create so layout is correct)
+//   window.reinitHzSliderTopcaptionGSAP = function () {
+//     if (window.innerWidth >= 1024) {
+//       destroyHzTopcaptionGSAP();
+//       initHzTopcaptionGSAP();
+//     }
+//   };
+//   // Sync hz-slider-topcaption Swiper to current scroll position (call after reinit + refresh)
+//   window.syncHzSliderTopcaptionToScroll = function () {
+//     if (typeof ScrollTrigger === "undefined" || window.innerWidth < 1024) return;
+//     var st = ScrollTrigger.getById("hz-slider-topcaption-pin");
+//     if (!st || !hzTopcaptionSwiper.slides.length) return;
+//     var totalSlides = hzTopcaptionSwiper.slides.length;
+//     var maxIndex = Math.max(0, totalSlides - 1);
+//     if (maxIndex === 0) return;
+//     var snap = gsap.utils.snap(1 / maxIndex);
+//     var idx = Math.round(snap(st.progress) * maxIndex);
+//     idx = Math.max(0, Math.min(idx, maxIndex));
+//     currentTopcaptionSlide = idx;
+//     hzTopcaptionSwiper.slideTo(idx, 0);
+//   };
 
-  // Handle resize - enable/disable GSAP pin based on screen width
-  let hzTopcaptionResizeTimer;
-  window.addEventListener("resize", function() {
-    clearTimeout(hzTopcaptionResizeTimer);
-    hzTopcaptionResizeTimer = setTimeout(function() {
-      // Update Swiper to apply breakpoint changes
-      applyCorrectTopcaptionSlidesPerView();
+//   // Handle resize - enable/disable GSAP pin based on screen width
+//   let hzTopcaptionResizeTimer;
+//   window.addEventListener("resize", function() {
+//     clearTimeout(hzTopcaptionResizeTimer);
+//     hzTopcaptionResizeTimer = setTimeout(function() {
+//       // Update Swiper to apply breakpoint changes
+//       applyCorrectTopcaptionSlidesPerView();
       
-      const isDesktop = window.innerWidth >= 1024;
-      const hasGSAP = hzTopcaptionScrollTrigger !== null;
+//       const isDesktop = window.innerWidth >= 1024;
+//       const hasGSAP = hzTopcaptionScrollTrigger !== null;
       
-      if (isDesktop && !hasGSAP) {
-        // Switched to desktop - initialize GSAP pin
-        initHzTopcaptionGSAP();
-      } else if (!isDesktop && hasGSAP) {
-        // Switched to mobile - destroy GSAP pin
-        destroyHzTopcaptionGSAP();
-      } else if (isDesktop && hasGSAP) {
-        // Still on desktop - refresh ScrollTrigger
-        ScrollTrigger.refresh();
-      }
-    }, 250);
-  });
+//       if (isDesktop && !hasGSAP) {
+//         // Switched to desktop - initialize GSAP pin
+//         initHzTopcaptionGSAP();
+//       } else if (!isDesktop && hasGSAP) {
+//         // Switched to mobile - destroy GSAP pin
+//         destroyHzTopcaptionGSAP();
+//       } else if (isDesktop && hasGSAP) {
+//         // Still on desktop - refresh ScrollTrigger
+//         ScrollTrigger.refresh();
+//       }
+//     }, 250);
+//   });
 
-  // Refresh after load so midway-reload shows correct hz-slider-topcaption state (same as gallery / cards)
-  if (!window._hzSliderTopcaptionLoadBound) {
-    window._hzSliderTopcaptionLoadBound = true;
-    function refreshHzSliderTopcaptionScrollTrigger() {
-      if (typeof ScrollTrigger === "undefined") return;
-      requestAnimationFrame(function () {
-        ScrollTrigger.refresh();
-      });
-      setTimeout(function () {
-        ScrollTrigger.refresh();
-      }, 100);
-      setTimeout(function () {
-        ScrollTrigger.refresh();
-      }, 500);
-    }
-    if (document.readyState === "complete") {
-      refreshHzSliderTopcaptionScrollTrigger();
-    } else {
-      window.addEventListener("load", function hzSliderTopcaptionOnLoad() {
-        window.removeEventListener("load", hzSliderTopcaptionOnLoad);
-        refreshHzSliderTopcaptionScrollTrigger();
-      });
-    }
-  }
-}
+//   // Refresh after load so midway-reload shows correct hz-slider-topcaption state (same as gallery / cards)
+//   if (!window._hzSliderTopcaptionLoadBound) {
+//     window._hzSliderTopcaptionLoadBound = true;
+//     function refreshHzSliderTopcaptionScrollTrigger() {
+//       if (typeof ScrollTrigger === "undefined") return;
+//       requestAnimationFrame(function () {
+//         ScrollTrigger.refresh();
+//       });
+//       setTimeout(function () {
+//         ScrollTrigger.refresh();
+//       }, 100);
+//       setTimeout(function () {
+//         ScrollTrigger.refresh();
+//       }, 500);
+//     }
+//     if (document.readyState === "complete") {
+//       refreshHzSliderTopcaptionScrollTrigger();
+//     } else {
+//       window.addEventListener("load", function hzSliderTopcaptionOnLoad() {
+//         window.removeEventListener("load", hzSliderTopcaptionOnLoad);
+//         refreshHzSliderTopcaptionScrollTrigger();
+//       });
+//     }
+//   }
+// }
 
 // Horizontal Slider Energy (3.1 slides on desktop vs 4.1 for topcaption)
-if (document.querySelector(".hz-slider-energy .energyswiper")) {
-  let hzEnergyScrollTrigger = null;
-  let hzEnergyTimeline = null;
-  let currentEnergySlide = 0;
+// if (document.querySelector(".hz-slider-energy .energyswiper")) {
+//   let hzEnergyScrollTrigger = null;
+//   let hzEnergyTimeline = null;
+//   let currentEnergySlide = 0;
 
-  const hzEnergySwiper = new Swiper(".hz-slider-energy .energyswiper", {
-    speed: 1200,
-    loop: false,
-    slidesPerView: 1.1,
-    spaceBetween: 20,
-    loopAddBlankSlides: false,
-    slideToClickedSlide: true,
-    centeredSlides: false,
-    allowTouchMove: window.innerWidth < 1024,
-    effect: 'slide',
-    resistance: true,
-    resistanceRatio: 0.85,
-    observer: true,
-    observeParents: true,
-    breakpoints: {
-      580: { slidesPerView: 1.1, spaceBetween: 20 },
-      768: { slidesPerView: 1.2, spaceBetween: 20 },
-      1024: { slidesPerView: 1.5, spaceBetween: 20 },
-      1280: { slidesPerView: 3.1, spaceBetween: 20 }
-    }
-  });
+//   const hzEnergySwiper = new Swiper(".hz-slider-energy .energyswiper", {
+//     speed: 2000,
+//     loop: false,
+//     slidesPerView: 1.1,
+//     spaceBetween: 30,
+//     loopAddBlankSlides: false,
+//     slideToClickedSlide: true,
+//     centeredSlides: false,
+//     allowTouchMove: window.innerWidth < 1024,
+//     effect: 'slide',
+//     resistance: true,
+//     resistanceRatio: 0.85,
+//     breakpoints: {
+//       580: { slidesPerView: 1.1, spaceBetween: 30 },
+//       768: { slidesPerView: 1.2, spaceBetween: 30 },
+//       1024: { slidesPerView: 1.5, spaceBetween: 30 },
+//       1280: { slidesPerView: 3.1, spaceBetween: 30 }
+//     }
+//   });
 
-  hzEnergySwiper.slideTo(0);
+//   hzEnergySwiper.slideTo(0);
 
-  function applyCorrectEnergySlidesPerView() {
-    const width = window.innerWidth;
-    let slidesPerView = 1.1;
-    if (width >= 1280) slidesPerView = 3.1;
-    else if (width >= 1024) slidesPerView = 1.5;
-    else if (width >= 768) slidesPerView = 1.2;
-    else slidesPerView = 1.1;
-    if (hzEnergySwiper.params.slidesPerView !== slidesPerView) {
-      hzEnergySwiper.params.slidesPerView = slidesPerView;
-      hzEnergySwiper.update();
-    }
-  }
-  applyCorrectEnergySlidesPerView();
-  setTimeout(applyCorrectEnergySlidesPerView, 100);
-  window.addEventListener('load', function() {
-    applyCorrectEnergySlidesPerView();
-    hzEnergySwiper.update();
-  });
+//   function applyCorrectEnergySlidesPerView() {
+//     const width = window.innerWidth;
+//     let slidesPerView = 1.1;
+//     if (width >= 1280) slidesPerView = 3.1;
+//     else if (width >= 1024) slidesPerView = 1.5;
+//     else if (width >= 768) slidesPerView = 1.2;
+//     else slidesPerView = 1.1;
+//     if (hzEnergySwiper.params.slidesPerView !== slidesPerView) {
+//       hzEnergySwiper.params.slidesPerView = slidesPerView;
+//       hzEnergySwiper.update();
+//     }
+//   }
+//   applyCorrectEnergySlidesPerView();
+//   setTimeout(applyCorrectEnergySlidesPerView, 100);
 
-  function initHzEnergyGSAP() {
-    if (window.innerWidth < 1024) return;
-    gsap.registerPlugin(ScrollTrigger);
-    const totalSlides = hzEnergySwiper.slides.length;
-    const snap = gsap.utils.snap(1 / totalSlides);
-    const scrollDistance = totalSlides * 150;
-    hzEnergySwiper.allowTouchMove = false;
-    applyCorrectEnergySlidesPerView();
-    hzEnergyTimeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".hz-slider-energy .slider",
-        pin: ".elementor-element.energycontainer.custom-container",
-        pinSpacing: true,
-        pinReparent: false,
-        start: "top 190px",
-        end: "+=" + scrollDistance + "vh",
-        scrub: 2,
-        markers: false,
-        invalidateOnRefresh: true,
-        refreshPriority: 1,
-        id: "hz-slider-energy-pin",
-        onEnter: () => {
-          requestAnimationFrame(() => {
-            applyCorrectEnergySlidesPerView();
-            hzEnergySwiper.update();
-          });
-        },
-        onEnterBack: () => {
-          requestAnimationFrame(() => {
-            applyCorrectEnergySlidesPerView();
-            hzEnergySwiper.update();
-          });
-        },
-        onUpdate: (self) => {
-          const updatedIndex = Math.round(snap(self.progress) * totalSlides);
-          if (updatedIndex !== currentEnergySlide) {
-            currentEnergySlide = updatedIndex;
-            hzEnergySwiper.slideTo(currentEnergySlide, 1200);
-          }
-        }
-      }
-    });
-    hzEnergyScrollTrigger = hzEnergyTimeline.scrollTrigger;
-  }
+//   function initHzEnergyGSAP() {
+//     if (window.innerWidth < 1024) return;
+//     gsap.registerPlugin(ScrollTrigger);
+//     const totalSlides = hzEnergySwiper.slides.length;
+//     const maxIndex = Math.max(0, totalSlides - 1);
+//     if (maxIndex === 0) return;
+//     const snap = gsap.utils.snap(1 / maxIndex);
+//     const scrollDistance = totalSlides * 300;
+//     hzEnergySwiper.allowTouchMove = false;
+//     applyCorrectEnergySlidesPerView();
+//     hzEnergyTimeline = gsap.timeline({
+//       scrollTrigger: {
+//         trigger: ".hz-slider-energy .slider",
+//         pin: ".hz-slider-energy",
+//         pinSpacing: true,
+//         pinReparent: false,
+//         start: "top 15%",
+//         end: "+=" + scrollDistance + "vh",
+//         scrub: 2,
+//         markers: false,
+//         invalidateOnRefresh: true,
+//         refreshPriority: 2,
+//         id: "hz-slider-energy-pin",
+//         onUpdate: (self) => {
+//           let updatedIndex = Math.round(snap(self.progress) * maxIndex);
+//           updatedIndex = Math.max(0, Math.min(updatedIndex, maxIndex));
+//           if (updatedIndex !== currentEnergySlide) {
+//             currentEnergySlide = updatedIndex;
+//             hzEnergySwiper.slideTo(currentEnergySlide, 2000);
+//           }
+//         }
+//       }
+//     });
+//     hzEnergyScrollTrigger = hzEnergyTimeline.scrollTrigger;
+//   }
 
-  function destroyHzEnergyGSAP() {
-    if (hzEnergyScrollTrigger) { hzEnergyScrollTrigger.kill(); hzEnergyScrollTrigger = null; }
-    if (hzEnergyTimeline) { hzEnergyTimeline.kill(); hzEnergyTimeline = null; }
-    hzEnergySwiper.allowTouchMove = true;
-    hzEnergySwiper.update();
-    currentEnergySlide = 0;
-    hzEnergySwiper.slideTo(0);
-  }
+//   function destroyHzEnergyGSAP() {
+//     if (hzEnergyScrollTrigger) { hzEnergyScrollTrigger.kill(); hzEnergyScrollTrigger = null; }
+//     if (hzEnergyTimeline) { hzEnergyTimeline.kill(); hzEnergyTimeline = null; }
+//     hzEnergySwiper.allowTouchMove = true;
+//     hzEnergySwiper.update();
+//     currentEnergySlide = 0;
+//     hzEnergySwiper.slideTo(0);
+//   }
 
-  initHzEnergyGSAP();
-  window.destroyHzSliderEnergyGSAP = destroyHzEnergyGSAP;
-  window.reinitHzSliderEnergyGSAP = function () {
-    if (window.innerWidth >= 1024) { destroyHzEnergyGSAP(); initHzEnergyGSAP(); }
-  };
-  window.syncHzSliderEnergyToScroll = function () {
-    if (typeof ScrollTrigger === "undefined" || window.innerWidth < 1024) return;
-    var st = ScrollTrigger.getById("hz-slider-energy-pin");
-    if (!st || !hzEnergySwiper.slides.length) return;
-    var totalSlides = hzEnergySwiper.slides.length;
-    var snap = gsap.utils.snap(1 / totalSlides);
-    var idx = Math.min(Math.round(snap(st.progress) * totalSlides), totalSlides - 1);
-    currentEnergySlide = idx;
-    hzEnergySwiper.slideTo(idx, 0);
-  };
+//   initHzEnergyGSAP();
+//   window.destroyHzSliderEnergyGSAP = destroyHzEnergyGSAP;
+//   window.reinitHzSliderEnergyGSAP = function () {
+//     if (window.innerWidth >= 1024) { destroyHzEnergyGSAP(); initHzEnergyGSAP(); }
+//   };
+//   window.syncHzSliderEnergyToScroll = function () {
+//     if (typeof ScrollTrigger === "undefined" || window.innerWidth < 1024) return;
+//     var st = ScrollTrigger.getById("hz-slider-energy-pin");
+//     if (!st || !hzEnergySwiper.slides.length) return;
+//     var totalSlides = hzEnergySwiper.slides.length;
+//     var maxIndex = Math.max(0, totalSlides - 1);
+//     if (maxIndex === 0) return;
+//     var snap = gsap.utils.snap(1 / maxIndex);
+//     var idx = Math.round(snap(st.progress) * maxIndex);
+//     idx = Math.max(0, Math.min(idx, maxIndex));
+//     currentEnergySlide = idx;
+//     hzEnergySwiper.slideTo(idx, 0);
+//   };
 
-  let hzEnergyResizeTimer;
-  window.addEventListener("resize", function () {
-    clearTimeout(hzEnergyResizeTimer);
-    hzEnergyResizeTimer = setTimeout(function () {
-      applyCorrectEnergySlidesPerView();
-      hzEnergySwiper.update();
-      const isDesktop = window.innerWidth >= 1024;
-      const hasGSAP = hzEnergyScrollTrigger !== null;
-      if (isDesktop && !hasGSAP) initHzEnergyGSAP();
-      else if (!isDesktop && hasGSAP) destroyHzEnergyGSAP();
-      else if (isDesktop && hasGSAP) ScrollTrigger.refresh();
-    }, 250);
-  });
+//   let hzEnergyResizeTimer;
+//   window.addEventListener("resize", function () {
+//     clearTimeout(hzEnergyResizeTimer);
+//     hzEnergyResizeTimer = setTimeout(function () {
+//       applyCorrectEnergySlidesPerView();
+//       hzEnergySwiper.update();
+//       const isDesktop = window.innerWidth >= 1024;
+//       const hasGSAP = hzEnergyScrollTrigger !== null;
+//       if (isDesktop && !hasGSAP) initHzEnergyGSAP();
+//       else if (!isDesktop && hasGSAP) destroyHzEnergyGSAP();
+//       else if (isDesktop && hasGSAP) ScrollTrigger.refresh();
+//     }, 250);
+//   });
 
-  if (!window._hzSliderEnergyLoadBound) {
-    window._hzSliderEnergyLoadBound = true;
-    function refreshHzEnergyScrollTrigger() {
-      if (typeof ScrollTrigger === "undefined") return;
-      requestAnimationFrame(function () { ScrollTrigger.refresh(); });
-      setTimeout(function () { ScrollTrigger.refresh(); }, 100);
-      setTimeout(function () { ScrollTrigger.refresh(); }, 500);
-    }
-    if (document.readyState === "complete") refreshHzEnergyScrollTrigger();
-    else window.addEventListener("load", function handler() { window.removeEventListener("load", handler); refreshHzEnergyScrollTrigger(); });
-  }
-}
+//   if (!window._hzSliderEnergyLoadBound) {
+//     window._hzSliderEnergyLoadBound = true;
+//     function refreshHzEnergyScrollTrigger() {
+//       if (typeof ScrollTrigger === "undefined") return;
+//       requestAnimationFrame(function () { ScrollTrigger.refresh(); });
+//       setTimeout(function () { ScrollTrigger.refresh(); }, 100);
+//       setTimeout(function () { ScrollTrigger.refresh(); }, 500);
+//     }
+//     if (document.readyState === "complete") refreshHzEnergyScrollTrigger();
+//     else window.addEventListener("load", function handler() { window.removeEventListener("load", handler); refreshHzEnergyScrollTrigger(); });
+//   }
+// }
 
 // Global ScrollTrigger refresh after all triggers are initialized
 // This ensures all ScrollTriggers are properly calculated relative to each other
-if (typeof ScrollTrigger !== 'undefined' && window.innerWidth >= 1024) {
-    // Wait for DOM to be fully ready and all triggers to be created
-    window.addEventListener('load', function() {
-        setTimeout(function() {
-            ScrollTrigger.refresh();
-        }, 500);
-    });
-}
+// if (typeof ScrollTrigger !== 'undefined' && window.innerWidth >= 1024) {
+//     // Wait for DOM to be fully ready and all triggers to be created
+//     window.addEventListener('load', function() {
+//         setTimeout(function() {
+//             ScrollTrigger.refresh();
+//         }, 500);
+//     });
+// }
 
 
 
@@ -2910,3 +2994,49 @@ if (sliderWrapper && prevButton) {
     // Observe class changes
     observer.observe(prevButton, { attributes: true, attributeFilter: ['class'] });
 }
+
+// Viewport-based autoplay for native HTML5 videos:
+// - plays (muted) + loops while in view
+// - pauses when out of view
+// - does not change src (no reload)
+(function () {
+    function initViewportVideos() {
+        if (typeof IntersectionObserver === "undefined") return;
+
+        var videos = Array.prototype.slice.call(
+            document.querySelectorAll('video[data-viewport-autoplay], video.js-viewport-autoplay')
+        );
+        if (!videos.length) return;
+
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                var v = entry.target;
+                if (!v || v.tagName !== "VIDEO") return;
+
+                // Ensure required attributes for policy + looping.
+                v.muted = true;
+                v.loop = true;
+                v.playsInline = true;
+                v.setAttribute("playsinline", "");
+                v.setAttribute("muted", "");
+                v.setAttribute("loop", "");
+
+                if (entry.isIntersecting) {
+                    // Avoid throwing on browsers that block autoplay until interaction.
+                    var p = v.play();
+                    if (p && typeof p.catch === "function") p.catch(function () { });
+                } else {
+                    v.pause();
+                }
+            });
+        }, { threshold: 0.25, rootMargin: "0px" });
+
+        videos.forEach(function (v) { io.observe(v); });
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initViewportVideos);
+    } else {
+        initViewportVideos();
+    }
+})();
