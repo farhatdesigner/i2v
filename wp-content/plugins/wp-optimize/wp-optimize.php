@@ -3,7 +3,7 @@
 Plugin Name: WP-Optimize - Clean, Compress, Cache
 Plugin URI: https://teamupdraft.com/wp-optimize
 Description: WP-Optimize makes your site fast and efficient. It cleans the database, compresses images and caches pages. Fast sites attract more traffic and users.
-Version: 4.5.0
+Version: 4.5.2
 Requires at least: 4.9
 Requires PHP: 7.2
 Update URI: https://wordpress.org/plugins/wp-optimize/
@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) die('No direct access allowed');
 
 // Check to make sure if WP_Optimize is already call and returns.
 if (!class_exists('WP_Optimize')) :
-define('WPO_VERSION', '4.5.0');
+define('WPO_VERSION', '4.5.2');
 define('WPO_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('WPO_PLUGIN_MAIN_PATH', plugin_dir_path(__FILE__));
 define('WPO_PLUGIN_SLUG', plugin_basename(__FILE__));
@@ -67,9 +67,12 @@ class WP_Optimize {
 
 		spl_autoload_register(array($this, 'loader'));
 
+		// Don't process when accessing without normal WordPress core loading.
+		if (!defined('WPINC')) return;
+
 		$bypass_instance = $this->get_bypass_instance();
 		if ($bypass_instance->should_bypass()) {
-			// Show bypass notice in admin bar
+			// Show a bypass notice in the admin bar
 			$bypass_instance->show_admin_notice();
 			if (!headers_sent()) {
 				header('WPO-Bypass-Mode: active');
@@ -107,7 +110,6 @@ class WP_Optimize {
 		}
 
 		$this->load_ajax_handler();
-		WP_Optimize_Heartbeat::get_instance();
 
 		// Show update to Premium notice for non-premium multisite.
 		add_action('wpo_additional_options', array($this, 'show_multisite_update_to_premium_notice'));
@@ -310,8 +312,20 @@ class WP_Optimize {
 		$skin = $upgrader_object->skin;
 		if ('plugin' === $options['type']) {
 			// A plugin is updated using the default update system (upgrader_overwrote_package is used for the upload method)
-			if (property_exists($skin, 'plugin_active') && $skin->plugin_active) {
-				$should_purge_cache = true;
+			$plugins = array();
+			if (!empty($options['plugin'])) {
+				$plugins = array($options['plugin']);
+			} elseif (!empty($options['plugins']) && is_array($options['plugins'])) {
+				$plugins = $options['plugins'];
+			}
+
+			foreach ($plugins as $plugin) {
+				if (!empty($plugin) && ! is_wp_error($upgrader_object->result)) {
+					if (is_plugin_active($plugin)) {
+						$should_purge_cache = true;
+						break;
+					}
+				}
 			}
 		} elseif ('theme' === $options['type']) {
 			$active_theme = get_stylesheet();
@@ -353,7 +367,7 @@ class WP_Optimize {
 		$custom = 90 >= $options['image_quality'] && 65 <= $options['image_quality'];
 		$sites = WP_Optimize()->get_sites();
 		$compression_server_hint = Updraft_Smush_Manager()->get_compression_server_hint();
-		$this->include_template('images/smush.php', false, array('smush_options' => $options, 'custom' => $custom, 'sites' => $sites, 'does_server_allows_local_webp_conversion' => $this->does_server_allows_local_webp_conversion(), 'compression_server_hint' => $compression_server_hint));
+		$this->include_template('images/smush.php', false, array('smush_options' => $options, 'custom' => $custom, 'sites' => $sites, 'does_server_allow_local_webp_conversion' => $this->get_server_compatibility_instance()->does_server_allow_local_webp_conversion(), 'compression_server_hint' => $compression_server_hint));
 		$this->add_smush_popup_template();
 	}
 
@@ -378,6 +392,7 @@ class WP_Optimize {
 		}
 
 		WPO_Page_Builder_Compatibility::instance();
+		WPO_KD_Submissions_Compatibility::instance();
 
 		if (class_exists('Custom_Permalinks')) {
 			WPO_Custom_Permalink_Compatibility::instance();
@@ -435,7 +450,7 @@ class WP_Optimize {
 	}
 
 	/**
-	 * Returns instance if WPO_Page_Cache class.
+	 * Returns instance of WPO_Page_Cache class.
 	 *
 	 * @return WPO_Page_Cache
 	 */
@@ -444,7 +459,7 @@ class WP_Optimize {
 	}
 
 	/**
-	 * Returns instance if WP_Optimize_WebP class.
+	 * Returns instance of WP_Optimize_WebP class.
 	 *
 	 * @return WP_Optimize_WebP
 	 */
@@ -453,44 +468,12 @@ class WP_Optimize {
 	}
 
 	/**
-	 * Detects if the platform is Kinsta or not
+	 * Returns instance of WP_Optimize_Server_Compatibility class.
 	 *
-	 * @return bool Returns true if it is Kinsta platform, otherwise returns false
+	 * @return WP_Optimize_Server_Compatibility
 	 */
-	private function is_kinsta(): bool {
-		return isset($_SERVER['KINSTA_CACHE_ZONE']);
-	}
-
-	/**
-	 * Detects whether the server handles cache. e.g. Nginx cache
-	 *
-	 * @return bool
-	 */
-	public function does_server_handles_cache(): bool {
-		return $this->is_kinsta();
-	}
-
-	/**
-	 * Detects whether the server supports table optimization.
-	 *
-	 * Some servers prevent table optimization
-	 * because InnoDB engine does not optimize table
-	 * instead it drops tables and recreate them
-	 * which results in elevated disk write operations
-	 *
-	 * @return bool
-	 */
-	public function does_server_allows_table_optimization(): bool {
-		return !$this->is_kinsta();
-	}
-
-	/**
-	 * Detects whether the server supports local webp conversion tools
-	 *
-	 * @return bool
-	 */
-	private function does_server_allows_local_webp_conversion(): bool {
-		return !$this->is_kinsta();
+	public function get_server_compatibility_instance(): WP_Optimize_Server_Compatibility {
+		return WP_Optimize_Server_Compatibility::get_instance();
 	}
 
 	/**
@@ -709,10 +692,14 @@ class WP_Optimize {
 			return;
 		}
 
-		if ($this->does_server_handles_cache()) {
+		if (is_admin() && current_user_can($this->capability_required())) {
+			WP_Optimize_Heartbeat::get_instance();
+		}
+
+		if ($this->get_server_compatibility_instance()->does_server_handle_cache()) {
 			add_filter('wp_optimize_admin_page_wpo_cache_tabs', array($this, 'filter_cache_tabs'), 99, 1);
 
-			// If newly migrated to server that handles cache, disable wpo cache
+			// If newly migrated to a server that handles cache, disable wpo cache
 			$cache = $this->get_page_cache();
 			if ($cache->is_enabled()) {
 				$cache->disable();
@@ -727,6 +714,7 @@ class WP_Optimize {
 		}
 
 		if (!self::is_premium()) {
+			$this->get_server_compatibility_instance()->maybe_disable_unsupported_table_optimization();
 			add_action('auto_option_settings', array($this->get_options(), 'auto_option_settings'));
 		}
 
@@ -734,7 +722,7 @@ class WP_Optimize {
 		WP_Optimize()->get_options()->set_default_options();
 
 		// Initialize loggers.
-		$this->setup_loggers();
+		add_action('init', array($this, 'setup_loggers'));
 
 		if ($this->is_active('premium') && false !== ($free_plugin = $this->is_active('free'))) {
 			if (!function_exists('deactivate_plugins')) include_once(ABSPATH.'wp-admin/includes/plugin.php');
@@ -815,7 +803,7 @@ class WP_Optimize {
 	}
 
 	/**
-	 * Filter cache tabs (when it is Kinsta)
+	 * Filter cache tabs (when the server handles it or do not allow it, like Kinsta)
 	 *
 	 * @param  array $tabs An array of tabs
 	 *
@@ -836,7 +824,7 @@ class WP_Optimize {
 	 *
 	 * @return string|boolean - plugin path (if installed) or false if not
 	 */
-	private function is_active($which = 'free') {
+	public function is_active($which = 'free') {
 		$active_plugins = $this->get_active_plugins();
 		foreach ($active_plugins as $file) {
 			if ('wp-optimize.php' == basename($file)) {
@@ -1520,7 +1508,7 @@ class WP_Optimize {
 	 */
 	private function schedule_plugin_cron_tasks() {
 		if (!wp_next_scheduled('wpo_weekly_cron_tasks')) {
-			wp_schedule_event(current_time("timestamp", 0), 'weekly', 'wpo_weekly_cron_tasks');
+			wp_schedule_event(current_time("timestamp", 0), 'wpo_weekly', 'wpo_weekly_cron_tasks');
 		}
 
 		add_action('wpo_weekly_cron_tasks', array($this, 'do_weekly_cron_tasks'));

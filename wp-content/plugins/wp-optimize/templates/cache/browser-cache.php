@@ -1,4 +1,4 @@
-<?php if (!defined('WPO_VERSION')) die('No direct access allowed'); ?>
+<?php if (!defined('ABSPATH')) die('No direct access allowed'); ?>
 
 <div class="wpo_section wpo_group">
 
@@ -87,6 +87,7 @@
 			<?php
 				}
 			?></div>
+			<div id="wpo_browser_cache_error_message" class="notice notice-error" style="display: none;"></div>
 			<pre id="wpo_browser_cache_output" style="display: none;"></pre>
 			<?php
 			}
