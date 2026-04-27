@@ -738,6 +738,8 @@ class Scalescroll extends Widget_Base
 
             .bolt img {
                 width: 40px;
+    max-height: max-content;
+    min-height: auto;
             }
 
             @media(max-width: 768px) {

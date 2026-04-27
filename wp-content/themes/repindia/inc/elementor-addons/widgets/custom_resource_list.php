@@ -283,7 +283,7 @@ class Custom_Resource_List extends Widget_Base {
                 </div>
                 
                 <div class="resource-filter-group">
-                    <h3>by resource product</h3>
+                    <!-- <h3>by resource product</h3> -->
                     <?php foreach ($resource_products as $term) : 
                         $is_active = ($url_product_slug == $term['slug']);
                     ?>
@@ -326,7 +326,7 @@ class Custom_Resource_List extends Widget_Base {
                 $clear_link_aria = $has_active_filters ? 'false' : 'true';
                 ?>
                 <div class="resource-filter-clear-wrapper">
-                    <a href="<?php echo esc_url($clear_filters_url); ?>" class="<?php echo esc_attr($clear_link_class); ?> theme-btn bg-trans border_btnlight" aria-disabled="<?php echo esc_attr($clear_link_aria); ?>">Clear filters</a>
+                    <a href="<?php echo esc_url($clear_filters_url); ?>" class="<?php echo esc_attr($clear_link_class); ?> theme-btn bg-trans border_btnlight" aria-disabled="<?php echo esc_attr($clear_link_aria); ?>">Clear filter</a>
                 </div>
             </div>
             

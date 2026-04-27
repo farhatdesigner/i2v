@@ -387,6 +387,8 @@
 .search-tabs-container {
   margin-bottom: 12px;
   border-bottom: 1px solid #E6EBF2;
+    position: sticky;
+    top: 120px;
 }
 
 .js-dark .search-tabs-container {
@@ -517,6 +519,7 @@
 /* Search Results Content */
 .search-results-content {
   margin-top: 48px;
+  max-width: 953px;
 }
 
 /* No Results Found */
@@ -673,7 +676,24 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  border-radius: 4px; 
+  border-radius: 4px;
+  background: #fff;
+  color: #06283D;
+}
+.nubmerPagination .page-numbers.current {
+  border: 1px solid;
+}
+.js-dark .nubmerPagination .page-numbers {
+  color: rgba(255, 255, 255, 0.80);
+  border: 1px solid  rgba(193, 196, 198, 0.20);
+  background:#464A4F;
+}
+
+.js-dark .nubmerPagination .page-numbers.current {
+  border: 1px solid;
+}
+.js-dark .paginationWrapper svg path {
+  fill: rgba(255, 255, 255, 0.80);
 }
 
 /* Responsive */
