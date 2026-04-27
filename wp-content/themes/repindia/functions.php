@@ -632,17 +632,46 @@ if (!shortcode_exists('last_url_segment')) {
 }
 
 // Auto Redirection Thankyou pages
-function thankyou_redirect_script() {
-    if (is_page(array('thank-you-career', 'thank-you-resource', 'thank-you-request-demo', 'thank-you-expert', 'thank-you-contact-us'))) {
-        wp_register_script('thankyou-redirect', false);
-        wp_enqueue_script('thankyou-redirect');
-        wp_add_inline_script('thankyou-redirect', '
-            document.addEventListener("DOMContentLoaded", function() {
-                setTimeout(function() {
-                    window.location.href = "' . home_url() . '";
-                }, 5000);
-            });
-        ');
-    }
-}
-add_action('wp_enqueue_scripts', 'thankyou_redirect_script');
+		function thankyou_redirect_script() {
+
+			if (
+				is_page(array('thank-you-career', 'thank-you-resource', 'thank-you-request-demo', 'thank-you-expert', 'thank-you-contact-us', 'thank-you-download-brochure', 'thank-you-channel-partner', 'thank-you-technology-partner')) &&
+				!is_admin() &&
+				!isset($_GET['elementor-preview'])
+			) {
+		
+				wp_register_script('thankyou-redirect', false);
+				wp_enqueue_script('thankyou-redirect');
+		
+				wp_add_inline_script('thankyou-redirect', '
+				document.addEventListener("DOMContentLoaded", function() {
+
+					// Prevent Elementor editor
+					if (window.location.href.includes("elementor-preview")) return;
+
+					let container = document.getElementById("thankyou-redirect-msg");
+
+					// If container not found → do nothing (prevents errors)
+					if (!container) return;
+
+					let timeLeft = 5;
+
+					container.innerHTML = "You will be redirected to homepage in <strong><span id=\"countdown\">5</span></strong> seconds...";
+
+					let countdown = document.getElementById("countdown");
+
+					let timer = setInterval(function() {
+						timeLeft--;
+						if (countdown) countdown.textContent = timeLeft;
+
+						if (timeLeft <= 0) {
+							clearInterval(timer);
+							window.location.href = "' . home_url() . '";
+						}
+					}, 1000);
+
+				});
+				');
+			}
+		}
+		add_action('wp_enqueue_scripts', 'thankyou_redirect_script');
