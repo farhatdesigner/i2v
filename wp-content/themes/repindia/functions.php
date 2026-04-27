@@ -630,3 +630,19 @@ if (!shortcode_exists('last_url_segment')) {
     }
     add_shortcode('last_url_segment', 'get_last_url_segment');
 }
+
+// Auto Redirection Thankyou pages
+function thankyou_redirect_script() {
+    if (is_page(array('thank-you-career', 'thank-you-resource', 'thank-you-request-demo', 'thank-you-expert', 'thank-you-contact-us'))) {
+        wp_register_script('thankyou-redirect', false);
+        wp_enqueue_script('thankyou-redirect');
+        wp_add_inline_script('thankyou-redirect', '
+            document.addEventListener("DOMContentLoaded", function() {
+                setTimeout(function() {
+                    window.location.href = "' . home_url() . '";
+                }, 5000);
+            });
+        ');
+    }
+}
+add_action('wp_enqueue_scripts', 'thankyou_redirect_script');
