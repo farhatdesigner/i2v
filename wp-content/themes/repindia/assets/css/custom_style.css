@@ -5359,8 +5359,7 @@ span.star {
 .elementor-element.grid_layout_mbl { display: flex;align-items: stretch;max-width: 350px;overflow-x: scroll;width: 100%;flex-wrap: nowrap;gap: 10px; }
 .iti__country-list {max-width: 100%;}
 .photo_custom img { max-height: inherit !important; min-height: inherit !important;}
-
-
+.search_result_header_content {flex-wrap: wrap;}
 
 }
 
