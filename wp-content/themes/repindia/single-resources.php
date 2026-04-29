@@ -6,7 +6,7 @@ $newscategories = get_the_category();
 		the_post();
 		global $repindia_option,$post; 
 		// Get ACF download file URL for this Resource
-		$resource_download_url = get_field('download_file_url');
+		$resource_download_url = get_field('resource_file_url');
 		// Get ACF form shortcode and extract form ID dynamically
 		$resource_form_shortcode = get_field('resource_form_short_code');
 		$resource_form_id = '';
@@ -176,14 +176,13 @@ $newscategories = get_the_category();
             }
         });
         
-        // Close modal and refresh page after download link is clicked - Must be before content handlers
+        // Close modal after download click without reloading page
         $modal.on('click', '#resourceDownloadBtn', function(e) {
             // Allow default link behavior (open download)
             e.stopPropagation(); // Prevent bubbling to overlay handler
-            // Close modal and refresh page after short delay to allow download to start
+            // Close modal after short delay to allow download to start
             setTimeout(function() {
                 closeResourceModal();
-                window.location.reload();
             }, 500);
         });
         

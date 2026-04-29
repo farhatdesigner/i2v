@@ -331,7 +331,7 @@ if ($download_b) { ?>
                         <h3>Thank You!</h3>
                         <p>Your request has been submitted successfully.</p>
                         <a href="<?php echo esc_url($download_file_url['value']); ?>" target="_blank"
-                            class="theme-btn xl-btn">Download Brochure</a>
+                            class="theme-btn xl-btn" id="brochureDownloadBtn" download>Download Brochure</a>
                     </div>
                 </div>
             </div>
@@ -360,8 +360,9 @@ if ($download_b) { ?>
                 }
 
                 function resetBrochureModalState() {
-                    $('.brochure-form-wrapper').show();
-                    $('.brochure-thankyou').removeClass('active');
+                    var $modal = $('#brochureModal');
+                    $modal.find('.brochure-form-wrapper').show();
+                    $modal.find('.brochure-thankyou').removeClass('active');
                 }
 
                 function setupBrochureModal() {
@@ -408,8 +409,13 @@ if ($download_b) { ?>
                 $(document).on('wpcf7mailsent', function (event) {
                     var $form = $(event.target);
                     if ($form.closest('#brochureModal').length) {
-                        $('.brochure-form-wrapper').hide();
-                        $('.brochure-thankyou').addClass('active');
+                        var $modal = $('#brochureModal');
+                        $modal.find('.brochure-form-wrapper').hide();
+                        $modal.find('.brochure-thankyou').addClass('active');
+                        // Keep modal open even if other listeners try to close it on submit.
+                        setTimeout(function () {
+                            openBrochureModal();
+                        }, 50);
                     }
                 });
             }
