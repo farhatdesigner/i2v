@@ -89,6 +89,10 @@ if ($download_b) { ?>
             text-align: center;
             display: none;
             padding: 30px 25px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
 
         .brochure-thankyou.active {
