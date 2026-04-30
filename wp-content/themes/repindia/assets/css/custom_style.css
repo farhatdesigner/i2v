@@ -4131,6 +4131,11 @@ span.star {
   /* color: #aeb6c9 !important;
   font-weight: 500 !important; */
 }
+#hotel_video .elementor-widget-video .elementor-wrapper video {
+    margin-bottom: -8px;
+    margin-top: -8px;
+    height: auto;
+}
 
 @media (min-width: 768px) {
   .footer-accordion-icon {
@@ -4421,8 +4426,9 @@ span.star {
     min-height: 600px;
   }
   .photo_custom img {
-    max-height: 400px !important;
+    max-height: max-content !important;
   }
+  .trusted_sec{margin-top: 160px !important;}
   .industry_box span.elementor-icon-box-title {
     min-height: 50px;
     display: block;
@@ -4868,6 +4874,8 @@ span.star {
   .industry_box span.elementor-icon-box-title {
     min-height: auto;
   }
+  .space_scrollaniamtion {margin-top: auto !important;}
+
 }
 
 @media screen and (max-width: 768px) {
