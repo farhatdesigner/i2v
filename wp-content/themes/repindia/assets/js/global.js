@@ -404,6 +404,51 @@ $(document).ready(function () {
         }, 350);
     };
 
+    // Reset only the scrolling gallery section (.makdmks) to first-card state after modal close.
+    window.scheduleMakdmksFirstCardResetAfterModalClose = function () {
+        if (window._makdmksFirstCardResetTimer) clearTimeout(window._makdmksFirstCardResetTimer);
+        window._makdmksFirstCardResetTimer = setTimeout(function () {
+            window._makdmksFirstCardResetTimer = null;
+
+            if (window.innerWidth < 1200) return;
+            var root = document.querySelector(".makdmks");
+            if (!root) return;
+
+            if (typeof ScrollTrigger !== "undefined") {
+                ScrollTrigger.getAll().forEach(function (st) {
+                    var id = st.vars && st.vars.id ? String(st.vars.id) : "";
+                    if (id.indexOf("gallery-section-") === 0 || id === "gallery-pin") {
+                        st.kill();
+                    }
+                });
+            }
+
+            if (typeof initGalleryGSAP === "function") {
+                initGalleryGSAP();
+            }
+
+            requestAnimationFrame(function () {
+                var rootTop = root.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop || 0);
+                var targetY = Math.max(0, Math.round(rootTop - (window.innerHeight * 0.25) + 1));
+                window.scrollTo(0, targetY);
+                document.documentElement.scrollTop = targetY;
+                document.body.scrollTop = targetY;
+
+                if (typeof ScrollTrigger !== "undefined") {
+                    ScrollTrigger.refresh();
+                }
+
+                if (typeof gsap !== "undefined") {
+                    var photos = root.querySelectorAll(".photo");
+                    if (photos.length) {
+                        gsap.set(photos, { opacity: 0 });
+                        gsap.set(photos[0], { opacity: 1 });
+                    }
+                }
+            });
+        }, 220);
+    };
+
     // Helper function to get scrollbar width
     function getScrollbarWidth() {
         // Create a temporary div to measure scrollbar width
@@ -672,8 +717,8 @@ $(document).ready(function () {
                 }
                 // Re-run ScrollTrigger/slider refresh after menu close (fixes careers-list hz-slider distortion when menu popup is closed)
                 window._modalRestoreScrollPosition = restorePosition;
-                if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
-                    window.scheduleCardsRefreshAfterModalClose();
+                if (typeof window.scheduleMakdmksFirstCardResetAfterModalClose === "function") {
+                    window.scheduleMakdmksFirstCardResetAfterModalClose();
                 }
             });
         });
@@ -817,8 +862,8 @@ $(document).ready(function () {
 
                 // Pass intended scroll position so it can be re-applied after GSAP refresh (avoids GSAP/scroll conflict when body was fixed e.g. hamburger)
                 window._modalRestoreScrollPosition = restorePosition;
-                if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
-                    window.scheduleCardsRefreshAfterModalClose();
+                if (typeof window.scheduleMakdmksFirstCardResetAfterModalClose === "function") {
+                    window.scheduleMakdmksFirstCardResetAfterModalClose();
                 }
 
                 // Re-run sticky fixed-header logic after popup close (programmatic scroll doesn't fire scroll; resize resets sticky state and re-evaluates fixed-header)
@@ -2013,6 +2058,10 @@ jQuery(document).ready(function() {
 
     // Pause all accordions when modal opens
     jQuery(document).on('show.bs.modal', '.modal', function() {
+        var modal = jQuery(this);
+        if (modal.hasClass('formpopup_modal') || modal.is('#brochureModal')) {
+            return;
+        }
         // Pause all accordion instances
         accordionInstances.forEach(function(instance) {
             instance.pause();
@@ -2030,7 +2079,6 @@ jQuery(document).ready(function() {
         }
         
         // Load video with autoplay when modal opens
-        var modal = jQuery(this);
         var iframe = modal.find('iframe');
         if (iframe.length) {
             // Get the base URL from data-src attribute
@@ -2046,8 +2094,11 @@ jQuery(document).ready(function() {
 
     // Resume all accordions when modal closes and stop video
     jQuery(document).on('hidden.bs.modal', '.modal', function() {
-        // Stop video by removing src attribute
         var modal = jQuery(this);
+        if (modal.hasClass('formpopup_modal') || modal.is('#brochureModal')) {
+            return;
+        }
+        // Stop video by removing src attribute
         var iframe = modal.find('iframe');
         if (iframe.length) {
             // Store the base URL (without autoplay) if not already stored
@@ -2077,8 +2128,8 @@ jQuery(document).ready(function() {
             jQuery("body").removeClass("modal-open");
             jQuery("body").css({ "overflow": "auto", "padding-right": "0", "position": "", "top": "", "left": "", "right": "", "width": "" });
         }
-        if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
-            window.scheduleCardsRefreshAfterModalClose();
+        if (typeof window.scheduleMakdmksFirstCardResetAfterModalClose === "function") {
+            window.scheduleMakdmksFirstCardResetAfterModalClose();
         }
 
         // Re-run sticky fixed-header logic so fixed-header class is correct after any modal close

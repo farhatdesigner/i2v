@@ -734,10 +734,12 @@ class Scalescroll extends Widget_Base
                 background: #262A30;
                 color: #D7DBE4 !important;
                 border: 1px solid rgb(193 196 198 / 10%);
-            }
+        }
 
             .bolt img {
                 width: 40px;
+    max-height: max-content;
+    min-height: auto;
             }
 
             @media(max-width: 768px) {
