@@ -387,6 +387,9 @@
 .search-tabs-container {
   margin-bottom: 12px;
   border-bottom: 1px solid #E6EBF2;
+    position: sticky;
+    top: 120px;
+    margin-top: -100px;
 }
 
 .js-dark .search-tabs-container {
@@ -445,6 +448,13 @@
   margin-top: 150px;
 }
 
+.search_result_header_content {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  position: relative;
+}
+
 .inner_page_banner_content {
   max-width: 720px;
 }
@@ -478,6 +488,7 @@
   padding: 20px 20px 20px 20px;
   border-radius: 8px 8px 8px 8px;
   margin-bottom: 20px;
+  max-width: 953px;
 }
 
 .search_result_content {
@@ -661,7 +672,7 @@
 .nubmerPagination {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   gap: 7px;
 }
 .nubmerPagination .page-numbers {
@@ -673,7 +684,24 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  border-radius: 4px; 
+  border-radius: 4px;
+  background: #fff;
+  color: #06283D;
+}
+.nubmerPagination .page-numbers.current {
+  border: 1px solid;
+}
+.js-dark .nubmerPagination .page-numbers {
+  color: rgba(255, 255, 255, 0.80);
+  border: 1px solid  rgba(193, 196, 198, 0.20);
+  background:#464A4F;
+}
+
+.js-dark .nubmerPagination .page-numbers.current {
+  border: 1px solid;
+}
+.js-dark .paginationWrapper svg path {
+  fill: rgba(255, 255, 255, 0.80);
 }
 
 /* Responsive */
@@ -736,6 +764,8 @@
   .search-popup-footer ul#header-main-menu li>a:before {left: -12px;}
   .search-popup-footer ul#header-main-menu li a {padding: 8px 16px 0 0px;font-size: 16px;}
   .search-popup-columns{ padding-right: 10px;padding-left: 10px; }
+  .search-tabs-container {margin-top: 0;}
+
 
 }
 
