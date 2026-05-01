@@ -412,6 +412,337 @@ if (!empty($repindia_option['technology_partner_form'])) { ?>
 <?php } ?>
 
 
+<!-- Modal: supportive devices / logo partners (same behavior as other form popups: scroll on .modal-content, static backdrop) -->
+<div class="formpopup_modal modal fade" id="logomodal_custom" data-bs-backdrop="static" data-bs-keyboard="false"
+	tabindex="-1" aria-labelledby="logomodal_customLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-logopartner-form">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div class="modal-header">
+					<h5 class="modal-title" id="logomodal_customLabel">
+						<?php echo esc_html( wpml_t( '100+ IP camera brands supported', 'Repindia-Template', 'Supportive devices' ) ); ?>
+					</h5>
+					<span class="btn-closecustom" data-bs-dismiss="modal" aria-label="<?php esc_attr_e( 'Close', 'repindia' ); ?>">
+						<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path fill-rule="evenodd" clip-rule="evenodd"
+								d="M8.67339 8.67351C9.03788 8.30902 9.62883 8.30902 9.99332 8.67351L14 12.6802L18.0067 8.67351C18.3712 8.30902 18.9622 8.30902 19.3267 8.67351C19.6911 9.038 19.6911 9.62896 19.3267 9.99345L15.32 14.0001L19.3267 18.0068C19.6911 18.3713 19.6911 18.9623 19.3267 19.3268C18.9622 19.6913 18.3712 19.6913 18.0067 19.3268L14 15.3201L9.99332 19.3268C9.62883 19.6913 9.03788 19.6913 8.67339 19.3268C8.3089 18.9623 8.3089 18.3713 8.67339 18.0068L12.6801 14.0001L8.67339 9.99345C8.3089 9.62896 8.3089 9.038 8.67339 8.67351Z"
+								fill="#5F6F94" />
+						</svg>
+					</span>
+				</div>
+				<div class="modal-body-content">
+					<div class="tech-images-grid">
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/x-vision.webp"
+								alt="Item1"><img class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/x-vision.webp"
+								alt="Item1">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/vivotek.webp"
+								alt="Item2"><img class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/vivotek.webp"
+								alt="Item2">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/vicon.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/vicon.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/verient.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/verient.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/unv.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/unv.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/tyco.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/tyco.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/tvt.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/tvt.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/trendnet.webp"
+								alt=""><img class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/trendnet.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/tp-link.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2026/04/tp-link.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/tiandy.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/tiandy.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/stardot.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/stardot.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/sony.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/sony.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/siemens.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/siemens.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/securus.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/securus.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/securn.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/securn.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/plexonics.webp"
+								alt=""><img class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/plexonics.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/pixord.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/pixord.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/pelco.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/pelco.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/panasonic.webp"
+								alt=""><img class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/panasonic.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/mobotix.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/panasonic.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/mobotix.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/mobotix.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/milesight.webp"
+								alt=""><img class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/milesight.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/matrix.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/matrix.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/logos-copy.webp"
+								alt=""><img class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/logos-copy.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/lilin.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/lilin.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/LG.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/LG.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/level-one.webp"
+								alt=""><img class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/level-one.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/jvc.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/jvc.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/infinova.webp"
+								alt=""><img class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/infinova.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/indinatus.webp"
+								alt=""><img class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/indinatus.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/indigovision.webp"
+								alt=""><img class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/indigovision.webp"
+								alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/idis.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/idis.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/honeywell.webp"
+								alt=""><img class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/honeywell.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/hikvision.webp"
+								alt=""><img class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/hikvision.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/hi-focus.webp"
+								alt=""><img class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/hi-focus.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/hanwa.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/hanwa.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/grandstream.webp"
+								alt=""><img class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/grandstream.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/geovision.webp"
+								alt=""><img class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/geovision.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/foscam.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/foscam.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/flir.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/flir.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/everfocus.webp"
+								alt=""><img class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/everfocus.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/dvtel.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/dvtel.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/dtech.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/dtech.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/dlink.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/dlink.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/cp-plus.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/cp-plus.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/compro.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/compro.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/cnb.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/cnb.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/cisco.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/cisco.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/camwell.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/camwell.webp" alt="">
+						</div>
+						<div class="tech-image-item tech-image-light tech-image-fallback" data-tab="" data-has-dark="1">
+							<img class="white_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/brick.webp" alt=""><img
+								class="black_theme_img" decoding="async"
+								src="https://reputationindia.in/i2v/wp-content/uploads/2025/11/brick.webp" alt="">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 <!-- JavaScript to open modals for CTAs with data-modal-target attribute or class -->
 <script>
 	(function () {
@@ -447,7 +778,8 @@ if (!empty($repindia_option['technology_partner_form'])) { ?>
 					trigger.classList.contains('open-demo-modal') ||
 					trigger.classList.contains('open-contact-modal') ||
 					trigger.classList.contains('open-channel-partner-modal') ||
-					trigger.classList.contains('open-technology-partner-modal');
+					trigger.classList.contains('open-technology-partner-modal') ||
+					trigger.classList.contains('open-logo-partner-modal');
 
 				if (hasModalTrigger) {
 					// Prevent default to avoid navigation when modal trigger is present
@@ -535,43 +867,64 @@ if (!empty($repindia_option['technology_partner_form'])) { ?>
 					}
 				});
 			}
+
+			// Supportive devices / logo grid modal (#logomodal_custom)
+			var logoPartnerModalTriggers = document.querySelectorAll('.open-logo-partner-modal');
+			if (logoPartnerModalTriggers.length > 0 && document.getElementById('logomodal_custom')) {
+				logoPartnerModalTriggers.forEach(function (trigger) {
+					if (!trigger.hasAttribute('data-modal-target')) {
+						trigger.addEventListener('click', function (e) {
+							handleModalClick(e, 'logomodal_custom');
+						});
+					}
+				});
+			}
 		});
 	})();
 </script>
 
 <!-- Global YouTube Video Popup (single reusable container) - matches video_accordion layout -->
-<div id="global-youtube-popup" class="global-youtube-popup" aria-hidden="true" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e('YouTube video', 'repindia'); ?>">
+<div id="global-youtube-popup" class="global-youtube-popup" aria-hidden="true" role="dialog" aria-modal="true"
+	aria-label="<?php esc_attr_e('YouTube video', 'repindia'); ?>">
 	<div class="global-youtube-popup__backdrop"></div>
 	<div class="global-youtube-popup__dialog">
 		<div class="global-youtube-popup__content">
 			<div class="global-youtube-popup__header">
-				<h1 class="global-youtube-popup__title" id="global-youtube-popup-title"><?php esc_html_e('Video', 'repindia'); ?></h1>
-				<button type="button" class="global-youtube-popup__close" aria-label="<?php esc_attr_e('Close', 'repindia'); ?>">
+				<h1 class="global-youtube-popup__title" id="global-youtube-popup-title">
+					<?php esc_html_e('Video', 'repindia'); ?>
+				</h1>
+				<button type="button" class="global-youtube-popup__close"
+					aria-label="<?php esc_attr_e('Close', 'repindia'); ?>">
 					<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path fill-rule="evenodd" clip-rule="evenodd" d="M8.67339 8.67351C9.03788 8.30902 9.62883 8.30902 9.99332 8.67351L14 12.6802L18.0067 8.67351C18.3712 8.30902 18.9622 8.30902 19.3267 8.67351C19.6911 9.038 19.6911 9.62896 19.3267 9.99345L15.32 14.0001L19.3267 18.0068C19.6911 18.3713 19.6911 18.9623 19.3267 19.3268C18.9622 19.6913 18.3712 19.6913 18.0067 19.3268L14 15.3201L9.99332 19.3268C9.62883 19.6913 9.03788 19.6913 8.67339 19.3268C8.3089 18.9623 8.3089 18.3713 8.67339 18.0068L12.6801 14.0001L8.67339 9.99345C8.3089 9.62896 8.3089 9.038 8.67339 8.67351Z" fill="#5F6F94"/>
+						<path fill-rule="evenodd" clip-rule="evenodd"
+							d="M8.67339 8.67351C9.03788 8.30902 9.62883 8.30902 9.99332 8.67351L14 12.6802L18.0067 8.67351C18.3712 8.30902 18.9622 8.30902 19.3267 8.67351C19.6911 9.038 19.6911 9.62896 19.3267 9.99345L15.32 14.0001L19.3267 18.0068C19.6911 18.3713 19.6911 18.9623 19.3267 19.3268C18.9622 19.6913 18.3712 19.6913 18.0067 19.3268L14 15.3201L9.99332 19.3268C9.62883 19.6913 9.03788 19.6913 8.67339 19.3268C8.3089 18.9623 8.3089 18.3713 8.67339 18.0068L12.6801 14.0001L8.67339 9.99345C8.3089 9.62896 8.3089 9.038 8.67339 8.67351Z"
+							fill="#5F6F94" />
 					</svg>
 				</button>
 			</div>
 			<div class="global-youtube-popup__body videoframe">
-				<iframe id="global-youtube-popup-iframe" class="global-youtube-popup__iframe" src="" title="<?php esc_attr_e('YouTube video', 'repindia'); ?>" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+				<iframe id="global-youtube-popup-iframe" class="global-youtube-popup__iframe" src=""
+					title="<?php esc_attr_e('YouTube video', 'repindia'); ?>"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+					allowfullscreen></iframe>
 			</div>
 		</div>
 	</div>
 </div>
 
 <!-- Smooth scroll effect script -->
- <script>
+<script>
 	window.addEventListener("load", function () {
-    if (window.location.hash) {
-        const el = document.querySelector(window.location.hash);
-        if (el) {
-            setTimeout(function () {
-                el.scrollIntoView({ behavior: "smooth" });
-            }, 150);
-        }
-    }
-    });
- </script>
+		if (window.location.hash) {
+			const el = document.querySelector(window.location.hash);
+			if (el) {
+				setTimeout(function () {
+					el.scrollIntoView({ behavior: "smooth" });
+				}, 150);
+			}
+		}
+	});
+</script>
 <?php
 wp_footer();
 ?>

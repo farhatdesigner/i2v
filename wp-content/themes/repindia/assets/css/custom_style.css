@@ -1766,15 +1766,18 @@ h3 {
   box-shadow: 0 0 15px 0 rgba(138, 149, 158, 0.4);
 }
 
-.modal-technology-partners-form .modal-content {
+.modal-technology-partners-form .modal-content,
+.modal-logopartner-form .modal-content {
   border-radius: 8px;
   background: #f2f5fa;
   box-shadow: 0 0 15px 0 rgba(138, 149, 158, 0.4);
 }
-.modal-demo-form .modal-body, #brochureModal .modal-body, .modal-technology-partners-form .modal-body {
+.modal-demo-form .modal-body, #brochureModal .modal-body, .modal-technology-partners-form .modal-body,
+.modal-logopartner-form .modal-body {
   padding: 0px;
 }
-.modal-demo-form .modal-header, .modal-technology-partners-form .modal-header {
+.modal-demo-form .modal-header, .modal-technology-partners-form .modal-header,
+.modal-logopartner-form .modal-header {
   padding: 20px;
   align-items: center;
   width: 100%;
@@ -1868,7 +1871,8 @@ h3 {
 .js-dark .modal-demo-form .modal-header,
 .js-dark .brochure-modal-overlay .modal-header,
 .js-dark label.form-label.required_note-demo, 
-.js-dark .formpopup_modal .modal-technology-partners-form .modal-header {
+.js-dark .formpopup_modal .modal-technology-partners-form .modal-header,
+.js-dark #logomodal_custom .modal-logopartner-form .modal-header {
   border-bottom: 1px solid #464a4f;
 }
 
@@ -4173,7 +4177,7 @@ span.star {
     overflow: hidden;
   }
 
-  .modal-dialog.modal-demo-form, .modal-dialog.modal-technology-partners-form {
+  .modal-dialog.modal-demo-form, .modal-dialog.modal-technology-partners-form, .modal-dialog.modal-logopartner-form {
     max-width: 768px;
   }
   .tabsautoscroll {
@@ -4407,6 +4411,14 @@ span.star {
   
 }
 
+@media (max-width: 1600px) {
+  .photo_custom img {
+    max-height: max-content !important;
+  }
+  .space_scrollaniamtion{margin-top: 160px !important;}
+
+}
+
 @media (max-width: 1366px) {
 
   .brochure-modal-content {
@@ -4425,10 +4437,7 @@ span.star {
   .video-analytics-widget {
     min-height: 600px;
   }
-  .photo_custom img {
-    max-height: max-content !important;
-  }
-  .trusted_sec{margin-top: 160px !important;}
+
   .industry_box span.elementor-icon-box-title {
     min-height: 50px;
     display: block;
