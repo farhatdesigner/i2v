@@ -70,14 +70,16 @@ a.explr_btn.xl-btn:hover,a.home_btn.xl-btn:hover,
 .js-dark .wpcf7-form-control-wrap span.wpcf7-form-control.wpcf7-radio .wpcf7-list-item label .wpcf7-list-item-label {
   color: rgba(255, 255, 255, 0.6);
 }
-.formpopup_modal .modal-demo-form .modal-header,.formpopup_modal .modal-technology-partners-form .modal-header{
+.formpopup_modal .modal-demo-form .modal-header,.formpopup_modal .modal-technology-partners-form .modal-header,
+.formpopup_modal .modal-logopartner-form .modal-header{
   padding: 15px 15px;
     position: fixed;
     max-width: 766px;
     background: #fff;
     z-index: 2;
 }
-.formpopup_modal .modal-demo-form .modal-title { font-size: 18px;font-weight: 600; }
+.formpopup_modal .modal-demo-form .modal-title,
+.formpopup_modal .modal-logopartner-form .modal-title { font-size: 18px;font-weight: 600; }
 .formpopup_modal .career-apply-form.styled-career-form { padding: 20px 30px;padding-top: 85px;}
 .formpopup_modal form.wpcf7-form p { margin: 0; }
 /* .formpopup_modal input.form-control, select.form-control{ max-height: 40px; } */
@@ -115,7 +117,8 @@ a.explr_btn.xl-btn:hover,a.home_btn.xl-btn:hover,
 }
 .js-dark .formpopup_modal .modal-content {scrollbar-color: rgba(255, 255, 255, 0.3) transparent;}
 .formpopup_modal .formnotic { margin: 8px 0px; }
-.formpopup_modal .career-apply-form.styled-career-form.popupform, .formpopup_modal .modal-technology-partners-form .modal-body-content { padding: 20px 30px; padding-top: 85px;}
+.formpopup_modal .career-apply-form.styled-career-form.popupform, .formpopup_modal .modal-technology-partners-form .modal-body-content,
+.formpopup_modal .modal-logopartner-form .modal-body-content { padding: 20px 30px; padding-top: 85px;}
 textarea.form-control{ max-height: 100px; }
 .wpcf7-not-valid-tip{ font-size: 14px;line-height: normal;margin-top: 3px; }
 .form-control{ margin-bottom: 0px!important; }
@@ -131,7 +134,8 @@ textarea.form-control{ max-height: 100px; }
   pointer-events: none;
 }
 
-.formpopup_modal .modal-technology-partners-form .tech-images-grid {
+.formpopup_modal .modal-technology-partners-form .tech-images-grid,
+.formpopup_modal .modal-logopartner-form .tech-images-grid {
   flex: 1;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -139,10 +143,12 @@ textarea.form-control{ max-height: 100px; }
   border-radius: 8px;
   padding: 4px;
 }
- .js-dark .formpopup_modal .modal-technology-partners-form .tech-images-grid {
+ .js-dark .formpopup_modal .modal-technology-partners-form .tech-images-grid,
+ .js-dark .formpopup_modal .modal-logopartner-form .tech-images-grid {
   background: #000;
 }
-.formpopup_modal .modal-technology-partners-form .tech-image-item {
+.formpopup_modal .modal-technology-partners-form .tech-image-item,
+.formpopup_modal .modal-logopartner-form .tech-image-item {
   background: #fff;
   padding: 5px;
   display: flex;
@@ -153,7 +159,8 @@ textarea.form-control{ max-height: 100px; }
   border-radius: 8px;
 }
 
-.formpopup_modal .modal-technology-partners-form .tech-image-item img {
+.formpopup_modal .modal-technology-partners-form .tech-image-item img,
+.formpopup_modal .modal-logopartner-form .tech-image-item img {
   max-width: 100%;
   max-height: 80px;
   width: auto;
@@ -161,15 +168,17 @@ textarea.form-control{ max-height: 100px; }
   object-fit: contain;
 }
 
-.js-dark .formpopup_modal .modal-technology-partners-form .tech-image-item {
+.js-dark .formpopup_modal .modal-technology-partners-form .tech-image-item,
+.js-dark .formpopup_modal .modal-logopartner-form .tech-image-item {
   background: #262A30;
 }
 
 @media (max-width: 767px) {
-  .formpopup_modal .modal-demo-form .modal-header, .formpopup_modal .modal-technology-partners-form .modal-header {
+  .formpopup_modal .modal-demo-form .modal-header, .formpopup_modal .modal-technology-partners-form .modal-header,
+  .formpopup_modal .modal-logopartner-form .modal-header {
     max-width: calc(100% - 18px);
   }
-  .formpopup_modal .modal-technology-partners-form .tech-images-grid {grid-template-columns: repeat(2, 1fr);}
+  .formpopup_modal .modal-technology-partners-form .tech-images-grid,
+  .formpopup_modal .modal-logopartner-form .tech-images-grid {grid-template-columns: repeat(2, 1fr);}
 
 }
-
