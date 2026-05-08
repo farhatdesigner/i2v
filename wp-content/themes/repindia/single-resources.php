@@ -6,7 +6,7 @@ $newscategories = get_the_category();
 		the_post();
 		global $repindia_option,$post; 
 		// Get ACF download file URL for this Resource
-		$resource_download_url = get_field('download_file_url');
+		$resource_download_url = get_field('resource_file_url');
 		// Get ACF form shortcode and extract form ID dynamically
 		$resource_form_shortcode = get_field('resource_form_short_code');
 		$resource_form_id = '';
@@ -22,7 +22,7 @@ $newscategories = get_the_category();
     <!-- Resource Thank You Popup Styles -->
     <style>
         .resource-modal-overlay {
-            display: none;
+            display: none !important;
             position: fixed;
             top: 0;
             left: 0;
@@ -35,7 +35,7 @@ $newscategories = get_the_category();
         }
 
         .resource-modal-overlay.active {
-            display: flex;
+            display: flex !important;
         }
 
         .resource-modal-content {
@@ -95,7 +95,7 @@ $newscategories = get_the_category();
 
     <!-- Resource Thank You Popup Modal - Only show if download_file_url exists -->
     <?php if($resource_download_url): ?>
-    <div class="resource-modal-overlay" id="resourceThankYouModal" <?php if($resource_form_id): ?>data-resource-form-id="<?php echo esc_attr($resource_form_id); ?>"<?php endif; ?>>
+    <div class="resource-modal-overlay" id="resourceThankYouModal" data-resource-post-id="<?php echo esc_attr(get_the_ID()); ?>" <?php if($resource_form_id): ?>data-resource-form-id="<?php echo esc_attr($resource_form_id); ?>"<?php endif; ?>>
         <div class="resource-modal-content">
             <span class="resource-modal-close">&times;</span>
             <div class="resource-thankyou">
@@ -140,23 +140,27 @@ $newscategories = get_the_category();
             return;
         }
         
-        // Get dynamic form ID from data attribute (extracted from ACF field resource_form_short_code)
-        var resourceFormId = $modal.data('resource-form-id');
-        
-        // Only listen for form submission if form ID is set
-        if (resourceFormId) {
-            // Listen for Contact Form 7 submission success - dynamic form ID from shortcode
-            $(document).on('wpcf7mailsent', function(event) {
-                // Check if the submitted form matches the Resource form ID extracted from shortcode
-                var submittedFormId = event.detail.contactFormId;
-                // Compare as strings (form IDs can be numeric strings or hashes)
-                if (String(submittedFormId) === String(resourceFormId)) {
-                    // Show the thank you popup
-                    $modal.addClass('active');
-                    $('body').css('overflow', 'hidden');
-                }
-            });
+        function openResourceModal() {
+            $modal.addClass('active');
+            $('body').css('overflow', 'hidden');
         }
+
+        // Listen for Contact Form 7 success for this template only (Elementor-rendered forms included)
+        $(document).on('wpcf7mailsent', function(event) {
+            var $submittedForm = $(event.target);
+
+            // Ignore events from modal forms (safety)
+            if ($submittedForm.closest('#brochureModal, .formpopup_modal').length) {
+                return;
+            }
+
+            // Open popup for visible non-modal CF7 forms on single-resources template.
+            var isVisiblePageForm = $submittedForm.length && $submittedForm.is(':visible');
+
+            if (isVisiblePageForm) {
+                openResourceModal();
+            }
+        });
         
         // Close modal on X button click - Bind directly to modal using event delegation
         $modal.on('click', '.resource-modal-close', function(e) {
@@ -176,14 +180,13 @@ $newscategories = get_the_category();
             }
         });
         
-        // Close modal and refresh page after download link is clicked - Must be before content handlers
+        // Close modal after download click without reloading page
         $modal.on('click', '#resourceDownloadBtn', function(e) {
             // Allow default link behavior (open download)
             e.stopPropagation(); // Prevent bubbling to overlay handler
-            // Close modal and refresh page after short delay to allow download to start
+            // Close modal after short delay to allow download to start
             setTimeout(function() {
                 closeResourceModal();
-                window.location.reload();
             }, 500);
         });
         

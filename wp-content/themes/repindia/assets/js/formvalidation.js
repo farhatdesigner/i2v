@@ -684,18 +684,22 @@
             // Use the helper from setupEventHandlers via document
             $(document).trigger('cf7-show-global-error');
           } else if (type === 'wpcf7mailsent') {
-            // Close form popup on success first so body is restored by modal's hidden handler
-            var openModals = document.querySelectorAll('.modal.show');
-            if (openModals.length) {
-              if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
-                openModals.forEach(function(modalEl) {
-                  var instance = bootstrap.Modal.getInstance(modalEl);
-                  if (instance) {
-                    instance.hide();
-                  }
-                });
-              } else if (typeof jQuery !== 'undefined' && jQuery.fn.modal) {
-                jQuery('.modal.show').modal('hide');
+            // Keep brochure modal open after successful submit so thank-you/download can be shown.
+            var isBrochureModalForm = $form.closest('#brochureModal').length > 0;
+            if (!isBrochureModalForm) {
+              // Close form popup on success first so body is restored by modal's hidden handler
+              var openModals = document.querySelectorAll('.modal.show');
+              if (openModals.length) {
+                if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+                  openModals.forEach(function(modalEl) {
+                    var instance = bootstrap.Modal.getInstance(modalEl);
+                    if (instance) {
+                      instance.hide();
+                    }
+                  });
+                } else if (typeof jQuery !== 'undefined' && jQuery.fn.modal) {
+                  jQuery('.modal.show').modal('hide');
+                }
               }
             }
             $(document).trigger('cf7-hide-global-error');

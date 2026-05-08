@@ -46,6 +46,9 @@
                     
                     add_action( 'wp_ajax_update-custom-type-order',         array ( $this, 'saveAjaxOrder') );
                     add_action( 'wp_ajax_update-custom-type-order-archive', array ( $this, 'saveArchiveAjaxOrder') );
+                    
+                    add_filter( 'plugin_action_links_post-types-order/post-types-order.php',                  array ( $this,  'add_plugin_action_links') );
+                    add_filter( 'network_admin_plugin_action_links_post-types-order/post-types-order.php' ,   array ( $this,  'add_plugin_action_links')  );
                 
                 }
 
@@ -306,7 +309,7 @@
                         return;
                                                                 
                     //if is taxonomy term filter return
-                    if(is_category()    ||  is_tax())
+                    if( is_category()    ||  is_tax() )
                         return;
                     
                     //return if use orderby columns
@@ -388,7 +391,7 @@
                                             foreach( $values as $position => $id ) 
                                                 {
                                                     //sanitize
-                                                    $id =   (int)$id;
+                                                    $id =   intval ( $id ); 
                                                     
                                                     $data = array('menu_order' => $position);
                                                     
@@ -406,7 +409,7 @@
                                                 {
                                                     
                                                     //sanitize
-                                                    $id =   (int)$id;
+                                                    $id =   intval ( $id );
                                                     
                                                     $data = array('menu_order' => $position, 'post_parent' => str_replace('item_', '', $key));
                                                     
@@ -489,6 +492,9 @@
                     //update the menu_order within database
                     foreach( $objects_ids as $menu_order   =>  $id ) 
                         {
+                            //sanitize
+                            $id =   intval ( $id );
+                            
                             $data = array(
                                             'menu_order' => $menu_order
                                             );
@@ -592,6 +598,17 @@
                         
                     wp_register_style('CPTStyleSheets', CPTURL . '/css/cpt.css', array(), PTO_VERSION );
                     wp_enqueue_style( 'CPTStyleSheets');
+                }
+                
+                
+                
+            function add_plugin_action_links( $plugin_actions )
+                {
+                    $new_actions = array();
+
+                    $new_actions['cpto_settings'] = sprintf( __( '<a href="%s">Settings</a>', 'post-types-order' ), esc_url( admin_url( 'options-general.php?page=cpto-options' ) ) );
+
+                    return array_merge( $new_actions, $plugin_actions );    
                 }
             
             
