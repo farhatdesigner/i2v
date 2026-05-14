@@ -45,6 +45,7 @@
 .search-popup-overlay.active .search-popup-container {
   transform: translateY(0) scale(1);
   opacity: 1;
+  box-shadow: 0 0 10px 0 rgba(0, 82, 128, 0.10);
 }
 
 .js-dark .search-popup-container {

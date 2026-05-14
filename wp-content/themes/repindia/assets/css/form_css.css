@@ -119,7 +119,7 @@ a.explr_btn.xl-btn:hover,a.home_btn.xl-btn:hover,
 .formpopup_modal .formnotic { margin: 8px 0px; }
 .formpopup_modal .career-apply-form.styled-career-form.popupform, .formpopup_modal .modal-technology-partners-form .modal-body-content,
 .formpopup_modal .modal-logopartner-form .modal-body-content { padding: 20px 30px; padding-top: 85px;}
-textarea.form-control{ max-height: 100px; }
+textarea.form-control{ max-height: max-content; }
 .wpcf7-not-valid-tip{ font-size: 14px;line-height: normal;margin-top: 3px; }
 .form-control{ margin-bottom: 0px!important; }
 .formpopup_modal .wpcf7-form-control-wrap{ margin-bottom: 12px; }
