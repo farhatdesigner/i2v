@@ -414,6 +414,7 @@ select.form-control {
 }
 .form-control:focus {
   border-color: #008EDB;
+  background-color: #fff;
   outline: 0;
   box-shadow: none;
 }
@@ -427,7 +428,7 @@ select.form-control {
 .js-dark .form-control:focus {
   border-color: #007ABE;
 }
-.js-dark .wpcf7-not-valid-tip, .js-dark #mobile-error {
+.js-dark .wpcf7-not-valid-tip, .js-dark #mobile-error, .js-dark .form-label span.star {
   color: #D58F8F !important;
 }
 .country-select.inside input[type="text"].form-control {
@@ -477,6 +478,8 @@ input[type="checkbox"] {
   align-items: flex-start;
   gap: 4px;
 }
+
+.wpcf7-form-control-wrap .wpcf7-list-item label {cursor: pointer;}
 span.wpcf7-list-item-label {
   color: #5f6f94;
   font-size: 14px;
@@ -484,7 +487,7 @@ span.wpcf7-list-item-label {
   line-height: 20px;
 }
 textarea.form-control {
-  height: 124px;
+  height: auto;
   margin-bottom: 0;
 }
 .contactus_form p {

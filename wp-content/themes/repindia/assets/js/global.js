@@ -339,18 +339,40 @@ $(document).ready(function () {
     var modalScrollPosition = 0;
     var brochureModalScrollPosition = 0;
 
-    // Single debounced run after any modal/menu close: re-create cards + gallery + hz-slider ScrollTriggers so layout is correct (fixes popup-close distortion for careers-list and industry details)
+    // After modal/menu close: restore saved scroll first, then re-init cards + gallery + hz-sliders so ScrollTrigger math matches the real viewport (gallery was only killed on open, not disabled in a half-built state).
     window.scheduleCardsRefreshAfterModalClose = function () {
         if (window._cardsModalRefreshTimer) clearTimeout(window._cardsModalRefreshTimer);
         window._cardsModalRefreshTimer = setTimeout(function () {
             window._cardsModalRefreshTimer = null;
+
+            var posPre = null;
+            if (window._modalRestoreScrollPosition != null) {
+                posPre = Math.max(0, Math.round(window._modalRestoreScrollPosition));
+                window._modalRestoreScrollPosition = null;
+            }
+            if (posPre != null) {
+                if (typeof window.syncViewportScrollTo === "function") {
+                    window.syncViewportScrollTo(posPre);
+                } else if (typeof lenis !== "undefined" && lenis && typeof lenis.scrollTo === "function") {
+                    lenis.scrollTo(posPre, { immediate: true });
+                } else {
+                    if (window.scrollTo) {
+                        window.scrollTo(0, posPre);
+                    }
+                    document.documentElement.scrollTop = posPre;
+                    document.body.scrollTop = posPre;
+                }
+            }
+
             if (typeof initCardsCustomBodyGSAP === "function") {
                 initCardsCustomBodyGSAP();
             }
-            if (typeof initGalleryGSAP === "function") {
-                initGalleryGSAP();
+            if (window.innerWidth >= 1200) {
+                var scaleRoot = document.querySelector(".scalescroll-widget.makdmks");
+                if (scaleRoot && scaleRoot.querySelector(".gallery") && typeof initGalleryGSAP === "function") {
+                    initGalleryGSAP();
+                }
             }
-            // Re-init horizontal sliders (hz-slider-section, hz-slider-topcaption) so layout is correct after menu/modal close
             if (typeof window.reinitHzSliderSectionGSAP === "function") {
                 window.reinitHzSliderSectionGSAP();
             }
@@ -360,95 +382,175 @@ $(document).ready(function () {
             if (typeof window.reinitHzSliderEnergyGSAP === "function") {
                 window.reinitHzSliderEnergyGSAP();
             }
-            if (typeof ScrollTrigger !== "undefined") {
-                requestAnimationFrame(function () {
-                    ScrollTrigger.refresh();
-                    var gallerySections = document.querySelectorAll(".makdmks .detailsWrapper .details");
-                    var galleryPhotos = document.querySelectorAll(".makdmks .photo");
+
+            function runScrollTriggerGallerySync() {
+                if (typeof ScrollTrigger === "undefined") return;
+                ScrollTrigger.refresh();
+                ScrollTrigger.update();
+                if (posPre != null && typeof window.syncViewportScrollTo === "function") {
+                    window.syncViewportScrollTo(posPre);
+                }
+                if (typeof lenis !== "undefined" && lenis && typeof lenis.resize === "function") {
+                    lenis.resize();
+                }
+                if (typeof window.syncScaleScrollGalleryPhotoOpacity === "function") {
+                    window.syncScaleScrollGalleryPhotoOpacity();
+                } else {
+                    var galleryRoot = document.querySelector(".scalescroll-widget.makdmks");
+                    var gallerySections = galleryRoot ? galleryRoot.querySelectorAll(".detailsWrapper .details") : [];
+                    var galleryPhotos = galleryRoot ? galleryRoot.querySelectorAll(".photo") : [];
                     if (gallerySections.length && galleryPhotos.length && typeof gsap !== "undefined") {
+                        var scrollY = typeof window.getGlobalScrollY === "function"
+                            ? window.getGlobalScrollY()
+                            : (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);
                         var photoIndex = 0;
-                        for (var i = 0; i < gallerySections.length; i++) {
-                            var st = ScrollTrigger.getById("gallery-section-" + i);
-                            if (st && st.progress >= 0 && st.progress <= 1) {
-                                photoIndex = i;
-                                break;
+                        for (var gi = 0; gi < gallerySections.length; gi++) {
+                            var gst = ScrollTrigger.getById("gallery-section-" + gi);
+                            if (gst && scrollY >= gst.start) {
+                                photoIndex = gi;
                             }
                         }
                         gsap.set(galleryPhotos, { opacity: 0 });
                         gsap.set(galleryPhotos[photoIndex], { opacity: 1 });
                     }
-                    // Sync horizontal sliders to current scroll position after reinit
-                    if (typeof window.syncHzSliderSectionToScroll === "function") {
-                        window.syncHzSliderSectionToScroll();
-                    }
-                    if (typeof window.syncHzSliderTopcaptionToScroll === "function") {
-                        window.syncHzSliderTopcaptionToScroll();
-                    }
-                    if (typeof window.syncHzSliderEnergyToScroll === "function") {
-                        window.syncHzSliderEnergyToScroll();
-                    }
-                    // Re-apply scroll after GSAP refresh (next tick) so layout and scroll stay in sync when modal scroll came from body.style.top e.g. hamburger open
-                    if (window._modalRestoreScrollPosition != null) {
-                        var pos = Math.max(0, Math.round(window._modalRestoreScrollPosition));
-                        window._modalRestoreScrollPosition = null;
-                        setTimeout(function () {
-                            window.scrollTo(0, pos);
-                            document.documentElement.scrollTop = pos;
-                            document.body.scrollTop = pos;
-                        }, 0);
-                    }
+                }
+                if (typeof window.syncHzSliderSectionToScroll === "function") {
+                    window.syncHzSliderSectionToScroll();
+                }
+                if (typeof window.syncHzSliderTopcaptionToScroll === "function") {
+                    window.syncHzSliderTopcaptionToScroll();
+                }
+                if (typeof window.syncHzSliderEnergyToScroll === "function") {
+                    window.syncHzSliderEnergyToScroll();
+                }
+            }
+
+            if (typeof ScrollTrigger !== "undefined") {
+                requestAnimationFrame(function () {
+                    requestAnimationFrame(function () {
+                        runScrollTriggerGallerySync();
+                    });
                 });
-            } else if (window._modalRestoreScrollPosition != null) {
-                window._modalRestoreScrollPosition = null;
+            } else if (posPre != null) {
+                if (typeof window.syncViewportScrollTo === "function") {
+                    window.syncViewportScrollTo(posPre);
+                } else if (typeof lenis !== "undefined" && lenis && typeof lenis.scrollTo === "function") {
+                    lenis.scrollTo(posPre, { immediate: true });
+                } else {
+                    if (window.scrollTo) {
+                        window.scrollTo(0, posPre);
+                    }
+                    document.documentElement.scrollTop = posPre;
+                    document.body.scrollTop = posPre;
+                }
             }
         }, 350);
     };
 
-    // Reset only the scrolling gallery section (.makdmks) to first-card state after modal close.
-    window.scheduleMakdmksFirstCardResetAfterModalClose = function () {
-        if (window._makdmksFirstCardResetTimer) clearTimeout(window._makdmksFirstCardResetTimer);
-        window._makdmksFirstCardResetTimer = setTimeout(function () {
-            window._makdmksFirstCardResetTimer = null;
-
-            if (window.innerWidth < 1200) return;
-            var root = document.querySelector(".makdmks");
-            if (!root) return;
-
-            if (typeof ScrollTrigger !== "undefined") {
-                ScrollTrigger.getAll().forEach(function (st) {
-                    var id = st.vars && st.vars.id ? String(st.vars.id) : "";
-                    if (id.indexOf("gallery-section-") === 0 || id === "gallery-pin") {
-                        st.kill();
-                    }
-                });
+    // Scale-scroll gallery: disable pin/scrub triggers before locking body scroll so they do not fight global scroll. After close, initGalleryGSAP runs again from scheduleCardsRefreshAfterModalClose.
+    window.disableScaleScrollGalleryScrollTriggers = function () {
+        if (typeof ScrollTrigger === "undefined") return;
+        ScrollTrigger.getAll().forEach(function (st) {
+            var id = st.vars && st.vars.id ? String(st.vars.id) : "";
+            if (id.indexOf("gallery-section-") === 0 || id === "gallery-pin") {
+                st.disable(false, false);
             }
-
-            if (typeof initGalleryGSAP === "function") {
-                initGalleryGSAP();
-            }
-
-            requestAnimationFrame(function () {
-                var rootTop = root.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop || 0);
-                var targetY = Math.max(0, Math.round(rootTop - (window.innerHeight * 0.25) + 1));
-                window.scrollTo(0, targetY);
-                document.documentElement.scrollTop = targetY;
-                document.body.scrollTop = targetY;
-
-                if (typeof ScrollTrigger !== "undefined") {
-                    ScrollTrigger.refresh();
-                }
-
-                if (typeof gsap !== "undefined") {
-                    var photos = root.querySelectorAll(".photo");
-                    if (photos.length) {
-                        gsap.set(photos, { opacity: 0 });
-                        gsap.set(photos[0], { opacity: 1 });
-                    }
-                }
-            });
-        }, 220);
+        });
     };
 
+    window.isViewportInsideScaleScrollWidget = function () {
+        var root = document.querySelector(".scalescroll-widget.makdmks");
+        if (!root || window.innerWidth < 1200) return false;
+        var rect = root.getBoundingClientRect();
+        var vh = window.innerHeight || 1;
+        var overlap = Math.min(rect.bottom, vh) - Math.max(rect.top, 0);
+        if (overlap > vh * 0.08) {
+            return true;
+        }
+        var scrollY = typeof window.getGlobalScrollY === "function"
+            ? window.getGlobalScrollY()
+            : (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);
+        var centerDoc = scrollY + vh * 0.5;
+        var secTop = scrollY + rect.top;
+        var secBottom = scrollY + rect.bottom;
+        return centerDoc >= secTop && centerDoc <= secBottom;
+    };
+
+    window.syncScaleScrollGalleryPhotoOpacity = function () {
+        var galleryRoot = document.querySelector(".scalescroll-widget.makdmks");
+        if (!galleryRoot || typeof ScrollTrigger === "undefined" || typeof gsap === "undefined") return;
+        var gallerySections = galleryRoot.querySelectorAll(".detailsWrapper .details");
+        var galleryPhotos = galleryRoot.querySelectorAll(".photo");
+        if (!gallerySections.length || !galleryPhotos.length) return;
+        var scrollY = typeof window.getGlobalScrollY === "function"
+            ? window.getGlobalScrollY()
+            : (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);
+        var photoIndex = 0;
+        for (var gi = 0; gi < gallerySections.length; gi++) {
+            var gst = ScrollTrigger.getById("gallery-section-" + gi);
+            if (gst && scrollY >= gst.start) {
+                photoIndex = gi;
+            }
+        }
+        gsap.set(galleryPhotos, { opacity: 0 });
+        gsap.set(galleryPhotos[photoIndex], { opacity: 1 });
+    };
+
+    // When opening a modal/menu over the scale-scroll section: kill gallery ScrollTriggers only (do not create then disable — that breaks pin state). Gallery is recreated after close in scheduleCardsRefreshAfterModalClose once scroll is restored.
+    window.killScaleScrollGalleryScrollTriggers = function () {
+        if (typeof ScrollTrigger === "undefined") return;
+        ScrollTrigger.getAll().forEach(function (st) {
+            var id = st.vars && st.vars.id ? String(st.vars.id) : "";
+            if (id.indexOf("gallery-section-") === 0 || id === "gallery-pin") {
+                st.kill();
+            }
+        });
+        if (typeof window.cleanupScaleScrollGalleryPinDom === "function") {
+            window.cleanupScaleScrollGalleryPinDom();
+        }
+    };
+
+    // After killing gallery ScrollTriggers: remove leftover pin-spacers and GSAP transforms on .right (prevents flex layout collapse / offset seen after modals).
+    window.cleanupScaleScrollGalleryPinDom = function () {
+        var makdmks = document.querySelector(".scalescroll-widget.makdmks");
+        if (!makdmks) return;
+        var gallery = makdmks.querySelector(".gallery");
+        var pinRight = makdmks.querySelector(".right");
+        if (typeof gsap !== "undefined" && pinRight) {
+            gsap.set(pinRight, { clearProps: "transform,translate,top,left" });
+        }
+        if (!gallery) return;
+        var spacers = gallery.querySelectorAll(".pin-spacer");
+        spacers.forEach(function (spacer) {
+            if (!spacer.parentNode || !gallery.contains(spacer)) return;
+            while (spacer.firstChild) {
+                gallery.insertBefore(spacer.firstChild, spacer);
+            }
+            spacer.parentNode.removeChild(spacer);
+        });
+    };
+
+    window.resetScaleScrollGalleryBeforeBodyLock = function (anchorScrollY) {
+        if (window.innerWidth < 1200) return;
+        if (typeof window.isViewportInsideScaleScrollWidget === "function" && !window.isViewportInsideScaleScrollWidget()) return;
+        if (typeof window.killScaleScrollGalleryScrollTriggers === "function") {
+            window.killScaleScrollGalleryScrollTriggers();
+        }
+        if (typeof ScrollTrigger !== "undefined") {
+            ScrollTrigger.refresh();
+            ScrollTrigger.update();
+        }
+        var y = Math.max(0, Math.round(anchorScrollY));
+        if (typeof window.syncViewportScrollTo === "function") {
+            window.syncViewportScrollTo(y);
+        } else {
+            if (window.scrollTo) {
+                window.scrollTo(0, y);
+            }
+            document.documentElement.scrollTop = y;
+            document.body.scrollTop = y;
+        }
+    };
     // Helper function to get scrollbar width
     function getScrollbarWidth() {
         // Create a temporary div to measure scrollbar width
@@ -687,25 +789,33 @@ $(document).ready(function () {
             });
             
             // Immediately restore scroll position - do this synchronously
-            // Set all possible scroll properties to ensure it works
-            if (window.scrollTo) {
-                window.scrollTo(0, restorePosition);
+            if (typeof window.syncViewportScrollTo === "function") {
+                window.syncViewportScrollTo(restorePosition);
+            } else {
+                if (window.scrollTo) {
+                    window.scrollTo(0, restorePosition);
+                }
+                document.documentElement.scrollTop = restorePosition;
+                document.body.scrollTop = restorePosition;
+                $(window).scrollTop(restorePosition);
             }
-            document.documentElement.scrollTop = restorePosition;
-            document.body.scrollTop = restorePosition;
-            $(window).scrollTop(restorePosition);
             
             // Double-check after a micro-delay to ensure position is maintained
             requestAnimationFrame(function() {
-                var currentScroll = window.pageYOffset || document.documentElement.scrollTop || $(window).scrollTop() || 0;
+                var currentScroll = typeof window.getGlobalScrollY === "function"
+                    ? window.getGlobalScrollY()
+                    : (window.pageYOffset || document.documentElement.scrollTop || $(window).scrollTop() || 0);
                 if (Math.abs(currentScroll - restorePosition) > 1) {
-                    // If position drifted, restore it again
-                    if (window.scrollTo) {
-                        window.scrollTo(0, restorePosition);
+                    if (typeof window.syncViewportScrollTo === "function") {
+                        window.syncViewportScrollTo(restorePosition);
+                    } else {
+                        if (window.scrollTo) {
+                            window.scrollTo(0, restorePosition);
+                        }
+                        document.documentElement.scrollTop = restorePosition;
+                        document.body.scrollTop = restorePosition;
+                        $(window).scrollTop(restorePosition);
                     }
-                    document.documentElement.scrollTop = restorePosition;
-                    document.body.scrollTop = restorePosition;
-                    $(window).scrollTop(restorePosition);
                 }
                 
                 // Restore original scroll-behavior after scroll position is restored
@@ -717,8 +827,8 @@ $(document).ready(function () {
                 }
                 // Re-run ScrollTrigger/slider refresh after menu close (fixes careers-list hz-slider distortion when menu popup is closed)
                 window._modalRestoreScrollPosition = restorePosition;
-                if (typeof window.scheduleMakdmksFirstCardResetAfterModalClose === "function") {
-                    window.scheduleMakdmksFirstCardResetAfterModalClose();
+                if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
+                    window.scheduleCardsRefreshAfterModalClose();
                 }
             });
         });
@@ -739,11 +849,13 @@ $(document).ready(function () {
     // Lock body scroll when formpopup_modal opens
     $(document).on('show.bs.modal', '.formpopup_modal', function () {
         // Save current scroll position using multiple methods for reliability
-        modalScrollPosition = window.pageYOffset ||
+        modalScrollPosition = typeof window.getGlobalScrollY === "function"
+            ? window.getGlobalScrollY()
+            : (window.pageYOffset ||
                               document.documentElement.scrollTop ||
                               document.body.scrollTop ||
                               $(window).scrollTop() ||
-                              0;
+                              0);
 
                 // When body is already position:fixed (e.g. hamburger menu open), pageYOffset is often 0 - use body's top so we don't restore to 0 on modal close
                 if (modalScrollPosition === 0 && document.body.style.position === "fixed" && document.body.style.top) {
@@ -761,10 +873,16 @@ $(document).ready(function () {
         // Ensure we have a valid number
         modalScrollPosition = Math.max(0, Math.round(modalScrollPosition));
 
-        // Unpin card ScrollTriggers BEFORE locking body so reflow from unpin doesn't distort the modal layout
+        if (typeof window.resetScaleScrollGalleryBeforeBodyLock === "function") {
+            window.resetScaleScrollGalleryBeforeBodyLock(modalScrollPosition);
+        }
+
+        // Unpin card + scale-scroll gallery ScrollTriggers BEFORE locking body so reflow from unpin doesn't distort the modal layout
         if (typeof ScrollTrigger !== "undefined") {
             ScrollTrigger.getAll().forEach(function(st) {
-                if (st.vars && st.vars.id && String(st.vars.id).indexOf("card-") === 0) {
+                if (!st.vars || !st.vars.id) return;
+                var sid = String(st.vars.id);
+                if (sid.indexOf("card-") === 0 || sid.indexOf("gallery-section-") === 0 || sid === "gallery-pin") {
                     st.disable(false, false);
                 }
             });
@@ -785,7 +903,8 @@ $(document).ready(function () {
         $(window).on("scroll", preventModalBodyScroll);
         document.addEventListener("wheel", preventModalBodyWheel, { passive: false, capture: false });
         $("body, .modal-backdrop").on("touchmove", preventModalBodyScroll);
-        $(".formpopup_modal .modal-content, .formpopup_modal .modal-body").on("wheel", function(e) {
+        // Bind wheel stop only on this modal so opening/closing one popup does not strip handlers from others (e.g. header demo form).
+        $(this).find(".modal-content, .modal-body").on("wheel", function (e) {
             e.stopPropagation();
         });
     });
@@ -803,7 +922,7 @@ $(document).ready(function () {
         $(window).off("scroll", preventModalBodyScroll);
         document.removeEventListener("wheel", preventModalBodyWheel, false);
         $("body, .modal-backdrop").off("touchmove", preventModalBodyScroll);
-        $(".formpopup_modal .modal-content, .formpopup_modal .modal-body").off("wheel");
+        $(this).find(".modal-content, .modal-body").off("wheel");
 
         // Store the exact scroll position we want to restore
         var restorePosition = modalScrollPosition;
@@ -831,25 +950,33 @@ $(document).ready(function () {
             });
 
             // Immediately restore scroll position - do this synchronously
-            // Set all possible scroll properties to ensure it works
-            if (window.scrollTo) {
-                window.scrollTo(0, restorePosition);
+            if (typeof window.syncViewportScrollTo === "function") {
+                window.syncViewportScrollTo(restorePosition);
+            } else {
+                if (window.scrollTo) {
+                    window.scrollTo(0, restorePosition);
+                }
+                document.documentElement.scrollTop = restorePosition;
+                document.body.scrollTop = restorePosition;
+                $(window).scrollTop(restorePosition);
             }
-            document.documentElement.scrollTop = restorePosition;
-            document.body.scrollTop = restorePosition;
-            $(window).scrollTop(restorePosition);
 
             // Double-check after a micro-delay to ensure position is maintained
             requestAnimationFrame(function() {
-                var currentScroll = window.pageYOffset || document.documentElement.scrollTop || $(window).scrollTop() || 0;
+                var currentScroll = typeof window.getGlobalScrollY === "function"
+                    ? window.getGlobalScrollY()
+                    : (window.pageYOffset || document.documentElement.scrollTop || $(window).scrollTop() || 0);
                 if (Math.abs(currentScroll - restorePosition) > 1) {
-                    // If position drifted, restore it again
-                    if (window.scrollTo) {
-                        window.scrollTo(0, restorePosition);
+                    if (typeof window.syncViewportScrollTo === "function") {
+                        window.syncViewportScrollTo(restorePosition);
+                    } else {
+                        if (window.scrollTo) {
+                            window.scrollTo(0, restorePosition);
+                        }
+                        document.documentElement.scrollTop = restorePosition;
+                        document.body.scrollTop = restorePosition;
+                        $(window).scrollTop(restorePosition);
                     }
-                    document.documentElement.scrollTop = restorePosition;
-                    document.body.scrollTop = restorePosition;
-                    $(window).scrollTop(restorePosition);
                 }
 
                 // Restore original scroll-behavior after scroll position is restored
@@ -862,8 +989,8 @@ $(document).ready(function () {
 
                 // Pass intended scroll position so it can be re-applied after GSAP refresh (avoids GSAP/scroll conflict when body was fixed e.g. hamburger)
                 window._modalRestoreScrollPosition = restorePosition;
-                if (typeof window.scheduleMakdmksFirstCardResetAfterModalClose === "function") {
-                    window.scheduleMakdmksFirstCardResetAfterModalClose();
+                if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
+                    window.scheduleCardsRefreshAfterModalClose();
                 }
 
                 // Re-run sticky fixed-header logic after popup close (programmatic scroll doesn't fire scroll; resize resets sticky state and re-evaluates fixed-header)
@@ -876,16 +1003,24 @@ $(document).ready(function () {
 
     // Lock body scroll when brochure modal opens
     $(document).on('show.bs.modal', '#brochureModal', function () {
-        brochureModalScrollPosition = window.pageYOffset ||
+        brochureModalScrollPosition = typeof window.getGlobalScrollY === "function"
+            ? window.getGlobalScrollY()
+            : (window.pageYOffset ||
             document.documentElement.scrollTop ||
             document.body.scrollTop ||
             $(window).scrollTop() ||
-            0;
+            0);
         brochureModalScrollPosition = Math.max(0, Math.round(brochureModalScrollPosition));
+
+        if (typeof window.resetScaleScrollGalleryBeforeBodyLock === "function") {
+            window.resetScaleScrollGalleryBeforeBodyLock(brochureModalScrollPosition);
+        }
 
         if (typeof ScrollTrigger !== "undefined") {
             ScrollTrigger.getAll().forEach(function (st) {
-                if (st.vars && st.vars.id && String(st.vars.id).indexOf("card-") === 0) {
+                if (!st.vars || !st.vars.id) return;
+                var sid = String(st.vars.id);
+                if (sid.indexOf("card-") === 0 || sid.indexOf("gallery-section-") === 0 || sid === "gallery-pin") {
                     st.disable(false, false);
                 }
             });
@@ -936,22 +1071,32 @@ $(document).ready(function () {
                 "width": ""
             });
 
-            if (window.scrollTo) {
-                window.scrollTo(0, restorePosition);
+            if (typeof window.syncViewportScrollTo === "function") {
+                window.syncViewportScrollTo(restorePosition);
+            } else {
+                if (window.scrollTo) {
+                    window.scrollTo(0, restorePosition);
+                }
+                document.documentElement.scrollTop = restorePosition;
+                document.body.scrollTop = restorePosition;
+                $(window).scrollTop(restorePosition);
             }
-            document.documentElement.scrollTop = restorePosition;
-            document.body.scrollTop = restorePosition;
-            $(window).scrollTop(restorePosition);
 
             requestAnimationFrame(function () {
-                var currentScroll = window.pageYOffset || document.documentElement.scrollTop || $(window).scrollTop() || 0;
+                var currentScroll = typeof window.getGlobalScrollY === "function"
+                    ? window.getGlobalScrollY()
+                    : (window.pageYOffset || document.documentElement.scrollTop || $(window).scrollTop() || 0);
                 if (Math.abs(currentScroll - restorePosition) > 1) {
-                    if (window.scrollTo) {
-                        window.scrollTo(0, restorePosition);
+                    if (typeof window.syncViewportScrollTo === "function") {
+                        window.syncViewportScrollTo(restorePosition);
+                    } else {
+                        if (window.scrollTo) {
+                            window.scrollTo(0, restorePosition);
+                        }
+                        document.documentElement.scrollTop = restorePosition;
+                        document.body.scrollTop = restorePosition;
+                        $(window).scrollTop(restorePosition);
                     }
-                    document.documentElement.scrollTop = restorePosition;
-                    document.body.scrollTop = restorePosition;
-                    $(window).scrollTop(restorePosition);
                 }
                 if (originalHtmlScrollBehavior) {
                     $("html").css("scroll-behavior", originalHtmlScrollBehavior);
@@ -970,21 +1115,45 @@ $(document).ready(function () {
         });
     });
 
+    // Other Bootstrap modals (not form popups / brochure): rebuild scale-scroll ST when opening over that section so GSAP stays stable.
+    $(document).on("show.bs.modal", ".modal", function () {
+        var $m = $(this);
+        if ($m.hasClass("formpopup_modal") || $m.is("#brochureModal")) {
+            return;
+        }
+        var sy = typeof window.getGlobalScrollY === "function"
+            ? window.getGlobalScrollY()
+            : (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);
+        if (typeof window.resetScaleScrollGalleryBeforeBodyLock === "function") {
+            window.resetScaleScrollGalleryBeforeBodyLock(sy);
+        }
+    });
+
     // Modal closes only via close (X) button - no close on outside/backdrop click
 
     // Open menu when burger icon is clicked
     $(".burger-icon").click(function () {
         // Save current scroll position using multiple methods for reliability
         // Get the most accurate scroll position
-        scrollPosition = window.pageYOffset || 
-                        document.documentElement.scrollTop || 
-                        document.body.scrollTop || 
-                        $(window).scrollTop() || 
-                        0;
+        scrollPosition = typeof window.getGlobalScrollY === "function"
+            ? window.getGlobalScrollY()
+            : (window.pageYOffset ||
+                        document.documentElement.scrollTop ||
+                        document.body.scrollTop ||
+                        $(window).scrollTop() ||
+                        0);
         
         // Ensure we have a valid number
         scrollPosition = Math.max(0, Math.round(scrollPosition));
-        
+
+        if (typeof window.resetScaleScrollGalleryBeforeBodyLock === "function") {
+            window.resetScaleScrollGalleryBeforeBodyLock(scrollPosition);
+        }
+
+        if (typeof window.disableScaleScrollGalleryScrollTriggers === "function") {
+            window.disableScaleScrollGalleryScrollTriggers();
+        }
+
         $(this).addClass("active-burger");
         $(".toggle-menu-container").addClass("open-menu");
         $("nav").addClass("overlaynav-active");
@@ -2073,8 +2242,11 @@ jQuery(document).ready(function() {
         if (typeof window.destroySectionsscrollGSAP === "function") window.destroySectionsscrollGSAP();
         if (typeof ScrollTrigger !== "undefined") {
             ScrollTrigger.getAll().forEach(function(st) {
-                var id = st.vars && st.vars.id ? String(st.vars.id) : "";
-                if (id.indexOf("card-") === 0) st.disable(false, false);
+                if (!st.vars || !st.vars.id) return;
+                var sid = String(st.vars.id);
+                if (sid.indexOf("card-") === 0 || sid.indexOf("gallery-section-") === 0 || sid === "gallery-pin") {
+                    st.disable(false, false);
+                }
             });
         }
         
@@ -2128,8 +2300,8 @@ jQuery(document).ready(function() {
             jQuery("body").removeClass("modal-open");
             jQuery("body").css({ "overflow": "auto", "padding-right": "0", "position": "", "top": "", "left": "", "right": "", "width": "" });
         }
-        if (typeof window.scheduleMakdmksFirstCardResetAfterModalClose === "function") {
-            window.scheduleMakdmksFirstCardResetAfterModalClose();
+        if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
+            window.scheduleCardsRefreshAfterModalClose();
         }
 
         // Re-run sticky fixed-header logic so fixed-header class is correct after any modal close
@@ -2177,25 +2349,86 @@ function destroySectionsscrollGSAP() {
 }
 window.destroySectionsscrollGSAP = destroySectionsscrollGSAP;
 window.reinitSectionsscrollGSAP = initSectionsscrollGSAP;
-if (window.innerWidth >= 1180 && document.querySelector(".sectionsscroll")) {
-    ScrollTrigger.config({ autoRefreshEvents: "visibilitychange,DOMContentLoaded,load" });
-    initSectionsscrollGSAP();
-}
-
 
 
 
 // Initialize Lenis smooth scroll
 const lenis = new Lenis();
-lenis.on("scroll", (e) => {
-    console.log(e);
-});
+// Align ScrollTrigger scroll math with Lenis (otherwise pin/scrub drift vs actual smooth scroll, especially after modals).
+if (typeof ScrollTrigger !== "undefined") {
+    ScrollTrigger.scrollerProxy(document.documentElement, {
+        scrollTop: function (value) {
+            if (arguments.length && lenis && typeof lenis.scrollTo === "function") {
+                lenis.scrollTo(value, { immediate: true });
+            }
+            if (lenis && typeof lenis.animatedScroll === "number") {
+                return lenis.animatedScroll;
+            }
+            if (lenis && typeof lenis.scroll === "number") {
+                return lenis.scroll;
+            }
+            return window.pageYOffset || document.documentElement.scrollTop || 0;
+        },
+        getBoundingClientRect: function () {
+            return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
+        }
+    });
+    requestAnimationFrame(function () {
+        ScrollTrigger.refresh();
+    });
+}
+window.getGlobalScrollY = function () {
+    try {
+        if (typeof lenis !== "undefined" && lenis) {
+            if (typeof lenis.animatedScroll === "number") {
+                return Math.max(0, Math.round(lenis.animatedScroll));
+            }
+            if (typeof lenis.scroll === "number") {
+                return Math.max(0, Math.round(lenis.scroll));
+            }
+        }
+    } catch (e) {}
+    return Math.max(0, Math.round(
+        window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0
+    ));
+};
+window.syncViewportScrollTo = function (y) {
+    var pos = Math.max(0, Math.round(y));
+    if (typeof lenis !== "undefined" && lenis && typeof lenis.scrollTo === "function") {
+        lenis.scrollTo(pos, { immediate: true });
+    } else {
+        if (window.scrollTo) {
+            window.scrollTo(0, pos);
+        }
+        document.documentElement.scrollTop = pos;
+        document.body.scrollTop = pos;
+    }
+    if (typeof jQuery !== "undefined") {
+        jQuery(window).scrollTop(pos);
+    }
+    if (typeof ScrollTrigger !== "undefined") {
+        ScrollTrigger.update();
+    }
+};
 lenis.on("scroll", ScrollTrigger.update);
 gsap.ticker.add((time) => {
     lenis.raf(time * 1000); // Convert seconds to milliseconds
 });
 gsap.ticker.lagSmoothing(0);
 
+(function () {
+    function runSectionsscrollInitOnce() {
+        if (window.innerWidth >= 1180 && document.querySelector(".sectionsscroll")) {
+            ScrollTrigger.config({ autoRefreshEvents: "visibilitychange,DOMContentLoaded,load" });
+            initSectionsscrollGSAP();
+        }
+    }
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", runSectionsscrollInitOnce);
+    } else {
+        runSectionsscrollInitOnce();
+    }
+})();
 
 
 //Conver svg into svg code
@@ -2211,13 +2444,13 @@ gsap.ticker.lagSmoothing(0);
 // });
 
 
-// Gallery Animation - Only on min-width 1200px and when gallery exists
-// Wrapped in DOMContentLoaded + refresh on load; re-callable on modal close (kill + re-create) so popup close doesn't distort (same as cards-custom-body)
+// Gallery Animation — only for the Elementor Scale Scroll widget (.scalescroll-widget.makdmks), min-width 1200px.
+// Opening a modal over the widget: kill gallery ScrollTriggers only (resetScaleScrollGalleryBeforeBodyLock). After close: scheduleCardsRefreshAfterModalClose restores scroll first, then initGalleryGSAP + refresh.
 function initGalleryGSAP() {
     if (window.innerWidth < 1200) return;
-    const makdmks = document.querySelector(".makdmks");
+    const makdmks = document.querySelector(".scalescroll-widget.makdmks");
     const gallery = makdmks ? makdmks.querySelector(".gallery") : null;
-    if (!gallery) return;
+    if (!gallery || !makdmks) return;
 
     gsap.registerPlugin(ScrollTrigger);
 
@@ -2231,10 +2464,17 @@ function initGalleryGSAP() {
         });
     }
 
-    const sections = gsap.utils.toArray(".makdmks .detailsWrapper .details");
-    const photos = gsap.utils.toArray(".makdmks .photo");
-    if (sections.length === 0 || photos.length === 0) return;
+    if (typeof window.cleanupScaleScrollGalleryPinDom === "function") {
+        window.cleanupScaleScrollGalleryPinDom();
+    }
 
+    const sections = gsap.utils.toArray(makdmks.querySelectorAll(".detailsWrapper .details"));
+    const photos = gsap.utils.toArray(makdmks.querySelectorAll(".photo"));
+    const pinRight = makdmks.querySelector(".right");
+    const lastDetail = makdmks.querySelector(".detailsWrapper .details:last-child");
+    if (sections.length === 0 || photos.length === 0 || !pinRight || !lastDetail) return;
+
+    var scrollRoot = document.documentElement;
     gsap.set(photos, { opacity: 0 });
     gsap.set(photos[0], { opacity: 1 });
 
@@ -2245,6 +2485,7 @@ function initGalleryGSAP() {
 
     sections.forEach((section, index) => {
         ScrollTrigger.create({
+            scroller: scrollRoot,
             trigger: section,
             start: "top 25%",
             end: "bottom 25%",
@@ -2257,12 +2498,14 @@ function initGalleryGSAP() {
     });
 
     ScrollTrigger.create({
-        trigger: ".makdmks .gallery",
+        scroller: scrollRoot,
+        trigger: gallery,
         start: "top 20%",
-        endTrigger: ".makdmks .detailsWrapper .details:last-child",
+        endTrigger: lastDetail,
         end: "top 20%",
-        pin: ".makdmks .right",
+        pin: pinRight,
         pinSpacing: false,
+        anticipatePin: 1,
         invalidateOnRefresh: true,
         refreshPriority: -1,
         id: "gallery-pin"
