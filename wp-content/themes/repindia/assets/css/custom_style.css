@@ -5586,7 +5586,9 @@ label.form-label.label_notic a:hover, .form-label.notice-text a:hover, .custom-l
 .partner_choose_desc .elementor-element.icc_bannerbtn .btn-sec_gap, .partner_tech_desc .elementor-element.icc_bannerbtn .btn-sec_gap {align-items: flex-start;flex-direction: column;}
 .partner_choose_desc .elementor-element.icc_bannerbtn .btn-sec_gap .theme-btn, .partner_tech_desc .elementor-element.icc_bannerbtn .btn-sec_gap .theme-btn {max-width: fit-content;}
   
-
+#chooserole {
+  scroll-margin-top: 100px; 
+}
 
 
 @media(max-width: 768px){

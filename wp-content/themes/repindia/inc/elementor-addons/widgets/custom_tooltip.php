@@ -1124,7 +1124,7 @@ class Custom_Tooltip extends Widget_Base
                 }
 
                 #choose_video .ctw-wrapper {
-                    justify-content: center !important;
+                    justify-content: align-items: start !important;
                 }
 
                 #center_mobileviiew .ctw-title {

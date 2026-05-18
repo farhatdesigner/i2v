@@ -418,6 +418,14 @@ select.form-control {
   outline: 0;
   box-shadow: none;
 }
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  -webkit-text-fill-color: #000;
+  transition: background-color 5000s ease-in-out 0s;
+}
 .wpcf7-not-valid-tip, #mobile-error {
   color: #C92629 !important;
   font-size: 14px;
@@ -427,6 +435,18 @@ select.form-control {
 }
 .js-dark .form-control:focus {
   border-color: #007ABE;
+}
+.js-dark input:-webkit-autofill,
+.js-dark input:-webkit-autofill:hover,
+.js-dark input:-webkit-autofill:focus,
+.js-dark textarea:-webkit-autofill,
+.js-dark textarea:-webkit-autofill:hover,
+.js-dark textarea:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #464a4f inset;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.6);
+  /* caret-color: rgba(255, 255, 255, 0.6); */
+  border: 1px solid #ffffff26;
+  transition: background-color 5000s ease-in-out 0s;
 }
 .js-dark .wpcf7-not-valid-tip, .js-dark #mobile-error, .js-dark .form-label span.star {
   color: #D58F8F !important;
@@ -489,6 +509,8 @@ span.wpcf7-list-item-label {
 textarea.form-control {
   height: auto;
   margin-bottom: 0;
+  resize: none;
+  overflow: hidden;
 }
 .contactus_form p {
   margin: 0;
@@ -520,6 +542,8 @@ input.wpcf7-submit.form-control.submitbtn {
 .iti.iti--allow-dropdown.iti--separate-dial-code.iti--show-flags {
   width: 100%;
 }
+input:-internal-autofill-selected{background: inherit !important;}
+
 input:-internal-autofill-selected{background: inherit !important;}
 
 .wpcf7-spinner {
@@ -574,7 +598,7 @@ label.form-label.required_note {
 .js-dark .elementor-element.contactform_box.e-con {
   background-color: #0d1117 !important;
 }
-.js-dark .form-control {
+.js-dark .form-control  {
   border: 1px solid #ffffff26;
   background: #464a4f;
   color: rgba(255, 255, 255, 0.6);
