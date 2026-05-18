@@ -489,15 +489,23 @@
         });
 
         // Close CF7 error overlay on close button or clicking outside dialog
-        $doc.off('click', '.cf7-error-close[data-cf7-error-close]');
-        $doc.on('click', '.cf7-error-close[data-cf7-error-close]', function(e) {
+        $doc.off('click', '[data-cf7-error-close]');
+        $doc.on('click', '[data-cf7-error-close]', function(e) {
           e.preventDefault();
           hideCf7ErrorOverlay();
         });
 
+        $doc.off('keydown', '[data-cf7-error-close]');
+        $doc.on('keydown', '[data-cf7-error-close]', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            hideCf7ErrorOverlay();
+          }
+        });
+
         $doc.off('click', '.cf7-error-overlay');
         $doc.on('click', '.cf7-error-overlay', function(e) {
-          if ($(e.target).is('.cf7-error-overlay')) {
+          if (!$(e.target).closest('.modal-content').length) {
             hideCf7ErrorOverlay();
           }
         });
