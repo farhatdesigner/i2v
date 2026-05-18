@@ -77,6 +77,7 @@ a.explr_btn.xl-btn:hover,a.home_btn.xl-btn:hover,
     max-width: 766px;
     background: #fff;
     z-index: 2;
+    border-radius: var(--SM, 8px) var(--SM, 8px) 0 0;
 }
 .formpopup_modal .modal-demo-form .modal-title,
 .formpopup_modal .modal-logopartner-form .modal-title { font-size: 18px;font-weight: 600; }
@@ -118,7 +119,8 @@ a.explr_btn.xl-btn:hover,a.home_btn.xl-btn:hover,
 .js-dark .formpopup_modal .modal-content {scrollbar-color: rgba(255, 255, 255, 0.3) transparent;}
 .formpopup_modal .formnotic { margin: 8px 0px; }
 .formpopup_modal .career-apply-form.styled-career-form.popupform, .formpopup_modal .modal-technology-partners-form .modal-body-content,
-.formpopup_modal .modal-logopartner-form .modal-body-content { padding: 20px 30px; padding-top: 85px;}
+.formpopup_modal .modal-logopartner-form .modal-body-content,
+.cf7-error-overlay.formpopup_modal .modal-body-content.cf7-error-body { padding: 20px 30px; padding-top: 85px;}
 textarea.form-control{ max-height: max-content; }
 .wpcf7-not-valid-tip{ font-size: 14px;line-height: normal;margin-top: 3px; }
 .form-control{ margin-bottom: 0px!important; }

@@ -15,60 +15,80 @@
   opacity: 1;
   visibility: visible;
 }
-.cf7-error-overlay .cf7-error-dialog {
+.cf7-error-overlay.formpopup_modal .modal-content {
+  max-height: 95vh;
+  min-height: min(95vh, 640px);
+  border-radius: var(--SM, 8px);
+  overflow: hidden;
+  background: var(--ModalOverlay-bg, #fff);
+  box-shadow: 0 0 15px 0 rgba(138, 149, 158, 0.4);
 }
-.cf7-error-overlay .cf7-error-dialog {
+.cf7-error-overlay.formpopup_modal .modal-demo-form .modal-header {
+  /* max-width: 100%;
+  width: 100%; */
+  border-radius: var(--SM, 8px) var(--SM, 8px) 0 0;
+  border-bottom: 1px solid #e5e9ec;
 }
-.cf7-error-overlay .cf7-error-dialog {
-  background: #fff;
-  border-radius: 12px;
-  max-width: 640px;
-  width: 90%;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
-  padding: 32px 40px 36px;
+.js-dark .cf7-error-overlay.formpopup_modal .modal-demo-form .modal-header {
+  border-bottom: 1px solid #3e4144;
 }
-.cf7-error-overlay .cf7-error-header {
+.cf7-error-overlay.formpopup_modal .modal-dialog.modal-demo-form {
+  max-width: 766px;
+  width: 100%;
+  margin: 0 auto;
+}
+.cf7-error-overlay.formpopup_modal .modal-demo-form .modal-body {
+  min-height: 100%;
+}
+/* Match demo-success / other form popup vertical size */
+.cf7-error-overlay.formpopup_modal .modal-demo-form .modal-body-content.cf7-error-body {
+  margin-top: 0;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 450px;
+  width: 100%;
+  min-height: calc(min(95vh, 640px) - 56px);
+  box-sizing: border-box;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
-  margin-bottom: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+  text-align: center;
 }
-.cf7-error-overlay .cf7-error-heading {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 600;
+.js-dark .cf7-error-overlay .cf7-error-title {
+  color: #fff;
 }
-.cf7-error-overlay .cf7-error-close {
-  border: none;
-  background: transparent;
-  font-size: 24px;
-  line-height: 1;
-  cursor: pointer;
-  padding: 0;
+.js-dark .cf7-error-overlay .cf7-error-text {
+  color: rgba(255, 255, 255, 0.7);
 }
-.cf7-error-overlay .cf7-error-title {
-  font-size: 32px;
-  font-weight: 600;
-  margin-bottom: 12px;
-  color: #06283D;
+.cf7-error-overlay .cf7-error-title.size-custom {
+  margin-bottom: 4px;
+  color: #06283d;
 }
 .cf7-error-overlay .cf7-error-text {
-  margin: 4px 0;
+  margin: 0 0 4px;
   font-size: 14px;
-  color: #5C5C5C;
+  color: #5c5c5c;
   font-weight: 500;
+  line-height: 142.857%;
+}
+.cf7-error-overlay .cf7-error-text:last-of-type {
+  margin-bottom: 0;
 }
 .cf7-error-overlay .cf7-error-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 24px;
+  margin-top: 20px;
   justify-content: center;
   flex-direction: column;
-  gap: 12px;
 }
-.cf7-error-overlay .cf7-error-body {
-  text-align: center;padding: 0 60px 20px;
+.cf7-error-overlay .cf7-error-icon img {
+  max-width: 120px;
+  height: auto;
+  margin: 0 auto 12px;
+  display: block;
 }
 .cf7-error-overlay .cf7-error-action-inner {
   display: flex;
@@ -82,7 +102,12 @@
   width: auto;
   margin: 0 auto;
 }
-.js-dark .cf7-error-overlay .cf7-error-dialog{ background: #262a30; }
+.js-dark .cf7-error-overlay.formpopup_modal .modal-content {
+  background: #262a30;
+}
+.js-dark .cf7-error-overlay.formpopup_modal .modal-demo-form .modal-header {
+  background: #262a30;
+}
 @media(max-width: 1400px){
   .elementor-element.certificate_icon .elementor-widget-image img{ height: auto!important;max-height: 84px; }
 }
@@ -96,14 +121,22 @@
   }
 }
 @media (max-width: 768px) {
-  .cf7-error-overlay .cf7-error-dialog {
-    padding: 24px 20px 28px;
+  .cf7-error-overlay.formpopup_modal .modal-content {
+    min-height: min(95vh, 100%);
   }
-  .cf7-error-overlay .cf7-error-title {
+  .cf7-error-overlay.formpopup_modal .modal-dialog.modal-demo-form {
+    max-width: calc(100% - 18px);
+  }
+  .cf7-error-overlay.formpopup_modal .modal-demo-form .modal-body-content.cf7-error-body {
+    max-width: 100%;
+    min-height: calc(min(95vh, 100%) - 56px);
+  }
+  .cf7-error-overlay .cf7-error-title.size-custom {
     font-size: 20px;
   }
-  .cf7-error-overlay .cf7-error-body { padding: 0; }
-  .cf7-error-overlay .cf7-error-action-inner{ flex-direction: column; }
+  .cf7-error-overlay .cf7-error-action-inner {
+    flex-direction: column;
+  }
 }
 /* Wrapper around the country text input */
 .country-input-wrapper {
@@ -1220,7 +1253,8 @@ border-radius: 12px;
     .card-title { color: #06283D; }
     .cards-listing-section .card-body { padding: 20px !important; }
     .brochure_download,.formpopup_modal .career-apply-form.styled-career-form.popupform, .formpopup_modal .modal-technology-partners-form .modal-body-content,
-    #logomodal_custom .modal-logopartner-form .modal-body-content { padding-left: 16px;padding-right: 16px; }
+    #logomodal_custom .modal-logopartner-form .modal-body-content,
+    .cf7-error-overlay.formpopup_modal .modal-body-content.cf7-error-body { padding-left: 16px;padding-right: 16px; }
     .elementor-element.product_banner img { object-fit: cover; }
     .card-wrapper_single { padding: 20px 0 0; }
     .card-wrapper_single .card-contents { padding: 0 20px; }
