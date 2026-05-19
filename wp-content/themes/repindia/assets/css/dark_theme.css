@@ -682,6 +682,17 @@ header li.burger-icon .icon-sun,
 .js-dark .white_theme_img {
   display: none;
 }
+
+.js-dark #light_theme-img {
+  display: none;
+}
+
+.js-dark #dark_theme-img {
+  display: block;
+}
+#dark_theme-img {
+  display: none;
+}
 /* .js-dark .theme-btn  {background-color:#007ABE;} */
 
 .js-dark .theme-btn {
