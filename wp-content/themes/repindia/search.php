@@ -225,7 +225,7 @@ if ($filter_type === 'all') {
 							</div>
 
 							<div class="search-no-results-actions">
-								<a href="<?php echo esc_url(home_url('/resources/')); ?>" class="theme-btn xl-btn">
+								<a href="<?php echo esc_url(home_url('/resource-center/')); ?>" class="theme-btn xl-btn">
 									<?php echo esc_html__('Browse all resources', 'repindia'); ?>
 								</a>
 								<a href="<?php echo esc_url(home_url('/i2vs-products/')); ?>"
