@@ -242,7 +242,10 @@ header li.burger-icon .icon-sun,
   fill: #d7dbe4;
 }
 .js-dark .toggle-menu > li.active.parent > a,
-.js-dark header #header-main-menu li.active.parent > a {
+.js-dark header #header-main-menu li.active.parent > a,
+.js-dark #header-toggle-menu > li.active:nth-child(6) > a span,
+.js-dark #header-toggle-menu .sub-menu li.current-menu-item a
+{
   color: #74c2ed !important;
 }
 .js-dark .toggle-menu > li.active.parent > a,
@@ -679,6 +682,17 @@ header li.burger-icon .icon-sun,
 .js-dark .white_theme_img {
   display: none;
 }
+
+.js-dark #light_theme-img {
+  display: none;
+}
+
+.js-dark #dark_theme-img {
+  display: block;
+}
+#dark_theme-img {
+  display: none;
+}
 /* .js-dark .theme-btn  {background-color:#007ABE;} */
 
 .js-dark .theme-btn {
@@ -719,7 +733,8 @@ header li.burger-icon .icon-sun,
 .js-dark header #header-main-menu li a:hover,
 .js-dark .toggle-menu > li > a:hover,
 .js-dark .listing-inner > ul > li > a:hover,
-.js-dark #header-toggle-menu .sub-menu li a:hover {
+.js-dark #header-toggle-menu .sub-menu li a:hover,
+.js-dark .toggle-menu > li:nth-child(6):hover a span {
   color: rgb(255 255 255 / 90%) !important;
 }
 

@@ -211,20 +211,8 @@ if ($filter_type === 'all') {
 							</div>
 
 							<div class="search-no-results-icon">
-								<svg width="120" height="120" viewBox="0 0 120 120" fill="none"
-									xmlns="http://www.w3.org/2000/svg">
-									<rect width="120" height="120" rx="8" fill="white" />
-									<path d="M30 20H90V100H30V20Z" stroke="#333" stroke-width="2" fill="none" />
-									<line x1="35" y1="35" x2="85" y2="35" stroke="#333" stroke-width="2" />
-									<line x1="35" y1="50" x2="85" y2="50" stroke="#333" stroke-width="2" />
-									<line x1="35" y1="65" x2="70" y2="65" stroke="#333" stroke-width="2" />
-									<circle cx="75" cy="75" r="15" stroke="#333" stroke-width="2" fill="none" />
-									<line x1="85" y1="85" x2="95" y2="95" stroke="#333" stroke-width="2"
-										stroke-linecap="round" />
-									<circle cx="75" cy="75" r="5" fill="#0066CC" />
-									<line x1="77" y1="77" x2="82" y2="82" stroke="white" stroke-width="2"
-										stroke-linecap="round" />
-								</svg>
+						<img class="white_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2026/02/no-result-placeholder1.gif" alt="No Results Found" width="120" height="120">
+						<img class="black_theme_img" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2026/05/no-result-placeholder1_dark.gif" alt="No Results Found" width="120" height="120">
 							</div>
 
 							<div class="search-no-results-message">
@@ -237,7 +225,7 @@ if ($filter_type === 'all') {
 							</div>
 
 							<div class="search-no-results-actions">
-								<a href="<?php echo esc_url(home_url('/resources/')); ?>" class="theme-btn xl-btn">
+								<a href="<?php echo esc_url(home_url('/resource-center/')); ?>" class="theme-btn xl-btn">
 									<?php echo esc_html__('Browse all resources', 'repindia'); ?>
 								</a>
 								<a href="<?php echo esc_url(home_url('/i2vs-products/')); ?>"
