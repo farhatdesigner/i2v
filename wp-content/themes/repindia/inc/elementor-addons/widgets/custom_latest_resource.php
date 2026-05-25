@@ -603,9 +603,11 @@ class Custom_Latest_Resource extends Widget_Base
                                     <?php else: ?>
                                         <div style="background: #f0f0f0; width: 100%; height: 100%;"></div>
                                     <?php endif; ?>
-                                    <div class="custom-latest-resource-date-overlay">
-                                        <?php echo esc_html($post_date); ?>
-                                    </div>
+                                    <?php if ( ! has_term( 'success-stories', 'newsroom_type', $post_id ) ) : ?>
+                                        <div class="custom-latest-resource-date-overlay">
+                                            <?php echo esc_html($post_date); ?>
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
 
                                 <div class="custom-latest-resource-card-content">
