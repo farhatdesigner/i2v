@@ -675,3 +675,76 @@ if (!shortcode_exists('last_url_segment')) {
 			}
 		}
 		add_action('wp_enqueue_scripts', 'thankyou_redirect_script');
+
+// AJAX handler for Resource List "Show more" button
+add_action('wp_ajax_load_more_resources', 'handle_load_more_resources');
+add_action('wp_ajax_nopriv_load_more_resources', 'handle_load_more_resources');
+
+function handle_load_more_resources() {
+    check_ajax_referer('load_more_resources', 'nonce');
+
+    $offset     = isset($_POST['offset']) ? absint($_POST['offset']) : 0;
+    $load_count = isset($_POST['load_count']) ? absint($_POST['load_count']) : 3;
+    $sort       = isset($_POST['sort']) ? sanitize_text_field($_POST['sort']) : 'newest';
+    $type_slug  = isset($_POST['resource_type']) ? sanitize_text_field($_POST['resource_type']) : '';
+    $product_slug = isset($_POST['resource_product']) ? sanitize_text_field($_POST['resource_product']) : '';
+
+    $args = [
+        'post_type'      => 'resources',
+        'post_status'    => 'publish',
+        'posts_per_page' => $load_count,
+        'offset'         => $offset,
+        'order'          => ($sort === 'oldest') ? 'ASC' : 'DESC',
+    ];
+
+    $tax_query = [];
+    if (!empty($type_slug)) {
+        $tax_query[] = ['taxonomy' => 'resource_type', 'field' => 'slug', 'terms' => [$type_slug]];
+    }
+    if (!empty($product_slug)) {
+        $tax_query[] = ['taxonomy' => 'resource_product', 'field' => 'slug', 'terms' => [$product_slug]];
+    }
+    if (count($tax_query) > 1) {
+        $tax_query['relation'] = 'AND';
+    }
+    if (!empty($tax_query)) {
+        $args['tax_query'] = $tax_query;
+    }
+
+    $query = new WP_Query($args);
+
+    ob_start();
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            $post_id = get_the_ID();
+            $file_size = function_exists('get_field') ? get_field('resource_file_size', $post_id) : '';
+            $resource_types_terms = get_the_terms($post_id, 'resource_type');
+            ?>
+            <a href="<?php echo esc_url(get_permalink($post_id)); ?>" class="resource-card">
+                <div class="resource-content">
+                    <?php if (!empty($resource_types_terms) && !is_wp_error($resource_types_terms)) : ?>
+                        <div class="resource-type-badge"><?php echo esc_html($resource_types_terms[0]->name); ?></div>
+                    <?php endif; ?>
+                    <h3 class="resource-title"><?php echo esc_html(get_the_title($post_id)); ?></h3>
+                    <?php if (!empty($file_size)) : ?>
+                        <div class="resource-file-size"><?php echo esc_html($file_size); ?></div>
+                    <?php endif; ?>
+                </div>
+                <div class="resource-image">
+                    <?php if (has_post_thumbnail($post_id)) : ?>
+                        <?php echo get_the_post_thumbnail($post_id, 'medium'); ?>
+                    <?php endif; ?>
+                </div>
+            </a>
+            <?php
+        }
+    }
+    $html = ob_get_clean();
+    wp_reset_postdata();
+
+    wp_send_json_success([
+        'html'   => $html,
+        'loaded' => $query->post_count,
+    ]);
+}
