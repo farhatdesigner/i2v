@@ -138,12 +138,10 @@ class Custom_Resource_List extends Widget_Base {
         $url_sort = isset($_GET['sort']) ? sanitize_text_field($_GET['sort']) : 'newest';
         $url_page = isset($_GET['page']) ? intval($_GET['page']) : 1;
         
-        // Build query args - for load more, we need to calculate offset
-        $posts_to_show = $posts_per_page * $url_page;
         $args = [
             'post_type' => 'resources',
             'post_status' => 'publish',
-            'posts_per_page' => $posts_to_show,
+            'posts_per_page' => $posts_per_page,
             'order' => ($url_sort === 'oldest') ? 'ASC' : 'DESC',
         ];
         
@@ -371,16 +369,15 @@ class Custom_Resource_List extends Widget_Base {
                             <?php endwhile; ?>
                         </div>
                         
-                        <?php 
-                        // Calculate if there are more posts to load
-                        $total_posts = $query->found_posts;
-                        $currently_showing = $query->post_count;
-                        $has_more = $currently_showing < $total_posts;
-                        $next_page = $url_page + 1;
-                        ?>
-                        <?php if ($has_more) : ?>
+                        <?php if ($query->post_count < $query->found_posts) : ?>
                             <div class="resource-load-more">
-                                <button class="load-more-btn" data-next-page="<?php echo esc_attr($next_page); ?>">Show more</button>
+                                <button class="load-more-btn"
+                                    data-next-page="2"
+                                    data-posts-per-page="<?php echo esc_attr($posts_per_page); ?>"
+                                    data-found-posts="<?php echo esc_attr($query->found_posts); ?>"
+                                    data-ajax-url="<?php echo esc_url(admin_url('admin-ajax.php')); ?>"
+                                    data-nonce="<?php echo esc_attr(wp_create_nonce('load_more_resources')); ?>"
+                                >Show more</button>
                             </div>
                         <?php endif; ?>
                     <?php else : ?>
@@ -480,12 +477,59 @@ class Custom_Resource_List extends Widget_Base {
                 });
             }
             
-            // Load more button
+            // Load more button (AJAX)
             var loadMoreBtn = section.querySelector('.load-more-btn');
             if (loadMoreBtn) {
                 loadMoreBtn.addEventListener('click', function() {
-                    var nextPage = parseInt(this.getAttribute('data-next-page')) || 2;
-                    buildUrlAndReload(currentType, currentProduct, currentSort, nextPage);
+                    var btn = this;
+                    if (btn.disabled) return;
+
+                    var nextPage = parseInt(btn.getAttribute('data-next-page')) || 2;
+                    var perPage = parseInt(btn.getAttribute('data-posts-per-page')) || 12;
+                    var foundPosts = parseInt(btn.getAttribute('data-found-posts')) || 0;
+                    var ajaxUrl = btn.getAttribute('data-ajax-url');
+                    var nonce = btn.getAttribute('data-nonce');
+
+                    btn.disabled = true;
+                    btn.textContent = 'Loading...';
+
+                    var formData = new FormData();
+                    formData.append('action', 'load_more_resources');
+                    formData.append('nonce', nonce);
+                    formData.append('page', nextPage);
+                    formData.append('posts_per_page', perPage);
+                    formData.append('resource_type', currentType);
+                    formData.append('resource_product', currentProduct);
+                    formData.append('sort', currentSort);
+
+                    fetch(ajaxUrl, { method: 'POST', body: formData })
+                        .then(function(res) { return res.json(); })
+                        .then(function(data) {
+                            if (data.success && data.data.html) {
+                                var grid = section.querySelector('.resource-grid');
+                                if (grid) {
+                                    grid.insertAdjacentHTML('beforeend', data.data.html);
+                                }
+                                var countEl = section.querySelector('.resource-count');
+                                if (countEl) {
+                                    var currentCards = grid ? grid.querySelectorAll('.resource-card').length : 0;
+                                    countEl.textContent = 'Showing ' + currentCards + ' of ' + foundPosts;
+                                }
+                                if (data.data.has_more) {
+                                    btn.setAttribute('data-next-page', nextPage + 1);
+                                    btn.disabled = false;
+                                    btn.textContent = 'Show more';
+                                } else {
+                                    btn.parentElement.style.display = 'none';
+                                }
+                            } else {
+                                btn.parentElement.style.display = 'none';
+                            }
+                        })
+                        .catch(function() {
+                            btn.disabled = false;
+                            btn.textContent = 'Show more';
+                        });
                 });
             }
 
@@ -503,4 +547,76 @@ class Custom_Resource_List extends Widget_Base {
     <?php 
         wp_reset_postdata();
     }
+}
+
+add_action('wp_ajax_load_more_resources', __NAMESPACE__ . '\\handle_load_more_resources');
+add_action('wp_ajax_nopriv_load_more_resources', __NAMESPACE__ . '\\handle_load_more_resources');
+
+function handle_load_more_resources() {
+    check_ajax_referer('load_more_resources', 'nonce');
+
+    $page           = isset($_POST['page']) ? absint($_POST['page']) : 2;
+    $posts_per_page = isset($_POST['posts_per_page']) ? absint($_POST['posts_per_page']) : 12;
+    $sort           = isset($_POST['sort']) ? sanitize_text_field($_POST['sort']) : 'newest';
+    $type_slug      = isset($_POST['resource_type']) ? sanitize_text_field($_POST['resource_type']) : '';
+    $product_slug   = isset($_POST['resource_product']) ? sanitize_text_field($_POST['resource_product']) : '';
+
+    $args = [
+        'post_type'      => 'resources',
+        'post_status'    => 'publish',
+        'posts_per_page' => $posts_per_page,
+        'paged'          => $page,
+        'order'          => ($sort === 'oldest') ? 'ASC' : 'DESC',
+    ];
+
+    $tax_query = [];
+    if (!empty($type_slug)) {
+        $tax_query[] = ['taxonomy' => 'resource_type', 'field' => 'slug', 'terms' => [$type_slug]];
+    }
+    if (!empty($product_slug)) {
+        $tax_query[] = ['taxonomy' => 'resource_product', 'field' => 'slug', 'terms' => [$product_slug]];
+    }
+    if (count($tax_query) > 1) {
+        $tax_query['relation'] = 'AND';
+    }
+    if (!empty($tax_query)) {
+        $args['tax_query'] = $tax_query;
+    }
+
+    $query = new \WP_Query($args);
+
+    ob_start();
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            $post_id = get_the_ID();
+            $file_size = get_field('resource_file_size', $post_id);
+            $resource_types_terms = get_the_terms($post_id, 'resource_type');
+            ?>
+            <a href="<?php echo esc_url(get_permalink($post_id)); ?>" class="resource-card">
+                <div class="resource-content">
+                    <?php if (!empty($resource_types_terms) && !is_wp_error($resource_types_terms)) : ?>
+                        <div class="resource-type-badge"><?php echo esc_html($resource_types_terms[0]->name); ?></div>
+                    <?php endif; ?>
+                    <h3 class="resource-title"><?php echo esc_html(get_the_title($post_id)); ?></h3>
+                    <?php if (!empty($file_size)) : ?>
+                        <div class="resource-file-size"><?php echo esc_html($file_size); ?></div>
+                    <?php endif; ?>
+                </div>
+                <div class="resource-image">
+                    <?php if (has_post_thumbnail($post_id)) : ?>
+                        <?php echo get_the_post_thumbnail($post_id, 'medium'); ?>
+                    <?php endif; ?>
+                </div>
+            </a>
+            <?php
+        }
+    }
+    $html = ob_get_clean();
+    wp_reset_postdata();
+
+    wp_send_json_success([
+        'html'     => $html,
+        'has_more' => $page < $query->max_num_pages,
+    ]);
 }
