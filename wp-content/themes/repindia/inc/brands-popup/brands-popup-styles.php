@@ -5,8 +5,16 @@ if (!defined('ABSPATH')) {
 ?>
 <style>
 	/* Scoped styles: do not affect existing widgets/popups */
-	#brandsPopup .brands-tech-tab-container { display: flex; gap: 80px; max-width: 100%; width: 100%; }
-	#brandsPopup .brands-tech-tabs-nav { flex: 0 0 350px; align-self: flex-start; background: #fff; border-radius: 8px; padding: 4px; height: fit-content; box-shadow: 0 0 15px 0 rgba(138, 149, 158, 0.40); max-height: 60vh; overflow: auto; }
+	/*
+	Sticky behavior note:
+	Bootstrap modals typically scroll the modal body. To match the Elementor widget behavior
+	(left nav stays visible while right side scrolls), we disable scrolling on the modal body
+	for this popup only and move scrolling to the right grid column.
+	*/
+	#brandsPopup .modal-body { overflow: hidden; }
+
+	#brandsPopup .brands-tech-tab-container { display: flex; gap: 80px; max-width: 100%; width: 100%;align-items: self-start; }
+	#brandsPopup .brands-tech-tabs-nav { flex: 0 0 350px; align-self: flex-start; position: sticky; top: 0; background: #fff; border-radius: 8px; padding: 4px; height: fit-content; box-shadow: 0 0 15px 0 rgba(138, 149, 158, 0.40); max-height: 60vh; overflow: auto; }
 	.js-dark #brandsPopup .brands-tech-tabs-nav { background: #262A30; border-color: rgba(193, 196, 198, 0.1); }
 	#brandsPopup .brands-tech-tabs-nav ul { list-style: none; margin: 0; padding: 0; }
 	#brandsPopup .brands-tech-tabs-nav li { margin: 0; padding: 0; }
@@ -23,7 +31,7 @@ if (!defined('ABSPATH')) {
 	.js-dark #brandsPopup .brands-tech-tabs-dropdown { border: 1px solid rgba(193, 196, 198, 0.1) !important; background: #262a30; color: #ccc; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23fff'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; background-size: 16px; }
 	#brandsPopup .brands-tech-tabs-dropdown:focus { outline: none; border-color: #06283D; }
 
-	#brandsPopup .brands-tech-images-grid { flex: 1; display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; background: transparent; border: none; }
+	#brandsPopup .brands-tech-images-grid { flex: 1; display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; background: transparent; border: none; max-height: 60vh; overflow: auto; padding-right: 2px; }
 	#brandsPopup .brands-tech-image-item { background: #fff; padding: 20px; display: flex; align-items: center; justify-content: center; height: 120px; transition: opacity 0.3s ease, transform 0.3s ease; border-radius: 8px; }
 	.js-dark #brandsPopup .brands-tech-image-item { background: #262A30; }
 
@@ -40,7 +48,7 @@ if (!defined('ABSPATH')) {
 		#brandsPopup .brands-tech-tab-container { flex-direction: column; gap: 20px; }
 		#brandsPopup .brands-tech-tabs-nav { display: none; }
 		#brandsPopup .brands-tech-tabs-dropdown { display: block; }
-		#brandsPopup .brands-tech-images-grid { grid-template-columns: repeat(2, 1fr); }
+		#brandsPopup .brands-tech-images-grid { grid-template-columns: repeat(2, 1fr);  }
 	}
 	@media (min-width: 769px) { #brandsPopup .brands-tech-tabs-dropdown { display: none; } }
 </style>
