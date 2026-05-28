@@ -179,7 +179,7 @@ textarea.form-control{ max-height: max-content; }
   background: #262A30;
 }
 @media(max-width: 1366px){
-  .formpopup_modal .modal-logopartner-form.modal_brandlogo_popup .modal-header { max-width: 97vw; }
+  .formpopup_modal .modal-logopartner-form.modal_brandlogo_popup .modal-header { max-width: -webkit-fill-available; }
 }
 @media (max-width: 767px) {
   .formpopup_modal .modal-demo-form .modal-header, .formpopup_modal .modal-technology-partners-form .modal-header,
