@@ -1772,6 +1772,10 @@ h3 {
   background: #f2f5fa;
   box-shadow: 0 0 15px 0 rgba(138, 149, 158, 0.4);
 }
+
+.js-dark .modal-logopartner-form.modal_brandlogo_popup .modal-content {
+  background: #0d1117;box-sizing: unset;
+}
 .modal-demo-form .modal-body, #brochureModal .modal-body, .modal-technology-partners-form .modal-body,
 .modal-logopartner-form .modal-body {
   padding: 0px;
@@ -4142,6 +4146,7 @@ span.star {
     margin-top: -8px;
     height: auto;
 }
+.modal-dialog.modal-logopartner-form.modal_brandlogo_popup{ max-width: 1300px;width: 100%; }
 
 @media (min-width: 768px) {
   .footer-accordion-icon {
@@ -4426,8 +4431,6 @@ span.star {
   .brochure-modal-content {
   max-height: max-content;
 }
-
-
   .animation_cards-text {
     width: 300px !important;
   }
@@ -4450,6 +4453,7 @@ span.star {
   .listing-inner {
     margin-top: 20px;
   }
+  .modal-dialog.modal-logopartner-form.modal_brandlogo_popup{ max-width: 100%;width: 100%;padding-left: 15px;padding-right: 15px; }
 }
 
 @media (max-width: 1200px) {
