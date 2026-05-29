@@ -611,6 +611,36 @@ h2 {
   pointer-events: none;
 }
 
+/* Mobile-specific banner backgrounds (hidden on desktop) */
+.hero-slider .mobile-bg {
+  display: none !important;
+}
+
+@media (max-width: 767px) {
+  .hero-slider .hero-slide-inner.has-mobile-bg > .slide-bg-white:not(.mobile-bg),
+  .hero-slider .hero-slide-inner.has-mobile-bg > .slide-bg-dark:not(.mobile-bg),
+  .hero-slider .hero-slide-inner.has-mobile-bg > .slide-video-white:not(.mobile-bg),
+  .hero-slider .hero-slide-inner.has-mobile-bg > .slide-video-dark:not(.mobile-bg) {
+    display: none !important;
+  }
+
+  .hero-slider .hero-slide-inner.has-mobile-bg .mobile-bg.white-theme-img {
+    display: block !important;
+  }
+
+  .hero-slider .hero-slide-inner.has-mobile-bg .mobile-bg.black-theme-img {
+    display: none !important;
+  }
+
+  .js-dark .hero-slider .hero-slide-inner.has-mobile-bg .mobile-bg.white-theme-img {
+    display: none !important;
+  }
+
+  .js-dark .hero-slider .hero-slide-inner.has-mobile-bg .mobile-bg.black-theme-img {
+    display: block !important;
+  }
+}
+
 
 .iti__country-list {
   width: auto;
