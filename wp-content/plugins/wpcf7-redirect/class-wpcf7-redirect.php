@@ -263,54 +263,80 @@ class Wpcf7_Redirect {
 	public function add_black_friday_data( $configs ) {
 		$config = $configs['default'];
 
-		// translators: %1$s - HTML tag, %2$s - discount, %3$s - HTML tag, %4$s - product name.
-		$message_template = __( 'Our biggest sale of the year: %1$sup to %2$s OFF%3$s on %4$s. Don\'t miss this limited-time offer.', 'wpcf7-redirect' );
-		$product_label    = 'Redirection for Contact Form 7';
-		$discount         = '70%';
+		$message   = __( 'Conditional redirects, submission logging, Stripe & PayPal integration. Automate what you\'re doing with workarounds. Exclusively for existing RCF7 users.', 'wpcf7-redirect' );
+		$cta_label = __( 'Get RCF7 Pro', 'wpcf7-redirect' );
 
-		$addons = array(
-			'wpcf7r-api',
-			'wpcf7r-conditional-logic',
-			'wpcf7r-create-post',
-			'wpcf7r-hubspot',
-			'wpcf7r-mailchimp',
-			'wpcf7r-paypal',
-			'wpcf7r-pdf',
-			'wpcf7r-popup',
-			'wpcf7r-salesforce',
-			'wpcf7r-stripe',
-			'wpcf7r-twilio',
-			'wpcf7r-firescript',
+		// Order addons by popularity so the first installed one becomes the preferred plugin meta target.
+		$addons           = array(
+			'wpcf7r-conditional-logic' => 'WPCF7R_CONDITIONAL_LOGIC_BASENAME',
+			'wpcf7r-api'               => 'WPCF7R_API_BASENAME',
+			'wpcf7r-salesforce'        => 'WPCF7R_SALESFORCE_BASENAME',
+			'wpcf7r-hubspot'           => 'WPCF7R_HUBSPOT_BASENAME',
+			'wpcf7r-firescript'        => 'WPCF7R_FIRE_SCRIPT_BASENAME',
+			'wpcf7r-mailchimp'         => 'WPCF7R_MAILCHIMP_BASENAME',
+			'wpcf7r-popup'             => 'WPCF7R_POPUP_BASENAME',
+			'wpcf7r-pdf'               => 'WPCF7R_PDF_BASENAME',
+			'wpcf7r-stripe'            => 'WPCF7R_STRIPE_BASENAME',
+			'wpcf7r-paypal'            => 'WPCF7R_PAYPAL_BASENAME',
+			'wpcf7r-twilio'            => 'WPCF7R_TWILIO_BASENAME',
+			'wpcf7r-create-post'       => 'WPCF7R_CREATE_POST_BASENAME',
 		);
+		$is_pro           = false;
+		$max_plan         = 0;
+		$license_key      = false;
+		$license_status   = false;
+		$has_expired      = false; // Track if any of the addons have expired. If yes, show it as priority.
+		$pro_product_slug = '';
 
-		$is_pro      = false;
-		$max_plan    = 0;
-		$license_key = false;
+		foreach ( $addons as $addon_slug => $addon_basefile_constant ) {
+			if ( empty( $pro_product_slug ) && defined( $addon_basefile_constant ) ) {
+				$pro_product_slug = basename( dirname( constant( $addon_basefile_constant ) ) );
+			}
 
-		foreach ( $addons as $addon_slug ) {
 			$plan = intval( apply_filters( 'product_' . $addon_slug . '_license_plan', 0 ) );
 			if ( $plan > $max_plan ) {
-				$is_pro      = true;
-				$max_plan    = $plan;
-				$license_key = apply_filters( 'product_' . $addon_slug . '_license_key', false );
+				$is_pro         = true;
+				$max_plan       = $plan;
+				$license_key    = apply_filters( 'product_' . $addon_slug . '_license_key', false );
+				$license_status = apply_filters( 'product_' . $addon_slug . '_license_status', false );
+				$has_expired    = $has_expired || 'expired' === $license_status || 'active-expired' === $license_status;
 			}
 		}
 
-		if ( $is_pro ) {
-			// translators: %1$s - HTML tag, %2$s - discount, %3$s - HTML tag, %4$s - product name.
-			$message_template = __( 'Get %1$sup to %2$s off%3$s when you upgrade your %4$s plan or renew early.', 'wpcf7-redirect' );
-			$product_label    = 'Redirection for Contact Form 7 Pro';
-			$discount         = '30%';
+		$is_valid   = 'valid' === $license_status;
+		$is_expired = 'expired' === $license_status || 'active-expired' === $license_status;
+
+		if ( $is_valid && ! $has_expired ) {
+			// translators: %s is the discount percentage.
+			$config['plugin_meta_message'] = sprintf( __( 'Black Friday Sale - up to %s off', 'wpcf7-redirect' ), '30%' );
+			// translators: %1$s - discount, %2$s - discount.
+			$message   = sprintf( __( 'Upgrade your RCF7 Pro plan: %1$s off this week. Already on the plan you need? Renew early and save up to %2$s.', 'wpcf7-redirect' ), '30%', '20%' );
+			$cta_label = __( 'See your options', 'wpcf7-redirect' );
+		} elseif ( $is_expired ) {
+			// translators: %s is the discount percentage.
+			$config['plugin_meta_message'] = sprintf( __( 'Black Friday Sale - %s off', 'wpcf7-redirect' ), '50%' );
+			$message                       = __( 'Your RCF7 Pro features are still here, just locked. Renew at a reduced rate this week.', 'wpcf7-redirect' );
+			$cta_label                     = __( 'Reactivate now', 'wpcf7-redirect' );
+		} else {
+			// translators: %s is the discount percentage.
+			$config['plugin_meta_message'] = sprintf( __( 'Black Friday Sale - %s off', 'wpcf7-redirect' ), '60%' );
+			// translators: %s - discount.
+			$config['title'] = sprintf( __( 'RCF7 Pro: %s off this week', 'wpcf7-redirect' ), '60%' );
 		}
 
-		$product_label = sprintf( '<strong>%s</strong>', $product_label );
-		$url_params    = array(
+		$url_params = array(
 			'utm_term' => $is_pro ? 'plan-' . $max_plan : 'free',
 			'lkey'     => $license_key,
+			'expired'  => $is_expired ? '1' : false,
 		);
 
-		$config['message']  = sprintf( $message_template, '<strong>', $discount, '</strong>', $product_label );
-		$config['sale_url'] = add_query_arg(
+		if ( ( $is_valid || $is_expired ) && ! empty( $pro_product_slug ) ) {
+			$config['plugin_meta_targets'] = array( $pro_product_slug );
+		}
+
+		$config['cta_label'] = $cta_label;
+		$config['message']   = $message;
+		$config['sale_url']  = add_query_arg(
 			$url_params,
 			tsdk_translate_link( tsdk_utmify( 'https://themeisle.link/wpcf7-bf', 'bfcm', 'wpcf7r' ) )
 		);

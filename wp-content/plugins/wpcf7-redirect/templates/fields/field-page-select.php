@@ -26,11 +26,4 @@ $field_id = $field['name'] . '-' . rand( 0, 1000 );
 			)
 		);
 		?>
-	<script>
-		var element = document.getElementById('<?php echo esc_attr( $field_id ); ?>');
-
-		if ( ! element.value ) {
-			element.options[0].setAttribute('selected','selected');
-		}
-	</script>
 </div>

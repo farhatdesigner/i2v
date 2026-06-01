@@ -1,9 +1,9 @@
 === Redirection for Contact Form 7 ===
-Tags: cf7 redirect, redirect cf7, contact form 7 MailChimp, redirect to URL, contact form 7 paypal
+Tags: contact form 7, cf7 redirect, redirect, mailchimp, webhook
 Contributors: codeinwp, themeisle, yuvalsabar, regevlio
 Requires at least: 5.2.0
-Tested up to: 6.9
-Stable tag: 3.2.9
+Tested up to: 7.0
+Stable tag: 3.2.10
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -143,6 +143,12 @@ No. One of the reasons we developed this plugin, is because on_send_ok is now de
 [{field_name}-base_64_file] - will replace the shortcode with a base64 representation of a file
 [{field_name}-path] - will replace the shortcode with the file path on the server
 
+= How to report a security issue? =
+ 
+Plugin security is a core priority for us. If you identify a potential vulnerability, we ask that you disclose it responsibly.
+
+Please follow the reporting protocols outlined on our [Security Page](https://themeisle.com/security/).
+
 == Screenshots ==
 
 1. Dashboard
@@ -152,6 +158,15 @@ No. One of the reasons we developed this plugin, is because on_send_ok is now de
 5. Save Entries Action
 
 == Changelog ==
+
+#####   Version 3.2.10 (2026-05-12)
+
+- Fixed fatal error occuring when using conditional logic module
+- Fixed default dropdown selection
+- Update dependencies
+
+
+
 
 #####   Version 3.2.9 (2026-02-10)
 
