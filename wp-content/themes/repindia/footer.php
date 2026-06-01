@@ -422,6 +422,38 @@ if (!empty($repindia_option['technology_partner_form'])) { ?>
 <?php } ?>
 
 
+<!-- Brands Modal (global): Vertical tabs + ACF galleries from CPT "brands" -->
+<div class="formpopup_modal modal fade" id="brandsPopup" data-bs-backdrop="static" data-bs-keyboard="true"
+	tabindex="-1" aria-labelledby="brandsPopupLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-logopartner-form modal_brandlogo_popup">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div class="modal-header">
+					<h5 class="modal-title" id="brandsPopupLabel">
+						<?php esc_html_e("i2V's supported camera brands", "repindia"); ?>
+					</h5>
+					<span class="btn-closecustom" data-bs-dismiss="modal"
+						aria-label="<?php esc_attr_e('Close', 'repindia'); ?>">
+						<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path fill-rule="evenodd" clip-rule="evenodd"
+								d="M8.67339 8.67351C9.03788 8.30902 9.62883 8.30902 9.99332 8.67351L14 12.6802L18.0067 8.67351C18.3712 8.30902 18.9622 8.30902 19.3267 8.67351C19.6911 9.038 19.6911 9.62896 19.3267 9.99345L15.32 14.0001L19.3267 18.0068C19.6911 18.3713 19.6911 18.9623 19.3267 19.3268C18.9622 19.6913 18.3712 19.6913 18.0067 19.3268L14 15.3201L9.99332 19.3268C9.62883 19.6913 9.03788 19.6913 8.67339 19.3268C8.3089 18.9623 8.3089 18.3713 8.67339 18.0068L12.6801 14.0001L8.67339 9.99345C8.3089 9.62896 8.3089 9.038 8.67339 8.67351Z"
+								fill="#5F6F94" />
+						</svg>
+					</span>
+				</div>
+
+				<?php require get_template_directory() . '/inc/brands-popup/brands-popup-styles.php'; ?>
+
+				<div class="modal-body-content">
+					<?php require get_template_directory() . '/inc/brands-popup/brands-popup-content.php'; ?>
+				</div>
+
+				<?php require get_template_directory() . '/inc/brands-popup/brands-popup-script.php'; ?>
+			</div>
+		</div>
+	</div>
+</div>
+
 <!-- Modal: supportive devices / logo partners (same behavior as other form popups: scroll on .modal-content, static backdrop) -->
 <div class="formpopup_modal modal fade" id="logomodal_custom" data-bs-backdrop="static" data-bs-keyboard="false"
 	tabindex="-1" aria-labelledby="logomodal_customLabel" aria-hidden="true">
@@ -790,7 +822,8 @@ if (!empty($repindia_option['technology_partner_form'])) { ?>
 					trigger.classList.contains('open-contact-modal') ||
 					trigger.classList.contains('open-channel-partner-modal') ||
 					trigger.classList.contains('open-technology-partner-modal') ||
-					trigger.classList.contains('open-logo-partner-modal');
+					trigger.classList.contains('open-logo-partner-modal') ||
+					trigger.classList.contains('open-brands-popup');
 
 				if (hasModalTrigger) {
 					// Prevent default to avoid navigation when modal trigger is present
@@ -886,6 +919,18 @@ if (!empty($repindia_option['technology_partner_form'])) { ?>
 					if (!trigger.hasAttribute('data-modal-target')) {
 						trigger.addEventListener('click', function (e) {
 							handleModalClick(e, 'logomodal_custom');
+						});
+					}
+				});
+			}
+
+			// Brands popup modal (#brandsPopup)
+			var brandsPopupTriggers = document.querySelectorAll('.open-brands-popup');
+			if (brandsPopupTriggers.length > 0 && document.getElementById('brandsPopup')) {
+				brandsPopupTriggers.forEach(function (trigger) {
+					if (!trigger.hasAttribute('data-modal-target')) {
+						trigger.addEventListener('click', function (e) {
+							handleModalClick(e, 'brandsPopup');
 						});
 					}
 				});

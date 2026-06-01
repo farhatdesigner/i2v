@@ -318,6 +318,10 @@ postboxes.add_postbox_toggles(pagenow);
     _custom_media = true;
     _orig_send_attachment = wp.media.editor.send.attachment;
   }
+  const maybeHasPicker = document.querySelector('#cptui_choose_dashicon');
+  if (!maybeHasPicker) {
+    return;
+  }
 
   // Trigger the modal and load our icons.
   const icons = cptuiIconPicker.iconsJSON;
@@ -689,20 +693,20 @@ var support_toggles = __webpack_require__(194);
     }
   }
   if (nameField) {
-    // Switch spaces for underscores on our slug fields.
-    nameField.addEventListener('keyup', e => {
+    // Use the `input` event so we catch paste, autofill, drag-drop, and
+    // any programmatic value change — not just keystrokes. The previous
+    // `keyup` listener missed paste/autofill, which is how invalid
+    // uppercase slugs ("People") could slip past client-side normalization.
+    nameField.addEventListener('input', e => {
       let value, original_value;
       value = original_value = e.currentTarget.value;
-      let keys = ['Tab', 'ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown'];
-      if (!keys.includes(e.code)) {
-        value = value.replace(/ /g, "_");
-        value = value.toLowerCase();
-        value = replaceDiacritics(value);
-        value = transliterate(value);
-        value = replaceSpecialCharacters(value);
-        if (value !== original_value) {
-          e.currentTarget.value = value;
-        }
+      value = value.replace(/ /g, "_");
+      value = value.toLowerCase();
+      value = replaceDiacritics(value);
+      value = transliterate(value);
+      value = replaceSpecialCharacters(value);
+      if (value !== original_value) {
+        e.currentTarget.value = value;
       }
 
       //Displays a message if slug changes.

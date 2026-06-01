@@ -79,6 +79,10 @@ a.explr_btn.xl-btn:hover,a.home_btn.xl-btn:hover,
     z-index: 2;
     border-radius: var(--SM, 8px) var(--SM, 8px) 0 0;
 }
+.js-dark .formpopup_modal .modal-logopartner-form.modal_brandlogo_popup .modal-header{
+    background: #262A30;border: 0;
+}
+.formpopup_modal .modal-logopartner-form.modal_brandlogo_popup .modal-header{ max-width: 1300px;padding-left: 30px;padding-right: 30px; } 
 .formpopup_modal .modal-demo-form .modal-title,
 .formpopup_modal .modal-logopartner-form .modal-title { font-size: 18px;font-weight: 600; }
 .formpopup_modal .career-apply-form.styled-career-form { padding: 20px 30px;padding-top: 85px;}
@@ -174,7 +178,9 @@ textarea.form-control{ max-height: max-content; }
 .js-dark .formpopup_modal .modal-logopartner-form .tech-image-item {
   background: #262A30;
 }
-
+@media(max-width: 1366px){
+  .formpopup_modal .modal-logopartner-form.modal_brandlogo_popup .modal-header { max-width: -webkit-fill-available; }
+}
 @media (max-width: 767px) {
   .formpopup_modal .modal-demo-form .modal-header, .formpopup_modal .modal-technology-partners-form .modal-header,
   .formpopup_modal .modal-logopartner-form .modal-header {

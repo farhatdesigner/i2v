@@ -51,7 +51,7 @@ class home_banner extends Widget_Base
 				'label_on' => esc_html__('Video', 'repindia'),
 				'label_off' => esc_html__('Image', 'repindia'),
 				'return_value' => 'video',
-				'default' => 'image',
+				'default' => '',
 			]
 		);
 
@@ -63,7 +63,7 @@ class home_banner extends Widget_Base
 				'type' => Controls_Manager::MEDIA,
 				'default' => [],
 				'condition' => [
-					'desktop_bg_type' => 'image',
+					'desktop_bg_type!' => 'video',
 				],
 			]
 		);
@@ -76,7 +76,7 @@ class home_banner extends Widget_Base
 				'type' => Controls_Manager::MEDIA,
 				'default' => [],
 				'condition' => [
-					'desktop_bg_type' => 'image',
+					'desktop_bg_type!' => 'video',
 				],
 			]
 		);
@@ -120,7 +120,7 @@ class home_banner extends Widget_Base
 				'label_on' => esc_html__('Video', 'repindia'),
 				'label_off' => esc_html__('Image', 'repindia'),
 				'return_value' => 'video',
-				'default' => 'image',
+				'default' => '',
 			]
 		);
 
@@ -133,7 +133,7 @@ class home_banner extends Widget_Base
 				'default' => [],
 				'description' => esc_html__('Leave empty to use desktop background', 'repindia'),
 				'condition' => [
-					'mobile_bg_type' => 'image',
+					'mobile_bg_type!' => 'video',
 				],
 			]
 		);
@@ -147,7 +147,7 @@ class home_banner extends Widget_Base
 				'default' => [],
 				'description' => esc_html__('Leave empty to use desktop background', 'repindia'),
 				'condition' => [
-					'mobile_bg_type' => 'image',
+					'mobile_bg_type!' => 'video',
 				],
 			]
 		);
@@ -359,9 +359,28 @@ class home_banner extends Widget_Base
                      $mobile_bg_video_id_dark = !empty($mobile_bg_video_id_dark) ? $mobile_bg_video_id_dark : $desktop_bg_video_id_dark;
                      $mobile_bg_type = $desktop_bg_type; // Use desktop type for fallback
                   }
+
+                  // Mobile dark theme fallback when mobile light image is set
+                  if ($mobile_bg_type === 'image' && !empty($mobile_bg_image) && empty($mobile_bg_image_dark)) {
+                     $mobile_bg_image_dark = $desktop_bg_image_dark;
+                  }
+                  if ($mobile_bg_type === 'video' && !empty($mobile_bg_video_id) && empty($mobile_bg_video_id_dark)) {
+                     $mobile_bg_video_id_dark = $desktop_bg_video_id_dark;
+                  }
+
+                  // Check if slide has its own mobile background (before fallback)
+                  $has_separate_mobile = false;
+                  if ($mobile_bg_type_setting === 'image' && !empty($slide['mobile_bg_image']['url'])) {
+                     $has_separate_mobile = true;
+                  } elseif ($mobile_bg_type_setting === 'video' && !empty($slide['mobile_bg_video_id'])) {
+                     $has_separate_mobile = true;
+                  }
                   
                   // Determine if slide uses image or video (for CSS class) - use desktop as primary
                   $slide_class = ($desktop_bg_type === 'image' && !empty($desktop_bg_image)) ? 'slide-bg-image' : '';
+                  if ($has_separate_mobile) {
+                     $slide_class .= ' has-mobile-bg';
+                  }
                   
                   // Get content data
                   $banner_title = !empty($slide['banner_title']) ? $slide['banner_title'] : '';
@@ -411,14 +430,6 @@ class home_banner extends Widget_Base
                         endif;
                         
                         // Render mobile backgrounds (default + dark theme) - only if different from desktop
-                        // Mobile fallback logic is already applied above, so render if mobile has its own background
-                        $has_separate_mobile = false;
-                        if ($mobile_bg_type_setting === 'image' && !empty($slide['mobile_bg_image']['url'])) {
-                           $has_separate_mobile = true;
-                        } elseif ($mobile_bg_type_setting === 'video' && !empty($slide['mobile_bg_video_id'])) {
-                           $has_separate_mobile = true;
-                        }
-                        
                         if ($has_separate_mobile && $mobile_bg_type === 'image' && !empty($mobile_bg_image)) :
                            // Mobile Image Backgrounds (separate from desktop)
                            ?>
