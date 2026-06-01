@@ -463,12 +463,11 @@ class Scalescroll extends Widget_Base
         );
 
         $repeater->add_control(
-            'partner_popup_button_classes',
+            'partner_popup_header_title',
             [
-                'label' => esc_html__('Partner Popup Button Classes', 'repindia'),
+                'label' => esc_html__('Partner Popup Header Title', 'repindia'),
                 'type' => Controls_Manager::TEXT,
-                'default' => '',
-                'description' => esc_html__('Add custom CSS classes for the Partner Popup button link (separate multiple classes with spaces)', 'repindia'),
+                'default' => esc_html__('Technology Partners', 'repindia'),
                 'label_block' => true,
                 'condition' => [
                     'enable_partner_popup' => 'yes',
@@ -476,68 +475,55 @@ class Scalescroll extends Widget_Base
             ]
         );
 
-        // $repeater->add_control(
-        //     'partner_popup_header_title',
-        //     [
-        //         'label' => esc_html__('Partner Popup Header Title', 'repindia'),
-        //         'type' => Controls_Manager::TEXT,
-        //         'default' => esc_html__('Technology Partners', 'repindia'),
-        //         'label_block' => true,
-        //         'condition' => [
-        //             'enable_partner_popup' => 'yes',
-        //         ],
-        //     ]
-        // );
+        $partner_popup_repeater = new \Elementor\Repeater();
+        $partner_popup_repeater->add_control(
+            'partner_image',
+            [
+                'label' => esc_html__('Partner Image', 'repindia'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [],
+            ]
+        );
+        $partner_popup_repeater->add_control(
+            'partner_dark_image',
+            [
+                'label' => esc_html__('Partner Dark Image (Optional)', 'repindia'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [],
+            ]
+        );
+        $partner_popup_repeater->add_control(
+            'partner_alt_text',
+            [
+                'label' => esc_html__('Partner Alt Text', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'label_block' => true,
+            ]
+        );
+        $partner_popup_repeater->add_control(
+            'partner_tab',
+            [
+                'label' => esc_html__('Partner Tab (Optional)', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'label_block' => true,
+            ]
+        );
 
-        // $partner_popup_repeater = new \Elementor\Repeater();
-        // $partner_popup_repeater->add_control(
-        //     'partner_image',
-        //     [
-        //         'label' => esc_html__('Partner Image', 'repindia'),
-        //         'type' => Controls_Manager::MEDIA,
-        //         'default' => [],
-        //     ]
-        // );
-        // $partner_popup_repeater->add_control(
-        //     'partner_dark_image',
-        //     [
-        //         'label' => esc_html__('Partner Dark Image (Optional)', 'repindia'),
-        //         'type' => Controls_Manager::MEDIA,
-        //         'default' => [],
-        //     ]
-        // );
-        // $partner_popup_repeater->add_control(
-        //     'partner_alt_text',
-        //     [
-        //         'label' => esc_html__('Partner Alt Text', 'repindia'),
-        //         'type' => Controls_Manager::TEXT,
-        //         'default' => '',
-        //         'label_block' => true,
-        //     ]
-        // );
-        // $partner_popup_repeater->add_control(
-        //     'partner_tab',
-        //     [
-        //         'label' => esc_html__('Partner Tab (Optional)', 'repindia'),
-        //         'type' => Controls_Manager::TEXT,
-        //         'default' => '',
-        //         'label_block' => true,
-        //     ]
-        // );
-
-        // $repeater->add_control(
-        //     'partner_popup_items',
-        //     [
-        //         'label' => esc_html__('Partner Popup Items', 'repindia'),
-        //         'type' => Controls_Manager::REPEATER,
-        //         'fields' => $partner_popup_repeater->get_controls(),
-        //         'default' => [],
-        //         'title_field' => '{{{ partner_alt_text }}}',
-        //         'condition' => [
-        //             'enable_partner_popup' => 'yes',
-        //         ],
-        //     ]
-        // );
+        $repeater->add_control(
+            'partner_popup_items',
+            [
+                'label' => esc_html__('Partner Popup Items', 'repindia'),
+                'type' => Controls_Manager::REPEATER,
+                'fields' => $partner_popup_repeater->get_controls(),
+                'default' => [],
+                'title_field' => '{{{ partner_alt_text }}}',
+                'condition' => [
+                    'enable_partner_popup' => 'yes',
+                ],
+            ]
+        );
 
         $this->add_control(
             'scroll_items',
@@ -838,28 +824,27 @@ class Scalescroll extends Widget_Base
                                     // Partner popup per item (fallbacks to existing static modal if not configured)
                                     $enable_partner_popup = !empty($item['enable_partner_popup']) && $item['enable_partner_popup'] === 'yes';
                                     $partner_popup_button_text = !empty($item['partner_popup_button_text']) ? $item['partner_popup_button_text'] : 'View all supported devices';
-                                    $partner_popup_button_classes = !empty($item['partner_popup_button_classes']) ? ' ' . esc_attr($item['partner_popup_button_classes']) : '';
-                                    // $partner_popup_header_title = !empty($item['partner_popup_header_title']) ? $item['partner_popup_header_title'] : 'Technology Partners';
-                                    // $partner_popup_items = !empty($item['partner_popup_items']) ? $item['partner_popup_items'] : [];
-                                    // $has_partner_popup_items = $enable_partner_popup && !empty($partner_popup_items);
+                                    $partner_popup_header_title = !empty($item['partner_popup_header_title']) ? $item['partner_popup_header_title'] : 'Technology Partners';
+                                    $partner_popup_items = !empty($item['partner_popup_items']) ? $item['partner_popup_items'] : [];
+                                    $has_partner_popup_items = $enable_partner_popup && !empty($partner_popup_items);
 
-                                    // $partner_popup_payload = [];
-                                    // if ($has_partner_popup_items) {
-                                    //     foreach ($partner_popup_items as $popup_item) {
-                                    //         $partner_image = !empty($popup_item['partner_image']['url']) ? $popup_item['partner_image']['url'] : '';
-                                    //         if (empty($partner_image)) {
-                                    //             continue;
-                                    //         }
-                                    //         $partner_popup_payload[] = [
-                                    //             'partner_image' => $partner_image,
-                                    //             'partner_dark_image' => !empty($popup_item['partner_dark_image']['url']) ? $popup_item['partner_dark_image']['url'] : '',
-                                    //             'partner_alt_text' => !empty($popup_item['partner_alt_text']) ? $popup_item['partner_alt_text'] : '',
-                                    //             'partner_tab' => !empty($popup_item['partner_tab']) ? $popup_item['partner_tab'] : '',
-                                    //         ];
-                                    //     }
-                                    //     $has_partner_popup_items = !empty($partner_popup_payload);
-                                    // }
-                                    // $partner_popup_json = $has_partner_popup_items ? wp_json_encode($partner_popup_payload) : '';
+                                    $partner_popup_payload = [];
+                                    if ($has_partner_popup_items) {
+                                        foreach ($partner_popup_items as $popup_item) {
+                                            $partner_image = !empty($popup_item['partner_image']['url']) ? $popup_item['partner_image']['url'] : '';
+                                            if (empty($partner_image)) {
+                                                continue;
+                                            }
+                                            $partner_popup_payload[] = [
+                                                'partner_image' => $partner_image,
+                                                'partner_dark_image' => !empty($popup_item['partner_dark_image']['url']) ? $popup_item['partner_dark_image']['url'] : '',
+                                                'partner_alt_text' => !empty($popup_item['partner_alt_text']) ? $popup_item['partner_alt_text'] : '',
+                                                'partner_tab' => !empty($popup_item['partner_tab']) ? $popup_item['partner_tab'] : '',
+                                            ];
+                                        }
+                                        $has_partner_popup_items = !empty($partner_popup_payload);
+                                    }
+                                    $partner_popup_json = $has_partner_popup_items ? wp_json_encode($partner_popup_payload) : '';
                                     ?>
                                     <div class="details details-<?php echo esc_attr($item_num); ?>">
                                         <?php if ($has_blue_headline): ?>
@@ -882,9 +867,12 @@ class Scalescroll extends Widget_Base
                                             <?php endif; ?>
                                             <?php //if (!empty($cta_text) && !empty($cta_url)): ?>
                                                 <div class="text-left">
-                                                    <?php if ($enable_partner_popup): ?>
-                                                        <a class="theme-btn bg-trans border_btnlight <?php echo $partner_popup_button_classes; ?>"
-                                                            href="javascript:void(0)" ><?php echo esc_html(!empty($partner_popup_button_text) ? $partner_popup_button_text : 'View all supported devices'); ?></a>
+                                                    <?php if ($has_partner_popup_items): ?>
+                                                        <a class="theme-btn bg-trans border_btnlight "
+                                                            href="javascript:void(0)" data-bs-toggle="modal"
+                                                            data-bs-target="#technologyPartnersDynamicModal"
+                                                            data-popup-title="<?php echo esc_attr($partner_popup_header_title); ?>"
+                                                            data-popup-items="<?php echo esc_attr($partner_popup_json); ?>"><?php echo esc_html(!empty($partner_popup_button_text) ? $partner_popup_button_text : 'View all supported devices'); ?></a>
                                                     <?php endif; ?>
                                                 </div>
                                             <?php //endif; ?>
@@ -1022,28 +1010,27 @@ class Scalescroll extends Widget_Base
                                     // Partner popup per item (fallbacks to existing static modal if not configured)
                                     $enable_partner_popup = !empty($item['enable_partner_popup']) && $item['enable_partner_popup'] === 'yes';
                                     $partner_popup_button_text = !empty($item['partner_popup_button_text']) ? $item['partner_popup_button_text'] : 'View all supported devices';
-                                    $partner_popup_button_classes = !empty($item['partner_popup_button_classes']) ? ' ' . esc_attr($item['partner_popup_button_classes']) : '';
-                                    // $partner_popup_header_title = !empty($item['partner_popup_header_title']) ? $item['partner_popup_header_title'] : 'Technology Partners';
-                                    // $partner_popup_items = !empty($item['partner_popup_items']) ? $item['partner_popup_items'] : [];
-                                    // $has_partner_popup_items = $enable_partner_popup && !empty($partner_popup_items);
+                                    $partner_popup_header_title = !empty($item['partner_popup_header_title']) ? $item['partner_popup_header_title'] : 'Technology Partners';
+                                    $partner_popup_items = !empty($item['partner_popup_items']) ? $item['partner_popup_items'] : [];
+                                    $has_partner_popup_items = $enable_partner_popup && !empty($partner_popup_items);
 
-                                    // $partner_popup_payload = [];
-                                    // if ($has_partner_popup_items) {
-                                    //     foreach ($partner_popup_items as $popup_item) {
-                                    //         $partner_image = !empty($popup_item['partner_image']['url']) ? $popup_item['partner_image']['url'] : '';
-                                    //         if (empty($partner_image)) {
-                                    //             continue;
-                                    //         }
-                                    //         $partner_popup_payload[] = [
-                                    //             'partner_image' => $partner_image,
-                                    //             'partner_dark_image' => !empty($popup_item['partner_dark_image']['url']) ? $popup_item['partner_dark_image']['url'] : '',
-                                    //             'partner_alt_text' => !empty($popup_item['partner_alt_text']) ? $popup_item['partner_alt_text'] : '',
-                                    //             'partner_tab' => !empty($popup_item['partner_tab']) ? $popup_item['partner_tab'] : '',
-                                    //         ];
-                                    //     }
-                                    //     $has_partner_popup_items = !empty($partner_popup_payload);
-                                    // }
-                                    // $partner_popup_json = $has_partner_popup_items ? wp_json_encode($partner_popup_payload) : '';
+                                    $partner_popup_payload = [];
+                                    if ($has_partner_popup_items) {
+                                        foreach ($partner_popup_items as $popup_item) {
+                                            $partner_image = !empty($popup_item['partner_image']['url']) ? $popup_item['partner_image']['url'] : '';
+                                            if (empty($partner_image)) {
+                                                continue;
+                                            }
+                                            $partner_popup_payload[] = [
+                                                'partner_image' => $partner_image,
+                                                'partner_dark_image' => !empty($popup_item['partner_dark_image']['url']) ? $popup_item['partner_dark_image']['url'] : '',
+                                                'partner_alt_text' => !empty($popup_item['partner_alt_text']) ? $popup_item['partner_alt_text'] : '',
+                                                'partner_tab' => !empty($popup_item['partner_tab']) ? $popup_item['partner_tab'] : '',
+                                            ];
+                                        }
+                                        $has_partner_popup_items = !empty($partner_popup_payload);
+                                    }
+                                    $partner_popup_json = $has_partner_popup_items ? wp_json_encode($partner_popup_payload) : '';
                                     ?>
                                     <div class="photo photo_custom">
                                         <?php if ($media_type === 'image' && !empty($image_default)): ?>
@@ -1106,9 +1093,12 @@ class Scalescroll extends Widget_Base
                                                 <?php endif; ?>
                                                 <?php //if (!empty($cta_text) && !empty($cta_url)): ?>
                                                     <div class="text-left">
-                                                        <?php if ($enable_partner_popup): ?>
-                                                            <a class="theme-btn bg-trans border_btnlight <?php echo $partner_popup_button_classes; ?>"
-                                                                href="javascript:void(0)" ><?php echo esc_html(!empty($partner_popup_button_text) ? $partner_popup_button_text : 'View all supported devices'); ?></a>
+                                                        <?php if ($has_partner_popup_items): ?>
+                                                            <a class="theme-btn bg-trans border_btnlight "
+                                                                href="javascript:void(0)" data-bs-toggle="modal"
+                                                                data-bs-target="#technologyPartnersDynamicModal"
+                                                                data-popup-title="<?php echo esc_attr($partner_popup_header_title); ?>"
+                                                                data-popup-items="<?php echo esc_attr($partner_popup_json); ?>"><?php echo esc_html(!empty($partner_popup_button_text) ? $partner_popup_button_text : 'View all supported devices'); ?></a>
                                                         <?php endif; ?>
                                                     </div>
                                                 <?php //endif; ?>
@@ -1209,7 +1199,7 @@ class Scalescroll extends Widget_Base
             </div>
         </div>
         <!-- technology-partners dynamic modal (reusable) -->
-        <!-- <div class="formpopup_modal modal fade" id="technologyPartnersDynamicModal" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="technologyPartnersDynamicModalLabel" aria-hidden="true">
+        <div class="formpopup_modal modal fade" id="technologyPartnersDynamicModal" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="technologyPartnersDynamicModalLabel" aria-hidden="true">
             <div class="modal-dialog  modal-dialog-centered modal-technology-partners-form">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -1223,62 +1213,62 @@ class Scalescroll extends Widget_Base
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>
 
         <script>
             (function () {
-                // function populateTechnologyPartnersDynamicModal(triggerEl) {
-                //     if (!triggerEl) return;
+                function populateTechnologyPartnersDynamicModal(triggerEl) {
+                    if (!triggerEl) return;
 
-                //     var raw = triggerEl.getAttribute("data-popup-items");
-                //     if (!raw) return;
+                    var raw = triggerEl.getAttribute("data-popup-items");
+                    if (!raw) return;
 
-                //     var items;
-                //     try {
-                //         items = JSON.parse(raw);
-                //     } catch (e) {
-                //         return;
-                //     }
-                //     if (!Array.isArray(items) || !items.length) return;
+                    var items;
+                    try {
+                        items = JSON.parse(raw);
+                    } catch (e) {
+                        return;
+                    }
+                    if (!Array.isArray(items) || !items.length) return;
 
-                //     var modal = document.getElementById("technologyPartnersDynamicModal");
-                //     if (!modal) return;
+                    var modal = document.getElementById("technologyPartnersDynamicModal");
+                    if (!modal) return;
 
-                //     var titleText = triggerEl.getAttribute("data-popup-title") || "Technology Partners";
-                //     var titleEl = modal.querySelector("#technologyPartnersDynamicModalLabel");
-                //     if (titleEl) titleEl.textContent = titleText;
+                    var titleText = triggerEl.getAttribute("data-popup-title") || "Technology Partners";
+                    var titleEl = modal.querySelector("#technologyPartnersDynamicModalLabel");
+                    if (titleEl) titleEl.textContent = titleText;
 
-                //     var grid = modal.querySelector(".tech-images-grid");
-                //     if (!grid) return;
-                //     grid.innerHTML = "";
+                    var grid = modal.querySelector(".tech-images-grid");
+                    if (!grid) return;
+                    grid.innerHTML = "";
 
-                //     items.forEach(function (it) {
-                //         if (!it || !it.partner_image) return;
+                    items.forEach(function (it) {
+                        if (!it || !it.partner_image) return;
 
-                //         var wrapper = document.createElement("div");
-                //         wrapper.className = "tech-image-item tech-image-light tech-image-fallback";
-                //         wrapper.setAttribute("data-tab", it.partner_tab || "");
+                        var wrapper = document.createElement("div");
+                        wrapper.className = "tech-image-item tech-image-light tech-image-fallback";
+                        wrapper.setAttribute("data-tab", it.partner_tab || "");
 
-                //         var hasDark = !!(it.partner_dark_image);
-                //         wrapper.setAttribute("data-has-dark", hasDark ? "1" : "0");
+                        var hasDark = !!(it.partner_dark_image);
+                        wrapper.setAttribute("data-has-dark", hasDark ? "1" : "0");
 
-                //         var imgWhite = document.createElement("img");
-                //         imgWhite.className = "white_theme_img";
-                //         imgWhite.decoding = "async";
-                //         imgWhite.src = it.partner_image;
-                //         imgWhite.alt = it.partner_alt_text || "";
+                        var imgWhite = document.createElement("img");
+                        imgWhite.className = "white_theme_img";
+                        imgWhite.decoding = "async";
+                        imgWhite.src = it.partner_image;
+                        imgWhite.alt = it.partner_alt_text || "";
 
-                //         var imgBlack = document.createElement("img");
-                //         imgBlack.className = "black_theme_img";
-                //         imgBlack.decoding = "async";
-                //         imgBlack.src = hasDark ? it.partner_dark_image : it.partner_image;
-                //         imgBlack.alt = it.partner_alt_text || "";
+                        var imgBlack = document.createElement("img");
+                        imgBlack.className = "black_theme_img";
+                        imgBlack.decoding = "async";
+                        imgBlack.src = hasDark ? it.partner_dark_image : it.partner_image;
+                        imgBlack.alt = it.partner_alt_text || "";
 
-                //         wrapper.appendChild(imgWhite);
-                //         wrapper.appendChild(imgBlack);
-                //         grid.appendChild(wrapper);
-                //     });
-                // }
+                        wrapper.appendChild(imgWhite);
+                        wrapper.appendChild(imgBlack);
+                        grid.appendChild(wrapper);
+                    });
+                }
 
                 function postYouTubeCommand(iframe, func) {
                     if (!iframe || !iframe.contentWindow) return;
