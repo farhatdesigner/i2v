@@ -632,6 +632,23 @@ if (!shortcode_exists('last_url_segment')) {
 }
 
 // Auto Redirection Thankyou pages
+		function thankyou_store_return_url_script() {
+			if (is_admin() || isset($_GET['elementor-preview'])) {
+				return;
+			}
+
+			wp_register_script('thankyou-store-return-url', false);
+			wp_enqueue_script('thankyou-store-return-url');
+			wp_add_inline_script('thankyou-store-return-url', '
+				document.addEventListener("wpcf7submit", function() {
+					try {
+						sessionStorage.setItem("repindia_form_return_url", window.location.href);
+					} catch (e) {}
+				}, true);
+			');
+		}
+		add_action('wp_enqueue_scripts', 'thankyou_store_return_url_script');
+
 		function thankyou_redirect_script() {
 
 			if (
@@ -654,6 +671,21 @@ if (!shortcode_exists('last_url_segment')) {
 					// If container not found → do nothing (prevents errors)
 					if (!container) return;
 
+					let returnUrl = "' . home_url() . '";
+					try {
+						let stored = sessionStorage.getItem("repindia_form_return_url");
+						if (stored) {
+							returnUrl = stored;
+							sessionStorage.removeItem("repindia_form_return_url");
+						} else if (document.referrer) {
+							returnUrl = document.referrer;
+						}
+					} catch (e) {
+						if (document.referrer) {
+							returnUrl = document.referrer;
+						}
+					}
+
 					let timeLeft = 5;
 
 					container.innerHTML = "You will be redirected to homepage in <strong><span id=\"countdown\">5</span></strong> seconds...";
@@ -666,7 +698,7 @@ if (!shortcode_exists('last_url_segment')) {
 
 						if (timeLeft <= 0) {
 							clearInterval(timer);
-							window.location.href = "' . home_url() . '";
+							window.location.href = returnUrl;
 						}
 					}, 1000);
 
