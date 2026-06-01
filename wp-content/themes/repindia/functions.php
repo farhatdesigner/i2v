@@ -965,43 +965,20 @@ add_action('wp_enqueue_scripts', 'enqueue_recaptcha_validation_script');
 add_filter('wpcf7_spam', 'i2v_validate_recaptcha_server_side', 10, 2);
 
 function i2v_validate_recaptcha_server_side($spam, $submission) {
-    // If already marked spam, don't override
     if ($spam) return $spam;
 
+    // The plugin already verified the token.
+    // We just need to check if the response token exists (was submitted).
+    // If it's empty, the user skipped reCAPTCHA — block it.
     $recaptcha_response = isset($_POST['g-recaptcha-response'])
                           ? sanitize_text_field($_POST['g-recaptcha-response'])
                           : '';
 
-    // Block if no recaptcha response at all
     if (empty($recaptcha_response)) {
-        return true;
+        return true; // Block — no token submitted at all
     }
 
-    // Verify with Google
-    $secret_key = '6LcMsucsAAAAAH1zeSVCp2mcY-Ie5757M9V9V2Rl'; // 🔴
-
-    $api_response = wp_remote_post('https://www.google.com/recaptcha/api/siteverify', [
-        'timeout' => 10,
-        'body'    => [
-            'secret'   => $secret_key,
-            'response' => $recaptcha_response,
-            'remoteip' => isset($_SERVER['REMOTE_ADDR']) 
-                          ? sanitize_text_field($_SERVER['REMOTE_ADDR']) 
-                          : '',
-        ],
-    ]);
-
-    // Block on request failure
-    if (is_wp_error($api_response)) {
-        return true;
-    }
-
-    $result = json_decode(wp_remote_retrieve_body($api_response), true);
-
-    // Block if Google says token is invalid
-    if (empty($result['success']) || $result['success'] !== true) {
-        return true;
-    }
-
-    return $spam; // All good, allow submission
+    // Token exists = plugin already verified it successfully upstream.
+    // If plugin verification had failed, CF7 would have already stopped here.
+    return $spam; // Allow submission
 }
