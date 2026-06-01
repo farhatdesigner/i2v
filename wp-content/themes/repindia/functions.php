@@ -631,82 +631,250 @@ if (!shortcode_exists('last_url_segment')) {
     add_shortcode('last_url_segment', 'get_last_url_segment');
 }
 
-// Auto Redirection Thankyou pages
-		function thankyou_store_return_url_script() {
-			if (is_admin() || isset($_GET['elementor-preview'])) {
-				return;
+// Auto redirection for Thank You pages (return visitors to the form source page).
+if ( ! function_exists( 'repindia_thankyou_page_slugs' ) ) {
+	/**
+	 * Slugs of dedicated CF7 thank-you pages (countdown + redirect).
+	 *
+	 * @return string[]
+	 */
+	function repindia_thankyou_page_slugs() {
+		return array(
+			'thank-you-career',
+			'thank-you-resource',
+			'thank-you-request-demo',
+			'thank-you-expert',
+			'thank-you-contact-us',
+			'thank-you-download-brochure',
+			'thank-you-channel-partner',
+			'thank-you-technology-partner',
+		);
+	}
+}
+
+if ( ! function_exists( 'repindia_is_thankyou_page' ) ) {
+	/**
+	 * Whether the current request is one of the thank-you pages.
+	 */
+	function repindia_is_thankyou_page() {
+		return is_page( repindia_thankyou_page_slugs() );
+	}
+}
+
+if ( ! function_exists( 'repindia_thankyou_should_run_frontend' ) ) {
+	/**
+	 * Frontend-only guard (excludes admin and Elementor preview).
+	 */
+	function repindia_thankyou_should_run_frontend() {
+		return ! is_admin() && ! isset( $_GET['elementor-preview'] );
+	}
+}
+
+/**
+ * Whether Contact Form 7 is available (used for return-URL storage).
+ */
+function repindia_thankyou_cf7_active() {
+	return function_exists( 'wpcf7' ) || class_exists( 'WPCF7' );
+}
+
+/**
+ * Inline config passed to the return-URL storage script (thank-you slugs + site host).
+ *
+ * @return array{thankYouSlugs: string[], siteHost: string|null}
+ */
+function repindia_thankyou_return_url_script_config() {
+	return array(
+		'thankYouSlugs' => repindia_thankyou_page_slugs(),
+		'siteHost'      => wp_parse_url( home_url(), PHP_URL_HOST ),
+	);
+}
+
+/**
+ * Store the originating page URL for thank-you countdown redirects.
+ *
+ * Loaded in the footer (not tied to CF7 enqueue timing) so it works when:
+ * - CF7 lives in footer/global popups rendered after wp_enqueue_scripts
+ * - WP Rocket or similar defers CF7 until shortcode/render
+ * - Elementor popups or AJAX-injected forms fire wpcf7mailsent later
+ *
+ * Tiny inline script only when CF7 is active; skipped on thank-you/admin/Elementor preview.
+ */
+function repindia_thankyou_store_return_url_script() {
+	if ( ! repindia_thankyou_should_run_frontend() || repindia_is_thankyou_page() ) {
+		return;
+	}
+
+	if ( ! repindia_thankyou_cf7_active() ) {
+		return;
+	}
+
+	$config = repindia_thankyou_return_url_script_config();
+
+	wp_register_script( 'repindia-thankyou-return-store', false, array(), null, true );
+	wp_enqueue_script( 'repindia-thankyou-return-store' );
+	wp_add_inline_script(
+		'repindia-thankyou-return-store',
+		'(function () {
+			var thankYouSlugs = ' . wp_json_encode( $config['thankYouSlugs'] ) . ';
+			var siteHost = ' . wp_json_encode( $config['siteHost'] ) . ';
+			var storageKey = "repindia_form_return_url";
+
+			function isThankYouPath(pathname) {
+				var parts = pathname.replace(/^\\/|\\/$/g, "").split("/");
+				var slug = parts.length ? parts[parts.length - 1] : "";
+				return thankYouSlugs.indexOf(slug) !== -1;
 			}
 
-			wp_register_script('thankyou-store-return-url', false);
-			wp_enqueue_script('thankyou-store-return-url');
-			wp_add_inline_script('thankyou-store-return-url', '
-				document.addEventListener("wpcf7submit", function() {
+			function storeReturnUrl() {
+				try {
+					var url = new URL(window.location.href);
+					if (siteHost && url.hostname !== siteHost) {
+						return;
+					}
+					if (isThankYouPath(url.pathname)) {
+						return;
+					}
+					sessionStorage.setItem(storageKey, url.href);
+				} catch (e) {}
+			}
+
+			function onMailSent() {
+				storeReturnUrl();
+			}
+
+			document.addEventListener("wpcf7mailsent", onMailSent, false);
+			document.addEventListener("wpcf7submit", function (event) {
+				if (event && event.detail && event.detail.status === "mail_sent") {
+					onMailSent(event);
+				}
+			}, false);
+
+			document.addEventListener("show.bs.modal", function (event) {
+				var modal = event && event.target;
+				if (!modal || !modal.classList) {
+					return;
+				}
+				if (
+					modal.classList.contains("formpopup_modal") ||
+					modal.id === "brochureModal" ||
+					modal.classList.contains("resource-modal-overlay") ||
+					modal.classList.contains("brochure-modal-overlay")
+				) {
+					if (modal.querySelector && modal.querySelector(".wpcf7")) {
+						storeReturnUrl();
+					}
+				}
+			}, true);
+
+			if (window.jQuery) {
+				jQuery(document).on("elementor/popup/show", function () {
+					storeReturnUrl();
+				});
+			}
+		})();',
+		'after'
+	);
+}
+add_action( 'wp_enqueue_scripts', 'repindia_thankyou_store_return_url_script' );
+
+/**
+ * Thank-you page countdown (unchanged UX) then redirect to stored source URL or homepage.
+ */
+function repindia_thankyou_redirect_script() {
+	if ( ! repindia_thankyou_should_run_frontend() || ! repindia_is_thankyou_page() ) {
+		return;
+	}
+
+	$fallback_url   = home_url();
+	$thankyou_slugs = wp_json_encode( repindia_thankyou_page_slugs() );
+	$site_host      = wp_json_encode( wp_parse_url( home_url(), PHP_URL_HOST ) );
+
+	wp_register_script( 'repindia-thankyou-redirect', false, array(), null, true );
+	wp_enqueue_script( 'repindia-thankyou-redirect' );
+	wp_add_inline_script(
+		'repindia-thankyou-redirect',
+		"(function () {
+			document.addEventListener('DOMContentLoaded', function () {
+
+				// Prevent Elementor editor
+				if (window.location.href.indexOf('elementor-preview') !== -1) {
+					return;
+				}
+
+				var container = document.getElementById('thankyou-redirect-msg');
+
+				// If container not found → do nothing (prevents errors)
+				if (!container) {
+					return;
+				}
+
+				var fallbackUrl = " . wp_json_encode( $fallback_url ) . ";
+				var thankYouSlugs = " . $thankyou_slugs . ";
+				var siteHost = " . $site_host . ";
+
+				function isThankYouPath(pathname) {
+					var parts = pathname.replace(/^\\/|\\/$/g, '').split('/');
+					var slug = parts.length ? parts[parts.length - 1] : '';
+					return thankYouSlugs.indexOf(slug) !== -1;
+				}
+
+				function resolveReturnUrl() {
+					var stored = null;
 					try {
-						sessionStorage.setItem("repindia_form_return_url", window.location.href);
-					} catch (e) {}
-				}, true);
-			');
-		}
-		add_action('wp_enqueue_scripts', 'thankyou_store_return_url_script');
-
-		function thankyou_redirect_script() {
-
-			if (
-				is_page(array('thank-you-career', 'thank-you-resource', 'thank-you-request-demo', 'thank-you-expert', 'thank-you-contact-us', 'thank-you-download-brochure', 'thank-you-channel-partner', 'thank-you-technology-partner')) &&
-				!is_admin() &&
-				!isset($_GET['elementor-preview'])
-			) {
-		
-				wp_register_script('thankyou-redirect', false);
-				wp_enqueue_script('thankyou-redirect');
-		
-				wp_add_inline_script('thankyou-redirect', '
-				document.addEventListener("DOMContentLoaded", function() {
-
-					// Prevent Elementor editor
-					if (window.location.href.includes("elementor-preview")) return;
-
-					let container = document.getElementById("thankyou-redirect-msg");
-
-					// If container not found → do nothing (prevents errors)
-					if (!container) return;
-
-					let returnUrl = "' . home_url() . '";
-					try {
-						let stored = sessionStorage.getItem("repindia_form_return_url");
+						stored = sessionStorage.getItem('repindia_form_return_url');
 						if (stored) {
-							returnUrl = stored;
-							sessionStorage.removeItem("repindia_form_return_url");
-						} else if (document.referrer) {
-							returnUrl = document.referrer;
+							sessionStorage.removeItem('repindia_form_return_url');
 						}
-					} catch (e) {
-						if (document.referrer) {
-							returnUrl = document.referrer;
-						}
+					} catch (e) {}
+
+					var candidates = [];
+					if (stored) {
+						candidates.push(stored);
+					}
+					if (document.referrer) {
+						candidates.push(document.referrer);
 					}
 
-					let timeLeft = 5;
+					for (var i = 0; i < candidates.length; i++) {
+						try {
+							var url = new URL(candidates[i], window.location.origin);
+							if (url.hostname !== siteHost) {
+								continue;
+							}
+							if (isThankYouPath(url.pathname)) {
+								continue;
+							}
+							return url.href;
+						} catch (err) {}
+					}
 
-					container.innerHTML = "You will be redirected to homepage in <strong><span id=\"countdown\">5</span></strong> seconds...";
+					return fallbackUrl;
+				}
 
-					let countdown = document.getElementById("countdown");
+				var returnUrl = resolveReturnUrl();
+				var timeLeft = 5;
 
-					let timer = setInterval(function() {
-						timeLeft--;
-						if (countdown) countdown.textContent = timeLeft;
+				container.innerHTML = 'You will be redirected to homepage in <strong><span id=\"countdown\">5</span></strong> seconds...';
 
-						if (timeLeft <= 0) {
-							clearInterval(timer);
-							window.location.href = returnUrl;
-						}
-					}, 1000);
+				var countdown = document.getElementById('countdown');
 
-				});
-				');
-			}
-		}
-		add_action('wp_enqueue_scripts', 'thankyou_redirect_script');
+				var timer = setInterval(function () {
+					timeLeft--;
+					if (countdown) {
+						countdown.textContent = timeLeft;
+					}
+
+					if (timeLeft <= 0) {
+						clearInterval(timer);
+						window.location.href = returnUrl;
+					}
+				}, 1000);
+
+			});
+		})();"
+	);
+}
+add_action( 'wp_enqueue_scripts', 'repindia_thankyou_redirect_script' );
 
 // AJAX handler for Resource List "Show more" button
 add_action('wp_ajax_load_more_resources', 'handle_load_more_resources');
