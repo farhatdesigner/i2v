@@ -134,7 +134,8 @@ if (! function_exists('repindia_load_theme_scripts_and_styles')) {
 		
 		// Enqueue form validation script
 		wp_enqueue_script('repindia-form-validation', get_template_directory_uri() . '/assets/js/formvalidation.js', array('jquery'), REPINDIA_THEME_VERSION, true);
-		
+		wp_enqueue_script('repindia-pill-dropdown', get_template_directory_uri() . '/assets/js/custom-pill-dropdown.js', array('jquery'), REPINDIA_THEME_VERSION, true);
+
 		// Enqueue search script
 		wp_enqueue_script('repindia-search', get_template_directory_uri() . '/assets/js/search.js', array(), REPINDIA_THEME_VERSION, true);
 		wp_localize_script('repindia-search', 'repindiaSearch', array(
@@ -158,6 +159,23 @@ if (! function_exists('repindia_load_theme_scripts_and_styles')) {
 		}
 	}
 }
+
+/**
+ * Mark CF7 fields that should use the Figma pill dropdown UI.
+ * Add class i2v-pill-dropdown on the field in CF7 to force-enable any control.
+ */
+if (! function_exists('repindia_cf7_pill_dropdown_markup')) {
+	function repindia_cf7_pill_dropdown_markup($content) {
+		$field_pattern = '(?:interested|industry|application|inquir(?:y|ery)(?:[-_]?type)?)';
+		return preg_replace(
+			'/(<span class="wpcf7-form-control-wrap)(\s+[^>]*data-name="' . $field_pattern . ')/i',
+			'$1 i2v-pill-dropdown-wrap$2',
+			$content
+		);
+	}
+	add_filter('wpcf7_form_elements', 'repindia_cf7_pill_dropdown_markup');
+}
+
 if (! function_exists('repindia_excerpt_more')) {
 	function repindia_excerpt_more($more)
 	{
