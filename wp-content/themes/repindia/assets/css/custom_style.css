@@ -3021,6 +3021,11 @@ label.form-label.required_note-demo {
   padding-left: 5px;
 }
 
+.comparison-wrapper .icon-check {
+  padding-left: 0;
+}
+.comparison-wrapper li img {max-width: 20px;}
+
 .uc_content {
   display: none;
 }
@@ -5413,6 +5418,7 @@ span.star {
 .iti__country-list {max-width: 100%;}
 .photo_custom img { max-height: inherit !important; min-height: inherit !important;}
 .search_result_header_content {flex-wrap: wrap;}
+
 
 }
 
