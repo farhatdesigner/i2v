@@ -616,6 +616,11 @@ h2 {
   display: none !important;
 }
 
+/* responsive.css .js-dark .black-theme-img overrides .mobile-bg above; keep mobile assets off desktop */
+.js-dark .hero-slider .hero-slide-inner .mobile-bg {
+  display: none !important;
+}
+
 @media (max-width: 767px) {
   .hero-slider .hero-slide-inner.has-mobile-bg > .slide-bg-white:not(.mobile-bg),
   .hero-slider .hero-slide-inner.has-mobile-bg > .slide-bg-dark:not(.mobile-bg),
