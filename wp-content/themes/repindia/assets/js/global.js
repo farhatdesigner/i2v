@@ -1381,36 +1381,44 @@ jQuery(document).ready(function ($) {
 
 // Footer Accordion - Mobile Only (max-width: 767px)
 jQuery(document).ready(function ($) {
-    function handleFooterAccordion() {
-        // Only enable accordion on mobile (767px and below)
-        if ($(window).width() <= 767) {
-            // Initialize all accordion items as active (opened) on mobile
-            $('.footer-accordion-item').addClass('active');
-            
-            $('.footer-accordion-title').off('click').on('click', function () {
-                var $accordionItem = $(this).closest('.footer-accordion-item');
+    var footerAccordionMode = null;
 
-                // Simply toggle the active class - CSS will handle the animation
-                $accordionItem.toggleClass('active');
-            });
-        } else {
-            // On desktop, remove click handler and ensure all content is visible
-            $('.footer-accordion-title').off('click');
-            $('.footer-accordion-content').css('display', '');
-            $('.footer-accordion-item').removeClass('active');
+    function bindFooterAccordionClicks() {
+        $('.footer-accordion-title').off('click.footerAccordion').on('click.footerAccordion', function () {
+            $(this).closest('.footer-accordion-item').toggleClass('active');
+        });
+    }
+
+    function enableFooterAccordionMobile() {
+        $('.footer-accordion-item').addClass('active');
+        bindFooterAccordionClicks();
+    }
+
+    function disableFooterAccordionDesktop() {
+        $('.footer-accordion-title').off('click.footerAccordion');
+        $('.footer-accordion-content').css('display', '');
+        $('.footer-accordion-item').removeClass('active');
+    }
+
+    function updateFooterAccordion() {
+        var isMobile = $(window).width() <= 767;
+        if (isMobile) {
+            if (footerAccordionMode !== 'mobile') {
+                enableFooterAccordionMobile();
+                footerAccordionMode = 'mobile';
+            }
+        } else if (footerAccordionMode !== 'desktop') {
+            disableFooterAccordionDesktop();
+            footerAccordionMode = 'desktop';
         }
     }
 
-    // Initialize on page load
-    handleFooterAccordion();
+    updateFooterAccordion();
 
-    // Re-initialize on window resize
     var resizeTimer;
     $(window).on('resize', function () {
         clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function () {
-            handleFooterAccordion();
-        }, 250);
+        resizeTimer = setTimeout(updateFooterAccordion, 250);
     });
 });
 

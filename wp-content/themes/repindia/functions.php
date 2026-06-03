@@ -1000,3 +1000,18 @@ function i2v_validate_recaptcha_server_side($spam, $submission) {
     // If plugin verification had failed, CF7 would have already stopped here.
     return $spam; // Allow submission
 }
+
+
+// 🔒 Force Security Headers via PHP
+function add_security_headers_via_php() {
+    if (!is_admin()) {
+        header("X-XSS-Protection: 1; mode=block");
+        header("X-Frame-Options: SAMEORIGIN");
+        header("X-Content-Type-Options: nosniff");
+        header("Strict-Transport-Security: max-age=63072000; includeSubDomains; preload");
+        header("Referrer-Policy: strict-origin-when-cross-origin");
+        header("Content-Security-Policy: upgrade-insecure-requests;");
+        header("Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()");
+    }
+}
+add_action('send_headers', 'add_security_headers_via_php', 1);
