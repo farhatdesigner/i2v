@@ -278,7 +278,7 @@ function add_products_cpt_breadcrumb( $links ) {
 }
 
 add_filter( 'wpseo_breadcrumb_separator', function() {
-    return '<img class="yoast-sep-icon" src="' . esc_url( home_url( '/wp-content/uploads/2025/11/chevron-right.svg' ) ) .'" alt=">>';
+    return '<img class="yoast-sep-icon" src="' . esc_url( home_url( '/wp-content/uploads/2025/11/chevron-right.svg' ) ) . '" alt=">">';
 });
 
 /**
