@@ -313,7 +313,7 @@ global $repindia_option;
 <?php
 if (!empty($repindia_option['demo_popup_form'])) { ?>
 	<div class="formpopup_modal modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="true"
-		tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		data-bs-focus="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 		<div class="modal-dialog  modal-dialog-centered modal-demo-form">
 			<div class="modal-content">
 				<div class="modal-body">
@@ -799,8 +799,8 @@ if (!empty($repindia_option['technology_partner_form'])) { ?>
 
 				// Check if Bootstrap modal is available
 				if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
-					// Bootstrap 5
-					var modalInstance = bootstrap.Modal.getOrCreateInstance(modal);
+					// Bootstrap 5 — focus:false avoids scroll-into-view on close for bottom CTAs (e.g. open-demo-modal)
+					var modalInstance = bootstrap.Modal.getOrCreateInstance(modal, { focus: false });
 					modalInstance.show();
 					return true;
 				} else if (typeof jQuery !== 'undefined' && jQuery.fn.modal) {

@@ -166,9 +166,9 @@ if (! function_exists('repindia_load_theme_scripts_and_styles')) {
  */
 if (! function_exists('repindia_cf7_pill_dropdown_markup')) {
 	function repindia_cf7_pill_dropdown_markup($content) {
-		$field_pattern = '(?:interested|industry|application|inquir(?:y|ery)(?:[-_]?type)?)';
+		$field_pattern = '(?:interested|industry|application|inquir(?:y|ery)(?:[-_]?type)?|technology|partnership|focus[-_]?area)';
 		return preg_replace(
-			'/(<span class="wpcf7-form-control-wrap)(\s+[^>]*data-name="' . $field_pattern . ')/i',
+			'/(<span class="wpcf7-form-control-wrap)(?! i2v-pill-dropdown-wrap)([^>]*data-name="' . $field_pattern . '")/i',
 			'$1 i2v-pill-dropdown-wrap$2',
 			$content
 		);

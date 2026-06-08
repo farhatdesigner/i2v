@@ -441,7 +441,7 @@ class Custom_Blog_Filter extends Widget_Base
 
             .custom-blog-filter-search input {
                 width: 100%;
-                padding: 12px 40px;
+                padding: 12px 48px 12px 40px;
                 border: 1px solid #E5E9EC;
                 height: 48px;
                 border-radius: 12px;
@@ -455,36 +455,82 @@ class Custom_Blog_Filter extends Widget_Base
                 white-space: nowrap;
             }
 
+            .custom-blog-filter-search-wrapper input:focus,
+            .custom-blog-filter-search-wrapper input:focus-visible {
+                outline: none;
+                box-shadow: none;
+            }
+
             .custom-blog-filter-search-icon {
                 position: absolute;
                 left: 12px;
                 width: 20px;
                 height: 20px;
                 pointer-events: none;
-                color: #949494;
+                color: #5F6F94;
             }
 
             .custom-blog-filter-search-clear {
                 position: absolute;
-                right: 12px;
-                width: 20px;
-                height: 20px;
+                right: 8px;
+                min-width: 34px;
+                min-height: 34px;
                 cursor: pointer;
                 display: none;
                 align-items: center;
                 justify-content: center;
-                color: #949494;
+                color: #5f6f94;
                 background: transparent;
                 border: none;
-                padding: 0;
+                padding: 5px;
+                border-radius: 100%;
+                transition: color 0.3s, background-color 0.3s;
+            }
+
+            .custom-blog-filter-search-clear svg {
+                width: 22px;
+                height: 22px;
+                flex-shrink: 0;
+            }
+
+            .custom-blog-filter-search-clear svg path {
+                transition: stroke 0.3s ease;
+                stroke: #5F6F94;
             }
 
             .custom-blog-filter-search-clear.visible {
                 display: flex;
             }
 
-            .custom-blog-filter-search-clear:hover {
-                color: #666;
+            .custom-blog-filter-search-clear:hover,
+            .custom-blog-filter-search-clear:focus,
+            .custom-blog-filter-search-clear:focus-visible {
+                color: #333;
+                background-color: #e6ebf2;
+                outline: none;
+            }
+
+            .js-dark .custom-blog-filter-search-clear {
+                color: #fff;
+                background: transparent;
+            }
+
+            .js-dark .custom-blog-filter-search-clear svg path, .js-dark .custom-blog-filter-search-icon  path, .js-dark .custom-blog-filter-search-icon circle {
+                stroke: #AEB6C9;
+            }
+
+            .js-dark .custom-blog-filter-search-clear:hover,
+            .js-dark .custom-blog-filter-search-clear:focus,
+            .js-dark .custom-blog-filter-search-clear:focus-visible {
+                background-color: rgba(255, 255, 255, 0.1);
+                color: #fff;
+                outline: none;
+            }
+
+            .js-dark .custom-blog-filter-search-clear:hover svg path,
+            .js-dark .custom-blog-filter-search-clear:focus svg path,
+            .js-dark .custom-blog-filter-search-clear:focus-visible svg path {
+                stroke: #EFF1F5;
             }
 
             .custom-blog-filter-accordion {

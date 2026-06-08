@@ -344,7 +344,7 @@ class Scalescroll2 extends Widget_Base
             
         </style>
 
-        <div class="makdmks scalescroll2-widget">
+        <div class="makdmks scalescroll-widget scalescroll2-widget">
             <div class="custom-container">
                 <?php if (!empty($section_title) || !empty($section_description)) : ?>
                     <div class="title-box">

@@ -323,8 +323,27 @@ class Analytic_Sidebar_Nav extends Widget_Base
                     max-height: calc(100vh - 120px);
                     overflow-y: auto;
                     overflow-x: hidden;
+                    scroll-behavior: smooth;
+                    -webkit-overflow-scrolling: touch;
+                    overscroll-behavior: contain;
+                    scrollbar-width: thin;
+                    scrollbar-color: #d5d5d5 transparent;
                 }
             }
+            .video_analytic_sidebar::-webkit-scrollbar,
+            .elementor-element.video_analytic_sidebar::-webkit-scrollbar { width: 6px; }
+            .video_analytic_sidebar::-webkit-scrollbar-track,
+            .elementor-element.video_analytic_sidebar::-webkit-scrollbar-track { background: transparent;border-radius: 10px; }
+            .video_analytic_sidebar::-webkit-scrollbar-thumb,
+            .elementor-element.video_analytic_sidebar::-webkit-scrollbar-thumb {
+                background: #d5d5d5;
+                border-radius: 10px;
+                transition: background 0.3s ease;
+            }
+            .video_analytic_sidebar::-webkit-scrollbar-thumb:hover,
+            .elementor-element.video_analytic_sidebar::-webkit-scrollbar-thumb:hover { background: #d5d5d5; }
+            .video_analytic_sidebar::-webkit-scrollbar-button,
+            .elementor-element.video_analytic_sidebar::-webkit-scrollbar-button { display: none;height: 0;width: 0; }
             /* Enable manual scrolling for right content section */
             .right_content_section,
             .elementor-element.right_content_section {
@@ -345,7 +364,14 @@ class Analytic_Sidebar_Nav extends Widget_Base
             .js-dark .analytic-sidebar { scrollbar-color: rgba(255, 255, 255, 0.3) transparent; }
             .js-dark .analytic-sidebar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.3); }
             .js-dark .analytic-sidebar::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.3); }
+            .js-dark .video_analytic_sidebar,
+            .js-dark .elementor-element.video_analytic_sidebar { scrollbar-color: rgba(255, 255, 255, 0.3) transparent; }
+            .js-dark .video_analytic_sidebar::-webkit-scrollbar-thumb,
+            .js-dark .elementor-element.video_analytic_sidebar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.3); }
+            .js-dark .video_analytic_sidebar::-webkit-scrollbar-thumb:hover,
+            .js-dark .elementor-element.video_analytic_sidebar::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.3); }
             .js-dark .right_content_section,.js-dark .elementor-element.right_content_section { scrollbar-color: rgba(255, 255, 255, 0.3) transparent; }
+            .js-dark .right_content_section, .js-dark .elementor-element.right_content_section img {border-color: #C1C4C633 !important;}
             .js-dark .right_content_section::-webkit-scrollbar-thumb,
             .js-dark .elementor-element.right_content_section::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.3); }
             .js-dark .right_content_section::-webkit-scrollbar-thumb:hover,
