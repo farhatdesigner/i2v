@@ -387,19 +387,31 @@ class Video_accordioncaption extends Widget_Base
             .vac_select_div {
                 display: flex;
                 align-items: center;
-                width: 100%;
+                width: calc(100% + 40px);
+                margin: -30px -20px;
+                padding: 30px 20px 30px 40px;
+                box-sizing: border-box;
                 background: transparent !important;
                 border: none;
                 cursor: pointer;
                 text-align: left;
                 gap: 15px;
-                padding-left: 20px;
+                position: relative;
+                z-index: 1;
+            }
+
+            .vac_accordion_set.active .vac_select_div {
+                width: calc(100% + 24px);
+                margin: -12px -12px 0;
+                padding: 12px 12px 0 32px;
             }
 
             .vac_ac_icon_wrap {
                 position: absolute;
                 left: 20px;
                 top: 10px;
+                z-index: 2;
+                pointer-events: none;
             }
 
             .vac_ac_icon_border {
@@ -732,6 +744,26 @@ class Video_accordioncaption extends Widget_Base
                     margin-left: 38px;
                 }
 
+                .vac_select_div {
+                    margin: -20px -20px;
+                    padding: 20px 20px 20px 40px;
+                    width: calc(100% + 40px);
+                }
+
+                .vac_accordion_set.active .vac_select_div {
+                    width: calc(100% + 24px);
+                    margin: -12px -12px 0;
+                    padding: 12px 12px 0 32px;
+                }
+
+                .vac_accordion_set {
+                    padding: 20px 20px;
+                }
+
+                .vac_ac_icon_wrap {
+                    top: 10px;
+                }
+
                 .vac_accontent,
                 .vac_accordion_set.active .vac_accontent {
                     padding-left: 0;
@@ -750,15 +782,6 @@ class Video_accordioncaption extends Widget_Base
 
                 .vac_accontent .vac_accordion_video p {
                     margin: 8px 0px 8px 0;
-                }
-
-                .vac_accordion_set {
-                    ;
-                    padding: 20px 20px;
-                }
-
-                .vac_ac_icon_wrap {
-                    top: 10px;
                 }
 
                 .vac_accontent .vac_accordion_video {
@@ -850,6 +873,10 @@ class Video_accordioncaption extends Widget_Base
 
                 #white_bg-conatainer .custom-container {
                     padding: 20px;
+                }
+
+                .vac_chevron {
+                    top: auto;
                 }
 
                 .vac_chevron {

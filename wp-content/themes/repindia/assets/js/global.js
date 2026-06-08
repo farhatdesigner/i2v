@@ -3342,3 +3342,12 @@ if (sliderWrapper && prevButton) {
         initViewportVideos();
     }
 })();
+
+
+jQuery(function ($) {
+    $('h3.custom-latest-resource-title, h3.custom-blog-filter-title').each(function () {
+        if (!$(this).find('.title-text_hover').length) {
+            $(this).wrapInner('<span class="title-text_hover"></span>');
+        }
+    });
+});

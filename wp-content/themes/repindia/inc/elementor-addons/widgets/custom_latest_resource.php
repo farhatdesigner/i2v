@@ -433,15 +433,14 @@ class Custom_Latest_Resource extends Widget_Base
                 font-style: normal;
                 font-weight: 600;
                 line-height: 26px;
-                /* overflow: hidden;
+                overflow: hidden;
                 text-overflow: ellipsis;
                 display: -webkit-box;
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
                 padding-bottom: 0;
-                min-height: unset; */
+                min-height: unset;
                 color: #06283D;
-                display: inline;
             }
 
             .custom-latest-resource-pagination {
