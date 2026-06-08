@@ -1090,7 +1090,7 @@ a:hover {
   width: 767px;
   background: #ffffff;
   position: absolute;
-  height: 100vh;
+  height: 100dvh;
   max-width: 100%;
   top: -20px;
   left: 0;
@@ -5108,7 +5108,7 @@ span.star {
 
   .inside-menu-container-inner {
     display: block;
-    height: calc(100vh - 160px);
+    height: calc(100dvh - 160px);
     overflow-y: auto;
   }
 
