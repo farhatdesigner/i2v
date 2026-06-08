@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  var FIELD_NAME_RE = /interested|industry|application|inquir|typeof|partner-type|contact-type/i;
+  var FIELD_NAME_RE = /interested|industry|application|inquir|typeof|partner-type|contact-type|technology|partnership|focus[-_]?area/i;
   var EXCLUDE_FIELD_RE = /country|phone|dial-code|dial_code|resume|file|email|tel|language|product[-_]?interest/i;
   var PLACEHOLDER = 'Select';
 
@@ -18,7 +18,7 @@
     if (!wrap) {
       return '';
     }
-    var p = wrap.closest('p, .form-group, .col-md-6, .col-sm-6, .col-12, li');
+    var p = wrap.closest('p, .form-group, .col-md-6, .col-sm-6, .col-md-12, .col-12, li');
     if (p) {
       var inBlock = p.querySelector('label.form-label, label');
       if (inBlock) {
@@ -46,7 +46,9 @@
     return (
       /select\s+industry|industry/.test(label) ||
       /select\s+inquir|inquiry\s+type|inquir(y|ery)\s+type/.test(label) ||
-      /i'?m\s+interested|interested\s+in|select\s+an?\s+application/.test(label)
+      /i'?m\s+interested|interested\s+in|select\s+an?\s+application/.test(label) ||
+      /technology\s+focus|focus\s+area/.test(label) ||
+      /type\s+of\s+partnership|partnership\s+interested/.test(label)
     );
   }
 
@@ -121,6 +123,12 @@
     if (/interested|application/.test(label)) {
       return 'Select an application';
     }
+    if (/technology\s+focus|focus\s+area/.test(label)) {
+      return 'Technology focus area';
+    }
+    if (/type\s+of\s+partnership|partnership/.test(label)) {
+      return 'Type of partnership interested in';
+    }
     if (/^select\s+/.test(label)) {
       var titled = getFieldLabel(wrap).replace(/\*/g, '').trim();
       return titled.charAt(0).toUpperCase() + titled.slice(1);
@@ -133,6 +141,12 @@
     }
     if (/interested|application/i.test(fieldName)) {
       return 'Select an application';
+    }
+    if (/technology|focus[-_]?area/i.test(fieldName)) {
+      return 'Technology focus area';
+    }
+    if (/partnership/i.test(fieldName)) {
+      return 'Type of partnership interested in';
     }
     return 'Select option';
   }
@@ -203,13 +217,13 @@
       return true;
     }
     var label = normalizeLabel(getFieldLabel(wrap));
-    if (/industry|inquir/.test(label)) {
+    if (/industry|inquir|technology\s+focus|focus\s+area|partnership/.test(label)) {
       return true;
     }
     if (/interested|application/.test(label) && isMulti) {
       return false;
     }
-    if (/industry|inquir/i.test(fieldName)) {
+    if (/industry|inquir|technology|partnership|focus[-_]?area/i.test(fieldName)) {
       return true;
     }
     return !isMulti;

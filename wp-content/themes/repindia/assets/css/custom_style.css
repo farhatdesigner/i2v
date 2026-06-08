@@ -1090,7 +1090,7 @@ a:hover {
   width: 767px;
   background: #ffffff;
   position: absolute;
-  height: 100vh;
+  height: 100dvh;
   max-width: 100%;
   top: -20px;
   left: 0;
@@ -5108,7 +5108,7 @@ span.star {
 
   .inside-menu-container-inner {
     display: block;
-    height: calc(100vh - 160px);
+    height: calc(100dvh - 160px);
     overflow-y: auto;
   }
 
@@ -5628,19 +5628,19 @@ span.star {
 .js-dark .global-youtube-popup__close:hover svg { background: rgba(255, 255, 255, 0.1); }
 .js-dark .global-youtube-popup__close svg path { fill: #d7dbe4; }
 
-.grid-listing li h5.card-title,header #header-main-menu li a,.toggle-menu > li > a,#header-toggle-menu .sub-menu li a,.footer ul li > a, label.form-label.label_notic a, .form-label.notice-text a, .custom-latest-resource-title, .brand_heading_color{ padding-bottom: 2px;display: inline;line-height: 1.2;background: linear-gradient(transparent, transparent);background-size: 100% 6px;background-repeat: no-repeat;background-position: 0 calc(100% - 6px);box-decoration-break: clone;-webkit-box-decoration-break: clone; }
+.grid-listing li h5.card-title,header #header-main-menu li a,.toggle-menu > li > a,#header-toggle-menu .sub-menu li a,.footer ul li > a, label.form-label.label_notic a, .form-label.notice-text a, .custom-latest-resource-title .title-text_hover, .custom-blog-filter-title .title-text_hover, .brand_heading_color{ padding-bottom: 2px;display: inline;line-height: 1.2;background: linear-gradient(transparent, transparent);background-size: 100% 6px;background-repeat: no-repeat;background-position: 0 calc(100% - 6px);box-decoration-break: clone;-webkit-box-decoration-break: clone; }
 
 .footer ul li{ margin-bottom: 12px; }
 
 .grid-listing li:hover h5.card-title,#header-toggle-menu > li > a:hover, #header-main-menu > li > a:hover, .sub-menu li a:hover, #header-toggle-menu > li:nth-last-child(4) > a span:hover, .listing-inner > ul > li > :hover .span-text, .cards-listing-section li:hover .card-title,#header-toggle-menu .sub-menu li a:hover, .industry-list-section .grid-industry_list li:hover .card-title, #header-toggle-menu > li:nth-child(6) > a:hover span, .toggle-menu > li:nth-child(6).active.parent > a span, 
-label.form-label.label_notic a:hover, .form-label.notice-text a:hover, .custom-latest-resource-title:hover,  #header-toggle-menu.toggle-menu > li:nth-child(6) a:hover span
+label.form-label.label_notic a:hover, .form-label.notice-text a:hover, .custom-latest-resource-title .title-text_hover:hover, .custom-blog-filter-title .title-text_hover:hover,  #header-toggle-menu.toggle-menu > li:nth-child(6) a:hover span
 ,.brand_heading_color:hover
 { background: linear-gradient(#dfe2e5, #dfe2e5);background-size: 100% 6px; background-repeat: no-repeat;background-position: 0 calc(100% - 6px);box-decoration-break: clone;-webkit-box-decoration-break: clone; }
 
 .toggle-menu > li.active.parent > a,header #header-main-menu li.active.parent > a,#header-toggle-menu .sub-menu li.current-menu-item a, #header-toggle-menu > li:nth-child(6) > a:hover span, .toggle-menu > li:nth-child(6).active.parent > a span  {
   background: linear-gradient(#D9EAF4, #D9EAF4);background-size: 100% 6px; background-repeat: no-repeat;background-position: 0 calc(100% - 6px);box-decoration-break: clone;-webkit-box-decoration-break: clone;
 }
-.js-dark .grid-listing li:hover h5.card-title,.js-dark #header-toggle-menu > li > a:hover, .js-dark #header-main-menu > li > a:hover, .sub-menu li a:hover, .js-dark #header-toggle-menu > li:nth-last-child(4) > a span:hover, .js-dark .listing-inner > ul > li > :hover .span-text, .js-dark .cards-listing-section li:hover .card-title, .js-dark .footer ul li > a:hover,.js-dark #header-toggle-menu .sub-menu li a:hover,.footer ul li > a:hover,.js-dark .industry-list-section .grid-industry_list li:hover .card-title, .js-dark label.form-label.label_notic a:hover, .js-dark .form-label.notice-text a:hover, .js-dark .custom-latest-resource-title:hover, .js-dark #header-toggle-menu > li:nth-child(6) > a:hover span, .js-dark .toggle-menu > li:nth-child(6).active.parent > a span, .js-dark .brand_heading_color:hover{background: linear-gradient(rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.10));background-size: 100% 6px; background-repeat: no-repeat;background-position: 0 calc(100% - 6px);box-decoration-break: clone;-webkit-box-decoration-break: clone; }
+.js-dark .grid-listing li:hover h5.card-title,.js-dark #header-toggle-menu > li > a:hover, .js-dark #header-main-menu > li > a:hover, .sub-menu li a:hover, .js-dark #header-toggle-menu > li:nth-last-child(4) > a span:hover, .js-dark .listing-inner > ul > li > :hover .span-text, .js-dark .cards-listing-section li:hover .card-title, .js-dark .footer ul li > a:hover,.js-dark #header-toggle-menu .sub-menu li a:hover,.footer ul li > a:hover,.js-dark .industry-list-section .grid-industry_list li:hover .card-title, .js-dark label.form-label.label_notic a:hover, .js-dark .form-label.notice-text a:hover, .js-dark .custom-latest-resource-title .title-text_hover:hover, .js-dark .custom-blog-filter-title .title-text_hover:hover, .js-dark #header-toggle-menu > li:nth-child(6) > a:hover span, .js-dark .toggle-menu > li:nth-child(6).active.parent > a span, .js-dark .brand_heading_color:hover{background: linear-gradient(rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.10));background-size: 100% 6px; background-repeat: no-repeat;background-position: 0 calc(100% - 6px);box-decoration-break: clone;-webkit-box-decoration-break: clone; }
 .js-dark .toggle-menu > li.active.parent > a,.js-dark header #header-main-menu li.active.parent > a,.js-dark #header-toggle-menu .sub-menu li.current-menu-item a, .js-dark #header-toggle-menu > li:nth-child(6) > a:hover span, .js-dark .toggle-menu > li:nth-child(6).active.parent > a span { padding-bottom: 4px;
   background: linear-gradient(rgb(116 194 237 / 15%), rgb(116 194 237 / 15%));background-size: 100% 6px; background-repeat: no-repeat;background-position: 0 calc(100% - 6px);box-decoration-break: clone;-webkit-box-decoration-break: clone;
 }

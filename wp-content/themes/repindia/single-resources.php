@@ -47,6 +47,10 @@ $newscategories = get_the_category();
             position: relative;
             text-align: center;
         }
+        
+.js-dark .resource-modal-content {
+    background: #262A30;
+}
 
         .resource-modal-close {
             position: absolute;
@@ -99,8 +103,9 @@ $newscategories = get_the_category();
         <div class="resource-modal-content">
             <span class="resource-modal-close">&times;</span>
             <div class="resource-thankyou">
-                <h3>Thank You!</h3>
-                <p>Your request has been submitted successfully.</p>
+                <h3>Message sent successfully</h3>
+                <p>Thank you for reaching out. We’ve received your message
+                and will get back to you shortly.</p>
                 <a href="<?php echo esc_url($resource_download_url); ?>" target="_blank" class="theme-btn xl-btn" id="resourceDownloadBtn" download>Download Resource</a>
             </div>
         </div>

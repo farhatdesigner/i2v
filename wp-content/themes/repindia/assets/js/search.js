@@ -92,9 +92,10 @@
             closeBtn.addEventListener('click', closePopup);
         }
 
-        // Close on overlay click
+        // Close when clicking outside the popup container (overlay or empty wrapper area)
+        const popupContainer = popup.querySelector('.search-popup-container');
         popup.addEventListener('click', function(e) {
-            if (e.target === popup) {
+            if (popupContainer && !popupContainer.contains(e.target)) {
                 closePopup();
             }
         });

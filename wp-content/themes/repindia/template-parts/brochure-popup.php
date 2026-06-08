@@ -332,8 +332,9 @@ if ($download_b) { ?>
                         } ?>
                     </div>
                     <div class="brochure-thankyou">
-                        <h3>Thank You!</h3>
-                        <p>Your request has been submitted successfully.</p>
+                        <h3>Message sent successfully</h3>
+                        <p>Thank you for reaching out. We’ve received your message
+                        and will get back to you shortly.</p>
                         <a href="<?php echo esc_url($download_file_url['value']); ?>" target="_blank"
                             class="theme-btn xl-btn" id="brochureDownloadBtn" download>Download Brochure</a>
                     </div>

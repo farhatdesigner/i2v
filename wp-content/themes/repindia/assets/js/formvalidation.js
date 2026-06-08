@@ -24,6 +24,26 @@
       // Cache for debouncing validation
       var validationTimers = {};
       
+      // Helper: Find label associated with a CF7 field (wrap or parent column)
+      function getFieldLabelElement($field) {
+        var $wrap = $field.closest('.wpcf7-form-control-wrap');
+        var $label = $wrap.find('label.form-label, label').first();
+        if ($label.length) {
+          return $label;
+        }
+
+        var $container = $wrap.closest('p, .form-group, .col-md-6, .col-sm-6, .col-md-12, .col-12, li');
+        if ($container.length) {
+          $label = $container.children('label.form-label, label').first();
+          if ($label.length) {
+            return $label;
+          }
+        }
+
+        $label = $wrap.prev('label.form-label, label');
+        return $label.length ? $label : $();
+      }
+
       // Helper: Check if field is required
       function isFieldRequired($field) {
         // Check multiple ways Contact Form 7 marks required fields
@@ -43,7 +63,7 @@
         if ($wrap.hasClass('optional')) return false;
         
         // 5. Check for required indicators in label (asterisk, required class)
-        var $label = $wrap.find('label');
+        var $label = getFieldLabelElement($field);
         if ($label.length) {
           var labelText = $label.text();
           var labelHtml = $label.html() || '';
@@ -83,6 +103,60 @@
       function isFileInUploadBox($field) {
         return $field.is('input[type="file"]') && $field.closest('.file-upload-box').length > 0;
       }
+
+      var UPLOAD_BOX_ALLOWED_EXT = ['pdf', 'doc', 'docx'];
+      var UPLOAD_BOX_MAX_BYTES = 2 * 1024 * 1024;
+
+      function validateUploadBoxFile($field) {
+        if (!isFileInUploadBox($field)) {
+          return true;
+        }
+
+        var el = $field[0];
+        var hasFile = el.files && el.files.length > 0;
+
+        if (isFieldRequired($field) && !hasFile) {
+          return false;
+        }
+
+        if (!hasFile) {
+          return true;
+        }
+
+        var file = el.files[0];
+        var ext = (file.name.split('.').pop() || '').toLowerCase();
+
+        if (UPLOAD_BOX_ALLOWED_EXT.indexOf(ext) === -1) {
+          return false;
+        }
+
+        if (file.size > UPLOAD_BOX_MAX_BYTES) {
+          return false;
+        }
+
+        return true;
+      }
+
+      function syncUploadBoxState($field) {
+        var $box = $field.closest('.file-upload-box');
+        if (!$box.length) {
+          return;
+        }
+
+        var hasValidFile = validateUploadBoxFile($field);
+        var el = $field[0];
+        var fileName = el.files && el.files.length > 0 ? el.files[0].name : '';
+
+        if (fileName && hasValidFile) {
+          $box.addClass('has-file');
+          $box.find('.file-name').text(fileName).show();
+        } else {
+          $box.removeClass('has-file');
+          $box.find('.file-name').text('').hide();
+        }
+
+        $box.toggleClass('is-invalid', !hasValidFile && (isFieldRequired($field) || fileName));
+      }
       
       // Helper: Validate specific field types
       function validateField($field, $form) {
@@ -97,6 +171,10 @@
         // Check if required and empty
         if (isFieldRequired($field) && (!value || value === '')) {
           return false;
+        }
+
+        if ($field.is('input[type="file"]') && isFileInUploadBox($field)) {
+          return validateUploadBoxFile($field);
         }
         
         // Type-specific validation
@@ -228,6 +306,10 @@
                   return val.length >= 10;
                 }
                 return true;
+              }},
+            { selector: '.file-upload-box input[type="file"]',
+              validate: function($f) {
+                return validateUploadBoxFile($f);
               }}
           ];
           
@@ -237,7 +319,7 @@
               var valid = true;
               $fields.each(function() {
                 var $f = $(this);
-                if (!$f.is(':visible')) return true;
+                if (!$f.is(':visible') && !isFileInUploadBox($f)) return true;
                 if (!fieldChecks[i].validate($f)) {
                   valid = false;
                   return false; // break
@@ -561,24 +643,13 @@
           }
         });
         
-        // Resume file handler
-        $doc.off('change', '.wpcf7 input#resume, .wpcf7 input[name="resume"]');
-        $doc.on('change', '.wpcf7 input#resume, .wpcf7 input[name="resume"]', function() {
-          var fileName = this.files.length > 0 ? this.files[0].name : "Resume (Max file size: 500 KB)";
-          var $noFileEl = $(this).closest('.wpcf7').find('#noFile');
-          if (!$noFileEl.length) {
-            $noFileEl = $(this).closest('.wpcf7-form-control-wrap').find('#noFile');
-          }
-          if ($noFileEl.length) {
-            $noFileEl.text(fileName);
-          }
-          var $box = $(this).closest('.file-upload-box');
-          if ($box.length && this.files.length > 0) {
-            $box.addClass('has-file');
-            $box.find('.file-name').text(fileName).show();
-          }
-          // Validation unchanged: still run after file selection
-          validateAndUpdateSubmit($(this).closest('.wpcf7'));
+        // Resume / CV file handler (scoped to .file-upload-box on career form)
+        $doc.off('change', '.wpcf7 .file-upload-box input[type="file"]');
+        $doc.on('change', '.wpcf7 .file-upload-box input[type="file"]', function() {
+          var $field = $(this);
+          var $form = $field.closest('.wpcf7');
+          syncUploadBoxState($field);
+          validateAndUpdateSubmit($form);
         });
 
         // File upload box / browse link: open file dialog only (input has pointer-events: none in CSS).

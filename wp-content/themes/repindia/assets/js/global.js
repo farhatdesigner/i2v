@@ -339,7 +339,35 @@ $(document).ready(function () {
     var modalScrollPosition = 0;
     var brochureModalScrollPosition = 0;
 
-    // After modal/menu close: restore saved scroll first, then re-init cards + gallery + hz-sliders so ScrollTrigger math matches the real viewport (gallery was only killed on open, not disabled in a half-built state).
+    // Pause (disable) card/gallery ScrollTriggers while modal is open; re-enable on close unless gallery was fully killed in-view.
+    window.pauseModalScrollTriggers = function () {
+        window._modalScrollTriggersPaused = [];
+        if (typeof ScrollTrigger === "undefined") return;
+        ScrollTrigger.getAll().forEach(function (st) {
+            if (!st.vars || !st.vars.id) return;
+            var sid = String(st.vars.id);
+            if (sid.indexOf("card-") === 0 || sid.indexOf("gallery-section-") === 0 || sid === "gallery-pin") {
+                if (!st.disabled && !st.killed) {
+                    st.disable(false, false);
+                    window._modalScrollTriggersPaused.push(st);
+                }
+            }
+        });
+    };
+
+    window.reEnablePausedModalScrollTriggers = function () {
+        if (!window._modalScrollTriggersPaused || !window._modalScrollTriggersPaused.length) return;
+        window._modalScrollTriggersPaused.forEach(function (st) {
+            try {
+                if (st && !st.killed && st.disabled) {
+                    st.enable(false, false);
+                }
+            } catch (e) {}
+        });
+        window._modalScrollTriggersPaused = [];
+    };
+
+    // After modal/menu close: restore saved scroll first, then re-enable paused ST (or rebuild gallery only if it was killed in-view).
     window.scheduleCardsRefreshAfterModalClose = function () {
         if (window._cardsModalRefreshTimer) clearTimeout(window._cardsModalRefreshTimer);
         window._cardsModalRefreshTimer = setTimeout(function () {
@@ -367,11 +395,18 @@ $(document).ready(function () {
             if (typeof initCardsCustomBodyGSAP === "function") {
                 initCardsCustomBodyGSAP();
             }
-            if (window.innerWidth >= 1200) {
+            if (window.innerWidth >= 1200 && typeof initGalleryGSAP === "function") {
                 var scaleRoot = document.querySelector(".scalescroll-widget.makdmks");
-                if (scaleRoot && scaleRoot.querySelector(".gallery") && typeof initGalleryGSAP === "function") {
+                if (scaleRoot && scaleRoot.querySelector(".gallery")) {
                     initGalleryGSAP();
                 }
+            }
+            if (typeof window.reinitSectionsscrollGSAP === "function") {
+                window.reinitSectionsscrollGSAP();
+            }
+            window._modalScaleScrollGalleryKilled = false;
+            if (typeof window.reEnablePausedModalScrollTriggers === "function") {
+                window.reEnablePausedModalScrollTriggers();
             }
             if (typeof window.reinitHzSliderSectionGSAP === "function") {
                 window.reinitHzSliderSectionGSAP();
@@ -510,6 +545,28 @@ $(document).ready(function () {
         }
     };
 
+    // After killing card ScrollTriggers: remove pin-spacers and transforms (fixes distortion when modal opens from deep scroll past .cards-custom-body).
+    window.cleanupCardsCustomBodyPinDom = function () {
+        var root = document.querySelector(".cards-custom-body");
+        if (!root) return;
+        var scope = root.closest(".wrapper") || root;
+        if (typeof gsap !== "undefined") {
+            root.querySelectorAll(".card-wrapper").forEach(function (wrapper) {
+                gsap.set(wrapper, { clearProps: "transform,translate,top,left,width,height,margin" });
+            });
+            root.querySelectorAll(".card_display").forEach(function (card) {
+                gsap.set(card, { clearProps: "transform,translate,top,left,scale" });
+            });
+        }
+        scope.querySelectorAll(".pin-spacer").forEach(function (spacer) {
+            if (!spacer.parentNode || !scope.contains(spacer)) return;
+            while (spacer.firstChild) {
+                spacer.parentNode.insertBefore(spacer.firstChild, spacer);
+            }
+            spacer.parentNode.removeChild(spacer);
+        });
+    };
+
     // After killing gallery ScrollTriggers: remove leftover pin-spacers and GSAP transforms on .right (prevents flex layout collapse / offset seen after modals).
     window.cleanupScaleScrollGalleryPinDom = function () {
         var makdmks = document.querySelector(".scalescroll-widget.makdmks");
@@ -533,6 +590,7 @@ $(document).ready(function () {
     window.resetScaleScrollGalleryBeforeBodyLock = function (anchorScrollY) {
         if (window.innerWidth < 1200) return;
         if (typeof window.isViewportInsideScaleScrollWidget === "function" && !window.isViewportInsideScaleScrollWidget()) return;
+        window._modalScaleScrollGalleryKilled = true;
         if (typeof window.killScaleScrollGalleryScrollTriggers === "function") {
             window.killScaleScrollGalleryScrollTriggers();
         }
@@ -567,6 +625,35 @@ $(document).ready(function () {
         
         outer.parentNode.removeChild(outer);
         return scrollbarWidth;
+    }
+
+    // Modal scroll lock: overflow hidden only (never position:fixed or lenis.stop — both break ScrollTrigger after close).
+    window._modalScrollLockMode = null;
+
+    function lockModalBodyScroll() {
+        var scrollbarWidth = getScrollbarWidth();
+        window._modalScrollLockMode = "overflow";
+        document.documentElement.style.overflow = "hidden";
+        document.body.style.overflow = "hidden";
+        document.body.style.paddingRight = scrollbarWidth + "px";
+    }
+
+    function unlockModalBodyScroll() {
+        document.documentElement.style.overflow = "";
+        document.body.style.overflow = "";
+        document.body.style.paddingRight = "";
+        document.body.style.position = "";
+        document.body.style.top = "";
+        document.body.style.left = "";
+        document.body.style.right = "";
+        document.body.style.width = "";
+        window._modalScrollLockMode = null;
+        if (typeof lenis !== "undefined" && lenis && typeof lenis.resize === "function") {
+            lenis.resize();
+        }
+        if (typeof ScrollTrigger !== "undefined") {
+            ScrollTrigger.update();
+        }
     }
 
     // Prevent body scroll when menu is open
@@ -848,6 +935,7 @@ $(document).ready(function () {
 
     // Lock body scroll when formpopup_modal opens
     $(document).on('show.bs.modal', '.formpopup_modal', function () {
+        window._modalScaleScrollGalleryKilled = false;
         // Save current scroll position using multiple methods for reliability
         modalScrollPosition = typeof window.getGlobalScrollY === "function"
             ? window.getGlobalScrollY()
@@ -877,31 +965,15 @@ $(document).ready(function () {
             window.resetScaleScrollGalleryBeforeBodyLock(modalScrollPosition);
         }
 
-        // Unpin card + scale-scroll gallery ScrollTriggers BEFORE locking body so reflow from unpin doesn't distort the modal layout
-        if (typeof ScrollTrigger !== "undefined") {
-            ScrollTrigger.getAll().forEach(function(st) {
-                if (!st.vars || !st.vars.id) return;
-                var sid = String(st.vars.id);
-                if (sid.indexOf("card-") === 0 || sid.indexOf("gallery-section-") === 0 || sid === "gallery-pin") {
-                    st.disable(false, false);
-                }
-            });
+        // Pause card + scale-scroll gallery ScrollTriggers BEFORE locking body (re-enabled on close; gallery rebuilt only if killed in-view).
+        if (typeof window.pauseModalScrollTriggers === "function") {
+            window.pauseModalScrollTriggers();
         }
 
-        // Then lock body scroll (order matters: unpin first, then fixed)
-        var scrollbarWidth = getScrollbarWidth();
-        $("body").css({
-            "overflow": "hidden",
-            "position": "fixed",
-            "top": "-" + modalScrollPosition + "px",
-            "left": "0",
-            "right": "0",
-            "width": "100%",
-            "padding-right": scrollbarWidth + "px"
-        });
+        lockModalBodyScroll();
 
         $(window).on("scroll", preventModalBodyScroll);
-        document.addEventListener("wheel", preventModalBodyWheel, { passive: false, capture: false });
+        document.addEventListener("wheel", preventModalBodyWheel, { passive: false, capture: true });
         $("body, .modal-backdrop").on("touchmove", preventModalBodyScroll);
         // Bind wheel stop only on this modal so opening/closing one popup does not strip handlers from others (e.g. header demo form).
         $(this).find(".modal-content, .modal-body").on("wheel", function (e) {
@@ -920,89 +992,27 @@ $(document).ready(function () {
 
         // Remove event listeners
         $(window).off("scroll", preventModalBodyScroll);
-        document.removeEventListener("wheel", preventModalBodyWheel, false);
+        document.removeEventListener("wheel", preventModalBodyWheel, { capture: true });
         $("body, .modal-backdrop").off("touchmove", preventModalBodyScroll);
         $(this).find(".modal-content, .modal-body").off("wheel");
 
-        // Store the exact scroll position we want to restore
-        var restorePosition = modalScrollPosition;
+        unlockModalBodyScroll();
 
-        // Temporarily disable smooth scroll behavior for instant scroll restoration
-        var originalHtmlScrollBehavior = $("html").css("scroll-behavior");
-        var originalBodyScrollBehavior = $("body").css("scroll-behavior");
-        $("html, body").css("scroll-behavior", "auto");
-
-        // First, restore overflow and padding (but keep position fixed temporarily)
-        $("body").css({
-            "overflow": "",
-            "padding-right": ""
-        });
-
-        // Use requestAnimationFrame to ensure smooth restoration
-        requestAnimationFrame(function() {
-            // Remove position fixed and restore scroll in the same frame
-            $("body").css({
-                "position": "",
-                "top": "",
-                "left": "",
-                "right": "",
-                "width": ""
-            });
-
-            // Immediately restore scroll position - do this synchronously
-            if (typeof window.syncViewportScrollTo === "function") {
-                window.syncViewportScrollTo(restorePosition);
-            } else {
-                if (window.scrollTo) {
-                    window.scrollTo(0, restorePosition);
-                }
-                document.documentElement.scrollTop = restorePosition;
-                document.body.scrollTop = restorePosition;
-                $(window).scrollTop(restorePosition);
+        var activeEl = document.activeElement;
+        if (activeEl && activeEl !== document.body && activeEl !== document.documentElement) {
+            if (activeEl.classList && activeEl.classList.contains("open-demo-modal")) {
+                activeEl.blur();
             }
+        }
 
-            // Double-check after a micro-delay to ensure position is maintained
-            requestAnimationFrame(function() {
-                var currentScroll = typeof window.getGlobalScrollY === "function"
-                    ? window.getGlobalScrollY()
-                    : (window.pageYOffset || document.documentElement.scrollTop || $(window).scrollTop() || 0);
-                if (Math.abs(currentScroll - restorePosition) > 1) {
-                    if (typeof window.syncViewportScrollTo === "function") {
-                        window.syncViewportScrollTo(restorePosition);
-                    } else {
-                        if (window.scrollTo) {
-                            window.scrollTo(0, restorePosition);
-                        }
-                        document.documentElement.scrollTop = restorePosition;
-                        document.body.scrollTop = restorePosition;
-                        $(window).scrollTop(restorePosition);
-                    }
-                }
-
-                // Restore original scroll-behavior after scroll position is restored
-                if (originalHtmlScrollBehavior) {
-                    $("html").css("scroll-behavior", originalHtmlScrollBehavior);
-                }
-                if (originalBodyScrollBehavior) {
-                    $("body").css("scroll-behavior", originalBodyScrollBehavior);
-                }
-
-                // Pass intended scroll position so it can be re-applied after GSAP refresh (avoids GSAP/scroll conflict when body was fixed e.g. hamburger)
-                window._modalRestoreScrollPosition = restorePosition;
-                if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
-                    window.scheduleCardsRefreshAfterModalClose();
-                }
-
-                // Re-run sticky fixed-header logic after popup close (programmatic scroll doesn't fire scroll; resize resets sticky state and re-evaluates fixed-header)
-                setTimeout(function () {
-                    $(window).trigger("resize");
-                }, 0);
-            });
-        });
+        if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
+            window.scheduleCardsRefreshAfterModalClose();
+        }
     });
 
     // Lock body scroll when brochure modal opens
     $(document).on('show.bs.modal', '#brochureModal', function () {
+        window._modalScaleScrollGalleryKilled = false;
         brochureModalScrollPosition = typeof window.getGlobalScrollY === "function"
             ? window.getGlobalScrollY()
             : (window.pageYOffset ||
@@ -1016,29 +1026,14 @@ $(document).ready(function () {
             window.resetScaleScrollGalleryBeforeBodyLock(brochureModalScrollPosition);
         }
 
-        if (typeof ScrollTrigger !== "undefined") {
-            ScrollTrigger.getAll().forEach(function (st) {
-                if (!st.vars || !st.vars.id) return;
-                var sid = String(st.vars.id);
-                if (sid.indexOf("card-") === 0 || sid.indexOf("gallery-section-") === 0 || sid === "gallery-pin") {
-                    st.disable(false, false);
-                }
-            });
+        if (typeof window.pauseModalScrollTriggers === "function") {
+            window.pauseModalScrollTriggers();
         }
 
-        var scrollbarWidth = getScrollbarWidth();
-        $("body").css({
-            "overflow": "hidden",
-            "position": "fixed",
-            "top": "-" + brochureModalScrollPosition + "px",
-            "left": "0",
-            "right": "0",
-            "width": "100%",
-            "padding-right": scrollbarWidth + "px"
-        });
+        lockModalBodyScroll();
 
         $(window).on("scroll", preventBrochureModalBodyScroll);
-        document.addEventListener("wheel", preventBrochureModalBodyWheel, { passive: false, capture: false });
+        document.addEventListener("wheel", preventBrochureModalBodyWheel, { passive: false, capture: true });
         $("body, .modal-backdrop").on("touchmove", preventBrochureModalBodyScroll);
         $("#brochureModal .modal-content, #brochureModal .modal-body").on("wheel", function (e) {
             e.stopPropagation();
@@ -1048,71 +1043,15 @@ $(document).ready(function () {
     // Unlock body scroll when brochure modal closes
     $(document).on('hidden.bs.modal', '#brochureModal', function () {
         $(window).off("scroll", preventBrochureModalBodyScroll);
-        document.removeEventListener("wheel", preventBrochureModalBodyWheel, false);
+        document.removeEventListener("wheel", preventBrochureModalBodyWheel, { capture: true });
         $("body, .modal-backdrop").off("touchmove", preventBrochureModalBodyScroll);
         $("#brochureModal .modal-content, #brochureModal .modal-body").off("wheel");
 
-        var restorePosition = brochureModalScrollPosition;
-        var originalHtmlScrollBehavior = $("html").css("scroll-behavior");
-        var originalBodyScrollBehavior = $("body").css("scroll-behavior");
-        $("html, body").css("scroll-behavior", "auto");
+        unlockModalBodyScroll();
 
-        $("body").css({
-            "overflow": "",
-            "padding-right": ""
-        });
-
-        requestAnimationFrame(function () {
-            $("body").css({
-                "position": "",
-                "top": "",
-                "left": "",
-                "right": "",
-                "width": ""
-            });
-
-            if (typeof window.syncViewportScrollTo === "function") {
-                window.syncViewportScrollTo(restorePosition);
-            } else {
-                if (window.scrollTo) {
-                    window.scrollTo(0, restorePosition);
-                }
-                document.documentElement.scrollTop = restorePosition;
-                document.body.scrollTop = restorePosition;
-                $(window).scrollTop(restorePosition);
-            }
-
-            requestAnimationFrame(function () {
-                var currentScroll = typeof window.getGlobalScrollY === "function"
-                    ? window.getGlobalScrollY()
-                    : (window.pageYOffset || document.documentElement.scrollTop || $(window).scrollTop() || 0);
-                if (Math.abs(currentScroll - restorePosition) > 1) {
-                    if (typeof window.syncViewportScrollTo === "function") {
-                        window.syncViewportScrollTo(restorePosition);
-                    } else {
-                        if (window.scrollTo) {
-                            window.scrollTo(0, restorePosition);
-                        }
-                        document.documentElement.scrollTop = restorePosition;
-                        document.body.scrollTop = restorePosition;
-                        $(window).scrollTop(restorePosition);
-                    }
-                }
-                if (originalHtmlScrollBehavior) {
-                    $("html").css("scroll-behavior", originalHtmlScrollBehavior);
-                }
-                if (originalBodyScrollBehavior) {
-                    $("body").css("scroll-behavior", originalBodyScrollBehavior);
-                }
-                window._modalRestoreScrollPosition = restorePosition;
-                if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
-                    window.scheduleCardsRefreshAfterModalClose();
-                }
-                setTimeout(function () {
-                    $(window).trigger("resize");
-                }, 0);
-            });
-        });
+        if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
+            window.scheduleCardsRefreshAfterModalClose();
+        }
     });
 
     // Other Bootstrap modals (not form popups / brochure): rebuild scale-scroll ST when opening over that section so GSAP stays stable.
@@ -2588,6 +2527,10 @@ function initCardsCustomBodyGSAP() {
         });
     }
 
+    if (typeof window.cleanupCardsCustomBodyPinDom === "function") {
+        window.cleanupCardsCustomBodyPinDom();
+    }
+
     const cardsWrappers = gsap.utils.toArray(".card-wrapper");
     const cards = gsap.utils.toArray(".card_display");
     const totalCards = cards.length;
@@ -3342,3 +3285,12 @@ if (sliderWrapper && prevButton) {
         initViewportVideos();
     }
 })();
+
+
+jQuery(function ($) {
+    $('h3.custom-latest-resource-title, h3.custom-blog-filter-title').each(function () {
+        if (!$(this).find('.title-text_hover').length) {
+            $(this).wrapInner('<span class="title-text_hover"></span>');
+        }
+    });
+});
