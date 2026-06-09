@@ -468,7 +468,7 @@ function mytheme_blog_scroll_assets() {
         'blog-scroll-progress',
         get_template_directory_uri() . '/assets/js/blog-scroll.js',
         [],
-        '1.0',
+        '1.1',
         true
     );
 }
