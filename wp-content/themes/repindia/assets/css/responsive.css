@@ -1285,7 +1285,7 @@ border-radius: 12px;
     .slide-btns { margin-top: 30px; }
     .grey-btn{ width: 100%; }
     .theme-btn{width: 100%;text-align: center;}
-    .contentdesc .theme-btn, .industry_icons .theme-btn, .photo_custom .details .theme-btn, .accordion_wrap .theme-btn, .search_result_button .theme-btn.global_btn {width: auto; text-align: left;}
+    .contentdesc .theme-btn, .industry_icons .theme-btn, .photo_custom .details .theme-btn, .accordion_wrap .theme-btn, .search_result_button .theme-btn.global_btn, .tabContent .theme-btn, .ctw-tooltip-inner .theme-btn {width: auto; text-align: left;}
     .inner_page_banner_content h1 { font-size: 28px; }
     .search_result_header { margin-top: 100px; }
     .search-results-content { margin-top: 25px!important; }
