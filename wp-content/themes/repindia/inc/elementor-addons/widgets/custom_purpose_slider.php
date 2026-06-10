@@ -266,7 +266,7 @@ class Custom_Purpose_Slider extends Widget_Base
 
                                     <?php if ($img_url): ?>
                                         <img src="<?php echo esc_url($img_url); ?>" alt="<?php echo esc_attr($img_alt); ?>"
-                                            loading="lazy">
+                                            loading="lazy" draggable="false">
                                     <?php endif; ?>
 
                                     <figcaption>
@@ -481,24 +481,25 @@ class Custom_Purpose_Slider extends Widget_Base
                 opacity: 0;
             }
 
-            /* Mobile-specific styles for touch/swipe (below 767px) */
+            /* Mobile: pan-y matches Swiper horizontal default — allows vertical page scroll while swiping slides sideways */
             @media (max-width: 767px) {
-                .purpose-slider-wrapper .purpose-swiper {
-                    /* overflow: hidden !important; */
-                    touch-action: pan-x;
+                .purpose-slider-wrapper .purpose-swiper,
+                .purpose-slider-wrapper .purpose-swiper .swiper-wrapper,
+                .purpose-slider-wrapper .purpose-swiper .swiper-slide,
+                .purpose-slider-wrapper .purpose-swiper .swiper-slide img {
+                    touch-action: pan-y pinch-zoom;
                     -webkit-overflow-scrolling: touch;
                 }
 
-                .purpose-slider-wrapper .purpose-swiper .swiper-wrapper {
-                    touch-action: pan-x;
-                    -webkit-transform: translate3d(0, 0, 0);
-                }
-
                 .purpose-slider-wrapper .purpose-swiper .swiper-slide {
-                    touch-action: pan-x;
                     -webkit-user-select: none;
                     user-select: none;
                     -webkit-tap-highlight-color: transparent;
+                }
+
+                .purpose-slider-wrapper .purpose-swiper .swiper-slide img {
+                    -webkit-user-drag: none;
+                    user-drag: none;
                 }
             }
         </style>
@@ -527,6 +528,11 @@ class Custom_Purpose_Slider extends Widget_Base
                             prevEl: prevBtn,
                         },
                         spaceBetween: 20,
+                        touchStartPreventDefault: false,
+                        passiveListeners: true,
+                        touchAngle: 40,
+                        threshold: 8,
+                        preventClicksPropagation: false,
                         breakpoints: {
                             0: {
                                 slidesPerView: 1,

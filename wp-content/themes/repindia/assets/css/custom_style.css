@@ -1004,7 +1004,7 @@ js-dark .hero-slider .swiper-pagination-bullet {
 }
 
 .hero-slider .swiper-pagination.swiper-pagination-bullets {
-  bottom: 4vh;
+  bottom: 20px;
   max-width: 1200px;
   margin: 0 auto;
   left: 60px;
@@ -5215,8 +5215,11 @@ span.star {
   .insights-updates-item-text {
     margin: 10px 0;
   }
-  .text-container {
+  .hero-slider .hero-slide-inner .text-container {
     padding: 0 20px 0 20px;
+    position: absolute;
+    z-index: 2;
+    bottom: 85px;
   }
 
   .testimonial-card {
@@ -5299,8 +5302,9 @@ span.star {
     width: 150px;
   }
 
-  .purpose-slider-wrapper:before {
+  .purpose-slider-wrapper:before, .purpose-slider-wrapper:after {
     background: none;
+    visibility: hidden;
   }
   .industry-carousel:after {
     background: linear-gradient(90deg, #f2f5fa 0%, rgb(255 255 255 / 0%) 83.82%) left top / 10% 100% no-repeat;

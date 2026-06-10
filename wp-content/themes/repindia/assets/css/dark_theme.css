@@ -299,6 +299,10 @@ header li.burger-icon .icon-sun,
 .js-dark ul.social_media_links > li > a > small {
   color: #aeb6c9;
 }
+.js-dark ul.social_media_links > li > a:hover small:before {
+  background: linear-gradient(rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.10));
+  opacity: 1;
+}
 .js-dark .elementor-element.e-con-full.withdark.e-flex.e-con.e-child {
   border-radius: var(--XSM, 4px);
   /* border: 1px solid var(--Golbal-others-border-3, rgba(193, 196, 198, 0.2)); */
