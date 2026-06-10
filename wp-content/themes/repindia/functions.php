@@ -1046,6 +1046,28 @@ function repindia_enqueue_cf7_recaptcha_defer_script() {
 }
 add_action( 'wp_footer', 'repindia_enqueue_cf7_recaptcha_defer_script', 1 );
 
+/**
+ * Re-sync popup country/dial fields when CF7 modals become visible (Option A — no init changes).
+ */
+function repindia_register_cf7_phone_country_sync_script() {
+	wp_register_script(
+		'repindia-cf7-phone-country-sync',
+		get_template_directory_uri() . '/assets/js/cf7-phone-country-sync.js',
+		array( 'intlTelInput-min' ),
+		REPINDIA_THEME_VERSION,
+		true
+	);
+}
+add_action( 'wp_enqueue_scripts', 'repindia_register_cf7_phone_country_sync_script', 52 );
+
+function repindia_enqueue_cf7_phone_country_sync_script() {
+	if ( ! repindia_should_run_cf7_recaptcha_defer() ) {
+		return;
+	}
+	wp_enqueue_script( 'repindia-cf7-phone-country-sync' );
+}
+add_action( 'wp_enqueue_scripts', 'repindia_enqueue_cf7_phone_country_sync_script', 53 );
+
 // Server side recaptcha validation
 add_filter('wpcf7_spam', 'i2v_validate_recaptcha_server_side', 10, 2);
 
@@ -1070,15 +1092,15 @@ function i2v_validate_recaptcha_server_side($spam, $submission) {
 
 
 // 🔒 Force Security Headers via PHP
-function add_security_headers_via_php() {
-    if (!is_admin()) {
-        header("X-XSS-Protection: 1; mode=block");
-        header("X-Frame-Options: SAMEORIGIN");
-        header("X-Content-Type-Options: nosniff");
-        header("Strict-Transport-Security: max-age=63072000; includeSubDomains; preload");
-        header("Referrer-Policy: strict-origin-when-cross-origin");
-        header("Content-Security-Policy: upgrade-insecure-requests;");
-        header("Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()");
-    }
-}
-add_action('send_headers', 'add_security_headers_via_php', 1);
+// function add_security_headers_via_php() {
+//     if (!is_admin()) {
+//         header("X-XSS-Protection: 1; mode=block");
+//         header("X-Frame-Options: SAMEORIGIN");
+//         header("X-Content-Type-Options: nosniff");
+//         header("Strict-Transport-Security: max-age=63072000; includeSubDomains; preload");
+//         header("Referrer-Policy: strict-origin-when-cross-origin");
+//         header("Content-Security-Policy: upgrade-insecure-requests;");
+//         header("Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()");
+//     }
+// }
+// add_action('send_headers', 'add_security_headers_via_php', 1);
