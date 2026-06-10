@@ -979,6 +979,73 @@ function enqueue_recaptcha_validation_script() {
 }
 add_action('wp_enqueue_scripts', 'enqueue_recaptcha_validation_script');
 
+/**
+ * Whether deferred reCAPTCHA should run (public frontend only).
+ */
+function repindia_should_run_cf7_recaptcha_defer() {
+	if ( is_admin() ) {
+		return false;
+	}
+	if ( isset( $_GET['elementor-preview'] ) ) {
+		return false;
+	}
+	if ( class_exists( '\Elementor\Plugin' ) ) {
+		$elementor = \Elementor\Plugin::$instance;
+		if ( ! empty( $elementor->editor ) && method_exists( $elementor->editor, 'is_edit_mode' ) && $elementor->editor->is_edit_mode() ) {
+			return false;
+		}
+		if ( ! empty( $elementor->preview ) && method_exists( $elementor->preview, 'is_preview_mode' ) && $elementor->preview->is_preview_mode() ) {
+			return false;
+		}
+	}
+	return true;
+}
+
+/**
+ * Register deferred reCAPTCHA script (theme-level; does not modify wpcf7-recaptcha plugin).
+ */
+function repindia_register_cf7_recaptcha_defer_script() {
+	wp_register_script(
+		'repindia-cf7-recaptcha-defer',
+		get_template_directory_uri() . '/assets/js/cf7-recaptcha-defer.js',
+		array( 'wpcf7-recaptcha-controls' ),
+		REPINDIA_THEME_VERSION,
+		true
+	);
+}
+add_action( 'wp_enqueue_scripts', 'repindia_register_cf7_recaptcha_defer_script', 51 );
+
+/**
+ * Load defer script before google-recaptcha api.js so recaptchaCallback is patched pre-onload.
+ * CF7 popup shortcodes enqueue google-recaptcha during footer render, so this runs on wp_footer.
+ */
+function repindia_enqueue_cf7_recaptcha_defer_script() {
+	if ( ! repindia_should_run_cf7_recaptcha_defer() ) {
+		return;
+	}
+
+	if ( ! wp_script_is( 'google-recaptcha', 'registered' ) ) {
+		return;
+	}
+
+	global $wp_scripts;
+
+	if ( ! isset( $wp_scripts->registered['google-recaptcha'] ) ) {
+		return;
+	}
+
+	$deps = &$wp_scripts->registered['google-recaptcha']->deps;
+
+	if ( ! in_array( 'repindia-cf7-recaptcha-defer', $deps, true ) ) {
+		$deps[] = 'repindia-cf7-recaptcha-defer';
+	}
+
+	if ( wp_script_is( 'google-recaptcha', 'enqueued' ) || wp_script_is( 'google-recaptcha', 'to_do' ) ) {
+		wp_enqueue_script( 'repindia-cf7-recaptcha-defer' );
+	}
+}
+add_action( 'wp_footer', 'repindia_enqueue_cf7_recaptcha_defer_script', 1 );
+
 // Server side recaptcha validation
 add_filter('wpcf7_spam', 'i2v_validate_recaptcha_server_side', 10, 2);
 
