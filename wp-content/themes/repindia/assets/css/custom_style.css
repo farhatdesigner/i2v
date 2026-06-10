@@ -5672,6 +5672,14 @@ label.form-label.label_notic a:hover, .form-label.notice-text a:hover, .custom-l
   height: 24px;
   border-radius: 100px;
 }
+.js-dark .date-author-txt p span, .js-dark .lisitng-inner .date-author-txt p span:last-child{ display: flex;align-items: center;gap: 10px;justify-content: flex-start; }
+.js-dark .insights-updates-item-text p,.js-dark .insights-updates-item-text_left .date-author-txt p {
+  font-size: 16px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
 @media(max-width: 768px){
   .global-youtube-popup__body { padding: 10px 15px; }
 }
