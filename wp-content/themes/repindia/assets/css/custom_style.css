@@ -5667,7 +5667,11 @@ label.form-label.label_notic a:hover, .form-label.notice-text a:hover, .custom-l
 #channelsection, #techsection {scroll-margin-top: 180px;}
 #lifei2v{scroll-margin-top: 100px;}
 
-
+.insights-updates-item-text .date-author-txt img {
+  width: 24px;
+  height: 24px;
+  border-radius: 100px;
+}
 @media(max-width: 768px){
   .global-youtube-popup__body { padding: 10px 15px; }
 }
