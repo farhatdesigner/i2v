@@ -5302,8 +5302,9 @@ span.star {
     width: 150px;
   }
 
-  .purpose-slider-wrapper:before {
+  .purpose-slider-wrapper:before, .purpose-slider-wrapper:after {
     background: none;
+    visibility: hidden;
   }
   .industry-carousel:after {
     background: linear-gradient(90deg, #f2f5fa 0%, rgb(255 255 255 / 0%) 83.82%) left top / 10% 100% no-repeat;

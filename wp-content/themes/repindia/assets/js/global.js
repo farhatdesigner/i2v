@@ -369,6 +369,10 @@ $(document).ready(function () {
 
     // After modal/menu close: restore saved scroll first, then re-enable paused ST (or rebuild gallery only if it was killed in-view).
     window.scheduleCardsRefreshAfterModalClose = function () {
+        // GSAP gallery/card ScrollTriggers are desktop-only; refresh on mobile can inflate scroll height after modals.
+        if (window.innerWidth < 768) {
+            return;
+        }
         if (window._cardsModalRefreshTimer) clearTimeout(window._cardsModalRefreshTimer);
         window._cardsModalRefreshTimer = setTimeout(function () {
             window._cardsModalRefreshTimer = null;
@@ -627,19 +631,17 @@ $(document).ready(function () {
         return scrollbarWidth;
     }
 
-    // Modal scroll lock: overflow hidden only (never position:fixed or lenis.stop — both break ScrollTrigger after close).
+    // Modal scroll lock: desktop uses overflow hidden only (never position:fixed or lenis.stop — both break ScrollTrigger after close).
+    // Mobile (<768px): Bootstrap handles body overflow; we only pause/resume Lenis to avoid height miscalc without scroll-restore flicker.
     window._modalScrollLockMode = null;
 
-    function lockModalBodyScroll() {
-        var scrollbarWidth = getScrollbarWidth();
-        window._modalScrollLockMode = "overflow";
-        document.documentElement.style.overflow = "hidden";
-        document.body.style.overflow = "hidden";
-        document.body.style.paddingRight = scrollbarWidth + "px";
+    function isMobileModalViewport() {
+        return window.innerWidth < 768;
     }
 
-    function unlockModalBodyScroll() {
+    window.forceBodyReset = function () {
         document.documentElement.style.overflow = "";
+        document.documentElement.style.paddingRight = "";
         document.body.style.overflow = "";
         document.body.style.paddingRight = "";
         document.body.style.position = "";
@@ -647,7 +649,59 @@ $(document).ready(function () {
         document.body.style.left = "";
         document.body.style.right = "";
         document.body.style.width = "";
+        document.body.style.height = "";
+        document.body.classList.remove("modal-open");
+    };
+
+    function lockModalBodyScroll(savedScrollY) {
+        var scrollbarWidth = getScrollbarWidth();
+        if (isMobileModalViewport()) {
+            window._modalScrollLockMode = "mobile-lenis";
+            var scrollY = Math.max(0, Math.round(savedScrollY || 0));
+            if (typeof lenis !== "undefined" && lenis) {
+                if (typeof lenis.scrollTo === "function") {
+                    lenis.scrollTo(scrollY, { immediate: true });
+                }
+                if (typeof lenis.stop === "function") {
+                    lenis.stop();
+                }
+            }
+            return;
+        }
+        window._modalScrollLockMode = "overflow";
+        document.documentElement.style.overflow = "hidden";
+        document.body.style.overflow = "hidden";
+        document.body.style.paddingRight = scrollbarWidth + "px";
+    }
+
+    function unlockModalBodyScroll(restoreScrollY) {
+        var mode = window._modalScrollLockMode;
         window._modalScrollLockMode = null;
+
+        if (mode === "mobile-lenis") {
+            window._modalScrollTriggersPaused = [];
+            var restoreY = Math.max(0, Math.round(restoreScrollY || 0));
+            // Wait two frames so Bootstrap body reset paints before Lenis resumes (prevents close flicker).
+            requestAnimationFrame(function () {
+                requestAnimationFrame(function () {
+                    if (typeof lenis !== "undefined" && lenis) {
+                        if (typeof lenis.start === "function") {
+                            lenis.start();
+                        }
+                        if (typeof lenis.scrollTo === "function") {
+                            lenis.scrollTo(restoreY, { immediate: true });
+                        }
+                        if (typeof lenis.resize === "function") {
+                            lenis.resize();
+                        }
+                    }
+                });
+            });
+            return;
+        }
+
+        window.forceBodyReset();
+
         if (typeof lenis !== "undefined" && lenis && typeof lenis.resize === "function") {
             lenis.resize();
         }
@@ -970,7 +1024,7 @@ $(document).ready(function () {
             window.pauseModalScrollTriggers();
         }
 
-        lockModalBodyScroll();
+        lockModalBodyScroll(modalScrollPosition);
 
         $(window).on("scroll", preventModalBodyScroll);
         document.addEventListener("wheel", preventModalBodyWheel, { passive: false, capture: true });
@@ -983,29 +1037,55 @@ $(document).ready(function () {
 
     // Unlock body scroll when formpopup_modal closes
     $(document).on('hidden.bs.modal', '.formpopup_modal', function () {
-    // Reset all forms inside the modal so it always opens in a clean state
-    $(this).find('form').each(function () {
-        if (typeof this.reset === "function") {
-            this.reset();
+        var $modal = $(this);
+        var mobileModal = isMobileModalViewport();
+
+        if (mobileModal) {
+            var activeEl = document.activeElement;
+            if (activeEl && activeEl !== document.body && activeEl !== document.documentElement) {
+                if (activeEl.classList && activeEl.classList.contains("open-demo-modal")) {
+                    if (typeof activeEl.blur === "function") {
+                        try {
+                            activeEl.blur({ preventScroll: true });
+                        } catch (err) {
+                            activeEl.blur();
+                        }
+                    }
+                }
+            }
+            unlockModalBodyScroll(modalScrollPosition);
         }
-    });
+
+        // Reset all forms inside the modal so it always opens in a clean state
+        $modal.find('form').each(function () {
+            if (typeof this.reset === "function") {
+                this.reset();
+            }
+        });
 
         // Remove event listeners
         $(window).off("scroll", preventModalBodyScroll);
         document.removeEventListener("wheel", preventModalBodyWheel, { capture: true });
         $("body, .modal-backdrop").off("touchmove", preventModalBodyScroll);
-        $(this).find(".modal-content, .modal-body").off("wheel");
+        $modal.find(".modal-content, .modal-body").off("wheel");
 
-        unlockModalBodyScroll();
-
-        var activeEl = document.activeElement;
-        if (activeEl && activeEl !== document.body && activeEl !== document.documentElement) {
-            if (activeEl.classList && activeEl.classList.contains("open-demo-modal")) {
-                activeEl.blur();
+        if (!mobileModal) {
+            var activeElDesktop = document.activeElement;
+            if (activeElDesktop && activeElDesktop !== document.body && activeElDesktop !== document.documentElement) {
+                if (activeElDesktop.classList && activeElDesktop.classList.contains("open-demo-modal")) {
+                    if (typeof activeElDesktop.blur === "function") {
+                        try {
+                            activeElDesktop.blur({ preventScroll: true });
+                        } catch (err) {
+                            activeElDesktop.blur();
+                        }
+                    }
+                }
             }
+            unlockModalBodyScroll(modalScrollPosition);
         }
 
-        if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
+        if (!mobileModal && typeof window.scheduleCardsRefreshAfterModalClose === "function") {
             window.scheduleCardsRefreshAfterModalClose();
         }
     });
@@ -1030,7 +1110,7 @@ $(document).ready(function () {
             window.pauseModalScrollTriggers();
         }
 
-        lockModalBodyScroll();
+        lockModalBodyScroll(brochureModalScrollPosition);
 
         $(window).on("scroll", preventBrochureModalBodyScroll);
         document.addEventListener("wheel", preventBrochureModalBodyWheel, { passive: false, capture: true });
@@ -1042,14 +1122,22 @@ $(document).ready(function () {
 
     // Unlock body scroll when brochure modal closes
     $(document).on('hidden.bs.modal', '#brochureModal', function () {
+        var mobileModal = isMobileModalViewport();
+
+        if (mobileModal) {
+            unlockModalBodyScroll(brochureModalScrollPosition);
+        }
+
         $(window).off("scroll", preventBrochureModalBodyScroll);
         document.removeEventListener("wheel", preventBrochureModalBodyWheel, { capture: true });
         $("body, .modal-backdrop").off("touchmove", preventBrochureModalBodyScroll);
         $("#brochureModal .modal-content, #brochureModal .modal-body").off("wheel");
 
-        unlockModalBodyScroll();
+        if (!mobileModal) {
+            unlockModalBodyScroll(brochureModalScrollPosition);
+        }
 
-        if (typeof window.scheduleCardsRefreshAfterModalClose === "function") {
+        if (!mobileModal && typeof window.scheduleCardsRefreshAfterModalClose === "function") {
             window.scheduleCardsRefreshAfterModalClose();
         }
     });

@@ -1682,7 +1682,7 @@ html {
     padding: 20px;
   }
 
-  .accordion_set > .select_div {
+  .accordion_set > .select_div, .accordion_set > .select_div:hover {
     padding-left: 1.5rem;
     text-align: left;
   }
@@ -1951,6 +1951,8 @@ html {
 .hz-slider-section .slider .swiper .swiper-slide:last-child,  .hz-slider-section .slider, 
 .hz-slider-topcaption .slider .swiper .swiper-slide:last-child,  .hz-slider-topcaption .slider {margin-right:20px !important}
 .content_mobile-mrgin {margin-left: 20px !important;margin-right: 20px !important;}
+.purpose-slider-wrapper .custom-container {margin-left: 0 !important;}
+.toptooltitle {display: -webkit-box !important;}
 
 }
 .elementor-element.dashed_border {

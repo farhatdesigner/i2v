@@ -221,24 +221,25 @@ class Custom_Purpose_Slider extends Widget_Base
             transform: translateY(-20px) rotate(180deg);
         }
         
-        /* Mobile-specific styles for touch/swipe (below 767px) */
+        /* Mobile: pan-y allows vertical page scroll while swiping slides sideways */
         @media (max-width: 767px) {
-            #<?php echo esc_attr($uid); ?> .purpose-swiper {
-                overflow: hidden !important;
-                touch-action: pan-x;
+            #<?php echo esc_attr($uid); ?> .purpose-swiper,
+            #<?php echo esc_attr($uid); ?> .purpose-swiper .swiper-wrapper,
+            #<?php echo esc_attr($uid); ?> .purpose-swiper .swiper-slide,
+            #<?php echo esc_attr($uid); ?> .purpose-swiper .swiper-slide img {
+                touch-action: pan-y pinch-zoom;
                 -webkit-overflow-scrolling: touch;
             }
-            
-            #<?php echo esc_attr($uid); ?> .purpose-swiper .swiper-wrapper {
-                touch-action: pan-x;
-                -webkit-transform: translate3d(0, 0, 0);
-            }
-            
+
             #<?php echo esc_attr($uid); ?> .purpose-swiper .swiper-slide {
-                touch-action: pan-x;
                 -webkit-user-select: none;
                 user-select: none;
                 -webkit-tap-highlight-color: transparent;
+            }
+
+            #<?php echo esc_attr($uid); ?> .purpose-swiper .swiper-slide img {
+                -webkit-user-drag: none;
+                user-drag: none;
             }
         }
 
@@ -288,6 +289,11 @@ class Custom_Purpose_Slider extends Widget_Base
                                 prevEl: prevBtn,
                             },
                             spaceBetween: 20,
+                            touchStartPreventDefault: false,
+                            passiveListeners: true,
+                            touchAngle: 40,
+                            threshold: 8,
+                            preventClicksPropagation: false,
                             // Enable touch/swipe by default (will be controlled by breakpoints)
                             allowTouchMove: true,
                             touchEventsTarget: 'container',
