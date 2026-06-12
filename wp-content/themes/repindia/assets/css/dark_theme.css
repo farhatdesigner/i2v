@@ -1157,3 +1157,6 @@ header li.burger-icon .icon-sun,
 }
 .project_box .elementor-position-top:before {background: #c1c4c633;}
 .js-dark .redtooltip h4.elementor-heading-title.elementor-size-default {color: #E6BA85 !important;}
+.js-dark .white-theme-authimg{ display: none; }
+.dark-theme-authimg{ display: none; }
+.js-dark .dark-theme-authimg{ display: block; }

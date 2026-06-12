@@ -313,6 +313,68 @@ class Insightsupdates extends Widget_Base
     }
 
     /**
+     * Resolve ACF image field value to a URL
+     */
+    private function resolve_acf_image_url($field_value)
+    {
+        if (empty($field_value)) {
+            return '';
+        }
+
+        $image_url = '';
+        $attachment_id = 0;
+
+        if (is_array($field_value)) {
+            if (!empty($field_value['url'])) {
+                $image_url = $field_value['url'];
+            }
+            if (!empty($field_value['ID'])) {
+                $attachment_id = (int) $field_value['ID'];
+            } elseif (!empty($field_value['id'])) {
+                $attachment_id = (int) $field_value['id'];
+            }
+        } elseif (is_numeric($field_value)) {
+            $attachment_id = (int) $field_value;
+        } elseif (is_string($field_value) && filter_var($field_value, FILTER_VALIDATE_URL)) {
+            $image_url = $field_value;
+        }
+
+        if (empty($image_url) && $attachment_id) {
+            $image_url = wp_get_attachment_image_url($attachment_id, 'thumbnail');
+        }
+
+        return !empty($image_url) ? $image_url : '';
+    }
+
+    /**
+     * Get light/dark author image URLs with fallback chain
+     */
+    private function get_news_author_images($post_id)
+    {
+        $default_url = get_template_directory_uri() . '/assets/images/update/avtar.svg';
+        $light_url = '';
+        $dark_url = '';
+
+        if (function_exists('get_field')) {
+            $light_url = $this->resolve_acf_image_url(get_field('news_author_image', $post_id));
+            $dark_url = $this->resolve_acf_image_url(get_field('news_author_image_dark', $post_id));
+        }
+
+        if (empty($light_url)) {
+            $light_url = $default_url;
+        }
+
+        if (empty($dark_url)) {
+            $dark_url = $light_url;
+        }
+
+        return [
+            'light' => $light_url,
+            'dark' => $dark_url,
+        ];
+    }
+
+    /**
      * Render pagination
      */
     private function render_pagination($query)
@@ -392,6 +454,7 @@ class Insightsupdates extends Widget_Base
                            $first_post_excerpt = get_the_excerpt($first_post_id);
                            $first_post_date = $this->format_post_date($first_post_id);
                            $first_post_author = get_the_author_meta('display_name', $first_post->post_author);
+                           $first_post_author_images = $this->get_news_author_images($first_post_id);
                            $first_post_link = get_permalink($first_post_id);
                            ?>
                            <a href="<?php echo esc_url($first_post_link); ?>" >
@@ -420,7 +483,7 @@ class Insightsupdates extends Widget_Base
                                        </div>
                                     <?php endif; ?>
                                     <div class="date-author-txt">
-                                       <p><span><?php echo esc_html($first_post_date); ?></span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> <?php echo esc_html($first_post_author); ?></span></p>
+                                       <p><span><?php echo esc_html($first_post_date); ?></span> <span><small><img class="white-theme-img" src="<?php echo esc_url($first_post_author_images['light']); ?>" alt="<?php echo esc_attr($first_post_author); ?>"><img class="black-theme-img" src="<?php echo esc_url($first_post_author_images['dark']); ?>" alt="<?php echo esc_attr($first_post_author); ?>"></small> <?php echo esc_html($first_post_author); ?></span></p>
                                     </div>
                                  </div>
                               </div>
@@ -438,6 +501,7 @@ class Insightsupdates extends Widget_Base
                                  $post_title = get_the_title($post_id);
                                  $post_date = $this->format_post_date($post_id);
                                  $post_author = get_the_author_meta('display_name', $post->post_author);
+                                 $post_author_images = $this->get_news_author_images($post_id);
                                  $post_link = get_permalink($post_id);
                                  ?>
                                     <a href="<?php echo esc_url($post_link); ?>" class="d-flex align-items-end gap-4">
@@ -452,7 +516,7 @@ class Insightsupdates extends Widget_Base
                                                 <?php echo esc_html($post_title); ?>
                                              </h5>
                                              <div class="date-author-txt">
-                                                <p><span><?php echo esc_html($post_date); ?></span> <span><small><img src="<?php echo get_template_directory_uri(); ?>/assets/images/update/avtar.svg" alt="tertiary"></small> <?php echo esc_html($post_author); ?></span></p>
+                                                <p><span><?php echo esc_html($post_date); ?></span> <span><small><img class="white-theme-img" src="<?php echo esc_url($post_author_images['light']); ?>" alt="<?php echo esc_attr($post_author); ?>"><img class="black-theme-img" src="<?php echo esc_url($post_author_images['dark']); ?>" alt="<?php echo esc_attr($post_author); ?>"></small> <?php echo esc_html($post_author); ?></span></p>
                                              </div>
                                           </div>
                                        <!-- </div> -->
