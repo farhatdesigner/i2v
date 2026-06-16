@@ -551,6 +551,11 @@ html.lenis body {
 #breadcrumbs {
   margin-bottom: 48px;
 }
+
+.m-0 .elementor-element.elementor-element-b383542.e-con-full.e-flex.e-con.e-child {
+  margin: 0;
+}
+
 .careers-template-default #breadcrumbs {
   margin-top: 130px;
 }
