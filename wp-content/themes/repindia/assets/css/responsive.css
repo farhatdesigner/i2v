@@ -1285,7 +1285,7 @@ border-radius: 12px;
     .slide-btns { margin-top: 30px; }
     .grey-btn{ width: 100%; }
     .theme-btn{width: 100%;text-align: center;}
-    .contentdesc .theme-btn, .industry_icons .theme-btn, .photo_custom .details .theme-btn, .accordion_wrap .theme-btn, .search_result_button .theme-btn.global_btn, .tabContent .theme-btn, .ctw-tooltip-inner .theme-btn,a.theme-btn.bg-trans.border_btnlight.open-demo-modal {width: auto; text-align: left;}
+    .contentdesc .theme-btn, .industry_icons .theme-btn, .photo_custom .details .theme-btn, .accordion_wrap .theme-btn, .search_result_button .theme-btn.global_btn, .tabContent .theme-btn, .ctw-tooltip-inner .theme-btn,a.theme-btn.bg-trans.border_btnlight.open-demo-modal, .btn-columt .theme-btn {width: auto; text-align: left;}
     .inner_page_banner_content h1 { font-size: 28px; }
     .search_result_header { margin-top: 100px; }
     .search-results-content { margin-top: 25px!important; }
@@ -1341,5 +1341,16 @@ border-radius: 12px;
     max-width: 100% !important;
     overflow: hidden;
   }
+  .grapg_hiddenmobile {
+    display: none;
+}
+.breadcrum_mobilecss {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 }
 
