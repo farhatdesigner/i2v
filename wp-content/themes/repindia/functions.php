@@ -666,6 +666,7 @@ if ( ! function_exists( 'repindia_thankyou_page_slugs' ) ) {
 			'thank-you-download-brochure',
 			'thank-you-channel-partner',
 			'thank-you-technology-partner',
+			'thank-you-subscribe'
 		);
 	}
 }
