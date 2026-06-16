@@ -114,6 +114,10 @@ header li.burger-icon .icon-sun,
   color: #aeb6c9 !important;
 }
 
+.js-dark .ai_smart_dark span.ctw-text, .js-dark .iccc_actions span.ctw-text {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
 .js-dark .tool_dark_hard span.ctw-text {
   color: rgba(255, 255, 255, 0.9) !important;
 }
@@ -1153,3 +1157,6 @@ header li.burger-icon .icon-sun,
 }
 .project_box .elementor-position-top:before {background: #c1c4c633;}
 .js-dark .redtooltip h4.elementor-heading-title.elementor-size-default {color: #E6BA85 !important;}
+.js-dark .white-theme-authimg{ display: none; }
+.dark-theme-authimg{ display: none; }
+.js-dark .dark-theme-authimg{ display: block; }

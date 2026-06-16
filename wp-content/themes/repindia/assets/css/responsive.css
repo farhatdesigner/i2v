@@ -1285,13 +1285,72 @@ border-radius: 12px;
     .slide-btns { margin-top: 30px; }
     .grey-btn{ width: 100%; }
     .theme-btn{width: 100%;text-align: center;}
-    .contentdesc .theme-btn, .industry_icons .theme-btn, .photo_custom .details .theme-btn, .accordion_wrap .theme-btn, .search_result_button .theme-btn.global_btn, .tabContent .theme-btn, .ctw-tooltip-inner .theme-btn {width: auto; text-align: left;}
+    .contentdesc .theme-btn, .industry_icons .theme-btn, .photo_custom .details .theme-btn, .accordion_wrap .theme-btn, .search_result_button .theme-btn.global_btn, .tabContent .theme-btn, .ctw-tooltip-inner .theme-btn,a.theme-btn.bg-trans.border_btnlight.open-demo-modal, .btn-columt .theme-btn {width: auto; text-align: left;}
     .inner_page_banner_content h1 { font-size: 28px; }
     .search_result_header { margin-top: 100px; }
     .search-results-content { margin-top: 25px!important; }
-    .photo_custom { margin-bottom: 40px;}
+    .photo_custom { margin-bottom: 20px;}
 
     
     
+}
+
+/* ITMS product page — keep hero stat bar inside viewport on mobile */
+@media (max-width: 768px) {
+  .wrap_parenttooltipbox .elementor-element.toptooltitle.e-flex.e-con {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: center !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    box-sizing: border-box !important;
+    gap: 4px 6px;
+    white-space: normal !important;
+  }
+
+  .wrap_parenttooltipbox .elementor-element.toptooltitle.e-flex.e-con > .elementor-element {
+    flex: 0 1 auto !important;
+    max-width: 100% !important;
+    width: auto !important;
+  }
+
+  .wrap_parenttooltipbox .elementor-element.toptooltitle .theme-img {
+    flex-shrink: 0;
+  }
+
+  .wrap_parenttooltipbox .elementor-element.toptooltitle .elementor-heading-title {
+    white-space: normal !important;
+    word-break: break-word;
+  }
+
+  .wrap_parenttooltipbox .elementor-element.toptooltitle .elementor-widget-container,
+  .wrap_parenttooltipbox .elementor-element.toptooltitle .ctw-wrapper {
+    width: auto !important;
+    max-width: 100% !important;
+  }
+
+  .wrap_parenttooltipbox .elementor-element.toptooltitle .ctw-text,
+  .wrap_parenttooltipbox .elementor-element.toptooltitle .ctw-title {
+    white-space: normal !important;
+  }
+
+  .wrap_parenttooltipbox .e-con-inner:has(.toptooltitle) {
+    max-width: 100% !important;
+    overflow: hidden;
+  }
+  .grapg_hiddenmobile {
+    display: none;
+}
+.breadcrum_mobilecss {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 }
 

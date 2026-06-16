@@ -527,7 +527,9 @@ class Custom_Latest_Resource extends Widget_Base
 
                 .custom-latest-resource-taxonomy {
                     padding: 4px 10px;
-                    font-size: 12px;
+        font-size: 12px;
+        line-height: 1.2 !important;
+        margin-bottom: 5px !important;
                 }
 
                 .custom-latest-resource-card-content {
