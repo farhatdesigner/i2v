@@ -14,6 +14,7 @@ global $repindia_option;
 <head class="is-smooth-scroll-compatible is-loading" lang="en"">
     <meta charset=" <?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-site-verification" content="Ef-ZoGOzh_3LctJIsgjOgphRliaQdbcJIVwJDvhZNWs" />
     <script>
         (function () {
             try {
@@ -24,6 +25,15 @@ global $repindia_option;
             } catch (e) {}
         })();
     </script>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7G9MS9WYQ3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7G9MS9WYQ3');
+</script>
     <?php wp_head(); ?>
 </head>
 

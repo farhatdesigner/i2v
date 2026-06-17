@@ -1,0 +1,107 @@
+# i2V Systems
+
+> i2V Systems is an AI-powered video surveillance and intelligent security technology company. We develop enterprise-grade Video Management Software (VMS), AI Video Analytics, Automatic Number Plate Recognition (ANPR), Face Recognition Software (FRS), Intelligent Traffic Management Systems (ITMS), and Integrated Command & Control Centers (ICCC) for governments, smart cities, enterprises, and critical infrastructure operators worldwide.
+
+i2V's platform is designed for scalability — from single-site deployments to city-wide surveillance networks managing thousands of cameras. Our solutions are trusted across 15+ industries including airports, railways, oil & gas, smart cities, healthcare, retail, law enforcement, and financial institutions.
+
+---
+
+## Core Products
+
+- [AI Video Management Software (VMS)](https://www.i2vsys.com/products/video-management-software/): Centralised, AI-based VMS for enterprise surveillance. Supports intelligent alerts, third-party integrations, and large-scale camera management.
+- [AI-Powered Video Analytics](https://www.i2vsys.com/products/ai-powered-video-analytics/): 30+ AI detection models for real-time threat detection, crowd analytics, PPE compliance, intrusion detection, and more.
+- [All Video Analytics Features](https://www.i2vsys.com/products/ai-powered-video-analytics/all-video-analytics-features/): Complete library of 30+ AI models across safety, security, and operational use cases.
+- [Automatic Number Plate Recognition (ANPR)](https://www.i2vsys.com/products/automatic-number-plate-recognition/): High-accuracy ANPR/ALPR software for vehicle tracking, parking management, and traffic enforcement.
+- [Face Recognition Software (FRS)](https://www.i2vsys.com/products/face-recognition-software/): Biometric facial recognition for access control, watchlist management, and public safety.
+- [Intelligent Traffic Management System (ITMS)](https://www.i2vsys.com/products/intelligent-traffic-management-system/): AI-driven traffic monitoring, analytics, and enforcement for smarter and safer roads.
+- [Central Monitoring System (CMS)](https://www.i2vsys.com/products/central-monitoring-system/): Unified platform to manage cameras, sensors, and alerts across multiple sites.
+- [Integrated Command & Control Center (ICCC)](https://www.i2vsys.com/products/integrated-command-and-control-center/): Real-time data fusion and AI analytics for city and enterprise command operations.
+- [All Products Overview](https://www.i2vsys.com/products/): Full portfolio of i2V's AI surveillance and security software solutions.
+
+---
+
+## Industries We Serve
+
+- [Industries Overview](https://www.i2vsys.com/industries-we-serve/): AI surveillance solutions tailored for 15+ sectors.
+- [Smart Cities](https://www.i2vsys.com/industries/smart-cities/): AI-powered urban surveillance and intelligent traffic management for city operators.
+- [Airport](https://www.i2vsys.com/industries/airport/): Unified terminal-to-airside security with offline-first resilience and aviation compliance.
+- [Transportation](https://www.i2vsys.com/industries/transportation/): Intelligent video surveillance for highways, logistics hubs, and transit networks.
+- [Railway & Metro](https://www.i2vsys.com/industries/railway-metro/): Real-time station, depot, and on-board surveillance for safe rail operations.
+- [Law Enforcement](https://www.i2vsys.com/industries/law-enforcement/): AI facial recognition, ANPR, and video analytics tools for police and public safety agencies.
+- [Oil & Gas](https://www.i2vsys.com/industries/oil-and-gas/): Perimeter protection and intrusion detection for refineries, pipelines, and offshore assets.
+- [Energy](https://www.i2vsys.com/industries/energy/): Intelligent surveillance for power plants, substations, solar farms, and energy infrastructure.
+- [Industrial](https://www.i2vsys.com/industries/industrial/): Worker safety enforcement, perimeter security, and compliance monitoring for factories and plants.
+- [Healthcare](https://www.i2vsys.com/industries/healthcare/): AI video surveillance for hospitals, clinics, and medical campuses.
+- [Financial Institutions](https://www.i2vsys.com/industries/financial-institutions/): Smart security for banks, ATMs, and financial branch networks.
+- [Retail](https://www.i2vsys.com/industries/retail/): Loss prevention, footfall analytics, and customer behaviour insights for retail environments.
+- [Education](https://www.i2vsys.com/industries/education/): Campus security and intrusion detection for schools and universities.
+- [Hospitality](https://www.i2vsys.com/industries/hospitality/): Guest safety and staff management for hotels and resorts.
+
+---
+
+## Company
+
+- [Why Choose i2V](https://www.i2vsys.com/why-choose-i2v/): 50+ smart analytics, proven scalability, cost-effective deployment, and enterprise-grade reliability.
+- [Our Partners](https://www.i2vsys.com/our-partners/): i2V's global technology and channel partner ecosystem.
+- [Technology Partners](https://www.i2vsys.com/our-partners/technology-partners/): Hardware and software integration partners.
+- [Contact Us](https://www.i2vsys.com/contact-us/): Request a demo or speak with an i2V security expert.
+- [Careers](https://www.i2vsys.com/career/): Open roles at i2V across engineering, AI/ML, and business development.
+- [Privacy Policy](https://www.i2vsys.com/privacy-policy/): How i2V collects, uses, and protects personal data.
+- [Terms of Use](https://www.i2vsys.com/terms-of-use/): Website usage terms and conditions.
+
+---
+
+## Newsroom & Insights
+
+- [Newsroom & Blog](https://www.i2vsys.com/newsroom-blog/): Latest news, project deployments, and AI surveillance industry insights.
+- [Passenger Safety in Aviation & Transportation](https://www.i2vsys.com/newsroom/passenger-safety-in-a-changing-world-the-role-of-intelligent-surveillance-in-aviation-and-transportation/): How intelligent surveillance is reshaping passenger safety.
+- [Modern Border Security & Intelligent Surveillance](https://www.i2vsys.com/newsroom/modern-border-security-in-a-changing-world-the-role-of-intelligent-surveillance/): The role of AI in protecting national borders.
+- [Securing Critical Infrastructure in 2026](https://www.i2vsys.com/newsroom/securing-critical-infrastructure-in-2026-from-oil-gas-to-smart-cities/): From oil & gas to smart cities — AI surveillance for critical assets.
+- [Chennai Smart City Deployment](https://www.i2vsys.com/newsroom/chennai-smart-city-deployment-scaling-surveillance-across-thousands-of-cameras/): How i2V scaled surveillance across thousands of cameras in Chennai.
+- [i2V Innovation Takes Centre Stage](https://www.i2vsys.com/newsroom/i2vs-innovation-takes-center-stage/): Latest product innovations and technology highlights.
+- [ITMS & VMS Installed in Himachal Pradesh, Mandi](https://www.i2vsys.com/newsroom/i2v-itms-vms-successfully-installed-in-himachal-pradesh-mandi/): AI traffic and surveillance deployment in Mandi.
+- [Airport Security Innovation at Inter Passenger Terminal Show 2025](https://www.i2vsys.com/newsroom/advancing-airport-security-innovation-at-inter-passenger-terminal-show-2025/): i2V's airport security showcase at IPS 2025.
+- [Crowd Management VMS at Mahakumbh, Haridwar](https://www.i2vsys.com/newsroom/i2v-crowd-management-vms-successfully-installed-in-haridwar-for-mahakumbh-festival/): Managing millions of pilgrims with AI crowd analytics.
+- [ICCC & VMS Deployed in Saharanpur Smart City](https://www.i2vsys.com/newsroom/i2v-command-and-control-psim-along-with-vms-successfully-installed-in-saharanpur-smart-city/): Command & control surveillance deployment for Saharanpur.
+- [Digital Transformation at DTC Bhubaneswar 2025](https://www.i2vsys.com/newsroom/accelerating-digital-transformation-at-dtc-bhubaneswar-2025/): i2V's role in accelerating smart city digital transformation.
+
+---
+
+## Resources & Downloads
+
+- [Resource Centre](https://www.i2vsys.com/resource-center/): All brochures, datasheets, and solution guides in one place.
+- [Complete Product Brochure](https://www.i2vsys.com/resources/complete-product-brochure/): Full overview of i2V's AI surveillance portfolio.
+- [Smart City Brochure](https://www.i2vsys.com/resources/smart-city-brochure/): AI surveillance and ICCC solutions for smart city operators.
+- [Airport Brochure](https://www.i2vsys.com/resources/airport-brochure/): Perimeter, terminal, and airside security solutions for airports.
+- [Traffic Brochure](https://www.i2vsys.com/resources/traffic-brochure/): Intelligent traffic management solutions overview.
+- [Industry Brochure](https://www.i2vsys.com/resources/industry-brochure/): Sector-specific AI surveillance capabilities.
+- [Retail Brochure](https://www.i2vsys.com/resources/retail-brochure/): Loss prevention and customer analytics for retail.
+- [VMS Datasheet](https://www.i2vsys.com/resources/i2v-vms-datasheet/): Technical specs for i2V's Video Management Software.
+- [Video Analytics Datasheet](https://www.i2vsys.com/resources/i2v-va-datashet/): AI models, accuracy benchmarks, and integration specs.
+- [ANPR Datasheet](https://www.i2vsys.com/resources/i2v-anpr-datasheet/): Number plate recognition technical specifications.
+- [FRS Datasheet](https://www.i2vsys.com/resources/i2v-frs-datasheet/): Face recognition software specifications and use cases.
+- [ITMS Datasheet](https://www.i2vsys.com/resources/i2v-itms-datasheet/): Intelligent traffic management system technical details.
+- [CMS Datasheet](https://www.i2vsys.com/resources/i2v-cms-datasheet/): Central monitoring system architecture and features.
+- [ICCC Datasheet](https://www.i2vsys.com/resources/i2v-iccc-datasheet/): Command and control centre specifications.
+- [VMS for NVR Rolling Stock Datasheet](https://www.i2vsys.com/resources/i2v-vms-for-nvr-rolling-stock-application-datasheet/): VMS for train and metro coach deployments.
+- [MNVR Rolling Stock Datasheet](https://www.i2vsys.com/resources/i2v-mnvr-rolling-stock-application-datasheet/): Mobile NVR specs for buses, trains, and transit vehicles.
+- [MIC Rolling Stock Datasheet](https://www.i2vsys.com/resources/i2v-mic-rolling-stock-application-datasheet/): In-vehicle computing for rolling stock video analytics.
+
+---
+
+## Careers
+
+- [Careers Overview](https://www.i2vsys.com/career/): Join i2V — open roles in AI, engineering, and business development.
+- [Business Development Manager](https://www.i2vsys.com/careers/business-development-manager/): Sales and partnerships role expanding i2V's market presence.
+- [Computer Vision Engineer](https://www.i2vsys.com/careers/computer-vision-engineer/): Build real-world AI models for video surveillance systems.
+- [Software Engineer in ML](https://www.i2vsys.com/careers/software-engineer-in-ml/): Develop next-generation machine learning models for intelligent security.
+
+---
+
+## Site Navigation
+
+- [HTML Sitemap](https://www.i2vsys.com/html-sitemap/): Complete directory of all pages on i2vsys.com.
+
+---
+
+*This file follows the llms.txt standard (https://llmstxt.org) to help AI assistants and large language models accurately represent i2V Systems' products, services, and content.*
