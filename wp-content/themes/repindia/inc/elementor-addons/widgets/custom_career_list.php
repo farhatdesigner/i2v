@@ -264,7 +264,8 @@ class Custom_Career_List extends Widget_Base {
             #<?php echo $uid; ?> .career-subtitle { font-size:16px; line-height:24px; }
             #<?php echo $uid; ?> .career-filter-section { min-width:100%; width:100%; }
             #<?php echo $uid; ?> .career-table-header { display:none; }
-            #<?php echo $uid; ?> .career-team-group { grid-template-columns: 1fr; gap:20px; margin-bottom:32px; }
+            #<?php echo $uid; ?> .career-team-group { grid-template-columns: 1fr; gap:0; margin-bottom:32px; }
+            #<?php echo $uid; ?> .career-row {padding: 0;}
             #<?php echo $uid; ?> .team-title { font-size:24px; margin-bottom: 0px; }
             #<?php echo $uid; ?> .career-team-col-in { flex-direction:column; align-items:flex-start; gap:8px; padding:10px 0; }
             #<?php echo $uid; ?> .career-role { width:100%; }
