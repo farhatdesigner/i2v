@@ -510,3 +510,40 @@ textarea.form-control{ max-height: max-content; }
 .wpcf7-form-control-wrap.wpcf7-not-valid .i2v-custom-dropdown__trigger {
   border-color: #c92629;
 }
+
+/* Footer subscription form (Contact Form 7) */
+.subscriptionform p { margin: 0;display: flex;flex-direction: column;align-items: flex-start;gap: 12px; }
+.subscriptionform .wpcf7-form-control-wrap { margin-bottom: 0;width: 100%; }
+.subscriptionform .wpcf7-form-control-wrap:has(input[type="hidden"]) { display: none; }
+.subscriptionform input[type="email"].form-control {
+  width: 100%;height: 48px;margin-bottom: 0;padding: 8px 12px 8px 40px;border-radius: 8px;border: 1px solid rgba(255, 255, 255, 0.15);background-color: #464a4f;
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 7.2C4 6.08 4.9 5.2 6 5.2h12c1.1 0 2 .88 2 1.98V16.8c0 1.1-.9 2-2 2H6c-1.1 0-2-.9-2-2V7.2Z' stroke='%23AEB6C9' stroke-width='1.5' stroke-linejoin='round'/%3E%3Cpath d='m5 7.5 7 5 7-5' stroke='%23AEB6C9' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;background-position: 12px center;background-size: 20px 20px;color: rgba(255, 255, 255, 0.9);font-size: 16px;font-weight: 500;line-height: 24px; }
+.subscriptionform input[type="email"].form-control::placeholder { color: rgba(255, 255, 255, 0.5); }
+.subscriptionform input[type="email"].form-control:hover { border-color: #008ad6; }
+.subscriptionform input[type="email"].form-control:focus { border-color: #007abe;outline: 0;box-shadow: none; }
+.subscriptionform input[type="email"].form-control.wpcf7-not-valid { border-color: #c92629; }
+.subscriptionform input[type="email"]:-webkit-autofill,
+.subscriptionform input[type="email"]:-webkit-autofill:hover,
+.subscriptionform input[type="email"]:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #464a4f inset;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.9);
+  transition: background-color 5000s ease-in-out 0s;
+}
+.subscriptionform input.wpcf7-submit.form-control.submitbtn { width: auto;height: auto;min-height: 40px;margin: 0;padding: 8px 16px;border: 0;border-radius: 8px;background: #0099ed;color: #fff;font-size: 16px;font-weight: 600;line-height: 24px;text-align: center;cursor: pointer; }
+.subscriptionform input.wpcf7-submit.form-control.submitbtn:hover { background: #0074b2; }
+.subscriptionform input.wpcf7-submit.form-control.submitbtn:focus-visible { outline: 2px solid #74c2ed;outline-offset: 2px;box-shadow: none; }
+.subscriptionform input.wpcf7-submit.form-control.submitbtn:disabled { background: #0099ed;color: #fff;opacity: 0.6;cursor: not-allowed; }
+.subscriptionform .wpcf7-not-valid-tip { margin-top: 4px;font-size: 14px;line-height: normal; }
+.subscriptionform .wpcf7-spinner { position: relative;right: auto;top: auto;margin-left: 8px; }
+@media (max-width: 767px) {
+  .subscriptionform input[type="email"].form-control { width: 100%; }
+  .wpcf7-form-control-wrap.recaptcha { display: block;overflow: hidden; }
+  .wpcf7-form-control.wpcf7-recaptcha.g-recaptcha {
+    transform: scale(0.88);
+    -webkit-transform: scale(0.88);
+    transform-origin: left top;
+    -webkit-transform-origin: left top;
+    display: inline-block;
+}
+}
