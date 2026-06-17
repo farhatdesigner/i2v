@@ -538,4 +538,12 @@ textarea.form-control{ max-height: max-content; }
 .subscriptionform .wpcf7-spinner { position: relative;right: auto;top: auto;margin-left: 8px; }
 @media (max-width: 767px) {
   .subscriptionform input[type="email"].form-control { width: 100%; }
+  .wpcf7-form-control-wrap.recaptcha { display: block;overflow: hidden; }
+  .wpcf7-form-control.wpcf7-recaptcha.g-recaptcha {
+    transform: scale(0.88);
+    -webkit-transform: scale(0.88);
+    transform-origin: left top;
+    -webkit-transform-origin: left top;
+    display: inline-block;
+}
 }
