@@ -1300,12 +1300,17 @@ border-radius: 12px;
   display: flex !important;
   flex-wrap: wrap !important;
   align-items: center !important;
-  justify-content: start !important;
+  justify-content: center !important;
   gap: 4px 6px;
   white-space: normal !important;
 }
 
-.elementor-element.withdark.toptooltitle.group_tooltip.e-con-full > .elementor-widget {
+.elementor-element.withdark.toptooltitle.group_tooltip {
+  white-space: normal !important;
+}
+
+.elementor-element.withdark.toptooltitle.group_tooltip.e-con-full > .elementor-widget,
+.elementor-element.withdark.toptooltitle.group_tooltip.e-con-full > .elementor-element {
   width: auto !important;
   max-width: none !important;
   flex: 0 1 auto !important;
@@ -1337,13 +1342,17 @@ border-radius: 12px;
     display: flex !important;
     flex-wrap: wrap !important;
     align-items: center !important;
-    justify-content: start !important;
+    justify-content: center !important;
     max-width: 100% !important;
     width: 100% !important;
     padding-left: 16px !important;
     padding-right: 16px !important;
     box-sizing: border-box !important;
     gap: 4px 6px;
+    white-space: normal !important;
+  }
+
+  .elementor-element.withdark.toptooltitle.group_tooltip {
     white-space: normal !important;
   }
 
@@ -1367,7 +1376,7 @@ border-radius: 12px;
   .elementor-element.withdark.toptooltitle.group_tooltip.e-con-full > .elementor-widget-custom_tooltip .elementor-widget-container,
   .elementor-element.withdark.toptooltitle.group_tooltip.e-con-full > .elementor-widget-custom_tooltip .ctw-wrapper {
     width: auto !important;
-    max-width: 100% !important;
+    max-width: max-content !important;
   }
 
   .e-con-inner:has(.withdark.toptooltitle.group_tooltip) {
@@ -1404,6 +1413,33 @@ border-radius: 12px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+  /* Transportation page — full-width breadcrumb with ellipsis on mobile */
+  .single-industries .elementor-element.breadcrum_mobilecss,
+  .single-industries .elementor-element.breadcrum_mobilecss .elementor-widget-container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .single-industries .elementor-element.breadcrum_mobilecss .elementor-shortcode {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: unset;
+    -webkit-box-orient: unset;
+  }
+
+  .single-industries .elementor-element.breadcrum_mobilecss .elementor-shortcode > span {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 .elementor-element.certificate_icon .elementor-widget-image img {
   height: 84px !important;
 }

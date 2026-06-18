@@ -173,6 +173,7 @@ class Horizontal_Slider_Energy extends Widget_Base
         .hz-slider-topcaption.hz-slider-energy .swiper-slide .slider-content img {
             width: 45px;
             height: 45px;
+            border-radius:0;
         }
         .hz-slider-topcaption.hz-slider-energy .swiper-slide .slider-image { position: relative; }
         .hz-slider-topcaption.hz-slider-energy .swiper-slide{ position: relative;padding: 0;border-radius: 12px; }
@@ -303,6 +304,7 @@ class Horizontal_Slider_Energy extends Widget_Base
             .hz-slider-topcaption.hz-slider-energy .swiper-slide .slider-content img {
                 width: 35px;
                 height: 35px;
+                border-radius:0;
             }
         }
        </style>
