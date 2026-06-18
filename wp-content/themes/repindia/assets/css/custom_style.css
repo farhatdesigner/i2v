@@ -5047,7 +5047,11 @@ span.star {
     flex-direction: column;
     align-items: flex-start;
   }
-
+  .btn-sec_gap.single_row {
+    gap: 12px;
+    flex-direction: row;
+    align-items: center;
+}
   /* .theme-btn.xl-btn {
     padding: 10px 10px !important;
     font-size: 13px !important;
@@ -5379,9 +5383,7 @@ span.star {
     left: 50%;
     transform: translate(-50%, 0%);
   }
-  .sec-tabs-wrapper {
-    padding: 0px 15px;
-  }
+
 
   .modal-content {
     overflow-y: auto;
