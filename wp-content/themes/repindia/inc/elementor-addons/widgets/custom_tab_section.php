@@ -483,6 +483,7 @@ class Custom_Tab_Section extends Widget_Base
 
                 .sec-panel-inner {
                     flex-direction: column;
+                    border-radius: 8px !important;
                 }
 
                 .sec-panel-image {
