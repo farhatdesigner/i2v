@@ -1094,7 +1094,9 @@ function i2v_validate_recaptcha_server_side($spam, $submission) {
 
 // 🔒 Force Security Headers via PHP
 function add_security_headers_via_php() {
-    if (!is_admin()) {
+	// Detect environment safely
+    $env = defined('WP_ENV') ? WP_ENV : 'production';
+    if (!is_admin() && ($env === 'production') ) {
         header("X-XSS-Protection: 1; mode=block");
         header("X-Frame-Options: SAMEORIGIN");
         header("X-Content-Type-Options: nosniff");

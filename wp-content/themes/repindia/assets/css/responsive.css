@@ -1295,9 +1295,50 @@ border-radius: 12px;
     
 }
 
-/* ITMS product page — keep hero stat bar inside viewport on mobile */
+/* Multi-stat hero tooltips (ITMS, FRS) — group_tooltip pages only */
+.elementor-element.withdark.toptooltitle.group_tooltip.e-con-full {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px 6px;
+  white-space: normal !important;
+}
+
+.elementor-element.withdark.toptooltitle.group_tooltip {
+  white-space: normal !important;
+}
+
+.elementor-element.withdark.toptooltitle.group_tooltip.e-con-full > .elementor-widget,
+.elementor-element.withdark.toptooltitle.group_tooltip.e-con-full > .elementor-element {
+  width: auto !important;
+  max-width: none !important;
+  flex: 0 1 auto !important;
+}
+
+.elementor-element.withdark.toptooltitle.group_tooltip.e-con-full > .elementor-widget-custom_tooltip .elementor-widget-container,
+.elementor-element.withdark.toptooltitle.group_tooltip.e-con-full > .elementor-widget-custom_tooltip .ctw-wrapper {
+  width: auto !important;
+  max-width: max-content !important;
+}
+
+.elementor-element.withdark.toptooltitle.group_tooltip .ctw-title .ctw-text,
+.elementor-element.withdark.toptooltitle.group_tooltip .ctw-title .ctw-text p {
+  font-size: 14px !important;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.elementor-element.withdark.toptooltitle.group_tooltip .ctw-text {
+  display: inline-block !important;
+  width: auto !important;
+  max-width: none !important;
+}
+
+/* Hero tooltip banners — mobile */
 @media (max-width: 768px) {
-  .wrap_parenttooltipbox .elementor-element.toptooltitle.e-flex.e-con {
+  /* ITMS + FRS only (multi-stat) */
+  .elementor-element.withdark.toptooltitle.group_tooltip.e-con-full {
     display: flex !important;
     flex-wrap: wrap !important;
     align-items: center !important;
@@ -1311,38 +1352,59 @@ border-radius: 12px;
     white-space: normal !important;
   }
 
-  .wrap_parenttooltipbox .elementor-element.toptooltitle.e-flex.e-con > .elementor-element {
+  .elementor-element.withdark.toptooltitle.group_tooltip {
+    white-space: normal !important;
+  }
+
+  .elementor-element.withdark.toptooltitle.group_tooltip.e-con-full > .elementor-element {
     flex: 0 1 auto !important;
     max-width: 100% !important;
     width: auto !important;
   }
 
-  .wrap_parenttooltipbox .elementor-element.toptooltitle .theme-img {
+  .elementor-element.withdark.toptooltitle.group_tooltip .theme-img {
     flex-shrink: 0;
   }
 
-  .wrap_parenttooltipbox .elementor-element.toptooltitle .elementor-heading-title {
+  .elementor-element.withdark.toptooltitle.group_tooltip.e-con-full > .elementor-widget-custom_tooltip .ctw-text,
+  .elementor-element.withdark.toptooltitle.group_tooltip.e-con-full > .elementor-widget-custom_tooltip .ctw-title {
     white-space: normal !important;
-    word-break: break-word;
+    overflow-wrap: break-word !important;
+    word-break: normal !important;
   }
 
-  .wrap_parenttooltipbox .elementor-element.toptooltitle .elementor-widget-container,
-  .wrap_parenttooltipbox .elementor-element.toptooltitle .ctw-wrapper {
+  .elementor-element.withdark.toptooltitle.group_tooltip.e-con-full > .elementor-widget-custom_tooltip .elementor-widget-container,
+  .elementor-element.withdark.toptooltitle.group_tooltip.e-con-full > .elementor-widget-custom_tooltip .ctw-wrapper {
     width: auto !important;
-    max-width: 100% !important;
+    max-width: max-content !important;
   }
 
-  .wrap_parenttooltipbox .elementor-element.toptooltitle .ctw-text,
-  .wrap_parenttooltipbox .elementor-element.toptooltitle .ctw-title {
-    white-space: normal !important;
-  }
-
-  .wrap_parenttooltipbox .e-con-inner:has(.toptooltitle) {
+  .e-con-inner:has(.withdark.toptooltitle.group_tooltip) {
     max-width: 100% !important;
     overflow: hidden;
   }
+
+  /* AI, CMS, ANPR — override e-flex / flex on #block-tooltitleonmobile only */
+  #block-tooltitleonmobile .single_hero_tooltip {
+    display: -webkit-box !important;
+    -webkit-box-orient: horizontal !important;
+    -webkit-box-align: start !important;
+    -webkit-box-pack: center !important;
+    white-space: normal !important;
+  }
+
+  #block-tooltitleonmobile .single_hero_tooltip > .elementor-element {
+    width: auto !important;
+    max-width: none !important;
+  }
+
+  #block-tooltitleonmobile .single_hero_tooltip .ctw-wrapper {
+    width: auto !important;
+    max-width: max-content !important;
+  }
+
   .grapg_hiddenmobile {
-    display: none;
+    display: none !important;
 }
 .breadcrum_mobilecss {
   display: -webkit-box;
@@ -1350,6 +1412,36 @@ border-radius: 12px;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+  /* Transportation page — full-width breadcrumb with ellipsis on mobile */
+  .single-industries .elementor-element.breadcrum_mobilecss,
+  .single-industries .elementor-element.breadcrum_mobilecss .elementor-widget-container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .single-industries .elementor-element.breadcrum_mobilecss .elementor-shortcode {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: unset;
+    -webkit-box-orient: unset;
+  }
+
+  .single-industries .elementor-element.breadcrum_mobilecss .elementor-shortcode > span {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+.elementor-element.certificate_icon .elementor-widget-image img {
+  height: 84px !important;
 }
 
 }

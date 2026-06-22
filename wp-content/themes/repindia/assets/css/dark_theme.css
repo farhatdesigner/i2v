@@ -114,6 +114,10 @@ header li.burger-icon .icon-sun,
   color: #aeb6c9 !important;
 }
 
+.js-dark .tooltiptitlebox span.ctw-text {
+  color: #ffff !important;
+}
+
 .js-dark .ai_smart_dark span.ctw-text, .js-dark .iccc_actions span.ctw-text {
   color: rgba(255, 255, 255, 0.9) !important;
 }

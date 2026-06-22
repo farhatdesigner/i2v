@@ -1127,9 +1127,9 @@ class Custom_Tooltip extends Widget_Base
                     justify-content: align-items: start !important;
                 }
 
-                #center_mobileviiew .ctw-title {
+                /* #center_mobileviiew .ctw-title {
                     text-align: center !important;
-                }
+                } */
 
                 #center_mobileviiew .ctw-wrapper {
                     justify-content: center !important;
