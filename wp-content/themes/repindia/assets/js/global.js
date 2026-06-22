@@ -653,8 +653,7 @@ $(document).ready(function () {
         document.body.classList.remove("modal-open");
     };
 
-    function lockModalBodyScroll(savedScrollY, options) {
-        options = options || {};
+    function lockModalBodyScroll(savedScrollY) {
         var scrollbarWidth = getScrollbarWidth();
         if (isMobileModalViewport()) {
             window._modalScrollLockMode = "mobile-lenis";
@@ -663,8 +662,8 @@ $(document).ready(function () {
                 if (typeof lenis.scrollTo === "function") {
                     lenis.scrollTo(scrollY, { immediate: true });
                 }
-                if (options.stopLenis !== false && typeof lenis.stop === "function") {
-                    lenis.stop();
+                if (typeof lenis.stop === "function") {
+                    // lenis.stop();
                 }
             }
             return;
@@ -1025,17 +1024,7 @@ $(document).ready(function () {
             window.pauseModalScrollTriggers();
         }
 
-        var modalId = this.id;
-        var isMobileLenisFormModal =
-            modalId === "staticBackdrop" ||
-            modalId === "contactBackdrop" ||
-            modalId === "channelPartnerBackdrop" ||
-            modalId === "technologyPartnerBackdrop";
-        if (isMobileModalViewport() && isMobileLenisFormModal) {
-            lockModalBodyScroll(modalScrollPosition, { stopLenis: false });
-        } else {
-            lockModalBodyScroll(modalScrollPosition);
-        }
+        lockModalBodyScroll(modalScrollPosition);
 
         $(window).on("scroll", preventModalBodyScroll);
         document.addEventListener("wheel", preventModalBodyWheel, { passive: false, capture: true });
