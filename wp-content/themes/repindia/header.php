@@ -53,15 +53,6 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
 </noscript>
 
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-FCN51SPYK2"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-
-gtag('config', 'G-FCN51SPYK2');
-</script>
 
 <!-- Microsoft Clarity -->
 <script type="text/javascript">
