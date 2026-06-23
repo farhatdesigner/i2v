@@ -1363,7 +1363,7 @@ border-radius: 12px;
     max-width: 100% !important;
   }
 
-  .elementor-element.key_tooltips > .e-con.e-child:has(.elementor-widget-custom_tooltip) > .e-con.e-child:last-child {
+  .elementor-element.key_tooltips > .e-con.e-child:has(.elementor-widget-custom_tooltip) > .e-con.e-child:last-child:not(.parentoneline_tooltip) {
     display: flex !important;
     flex-direction: column !important;
     flex: 0 0 auto !important;
@@ -1381,16 +1381,10 @@ border-radius: 12px;
     overflow-wrap: break-word !important;
   }
 
-  /* Two tooltips in one flowing row, inside box */
+  /* Two tooltips flow as one sentence — second starts right after first ends */
   .elementor-element.key_tooltips .parentoneline_tooltip {
-    --display: flex;
-    --flex-direction: row;
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: wrap !important;
-    align-items: baseline !important;
-    justify-content: flex-start !important;
-    gap: 0 !important;
+    --display: block;
+    display: block !important;
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
@@ -1398,58 +1392,84 @@ border-radius: 12px;
     overflow-wrap: break-word !important;
     word-wrap: break-word !important;
     box-sizing: border-box !important;
+    font-size: 0;
+    line-height: 0;
   }
 
   .elementor-element.key_tooltips .parentoneline_tooltip > .elementor-element.elementor-widget-custom_tooltip,
-  .elementor-element.key_tooltips .parentoneline_tooltip > .elementor-widget-custom_tooltip {
-    display: block !important;
-    flex: 0 1 auto !important;
+  .elementor-element.key_tooltips .parentoneline_tooltip > .elementor-widget-custom_tooltip,
+  body.postid-6343 .elementor-6343 .elementor-element.key_tooltips .parentoneline_tooltip > .elementor-element.onelinetooltip.elementor-widget-custom_tooltip {
+    display: inline !important;
     width: auto !important;
     max-width: 100% !important;
     min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    vertical-align: baseline !important;
+    font-size: 16px;
+    line-height: 26px;
   }
 
-  .elementor-element.key_tooltips .elementor-widget-custom_tooltip .elementor-widget-container {
-    display: block !important;
+  .elementor-element.key_tooltips .parentoneline_tooltip .elementor-widget-container {
+    display: inline !important;
     width: auto !important;
     max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
-  .elementor-element.key_tooltips .elementor-widget-custom_tooltip .ctw-wrapper {
-    display: inline-flex !important;
+  .elementor-element.key_tooltips .parentoneline_tooltip .elementor-widget-custom_tooltip .ctw-wrapper {
+    display: inline !important;
     width: auto !important;
     max-width: 100% !important;
     position: relative !important;
-    flex: none !important;
-    justify-content: flex-start !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    vertical-align: baseline !important;
   }
 
-  .elementor-element.key_tooltips .elementor-widget-custom_tooltip .ctw-title {
-    display: inline-flex !important;
-    align-items: baseline !important;
+  .elementor-element.key_tooltips .parentoneline_tooltip .elementor-widget-custom_tooltip .ctw-wrapper > div {
+    display: inline !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .elementor-element.key_tooltips .parentoneline_tooltip .elementor-widget-custom_tooltip .ctw-title {
+    display: inline !important;
     width: auto !important;
     max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    vertical-align: baseline !important;
   }
 
-  .elementor-element.key_tooltips .elementor-widget-custom_tooltip .ctw-text {
-    display: inline-block !important;
+  .elementor-element.key_tooltips .parentoneline_tooltip .elementor-widget-custom_tooltip .ctw-text,
+  .elementor-element.key_tooltips .parentoneline_tooltip .elementor-widget-custom_tooltip .ctw-trigger {
+    display: inline !important;
     width: auto !important;
     max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    vertical-align: baseline !important;
   }
 
-  .elementor-element.key_tooltips .elementor-widget-custom_tooltip .ctw-text p,
-  .elementor-element.key_tooltips .elementor-widget-custom_tooltip .ctw-trigger p {
+  .elementor-element.key_tooltips .parentoneline_tooltip .elementor-widget-custom_tooltip .ctw-text p,
+  .elementor-element.key_tooltips .parentoneline_tooltip .elementor-widget-custom_tooltip .ctw-trigger p,
+  .elementor-element.key_tooltips .parentoneline_tooltip .elementor-widget-custom_tooltip .ctw-text span,
+  .elementor-element.key_tooltips .parentoneline_tooltip .elementor-widget-custom_tooltip .ctw-trigger span {
     display: inline !important;
     margin: 0 !important;
+    padding: 0 !important;
   }
 
-  .elementor-element.key_tooltips .onelinetooltip {
-    display: inline-block !important;
+  .elementor-element.key_tooltips .parentoneline_tooltip .onelinetooltip {
+    display: inline !important;
     width: auto !important;
     max-width: 100% !important;
   }
 
-  .elementor-element.key_tooltips .elementor-widget__width-inherit {
+  .elementor-element.key_tooltips .parentoneline_tooltip .elementor-widget__width-inherit {
     width: auto !important;
   }
 }
