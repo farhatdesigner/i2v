@@ -307,6 +307,10 @@ header li.burger-icon .icon-sun,
 .js-dark ul.social_media_links > li > a > small {
   color: #aeb6c9;
 }
+
+.js-dark .search-popup-trigger svg path {
+  fill: rgb(255 255 255 / 90%);
+}
 .js-dark ul.social_media_links > li > a:hover small:before {
   background: linear-gradient(rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.10));
   opacity: 1;

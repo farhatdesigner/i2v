@@ -213,6 +213,12 @@ class Custom_Resource_List extends Widget_Base {
                 .load-more-btn { padding: 8px 16px;border: 1px solid #E5E9EC;background: #fff;color: #0099ED;transition: all 0.2s;border-radius: 8px;font-size: 16px;font-style: normal;font-weight: 600;line-height: 24px; }
                 .load-more-btn:hover { background: #0074B2; color: white; }
                 .load-more-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+                
+.js-dark .load-more-btn, .js-dark .load-more-btn:hover, .js-dark .load-more-btn:focus  {
+    border: 1px solid #C1C4C633;
+    background: #464A4F;
+    color: #74C2ED;
+}
                 .resource-no-results { text-align: center; padding: 40px; color: #666; }
                 .resource_filter_cont { padding: 8px; }
                 .resource-filter-group { padding: 8px 0px; }
