@@ -833,6 +833,7 @@ class Custom_Tooltip extends Widget_Base
             echo '.ctw-popup-icon-dark { display: none; }';
             echo 'body.js-dark .ctw-popup-icon-light { display: none; }';
             echo 'body.js-dark .ctw-popup-icon-dark { display: flex; align-items: center; justify-content: center; }';
+            echo '@media (max-width:768px){.key_tooltips>.e-con.e-child:has(.elementor-widget-custom_tooltip){flex-direction:column!important;}.key_tooltips>.e-con.e-child:has(.elementor-widget-custom_tooltip)>.e-con.e-child:last-child{display:flex!important;flex-direction:column!important;width:100%!important;overflow:visible!important;}.key_tooltips .parentoneline_tooltip{display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;width:100%!important;max-width:100%!important;}.key_tooltips .parentoneline_tooltip>.elementor-widget-custom_tooltip{flex:0 1 auto!important;width:auto!important;max-width:100%!important;}.key_tooltips .elementor-widget-custom_tooltip .ctw-wrapper{display:inline-flex!important;width:auto!important;max-width:100%!important;}.key_tooltips .elementor-widget-custom_tooltip .ctw-text p,.key_tooltips .elementor-widget-custom_tooltip .ctw-trigger p{display:inline!important;margin:0!important;}}';
             echo '</style>';
         }
 
@@ -1027,13 +1028,55 @@ class Custom_Tooltip extends Widget_Base
             }
 
 
-            .parentoneline_tooltip {
-                display: block;
-            }
+            @media (max-width: 768px) {
+                .key_tooltips > .e-con.e-child:has(.elementor-widget-custom_tooltip) {
+                    flex-direction: column !important;
+                    align-items: stretch !important;
+                    width: 100% !important;
+                }
 
-            .onelinetooltip {
-                display: inline-flex;
-                max-width: max-content !important;
+                .key_tooltips > .e-con.e-child:has(.elementor-widget-custom_tooltip) > .e-con.e-child:last-child {
+                    display: flex !important;
+                    flex-direction: column !important;
+                    width: 100% !important;
+                    overflow: visible !important;
+                }
+
+                .key_tooltips .parentoneline_tooltip {
+                    display: flex !important;
+                    flex-direction: row !important;
+                    flex-wrap: wrap !important;
+                    align-items: baseline !important;
+                    width: 100% !important;
+                    max-width: 100% !important;
+                    overflow-wrap: break-word !important;
+                }
+
+                .key_tooltips .parentoneline_tooltip > .elementor-element.elementor-widget-custom_tooltip {
+                    flex: 0 1 auto !important;
+                    width: auto !important;
+                    max-width: 100% !important;
+                }
+
+                .key_tooltips .elementor-widget-custom_tooltip .ctw-wrapper {
+                    display: inline-flex !important;
+                    width: auto !important;
+                    max-width: 100% !important;
+                }
+
+                .key_tooltips .elementor-widget-custom_tooltip .ctw-text {
+                    display: inline-block !important;
+                }
+
+                .key_tooltips .elementor-widget-custom_tooltip .ctw-text p,
+                .key_tooltips .elementor-widget-custom_tooltip .ctw-trigger p {
+                    display: inline !important;
+                    margin: 0 !important;
+                }
+
+                .key_tooltips .elementor-widget__width-inherit {
+                    width: auto !important;
+                }
             }
 
             .js-dark .ctw-title:hover .border-b {
