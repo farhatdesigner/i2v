@@ -181,7 +181,7 @@ class Custom_Resource_List extends Widget_Base {
                 /* a.resource-filter-clear:hover { color: #7b7676; } */
                 .reset-disabled {
                     pointer-events: none;
-                    opacity: 0.5;
+                    /* opacity: 0.5; */
                     cursor: not-allowed;
                     color: #949494!important;
                     border-color: #E6E6E6!important;
@@ -330,7 +330,7 @@ class Custom_Resource_List extends Widget_Base {
                 $clear_link_aria = $has_active_filters ? 'false' : 'true';
                 ?>
                 <div class="resource-filter-clear-wrapper">
-                    <a href="<?php echo esc_url($clear_filters_url); ?>" class="<?php echo esc_attr($clear_link_class); ?> theme-btn bg-trans border_btnlight" aria-disabled="<?php echo esc_attr($clear_link_aria); ?>">Clear filter</a>
+                    <a href="<?php echo esc_url($clear_filters_url); ?>" class="<?php echo esc_attr($clear_link_class); ?> theme-btn bg-trans border_btnlight w-auto" aria-disabled="<?php echo esc_attr($clear_link_aria); ?>">Clear filter</a>
                 </div>
             </div>
             
