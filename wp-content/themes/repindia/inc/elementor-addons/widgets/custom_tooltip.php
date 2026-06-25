@@ -833,6 +833,7 @@ class Custom_Tooltip extends Widget_Base
             echo '.ctw-popup-icon-dark { display: none; }';
             echo 'body.js-dark .ctw-popup-icon-light { display: none; }';
             echo 'body.js-dark .ctw-popup-icon-dark { display: flex; align-items: center; justify-content: center; }';
+            echo '@media (max-width:768px){.key_tooltips>.e-con.e-child:has(.elementor-widget-custom_tooltip){flex-direction:column!important;}.key_tooltips>.e-con.e-child:has(.elementor-widget-custom_tooltip)>.e-con.e-child:last-child:not(.parentoneline_tooltip){display:flex!important;flex-direction:column!important;width:100%!important;overflow:visible!important;}.key_tooltips .parentoneline_tooltip{--display:block;display:block!important;width:100%!important;max-width:100%!important;font-size:0;line-height:0;}.key_tooltips .parentoneline_tooltip>.elementor-widget-custom_tooltip,.key_tooltips .parentoneline_tooltip>.elementor-element.onelinetooltip.elementor-widget-custom_tooltip{display:inline!important;width:auto!important;max-width:100%!important;margin:0!important;padding:0!important;vertical-align:baseline!important;font-size:16px;line-height:26px;}.key_tooltips .parentoneline_tooltip .elementor-widget-container{display:inline!important;width:auto!important;margin:0!important;padding:0!important;}.key_tooltips .parentoneline_tooltip .ctw-wrapper{display:inline!important;width:auto!important;margin:0!important;padding:0!important;vertical-align:baseline!important;}.key_tooltips .parentoneline_tooltip .ctw-wrapper>div{display:inline!important;}.key_tooltips .parentoneline_tooltip .ctw-title,.key_tooltips .parentoneline_tooltip .ctw-text,.key_tooltips .parentoneline_tooltip .ctw-trigger{display:inline!important;margin:0!important;padding:0!important;vertical-align:baseline!important;}.key_tooltips .parentoneline_tooltip .ctw-text p,.key_tooltips .parentoneline_tooltip .ctw-trigger p,.key_tooltips .parentoneline_tooltip .ctw-text span,.key_tooltips .parentoneline_tooltip .ctw-trigger span{display:inline!important;margin:0!important;padding:0!important;}}';
             echo '</style>';
         }
 
@@ -1027,13 +1028,86 @@ class Custom_Tooltip extends Widget_Base
             }
 
 
-            .parentoneline_tooltip {
-                display: block;
-            }
+            @media (max-width: 768px) {
+                .key_tooltips > .e-con.e-child:has(.elementor-widget-custom_tooltip) {
+                    flex-direction: column !important;
+                    align-items: stretch !important;
+                    width: 100% !important;
+                }
 
-            .onelinetooltip {
-                display: inline-flex;
-                max-width: max-content !important;
+                .key_tooltips > .e-con.e-child:has(.elementor-widget-custom_tooltip) > .e-con.e-child:last-child:not(.parentoneline_tooltip) {
+                    display: flex !important;
+                    flex-direction: column !important;
+                    width: 100% !important;
+                    overflow: visible !important;
+                }
+
+                .key_tooltips .parentoneline_tooltip {
+                    --display: block;
+                    display: block !important;
+                    width: 100% !important;
+                    max-width: 100% !important;
+                    overflow-wrap: break-word !important;
+                    font-size: 0;
+                    line-height: 0;
+                }
+
+                .key_tooltips .parentoneline_tooltip > .elementor-element.elementor-widget-custom_tooltip,
+                .key_tooltips .parentoneline_tooltip > .elementor-element.onelinetooltip.elementor-widget-custom_tooltip {
+                    display: inline !important;
+                    width: auto !important;
+                    max-width: 100% !important;
+                    margin: 0 !important;
+                    padding: 0 !important;
+                    vertical-align: baseline !important;
+                    font-size: 16px;
+                    line-height: 26px;
+                }
+
+                .key_tooltips .parentoneline_tooltip .elementor-widget-container {
+                    display: inline !important;
+                    width: auto !important;
+                    margin: 0 !important;
+                    padding: 0 !important;
+                }
+
+                .key_tooltips .parentoneline_tooltip .elementor-widget-custom_tooltip .ctw-wrapper {
+                    display: inline !important;
+                    width: auto !important;
+                    margin: 0 !important;
+                    padding: 0 !important;
+                    vertical-align: baseline !important;
+                }
+
+                .key_tooltips .parentoneline_tooltip .elementor-widget-custom_tooltip .ctw-wrapper > div {
+                    display: inline !important;
+                }
+
+                .key_tooltips .parentoneline_tooltip .elementor-widget-custom_tooltip .ctw-title,
+                .key_tooltips .parentoneline_tooltip .elementor-widget-custom_tooltip .ctw-text,
+                .key_tooltips .parentoneline_tooltip .elementor-widget-custom_tooltip .ctw-trigger {
+                    display: inline !important;
+                    margin: 0 !important;
+                    padding: 0 !important;
+                    vertical-align: baseline !important;
+                }
+
+                .key_tooltips .parentoneline_tooltip .elementor-widget-custom_tooltip .ctw-text {
+                    display: inline !important;
+                }
+
+                .key_tooltips .parentoneline_tooltip .elementor-widget-custom_tooltip .ctw-text p,
+                .key_tooltips .parentoneline_tooltip .elementor-widget-custom_tooltip .ctw-trigger p,
+                .key_tooltips .parentoneline_tooltip .elementor-widget-custom_tooltip .ctw-text span,
+                .key_tooltips .parentoneline_tooltip .elementor-widget-custom_tooltip .ctw-trigger span {
+                    display: inline !important;
+                    margin: 0 !important;
+                    padding: 0 !important;
+                }
+
+                .key_tooltips .parentoneline_tooltip .elementor-widget__width-inherit {
+                    width: auto !important;
+                }
             }
 
             .js-dark .ctw-title:hover .border-b {

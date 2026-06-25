@@ -96,7 +96,7 @@ a.explr_btn.xl-btn:hover,a.home_btn.xl-btn:hover,
   scroll-behavior: smooth;
   scrollbar-width: thin;
   scrollbar-color: #d5d5d5 transparent;
-  -webkit-overflow-scrolling: touch;
+  /*-webkit-overflow-scrolling: touch;*/
 }
 
 /* Custom scrollbar for form popup (same as toggle-menu) */

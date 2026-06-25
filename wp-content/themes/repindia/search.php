@@ -91,7 +91,7 @@ if ($filter_type === 'all') {
 				<div class="search_result_image">
 					<img class="white_theme_img w-100" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2026/04/search-img.svg"
 						alt="Search Result Image" width="100%" height="100%">
-					<img class="black_theme_img w-100" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2026/04/search-img.svg"
+					<img class="black_theme_img w-100" src="<?php echo esc_url(home_url('/')); ?>wp-content/uploads/2026/06/illustration-dark.svg"
 						alt="Search Result Image" width="100%" height="100%">
 				</div>
 			</div>

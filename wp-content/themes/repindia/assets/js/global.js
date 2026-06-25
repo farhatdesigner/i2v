@@ -663,7 +663,7 @@ $(document).ready(function () {
                     lenis.scrollTo(scrollY, { immediate: true });
                 }
                 if (typeof lenis.stop === "function") {
-                    lenis.stop();
+                    // lenis.stop();
                 }
             }
             return;

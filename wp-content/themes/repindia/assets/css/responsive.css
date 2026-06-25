@@ -1075,6 +1075,11 @@ border-radius: 12px;
     width: auto !important;
     max-width: inherit !important;
 }
+#site_floating .enterprisebanner {
+  width: calc(100% - 40px) !important;
+  max-width: inherit !important;
+  margin: 0 auto;
+}
   .enterprisebanner ul.elementor-icon-list-items.elementor-inline-items {
     flex-wrap: unset;
     /* max-width: max-content; */
@@ -1278,6 +1283,15 @@ border-radius: 12px;
     .content-inner-icons ul { margin: 30px 0 0; }
     .content-inner-icons div { justify-content: flex-start; }
     .chosse_circle .elementor-icon-box-wrapper { padding: 0 0 20px; }
+    /* Elementor grid keeps repeat(2, 1fr) rows on mobile — row 2 stretches to match row 1 */
+    .elementor-element.enforcegrid_box.chosse_circle {
+      --e-con-grid-template-rows: auto !important;
+      align-items: start;
+    }
+    .elementor-element.enforcegrid_box.chosse_circle > .elementor-widget {
+      align-self: start;
+      height: auto !important;
+    }
     .sectionsinsightsupdates .mx-auto .text-center { text-align: left !important; }
     .sectionsinsightsupdates h3 { margin-bottom: 10px; }
     .insights-updates{ margin-top: 20px;}
@@ -1299,8 +1313,8 @@ border-radius: 12px;
 .elementor-element.withdark.toptooltitle.group_tooltip.e-con-full {
   display: flex !important;
   flex-wrap: wrap !important;
-  align-items: center !important;
-  justify-content: center !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
   gap: 4px 6px;
   white-space: normal !important;
 }
@@ -1335,14 +1349,144 @@ border-radius: 12px;
   max-width: none !important;
 }
 
+/* Retail page — key_tooltips section (mobile only) */
+@media (max-width: 768px) {
+  /* Each challenge card: icon row 1, content row 2 */
+  .elementor-element.key_tooltips > .e-con.e-child:has(.elementor-widget-custom_tooltip) {
+    --flex-direction: column;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .elementor-element.key_tooltips > .e-con.e-child:has(.elementor-widget-custom_tooltip) > .e-con.e-child:first-child {
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .elementor-element.key_tooltips > .e-con.e-child:has(.elementor-widget-custom_tooltip) > .e-con.e-child:last-child:not(.parentoneline_tooltip) {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow: visible !important;
+    box-sizing: border-box !important;
+  }
+
+  .elementor-element.key_tooltips .elementor-heading-title {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-wrap: break-word !important;
+  }
+
+  /* Two tooltips flow as one sentence — second starts right after first ends */
+  .elementor-element.key_tooltips .parentoneline_tooltip {
+    --display: block;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow: visible !important;
+    overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
+    box-sizing: border-box !important;
+    font-size: 0;
+    line-height: 0;
+  }
+
+  .elementor-element.key_tooltips .parentoneline_tooltip > .elementor-element.elementor-widget-custom_tooltip,
+  .elementor-element.key_tooltips .parentoneline_tooltip > .elementor-widget-custom_tooltip,
+  body.postid-6343 .elementor-6343 .elementor-element.key_tooltips .parentoneline_tooltip > .elementor-element.onelinetooltip.elementor-widget-custom_tooltip {
+    display: inline !important;
+    width: auto !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    vertical-align: baseline !important;
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .elementor-element.key_tooltips .parentoneline_tooltip .elementor-widget-container {
+    display: inline !important;
+    width: auto !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .elementor-element.key_tooltips .parentoneline_tooltip .elementor-widget-custom_tooltip .ctw-wrapper {
+    display: inline !important;
+    width: auto !important;
+    max-width: 100% !important;
+    position: relative !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    vertical-align: baseline !important;
+  }
+
+  .elementor-element.key_tooltips .parentoneline_tooltip .elementor-widget-custom_tooltip .ctw-wrapper > div {
+    display: inline !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .elementor-element.key_tooltips .parentoneline_tooltip .elementor-widget-custom_tooltip .ctw-title {
+    display: inline !important;
+    width: auto !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    vertical-align: baseline !important;
+  }
+
+  .elementor-element.key_tooltips .parentoneline_tooltip .elementor-widget-custom_tooltip .ctw-text,
+  .elementor-element.key_tooltips .parentoneline_tooltip .elementor-widget-custom_tooltip .ctw-trigger {
+    display: inline !important;
+    width: auto !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    vertical-align: baseline !important;
+  }
+
+  .elementor-element.key_tooltips .parentoneline_tooltip .elementor-widget-custom_tooltip .ctw-text p,
+  .elementor-element.key_tooltips .parentoneline_tooltip .elementor-widget-custom_tooltip .ctw-trigger p,
+  .elementor-element.key_tooltips .parentoneline_tooltip .elementor-widget-custom_tooltip .ctw-text span,
+  .elementor-element.key_tooltips .parentoneline_tooltip .elementor-widget-custom_tooltip .ctw-trigger span {
+    display: inline !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .elementor-element.key_tooltips .parentoneline_tooltip .onelinetooltip {
+    display: inline !important;
+    width: auto !important;
+    max-width: 100% !important;
+  }
+
+  .elementor-element.key_tooltips .parentoneline_tooltip .elementor-widget__width-inherit {
+    width: auto !important;
+  }
+}
+
 /* Hero tooltip banners — mobile */
 @media (max-width: 768px) {
   /* ITMS + FRS only (multi-stat) */
   .elementor-element.withdark.toptooltitle.group_tooltip.e-con-full {
     display: flex !important;
     flex-wrap: wrap !important;
-    align-items: center !important;
-    justify-content: center !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
     max-width: 100% !important;
     width: 100% !important;
     padding-left: 16px !important;
@@ -1440,9 +1584,48 @@ border-radius: 12px;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
-.elementor-element.certificate_icon .elementor-widget-image img {
-  height: 84px !important;
-}
+
+  .elementor-element.certificate_icon .elementor-widget-image img {
+    height: 84px !important;
+  }
 
 }
 
+/* "Stay updated" tooltip rows: keep icon + text inline on mobile */
+@media (max-width: 768px) {
+  .stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip):has(> .elementor-widget-heading) {
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    flex-wrap: nowrap !important;
+    column-gap: 0px !important;
+    width: 100% !important;
+    padding-left: 0;
+  }
+
+  .stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip):has(> .elementor-widget-heading) > .elementor-widget-custom_tooltip {
+    width: auto !important;
+    max-width: none !important;
+    flex: 0 0 auto !important;
+    align-self: flex-start !important;
+  }
+
+  /* keep the info icon pinned to the top even if the widget stretches */
+  .stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip):has(> .elementor-widget-heading) > .elementor-widget-custom_tooltip .elementor-widget-container,
+  .stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip):has(> .elementor-widget-heading) > .elementor-widget-custom_tooltip .ctw-wrapper,
+  .stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip):has(> .elementor-widget-heading) > .elementor-widget-custom_tooltip .ctw-title {
+    align-items: flex-start !important;
+    margin-top: -2px;
+  }
+
+  .stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip):has(> .elementor-widget-heading) > .elementor-widget-heading {
+    width: auto !important;
+    max-width: none !important;
+    flex: 1 1 auto !important;
+    align-self: flex-start !important;
+  }
+
+  .stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip):has(> .elementor-widget-heading) > .elementor-widget-heading .elementor-heading-title {
+    text-align: left !important;
+    line-height: 1!important;
+  }
+}

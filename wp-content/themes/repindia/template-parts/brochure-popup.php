@@ -286,6 +286,10 @@ if ($download_b) { ?>
                 padding: 15px;
                 font-size: 14px;
             }
+            .brochure-thankyou {
+       width: 100%;
+        }
+
         }
 
         @media (max-width: 767px) {
@@ -311,7 +315,7 @@ if ($download_b) { ?>
             <div class="modal-content brochure-modal-content">
                 <div class="modal-body">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="brochureModalLabel">Download Brochure</h5>
+                        <h5 class="modal-title" id="brochureModalLabel">Download brochure</h5>
                         <!-- <span class="brochure-modal-close btn-closecustom" data-bs-dismiss="modal"
                             aria-label="Close">&times;</span> -->
                         <span class="btn-closecustom" data-bs-dismiss="modal" aria-label="Close">
@@ -328,7 +332,7 @@ if ($download_b) { ?>
                         if ($selected_form_id) {
                             echo do_shortcode('[contact-form-7 id="' . $selected_form_id . '"]');
                         } else {
-                            echo do_shortcode('[contact-form-7 id="9a3625d" title="Download Brochure"]');
+                            echo do_shortcode('[contact-form-7 id="9a3625d" title="Download brochure"]');
                         } ?>
                     </div>
                     <div class="brochure-thankyou">
@@ -336,7 +340,7 @@ if ($download_b) { ?>
                         <p>Thank you for reaching out. We’ve received your message
                         and will get back to you shortly.</p>
                         <a href="<?php echo esc_url($download_file_url['value']); ?>" target="_blank"
-                            class="theme-btn xl-btn" id="brochureDownloadBtn" download>Download Brochure</a>
+                            class="theme-btn xl-btn" id="brochureDownloadBtn" download>Download brochure</a>
                     </div>
                 </div>
             </div>
