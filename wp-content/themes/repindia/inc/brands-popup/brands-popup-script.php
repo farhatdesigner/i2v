@@ -64,6 +64,11 @@ if (!defined('ABSPATH')) {
 				setActiveTab(defaultTab);
 			}
 
+			// Restore default tab when the popup is reset on close (global.js).
+			modalEl.addEventListener('repindia:popup-reset', function () {
+				setActiveTab(defaultTab);
+			});
+
 			tabButtons.forEach(function (btn) {
 				btn.addEventListener('click', function () {
 					var tab = this.getAttribute('data-brand-tab');

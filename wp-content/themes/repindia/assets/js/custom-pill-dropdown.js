@@ -552,6 +552,18 @@
     });
   });
 
+  // Popup reset (fired by global.js when a modal is closed): re-sync pill widgets
+  // inside that popup only, so it reopens matching the freshly reset CF7 controls.
+  document.addEventListener('repindia:popup-reset', function (e) {
+    var root = (e && e.target && e.target.querySelectorAll) ? e.target : document;
+    root.querySelectorAll('.i2v-custom-dropdown').forEach(function (dropdown) {
+      if (dropdown._sourceControl) {
+        syncPillStates(dropdown);
+      }
+      setDropdownOpen(dropdown, false);
+    });
+  });
+
   ['wpcf7submit', 'wpcf7invalid', 'wpcf7spam', 'wpcf7mailfailed'].forEach(function (evt) {
     document.addEventListener(evt, function (e) {
       if (e.target && e.target.closest) {
