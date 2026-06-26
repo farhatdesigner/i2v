@@ -273,7 +273,7 @@ class Custom_Social_Share extends Widget_Base
                         right: unset;
                         top: unset;
                         bottom: 0;
-                        z-index: 2;
+                        z-index: 4;
                         justify-content: center;
                         width: 100%;
                         max-width: 100%;
