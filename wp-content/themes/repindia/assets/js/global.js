@@ -1156,6 +1156,75 @@ $(document).ready(function () {
         }
     });
 
+    // === CF7 popup state reset ===================================================
+    // Make every popup open like a fresh page load. Generic + scoped to ONE modal:
+    // resets CF7 forms (values, validation, status, response output) inside the
+    // given modal only, then dispatches `repindia:popup-reset` so popup-specific
+    // modules (brochure, brands, custom widgets) restore their own state.
+    // No popup-specific logic lives here.
+    window.repindiaResetCf7Popup = function (modalElement) {
+        if (!modalElement || typeof modalElement.querySelectorAll !== "function") return;
+
+        var CF7_STATUS_CLASSES = [
+            "init", "submitting", "sent", "failed",
+            "invalid", "spam", "unaccepted", "payment-required", "aborted"
+        ];
+
+        modalElement.querySelectorAll("form.wpcf7-form").forEach(function (form) {
+            var wrapper = form.closest(".wpcf7") || form;
+
+            // 1. Native reset (clears values, restores hidden fields to HTML defaults)
+            if (typeof form.reset === "function") {
+                form.reset();
+            }
+
+            // 2. Restore CF7 initial status on the form only (CF7 never puts
+            //    status classes / data-status on the .wpcf7 wrapper on a fresh load).
+            if (form.classList) {
+                CF7_STATUS_CLASSES.forEach(function (cls) { form.classList.remove(cls); });
+                form.classList.add("init");
+                if (form.hasAttribute("data-status")) {
+                    form.setAttribute("data-status", "init");
+                }
+            }
+
+            // 3. Remove validation state (native CF7 + theme custom artifacts)
+            form.querySelectorAll(".wpcf7-not-valid").forEach(function (field) {
+                field.classList.remove("wpcf7-not-valid");
+                field.removeAttribute("aria-invalid");
+                field.removeAttribute("aria-describedby");
+            });
+            form.querySelectorAll(".wpcf7-not-valid-tip").forEach(function (tip) {
+                if (tip.parentNode) tip.parentNode.removeChild(tip);
+            });
+            form.querySelectorAll(".recaptcha-error-msg, #mobile-error").forEach(function (node) {
+                if (node.parentNode) node.parentNode.removeChild(node);
+            });
+            form.querySelectorAll(".is-invalid").forEach(function (node) {
+                node.classList.remove("is-invalid");
+            });
+
+            // 4. Clear response output (previous success/error message)
+            wrapper.querySelectorAll(".wpcf7-response-output").forEach(function (out) {
+                out.textContent = "";
+                out.className = "wpcf7-response-output";
+                out.setAttribute("aria-hidden", "true");
+                out.style.display = "";
+            });
+        });
+
+        // 5. Let popup-specific modules restore themselves
+        modalElement.dispatchEvent(new CustomEvent("repindia:popup-reset", { bubbles: true }));
+    };
+
+    // Run the reset while the popup is hidden (no flicker, never right after submit;
+    // brochure thank-you stays visible until the user actually closes the modal).
+    $(document).on("hidden.bs.modal", ".modal", function () {
+        if (typeof window.repindiaResetCf7Popup === "function") {
+            window.repindiaResetCf7Popup(this);
+        }
+    });
+
     // Modal closes only via close (X) button - no close on outside/backdrop click
 
     // Open menu when burger icon is clicked

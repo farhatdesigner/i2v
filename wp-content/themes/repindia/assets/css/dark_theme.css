@@ -249,6 +249,8 @@ header li.burger-icon .icon-sun,
 .js-dark .ctw-icon svg path {
   fill: #d7dbe4;
 }
+
+
 .js-dark .toggle-menu > li.active.parent > a,
 .js-dark header #header-main-menu li.active.parent > a,
 .js-dark #header-toggle-menu > li.active:nth-child(6) > a span,
