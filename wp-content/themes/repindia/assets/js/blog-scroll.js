@@ -13,6 +13,17 @@
         return;
     }
 
+    // Cached wrapper element so we can hide it once the article is fully read.
+    // We target the whole social-share wrapper; restoring it (display:'')
+    // reverts to the CSS cascade so the existing stick_social class resumes
+    // full control of visibility.
+    const progressWrapper = progressCircle.closest('.socialshare_section');
+    // Tracks current visibility so the DOM is only touched on a state change.
+    let progressHidden = false;
+    // Pending hide timer. Lets the user briefly see "100%" before hiding.
+    let hideTimer = null;
+    const HIDE_DELAY = 200;
+
     /**
      * Article container candidates, ordered by specificity.
      * newsroom_detail_content is the Elementor section that wraps the article body
@@ -119,6 +130,35 @@
 
         progressCircle.style.strokeDasharray = progress + ',100';
         progressText.textContent = progress + '%';
+
+        // Once reading completes, keep "100%" visible briefly, then hide.
+        // The hide is deferred via a single timeout so the 100% frame paints.
+        // Scrolling back below 100% cancels any pending hide and reveals the
+        // bar immediately. Guards ensure only one timeout exists at a time and
+        // the DOM is only touched on an actual state change.
+        //
+        // We toggle a dedicated, feature-owned class instead of an inline
+        // style so we never collide with the stick_social visibility system.
+        if (progressWrapper) {
+            if (progress >= 100) {
+                if (!progressHidden && hideTimer === null) {
+                    hideTimer = window.setTimeout(function () {
+                        progressWrapper.classList.add('reading-complete-hidden');
+                        progressHidden = true;
+                        hideTimer = null;
+                    }, HIDE_DELAY);
+                }
+            } else {
+                if (hideTimer !== null) {
+                    window.clearTimeout(hideTimer);
+                    hideTimer = null;
+                }
+                if (progressHidden) {
+                    progressWrapper.classList.remove('reading-complete-hidden');
+                    progressHidden = false;
+                }
+            }
+        }
 
         ticking = false;
     }

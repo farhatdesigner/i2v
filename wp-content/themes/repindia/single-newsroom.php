@@ -25,6 +25,13 @@ $newscategories = get_the_category();
                 opacity: 1;
             }
 
+            /* Owned solely by the reading-progress feature (blog-scroll.js).
+               Temporarily hides the wrapper after reading completes without
+               touching the stick_social visibility system. */
+            .socialshare_section.reading-complete-hidden {
+                display: none !important;
+            }
+
 
             .reading-progress {
                 position: relative;
