@@ -1730,6 +1730,13 @@ html {
     pointer-events: auto;
   }
 
+  /* Pull the in-content accordion image to the left so it sits below the
+     start icon (offsets the .accordion_set 33px left padding) on mobile */
+  .accordion_sets .accontent .accordion_video {
+    margin-left: -33px;
+    width: calc(100% + 33px);
+  }
+
   .accordion_sets .btn-sec_gap {
     padding-left: 4rem;
   }
@@ -1993,6 +2000,14 @@ html {
     .youtube-iframe, .youtube-wrapper {
         height: 25vh !important;
     }
+
+    .hz-slider-topcaption.hz-slider-energy {
+      padding-right: 20px;
+  }
+  .partner_choose_desc .elementor-element.icc_bannerbtn .btn-sec_gap {
+    flex-direction: column !important;
+}
+.partner_choose_desc .elementor-element.icc_bannerbtn .btn-sec_gap .theme-btn {max-width: 100% !important;}
 
 }
 .elementor-element.dashed_border {

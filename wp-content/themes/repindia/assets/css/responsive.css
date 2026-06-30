@@ -1126,6 +1126,22 @@ border-radius: 12px;
     min-height: unset;
     margin-bottom: 20px;
   }
+  .single-industries .elementor-shortcode:has(.breadcrumb_last) {
+    display: block !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    -webkit-line-clamp: unset !important;
+    -webkit-box-orient: unset !important;
+  }
+  .single-industries .elementor-shortcode:has(.breadcrumb_last) > span {
+    white-space: nowrap !important;
+  }
+  .single-industries .breadcrumb_last {
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
+  }
   .accordion_set {
     padding: 16px 10px;
     padding-left: 58px;
@@ -1313,7 +1329,7 @@ border-radius: 12px;
 .elementor-element.withdark.toptooltitle.group_tooltip.e-con-full {
   display: flex !important;
   flex-wrap: wrap !important;
-  align-items: flex-start !important;
+  align-items: center !important;
   justify-content: flex-start !important;
   gap: 4px 6px;
   white-space: normal !important;
@@ -1585,15 +1601,84 @@ border-radius: 12px;
     text-overflow: ellipsis;
   }
 
+  /* Apply the same single-line ellipsis breadcrumb to every industry page
+     (e.g. law-enforcement) even when the breadcrumb widget does not have the
+     breadcrum_mobilecss class added in Elementor. Scoped to the breadcrumb
+     shortcode via :has(.breadcrumb_last) so other shortcodes are untouched. */
+  .single-industries .elementor-shortcode:has(.breadcrumb_last) {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+    -webkit-line-clamp: unset !important;
+    -webkit-box-orient: unset !important;
+  }
+
+  .single-industries .elementor-shortcode:has(.breadcrumb_last) > span {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap !important;
+    text-overflow: ellipsis;
+  }
+
+  .single-industries .breadcrumb_last {
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
+  }
+
   .elementor-element.certificate_icon .elementor-widget-image img {
     height: 84px !important;
   }
 
 }
 
+/* "Stay updated" tooltip rows: equal spacing between each list item (all viewports) */
+/* Match every row that has the check icon, regardless of the text widget type */
+.stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip) {
+  margin: 0 0 16px 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  align-items: flex-start !important;
+}
+
+.stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip):last-child {
+  margin-bottom: 0 !important;
+}
+
+/* Pin the icon to the top of the row so a 1-line row is never taller than its text */
+.stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip) > .elementor-widget-custom_tooltip {
+  align-self: flex-start !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip) > .elementor-widget-custom_tooltip .elementor-widget-container,
+.stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip) > .elementor-widget-custom_tooltip .ctw-wrapper,
+.stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip) > .elementor-widget-custom_tooltip .ctw-title {
+  line-height: 1 !important;
+}
+
+/* Remove the text widget's own vertical margin/padding so the gap is only the 16px above */
+.stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip) > .elementor-widget-heading,
+.stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip) > .elementor-widget-text-editor {
+  margin: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip) > .elementor-widget-heading .elementor-heading-title {
+  margin: 0 !important;
+}
+
 /* "Stay updated" tooltip rows: keep icon + text inline on mobile */
 @media (max-width: 768px) {
   .stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip):has(> .elementor-widget-heading) {
+    position: relative !important;
     flex-direction: row !important;
     align-items: flex-start !important;
     flex-wrap: nowrap !important;
@@ -1601,14 +1686,28 @@ border-radius: 12px;
     width: 100% !important;
     padding-left: 0;
     padding: 0;
-    margin: 0;
+    margin: 0 0 16px 0 !important;
   }
 
+  /* remove trailing gap after the last row so spacing stays even */
+  .stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip):has(> .elementor-widget-heading):last-child {
+    margin-bottom: 0 !important;
+  }
+
+  /* icon out of flow so it never adds/eats row space and spacing stays even */
   .stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip):has(> .elementor-widget-heading) > .elementor-widget-custom_tooltip {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
     width: auto !important;
     max-width: none !important;
     flex: 0 0 auto !important;
     align-self: flex-start !important;
+  }
+
+  /* reserve space on the left of the text for the absolutely-positioned icon */
+  .stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip):has(> .elementor-widget-heading) > .elementor-widget-heading {
+    padding-left: 28px !important;
   }
 
   /* keep the info icon pinned to the top even if the widget stretches */

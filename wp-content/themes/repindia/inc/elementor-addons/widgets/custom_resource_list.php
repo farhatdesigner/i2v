@@ -176,7 +176,7 @@ class Custom_Resource_List extends Widget_Base {
                 .resource-filter-item span { color: #5F6F94;font-size: 16px;font-style: normal;font-weight: 500;line-height: 24px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;min-height: unset; }
                 .resource-filter-item:hover span{ color: #4A5673; }
                 .resource-filter-item.active span{ color: #06283D; }
-                .resource-filter-clear-wrapper { margin-top: 0;padding: 8px; }
+                .resource-filter-clear-wrapper { margin-top: -25px;padding: 8px; }
                 a.resource-filter-clear { font-size: 16px;font-style: normal;font-weight: 600;line-height: 24px; }
                 /* a.resource-filter-clear:hover { color: #7b7676; } */
                 .reset-disabled {
@@ -225,7 +225,7 @@ class Custom_Resource_List extends Widget_Base {
                 .resource-filter-group h3{ padding: 0 8px; margin: 0; }
                 .resource-card:hover .resource-type-badge{ border-color: #D7DBE4; }
                 .js-dark .resource-filter-sidebar,.js-dark .resource-sort select,.js-dark .resource-card{ background: #262A30; }
-                .js-dark .resource-sort select{ border-color: #464a4f;;color: rgba(255, 255, 255, 0.9);background: #262A30;appearance:none; background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%234A5673' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center;text-overflow: ellipsis;white-space: nowrap; }
+				.js-dark .resource-sort select{ border-color: #464a4f;;color: rgba(255, 255, 255, 0.9);background: #262A30;appearance:none; background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23FFFFFF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center;text-overflow: ellipsis;white-space: nowrap; }
                 .js-dark .resource-sort select option{ border-color: #262A30; }
                 .js-dark .resource-file-size{ color: rgba(255, 255, 255, 0.9); }
                 .js-dark .resource-type-badge{background: rgba(255, 206, 147, 0.1);color: #D7DBE4;border: 1px solid rgb(255 255 255 / 10%);}
@@ -240,6 +240,7 @@ class Custom_Resource_List extends Widget_Base {
                     .resource-filter-sidebar { width: 100%; }
                     .resource-grid { grid-template-columns: 1fr; }
                     .resource-filter-section{ padding: 40px 0px; }
+                    
                 }
             </style>
             
