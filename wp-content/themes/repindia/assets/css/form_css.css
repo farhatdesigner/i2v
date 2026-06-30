@@ -513,6 +513,7 @@ textarea.form-control{ max-height: max-content; }
 
 /* Footer subscription form (Contact Form 7) */
 .subscriptionform p { margin: 0;display: flex;flex-direction: column;align-items: flex-start;gap: 12px; }
+.p.recaptcha-error-msg{color: #D58F8F !important;}
 .subscriptionform .wpcf7-form-control-wrap { margin-bottom: 0;width: 100%; }
 .subscriptionform .wpcf7-form-control-wrap:has(input[type="hidden"]) { display: none; }
 .subscriptionform input[type="email"].form-control {
