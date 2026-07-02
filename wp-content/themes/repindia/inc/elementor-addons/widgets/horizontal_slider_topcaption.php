@@ -260,6 +260,7 @@ class Horizontal_Slider_Topcaption extends Widget_Base
             .static_slide .slider-image_content { 
               min-height: 100%;
               padding: 38px;
+              text-align: left
             }
         }
        </style>

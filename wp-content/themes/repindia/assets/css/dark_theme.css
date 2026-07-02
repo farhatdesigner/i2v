@@ -2,11 +2,6 @@
   max-width: 800px !important;
 }
 .elementor_breadcrumbs .elementor-shortcode {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
   padding-bottom: 0;
   min-height: unset;
 }

@@ -366,6 +366,11 @@ class Tabbed_Custom_Swiper extends Widget_Base
     fill: #fff;
 }
 
+.js-dark #tabbedSliderWrapper .tab-btn.active {
+                border: 1px solid #007ABE;
+                background: #007ABE;
+            }
+
 
 @media (max-width: 767px) {
 

@@ -1116,15 +1116,51 @@ border-radius: 12px;
   }
 
   
-  p#breadcrumbs {
+  /* Breadcrumb — use full available width; ellipsis only when space is exhausted */
+  p#breadcrumbs,
+  .elementor-shortcode:has(.breadcrumb_last),
+  .elementor_breadcrumbs .elementor-shortcode {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     overflow: hidden;
+    white-space: nowrap;
     text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
+    -webkit-line-clamp: unset;
+    -webkit-box-orient: unset;
     padding-bottom: 0;
     min-height: unset;
+  }
+
+  p#breadcrumbs {
     margin-bottom: 20px;
+  }
+
+  p#breadcrumbs > span,
+  .elementor-shortcode:has(.breadcrumb_last) > span,
+  .elementor_breadcrumbs .elementor-shortcode > span {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .elementor-widget-shortcode:has(.breadcrumb_last),
+  .elementor-widget-shortcode:has(.breadcrumb_last) .elementor-widget-container,
+  .elementor-element.breadcrum_mobilecss,
+  .elementor-element.breadcrum_mobilecss .elementor-widget-container {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .breadcrumb_last {
+    white-space: nowrap;
+    word-break: keep-all;
+    overflow-wrap: normal;
   }
   .accordion_set {
     padding: 16px 10px;
@@ -1269,7 +1305,7 @@ border-radius: 12px;
     .card-wrapper_single .card-img_single > img { padding-top: 0;margin-top: 30px; }
     .e-con-full.ai_smart_dark .elementor-position-left.theme-img{ padding: 0; }
     .accordion_sets .accontent p { margin: 10px 0 0 1.5rem; }
-    .elementor-element.lefticon_box .elementor-image-box-wrapper { display: flex;flex-direction: row;gap: 10px; }
+    .elementor-element.lefticon_box .elementor-image-box-wrapper { display: flex;flex-direction: row;gap: 10px; align-items: center;}
     .title-box { margin-bottom: 30px; }
     .details { padding: 15px 0 10px; }
     .photo_custom .details h2{ font-size: 20px; }
@@ -1313,7 +1349,7 @@ border-radius: 12px;
 .elementor-element.withdark.toptooltitle.group_tooltip.e-con-full {
   display: flex !important;
   flex-wrap: wrap !important;
-  align-items: flex-start !important;
+  /* align-items: center !important; */
   justify-content: flex-start !important;
   gap: 4px 6px;
   white-space: normal !important;
@@ -1485,7 +1521,7 @@ border-radius: 12px;
   .elementor-element.withdark.toptooltitle.group_tooltip.e-con-full {
     display: flex !important;
     flex-wrap: wrap !important;
-    align-items: flex-start !important;
+    /* align-items: flex-start !important; */
     justify-content: flex-start !important;
     max-width: 100% !important;
     width: 100% !important;
@@ -1550,50 +1586,224 @@ border-radius: 12px;
   .grapg_hiddenmobile {
     display: none !important;
 }
-.breadcrum_mobilecss {
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-  /* Transportation page — full-width breadcrumb with ellipsis on mobile */
-  .single-industries .elementor-element.breadcrum_mobilecss,
-  .single-industries .elementor-element.breadcrum_mobilecss .elementor-widget-container {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .single-industries .elementor-element.breadcrum_mobilecss .elementor-shortcode {
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    -webkit-line-clamp: unset;
-    -webkit-box-orient: unset;
-  }
-
-  .single-industries .elementor-element.breadcrum_mobilecss .elementor-shortcode > span {
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-
   .elementor-element.certificate_icon .elementor-widget-image img {
     height: 84px !important;
   }
 
 }
 
+/* ITMS/FRS + ICC hero stat tooltips — very narrow screens (natural wrap, preserve margins) */
+@media (max-width: 399px) {
+  /* ITMS/FRS — keep boxed banner width, flow text inline inside it */
+  .elementor-element.withdark.toptooltitle.group_tooltip.e-con-full {
+    width: auto !important;
+    max-width: min(336px, 100%) !important;
+    min-width: 0 !important;
+    display: block !important;
+    box-sizing: border-box !important;
+    font-size: 0;
+    line-height: 0;
+    white-space: normal !important;
+  }
+
+  .elementor-element.withdark.toptooltitle.group_tooltip.e-con-full > .elementor-element {
+    display: inline !important;
+    width: auto !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    vertical-align: baseline !important;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .elementor-element.withdark.toptooltitle.group_tooltip .theme-img,
+  .elementor-element.withdark.toptooltitle.group_tooltip.e-con-full > .elementor-widget-image {
+    display: inline-block !important;
+    vertical-align: top !important;
+    margin-right: 4px;
+    flex-shrink: 0;
+  }
+
+  .elementor-element.withdark.toptooltitle.group_tooltip.e-con-full > .elementor-widget-custom_tooltip,
+  .elementor-element.withdark.toptooltitle.group_tooltip.e-con-full > .elementor-widget-custom_tooltip .elementor-widget-container,
+  .elementor-element.withdark.toptooltitle.group_tooltip.e-con-full > .elementor-widget-custom_tooltip .ctw-wrapper,
+  .elementor-element.withdark.toptooltitle.group_tooltip.e-con-full > .elementor-widget-custom_tooltip .ctw-wrapper > div,
+  .elementor-element.withdark.toptooltitle.group_tooltip.e-con-full > .elementor-widget-custom_tooltip .ctw-title,
+  .elementor-element.withdark.toptooltitle.group_tooltip.e-con-full > .elementor-widget-custom_tooltip .ctw-text {
+    display: inline !important;
+    width: auto !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    vertical-align: baseline !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .elementor-element.withdark.toptooltitle.group_tooltip.e-con-full > .elementor-widget-custom_tooltip .ctw-text p,
+  .elementor-element.withdark.toptooltitle.group_tooltip.e-con-full > .elementor-widget-custom_tooltip .ctw-text span,
+  .elementor-element.withdark.toptooltitle.group_tooltip.e-con-full > .elementor-widget-custom_tooltip .ctw-trigger,
+  .elementor-element.withdark.toptooltitle.group_tooltip.e-con-full > .elementor-widget-custom_tooltip .ctw-trigger span {
+    display: inline !important;
+    white-space: normal !important;
+    overflow-wrap: break-word !important;
+    word-break: normal !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .elementor-element.withdark.toptooltitle.group_tooltip .ctw-text {
+    display: inline !important;
+    width: auto !important;
+    max-width: 100% !important;
+  }
+
+  .elementor-element.withdark.toptooltitle.group_tooltip.e-con-full > .elementor-widget-custom_tooltip .elementor-widget-container,
+  .elementor-element.withdark.toptooltitle.group_tooltip.e-con-full > .elementor-widget-custom_tooltip .ctw-wrapper {
+    max-width: 100% !important;
+  }
+
+  .e-con-inner:has(.withdark.toptooltitle.group_tooltip) {
+    overflow: visible !important;
+  }
+
+  /* ICC — nested .toptooltitle > .withdark (preserve boxed width, inline sentence flow) */
+  .elementor-element.toptooltitle:not(.group_tooltip):not(.single_hero_tooltip) {
+    -webkit-box-orient: unset !important;
+    white-space: normal !important;
+  }
+
+  .elementor-element.toptooltitle:not(.group_tooltip):not(.single_hero_tooltip) > .elementor-element.withdark {
+    width: auto !important;
+    max-width: min(336px, 100%) !important;
+    min-width: 0 !important;
+    display: block !important;
+    box-sizing: border-box !important;
+    font-size: 0;
+    line-height: 0;
+    white-space: normal !important;
+  }
+
+  .elementor-element.toptooltitle:not(.group_tooltip):not(.single_hero_tooltip) > .elementor-element.withdark > .elementor-element {
+    display: inline !important;
+    width: auto !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    vertical-align: baseline !important;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .elementor-element.toptooltitle:not(.group_tooltip):not(.single_hero_tooltip) > .elementor-element.withdark > .elementor-widget-image {
+    display: inline-block !important;
+    vertical-align: top !important;
+    margin-right: 4px;
+    flex-shrink: 0;
+  }
+
+  .elementor-element.toptooltitle:not(.group_tooltip):not(.single_hero_tooltip) > .elementor-element.withdark > .elementor-widget-heading {
+    display: inline !important;
+    width: auto !important;
+    max-width: 100% !important;
+    vertical-align: baseline !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .elementor-element.toptooltitle:not(.group_tooltip):not(.single_hero_tooltip) > .elementor-element.withdark > .elementor-widget-heading .elementor-heading-title {
+    display: inline !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    line-height: 1.5 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    white-space: normal !important;
+  }
+
+  .elementor-element.toptooltitle:not(.group_tooltip):not(.single_hero_tooltip) > .elementor-element.withdark > .elementor-widget-custom_tooltip,
+  .elementor-element.toptooltitle:not(.group_tooltip):not(.single_hero_tooltip) > .elementor-element.withdark > .elementor-widget-custom_tooltip .elementor-widget-container,
+  .elementor-element.toptooltitle:not(.group_tooltip):not(.single_hero_tooltip) > .elementor-element.withdark > .elementor-widget-custom_tooltip .ctw-wrapper,
+  .elementor-element.toptooltitle:not(.group_tooltip):not(.single_hero_tooltip) > .elementor-element.withdark > .elementor-widget-custom_tooltip .ctw-wrapper > div,
+  .elementor-element.toptooltitle:not(.group_tooltip):not(.single_hero_tooltip) > .elementor-element.withdark > .elementor-widget-custom_tooltip .ctw-title,
+  .elementor-element.toptooltitle:not(.group_tooltip):not(.single_hero_tooltip) > .elementor-element.withdark > .elementor-widget-custom_tooltip .ctw-text {
+    display: inline !important;
+    width: auto !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    vertical-align: baseline !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .elementor-element.toptooltitle:not(.group_tooltip):not(.single_hero_tooltip) > .elementor-element.withdark > .elementor-widget-custom_tooltip .ctw-text p,
+  .elementor-element.toptooltitle:not(.group_tooltip):not(.single_hero_tooltip) > .elementor-element.withdark > .elementor-widget-custom_tooltip .ctw-text span,
+  .elementor-element.toptooltitle:not(.group_tooltip):not(.single_hero_tooltip) > .elementor-element.withdark > .elementor-widget-custom_tooltip .ctw-trigger,
+  .elementor-element.toptooltitle:not(.group_tooltip):not(.single_hero_tooltip) > .elementor-element.withdark > .elementor-widget-custom_tooltip .ctw-trigger span {
+    display: inline !important;
+    white-space: normal !important;
+    overflow-wrap: break-word !important;
+    word-break: normal !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .elementor-element.toptooltitle:not(.group_tooltip):not(.single_hero_tooltip) > .elementor-element.withdark .ctw-text {
+    display: inline !important;
+    width: auto !important;
+    max-width: 100% !important;
+  }
+
+  .e-con-inner:has(.toptooltitle:not(.group_tooltip):not(.single_hero_tooltip)) {
+    overflow: visible !important;
+  }
+}
+
+
+/* "Stay updated" tooltip rows: equal spacing between each list item (all viewports) */
+/* Match every row that has the check icon, regardless of the text widget type */
+.stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip) {
+  margin: 0 0 16px 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  align-items: flex-start !important;
+}
+
+.stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip):last-child {
+  margin-bottom: 0 !important;
+}
+
+/* Pin the icon to the top of the row so a 1-line row is never taller than its text */
+.stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip) > .elementor-widget-custom_tooltip {
+  align-self: flex-start !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip) > .elementor-widget-custom_tooltip .elementor-widget-container,
+.stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip) > .elementor-widget-custom_tooltip .ctw-wrapper,
+.stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip) > .elementor-widget-custom_tooltip .ctw-title {
+  line-height: 1 !important;
+}
+
+/* Remove the text widget's own vertical margin/padding so the gap is only the 16px above */
+.stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip) > .elementor-widget-heading,
+.stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip) > .elementor-widget-text-editor {
+  margin: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip) > .elementor-widget-heading .elementor-heading-title {
+  margin: 0 !important;
+}
+
 /* "Stay updated" tooltip rows: keep icon + text inline on mobile */
 @media (max-width: 768px) {
   .stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip):has(> .elementor-widget-heading) {
+    position: relative !important;
     flex-direction: row !important;
     align-items: flex-start !important;
     flex-wrap: nowrap !important;
@@ -1601,14 +1811,28 @@ border-radius: 12px;
     width: 100% !important;
     padding-left: 0;
     padding: 0;
-    margin: 0;
+    margin: 0 0 16px 0 !important;
   }
 
+  /* remove trailing gap after the last row so spacing stays even */
+  .stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip):has(> .elementor-widget-heading):last-child {
+    margin-bottom: 0 !important;
+  }
+
+  /* icon out of flow so it never adds/eats row space and spacing stays even */
   .stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip):has(> .elementor-widget-heading) > .elementor-widget-custom_tooltip {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
     width: auto !important;
     max-width: none !important;
     flex: 0 0 auto !important;
     align-self: flex-start !important;
+  }
+
+  /* reserve space on the left of the text for the absolutely-positioned icon */
+  .stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip):has(> .elementor-widget-heading) > .elementor-widget-heading {
+    padding-left: 28px !important;
   }
 
   /* keep the info icon pinned to the top even if the widget stretches */
@@ -1616,9 +1840,8 @@ border-radius: 12px;
   .stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip):has(> .elementor-widget-heading) > .elementor-widget-custom_tooltip .ctw-wrapper,
   .stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip):has(> .elementor-widget-heading) > .elementor-widget-custom_tooltip .ctw-title {
     align-items: flex-start !important;
-    margin-top: -2px;
+    margin-top: 0.5px !important;
   }
-
   .stay_tooltipicon .e-con.e-child:has(> .elementor-widget-custom_tooltip):has(> .elementor-widget-heading) > .elementor-widget-heading {
     width: auto !important;
     max-width: none !important;
@@ -1635,8 +1858,8 @@ border-radius: 12px;
   .stay_tooltipicon .elementor-widget-heading .elementor-heading-title.elementor-size-default {
     margin: 0 !important;
   }
-  .js-dark .stay_tooltipicon  .ctw-icon svg path {
-    transform: scale(0.8);
+  .stay_tooltipicon  .ctw-icon svg path {
+    transform: scale(0.7);
   }
 
 
