@@ -1851,6 +1851,10 @@ html {
   .nested-repeater-2.listedgroup_repeator ul li {
     font-size: 14px;
   }
+  
+.hz-slider-topcaption .swiper-slide p {
+  margin-bottom: 10px;
+}
 
   /* Mobile alignment for hz-slider-section list items */
   .hz-slider-section .swiper-slide ul li {

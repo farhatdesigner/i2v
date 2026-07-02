@@ -245,6 +245,10 @@ header li.burger-icon .icon-sun,
   fill: #d7dbe4;
 }
 
+.js-dark .bg-tooltip .ctw-icon svg path {
+  fill: #669477;
+}
+
 
 .js-dark .toggle-menu > li.active.parent > a,
 .js-dark header #header-main-menu li.active.parent > a,

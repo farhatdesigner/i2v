@@ -1208,7 +1208,7 @@ border-radius: 12px;
   
 .featuregroup_repeator .nested-item-1 {
   max-width: none;
-  justify-content: center;
+  /* justify-content: center; */
 }
   input.form-control,
   select.form-control {
