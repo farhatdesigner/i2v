@@ -776,9 +776,9 @@ class Scalescroll extends Widget_Base
                     line-height: 1.2 !important;
                 }
 
-                h4.boxtitle {
+                /* h4.boxtitle {
                     font-size: 11px;
-                }
+                } */
                 
 .featuregroup_repeator .nested-image-wrapper img, .featuregroup_repeator .nested-image-wrapper {
     width: 32px;
