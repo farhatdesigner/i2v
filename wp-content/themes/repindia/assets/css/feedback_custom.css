@@ -2013,7 +2013,15 @@ html {
 }
 .partner_choose_desc .elementor-element.icc_bannerbtn .btn-sec_gap .theme-btn {max-width: 100% !important;}
 
+
+
+.nested-repeater-2.listedgroup_repeator ul li {display: flex;align-items: center;}
+.nested-repeater-2.listedgroup_repeator ul li>span svg {transform: scale(0.8);margin-top: -1px;}
+.nested-repeater-2.listedgroup_repeator ul li>span {padding-right: 5px;}
+
+
 }
+
 .elementor-element.dashed_border {
   background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='12' ry='12' stroke='%23D7DBE4FF' stroke-width='4' stroke-dasharray='7%2c 7' stroke-dashoffset='11' stroke-linecap='butt'/%3e%3c/svg%3e");
 }
