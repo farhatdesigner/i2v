@@ -482,8 +482,8 @@ class Video_accordion extends Widget_Base
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <?php if (!empty($item_title)): ?>
-                                                    <h1 class="modal-title fs-5" id="<?php echo esc_attr($modal_label_id); ?>">
-                                                        <?php echo esc_html($item_title); ?></h1>
+                                                    <h2 class="modal-title fs-5" id="<?php echo esc_attr($modal_label_id); ?>">
+                                                        <?php echo esc_html($item_title); ?></h2>
                                                 <?php endif; ?>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
