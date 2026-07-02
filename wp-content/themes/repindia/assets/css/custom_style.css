@@ -5427,6 +5427,7 @@ span.star {
 
   .bolt {
     max-width: 100% !important;
+    margin:0 !important;
   }
   .photos .photo_custom:last-child .details {
     margin-bottom: 0;

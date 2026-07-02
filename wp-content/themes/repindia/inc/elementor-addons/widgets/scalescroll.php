@@ -766,6 +766,8 @@ class Scalescroll extends Widget_Base
 
                 .featuregroup_repeator h3.nested-title-1 {
                     font-size: 14px;
+                    margin: 10px 0 5px;
+                    line-height: 1.2;
                 }
 
                 .featuregroup_repeator .nested-description-1,
@@ -782,6 +784,14 @@ class Scalescroll extends Widget_Base
     width: 32px;
     height: 32px;
     padding-bottom: 0;
+}
+
+#transportation_analytics .featuregroup_repeator .nested-item-1 {
+    width: calc(50% - 4px);
+}
+
+.nested-repeater-1.featuregroup_repeator {
+    gap: 8px;
 }
 
             }
