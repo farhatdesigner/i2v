@@ -546,5 +546,24 @@ p.recaptcha-error-msg{color: #D58F8F !important;}
     transform-origin: left top;
     -webkit-transform-origin: left top;
     display: inline-block;
-}
+  }
+  /* Modal forms only: transform/overflow break reCAPTCHA touch on real iOS/Android */
+  .formpopup_modal .wpcf7-form-control-wrap.recaptcha,
+  #brochureModal .wpcf7-form-control-wrap.recaptcha,
+  .brochure-modal-overlay .wpcf7-form-control-wrap.recaptcha {
+    overflow: visible;
+  }
+  .formpopup_modal .wpcf7-recaptcha.g-recaptcha,
+  #brochureModal .wpcf7-recaptcha.g-recaptcha,
+  .brochure-modal-overlay .wpcf7-recaptcha.g-recaptcha {
+    transform: none !important;
+    -webkit-transform: none !important;
+    touch-action: manipulation;
+  }
+  .formpopup_modal .wpcf7-recaptcha iframe,
+  #brochureModal .wpcf7-recaptcha iframe,
+  .brochure-modal-overlay .wpcf7-recaptcha iframe {
+    pointer-events: auto !important;
+    touch-action: manipulation;
+  }
 }
