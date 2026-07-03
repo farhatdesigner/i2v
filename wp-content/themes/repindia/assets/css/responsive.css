@@ -1202,13 +1202,13 @@ border-radius: 12px;
     text-align: left;
   }
   .txtflex p {
-    font-size: 14px;
+    font-size: 16px;
     text-align: left;
   }
   
 .featuregroup_repeator .nested-item-1 {
   max-width: none;
-  justify-content: center;
+  /* justify-content: center; */
 }
   input.form-control,
   select.form-control {

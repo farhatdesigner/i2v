@@ -1107,3 +1107,7 @@ function add_security_headers_via_php() {
     }
 }
 add_action('send_headers', 'add_security_headers_via_php', 1);
+
+
+// Disable Yoast Schema
+add_filter( 'wpseo_json_ld_output', '__return_false' );

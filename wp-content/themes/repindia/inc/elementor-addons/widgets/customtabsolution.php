@@ -42,6 +42,15 @@ class Customtabsolution extends Widget_Base
 			]
 		);
 
+		$this->add_control(
+            'section_title',
+            [
+                'label' => esc_html__('Section Title', 'repindia'),
+                'type' => Controls_Manager::TEXT,
+                'default' => esc_html__('AI-powered Video Surveillance & VMS Solutions', 'repindia'),
+                'label_block' => true,
+            ]
+        );
 		// Main repeater for tabs
 		$repeater = new \Elementor\Repeater();
 
@@ -253,6 +262,7 @@ class Customtabsolution extends Widget_Base
 	{
 		$settings = $this->get_settings_for_display();
 		$this->add_inline_editing_attributes('custom_class', 'basic');
+		$section_title = !empty($settings['section_title']) ? $settings['section_title'] : '';
 		
 		// Get solution tabs from repeater
 		$solution_tabs = !empty($settings['solution_tabs']) ? $settings['solution_tabs'] : [];
@@ -271,9 +281,11 @@ class Customtabsolution extends Widget_Base
 		<div class="customtabsolution">
 			<section class="microspace-inside">
 				<div class="custom-container">
+				<?php if (!empty($section_title)) : ?>
 					<div class="col-lg-8 col-xxl-7">
-						<h1 class="main_title quote weight-600"><?php echo esc_html('Integrated solutions to secure and streamline every facet of your operations', 'repindia'); ?> </h1>
+						<h1 class="main_title quote weight-600"><?php echo esc_html($section_title); ?> </h1>
 					</div>
+					<?php endif; ?>
 					<div class="contentWrapper">
 						<div class="filter-menu tabsWrapper">
 							<label class="dropdown-label"><?php echo esc_html('Solutions', 'repindia'); ?></label>

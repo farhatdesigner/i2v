@@ -681,7 +681,7 @@ class Video_accordioncaption extends Widget_Base
 
                 .vac_padd-accordion,
                 .vac_padd-accordion_video {
-                    padding: 30px 15px;
+                    padding: 30px 15px 0;
                 }
 
                 .vac_padd-accordion_video {

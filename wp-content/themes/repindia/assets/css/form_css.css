@@ -513,7 +513,7 @@ textarea.form-control{ max-height: max-content; }
 
 /* Footer subscription form (Contact Form 7) */
 .subscriptionform p { margin: 0;display: flex;flex-direction: column;align-items: flex-start;gap: 12px; }
-.p.recaptcha-error-msg{color: #D58F8F !important;}
+p.recaptcha-error-msg{color: #D58F8F !important;}
 .subscriptionform .wpcf7-form-control-wrap { margin-bottom: 0;width: 100%; }
 .subscriptionform .wpcf7-form-control-wrap:has(input[type="hidden"]) { display: none; }
 .subscriptionform input[type="email"].form-control {
@@ -546,5 +546,24 @@ textarea.form-control{ max-height: max-content; }
     transform-origin: left top;
     -webkit-transform-origin: left top;
     display: inline-block;
-}
+  }
+  /* Modal forms only: transform/overflow break reCAPTCHA touch on real iOS/Android */
+  .formpopup_modal .wpcf7-form-control-wrap.recaptcha,
+  #brochureModal .wpcf7-form-control-wrap.recaptcha,
+  .brochure-modal-overlay .wpcf7-form-control-wrap.recaptcha {
+    overflow: visible;
+  }
+  .formpopup_modal .wpcf7-recaptcha.g-recaptcha,
+  #brochureModal .wpcf7-recaptcha.g-recaptcha,
+  .brochure-modal-overlay .wpcf7-recaptcha.g-recaptcha {
+    transform: none !important;
+    -webkit-transform: none !important;
+    touch-action: manipulation;
+  }
+  .formpopup_modal .wpcf7-recaptcha iframe,
+  #brochureModal .wpcf7-recaptcha iframe,
+  .brochure-modal-overlay .wpcf7-recaptcha iframe {
+    pointer-events: auto !important;
+    touch-action: manipulation;
+  }
 }
