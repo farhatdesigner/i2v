@@ -639,6 +639,23 @@ $(document).ready(function () {
         return window.innerWidth < 768;
     }
 
+    function isRecaptchaInteractionTarget($target) {
+        if (!$target || !$target.length) {
+            return false;
+        }
+        if ($target.closest(".g-recaptcha, .wpcf7-recaptcha, .wpcf7-form-control-wrap.recaptcha").length) {
+            return true;
+        }
+        if ($target.is("iframe") && /recaptcha/i.test($target.attr("src") || "")) {
+            return true;
+        }
+        return false;
+    }
+
+    function isGoogleRecaptchaChallengeOpen() {
+        return !!document.querySelector('iframe[src*="recaptcha/api2/bframe"], iframe[src*="recaptcha/enterprise/bframe"]');
+    }
+
     window.forceBodyReset = function () {
         document.documentElement.style.overflow = "";
         document.documentElement.style.paddingRight = "";
@@ -783,6 +800,15 @@ $(document).ready(function () {
         if ($target.closest(".formpopup_modal .modal-content, .formpopup_modal .modal-body").length) {
             return true;
         }
+        // Mobile only: allow reCAPTCHA and challenge overlay interaction
+        if (isMobileModalViewport()) {
+            if (isGoogleRecaptchaChallengeOpen()) {
+                return true;
+            }
+            if (isRecaptchaInteractionTarget($target)) {
+                return true;
+            }
+        }
         // Prevent scrolling on body/overlay
         e.preventDefault();
         e.stopPropagation();
@@ -847,6 +873,15 @@ $(document).ready(function () {
         var $target = $(e.target);
         if ($target.closest("#brochureModal .modal-content, #brochureModal .modal-body").length) {
             return true;
+        }
+        // Mobile only: allow reCAPTCHA and challenge overlay interaction
+        if (isMobileModalViewport()) {
+            if (isGoogleRecaptchaChallengeOpen()) {
+                return true;
+            }
+            if (isRecaptchaInteractionTarget($target)) {
+                return true;
+            }
         }
         e.preventDefault();
         e.stopPropagation();
@@ -1026,6 +1061,8 @@ $(document).ready(function () {
 
         lockModalBodyScroll(modalScrollPosition);
 
+        $(this).find(".modal-content").attr("data-lenis-prevent", "");
+
         $(window).on("scroll", preventModalBodyScroll);
         document.addEventListener("wheel", preventModalBodyWheel, { passive: false, capture: true });
         $("body, .modal-backdrop").on("touchmove", preventModalBodyScroll);
@@ -1064,6 +1101,8 @@ $(document).ready(function () {
         });
 
         // Remove event listeners
+        $modal.find(".modal-content").removeAttr("data-lenis-prevent");
+
         $(window).off("scroll", preventModalBodyScroll);
         document.removeEventListener("wheel", preventModalBodyWheel, { capture: true });
         $("body, .modal-backdrop").off("touchmove", preventModalBodyScroll);
@@ -1112,6 +1151,8 @@ $(document).ready(function () {
 
         lockModalBodyScroll(brochureModalScrollPosition);
 
+        $("#brochureModal .modal-content").attr("data-lenis-prevent", "");
+
         $(window).on("scroll", preventBrochureModalBodyScroll);
         document.addEventListener("wheel", preventBrochureModalBodyWheel, { passive: false, capture: true });
         $("body, .modal-backdrop").on("touchmove", preventBrochureModalBodyScroll);
@@ -1131,6 +1172,7 @@ $(document).ready(function () {
         $(window).off("scroll", preventBrochureModalBodyScroll);
         document.removeEventListener("wheel", preventBrochureModalBodyWheel, { capture: true });
         $("body, .modal-backdrop").off("touchmove", preventBrochureModalBodyScroll);
+        $("#brochureModal .modal-content").removeAttr("data-lenis-prevent");
         $("#brochureModal .modal-content, #brochureModal .modal-body").off("wheel");
 
         if (!mobileModal) {

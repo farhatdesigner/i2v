@@ -32,7 +32,7 @@ html.lenis body {
   overflow: hidden;
 }
 
-.lenis.lenis-scrolling iframe {
+.lenis.lenis-scrolling iframe:not([src*="google.com/recaptcha"]):not([src*="recaptcha.net"]) {
   pointer-events: none;
 }
 
