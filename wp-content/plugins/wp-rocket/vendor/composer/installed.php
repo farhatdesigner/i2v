@@ -46,6 +46,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'wordpress/mcp-adapter' => array(
+            'pretty_version' => 'v0.4.1',
+            'version' => '0.4.1.0',
+            'reference' => '1a0f9ab868e34b4375be42e873f60765e6632505',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../wordpress/mcp-adapter',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'wp-media/apply-filters-typed' => array(
             'pretty_version' => 'v1.2',
             'version' => '1.2.0.0',
@@ -65,9 +74,9 @@
             'dev_requirement' => false,
         ),
         'wp-media/wp-mixpanel' => array(
-            'pretty_version' => 'v1.4.0',
-            'version' => '1.4.0.0',
-            'reference' => 'dfedab2014e816a1040c57d544a6180f1d446624',
+            'pretty_version' => 'v1.4.1',
+            'version' => '1.4.1.0',
+            'reference' => '09dea8a51f97e8047defc9f8a995b87dec76baad',
             'type' => 'library',
             'install_path' => __DIR__ . '/../wp-media/wp-mixpanel',
             'aliases' => array(),

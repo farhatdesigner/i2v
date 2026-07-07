@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitac80684aa31b33b19b79d81e65b19e78
+class ComposerStaticInit0c645b4336027200226aab0ef7897dc3
 {
     public static $files = array (
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
@@ -19,6 +19,7 @@ class ComposerStaticInitac80684aa31b33b19b79d81e65b19e78
         'W' =>
         array (
             'WP_Rocket\\' => 10,
+            'WP\\MCP\\' => 7,
             'WPMedia\\PluginFamily\\' => 21,
             'WPMedia\\Mixpanel\\' => 17,
             'WPMedia\\Cloudflare\\' => 19,
@@ -38,6 +39,10 @@ class ComposerStaticInitac80684aa31b33b19b79d81e65b19e78
         'WP_Rocket\\' =>
         array (
             0 => __DIR__ . '/../..' . '/inc',
+        ),
+        'WP\\MCP\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes',
         ),
         'WPMedia\\PluginFamily\\' =>
         array (
@@ -153,6 +158,59 @@ class ComposerStaticInitac80684aa31b33b19b79d81e65b19e78
         'WPMedia_Producers_MixpanelEvents' => __DIR__ . '/..' . '/wp-media/wp-mixpanel/src/Classes/Producers/MixpanelEvents.php',
         'WPMedia_Producers_MixpanelGroups' => __DIR__ . '/..' . '/wp-media/wp-mixpanel/src/Classes/Producers/MixpanelGroups.php',
         'WPMedia_Producers_MixpanelPeople' => __DIR__ . '/..' . '/wp-media/wp-mixpanel/src/Classes/Producers/MixpanelPeople.php',
+        'WP\\MCP\\Abilities\\DiscoverAbilitiesAbility' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Abilities/DiscoverAbilitiesAbility.php',
+        'WP\\MCP\\Abilities\\ExecuteAbilityAbility' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Abilities/ExecuteAbilityAbility.php',
+        'WP\\MCP\\Abilities\\GetAbilityInfoAbility' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Abilities/GetAbilityInfoAbility.php',
+        'WP\\MCP\\Abilities\\McpAbilityHelperTrait' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Abilities/McpAbilityHelperTrait.php',
+        'WP\\MCP\\Autoloader' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Autoloader.php',
+        'WP\\MCP\\Cli\\McpCommand' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Cli/McpCommand.php',
+        'WP\\MCP\\Cli\\StdioServerBridge' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Cli/StdioServerBridge.php',
+        'WP\\MCP\\Core\\McpAdapter' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Core/McpAdapter.php',
+        'WP\\MCP\\Core\\McpComponentRegistry' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Core/McpComponentRegistry.php',
+        'WP\\MCP\\Core\\McpServer' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Core/McpServer.php',
+        'WP\\MCP\\Core\\McpTransportFactory' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Core/McpTransportFactory.php',
+        'WP\\MCP\\Domain\\Prompts\\Contracts\\McpPromptBuilderInterface' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Domain/Prompts/Contracts/McpPromptBuilderInterface.php',
+        'WP\\MCP\\Domain\\Prompts\\McpPrompt' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Domain/Prompts/McpPrompt.php',
+        'WP\\MCP\\Domain\\Prompts\\McpPromptBuilder' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Domain/Prompts/McpPromptBuilder.php',
+        'WP\\MCP\\Domain\\Prompts\\McpPromptValidator' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Domain/Prompts/McpPromptValidator.php',
+        'WP\\MCP\\Domain\\Prompts\\RegisterAbilityAsMcpPrompt' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Domain/Prompts/RegisterAbilityAsMcpPrompt.php',
+        'WP\\MCP\\Domain\\Resources\\McpResource' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Domain/Resources/McpResource.php',
+        'WP\\MCP\\Domain\\Resources\\McpResourceValidator' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Domain/Resources/McpResourceValidator.php',
+        'WP\\MCP\\Domain\\Resources\\RegisterAbilityAsMcpResource' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Domain/Resources/RegisterAbilityAsMcpResource.php',
+        'WP\\MCP\\Domain\\Tools\\McpTool' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Domain/Tools/McpTool.php',
+        'WP\\MCP\\Domain\\Tools\\McpToolValidator' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Domain/Tools/McpToolValidator.php',
+        'WP\\MCP\\Domain\\Tools\\RegisterAbilityAsMcpTool' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Domain/Tools/RegisterAbilityAsMcpTool.php',
+        'WP\\MCP\\Domain\\Utils\\McpAnnotationMapper' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Domain/Utils/McpAnnotationMapper.php',
+        'WP\\MCP\\Domain\\Utils\\McpValidator' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Domain/Utils/McpValidator.php',
+        'WP\\MCP\\Domain\\Utils\\SchemaTransformer' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Domain/Utils/SchemaTransformer.php',
+        'WP\\MCP\\Handlers\\HandlerHelperTrait' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Handlers/HandlerHelperTrait.php',
+        'WP\\MCP\\Handlers\\Initialize\\InitializeHandler' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Handlers/Initialize/InitializeHandler.php',
+        'WP\\MCP\\Handlers\\Prompts\\PromptsHandler' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Handlers/Prompts/PromptsHandler.php',
+        'WP\\MCP\\Handlers\\Resources\\ResourcesHandler' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Handlers/Resources/ResourcesHandler.php',
+        'WP\\MCP\\Handlers\\System\\SystemHandler' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Handlers/System/SystemHandler.php',
+        'WP\\MCP\\Handlers\\Tools\\ToolsHandler' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Handlers/Tools/ToolsHandler.php',
+        'WP\\MCP\\Infrastructure\\ErrorHandling\\Contracts\\McpErrorHandlerInterface' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Infrastructure/ErrorHandling/Contracts/McpErrorHandlerInterface.php',
+        'WP\\MCP\\Infrastructure\\ErrorHandling\\ErrorLogMcpErrorHandler' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Infrastructure/ErrorHandling/ErrorLogMcpErrorHandler.php',
+        'WP\\MCP\\Infrastructure\\ErrorHandling\\McpErrorFactory' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Infrastructure/ErrorHandling/McpErrorFactory.php',
+        'WP\\MCP\\Infrastructure\\ErrorHandling\\NullMcpErrorHandler' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Infrastructure/ErrorHandling/NullMcpErrorHandler.php',
+        'WP\\MCP\\Infrastructure\\Observability\\ConsoleObservabilityHandler' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Infrastructure/Observability/ConsoleObservabilityHandler.php',
+        'WP\\MCP\\Infrastructure\\Observability\\Contracts\\McpObservabilityHandlerInterface' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Infrastructure/Observability/Contracts/McpObservabilityHandlerInterface.php',
+        'WP\\MCP\\Infrastructure\\Observability\\ErrorLogMcpObservabilityHandler' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Infrastructure/Observability/ErrorLogMcpObservabilityHandler.php',
+        'WP\\MCP\\Infrastructure\\Observability\\McpObservabilityHelperTrait' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Infrastructure/Observability/McpObservabilityHelperTrait.php',
+        'WP\\MCP\\Infrastructure\\Observability\\NullMcpObservabilityHandler' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Infrastructure/Observability/NullMcpObservabilityHandler.php',
+        'WP\\MCP\\Plugin' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Plugin.php',
+        'WP\\MCP\\Servers\\DefaultServerFactory' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Servers/DefaultServerFactory.php',
+        'WP\\MCP\\Transport\\Contracts\\McpRestTransportInterface' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Transport/Contracts/McpRestTransportInterface.php',
+        'WP\\MCP\\Transport\\Contracts\\McpTransportInterface' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Transport/Contracts/McpTransportInterface.php',
+        'WP\\MCP\\Transport\\HttpTransport' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Transport/HttpTransport.php',
+        'WP\\MCP\\Transport\\Infrastructure\\HttpRequestContext' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Transport/Infrastructure/HttpRequestContext.php',
+        'WP\\MCP\\Transport\\Infrastructure\\HttpRequestHandler' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Transport/Infrastructure/HttpRequestHandler.php',
+        'WP\\MCP\\Transport\\Infrastructure\\HttpSessionValidator' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Transport/Infrastructure/HttpSessionValidator.php',
+        'WP\\MCP\\Transport\\Infrastructure\\JsonRpcResponseBuilder' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Transport/Infrastructure/JsonRpcResponseBuilder.php',
+        'WP\\MCP\\Transport\\Infrastructure\\McpTransportContext' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Transport/Infrastructure/McpTransportContext.php',
+        'WP\\MCP\\Transport\\Infrastructure\\McpTransportHelperTrait' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Transport/Infrastructure/McpTransportHelperTrait.php',
+        'WP\\MCP\\Transport\\Infrastructure\\RequestRouter' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Transport/Infrastructure/RequestRouter.php',
+        'WP\\MCP\\Transport\\Infrastructure\\SessionManager' => __DIR__ . '/..' . '/wordpress/mcp-adapter/includes/Transport/Infrastructure/SessionManager.php',
         'WP_Rocket\\Abstract_Render' => __DIR__ . '/../..' . '/inc/classes/class-abstract-render.php',
         'WP_Rocket\\Addon\\Busting\\BustingFactory' => __DIR__ . '/../..' . '/inc/deprecated/Engine/Addon/Busting/BustingFactory.php',
         'WP_Rocket\\Addon\\Busting\\FileBustingTrait' => __DIR__ . '/../..' . '/inc/deprecated/Engine/Addon/Busting/FileBustingTrait.php',
@@ -289,6 +347,12 @@ class ComposerStaticInitac80684aa31b33b19b79d81e65b19e78
         'WP_Rocket\\Dependencies\\WPMedia\\PluginFamily\\Controller\\PluginFamily' => __DIR__ . '/../..' . '/inc/Dependencies/WPMedia/PluginFamily/Controller/PluginFamily.php',
         'WP_Rocket\\Dependencies\\WPMedia\\PluginFamily\\Controller\\PluginFamilyInterface' => __DIR__ . '/../..' . '/inc/Dependencies/WPMedia/PluginFamily/Controller/PluginFamilyInterface.php',
         'WP_Rocket\\Dependencies\\WPMedia\\PluginFamily\\Model\\PluginFamily' => __DIR__ . '/../..' . '/inc/Dependencies/WPMedia/PluginFamily/Model/PluginFamily.php',
+        'WP_Rocket\\Engine\\Abilities\\AbilitiesInterface' => __DIR__ . '/../..' . '/inc/Engine/Abilities/AbilitiesInterface.php',
+        'WP_Rocket\\Engine\\Abilities\\Context' => __DIR__ . '/../..' . '/inc/Engine/Abilities/Context.php',
+        'WP_Rocket\\Engine\\Abilities\\Options\\GetOptions' => __DIR__ . '/../..' . '/inc/Engine/Abilities/Options/GetOptions.php',
+        'WP_Rocket\\Engine\\Abilities\\Options\\SetOption' => __DIR__ . '/../..' . '/inc/Engine/Abilities/Options/SetOption.php',
+        'WP_Rocket\\Engine\\Abilities\\Options\\Subscriber' => __DIR__ . '/../..' . '/inc/Engine/Abilities/Options/Subscriber.php',
+        'WP_Rocket\\Engine\\Abilities\\ServiceProvider' => __DIR__ . '/../..' . '/inc/Engine/Abilities/ServiceProvider.php',
         'WP_Rocket\\Engine\\Activation\\Activation' => __DIR__ . '/../..' . '/inc/Engine/Activation/Activation.php',
         'WP_Rocket\\Engine\\Activation\\ActivationInterface' => __DIR__ . '/../..' . '/inc/Engine/Activation/ActivationInterface.php',
         'WP_Rocket\\Engine\\Activation\\ServiceProvider' => __DIR__ . '/../..' . '/inc/Engine/Activation/ServiceProvider.php',
@@ -307,6 +371,13 @@ class ComposerStaticInitac80684aa31b33b19b79d81e65b19e78
         'WP_Rocket\\Engine\\Admin\\DomainChange\\Subscriber' => __DIR__ . '/../..' . '/inc/Engine/Admin/DomainChange/Subscriber.php',
         'WP_Rocket\\Engine\\Admin\\Metaboxes\\PostEditOptionsSubscriber' => __DIR__ . '/../..' . '/inc/Engine/Admin/Metaboxes/PostEditOptionsSubscriber.php',
         'WP_Rocket\\Engine\\Admin\\RocketInsights\\APIHandler\\APIClient' => __DIR__ . '/../..' . '/inc/Engine/Admin/RocketInsights/APIHandler/APIClient.php',
+        'WP_Rocket\\Engine\\Admin\\RocketInsights\\Abilities\\AddPageInsights' => __DIR__ . '/../..' . '/inc/Engine/Admin/RocketInsights/Abilities/AddPageInsights.php',
+        'WP_Rocket\\Engine\\Admin\\RocketInsights\\Abilities\\GetInsightsScore' => __DIR__ . '/../..' . '/inc/Engine/Admin/RocketInsights/Abilities/GetInsightsScore.php',
+        'WP_Rocket\\Engine\\Admin\\RocketInsights\\Abilities\\GetPageInsightsScore' => __DIR__ . '/../..' . '/inc/Engine/Admin/RocketInsights/Abilities/GetPageInsightsScore.php',
+        'WP_Rocket\\Engine\\Admin\\RocketInsights\\Abilities\\GetRecommendations' => __DIR__ . '/../..' . '/inc/Engine/Admin/RocketInsights/Abilities/GetRecommendations.php',
+        'WP_Rocket\\Engine\\Admin\\RocketInsights\\Abilities\\RemovePageInsights' => __DIR__ . '/../..' . '/inc/Engine/Admin/RocketInsights/Abilities/RemovePageInsights.php',
+        'WP_Rocket\\Engine\\Admin\\RocketInsights\\Abilities\\RetestPageInsights' => __DIR__ . '/../..' . '/inc/Engine/Admin/RocketInsights/Abilities/RetestPageInsights.php',
+        'WP_Rocket\\Engine\\Admin\\RocketInsights\\Abilities\\Subscriber' => __DIR__ . '/../..' . '/inc/Engine/Admin/RocketInsights/Abilities/Subscriber.php',
         'WP_Rocket\\Engine\\Admin\\RocketInsights\\Context\\Context' => __DIR__ . '/../..' . '/inc/Engine/Admin/RocketInsights/Context/Context.php',
         'WP_Rocket\\Engine\\Admin\\RocketInsights\\Context\\SaasContext' => __DIR__ . '/../..' . '/inc/Engine/Admin/RocketInsights/Context/SaasContext.php',
         'WP_Rocket\\Engine\\Admin\\RocketInsights\\Controller' => __DIR__ . '/../..' . '/inc/Engine/Admin/RocketInsights/Controller.php',
@@ -321,7 +392,6 @@ class ComposerStaticInitac80684aa31b33b19b79d81e65b19e78
         'WP_Rocket\\Engine\\Admin\\RocketInsights\\Jobs\\Manager' => __DIR__ . '/../..' . '/inc/Engine/Admin/RocketInsights/Jobs/Manager.php',
         'WP_Rocket\\Engine\\Admin\\RocketInsights\\Managers\\Plan' => __DIR__ . '/../..' . '/inc/Engine/Admin/RocketInsights/Managers/Plan.php',
         'WP_Rocket\\Engine\\Admin\\RocketInsights\\MetricFormatter' => __DIR__ . '/../..' . '/inc/Engine/Admin/RocketInsights/MetricFormatter.php',
-        'WP_Rocket\\Engine\\Admin\\RocketInsights\\PageHandlerTrait' => __DIR__ . '/../..' . '/inc/Engine/Admin/RocketInsights/PageHandlerTrait.php',
         'WP_Rocket\\Engine\\Admin\\RocketInsights\\PostListing\\Subscriber' => __DIR__ . '/../..' . '/inc/Engine/Admin/RocketInsights/PostListing/Subscriber.php',
         'WP_Rocket\\Engine\\Admin\\RocketInsights\\Queue\\Queue' => __DIR__ . '/../..' . '/inc/Engine/Admin/RocketInsights/Queue/Queue.php',
         'WP_Rocket\\Engine\\Admin\\RocketInsights\\Recommendations\\APIClient' => __DIR__ . '/../..' . '/inc/Engine/Admin/RocketInsights/Recommendations/APIClient.php',
@@ -347,13 +417,34 @@ class ComposerStaticInitac80684aa31b33b19b79d81e65b19e78
         'WP_Rocket\\Engine\\Admin\\Settings\\Subscriber' => __DIR__ . '/../..' . '/inc/Engine/Admin/Settings/Subscriber.php',
         'WP_Rocket\\Engine\\CDN\\Admin\\Subscriber' => __DIR__ . '/../..' . '/inc/Engine/CDN/Admin/Subscriber.php',
         'WP_Rocket\\Engine\\CDN\\CDN' => __DIR__ . '/../..' . '/inc/Engine/CDN/CDN.php',
+        'WP_Rocket\\Engine\\CDN\\CNAMEValidator' => __DIR__ . '/../..' . '/inc/Engine/CDN/CNAMEValidator.php',
+        'WP_Rocket\\Engine\\CDN\\Cache' => __DIR__ . '/../..' . '/inc/Engine/CDN/Cache.php',
+        'WP_Rocket\\Engine\\CDN\\Context' => __DIR__ . '/../..' . '/inc/Engine/CDN/Context.php',
+        'WP_Rocket\\Engine\\CDN\\Drivers\\Custom' => __DIR__ . '/../..' . '/inc/Engine/CDN/Drivers/Custom.php',
+        'WP_Rocket\\Engine\\CDN\\Drivers\\DriverFactory' => __DIR__ . '/../..' . '/inc/Engine/CDN/Drivers/DriverFactory.php',
+        'WP_Rocket\\Engine\\CDN\\Drivers\\DriverInterface' => __DIR__ . '/../..' . '/inc/Engine/CDN/Drivers/DriverInterface.php',
+        'WP_Rocket\\Engine\\CDN\\Drivers\\RocketCDNFree' => __DIR__ . '/../..' . '/inc/Engine/CDN/Drivers/RocketCDNFree.php',
+        'WP_Rocket\\Engine\\CDN\\Drivers\\RocketCDNPaid' => __DIR__ . '/../..' . '/inc/Engine/CDN/Drivers/RocketCDNPaid.php',
+        'WP_Rocket\\Engine\\CDN\\Render\\Controller' => __DIR__ . '/../..' . '/inc/Engine/CDN/Render/Controller.php',
+        'WP_Rocket\\Engine\\CDN\\Render\\Subscriber' => __DIR__ . '/../..' . '/inc/Engine/CDN/Render/Subscriber.php',
         'WP_Rocket\\Engine\\CDN\\RocketCDN\\APIClient' => __DIR__ . '/../..' . '/inc/Engine/CDN/RocketCDN/APIClient.php',
+        'WP_Rocket\\Engine\\CDN\\RocketCDN\\APIHandler\\CheckStatusAPIClient' => __DIR__ . '/../..' . '/inc/Engine/CDN/RocketCDN/APIHandler/CheckStatusAPIClient.php',
+        'WP_Rocket\\Engine\\CDN\\RocketCDN\\APIHandler\\CreateAPIClient' => __DIR__ . '/../..' . '/inc/Engine/CDN/RocketCDN/APIHandler/CreateAPIClient.php',
+        'WP_Rocket\\Engine\\CDN\\RocketCDN\\APIHandler\\WebsiteSearch' => __DIR__ . '/../..' . '/inc/Engine/CDN/RocketCDN/APIHandler/WebsiteSearch.php',
         'WP_Rocket\\Engine\\CDN\\RocketCDN\\AdminPageSubscriber' => __DIR__ . '/../..' . '/inc/Engine/CDN/RocketCDN/AdminPageSubscriber.php',
         'WP_Rocket\\Engine\\CDN\\RocketCDN\\CDNOptionsManager' => __DIR__ . '/../..' . '/inc/Engine/CDN/RocketCDN/CDNOptionsManager.php',
         'WP_Rocket\\Engine\\CDN\\RocketCDN\\DataManagerSubscriber' => __DIR__ . '/../..' . '/inc/Engine/CDN/RocketCDN/DataManagerSubscriber.php',
+        'WP_Rocket\\Engine\\CDN\\RocketCDN\\Database\\Queries\\RocketCDN' => __DIR__ . '/../..' . '/inc/Engine/CDN/RocketCDN/Database/Queries/RocketCDN.php',
+        'WP_Rocket\\Engine\\CDN\\RocketCDN\\Database\\Rows\\RocketCDN' => __DIR__ . '/../..' . '/inc/Engine/CDN/RocketCDN/Database/Rows/RocketCDN.php',
+        'WP_Rocket\\Engine\\CDN\\RocketCDN\\Database\\Schemas\\RocketCDN' => __DIR__ . '/../..' . '/inc/Engine/CDN/RocketCDN/Database/Schemas/RocketCDN.php',
+        'WP_Rocket\\Engine\\CDN\\RocketCDN\\Database\\Tables\\RocketCDN' => __DIR__ . '/../..' . '/inc/Engine/CDN/RocketCDN/Database/Tables/RocketCDN.php',
+        'WP_Rocket\\Engine\\CDN\\RocketCDN\\FrontendSubscriber' => __DIR__ . '/../..' . '/inc/Engine/CDN/RocketCDN/FrontendSubscriber.php',
         'WP_Rocket\\Engine\\CDN\\RocketCDN\\NoticesSubscriber' => __DIR__ . '/../..' . '/inc/Engine/CDN/RocketCDN/NoticesSubscriber.php',
+        'WP_Rocket\\Engine\\CDN\\RocketCDN\\Queue' => __DIR__ . '/../..' . '/inc/Engine/CDN/RocketCDN/Queue.php',
         'WP_Rocket\\Engine\\CDN\\RocketCDN\\RESTSubscriber' => __DIR__ . '/../..' . '/inc/Engine/CDN/RocketCDN/RESTSubscriber.php',
+        'WP_Rocket\\Engine\\CDN\\RocketCDN\\Rest' => __DIR__ . '/../..' . '/inc/Engine/CDN/RocketCDN/Rest.php',
         'WP_Rocket\\Engine\\CDN\\RocketCDN\\ServiceProvider' => __DIR__ . '/../..' . '/inc/Engine/CDN/RocketCDN/ServiceProvider.php',
+        'WP_Rocket\\Engine\\CDN\\RocketCDN\\SubscriptionController' => __DIR__ . '/../..' . '/inc/Engine/CDN/RocketCDN/SubscriptionController.php',
         'WP_Rocket\\Engine\\CDN\\ServiceProvider' => __DIR__ . '/../..' . '/inc/Engine/CDN/ServiceProvider.php',
         'WP_Rocket\\Engine\\CDN\\Subscriber' => __DIR__ . '/../..' . '/inc/Engine/CDN/Subscriber.php',
         'WP_Rocket\\Engine\\Cache\\AdminSubscriber' => __DIR__ . '/../..' . '/inc/Engine/Cache/AdminSubscriber.php',
@@ -404,6 +495,7 @@ class ComposerStaticInitac80684aa31b33b19b79d81e65b19e78
         'WP_Rocket\\Engine\\Common\\JobManager\\Strategy\\Strategies\\JobSetFail' => __DIR__ . '/../..' . '/inc/Engine/Common/JobManager/Strategy/Strategies/JobSetFail.php',
         'WP_Rocket\\Engine\\Common\\JobManager\\Strategy\\Strategies\\ResetRetryProcess' => __DIR__ . '/../..' . '/inc/Engine/Common/JobManager/Strategy/Strategies/ResetRetryProcess.php',
         'WP_Rocket\\Engine\\Common\\JobManager\\Strategy\\Strategies\\StrategyInterface' => __DIR__ . '/../..' . '/inc/Engine/Common/JobManager/Strategy/Strategies/StrategyInterface.php',
+        'WP_Rocket\\Engine\\Common\\Page\\PageHandlerTrait' => __DIR__ . '/../..' . '/inc/Engine/Common/Page/PageHandlerTrait.php',
         'WP_Rocket\\Engine\\Common\\PerformanceHints\\AJAX\\AJAXControllerTrait' => __DIR__ . '/../..' . '/inc/Engine/Common/PerformanceHints/AJAX/AJAXControllerTrait.php',
         'WP_Rocket\\Engine\\Common\\PerformanceHints\\AJAX\\ControllerInterface' => __DIR__ . '/../..' . '/inc/Engine/Common/PerformanceHints/AJAX/ControllerInterface.php',
         'WP_Rocket\\Engine\\Common\\PerformanceHints\\AJAX\\Processor' => __DIR__ . '/../..' . '/inc/Engine/Common/PerformanceHints/AJAX/Processor.php',
@@ -817,10 +909,10 @@ class ComposerStaticInitac80684aa31b33b19b79d81e65b19e78
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitac80684aa31b33b19b79d81e65b19e78::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitac80684aa31b33b19b79d81e65b19e78::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitac80684aa31b33b19b79d81e65b19e78::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitac80684aa31b33b19b79d81e65b19e78::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit0c645b4336027200226aab0ef7897dc3::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit0c645b4336027200226aab0ef7897dc3::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit0c645b4336027200226aab0ef7897dc3::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit0c645b4336027200226aab0ef7897dc3::$classMap;
 
         }, null, ClassLoader::class);
     }
