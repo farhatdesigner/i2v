@@ -1592,6 +1592,11 @@ border-radius: 12px;
 
 }
 
+@media (max-width: 767px) {
+.partner_tech_desc .elementor-element.icc_bannerbtn .btn-sec_gap{flex-direction: column;}
+.partner_tech_desc .elementor-element.icc_bannerbtn .btn-sec_gap .theme-btn{max-width: 100%;}
+
+}
 /* ITMS/FRS + ICC hero stat tooltips — very narrow screens (natural wrap, preserve margins) */
 @media (max-width: 399px) {
   /* ITMS/FRS — keep boxed banner width, flow text inline inside it */
