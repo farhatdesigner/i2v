@@ -39901,6 +39901,17 @@ PanelElementsLayoutView = Marionette.LayoutView.extend({
         atomicFormPromotion: true
       });
     });
+    jQuery.each(elementor.config.birthdayEasterEggWidgets || [], function (index, widget) {
+      elementsCollection.add({
+        name: widget.name,
+        title: widget.title,
+        widgetType: widget.name,
+        icon: widget.icon,
+        categories: JSON.parse(widget.categories),
+        editable: false,
+        birthdayEasterEgg: true
+      });
+    });
     if (elementor.config.integrationWidgets) {
       var injectionPoint = elementsCollection.findIndex({
         widgetType: 'image-carousel'
@@ -40010,6 +40021,18 @@ PanelElementsLayoutView = Marionette.LayoutView.extend({
     var viewDetails = this.regionViews[viewName],
       options = viewDetails.options || {};
     viewDetails.region.show(new viewDetails.view(options));
+    if ('elements' === viewName) {
+      this.appendStickyPromotion();
+    }
+  },
+  appendStickyPromotion: function appendStickyPromotion() {
+    if (this.$('#elementor-panel-get-pro-elements-sticky').length) {
+      return;
+    }
+    var html = Marionette.Renderer.render('#tmpl-elementor-panel-element-sticky-promotion', {}).trim();
+    if (html) {
+      this.$el.append(html);
+    }
   },
   clearSearchInput: function clearSearchInput() {
     this.getChildView('search').clearInput();
@@ -40257,7 +40280,7 @@ module.exports = Marionette.ItemView.extend({
   template: '#tmpl-elementor-element-library-element',
   className: function className() {
     var className = 'elementor-element-wrapper';
-    if (!this.isEditable() && !this.isAtomicFormPromotion()) {
+    if (!this.isEditable() && !this.isAtomicFormPromotion() && !this.isBirthdayEasterEgg()) {
       className += ' elementor-element--promotion';
     }
     if (this.isIntegration()) {
@@ -40267,7 +40290,7 @@ module.exports = Marionette.ItemView.extend({
   },
   events: function events() {
     var events = {};
-    if (!this.isEditable()) {
+    if (!this.isEditable() && !this.isBirthdayEasterEgg()) {
       events.mousedown = 'onMouseDown';
     }
     return events;
@@ -40296,9 +40319,22 @@ module.exports = Marionette.ItemView.extend({
   isAtomicFormPromotion: function isAtomicFormPromotion() {
     return !!this.model.get('atomicFormPromotion');
   },
+  isBirthdayEasterEgg: function isBirthdayEasterEgg() {
+    return !!this.model.get('birthdayEasterEgg');
+  },
   onRender: function onRender() {
     var _this = this;
-    if (!elementor.userCan('design') || !this.isEditable()) {
+    if (!elementor.userCan('design')) {
+      return;
+    }
+    if (this.isBirthdayEasterEgg()) {
+      this.ui.element.on('click', function () {
+        return _this.openBirthdayEasterEgg();
+      });
+      this.bindBirthdayEasterEggDrag();
+      return;
+    }
+    if (!this.isEditable()) {
       return;
     }
     this.ui.element.on('click', function () {
@@ -40316,9 +40352,30 @@ module.exports = Marionette.ItemView.extend({
       groups: ['elementor-element']
     });
   },
+  bindBirthdayEasterEggDrag: function bindBirthdayEasterEggDrag() {
+    var _this2 = this;
+    this.ui.element.html5Draggable({
+      onDragStart: function onDragStart() {
+        elementor.channels.editor.reply('element:dragged', null);
+        elementor.channels.panelElements.reply('element:selected', _this2).trigger('element:drag:start');
+      },
+      onDragEnd: function onDragEnd() {
+        elementor.channels.panelElements.trigger('element:drag:end');
+        _this2.openBirthdayEasterEgg();
+      },
+      groups: ['elementor-element']
+    });
+  },
+  openBirthdayEasterEgg: function openBirthdayEasterEgg() {
+    document.dispatchEvent(new CustomEvent('birthday-easter-egg:open', {
+      detail: {
+        target: this.el
+      }
+    }));
+  },
   onMouseDown: function onMouseDown(event) {
+    event.stopPropagation();
     if (this.isAtomicFormPromotion()) {
-      event.stopPropagation();
       document.dispatchEvent(new CustomEvent('atomic-form-promotion:open', {
         detail: {
           target: this.el
@@ -40326,34 +40383,33 @@ module.exports = Marionette.ItemView.extend({
       }));
       return;
     }
-    var title = this.model.get('title'),
+    var widgetTitle = this.model.get('title'),
       widgetType = this.model.get('name') || this.model.get('widgetType'),
       isIntegration = this.isIntegration(),
       configPromotion = elementor.config.promotion;
-    var promotion = configPromotion.elements,
-      // eslint-disable-next-line @wordpress/valid-sprintf
-      url = sprintf(promotion.action_button.url.toString(), widgetType);
+    var ctaUrl, ctaText, title, content;
     if (isIntegration) {
       var _configPromotion$inte;
-      promotion = configPromotion === null || configPromotion === void 0 || (_configPromotion$inte = configPromotion.integration) === null || _configPromotion$inte === void 0 ? void 0 : _configPromotion$inte[widgetType];
-      url = promotion.action_button.url.toString().replaceAll('&amp;', '&');
+      var integrationPromo = configPromotion === null || configPromotion === void 0 || (_configPromotion$inte = configPromotion.integration) === null || _configPromotion$inte === void 0 ? void 0 : _configPromotion$inte[widgetType];
+      ctaUrl = integrationPromo.action_button.url.toString().replaceAll('&amp;', '&');
+      ctaText = integrationPromo.action_button.text;
+      // eslint-disable-next-line @wordpress/valid-sprintf
+      title = sprintf(integrationPromo.title, widgetTitle);
+      // eslint-disable-next-line @wordpress/valid-sprintf
+      content = sprintf(integrationPromo.content, widgetTitle);
     }
-    elementor.promotion.showDialog({
-      // eslint-disable-next-line @wordpress/valid-sprintf
-      title: sprintf(promotion.title, title),
-      // eslint-disable-next-line @wordpress/valid-sprintf
-      content: sprintf(promotion.content, title),
-      targetElement: this.el,
-      position: {
-        blockStart: '-7'
-      },
-      actionButton: {
-        url: url,
-        text: promotion.action_button.text,
-        classes: promotion.action_button.classes || ['elementor-button', 'go-pro']
-      },
-      hideProTag: isIntegration
-    });
+    document.dispatchEvent(new CustomEvent('widget-promotion:open', {
+      detail: {
+        target: this.el,
+        widgetType: widgetType,
+        widgetTitle: widgetTitle,
+        title: title,
+        content: content,
+        ctaUrl: ctaUrl,
+        ctaText: ctaText,
+        hideProTag: isIntegration
+      }
+    }));
   },
   addToPage: function addToPage() {
     var _this$model$attribute, _this$model$attribute2, _elementorCommon;
@@ -42957,6 +43013,60 @@ var EditorOneEventManager = exports.EditorOneEventManager = /*#__PURE__*/functio
         };
       }
       return this.dispatchEvent(config === null || config === void 0 || (_config$names1 = config.names) === null || _config$names1 === void 0 || (_config$names1 = _config$names1.editorOne) === null || _config$names1 === void 0 ? void 0 : _config$names1.widgetPanelSearch, payload);
+    }
+  }, {
+    key: "createWpDashPayload",
+    value: function createWpDashPayload() {
+      var _config$appTypes$wpDa, _config$appTypes5, _config$locations11;
+      var overrides = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var config = this.getConfig();
+      return this.createBasePayload(_objectSpread({
+        window_name: (_config$appTypes$wpDa = config === null || config === void 0 || (_config$appTypes5 = config.appTypes) === null || _config$appTypes5 === void 0 ? void 0 : _config$appTypes5.wpDash) !== null && _config$appTypes$wpDa !== void 0 ? _config$appTypes$wpDa : 'wpdash',
+        target_location: this.toLowerSnake(config === null || config === void 0 || (_config$locations11 = config.locations) === null || _config$locations11 === void 0 ? void 0 : _config$locations11.wpDashAdmin),
+        location_l2: ''
+      }, overrides));
+    }
+  }, {
+    key: "sendWpDashElementorMenuClick",
+    value: function sendWpDashElementorMenuClick() {
+      var _config$names10, _config$triggers10, _config$targetTypes11, _config$interactionRe13, _config$secondaryLoca11;
+      var config = this.getConfig();
+      return this.dispatchEvent(config === null || config === void 0 || (_config$names10 = config.names) === null || _config$names10 === void 0 || (_config$names10 = _config$names10.editorOne) === null || _config$names10 === void 0 ? void 0 : _config$names10.wpDashElementorMenuClick, this.createWpDashPayload({
+        interaction_type: this.toLowerSnake(config === null || config === void 0 || (_config$triggers10 = config.triggers) === null || _config$triggers10 === void 0 ? void 0 : _config$triggers10.click),
+        target_type: config === null || config === void 0 || (_config$targetTypes11 = config.targetTypes) === null || _config$targetTypes11 === void 0 ? void 0 : _config$targetTypes11.wpDashAdminMenuItem,
+        target_name: 'elementor_menu_item',
+        interaction_result: config === null || config === void 0 || (_config$interactionRe13 = config.interactionResults) === null || _config$interactionRe13 === void 0 ? void 0 : _config$interactionRe13.elementorSideMenuOpened,
+        location_l1: this.toLowerSnake(config === null || config === void 0 || (_config$secondaryLoca11 = config.secondaryLocations) === null || _config$secondaryLoca11 === void 0 ? void 0 : _config$secondaryLoca11.wpDashElementorCoreMenu),
+        interaction_description: 'core_user_clicked_elementor_menu_item'
+      }));
+    }
+  }, {
+    key: "sendWpDashEditorSubMenuHover",
+    value: function sendWpDashEditorSubMenuHover() {
+      var _config$names11, _config$triggers11, _config$targetTypes12, _config$interactionRe14, _config$secondaryLoca12;
+      var config = this.getConfig();
+      return this.dispatchEvent(config === null || config === void 0 || (_config$names11 = config.names) === null || _config$names11 === void 0 || (_config$names11 = _config$names11.editorOne) === null || _config$names11 === void 0 ? void 0 : _config$names11.wpDashEditorSubMenuHover, this.createWpDashPayload({
+        interaction_type: this.toLowerSnake(config === null || config === void 0 || (_config$triggers11 = config.triggers) === null || _config$triggers11 === void 0 ? void 0 : _config$triggers11.hover),
+        target_type: config === null || config === void 0 || (_config$targetTypes12 = config.targetTypes) === null || _config$targetTypes12 === void 0 ? void 0 : _config$targetTypes12.wpDashEditorMenu,
+        target_name: 'wpdash_editor_sub_menu',
+        interaction_result: config === null || config === void 0 || (_config$interactionRe14 = config.interactionResults) === null || _config$interactionRe14 === void 0 ? void 0 : _config$interactionRe14.editorSubMenuOpened,
+        location_l1: this.toLowerSnake(config === null || config === void 0 || (_config$secondaryLoca12 = config.secondaryLocations) === null || _config$secondaryLoca12 === void 0 ? void 0 : _config$secondaryLoca12.wpDashElementorCoreSubMenu),
+        interaction_description: 'core_user_hovered_sub_menu'
+      }));
+    }
+  }, {
+    key: "sendWpDashThemeBuilderClick",
+    value: function sendWpDashThemeBuilderClick() {
+      var _config$names12, _config$triggers12, _config$targetTypes13, _config$interactionRe15, _config$secondaryLoca13;
+      var config = this.getConfig();
+      return this.dispatchEvent(config === null || config === void 0 || (_config$names12 = config.names) === null || _config$names12 === void 0 || (_config$names12 = _config$names12.editorOne) === null || _config$names12 === void 0 ? void 0 : _config$names12.wpDashThemeBuilderClick, this.createWpDashPayload({
+        interaction_type: this.toLowerSnake(config === null || config === void 0 || (_config$triggers12 = config.triggers) === null || _config$triggers12 === void 0 ? void 0 : _config$triggers12.click),
+        target_type: config === null || config === void 0 || (_config$targetTypes13 = config.targetTypes) === null || _config$targetTypes13 === void 0 ? void 0 : _config$targetTypes13.wpDashSubMenuItem,
+        target_name: 'theme_builder_menu_item',
+        interaction_result: config === null || config === void 0 || (_config$interactionRe15 = config.interactionResults) === null || _config$interactionRe15 === void 0 ? void 0 : _config$interactionRe15.themeBuilderPromotionWindow,
+        location_l1: this.toLowerSnake(config === null || config === void 0 || (_config$secondaryLoca13 = config.secondaryLocations) === null || _config$secondaryLoca13 === void 0 ? void 0 : _config$secondaryLoca13.wpDashThemeBuilder),
+        interaction_description: 'core_user_clicked_theme_builder_menu_item'
+      }));
     }
   }]);
 }();
@@ -56235,11 +56345,14 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "../node_modules/@babel/runtime/helpers/defineProperty.js"));
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "../node_modules/@babel/runtime/helpers/classCallCheck.js"));
 var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/createClass */ "../node_modules/@babel/runtime/helpers/createClass.js"));
 var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js"));
 var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "../node_modules/@babel/runtime/helpers/getPrototypeOf.js"));
 var _inherits2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/inherits */ "../node_modules/@babel/runtime/helpers/inherits.js"));
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _callSuper(t, o, e) { return o = (0, _getPrototypeOf2.default)(o), (0, _possibleConstructorReturn2.default)(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], (0, _getPrototypeOf2.default)(t).constructor) : o.apply(t, e)); }
 function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
 var PromotionBehavior = exports["default"] = /*#__PURE__*/function (_Marionette$Behavior) {
@@ -56269,67 +56382,111 @@ var PromotionBehavior = exports["default"] = /*#__PURE__*/function (_Marionette$
       };
     }
   }, {
+    key: "dispatchPromotionEvent",
+    value: function dispatchPromotionEvent(widgetType, promotion) {
+      document.dispatchEvent(new CustomEvent('widget-promotion:open', {
+        detail: _objectSpread({
+          target: this.el,
+          widgetType: widgetType
+        }, promotion)
+      }));
+    }
+  }, {
     key: "onClickControlButtonDisplayConditions",
     value: function onClickControlButtonDisplayConditions(event) {
       event.stopPropagation();
-      var dialogOptions = {
+      this.dispatchPromotionEvent('displayConditions', {
         title: __('Display Conditions', 'elementor'),
         content: __('Upgrade to Elementor Pro Advanced to get the Display Conditions Feature as well as additional professional and ecommerce widgets', 'elementor'),
-        targetElement: this.el,
-        actionButton: {
-          url: 'https://go.elementor.com/go-pro-display-conditions/',
-          text: __('Upgrade Now', 'elementor')
-        }
-      };
-      elementor.promotion.showDialog(dialogOptions);
+        ctaUrl: 'https://go.elementor.com/go-pro-display-conditions/'
+      });
     }
   }, {
     key: "onClickControlButtonScrollingEffects",
     value: function onClickControlButtonScrollingEffects(event) {
       event.stopPropagation();
-      var dialogOptions = {
+      this.dispatchPromotionEvent('scrollingEffects', {
         title: __('Scrolling Effects', 'elementor'),
-        content: __('Get Scrolling Effects such as <br /> vertical/horizontal scroll, transparency,<br /> and more with Elementor Pro.', 'elementor'),
-        targetElement: this.el,
-        actionButton: {
-          url: 'https://go.elementor.com/go-pro-scrolling-effects-advanced/',
-          text: __('Upgrade Now', 'elementor')
-        }
-      };
-      elementor.promotion.showDialog(dialogOptions);
+        content: __('Get Scrolling Effects such as vertical/horizontal scroll, transparency, and more with Elementor Pro.', 'elementor'),
+        ctaUrl: 'https://go.elementor.com/go-pro-scrolling-effects-advanced/'
+      });
     }
   }, {
     key: "onClickControlButtonMouseEffects",
     value: function onClickControlButtonMouseEffects(event) {
       event.stopPropagation();
-      var dialogOptions = {
+      this.dispatchPromotionEvent('mouseEffects', {
         title: __('Mouse Effects', 'elementor'),
-        content: __('Add a Mouse Track or 3d Tilt effect with<br />Elementor Pro.', 'elementor'),
-        targetElement: this.el,
-        actionButton: {
-          url: 'https://go.elementor.com/go-pro-motion-effects-advanced/',
-          text: __('Upgrade Now', 'elementor')
-        }
-      };
-      elementor.promotion.showDialog(dialogOptions);
+        content: __('Add a Mouse Track or 3d Tilt effect with Elementor Pro.', 'elementor'),
+        ctaUrl: 'https://go.elementor.com/go-pro-motion-effects-advanced/'
+      });
     }
   }, {
     key: "onClickControlButtonStickyEffects",
     value: function onClickControlButtonStickyEffects(event) {
       event.stopPropagation();
-      var dialogOptions = {
+      this.dispatchPromotionEvent('sticky', {
         title: __('Sticky', 'elementor'),
-        content: __('Make any element on your page sticky and<br />keep them in sight at the top or bottom of<br />the screen.', 'elementor'),
-        targetElement: this.el,
-        actionButton: {
-          url: 'https://go.elementor.com/go-pro-sticky-element-advanced/',
-          text: __('Upgrade Now', 'elementor')
-        }
-      };
-      elementor.promotion.showDialog(dialogOptions);
+        content: __('Make any element on your page sticky and keep them in sight at the top or bottom of the screen.', 'elementor'),
+        ctaUrl: 'https://go.elementor.com/go-pro-sticky-element-advanced/'
+      });
     }
   }]);
 }(Marionette.Behavior);
+
+/***/ }),
+
+/***/ "../modules/promotions/assets/js/editor/hooks/block-birthday-easter-egg-drop.js":
+/*!**************************************************************************************!*\
+  !*** ../modules/promotions/assets/js/editor/hooks/block-birthday-easter-egg-drop.js ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = exports.BIRTHDAY_EASTER_EGG_WIDGET_NAME = void 0;
+var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "../node_modules/@babel/runtime/helpers/classCallCheck.js"));
+var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/createClass */ "../node_modules/@babel/runtime/helpers/createClass.js"));
+var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js"));
+var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "../node_modules/@babel/runtime/helpers/getPrototypeOf.js"));
+var _inherits2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/inherits */ "../node_modules/@babel/runtime/helpers/inherits.js"));
+function _callSuper(t, o, e) { return o = (0, _getPrototypeOf2.default)(o), (0, _possibleConstructorReturn2.default)(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], (0, _getPrototypeOf2.default)(t).constructor) : o.apply(t, e)); }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+var BIRTHDAY_EASTER_EGG_WIDGET_NAME = exports.BIRTHDAY_EASTER_EGG_WIDGET_NAME = 'e-birthday-easter-egg';
+var BlockBirthdayEasterEggDrop = exports["default"] = /*#__PURE__*/function (_$e$modules$hookData$) {
+  function BlockBirthdayEasterEggDrop() {
+    (0, _classCallCheck2.default)(this, BlockBirthdayEasterEggDrop);
+    return _callSuper(this, BlockBirthdayEasterEggDrop, arguments);
+  }
+  (0, _inherits2.default)(BlockBirthdayEasterEggDrop, _$e$modules$hookData$);
+  return (0, _createClass2.default)(BlockBirthdayEasterEggDrop, [{
+    key: "getCommand",
+    value: function getCommand() {
+      return 'preview/drop';
+    }
+  }, {
+    key: "getId",
+    value: function getId() {
+      return 'block-birthday-easter-egg-drop';
+    }
+  }, {
+    key: "getConditions",
+    value: function getConditions(args) {
+      var _args$model;
+      return BIRTHDAY_EASTER_EGG_WIDGET_NAME === ((_args$model = args.model) === null || _args$model === void 0 ? void 0 : _args$model.widgetType);
+    }
+  }, {
+    key: "apply",
+    value: function apply() {
+      return false;
+    }
+  }]);
+}($e.modules.hookData.Dependency);
 
 /***/ }),
 
@@ -56352,6 +56509,7 @@ var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtim
 var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js"));
 var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "../node_modules/@babel/runtime/helpers/getPrototypeOf.js"));
 var _inherits2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/inherits */ "../node_modules/@babel/runtime/helpers/inherits.js"));
+var _blockBirthdayEasterEggDrop = _interopRequireDefault(__webpack_require__(/*! ./hooks/block-birthday-easter-egg-drop */ "../modules/promotions/assets/js/editor/hooks/block-birthday-easter-egg-drop.js"));
 var _behavior = _interopRequireDefault(__webpack_require__(/*! ./behavior */ "../modules/promotions/assets/js/editor/behavior.js"));
 function _callSuper(t, o, e) { return o = (0, _getPrototypeOf2.default)(o), (0, _possibleConstructorReturn2.default)(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], (0, _getPrototypeOf2.default)(t).constructor) : o.apply(t, e)); }
 function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
@@ -56367,6 +56525,7 @@ var Module = exports["default"] = /*#__PURE__*/function (_elementorModules$edi) 
       if (!this.hasPromotionWidgets() && !this.hasIntegrationWidgets()) {
         return;
       }
+      new _blockBirthdayEasterEggDrop.default().register();
       elementor.hooks.addFilter('element/view', function (DefaultView, model) {
         var _config$promotionWidg, _config$integrationWi;
         var widgetType = model.get('widgetType');

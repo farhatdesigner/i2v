@@ -2,8 +2,8 @@
 Contributors: vsourz1td
 Tags: contact form 7 db, contact form db, advanced cf7 db, contact form 7, database
 Requires at least: 4.0
-Tested up to: 6.9.4
-Stable tag: 2.1.1
+Tested up to: 7.0
+Stable tag: 2.1.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -173,6 +173,11 @@ return $contact_form_ids;
 
 
 == Changelog ==
+= 2.1.2 =
+* Security: Added capability checks to restrict unauthorized access to frontend views.
+* Enhancement: Added integration with Advanced CF7 DB – User Access Manager plugin for improved user access control.
+* Improvement: Applied the same user access rules to frontend views, ensuring consistent capability enforcement across both the admin dashboard and frontend.
+
 = 2.1.1 =
 * Data Storage Update: Data is now saved in the WordPress uploads directory instead of the plugin's admin CSV directory, improving compatibility and organization.
 * Form List Enhancement: The Import CSV form selection and Advanced CF7 DB form selection now display an alphabetically sorted list of forms for easier navigation.
