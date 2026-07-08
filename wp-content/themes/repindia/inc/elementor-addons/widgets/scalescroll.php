@@ -1309,8 +1309,6 @@ class Scalescroll extends Widget_Base
                     var params = [
                         "autoplay=" + (opts.autoplay ? "1" : "0"),
                         "mute=" + (opts.muted ? "1" : "0"),
-                        "loop=1",
-                        "playlist=" + encodeURIComponent(videoId),
                         "rel=0",
                         "playsinline=1",
                         "controls=0",
@@ -1320,6 +1318,28 @@ class Scalescroll extends Widget_Base
 
                     iframe.src = "https://www.youtube.com/embed/" + encodeURIComponent(videoId) + "?" + params.join("&");
                     iframe.dataset.ytLoaded = "1";
+
+                    // Register for player events so we can re-loop without the
+                    // "playlist" param (that param is what draws YouTube's
+                    // left/right navigation arrows over a single video).
+                    // The player isn't ready the instant the iframe loads, so
+                    // resend the handshake a few times until it starts emitting
+                    // events.
+                    iframe.addEventListener("load", function () {
+                        var sendListening = function () {
+                            if (!iframe.contentWindow) return;
+                            iframe.contentWindow.postMessage(
+                                JSON.stringify({ event: "listening", id: iframe.id || undefined }),
+                                "*"
+                            );
+                        };
+                        sendListening();
+                        var tries = 0;
+                        var handshake = setInterval(function () {
+                            sendListening();
+                            if (++tries >= 10) clearInterval(handshake);
+                        }, 500);
+                    });
                 }
 
                 function getActiveIframe(wrapper) {
@@ -1335,6 +1355,44 @@ class Scalescroll extends Widget_Base
                     var playBtn = wrapper.querySelector(".play-btn");
                     if (playBtn) playBtn.style.display = "none";
                 }
+
+                // Re-loop the video when it ends. This preserves the previous
+                // looping behavior that "loop=1&playlist=<id>" provided, but
+                // without the playlist param (which draws YouTube's left/right
+                // navigation arrows over the video).
+                window.addEventListener("message", function (event) {
+                    if (typeof event.origin !== "string" || event.origin.indexOf("youtube.com") === -1) return;
+
+                    var data;
+                    try {
+                        data = typeof event.data === "string" ? JSON.parse(event.data) : event.data;
+                    } catch (e) {
+                        return;
+                    }
+                    if (!data) return;
+
+                    // YouTube reports the "ended" state (0) via two message
+                    // shapes depending on the player build.
+                    var ended =
+                        (data.event === "onStateChange" && data.info === 0) ||
+                        (data.event === "infoDelivery" && data.info && data.info.playerState === 0);
+                    if (!ended) return;
+
+                    var iframes = document.querySelectorAll(".scalescroll-widget .youtube-iframe");
+                    for (var i = 0; i < iframes.length; i++) {
+                        if (iframes[i].contentWindow === event.source) {
+                            iframes[i].contentWindow.postMessage(
+                                JSON.stringify({ event: "command", func: "seekTo", args: [0, true] }),
+                                "*"
+                            );
+                            iframes[i].contentWindow.postMessage(
+                                JSON.stringify({ event: "command", func: "playVideo", args: [] }),
+                                "*"
+                            );
+                            break;
+                        }
+                    }
+                });
 
                 document.addEventListener("DOMContentLoaded", function () {
                     document.addEventListener("click", function (e) {
@@ -1370,14 +1428,24 @@ class Scalescroll extends Widget_Base
                         }, { threshold: 0.25, rootMargin: "0px" });
                         observer.observe(wrapper);
 
-                        // If the user explicitly clicks, keep playing and unmute (still no reload).
+                        // If the user explicitly clicks, keep playing. On desktop we
+                        // unmute; on mobile/touch we stay muted (no sound on tap).
                         wrapper.addEventListener("click", function () {
                             var iframe = getActiveIframe(wrapper);
                             if (!iframe) return;
                             hideThumbsAndButton(wrapper);
-                            ensureYouTubeSrc(iframe, { autoplay: true, muted: false });
+
+                            var isMobile = (typeof window.matchMedia === "function" && window.matchMedia("(max-width: 768px)").matches)
+                                || ("ontouchstart" in window)
+                                || (navigator.maxTouchPoints > 0);
+
+                            ensureYouTubeSrc(iframe, { autoplay: true, muted: isMobile });
                             postYouTubeCommand(iframe, "playVideo");
-                            postYouTubeCommand(iframe, "unMute");
+                            if (!isMobile) {
+                                postYouTubeCommand(iframe, "unMute");
+                            } else {
+                                postYouTubeCommand(iframe, "mute");
+                            }
                         });
                     });
                 });

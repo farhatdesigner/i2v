@@ -1350,14 +1350,24 @@ class Scalescroll extends Widget_Base
                         }, { threshold: 0.25, rootMargin: "0px" });
                         observer.observe(wrapper);
 
-                        // If the user explicitly clicks, keep playing and unmute (still no reload).
+                        // If the user explicitly clicks, keep playing. On desktop we
+                        // unmute; on mobile/touch we stay muted (no sound on tap).
                         wrapper.addEventListener("click", function () {
                             var iframe = getActiveIframe(wrapper);
                             if (!iframe) return;
                             hideThumbsAndButton(wrapper);
-                            ensureYouTubeSrc(iframe, { autoplay: true, muted: false });
+
+                            var isMobile = (typeof window.matchMedia === "function" && window.matchMedia("(max-width: 768px)").matches)
+                                || ("ontouchstart" in window)
+                                || (navigator.maxTouchPoints > 0);
+
+                            ensureYouTubeSrc(iframe, { autoplay: true, muted: isMobile });
                             postYouTubeCommand(iframe, "playVideo");
-                            postYouTubeCommand(iframe, "unMute");
+                            if (!isMobile) {
+                                postYouTubeCommand(iframe, "unMute");
+                            } else {
+                                postYouTubeCommand(iframe, "mute");
+                            }
                         });
                     });
                 });
