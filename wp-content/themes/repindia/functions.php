@@ -189,6 +189,50 @@ if (! function_exists('repindia_enqueue_frontend_compat_layer')) {
 }
 
 /**
+ * Global Image Loader (spinner) — OPTIONAL + ADDITIVE.
+ *
+ * Enqueues a lightweight, pure-CSS spinner shown over any <img> while it loads.
+ *
+ * Safety notes:
+ * - Standalone assets: no dependencies, and nothing depends on them.
+ * - Vanilla JS (no jQuery); one MutationObserver + one IntersectionObserver.
+ * - Does not modify Elementor/plugin files, templates, lazy loading or layout.
+ * - Rollback: delete assets/css/global-image-loader.css and
+ *   assets/js/global-image-loader.js and remove this function + its add_action().
+ */
+if (! function_exists('repindia_enqueue_global_image_loader')) {
+	function repindia_enqueue_global_image_loader()
+	{
+		if (is_admin()) {
+			return;
+		}
+		// Skip inside Elementor editor/preview to avoid interfering with editing.
+		if (isset($_GET['elementor-preview'])) {
+			return;
+		}
+
+		$version = defined('REPINDIA_THEME_VERSION') ? REPINDIA_THEME_VERSION : false;
+
+		wp_enqueue_style(
+			'repindia-global-image-loader',
+			get_template_directory_uri() . '/assets/css/global-image-loader.css',
+			array(),
+			$version,
+			'all'
+		);
+
+		wp_enqueue_script(
+			'repindia-global-image-loader',
+			get_template_directory_uri() . '/assets/js/global-image-loader.js',
+			array(),
+			$version,
+			true
+		);
+	}
+	add_action('wp_enqueue_scripts', 'repindia_enqueue_global_image_loader');
+}
+
+/**
  * Mark CF7 fields that should use the Figma pill dropdown UI.
  * Add class i2v-pill-dropdown on the field in CF7 to force-enable any control.
  */
