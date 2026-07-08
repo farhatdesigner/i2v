@@ -107,7 +107,6 @@ if (! function_exists('repindia_load_theme_scripts_and_styles')) {
 			wp_enqueue_style('feedback-custom', get_template_directory_uri() . '/assets/css/feedback_custom.css', null, REPINDIA_THEME_VERSION, 'all');
 			wp_enqueue_style('repindia-style', get_stylesheet_uri(), null, REPINDIA_THEME_VERSION, 'all');
 			wp_enqueue_style('form-css', get_template_directory_uri() . '/assets/css/form_css.css', null, REPINDIA_THEME_VERSION, 'all');
-			wp_enqueue_style('repindia-style', get_stylesheet_uri(), null, REPINDIA_THEME_VERSION, 'all');
 			wp_enqueue_style('intlTelInput-css', get_template_directory_uri() . '/assets/intl-tel-input/css/intlTelInput.css', null, REPINDIA_THEME_VERSION, 'all');
 			wp_enqueue_style('dark-theme', get_template_directory_uri() . '/assets/css/dark_theme.css', null, REPINDIA_THEME_VERSION, 'all');
 			wp_enqueue_style('repindia-responsive', get_template_directory_uri() . '/assets/css/responsive.css', null, REPINDIA_THEME_VERSION, 'all');
@@ -158,6 +157,35 @@ if (! function_exists('repindia_load_theme_scripts_and_styles')) {
 			}
 		}
 	}
+}
+
+/**
+ * Frontend Compatibility Layer (RIFC) — Phase 2.
+ *
+ * OPTIONAL + ADDITIVE shared infrastructure for FUTURE widgets.
+ *
+ * Safety notes:
+ * - Standalone script: no dependencies, and nothing depends on it.
+ * - Inert at load: only defines window.RIFC (no listeners/queries/timers).
+ * - Existing widgets, global.js and inline scripts are unaffected.
+ * - Rollback: delete assets/js/frontend/repindia-fc.js and remove this
+ *   function + its add_action() below.
+ */
+if (! function_exists('repindia_enqueue_frontend_compat_layer')) {
+	function repindia_enqueue_frontend_compat_layer()
+	{
+		if (is_admin()) {
+			return;
+		}
+		wp_enqueue_script(
+			'repindia-frontend-compat',
+			get_template_directory_uri() . '/assets/js/frontend/repindia-fc.js',
+			array(),
+			defined('REPINDIA_THEME_VERSION') ? REPINDIA_THEME_VERSION : false,
+			true
+		);
+	}
+	add_action('wp_enqueue_scripts', 'repindia_enqueue_frontend_compat_layer', 5);
 }
 
 /**
