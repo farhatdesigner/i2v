@@ -112,6 +112,7 @@ if (! function_exists('repindia_load_theme_scripts_and_styles')) {
 			wp_enqueue_style('repindia-responsive', get_template_directory_uri() . '/assets/css/responsive.css', null, REPINDIA_THEME_VERSION, 'all');
 			wp_enqueue_style('repindia-search', get_template_directory_uri() . '/assets/css/search.css', null, REPINDIA_THEME_VERSION, 'all');
 			wp_enqueue_style('repindia-rtl', get_template_directory_uri() . '/assets/css/rlt.css', null, REPINDIA_THEME_VERSION, 'all');
+			wp_enqueue_style('repindia-custom-class-tooltip', get_template_directory_uri() . '/assets/css/custom_class_tooltip.css', null, REPINDIA_THEME_VERSION, 'all');
 
 		/* Register Scripts */
 		// Deregister WordPress default jQuery
@@ -134,6 +135,14 @@ if (! function_exists('repindia_load_theme_scripts_and_styles')) {
 		// Enqueue form validation script
 		wp_enqueue_script('repindia-form-validation', get_template_directory_uri() . '/assets/js/formvalidation.js', array('jquery'), REPINDIA_THEME_VERSION, true);
 		wp_enqueue_script('repindia-pill-dropdown', get_template_directory_uri() . '/assets/js/custom-pill-dropdown.js', array('jquery'), REPINDIA_THEME_VERSION, true);
+		wp_enqueue_script('repindia-custom-class-tooltip', get_template_directory_uri() . '/assets/js/custom_class_tooltip.js', array('jquery'), REPINDIA_THEME_VERSION, true);
+		wp_localize_script('repindia-custom-class-tooltip', 'repindiaCct', array(
+			'uploadsUrl' => esc_url(content_url('uploads/')),
+			'icons'      => array(
+				'light' => esc_url(content_url('uploads/2026/02/Light-infotooltip.svg')),
+				'dark'  => esc_url(content_url('uploads/2026/02/Dark-infotooltip.svg')),
+			),
+		));
 
 		// Enqueue search script
 		wp_enqueue_script('repindia-search', get_template_directory_uri() . '/assets/js/search.js', array(), REPINDIA_THEME_VERSION, true);
