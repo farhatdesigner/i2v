@@ -1331,6 +1331,7 @@ ul.social_media_links > li > a > span {
   background: #f2f5fa;
   width: 32px;
   height: 32px;
+  line-height: 28px;
   display: inline-block;
   border-radius: 50%;
   text-align: center;

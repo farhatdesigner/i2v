@@ -336,6 +336,9 @@ if ($download_b) { ?>
                         } ?>
                     </div>
                     <div class="brochure-thankyou">
+                        <div class="brochure-thankyou-successimg">
+                            <img src="https://www.i2vsys.com/wp-content/uploads/2026/05/success.gif" alt="Success Icon">
+                        </div>
                         <h3>Message sent successfully</h3>
                         <p>Thank you for reaching out. We’ve received your message
                         and will get back to you shortly.</p>

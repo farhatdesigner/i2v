@@ -21,6 +21,49 @@
 		'<p>Based on operational deployments in malls, airports, metro stations, and similar locations as of 2026.</p>' +
 		'<a href="javascript:void(0);" class="cct-learn-more-btn ctw-learn-more-btn theme-btn bg-trans border_btnlight">Learn more</a>';
 
+	var TRIGGER_SELECTOR = '.custom_tooltip, [class*="custom_tooltip_"]';
+
+	function getTriggerSuffix($trigger) {
+		var classes = ($trigger.attr('class') || '').split(/\s+/);
+		var suffix = '';
+
+		classes.forEach(function (className) {
+			if (className.indexOf('custom_tooltip_') === 0) {
+				suffix = className.replace('custom_tooltip_', '');
+			}
+		});
+
+		return suffix;
+	}
+
+	function resolveContentTargetId($trigger) {
+		var targetId = $trigger.attr('data-cct-target');
+		if (targetId) {
+			return targetId;
+		}
+
+		var suffix = getTriggerSuffix($trigger);
+		if (suffix) {
+			return 'cct-tooltip-content-' + suffix;
+		}
+
+		return DEFAULT_CONTENT_ID;
+	}
+
+	function resolvePopupTargetId($trigger) {
+		var popupTargetId = $trigger.attr('data-cct-popup-target');
+		if (popupTargetId) {
+			return popupTargetId;
+		}
+
+		var suffix = getTriggerSuffix($trigger);
+		if (suffix) {
+			return 'cct-popup-content-' + suffix;
+		}
+
+		return DEFAULT_POPUP_ID;
+	}
+
 	function applyDynamicIconPaths() {
 		var lightIcon = icons.light || '';
 		var darkIcon = icons.dark || lightIcon;
@@ -69,6 +112,28 @@
 			'</div>' +
 			'</div>'
 		);
+	}
+
+	function ensureConfiguredSources() {
+		var tooltips = config.tooltips || {};
+
+		Object.keys(tooltips).forEach(function (key) {
+			var tooltip = tooltips[key] || {};
+			var contentId = 'cct-tooltip-content-' + key;
+			var popupId = 'cct-popup-content-' + key;
+
+			if (tooltip.content && !$('#' + contentId).length) {
+				$('body').append(
+					'<div id="' + contentId + '" class="cct-tooltip-source">' + tooltip.content + '</div>'
+				);
+			}
+
+			if (tooltip.popup && !$('#' + popupId).length) {
+				$('body').append(
+					'<div id="' + popupId + '" class="cct-popup-source">' + tooltip.popup + '</div>'
+				);
+			}
+		});
 	}
 
 	function ensureDefaultContent() {
@@ -120,7 +185,7 @@
 	}
 
 	function getContentSource($trigger) {
-		var targetId = $trigger.attr('data-cct-target');
+		var targetId = resolveContentTargetId($trigger);
 
 		if (targetId) {
 			var $byId = $('#' + targetId);
@@ -148,7 +213,7 @@
 	}
 
 	function getPopupSource($trigger) {
-		var popupTargetId = $trigger.attr('data-cct-popup-target');
+		var popupTargetId = resolvePopupTargetId($trigger);
 
 		if (popupTargetId) {
 			var $byId = $('#' + popupTargetId);
@@ -179,6 +244,7 @@
 		var $portal = ensurePortal();
 		var $tooltip = $portal.find('.cct-tooltip');
 		var rect = $trigger[0].getBoundingClientRect();
+		var isMobile = window.innerWidth <= 768;
 		var css = {
 			left: 'auto',
 			right: 'auto',
@@ -193,11 +259,34 @@
 			)
 			.addClass('cct-tooltip-' + position + ' ctw-tooltip-' + position);
 
-		if (window.innerWidth <= 768) {
+		if (isMobile) {
 			$portal.addClass('cct-tooltip-portal-mobile');
-			css.left = '50%';
-			css.top = '50%';
-			css.transform = 'translate(-50%, -50%)';
+
+			var gap = 8;
+			var viewportPadding = 16;
+			var centerX = rect.left + rect.width / 2;
+			var tooltipWidth = Math.min(360, window.innerWidth - viewportPadding * 2);
+			var tooltipHeight = $tooltip.outerHeight() || 120;
+			var spaceBelow = window.innerHeight - rect.bottom - gap - viewportPadding;
+			var spaceAbove = rect.top - gap - viewportPadding;
+			var top;
+
+			if (spaceBelow >= tooltipHeight || spaceBelow >= spaceAbove) {
+				top = rect.bottom + gap;
+			} else {
+				top = rect.top - gap - tooltipHeight;
+			}
+
+			top = Math.max(viewportPadding, Math.min(top, window.innerHeight - tooltipHeight - viewportPadding));
+
+			var left = Math.max(
+				viewportPadding + tooltipWidth / 2,
+				Math.min(window.innerWidth - viewportPadding - tooltipWidth / 2, centerX)
+			);
+
+			css.left = left + 'px';
+			css.top = top + 'px';
+			css.transform = 'translateX(-50%)';
 		} else if (position === 'bottom') {
 			$portal.removeClass('cct-tooltip-portal-mobile');
 			css.left = rect.left + rect.width / 2 + 'px';
@@ -244,7 +333,7 @@
 	}
 
 	function openPopup() {
-		var $source = getPopupSource(activeTrigger || $('.custom_tooltip').first());
+		var $source = getPopupSource(activeTrigger || $(TRIGGER_SELECTOR).first());
 
 		if (!$source.length) {
 			return;
@@ -274,8 +363,13 @@
 		closeOtherTooltips();
 		$inner.html($source.html());
 		$portal.find('.cct-tooltip').toggleClass('cct-has-learn-more ctw-has-learn-more moretooldiv', hasLearnMore);
-		positionPortal($trigger, position);
 		$portal.addClass('is-open').attr('aria-hidden', 'false');
+		positionPortal($trigger, position);
+		window.requestAnimationFrame(function () {
+			if (activeTrigger && activeTrigger[0] === $trigger[0] && $portal.hasClass('is-open')) {
+				positionPortal($trigger, position);
+			}
+		});
 		activeTrigger = $trigger;
 	}
 
@@ -328,6 +422,11 @@
 		$(window)
 			.off('scroll.' + SCROLL_NS + ' resize.' + SCROLL_NS)
 			.on('scroll.' + SCROLL_NS + ' resize.' + SCROLL_NS, function () {
+				if (activeTrigger && $('#' + PORTAL_ID).hasClass('is-open')) {
+					positionPortal(activeTrigger, activeTrigger.attr('data-cct-position') || 'bottom');
+					return;
+				}
+
 				closePortal();
 			});
 	}
@@ -337,7 +436,7 @@
 			return;
 		}
 
-		if ($trigger.closest('.ctw-wrapper').length) {
+		if ($trigger.closest('.ctw-wrapper, .elementor-widget-custom_tooltip').length) {
 			return;
 		}
 
@@ -366,11 +465,12 @@
 
 	function initCustomClassTooltips() {
 		ensureDefaultContent();
+		ensureConfiguredSources();
 		ensurePortal();
 		ensurePopupModal();
 		applyDynamicIconPaths();
 
-		$('.custom_tooltip').each(function () {
+		$(TRIGGER_SELECTOR).each(function () {
 			initTrigger($(this));
 		});
 	}

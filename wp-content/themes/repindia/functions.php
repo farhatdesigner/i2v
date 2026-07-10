@@ -93,6 +93,61 @@ function repindia_backgroundstyle($key)
 	return $inner_header_style;
 }
 
+if (! function_exists('repindia_get_custom_class_tooltip_popup_html')) {
+	function repindia_get_custom_class_tooltip_popup_html($text)
+	{
+		$light_icon = esc_url(content_url('uploads/2026/02/Light-infotooltip.svg'));
+		$dark_icon  = esc_url(content_url('uploads/2026/02/Dark-infotooltip.svg'));
+
+		return (
+			'<div class="cct-popup-content-wrapper ctw-popup-content-wrapper">' .
+			'<div class="cct-popup-icon-wrapper ctw-popup-icon-wrapper">' .
+			'<span class="cct-popup-icon ctw-popup-icon ctw-popup-icon-light"><img src="' . $light_icon . '" alt="" class="cct-popup-icon ctw-popup-icon" /></span>' .
+			'<span class="cct-popup-icon ctw-popup-icon ctw-popup-icon-dark"><img src="' . $dark_icon . '" alt="" class="cct-popup-icon ctw-popup-icon" /></span>' .
+			'</div>' .
+			'<div class="cct-popup-content-text ctw-popup-content-text"><p>' . esc_html($text) . '</p></div>' .
+			'</div>'
+		);
+	}
+}
+
+if (! function_exists('repindia_get_custom_class_tooltip_config')) {
+	function repindia_get_custom_class_tooltip_config()
+	{
+		$config = array(
+			'uploadsUrl' => esc_url(content_url('uploads/')),
+			'icons'      => array(
+				'light' => esc_url(content_url('uploads/2026/02/Light-infotooltip.svg')),
+				'dark'  => esc_url(content_url('uploads/2026/02/Dark-infotooltip.svg')),
+			),
+		);
+
+		if (is_singular('products')) {
+			$post = get_queried_object();
+			if ($post && isset($post->post_name) && $post->post_name === 'automatic-number-plate-recognition') {
+				$config['tooltips'] = array(
+					'95' => array(
+						'content' => '<p>' . esc_html__('Based on daylight plate-read testing in controlled and live deployment environments.', 'repindia') . '</p>' .
+							'<a href="javascript:void(0);" class="cct-learn-more-btn ctw-learn-more-btn theme-btn bg-trans border_btnlight">' . esc_html__('Learn more', 'repindia') . '</a>',
+						'popup'   => repindia_get_custom_class_tooltip_popup_html(
+							__('Validated across toll lanes, parking gates, and enforcement checkpoints under standard daylight visibility.', 'repindia')
+						),
+					),
+					'85' => array(
+						'content' => '<p>' . esc_html__('Measured under low-light and night conditions with IR-assisted camera setups.', 'repindia') . '</p>' .
+							'<a href="javascript:void(0);" class="cct-learn-more-btn ctw-learn-more-btn theme-btn bg-trans border_btnlight">' . esc_html__('Learn more', 'repindia') . '</a>',
+						'popup'   => repindia_get_custom_class_tooltip_popup_html(
+							__('Validated using IR-enabled cameras in gate, parking, and highway deployments under controlled night testing.', 'repindia')
+						),
+					),
+				);
+			}
+		}
+
+		return $config;
+	}
+}
+
 add_action('wp_enqueue_scripts', 'repindia_load_theme_scripts_and_styles');
 if (! function_exists('repindia_load_theme_scripts_and_styles')) {
 	function repindia_load_theme_scripts_and_styles()
@@ -136,13 +191,7 @@ if (! function_exists('repindia_load_theme_scripts_and_styles')) {
 		wp_enqueue_script('repindia-form-validation', get_template_directory_uri() . '/assets/js/formvalidation.js', array('jquery'), REPINDIA_THEME_VERSION, true);
 		wp_enqueue_script('repindia-pill-dropdown', get_template_directory_uri() . '/assets/js/custom-pill-dropdown.js', array('jquery'), REPINDIA_THEME_VERSION, true);
 		wp_enqueue_script('repindia-custom-class-tooltip', get_template_directory_uri() . '/assets/js/custom_class_tooltip.js', array('jquery'), REPINDIA_THEME_VERSION, true);
-		wp_localize_script('repindia-custom-class-tooltip', 'repindiaCct', array(
-			'uploadsUrl' => esc_url(content_url('uploads/')),
-			'icons'      => array(
-				'light' => esc_url(content_url('uploads/2026/02/Light-infotooltip.svg')),
-				'dark'  => esc_url(content_url('uploads/2026/02/Dark-infotooltip.svg')),
-			),
-		));
+		wp_localize_script('repindia-custom-class-tooltip', 'repindiaCct', repindia_get_custom_class_tooltip_config());
 
 		// Enqueue search script
 		wp_enqueue_script('repindia-search', get_template_directory_uri() . '/assets/js/search.js', array(), REPINDIA_THEME_VERSION, true);
