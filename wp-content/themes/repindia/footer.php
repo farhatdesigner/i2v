@@ -214,6 +214,7 @@ global $repindia_option;
 				if (empty($linkedin_footer_icon_url)) {
 					$linkedin_footer_icon_url = get_template_directory_uri() . '/assets/images/icons/linkdin.svg';
 				}
+				$linkedin_footer_icon_dark_url = 'https://www.i2vsys.com/wp-content/uploads/2026/07/linkedin-3.svg';
 
 				// Get YouTube icon URL
 				$youtube_footer_icon_url = '';
@@ -230,6 +231,7 @@ global $repindia_option;
 				if (empty($youtube_footer_icon_url)) {
 					$youtube_footer_icon_url = get_template_directory_uri() . '/assets/images/icons/youtube.svg';
 				}
+				$youtube_footer_icon_dark_url = 'https://www.i2vsys.com/wp-content/uploads/2026/07/youtube-3.svg';
 
 				// Only show if social media is enabled and at least one URL is provided
 				if ($enable_social && $footer_social && (!empty($linkedin_url) || !empty($youtube_url))) {
@@ -237,12 +239,14 @@ global $repindia_option;
 					<div class="col-6 col-md-4 d-flex justify-content-end order-2 order-md-3">
 						<?php if (!empty($linkedin_url)): ?>
 							<a href="<?php echo esc_url($linkedin_url); ?>" class="ms-2" target="_blank">
-								<img src="<?php echo esc_url($linkedin_footer_icon_url); ?>" alt="link">
+								<img class="white_theme_img" src="<?php echo esc_url($linkedin_footer_icon_url); ?>" alt="link">
+								<img class="black_theme_img" src="<?php echo esc_url($linkedin_footer_icon_dark_url); ?>" alt="link">
 							</a>
 						<?php endif; ?>
 						<?php if (!empty($youtube_url)): ?>
 							<a href="<?php echo esc_url($youtube_url); ?>" class="ms-2" target="_blank">
-								<img src="<?php echo esc_url($youtube_footer_icon_url); ?>" alt="youtube">
+								<img class="white_theme_img" src="<?php echo esc_url($youtube_footer_icon_url); ?>" alt="youtube">
+								<img class="black_theme_img" src="<?php echo esc_url($youtube_footer_icon_dark_url); ?>" alt="youtube">
 							</a>
 						<?php endif; ?>
 					</div>

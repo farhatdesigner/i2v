@@ -778,6 +778,7 @@ class Video_accordioncaption extends Widget_Base
                 .vac_accontent p {
                     margin: 8px 15px 8px 58px;
                     font-size: 12px;
+                    min-height: auto;
                 }
 
                 .vac_accontent .vac_accordion_video p {
@@ -845,7 +846,13 @@ class Video_accordioncaption extends Widget_Base
                     font-size: 12px;
                     line-height: 1.5;
                     margin-bottom: 10px;
+                    min-height: auto;
                 }
+                
+.vac_accordion_video .d-flex.flex-wrap {
+    margin-top: 0 !important;
+}
+
 
                 .vac_accontent .vac_accordion_video .badge-custom {
                     font-size: 10px;

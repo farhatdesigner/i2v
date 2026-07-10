@@ -191,6 +191,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
                                 if (empty($linkedin_icon_url)) {
                                     $linkedin_icon_url = get_template_directory_uri() . '/assets/images/icons/linkdin.svg';
                                 }
+                                $linkedin_icon_dark_url = 'https://www.i2vsys.com/wp-content/uploads/2026/07/linkedin-3.svg';
 
                                 // Get YouTube icon URL
                                 $youtube_icon_url = '';
@@ -207,6 +208,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
                                 if (empty($youtube_icon_url)) {
                                     $youtube_icon_url = get_template_directory_uri() . '/assets/images/icons/youtube.svg';
                                 }
+                                $youtube_icon_dark_url = 'https://www.i2vsys.com/wp-content/uploads/2026/07/youtube-3.svg';
 
                                 // Only show if social media is enabled and at least one URL is provided
                                 if ($enable_social && $hamburger_social && (!empty($linkedin_url) || !empty($youtube_url))) {
@@ -220,15 +222,19 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
                                             <?php } ?>
                                             <?php if (!empty($linkedin_url)): ?>
                                                 <a href="<?php echo esc_url($linkedin_url); ?>" target="_blank">
-                                                    <span><img src="<?php echo esc_url($linkedin_icon_url); ?>"
-                                                            alt="LinkedIn"></span>
+                                                    <span>
+                                                        <img class="white_theme_img" src="<?php echo esc_url($linkedin_icon_url); ?>" alt="LinkedIn">
+                                                        <img class="black_theme_img" src="<?php echo esc_url($linkedin_icon_dark_url); ?>" alt="LinkedIn">
+                                                    </span>
                                                     <small><?php echo esc_attr($repindia_option['linkedin_title']); ?></small>
                                                 </a>
                                             <?php endif; ?>
                                             <?php if (!empty($youtube_url)): ?>
                                                 <a href="<?php echo esc_url($youtube_url); ?>" target="_blank">
-                                                    <span><img src="<?php echo esc_url($youtube_icon_url); ?>"
-                                                            alt="YouTube"></span>
+                                                    <span>
+                                                        <img class="white_theme_img" src="<?php echo esc_url($youtube_icon_url); ?>" alt="YouTube">
+                                                        <img class="black_theme_img" src="<?php echo esc_url($youtube_icon_dark_url); ?>" alt="YouTube">
+                                                    </span>
                                                     <small><?php echo esc_attr($repindia_option['youtube_title']); ?></small>
                                                 </a>
                                             <?php endif; ?>

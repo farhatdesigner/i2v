@@ -309,6 +309,21 @@ header li.burger-icon .icon-sun,
   color: #aeb6c9;
 }
 
+.js-dark ul.social_media_links > li > a > span {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.js-dark ul.social_media_links > li > a > span img.white_theme_img {
+  display: none !important;
+}
+
+.js-dark ul.social_media_links > li > a > span img.black_theme_img {
+  display: inline-block !important;
+  width: 18px;
+  height: 18px;
+  vertical-align: middle;
+}
+
 .js-dark .search-popup-trigger svg path {
   fill: rgb(255 255 255 / 90%);
 }

@@ -2,28 +2,36 @@
  * Standalone .custom_tooltip styles (scoped — does not affect .ctw-wrapper widget).
  */
 
-.custom_tooltip {
+.custom_tooltip,
+[class*='custom_tooltip_'] {
 	cursor: pointer;
 	border-bottom: 2px solid #d7dbe4;
 	transition: border-color 0.2s ease;
 }
 
 .custom_tooltip:hover,
-.custom_tooltip:focus {
+.custom_tooltip:focus,
+[class*='custom_tooltip_']:hover,
+[class*='custom_tooltip_']:focus {
 	border-bottom-color: #9ea1a8;
 }
 
-.js-dark .custom_tooltip {
+.js-dark .custom_tooltip,
+.js-dark [class*='custom_tooltip_'] {
 	border-bottom-color: #464a4f;
 	color: #aeb6c9;
 }
 
 .js-dark .custom_tooltip:hover,
-.js-dark .custom_tooltip:focus {
+.js-dark .custom_tooltip:focus,
+.js-dark [class*='custom_tooltip_']:hover,
+.js-dark [class*='custom_tooltip_']:focus {
 	border-bottom-color: #7d8895;
 }
 
-.vac-description .custom_tooltip {
+.vac-description .custom_tooltip,
+.elementor-image-box-description .custom_tooltip,
+.elementor-image-box-description [class*='custom_tooltip_'] {
 	font-weight: 600;
 }
 
@@ -296,10 +304,14 @@
 		max-width: min(360px, calc(100vw - 32px));
 	}
 
-	#cct-tooltip-portal.cct-tooltip-portal-mobile {
-		left: 50% !important;
-		top: 50% !important;
-		transform: translate(-50%, -50%) !important;
+	#cct-tooltip-portal .cct-tooltip.ctw-tooltip-bottom,
+	#cct-tooltip-portal .ctw-tooltip-bottom {
+		position: relative !important;
+		top: auto !important;
+		left: auto !important;
+		right: auto !important;
+		margin-top: 0 !important;
+		transform: none !important;
 	}
 
 	#cct-popup-box.cct-popup-box,
