@@ -1,0 +1,93 @@
+/**
+ * Global Image Loader — pure CSS spinner.
+ *
+ * Additive & reversible: everything is namespaced under `.i2v-il-*` so it cannot
+ * clash with theme, Elementor, Swiper or plugin styles. Remove the CSS/JS enqueue
+ * to fully revert with zero side effects.
+ *
+ * The spinner is a SINGLE absolutely-positioned overlay node whose rotating ring
+ * is drawn with a `::before` pseudo-element (no extra DOM wrapper per image). It
+ * is `pointer-events:none`, so it never blocks clicks (lightboxes, links,
+ * sliders) and never causes layout shift (it is out of normal flow and adds no
+ * box to the parent's flow).
+ */
+
+/* Positioning context added at runtime ONLY when the image's parent is
+   `position: static`. Kept minimal so it cannot disturb existing layouts. */
+.i2v-il-host {
+	position: relative;
+}
+
+/* Absolutely positioned overlay, sized to match the image box at runtime.
+   Centers the ring and stays visually inert (no clicks, no shift).
+   `contain` isolates its layout/paint so it never triggers reflow elsewhere. */
+.i2v-il-overlay {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0;
+	pointer-events: none;
+	z-index: 2;
+	opacity: 1;
+	/* Smooth fade-out when loading completes. GPU-friendly (opacity only). */
+	transition: opacity 0.3s ease;
+	will-change: opacity;
+	contain: layout paint;
+}
+
+/* Fade-out state applied just before the overlay is removed from the DOM. */
+.i2v-il-overlay.is-hidden {
+	opacity: 0;
+}
+
+/* The rotating ring (drawn as a pseudo-element — no extra DOM node). ~24px, thin
+   border, neutral palette that reads clearly on both light and dark backgrounds:
+   - semi-transparent white center + subtle backdrop blur + soft shadow
+   - light-gray outer track
+   - blue-gray rotating accent (top border) */
+.i2v-il-overlay::before {
+	content: "";
+	box-sizing: border-box;
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	border: 2.5px solid rgba(148, 163, 184, 0.45); /* light-gray track */
+	border-top-color: #5b6b7f; /* blue-gray accent */
+	background-color: rgba(255, 255, 255, 0.55); /* semi-transparent white center */
+	box-shadow: 0 1px 4px rgba(15, 23, 42, 0.18); /* soft shadow */
+	/* GPU-accelerated rotation, isolated onto its own compositor layer.
+	   NOTE: do NOT set a base `transform` here — it would become the animation's
+	   implicit `from` and, being an incompatible transform-function list vs. the
+	   `rotate()` keyframes, force identity-matrix interpolation (a static ring).
+	   Layer promotion is achieved via `will-change` + `backface-visibility`. */
+	animation: i2v-il-spin 0.9s linear infinite;
+	will-change: transform;
+	backface-visibility: hidden;
+}
+
+/* Optional subtle blur behind the translucent center for readability over busy
+   images. Progressive enhancement — ignored where unsupported. */
+@supports ((backdrop-filter: blur(2px)) or (-webkit-backdrop-filter: blur(2px))) {
+	.i2v-il-overlay::before {
+		-webkit-backdrop-filter: blur(2px);
+		backdrop-filter: blur(2px);
+	}
+}
+
+@keyframes i2v-il-spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* Respect users who prefer reduced motion: keep an indicator but slow it down. */
+@media (prefers-reduced-motion: reduce) {
+	.i2v-il-overlay::before {
+		animation-duration: 1.6s;
+	}
+}

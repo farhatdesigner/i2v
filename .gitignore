@@ -22,4 +22,5 @@ wp-content/smush-webp/*
 wp-content/autoptimize_404_handler.php
 wordfence/*
 conf/*
+beta_i2v
 *.DS_Store

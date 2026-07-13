@@ -3,6 +3,17 @@
 if(!defined( 'ABSPATH' ) ) {
 	exit;
 }
+if (!defined('ACF7DB_USER_ACCESS_VERSION')) {
+    return '<div class="cf7-user-access-required" style="padding: 20px; background: #f8d7da; border-left: 4px solid #dc3545; margin: 15px 0; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, Oxygen-Sans, Ubuntu, Cantarell, sans-serif;">'
+        . '<h3 style="margin-top: 0; color: #721c24;">' . esc_html__('User Access Addon Required', 'contact-form-7') . '</h3>'
+        . '<p style="margin: 10px 0;">' . esc_html__('This shortcode requires the CF7 Database User Access addon to display data.', 'contact-form-7') . '</p>'
+        . '<p style="margin: 10px 0;"><strong>' . esc_html__('Please purchase and install the User Access addon to enable this feature.', 'contact-form-7') . '</strong></p>'
+        . '<p style="margin: 10px 0;"><a href="https://codecanyon.net/item/advanced-cf7-db-user-access-manager/22058788" target="_blank" style="display: inline-block; padding: 10px 20px; background: #0073aa; color: #fff; text-decoration: none; border-radius: 3px;">' 
+        . esc_html__('Purchase User Access Addon', 'contact-form-7') 
+        . '</a></p>'
+        . '</div>';
+}
+
 
 //print "calling shortcode";
 
@@ -69,6 +80,7 @@ if(!empty($formArr)){
 
 	foreach($formArr as $fid){
 		
+		
 		if(isset($allForms) && $allForms){
 			$form = $fid;
 			unset($fid);
@@ -80,6 +92,13 @@ if(!empty($formArr)){
 			$objForm = wpcf7_get_contact_form_by_hash($fid);	
 			$fid = $objForm->id();
 		}
+        
+         $user = wp_get_current_user();
+
+       if (!cf7_check_capability('cf7_db_form_edit_'.$fid) && !cf7_check_capability('cf7_db_form_view'.$fid)){
+            continue;
+        }
+		
 		
 		$form = vsz_cf7_get_the_form_list($fid);	
 		

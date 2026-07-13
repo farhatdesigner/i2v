@@ -950,9 +950,8 @@ if (!empty($repindia_option['technology_partner_form'])) { ?>
 	<div class="global-youtube-popup__dialog">
 		<div class="global-youtube-popup__content">
 			<div class="global-youtube-popup__header">
-				<h1 class="global-youtube-popup__title" id="global-youtube-popup-title">
-					<?php esc_html_e('Video', 'repindia'); ?>
-				</h1>
+				<p class="global-youtube-popup__title" id="global-youtube-popup-title">
+					<?php esc_html_e('Video', 'repindia'); ?></p>
 				<button type="button" class="global-youtube-popup__close"
 					aria-label="<?php esc_attr_e('Close', 'repindia'); ?>">
 					<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">

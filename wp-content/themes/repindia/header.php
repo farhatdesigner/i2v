@@ -63,6 +63,115 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
 })(window, document, "clarity", "script", "xbf1gxtvgr");
 </script>
 
+<!-- Organization Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://www.i2vsys.com/#organization",
+  "name": "i2V Systems Pvt. Ltd.",
+  "legalName": "i2V Systems Pvt. Ltd.",
+  "alternateName": "i2V",
+  "url": "https://www.i2vsys.com/",
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://www.i2vsys.com/wp-content/uploads/2025/11/logo.svg"
+  },
+  "image": "https://www.i2vsys.com/wp-content/uploads/2025/11/logo.svg",
+  "description": "i2V is an AI-powered video surveillance and security software company.",
+  "email": "sales@i2vsys.com",
+  "telephone": "+91-8950451484",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "3rd and 4th floor, i2V Systems Pvt. Ltd., Software Technology Park of India, Plot No 30, Electronic City, Phase IV, Udyog Vihar",
+    "addressLocality": "Gurugram",
+    "addressRegion": "Haryana",
+    "postalCode": "122015",
+    "addressCountry": "IN"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "India"
+  },
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "contactType": "sales",
+      "email": "sales@i2vsys.com",
+      "telephone": "+91-8950451484",
+      "areaServed": "IN",
+      "availableLanguage": ["English", "Hindi"]
+    }
+  ],
+  "sameAs": [
+    "https://in.linkedin.com/company/i2v-systems",
+    "https://www.youtube.com/@i2vsystems120"
+  ]
+}
+</script>
+
+<!-- Website Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://www.i2vsys.com/#website",
+  "url": "https://www.i2vsys.com/",
+  "name": "i2V Systems Pvt. Ltd.",
+  "publisher": {
+    "@id": "https://www.i2vsys.com/#organization"
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://www.i2vsys.com/search-result/?s={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+<!-- Local Business Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": "https://www.i2vsys.com/#localbusiness",
+  "name": "i2V Systems Pvt. Ltd.",
+  "image": "https://www.i2vsys.com/wp-content/uploads/2025/11/logo.svg",
+  "url": "https://www.i2vsys.com/",
+  "telephone": "+91-8950451484",
+  "email": "sales@i2vsys.com",
+  "description": "i2V is an AI-powered video surveillance and security software company.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "3rd and 4th floor, i2V Systems Pvt. Ltd., Software Technology Park of India, Plot No 30, Electronic City, Phase IV, Udyog Vihar",
+    "addressLocality": "Gurugram",
+    "addressRegion": "Haryana",
+    "postalCode": "122015",
+    "addressCountry": "IN"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "India"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "10:00",
+      "closes": "18:00"
+    }
+  ],
+  "parentOrganization": {
+    "@id": "https://www.i2vsys.com/#organization"
+  }
+}
+</script>
+
+
+
     <?php wp_head(); ?>
 </head>
 
