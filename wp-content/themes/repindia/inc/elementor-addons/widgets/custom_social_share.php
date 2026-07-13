@@ -288,6 +288,7 @@ class Custom_Social_Share extends Widget_Base
 
                     .socialshare_section ul.shocial_media li {
                         height: auto;
+                        display: flex !important;
                     }
 
                     .reading-progress {
