@@ -349,17 +349,6 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
                                             <?php endif; ?>
                                         </li>
                                         <li class="mobile_search_theme_switch">
-                                        <?php
-                                            if (isset($repindia_option['search_btn_switch']) && $repindia_option['search_btn_switch'] == 1) { ?>
-                                                
-                                                    <a href="javascript:void(0)" class="search-popup-trigger" aria-label="Search">
-                                                        <!-- <span> -->
-                                                            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg"><path d="M18.6662 19.5556C18.4351 19.5556 18.2129 19.4667 18.0351 19.2978L13.244 14.5067C12.0351 15.4401 10.524 16.0001 8.88845 16.0001C4.96846 16.0001 1.77734 12.8089 1.77734 8.88894C1.77734 4.96894 4.96846 1.77783 8.88845 1.77783C12.8085 1.77783 15.9996 4.96894 15.9996 8.88894C15.9996 10.5334 15.4396 12.0445 14.5062 13.2445L19.2973 18.0356C19.644 18.3823 19.644 18.9423 19.2973 19.2889C19.1196 19.4667 18.8973 19.5467 18.6662 19.5467V19.5556ZM8.88845 3.55561C5.94623 3.55561 3.55512 5.94672 3.55512 8.88894C3.55512 11.8312 5.94623 14.2223 8.88845 14.2223C11.8307 14.2223 14.2218 11.8312 14.2218 8.88894C14.2218 5.94672 11.8307 3.55561 8.88845 3.55561Z" fill="#5F6F94" /></svg>
-                                                        <!-- </span> -->
-                                                    </a>
-                                                <?php
-                                            } ?>
                                             <?php
                                             if (isset($repindia_option['theme_switch_btn']) && $repindia_option['theme_switch_btn'] == 1) { ?>
                                                     <a class="dark-mode-toggle">

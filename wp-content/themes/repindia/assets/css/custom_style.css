@@ -4602,12 +4602,12 @@ span.star {
   }
 
   ul.header-right-box {
-    gap: 8px;
+    gap: 4px !important;
     padding-left: 15px;
   }
 
   .header-right-box > li:first-child {
-    margin-right: 0px;
+    margin-right: 0px !important;
   }
 
   .content-inner-icons ul {
@@ -5028,8 +5028,12 @@ span.star {
   .dark-mode-toggle .icon-moon {
     margin: 3.3px;
   }
-  .header-right-box li.lang_switch, .header-right-box li.search_switch,.header-right-box li.theme_switch {
+  .header-right-box li.lang_switch, .header-right-box li.search_switch, .header-right-box li.theme_switch {
     display: none;
+  }
+
+  .header-right-box li.search_switch {
+    display: flex;
   }
 
   .main_nav_menu {
@@ -5469,6 +5473,10 @@ span.star {
   /* .hero-style .slide-title h2 {
     font-size: 30px;
   } */
+   
+.main_header .logo-wdth {
+  width: 75px;
+}
 
   .badge-custom {
     padding: 2px 13px;
