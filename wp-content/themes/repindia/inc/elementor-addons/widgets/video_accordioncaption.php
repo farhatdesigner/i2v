@@ -884,10 +884,10 @@ class Video_accordioncaption extends Widget_Base
 
                 .vac_chevron {
                     top: auto;
+                    right: 0;
                 }
-
-                .vac_chevron {
-                    top: auto;
+                .vac_accordion_set.active .vac_chevron {
+                    right: 4px;
                 }
 
             }

@@ -5463,9 +5463,9 @@ span.star {
 .iti__country-list {max-width: 100%;}
 .photo_custom img { max-height: inherit !important; min-height: inherit !important;}
 .search_result_header_content {flex-wrap: wrap;}
-.trusted_sec .elementor-image-box-wrapper .elementor-image-box-content h3.elementor-image-box-title {
-  margin-top: 10px;
-}
+.trusted_sec .elementor-image-box-wrapper .elementor-image-box-content h3.elementor-image-box-title {margin-top: 10px;}
+.elementor-element.ai_explore_dark .box-custom.e-flex.e-con.e-child:last-child {margin-right: 15px;}
+.max_width_content{width: max-content !important;}
 
 }
 
